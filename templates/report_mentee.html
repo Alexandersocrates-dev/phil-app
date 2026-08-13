@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Progress report - Phil{% endblock %}
+{% block content %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <h1>{{ enrolment.forename }} {{ enrolment.surname }} &middot; {{ enrolment.course_title }}</h1>
+      <p class="muted">Mentor: {{ enrolment.mentor_name }} &middot; Started {{ enrolment.start_date }} &middot;
+        {% if enrolment.status == 'completed' %}Completed{% else %}Week {{ enrolment.current_week }} of 5{% endif %}</p>
+    </div>
+    <a class="btn btn-secondary btn-sm" href="/report/mentee/{{ enrolment.id }}/pdf" target="_blank">Download PDF</a>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Coverage so far</h2>
+  {% if not weeks %}
+    <p class="muted">No sessions recorded yet.</p>
+  {% endif %}
+  {% for w in weeks %}
+  <div style="margin-bottom:14px;">
+    <h3>Week {{ w.week_number }}: {{ w.title }} <span class="muted" style="font-weight:400;">({{ w.date }})</span></h3>
+    <p>{{ w.objective }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+{% if reflection %}
+<div class="card">
+  <h2>Completion reflection</h2>
+  <h3>Pupil engagement</h3><p>{{ reflection.pupil_engagement }}</p>
+  <h3>Course effectiveness</h3><p>{{ reflection.course_effectiveness }}</p>
+  <h3>Recommended next steps</h3><p>{{ reflection.recommended_next_steps }}</p>
+</div>
+{% endif %}
+{% endblock %}

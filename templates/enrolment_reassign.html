@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Reassign mentor - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
+<div class="card">
+  <h1>Reassign mentor</h1>
+  <p class="muted">{{ enrolment.forename }} {{ enrolment.surname }}'s "{{ enrolment.course_title }}" enrolment is
+    currently mentored by {{ enrolment.mentor_name }}. Choose who should take it over. Every session record and
+    the pupil's history move with it, nothing is lost.</p>
+  {% if not mentors %}
+    <p class="muted">There is no other active mentor or admin at your establishment to reassign to yet.</p>
+  {% else %}
+  <form method="post" action="/admin/enrolments/{{ enrolment.id }}/reassign">
+    <div class="field">
+      <label>New mentor</label>
+      <select name="mentor_id" required>
+        <option value="">Choose a mentor</option>
+        {% for m in mentors %}
+        <option value="{{ m.id }}">{{ m.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Reassign</button>
+  </form>
+  {% endif %}
+</div>
+{% endblock %}

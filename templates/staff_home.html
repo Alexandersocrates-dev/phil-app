@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Phil staff - Phil{% endblock %}
+{% block content %}
+<h1>Phil staff</h1>
+<p class="muted">Internal console. No pupil or school data appears here beyond what's needed to run the business.</p>
+
+{% for n in notes %}
+<div class="flash flash-error" style="display:flex; justify-content:space-between; align-items:center;">
+  <span>{{ n.payload }}</span>
+  <form method="post" action="/staff/notifications/{{ n.id }}/read"><button class="btn btn-secondary btn-sm" type="submit">Dismiss</button></form>
+</div>
+{% endfor %}
+
+<div class="tile-grid">
+  <a class="tile" href="/staff/establishments"><div class="num">{{ active_estabs }}</div>Active establishments</a>
+  <a class="tile" href="/staff/mentors"><div class="num">{{ individual_mentors }}</div>Individual mentors</a>
+  <a class="tile" href="/staff/support"><div class="num">{{ open_support }}</div>Open support requests</a>
+  <a class="tile" href="/staff/course-requests"><div class="num">{{ pending_requests }}</div>Pending course requests</a>
+  <a class="tile" href="/admin/courses"><div class="num">&#9998;</div>Course library</a>
+  <a class="tile" href="/staff/billing"><div class="num">&#163;</div>Billing &amp; revenue</a>
+  <a class="tile" href="/staff/establishments/new"><div class="num">+</div>Add establishment</a>
+  <a class="tile" href="/staff/team"><div class="num">&#128101;</div>Phil team</a>
+  <a class="tile" href="/staff/audit-log"><div class="num">&#128220;</div>Audit log</a>
+</div>
+{% endblock %}

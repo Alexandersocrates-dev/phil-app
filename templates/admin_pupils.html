@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Pupils - Phil{% endblock %}
+{% block content %}
+<p><a href="/admin">&larr; Admin home</a></p>
+<h1>Pupils</h1>
+
+<div class="card" style="display:flex; gap:8px;">
+  <a class="btn btn-sm {{ 'btn-primary' if status_filter == 'active' else 'btn-secondary' }}" href="/admin/pupils?status=active">Active</a>
+  <a class="btn btn-sm {{ 'btn-primary' if status_filter == 'archived' else 'btn-secondary' }}" href="/admin/pupils?status=archived">Archived</a>
+</div>
+
+<div class="card">
+  {% if not pupil_data %}
+    <p class="muted">No {{ status_filter }} pupils yet.</p>
+  {% else %}
+  <table>
+    <tr><th>Pupil</th><th>Year</th><th>Courses</th><th></th></tr>
+    {% for item in pupil_data %}
+    <tr>
+      <td><a href="/mentor/pupils/{{ item.pupil.id }}">{{ item.pupil.forename }} {{ item.pupil.surname }}</a></td>
+      <td>{{ item.pupil.year_group }}</td>
+      <td>
+        {% if not item.enrolments %}<span class="muted">Not enrolled</span>{% endif %}
+        {% for e in item.enrolments %}
+          {{ e.course_title }} ({{ e.mentor_name }}{% if e.status != 'active' %}, {{ e.status }}{% endif %}){% if not loop.last %}, {% endif %}
+        {% endfor %}
+      </td>
+      <td>
+        <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ item.pupil.id }}">View</a>
+        {% if status_filter == 'active' %}
+        <a class="btn btn-red btn-sm" href="/admin/pupils/{{ item.pupil.id }}/delete">Delete</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

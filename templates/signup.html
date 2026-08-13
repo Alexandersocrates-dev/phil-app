@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Get started - Phil{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Get started</h1>
+  <p class="muted">Creates your establishment (or your own account, if signing up independently) and your admin login.</p>
+  <form method="post" action="/signup">
+    <div class="field">
+      <label>Account type</label>
+      <select name="signup_type" id="signup_type" onchange="document.getElementById('estabFields').style.display = this.value==='individual' ? 'none' : 'block'">
+        <option value="pilot">Establishment, free 3-week pilot</option>
+        <option value="school">Establishment, paid plan</option>
+        <option value="individual">Individual mentor</option>
+      </select>
+      <div class="hint">You can convert a pilot to a paid plan at any time; nothing recorded during the pilot is lost.</div>
+    </div>
+
+    <div id="estabFields">
+      <div class="field">
+        <label for="establishment_name">Establishment name</label>
+        <input type="text" id="establishment_name" name="establishment_name" placeholder="e.g. Elmswood Academy">
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required minlength="8">
+      <div class="hint">At least 8 characters.</div>
+    </div>
+    <button class="btn btn-primary" type="submit">Create account</button>
+  </form>
+  <p class="muted" style="margin-top:16px;">Already have an account? <a href="/login">Sign in</a></p>
+</div>
+{% endblock %}

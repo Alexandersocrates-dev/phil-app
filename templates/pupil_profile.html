@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ pupil.forename }} {{ pupil.surname }} - Phil{% endblock %}
+{% block content %}
+<p><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <div>
+      <h1>{{ pupil.forename }} {{ pupil.surname }}</h1>
+      <p class="muted">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth }}</p>
+    </div>
+    <div>
+      {% if pupil.status == 'active' %}
+        <a class="btn btn-secondary btn-sm" href="/mentor/enrol/{{ pupil.id }}">+ Enrol on another course</a>
+        <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">+ Link a parent/carer</a>
+        <form method="post" action="/mentor/pupils/{{ pupil.id }}/archive" style="display:inline;">
+          <button class="btn btn-red btn-sm" type="submit" onclick="return confirm('Archive this pupil? Their records are kept and this can be reversed.')">Archive</button>
+        </form>
+        {% if user.role == 'admin' %}
+        <a class="btn btn-red btn-sm" href="/admin/pupils/{{ pupil.id }}/delete">Delete permanently</a>
+        {% endif %}
+      {% else %}
+        <span class="badge badge-muted">Archived</span>
+        <form method="post" action="/mentor/pupils/{{ pupil.id }}/reactivate" style="display:inline;">
+          <button class="btn btn-secondary btn-sm" type="submit">Reactivate</button>
+        </form>
+        {% if user.role == 'admin' %}
+        <a class="btn btn-red btn-sm" href="/admin/pupils/{{ pupil.id }}/delete">Delete permanently</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% for item in enrolment_data %}
+{% set e = item.enrolment %}
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>{{ e.course_title }}</h2>
+    {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
+    {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
+    {% else %}<span class="badge badge-teal">Active</span>{% endif %}
+  </div>
+  <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
+  <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; Week {{ e.current_week }} of 5 &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'on' if e.parent_access_enabled else 'off' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
+
+  {% if e.status == 'active' %}
+    <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record week {{ e.current_week + 1 }} session</a>
+    <a class="btn btn-secondary btn-sm" href="/mentor/schedule/{{ e.id }}">Plan session dates</a>
+    {% if user.role == 'admin' %}
+    <a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ e.id }}/reassign">Reassign mentor</a>
+    {% endif %}
+  {% endif %}
+  {% if e.current_week > 0 %}
+    <a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank">Progress report</a>
+  {% endif %}
+  {% if item.certificate %}
+    <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Download certificate</a>
+  {% endif %}
+  {% if e.status == 'completed' %}
+    <a class="btn btn-secondary btn-sm" href="/mentor/reflection/{{ e.id }}">{{ 'Edit' if item.reflection else 'Write' }} completion reflection</a>
+    {% if not item.reflection %}<span class="badge badge-amber">Reflection needed</span>{% endif %}
+  {% endif %}
+
+  {% if item.records %}
+  <table style="margin-top:14px;">
+    <tr><th>Week</th><th>Date</th><th>Safeguarding</th><th></th></tr>
+    {% for r in item.records %}
+    <tr>
+      <td>{{ r.week_number }}: {{ r.week_title }}</td>
+      <td>{{ r.date }}</td>
+      <td>{% if r.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
+      <td><a href="/session/{{ r.id }}/pdf" target="_blank">PDF</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Parent home - Phil{% endblock %}
+{% block content %}
+<h1>Hi, {{ user.name }}</h1>
+{% if not enrolments %}
+<div class="card"><p class="muted">Nothing to show yet. Once a mentor links you to a pupil and turns on parent/carer access, their course will appear here.</p></div>
+{% endif %}
+{% for item in enrolments %}
+{% set e = item.enrolment %}
+<div class="card">
+  <h2>{{ e.forename }} {{ e.surname }} &middot; {{ e.course_title }}</h2>
+  <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
+  <p class="muted">Week {{ e.current_week }} of 5{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
+  {% if item.week %}
+  <h3>This week's home activity</h3>
+  <p>{{ item.week.home_activity }}</p>
+  {% endif %}
+  <a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank">Progress report</a>
+  {% if item.certificate %}
+  <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Download certificate</a>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock %}

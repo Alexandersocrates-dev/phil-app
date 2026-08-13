@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Course library management - Phil{% endblock %}
+{% block content %}
+<p><a href="/admin">&larr; Admin home</a></p>
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Course library management</h1>
+  <a class="btn btn-primary" href="/admin/courses/new">+ New course</a>
+</div>
+<div class="card">
+  <table>
+    <tr><th>Module</th><th>Title</th><th>Status</th><th></th></tr>
+    {% for c in courses %}
+    <tr>
+      <td>{{ '%02d'|format(c.module_number) }}</td>
+      <td>{{ c.title }}</td>
+      <td>{% if c.status == 'published' %}<span class="badge badge-teal">Published</span>{% else %}<span class="badge badge-muted">Draft</span>{% endif %}</td>
+      <td>
+        <a class="btn btn-secondary btn-sm" href="/admin/courses/{{ c.id }}/edit">Edit</a>
+        {% if c.status == 'published' %}
+        <form method="post" action="/admin/courses/{{ c.id }}/unpublish" style="display:inline;"><button class="btn btn-red btn-sm" type="submit">Unpublish</button></form>
+        {% else %}
+        <form method="post" action="/admin/courses/{{ c.id }}/publish" style="display:inline;"><button class="btn btn-amber btn-sm" type="submit">Publish</button></form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

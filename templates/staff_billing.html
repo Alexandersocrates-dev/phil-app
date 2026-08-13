@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Billing & revenue - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<h1>Billing &amp; revenue</h1>
+
+<div class="tile-grid" style="margin-bottom:20px;">
+  <div class="tile"><div class="num">&#163;{{ mrr }}</div>Estimated MRR</div>
+  <div class="tile"><div class="num">{{ active_paid }}</div>Active paid subscriptions</div>
+  <div class="tile"><div class="num">{{ pilots|length }}</div>Pilots in progress</div>
+</div>
+
+<div class="card">
+  <h2>All subscriptions</h2>
+  <table>
+    <tr><th>Establishment</th><th>Type</th><th>Plan</th><th>Status</th><th>Payment method</th></tr>
+    {% for s in subs %}
+    <tr>
+      <td>{{ s.establishment_name }}</td>
+      <td>{{ s.establishment_type }}</td>
+      <td>{{ s.plan_type }}</td>
+      <td>{{ s.status }}</td>
+      <td>{{ s.payment_method or '-' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2>Invoices</h2>
+  {% if not invoices %}
+    <p class="muted">No invoices recorded yet.</p>
+  {% else %}
+  <table>
+    <tr><th>Establishment</th><th>Amount</th><th>PO reference</th><th>Status</th><th>Due</th></tr>
+    {% for i in invoices %}
+    <tr>
+      <td>{{ i.establishment_name }}</td>
+      <td>&#163;{{ i.amount }}</td>
+      <td>{{ i.purchase_order_ref or '-' }}</td>
+      <td>{{ i.status }}</td>
+      <td>{{ i.due_date or '-' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

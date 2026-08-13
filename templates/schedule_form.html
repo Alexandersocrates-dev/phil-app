@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Plan session dates - Phil{% endblock %}
+{% block content %}
+<p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
+<div class="card">
+  <h1>Plan session dates</h1>
+  <p class="muted">{{ enrolment.course_title }}. Optional, a planning aid only, recording a session is what actually advances progress. Leave a week blank if you don't want to plan it.</p>
+  <form method="post" action="/mentor/schedule/{{ enrolment.id }}">
+    {% for i in range(1,6) %}
+    <div class="field">
+      <label>Week {{ i }}{% if i <= enrolment.current_week %} (recorded){% endif %}</label>
+      <input type="date" name="week{{ i }}_date" value="{{ planned.get(i, '') }}">
+    </div>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Save planned dates</button>
+  </form>
+</div>
+{% endblock %}

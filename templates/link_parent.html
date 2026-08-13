@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Link a parent/carer - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Link a parent/carer</h1>
+  <p class="muted">For {{ pupil.forename }} {{ pupil.surname }}. Creates their account directly in this local build; in production this sends an email invite instead.</p>
+  <form method="post" action="/mentor/pupils/{{ pupil.id }}/link-parent">
+    <div class="field"><label>Parent/carer name</label><input type="text" name="name" required></div>
+    <div class="field"><label>Email</label><input type="email" name="email" required></div>
+    <div class="field"><label>Temporary password</label><input type="password" name="password" required minlength="8"></div>
+    <div class="field"><label>Relationship</label><input type="text" name="relationship" placeholder="e.g. Mother, Father, Guardian"></div>
+    <button class="btn btn-primary" type="submit">Link parent/carer</button>
+  </form>
+</div>
+
+{% if links %}
+<div class="card">
+  <h2>Already linked</h2>
+  <table>
+    <tr><th>Name</th><th>Email</th><th>Relationship</th></tr>
+    {% for l in links %}
+    <tr><td>{{ l.name }}</td><td>{{ l.email }}</td><td>{{ l.relationship or '-' }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}

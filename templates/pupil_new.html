@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Add a pupil - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Add a pupil</h1>
+  <form method="post" action="/mentor/pupils/new">
+    <div class="field"><label>Forename</label><input type="text" name="forename" required></div>
+    <div class="field"><label>Surname</label><input type="text" name="surname" required></div>
+    <div class="field"><label>Date of birth</label><input type="date" name="date_of_birth" required></div>
+    <div class="field"><label>Year group</label><input type="text" name="year_group" placeholder="e.g. Year 9" required></div>
+    <div class="field"><label>Form class (optional)</label><input type="text" name="form_class"></div>
+    <button class="btn btn-primary" type="submit">Add pupil</button>
+  </form>
+</div>
+{% endblock %}

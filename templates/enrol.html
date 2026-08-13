@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Enrol {{ pupil.forename }} - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Enrol {{ pupil.forename }} {{ pupil.surname }}</h1>
+  <form method="post" action="/mentor/enrol/{{ pupil.id }}">
+    <div class="field">
+      <label>Course</label>
+      <select name="course_id" required>
+        {% for c in courses %}<option value="{{ c.id }}">{{ '%02d'|format(c.module_number) }} - {{ c.title }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label><input type="checkbox" name="parent_access_enabled" checked style="width:auto; display:inline-block; margin-right:8px;">Parent/carer access enabled</label>
+      <div class="hint">Grants progress tracking and this course's weekly home activities to a linked parent/carer. Off means the enrolment doesn't appear in the parent's app at all.</div>
+    </div>
+    <button class="btn btn-primary" type="submit">Enrol</button>
+  </form>
+</div>
+{% endblock %}

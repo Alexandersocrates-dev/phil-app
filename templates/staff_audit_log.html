@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Audit log - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<h1>Audit log</h1>
+<p class="muted">Sensitive internal actions: suspensions, reactivations, permanent deletions, and support-ticket-scoped safeguarding access.</p>
+<div class="card">
+  <table>
+    <tr><th>When</th><th>Actor</th><th>Action</th><th>Target</th><th>Detail</th></tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.created_at[:19] }}</td>
+      <td>{{ r.actor_name or 'System' }}</td>
+      <td>{{ r.action }}</td>
+      <td>{{ r.target_type }}{% if r.target_id %} #{{ r.target_id }}{% endif %}</td>
+      <td>{{ r.detail or '-' }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

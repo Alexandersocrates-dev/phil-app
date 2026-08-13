@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Record session - Phil{% endblock %}
+{% block content %}
+<p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
+
+{% if not week %}
+<div class="card"><p>This course is already complete, all five sessions are recorded.</p></div>
+{% else %}
+<div class="card">
+  <h1>Week {{ week.week_number }}: {{ week.title }}</h1>
+  <p class="muted"><strong>Objective:</strong> {{ week.objective }}</p>
+  <p class="muted"><strong>Planned activity:</strong> {{ week.activity }}</p>
+</div>
+
+<div class="card">
+  <h2>Session record</h2>
+  <form method="post" action="/mentor/session/{{ enrolment.id }}">
+    <div class="field">
+      <label>Mood rating (1-5)</label>
+      <select name="mood_rating">
+        {% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>Engagement rating (1-5)</label>
+      <select name="engagement_rating">
+        {% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label>What happened</label>
+      <textarea name="what_happened" placeholder="What was covered and how the pupil responded"></textarea>
+    </div>
+    <div class="field">
+      <label>Reflection / goal for the pupil</label>
+      <textarea name="reflection_goal">{{ week.reflect }}</textarea>
+    </div>
+    <div class="field">
+      <label>Mentor notes</label>
+      <textarea name="mentor_notes"></textarea>
+    </div>
+    <div class="field">
+      <label>Resources used</label>
+      <input type="text" name="resources_used" value="{{ week.resources|join(', ') }}">
+    </div>
+
+    <div class="safeguard-box safeguard-clear" id="sgBox">
+      <h3>Safeguarding, every session</h3>
+      <div class="field">
+        <label><input type="radio" name="safeguarding_flag" value="no" checked style="width:auto; display:inline-block;"> No concerns to flag this session</label><br>
+        <label><input type="radio" name="safeguarding_flag" value="yes" style="width:auto; display:inline-block;"> Flag a concern</label>
+      </div>
+      <div class="field">
+        <label>Safeguarding note (mandatory, even when not flagged)</label>
+        <textarea name="safeguarding_note" required placeholder="e.g. 'No concerns this session.'"></textarea>
+      </div>
+      <p class="muted" style="font-size:12px;">This record is not a safeguarding report and Phil takes no action on it. You remain responsible for following your establishment's own safeguarding procedure.</p>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save session record</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

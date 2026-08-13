@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Phil{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="topbar">
+  <a class="brand" href="/">Phil</a>
+  <nav>
+    {% if user %}
+      {% if user.role == 'admin' %}<a href="/admin">Admin home</a> <a href="/support/new">Get support</a>{% endif %}
+      {% if user.role == 'mentor' %}<a href="/mentor">Mentor home</a> <a href="/support/new">Get support</a>{% endif %}
+      {% if user.role == 'parent_carer' %}<a href="/parent">Parent home</a>{% endif %}
+      {% if user.role == 'phil_staff' %}<a href="/staff">Phil staff</a>{% endif %}
+      <a href="/courses">Courses</a>
+      <a href="/logout">Sign out ({{ user.name }})</a>
+    {% else %}
+      <a href="/courses">Courses</a>
+      <a href="/login">Sign in</a>
+      <a href="/signup">Get started</a>
+    {% endif %}
+  </nav>
+</div>
+
+<div class="wrap {% block wrapclass %}{% endblock %}">
+  {% if flash %}
+    <div class="flash flash-{{ flash.kind }}">{{ flash.message }}</div>
+  {% endif %}
+  {% block content %}{% endblock %}
+</div>
+
+<footer>Phil, structured support, real growth. Local development build.</footer>
+</body>
+</html>

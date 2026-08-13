@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} - Phil{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>{{ title }}</h1>
+  <div style="display:flex; gap:8px;">
+    <a class="btn btn-secondary btn-sm" href="{{ pdf_url }}" target="_blank">Download PDF</a>
+    {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Download Excel</a>{% endif %}
+  </div>
+</div>
+
+{% if mentors is defined %}
+<div class="card">
+  <form method="get" action="/admin/reports/caseload">
+    <div class="field" style="max-width:280px;">
+      <label>Filter by mentor</label>
+      <select name="mentor_id" onchange="this.form.submit()">
+        <option value="all" {% if selected_mentor == 'all' %}selected{% endif %}>All mentors</option>
+        {% for m in mentors %}
+        <option value="{{ m.id }}" {% if selected_mentor == m.id|string %}selected{% endif %}>{{ m.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+</div>
+{% endif %}
+
+<div class="card">
+  {% if not rows %}
+    <p class="muted">No enrolments yet.</p>
+  {% else %}
+  <table>
+    <tr>
+      <th>Pupil</th><th>Course</th>{% if show_mentor %}<th>Mentor</th>{% endif %}
+      <th>Started</th><th>Scheduled end</th><th>Progress</th><th>Certificate</th><th>Reflection</th><th></th>
+    </tr>
+    {% for r in rows %}
+    <tr>
+      <td>{{ r.pupil }}</td>
+      <td>{{ r.course }}</td>
+      {% if show_mentor %}<td>{{ r.mentor }}</td>{% endif %}
+      <td>{{ r.started }}</td>
+      <td>{{ r.scheduled_end }}</td>
+      <td>{{ r.progress }}</td>
+      <td>{{ r.certificate }}</td>
+      <td>{% if r.reflection == 'Needed' %}<span class="badge badge-amber">Needed</span>{% elif r.reflection == 'Done' %}<span class="badge badge-teal">Done</span>{% else %}-{% endif %}</td>
+      <td><a href="/report/mentee/{{ r.enrolment_id }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

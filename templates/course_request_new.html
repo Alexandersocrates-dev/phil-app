@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Request a course - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Request a new course topic</h1>
+  <p class="muted">Sent to the Phil team to review and build.</p>
+  <form method="post" action="/admin/course-requests/new">
+    <div class="field"><label>Topic</label><input type="text" name="topic" required placeholder="e.g. Selective mutism"></div>
+    <div class="field"><label>Note (optional)</label><textarea name="note" placeholder="Why this would help your pupils"></textarea></div>
+    <button class="btn btn-primary" type="submit">Send request</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ ticket.subject }} - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff/support">&larr; Support inbox</a></p>
+<div class="card">
+  <h1>{{ ticket.subject }}</h1>
+  <p class="muted">{{ ticket.establishment_name or 'Independent' }} &middot; from {{ ticket.requester_name }} &middot; {{ ticket.created_at[:10] }}</p>
+  <p>{{ ticket.message }}</p>
+
+  {% if pupil %}
+  <div class="safeguard-box safeguard-clear">
+    <h3>Pupil referenced: {{ pupil.forename }} {{ pupil.surname }}</h3>
+    <p class="muted" style="font-size:12.5px;">This access is scoped to this ticket only and has been logged to the audit log, it is not standing visibility.</p>
+  </div>
+  {% endif %}
+
+  {% if ticket.status == 'open' %}
+  <form method="post" action="/staff/support/{{ ticket.id }}/resolve">
+    <div class="field"><label>Response</label><textarea name="response" required></textarea></div>
+    <button class="btn btn-primary" type="submit">Resolve</button>
+  </form>
+  {% else %}
+  <div class="card" style="background:var(--teal-light);">
+    <h3>Resolved</h3>
+    <p>{{ ticket.response }}</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

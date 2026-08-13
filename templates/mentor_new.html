@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Add a mentor - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card">
+  <h1>Add a mentor</h1>
+  <p class="muted">Creates their account directly for this local build. In production this sends an email invite instead.</p>
+  <form method="post" action="/admin/mentors/new">
+    <div class="field"><label>Name</label><input type="text" name="name" required></div>
+    <div class="field"><label>Email</label><input type="email" name="email" required></div>
+    <div class="field"><label>Temporary password</label><input type="password" name="password" required minlength="8"></div>
+    <button class="btn btn-primary" type="submit">Add mentor</button>
+  </form>
+</div>
+{% endblock %}

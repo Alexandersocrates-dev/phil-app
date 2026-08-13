@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+data/phil.db
+data/pdfs/
+server*.log
+.DS_Store
+.env

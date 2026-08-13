@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Mentor home - Phil{% endblock %}
+{% block content %}
+<h1>Hi, {{ user.name }}</h1>
+<p class="muted">Your mentees and where each course is up to.</p>
+
+<div class="card">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2 style="margin:0;">My caseload</h2>
+    <div>
+      <a class="btn btn-secondary btn-sm" href="/mentor/reports/caseload">Case load report</a>
+      <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">+ Add a pupil</a>
+    </div>
+  </div>
+
+  {% if not enrolments %}
+    <p class="muted">No pupils enrolled yet.</p>
+  {% else %}
+  <table>
+    <tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
+    {% for e in enrolments %}
+    <tr>
+      <td><a href="/mentor/pupils/{{ e.pupil_id }}">{{ e.forename }} {{ e.surname }}</a></td>
+      <td>{{ e.course_title }}</td>
+      <td style="width:140px;">
+        <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
+        <span class="muted" style="font-size:12px;">Week {{ e.current_week }} of 5</span>
+      </td>
+      <td>
+        {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
+        {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
+        {% else %}<span class="badge badge-teal">Active</span>{% endif %}
+      </td>
+      <td>
+        {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
+        {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Certificate</a>{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Support inbox - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<h1>Support inbox</h1>
+<div class="card">
+  <table>
+    <tr><th>Establishment</th><th>Subject</th><th>From</th><th>Status</th><th></th></tr>
+    {% for r in requests %}
+    <tr>
+      <td>{{ r.establishment_name or 'Independent' }}</td>
+      <td>{{ r.subject }}</td>
+      <td>{{ r.requester_name }}</td>
+      <td>{% if r.status == 'open' %}<span class="badge badge-amber">Open</span>{% else %}<span class="badge badge-teal">Resolved</span>{% endif %}</td>
+      <td><a href="/staff/support/{{ r.id }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

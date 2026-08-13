@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Course library - Phil{% endblock %}
+{% block content %}
+<h1>Course library</h1>
+<p class="muted">Twenty five-week courses grounded in DfE, Ofsted and clinical guidance.</p>
+<div class="tile-grid">
+  {% for c in courses %}
+  <a class="tile" href="/courses/{{ c.id }}">
+    <div class="num">{{ '%02d'|format(c.module_number) }}</div>
+    <div>{{ c.title }}</div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

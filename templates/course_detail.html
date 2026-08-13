@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} - Phil{% endblock %}
+{% block content %}
+<p><a href="/courses">&larr; Course library</a></p>
+<div class="card">
+  <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
+  <h1>{{ course.title }}</h1>
+  <p class="muted">{{ course.description }}</p>
+</div>
+
+<h2>Five-week session flow</h2>
+<ul class="week-list" style="flex-direction:column; align-items:stretch;">
+  {% for w in weeks %}
+  <li style="display:block;">
+    <h3>Week {{ w.week_number }}: {{ w.title }}</h3>
+    <p><strong>Objective:</strong> {{ w.objective }}</p>
+    <p><strong>Check-in:</strong> {{ w.checkin }}</p>
+    <p><strong>Input:</strong> {{ w.input_content }}</p>
+    <p><strong>Activity:</strong> {{ w.activity }}</p>
+    <p><strong>Reflect:</strong> {{ w.reflect }}</p>
+    <p><strong>Watch for:</strong> {{ w.lookfor }}</p>
+    {% if w.resources %}
+    <div class="pill-row">
+      {% for r in w.resources %}<span class="pill">{{ r }}</span>{% endfor %}
+    </div>
+    {% endif %}
+    <p class="muted"><strong>Parent/carer take-home:</strong> {{ w.home_activity }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

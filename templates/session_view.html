@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Session record - Phil{% endblock %}
+{% block content %}
+<p><a href="/admin">&larr; Admin home</a></p>
+<div class="card">
+  <h1>{{ record.forename }} {{ record.surname }} &middot; {{ record.course_title }}</h1>
+  <p class="muted">Week {{ record.week_number }}: {{ record.week_title }} &middot; {{ record.date }} &middot; recorded by {{ record.mentor_name }}</p>
+  <p>Mood {{ record.mood_rating }}/5 &middot; Engagement {{ record.engagement_rating }}/5</p>
+  <h3>What happened</h3><p>{{ record.what_happened }}</p>
+  <h3>Reflection / goal</h3><p>{{ record.reflection_goal }}</p>
+  <h3>Mentor notes</h3><p>{{ record.mentor_notes }}</p>
+
+  <div class="safeguard-box {{ 'safeguard-flagged' if record.safeguarding_flag else 'safeguard-clear' }}">
+    <h3>{{ 'Safeguarding: flagged' if record.safeguarding_flag else 'Safeguarding: not flagged' }}</h3>
+    <p>{{ record.safeguarding_note }}</p>
+  </div>
+  <a class="btn btn-secondary btn-sm" href="/session/{{ record.id }}/pdf" target="_blank">Download PDF</a>
+</div>
+{% endblock %}

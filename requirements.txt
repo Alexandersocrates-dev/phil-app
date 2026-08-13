@@ -1,0 +1,12 @@
+# Phil, web app dependencies.
+#
+# This sandbox has no network access to install these, so they were never
+# actually installed here, they come pre-installed in the environment Phil
+# was built in. Railway's build environment (Nixpacks) has full network
+# access, so it installs everything below from this file automatically on
+# deploy. No action needed beyond having this file present in the repo.
+
+Jinja2>=3.1
+reportlab>=4.0
+openpyxl>=3.1
+stripe>=10.0

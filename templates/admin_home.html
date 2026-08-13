@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Admin - Phil{% endblock %}
+{% block content %}
+<h1>{{ establishment.name }}</h1>
+{% if sub %}
+<p class="muted">
+  Plan: {{ sub.plan_type }} &middot; Seats used: {{ used }} of {{ limit }}
+  {% if sub.plan_type == 'pilot' %}&middot; Pilot ends {{ sub.pilot_ends_at[:10] }}{% endif %}
+</p>
+{% endif %}
+
+{% for n in admin_notes %}
+<div class="flash flash-{{ 'error' if n.type == 'pilot_ending' else 'ok' }}" style="display:flex; justify-content:space-between; align-items:center;">
+  <span>{{ n.payload }}</span>
+  <form method="post" action="/staff/notifications/{{ n.id }}/read"><button class="btn btn-secondary btn-sm" type="submit">Dismiss</button></form>
+</div>
+{% endfor %}
+
+{% if sub and sub.plan_type == 'pilot' %}
+<div class="card" style="background:var(--amber-light); border-color:var(--amber);">
+  <h3 style="color:var(--amber-dark);">Free pilot</h3>
+  <p class="muted">Up to 3 seats and 10 pupils. Convert any time, before or after the pilot ends, nothing recorded is lost.</p>
+  <div style="display:flex; gap:8px; flex-wrap:wrap;">
+    {% if stripe_configured %}
+    <a class="btn btn-primary btn-sm" href="/admin/billing/checkout">Pay by card</a>
+    {% endif %}
+    <form method="post" action="/admin/convert-pilot" style="display:inline;">
+      <button class="btn btn-amber btn-sm" type="submit">Convert to paid plan (invoice)</button>
+    </form>
+  </div>
+  {% if not stripe_configured %}
+  <p class="muted" style="font-size:12px; margin-top:8px;">Card payments aren't switched on for this deployment yet, "Convert to paid plan" moves the establishment onto the paid plan and marks it to be invoiced.</p>
+  {% endif %}
+</div>
+{% elif sub and stripe_configured and sub.payment_method != 'card' %}
+<div class="card">
+  <h3>Billing</h3>
+  <p class="muted">Currently billed by invoice. Switch to card payments if you'd rather pay automatically going forward.</p>
+  <a class="btn btn-secondary btn-sm" href="/admin/billing/checkout">Pay by card instead</a>
+</div>
+{% endif %}
+
+<div class="tile-grid" style="margin-bottom:20px;">
+  <div class="tile"><div class="num">{{ mentors|length }}</div>Mentors and admins</div>
+  <a class="tile" href="/admin/pupils"><div class="num">{{ pupils|length }}</div>Active pupils</a>
+  <a class="tile" href="/admin/mentors/new"><div class="num">+</div>Add a mentor</a>
+  <a class="tile" href="/courses"><div class="num">20</div>Course library</a>
+  <a class="tile" href="/admin/courses"><div class="num">&#9998;</div>Manage courses</a>
+  <a class="tile" href="/admin/reports/caseload"><div class="num">&#128203;</div>Case load report</a>
+  <a class="tile" href="/admin/reports/full"><div class="num">&#128196;</div>Full mentoring report</a>
+  <a class="tile" href="/admin/course-requests/new"><div class="num">&#128172;</div>Request a course</a>
+</div>
+
+<div class="card">
+  <h2>Mentors and admins</h2>
+  <table>
+    <tr><th>Name</th><th>Role</th><th>Email</th><th></th></tr>
+    {% for m in mentors %}
+    <tr>
+      <td>{{ m.name }}</td><td>{{ m.role }}</td><td>{{ m.email }}</td>
+      <td>{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="card">
+  <h2>Recent session records, establishment-wide</h2>
+  <p class="muted" style="font-size:12.5px;">As admin you can open any session record at your establishment, including safeguarding notes. Phil never pushes a notification when one is flagged; this is a look-it-up capability only.</p>
+  {% if not sessions %}
+    <p class="muted">No sessions recorded yet.</p>
+  {% else %}
+  <table>
+    <tr><th>Pupil</th><th>Course</th><th>Week</th><th>Date</th><th>Mentor</th><th>Safeguarding</th></tr>
+    {% for s in sessions %}
+    <tr>
+      <td><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
+      <td>{{ s.course_title }}</td>
+      <td>{{ s.week_number }}</td>
+      <td>{{ s.date }}</td>
+      <td>{{ s.mentor_name }}</td>
+      <td>{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

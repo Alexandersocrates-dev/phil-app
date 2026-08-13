@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Establishments - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h1>Establishments</h1>
+  <a class="btn btn-primary" href="/staff/establishments/new">+ Add establishment</a>
+</div>
+<div class="card">
+  <table>
+    <tr><th>Name</th><th>Status</th><th></th></tr>
+    {% for e in establishments %}
+    <tr>
+      <td>{{ e.name }}</td>
+      <td>{% if e.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</td>
+      <td><a href="/staff/establishments/{{ e.id }}">View</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

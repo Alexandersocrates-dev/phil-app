@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Course requests - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<h1>Course requests</h1>
+<div class="card">
+  <table>
+    <tr><th>Establishment</th><th>Topic</th><th>Requested by</th><th>Status</th><th></th></tr>
+    {% for r in requests %}
+    <tr>
+      <td>{{ r.establishment_name }}</td>
+      <td>{{ r.topic }}{% if r.note %}<div class="muted" style="font-size:12px;">{{ r.note }}</div>{% endif %}</td>
+      <td>{{ r.requester_name }}</td>
+      <td>
+        {% if r.status == 'open' %}<span class="badge badge-amber">Open</span>
+        {% elif r.status == 'in_progress' %}<span class="badge badge-teal">In progress</span>
+        {% else %}<span class="badge badge-muted">Linked</span>{% endif %}
+      </td>
+      <td>
+        {% if r.status != 'in_progress' %}
+        <form method="post" action="/staff/course-requests/{{ r.id }}/status" style="display:inline;">
+          <input type="hidden" name="status" value="in_progress">
+          <button class="btn btn-secondary btn-sm" type="submit">Mark in progress</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
