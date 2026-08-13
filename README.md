@@ -192,8 +192,13 @@ is exactly what Railway hosts (unlike Netlify, which only runs short-lived
 serverless functions with no persistent storage, and can't run this app at
 all without a much larger rewrite). `Procfile`, `railway.json`, and
 `requirements.txt` are already in this repo for Railway to pick up
-automatically. What's left is entirely account setup that has to happen in
-your own browser, none of it can be done from inside this build:
+automatically, and a git repository with everything already committed sits
+in this folder, ready to push. See **`DEPLOYMENT.md`** in this same folder
+for the full step-by-step checklist with exact values (pricing, field
+names, event types) filled in. Short version below.
+
+What's left is entirely account setup that has to happen in your own
+browser, none of it can be done from inside this build:
 
 1. **Push this code to GitHub.** Create a repository (or use one you
    already have) and push this folder to it. Railway deploys from a GitHub
@@ -209,9 +214,10 @@ your own browser, none of it can be done from inside this build:
 4. **Add a custom domain** (Settings > Networking > Custom Domain) pointing
    at your phileducation.co.uk DNS if you want Phil on your own domain
    rather than Railway's generated one.
-5. **Run `python3 seed.py` once** against the deployed app (Railway's
-   dashboard has a shell/one-off command runner) to load the 20 courses and
-   create the first Phil staff account, same as local setup.
+5. **Nothing to run manually here.** `run.py` seeds the 20 courses and the
+   first Phil staff account itself the first time it boots against an
+   empty database, and never touches them again on later boots, so this
+   just happens the first time you open the deployed URL.
 6. **If you want card payments**, create a Stripe account, switch it to
    test mode first, create a recurring Price for the school plan (and one
    for individual mentors if you sell to them separately), add a webhook
