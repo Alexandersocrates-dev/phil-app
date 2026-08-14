@@ -216,15 +216,16 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 }
 .app-sidebar-brand{
   font-family:var(--font-head); font-weight:800; font-size:19px; color:var(--navy);
-  text-decoration:none; padding:0 10px 18px; display:block;
+  text-decoration:none; padding:0 10px 18px; display:flex; align-items:center; gap:9px;
 }
+.app-sidebar-brand svg{width:26px; height:26px; flex-shrink:0;}
 .app-sidebar-nav{display:flex; flex-direction:column; gap:3px; flex:1;}
 .app-sidebar-item{
   display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:10px;
   text-decoration:none; color:var(--muted); font-family:var(--font-head); font-weight:600; font-size:13.5px;
   transition:background 150ms ease, color 150ms ease;
 }
-.app-sidebar-item:hover{background:#F4F2E9;}
+.app-sidebar-item:hover{background:rgba(29,158,117,0.12); color:var(--teal-dark);}
 .app-sidebar-item.active{background:var(--teal-light); color:var(--teal-darker);}
 .app-sidebar-item svg{width:18px; height:18px; flex-shrink:0; stroke:currentColor;}
 .app-sidebar-signout{margin-top:auto; border-top:1px solid var(--border); padding-top:14px;}
