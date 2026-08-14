@@ -46,6 +46,24 @@
         <span class="avatar avatar-sm">{{ user.name[:1] }}</span>
         <div><span class="name">{{ user.name }}</span><span class="sub">{{ shell_sub }}</span></div>
       </div>
+      {% if user.role == 'admin' %}
+      <div class="segmented app-topbar-toggle" id="viewToggle" role="group" aria-label="Switch between your Admin console and Mentor view">
+        <a href="/admin" data-area="/admin">Admin</a>
+        <a href="/mentor" data-area="/mentor">Mentor</a>
+      </div>
+      <script>
+      (function(){
+        var path = window.location.pathname;
+        var links = document.querySelectorAll('#viewToggle a');
+        var best = null;
+        for (var i = 0; i < links.length; i++) {
+          var area = links[i].getAttribute('data-area');
+          if (path === area || path.indexOf(area + '/') === 0) { best = links[i]; }
+        }
+        if (best) { best.classList.add('active'); best.setAttribute('aria-current', 'page'); }
+      })();
+      </script>
+      {% endif %}
       <div class="app-topbar-actions">
         <a class="app-topbar-icon" href="{{ shell_home }}" title="Notifications">{{ icon_bell() }}</a>
         <a class="app-topbar-icon" href="{{ '/staff/help' if user.role == 'phil_staff' else '/support/new' }}" title="Get help">{{ icon_help_circle() }}</a>
