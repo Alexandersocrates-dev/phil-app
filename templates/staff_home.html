@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_building, icon_user, icon_message_circle, icon_folder, icon_book, icon_credit_card, icon_plus, icon_users, icon_list %}
 {% block title %}Phil staff - Phil{% endblock %}
 {% block content %}
 <h1>Phil staff</h1>
@@ -12,14 +13,14 @@
 {% endfor %}
 
 <div class="tile-grid">
-  <a class="tile" href="/staff/establishments"><div class="num">{{ active_estabs }}</div>Active establishments</a>
-  <a class="tile" href="/staff/mentors"><div class="num">{{ individual_mentors }}</div>Individual mentors</a>
-  <a class="tile" href="/staff/support"><div class="num">{{ open_support }}</div>Open support requests</a>
-  <a class="tile" href="/staff/course-requests"><div class="num">{{ pending_requests }}</div>Pending course requests</a>
-  <a class="tile" href="/admin/courses"><div class="num">&#9998;</div>Course library</a>
-  <a class="tile" href="/staff/billing"><div class="num">&#163;</div>Billing &amp; revenue</a>
-  <a class="tile" href="/staff/establishments/new"><div class="num">+</div>Add establishment</a>
-  <a class="tile" href="/staff/team"><div class="num">&#128101;</div>Phil team</a>
-  <a class="tile" href="/staff/audit-log"><div class="num">&#128220;</div>Audit log</a>
+  <a class="tile" href="/staff/establishments"><div class="ati" style="background:var(--teal-light);">{{ icon_building(color='var(--teal-darker)') }}</div><div class="num">{{ active_estabs }}</div><span class="tlabel">Active establishments</span></a>
+  <a class="tile" href="/staff/mentors"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><div class="num">{{ individual_mentors }}</div><span class="tlabel">Individual mentors</span></a>
+  <a class="tile" href="/staff/support"><div class="ati" style="background:var(--coral-light);">{{ icon_message_circle(color='var(--coral-dark)') }}</div><div class="num">{{ open_support }}</div><span class="tlabel">Open support requests</span></a>
+  <a class="tile" href="/staff/course-requests"><div class="ati" style="background:var(--teal-light);">{{ icon_folder(color='var(--teal-darker)') }}</div><div class="num">{{ pending_requests }}</div><span class="tlabel">Pending course requests</span></a>
+  <a class="tile" href="/admin/courses"><div class="ati" style="background:var(--amber-light);">{{ icon_book(color='var(--amber-dark)') }}</div><span class="tlabel">Course library</span></a>
+  <a class="tile" href="/staff/billing"><div class="ati" style="background:var(--coral-light);">{{ icon_credit_card(color='var(--coral-dark)') }}</div><span class="tlabel">Billing &amp; revenue</span></a>
+  <a class="tile" href="/staff/establishments/new"><div class="ati" style="background:var(--teal-light);">{{ icon_plus(color='var(--teal-darker)') }}</div><span class="tlabel">Add establishment</span></a>
+  <a class="tile" href="/staff/team"><div class="ati" style="background:var(--amber-light);">{{ icon_users(color='var(--amber-dark)') }}</div><span class="tlabel">Phil team</span></a>
+  <a class="tile" href="/staff/audit-log"><div class="ati" style="background:var(--coral-light);">{{ icon_list(color='var(--coral-dark)') }}</div><span class="tlabel">Audit log</span></a>
 </div>
 {% endblock %}
