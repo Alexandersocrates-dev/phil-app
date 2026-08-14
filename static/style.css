@@ -183,6 +183,7 @@ tbody tr:hover{background:var(--teal-light);}
   transition:background 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
 .segmented a.active, .segmented button.active{background:#fff; color:var(--navy); box-shadow:0 1px 3px rgba(27,42,74,0.12);}
+.segmented a:focus-visible, .segmented button:focus-visible{outline:2px solid var(--teal-dark); outline-offset:2px;}
 
 .icon-badge{width:56px; height:56px; border-radius:18px; display:flex; align-items:center; justify-content:center; margin:0 auto var(--sp-4);}
 .icon-badge svg{width:26px; height:26px;}
