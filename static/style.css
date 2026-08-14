@@ -232,12 +232,13 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 .app-sidebar-signout{margin-top:auto; border-top:1px solid var(--border); padding-top:var(--sp-4);}
 
 .app-topbar-v2{
-  display:flex; align-items:center; justify-content:space-between;
-  background:#fff; border-bottom:1px solid var(--border); padding:var(--sp-3) var(--sp-6);
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  background:#fff; border-bottom:1px solid var(--border); padding:var(--sp-3) var(--sp-6); gap:var(--sp-3) var(--sp-4);
 }
 .app-topbar-user{display:flex; align-items:center; gap:var(--sp-3);}
 .app-topbar-user .name{font-family:var(--font-head); font-weight:700; font-size:14px; color:var(--navy); display:block;}
 .app-topbar-user .sub{font-size:12px; color:var(--muted); display:block;}
+.app-topbar-toggle{flex-shrink:0;}
 .app-topbar-actions{display:flex; align-items:center; gap:var(--sp-2);}
 .app-topbar-icon{
   width:36px; height:36px; border-radius:50%; background:#EFEDE3; border:none;
@@ -246,6 +247,9 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 }
 .app-topbar-icon:hover{background:var(--teal-light); color:var(--teal-darker);}
 .app-topbar-icon svg{width:16px; height:16px; stroke:currentColor;}
+@media (max-width:600px){
+  .app-topbar-toggle{order:3; flex:1 0 100%; justify-content:center; margin-top:var(--sp-1);}
+}
 
 .app-main{flex:1; min-width:0; display:flex; flex-direction:column;}
 .app-main .wrap{padding-bottom:70px;}
