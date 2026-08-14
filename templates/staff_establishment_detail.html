@@ -1,12 +1,16 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_building %}
 {% block title %}{{ estab.name }} - Phil{% endblock %}
 {% block content %}
 <p><a href="/staff/establishments">&larr; Establishments</a></p>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <div>
-      <h1>{{ estab.name }}</h1>
-      <p class="muted">{% if estab.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</p>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="icon-badge" style="background:var(--coral-light); margin:0;">{{ icon_building(color='var(--coral-dark)') }}</div>
+      <div>
+        <h1 style="margin:0;">{{ estab.name }}</h1>
+        <p class="muted" style="margin:4px 0 0;">{% if estab.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</p>
+      </div>
     </div>
     <div>
       {% if estab.status == 'active' %}
