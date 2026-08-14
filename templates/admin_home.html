@@ -2,13 +2,7 @@
 {% from "_icons.html" import icon_users, icon_user, icon_user_plus, icon_book, icon_edit, icon_folder, icon_file_text, icon_message_circle %}
 {% block title %}Admin - Phil{% endblock %}
 {% block content %}
-<div class="page-header">
-  <h1>{{ establishment.name }}</h1>
-  <div class="segmented">
-    <a class="active" href="/admin">Admin</a>
-    <a href="/mentor">Mentor</a>
-  </div>
-</div>
+<h1>{{ establishment.name }}</h1>
 {% if sub %}
 <p class="muted">
   Plan: {{ sub.plan_type }} &middot; Seats used: {{ used }} of {{ limit }}
