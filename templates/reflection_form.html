@@ -1,22 +1,28 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_edit %}
 {% block title %}Completion reflection - Phil{% endblock %}
 {% block content %}
 <p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
 <div class="card">
-  <h1>Completion reflection</h1>
+  <div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
+    <div class="icon-badge" style="background:var(--teal-light); margin:0;">{{ icon_edit(color='var(--teal-darker)') }}</div>
+    <div>
+      <h1 style="margin:0;">Completion reflection</h1>
+    </div>
+  </div>
   <p class="muted">{{ enrolment.course_title }}. Optional, but visible to the establishment's admin and to any mentor who later takes on this pupil. Never visible to the parent/carer.</p>
   <form method="post" action="/mentor/reflection/{{ enrolment.id }}">
     <div class="field">
-      <label>How did the pupil engage with the course?</label>
-      <textarea name="pupil_engagement">{{ reflection.pupil_engagement if reflection else '' }}</textarea>
+      <label for="pupil_engagement">How did the pupil engage with the course?</label>
+      <textarea id="pupil_engagement" name="pupil_engagement">{{ reflection.pupil_engagement if reflection else '' }}</textarea>
     </div>
     <div class="field">
-      <label>How effective was the course for them?</label>
-      <textarea name="course_effectiveness">{{ reflection.course_effectiveness if reflection else '' }}</textarea>
+      <label for="course_effectiveness">How effective was the course for them?</label>
+      <textarea id="course_effectiveness" name="course_effectiveness">{{ reflection.course_effectiveness if reflection else '' }}</textarea>
     </div>
     <div class="field">
-      <label>Recommended next steps</label>
-      <textarea name="recommended_next_steps">{{ reflection.recommended_next_steps if reflection else '' }}</textarea>
+      <label for="recommended_next_steps">Recommended next steps</label>
+      <textarea id="recommended_next_steps" name="recommended_next_steps">{{ reflection.recommended_next_steps if reflection else '' }}</textarea>
     </div>
     <button class="btn btn-primary" type="submit">Save reflection</button>
   </form>
