@@ -85,6 +85,12 @@ def seat_limit(sub):
 
 # -------------------------------------------------------------------- home --
 
+def render_done(user, title, message, back_url, back_label="Back", accent="teal"):
+    """Render a dedicated confirmation screen after a completed multi-step action."""
+    return render("action_done.html", user=user, title=title, message=message,
+                   back_url=back_url, back_label=back_label, accent=accent)
+
+
 @router.get("/")
 def home(request):
     user = current_user(request)
@@ -377,7 +383,7 @@ def archive_pupil(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/mentor", "Pupil archived. Their records are kept and they can be reactivated at any time.", "ok")
+    return render_done(user, "Pupil archived", "Their records are kept and they can be reactivated at any time.", "/mentor")
 
 
 @router.post("/mentor/pupils/<pupil_id>/reactivate")
@@ -392,7 +398,7 @@ def reactivate_pupil(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash(f"/mentor/pupils/{request.params['pupil_id']}", "Pupil reactivated.", "ok")
+    return render_done(user, "Pupil reactivated", "They're active again and back on their mentor's list.", f"/mentor/pupils/{request.params['pupil_id']}", back_label="View pupil")
 
 
 @router.get("/admin/pupils")
@@ -486,8 +492,9 @@ def admin_reassign_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
-                       f"Reassigned to {new_mentor['name']}.", "ok")
+    return render_done(user, "Case load reassigned",
+                        f"{enrolment['forename']} {enrolment['surname']} is now with {new_mentor['name']}.",
+                        f"/mentor/pupils/{enrolment['pupil_id']}", back_label="View pupil")
 
 
 @router.get("/admin/pupils/<pupil_id>/delete")
@@ -536,7 +543,7 @@ def admin_pupil_delete_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin/pupils", f"{expected}'s record has been permanently deleted.", "ok")
+    return render_done(user, "Record deleted", f"{expected}'s record has been permanently deleted.", "/admin/pupils", back_label="Back to pupils")
 
 
 @router.get("/admin/mentors/<mentor_id>/remove")
@@ -609,7 +616,7 @@ def admin_mentor_remove_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin", f"{mentor['name']} has been removed.", "ok")
+    return render_done(user, "Mentor removed", f"{mentor['name']} has lost access immediately. Every pupil record and past session they wrote stays exactly as it is.", "/admin", back_label="Admin home")
 
 
 @router.get("/mentor/pupils/<pupil_id>/link-parent")
@@ -1247,7 +1254,7 @@ def new_mentor_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin", f"{name} added as a mentor.", "ok")
+    return render_done(user, "Mentor added", f"{name} can now sign in and start mentoring.", "/admin", back_label="Admin home")
 
 
 @router.get("/admin/session/<record_id>")
@@ -1396,7 +1403,7 @@ def publish_course(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin/courses", "Course published. It's now visible to every mentor.", "ok")
+    return render_done(user, "Course published", "It's now visible to every mentor.", "/admin/courses", back_label="Back to courses")
 
 
 @router.post("/admin/courses/<course_id>/unpublish")
@@ -1410,7 +1417,7 @@ def unpublish_course(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin/courses", "Course unpublished. Existing enrolments are unaffected.", "ok")
+    return render_done(user, "Course unpublished", "Existing enrolments are unaffected.", "/admin/courses", back_label="Back to courses")
 
 
 # ------------------------------------------------------------------- parent --
@@ -1863,7 +1870,7 @@ def staff_new_establishment_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/staff/establishments", f"{name} created.", "ok")
+    return render_done(user, "Establishment added", f"{name} has been created and can sign in now.", "/staff/establishments", back_label="Back to establishments")
 
 
 @router.get("/staff/establishments/<establishment_id>")
@@ -1904,7 +1911,7 @@ def staff_suspend_establishment(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash(f"/staff/establishments/{eid}", f"{estab['name']} suspended.", "ok")
+    return render_done(user, "Establishment suspended", f"{estab['name']} has lost access immediately.", f"/staff/establishments/{eid}", back_label="Back to establishment")
 
 
 @router.post("/staff/establishments/<establishment_id>/reactivate")
@@ -1921,7 +1928,7 @@ def staff_reactivate_establishment(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash(f"/staff/establishments/{eid}", f"{estab['name']} reactivated.", "ok")
+    return render_done(user, "Establishment reactivated", f"{estab['name']} is active again.", f"/staff/establishments/{eid}", back_label="Back to establishment")
 
 
 @router.get("/staff/mentors")
@@ -1954,7 +1961,7 @@ def staff_suspend_mentor(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/staff/mentors", "Mentor account suspended.", "ok")
+    return render_done(user, "Mentor suspended", "This individual mentor account has lost access.", "/staff/mentors", back_label="Back to mentors")
 
 
 @router.post("/staff/mentors/<establishment_id>/reactivate")
@@ -1970,7 +1977,7 @@ def staff_reactivate_mentor(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/staff/mentors", "Mentor account reactivated.", "ok")
+    return render_done(user, "Mentor reactivated", "This individual mentor account is active again.", "/staff/mentors", back_label="Back to mentors")
 
 
 @router.get("/staff/course-requests")
@@ -2035,7 +2042,7 @@ def new_course_request_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/admin", "Course request sent to the Phil team.", "ok")
+    return render_done(user, "Request sent", "The Phil team will review your course request.", "/admin", back_label="Admin home")
 
 
 @router.get("/support/new")
@@ -2211,7 +2218,7 @@ def staff_team_new_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return with_flash("/staff/team", f"{name} added to the Phil team.", "ok")
+    return render_done(user, "Invite sent", f"{name} added to the Phil team and can sign in now.", "/staff/team", back_label="Back to team")
 
 
 @router.get("/staff/audit-log")
