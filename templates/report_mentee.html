@@ -6,7 +6,7 @@
     <div>
       <h1>{{ enrolment.forename }} {{ enrolment.surname }} &middot; {{ enrolment.course_title }}</h1>
       <p class="muted">Mentor: {{ enrolment.mentor_name }} &middot; Started {{ enrolment.start_date }} &middot;
-        {% if enrolment.status == 'completed' %}Completed{% else %}Week {{ enrolment.current_week }} of 5{% endif %}</p>
+        {% if enrolment.status == 'completed' %}Completed{% else %}Session {{ enrolment.current_week }} of 5{% endif %}</p>
     </div>
     <a class="btn btn-secondary btn-sm" href="/report/mentee/{{ enrolment.id }}/pdf" target="_blank">Download PDF</a>
   </div>
@@ -19,7 +19,7 @@
   {% endif %}
   {% for w in weeks %}
   <div style="margin-bottom:14px;">
-    <h3>Week {{ w.week_number }}: {{ w.title }} <span class="muted" style="font-weight:400;">({{ w.date }})</span></h3>
+    <h3>Session {{ w.week_number }}: {{ w.title }} <span class="muted" style="font-weight:400;">({{ w.date }})</span></h3>
     <p>{{ w.objective }}</p>
   </div>
   {% endfor %}
