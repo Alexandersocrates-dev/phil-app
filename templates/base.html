@@ -61,7 +61,7 @@
           {% if user.role == 'phil_staff' %}<a href="/staff">Phil staff</a>{% endif %}
           <a href="/courses">Courses</a>
           <a href="/logout">Sign out ({{ user.name }})</a>
-        {% else %}
+        {% elif not hide_nav_links %}
           <a href="/courses">Courses</a>
           <a href="/login">Sign in</a>
           <a href="/signup">Get started</a>
