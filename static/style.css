@@ -315,3 +315,11 @@ details.acc .acc-body{padding:0 14px 12px;}
 .role-card .rd{font-size:12px; color:var(--muted); margin:0; line-height:1.4;}
 .btn-ghost{background:transparent; border:1.5px solid var(--border); color:var(--navy);}
 .btn-ghost:hover{border-color:var(--teal); color:var(--teal-dark);}
+
+.wheel-picker{position:relative; background:#fff; border:1px solid var(--border); border-radius:12px; padding:3px 4px; display:grid; grid-template-columns:0.85fr 1fr 0.95fr; text-align:center; overflow:hidden; max-width:260px;}
+.wheel-highlight{position:absolute; top:50%; left:6px; right:6px; height:26px; margin-top:-13px; background:var(--teal-light); border-top:1.5px solid var(--teal); border-bottom:1.5px solid var(--teal); pointer-events:none; z-index:1;}
+.wheel-col{height:130px; overflow-y:scroll; scrollbar-width:none; -ms-overflow-style:none; position:relative; z-index:2;}
+.wheel-col::-webkit-scrollbar{display:none;}
+.wheel-col + .wheel-col{border-left:1px solid var(--border);}
+.wheel-item{height:26px; line-height:26px; font-size:13px; color:var(--muted); opacity:0.55; scroll-snap-align:center; user-select:none;}
+.wheel-item.active{font-family:var(--font-head); font-weight:700; font-size:14px; color:var(--navy); opacity:1;}
