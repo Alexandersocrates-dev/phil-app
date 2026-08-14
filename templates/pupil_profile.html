@@ -4,9 +4,12 @@
 <p><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <div>
-      <h1>{{ pupil.forename }} {{ pupil.surname }}</h1>
-      <p class="muted">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth }}</p>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <span class="avatar avatar-lg">{{ pupil.forename[:1] }}{{ pupil.surname[:1] }}</span>
+      <div>
+        <h1 style="margin:0;">{{ pupil.forename }} {{ pupil.surname }}</h1>
+        <p class="muted" style="margin:4px 0 0;">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth }}</p>
+      </div>
     </div>
     <div>
       {% if pupil.status == 'active' %}
