@@ -1,14 +1,87 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_book %}
 {% block title %}Course library - Phil{% endblock %}
 {% block content %}
 <h1>Course library</h1>
-<p class="muted">Twenty five-week courses grounded in DfE, Ofsted and clinical guidance.</p>
-<div class="tile-grid">
-  {% for c in courses %}
-  <a class="tile" href="/courses/{{ c.id }}">
-    <div class="num">{{ '%02d'|format(c.module_number) }}</div>
-    <div>{{ c.title }}</div>
-  </a>
-  {% endfor %}
+<p class="muted">Twenty five-week courses grounded in DfE, Ofsted and clinical guidance, browse before you enrol a pupil.</p>
+
+<div class="field" style="margin-bottom:10px;">
+<label for="courseSearch" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Search courses</label>
+<input type="text" id="courseSearch" placeholder="Search by focus area or title" oninput="filterCourses()" autocomplete="off">
 </div>
+<div id="courseFilters" class="chip-row"></div>
+
+<div id="courseList">
+{% for c in courses %}
+<a class="course-row" data-title="{{ c.title|lower }}" data-focus="{{ (c.focus_area or '')|lower }}" href="/courses/{{ c.id }}">
+<div class="ric" style="background:var(--coral-light);">{{ icon_book(color='var(--coral-dark)') }}</div>
+<div class="crt">
+<p class="crtitle">{{ '%02d'|format(c.module_number) }} &middot; {{ c.title }}</p>
+<p class="crmeta">5 sessions{% if c.focus_area %} &middot; {{ c.focus_area }}{% endif %}</p>
+</div>
+<svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" style="width:14px; height:14px; flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+</a>
+{% endfor %}
+</div>
+<p id="courseEmptyState" class="muted" style="display:none; text-align:center; padding:24px 0;">No courses match your search.</p>
+
+<script>
+(function(){
+var rows = [].slice.call(document.querySelectorAll('.course-row'));
+var focuses = [];
+rows.forEach(function(r){
+var f = r.getAttribute('data-focus');
+if (f && focuses.indexOf(f) === -1) focuses.push(f);
+});
+var filterBar = document.getElementById('courseFilters');
+var activeFocus = 'all';
+
+function chipLabel(f){
+return f.replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+}
+
+function buildChips(){
+filterBar.innerHTML = '';
+var allChip = document.createElement('button');
+allChip.type = 'button';
+allChip.className = 'chip active';
+allChip.textContent = 'All';
+allChip.onclick = function(){ setFocus('all'); };
+filterBar.appendChild(allChip);
+focuses.forEach(function(f){
+var chip = document.createElement('button');
+chip.type = 'button';
+chip.className = 'chip';
+chip.textContent = chipLabel(f);
+chip.onclick = function(){ setFocus(f); };
+filterBar.appendChild(chip);
+});
+}
+
+function setFocus(f){
+activeFocus = f;
+[].forEach.call(filterBar.children, function(c){ c.classList.remove('active'); });
+var idx = f === 'all' ? 0 : (focuses.indexOf(f) + 1);
+filterBar.children[idx].classList.add('active');
+applyFilter();
+}
+
+window.filterCourses = applyFilter;
+
+function applyFilter(){
+var q = document.getElementById('courseSearch').value.trim().toLowerCase();
+var visible = 0;
+rows.forEach(function(r){
+var matchesFocus = activeFocus === 'all' || r.getAttribute('data-focus') === activeFocus;
+var matchesSearch = !q || r.getAttribute('data-title').indexOf(q) !== -1 || r.getAttribute('data-focus').indexOf(q) !== -1;
+var show = matchesFocus && matchesSearch;
+r.style.display = show ? '' : 'none';
+if (show) visible++;
+});
+document.getElementById('courseEmptyState').style.display = visible === 0 ? 'block' : 'none';
+}
+
+buildChips();
+})();
+</script>
 {% endblock %}
