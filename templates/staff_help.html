@@ -2,12 +2,12 @@
 {% from "_icons.html" import icon_help_circle, icon_message_circle, icon_list %}
 {% block title %}Get help - Phil{% endblock %}
 {% block content %}
-<p><a href="/staff">&larr; Phil staff</a></p>
-<div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
-<div class="icon-badge" style="background:var(--teal-light); margin:0;">{{ icon_help_circle(color='var(--teal-darker)') }}</div>
-<h1 style="margin:0;">Get help</h1>
+<p class="back-link"><a href="/staff">&larr; Phil staff</a></p>
+<div class="page-header-title">
+<div class="icon-badge" style="background:var(--teal-light);">{{ icon_help_circle(color='var(--teal-darker)') }}</div>
+<h1>Get help</h1>
 </div>
-<p class="muted" style="margin-bottom:20px;">Quick links for the Phil team.</p>
+<p class="page-subtitle">Quick links for the Phil team.</p>
 
 <div class="card">
 <h2>Contact engineering</h2>
