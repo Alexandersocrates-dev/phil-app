@@ -2103,7 +2103,7 @@ def new_course_request_submit(request):
 
 @router.get("/support/new")
 def new_support_request_form(request):
-    user, err = require(request, roles=["admin", "mentor"])
+    user, err = require(request, roles=["admin", "mentor", "parent_carer"])
     if err:
         return err
     return render("support_new.html", user=user, flash=flash_from_query(request))
@@ -2111,7 +2111,7 @@ def new_support_request_form(request):
 
 @router.post("/support/new")
 def new_support_request_submit(request):
-    user, err = require(request, roles=["admin", "mentor"])
+    user, err = require(request, roles=["admin", "mentor", "parent_carer"])
     if err:
         return err
     subject = request.field("subject", "").strip()
@@ -2128,7 +2128,7 @@ def new_support_request_submit(request):
         conn.commit()
     finally:
         conn.close()
-    dest = "/admin" if user["role"] == "admin" else "/mentor"
+    dest = {"admin": "/admin", "mentor": "/mentor", "parent_carer": "/parent"}.get(user["role"], "/mentor")
     return with_flash(dest, "Support request sent. The Phil team will follow up.", "ok")
 
 
