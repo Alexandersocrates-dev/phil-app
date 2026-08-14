@@ -6,7 +6,7 @@
 <p class="muted">Internal console. No pupil or school data appears here beyond what's needed to run the business.</p>
 
 {% for n in notes %}
-<div class="flash flash-error" style="display:flex; justify-content:space-between; align-items:center;">
+<div class="flash flash-error">
   <span>{{ n.payload }}</span>
   <form method="post" action="/staff/notifications/{{ n.id }}/read"><button class="btn btn-secondary btn-sm" type="submit">Dismiss</button></form>
 </div>
