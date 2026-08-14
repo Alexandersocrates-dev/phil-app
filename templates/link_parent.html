@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon_user_plus %}
-{% block title %}Link a parent/carer - Phil{% endblock %}
+{% block title %}{{ 'Link a parent/carer' if user.role == 'admin' else 'Request parent access' }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
+{% if user.role == 'admin' %}
 <div class="card" style="text-align:center;">
   <div class="icon-badge" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
   <h1>Link a parent/carer</h1>
@@ -15,6 +16,56 @@
     <button class="btn btn-primary" type="submit" style="width:100%;">Link parent/carer</button>
   </form>
 </div>
+
+{% if pending_requests %}
+<div class="card" id="requests">
+  <h2>Pending requests</h2>
+  <p class="muted" style="font-size:12.5px;">A mentor flagged that these parents/carers should get access. Review each one and approve or decline.</p>
+  {% for r in pending_requests %}
+  <div class="card" style="background:var(--cream); margin-bottom:12px;">
+    <p style="margin:0 0 4px;"><strong>{{ r.parent_name }}</strong> &middot; {{ r.parent_email }}{% if r.relationship %} &middot; {{ r.relationship }}{% endif %}</p>
+    <p class="muted" style="font-size:12.5px; margin:0 0 10px;">Requested by {{ r.requested_by_name }}{% if r.note %} &middot; "{{ r.note }}"{% endif %}</p>
+    <form method="post" action="/admin/parent-requests/{{ r.id }}/approve" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+      <div class="field" style="margin:0; flex:1; min-width:180px;">
+        <label for="approve-password-{{ r.id }}">Temporary password</label>
+        <input type="password" id="approve-password-{{ r.id }}" name="password" minlength="8" placeholder="Only needed for a new account">
+      </div>
+      <button class="btn btn-primary btn-sm" type="submit">Approve</button>
+    </form>
+    <form method="post" action="/admin/parent-requests/{{ r.id }}/decline" style="margin-top:8px;">
+      <button class="btn btn-secondary btn-sm" type="submit" onclick="return confirm('Decline this request?')">Decline</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% else %}
+<div class="card" style="text-align:center;">
+  <div class="icon-badge" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+  <h1>Request parent access</h1>
+  <p class="muted">For {{ pupil.forename }} {{ pupil.surname }}. Only an admin at your establishment can grant parent/carer access, this sends them a request to review.</p>
+  <form method="post" action="/mentor/pupils/{{ pupil.id }}/link-parent" style="text-align:left;">
+    <div class="field"><label for="name">Parent/carer name</label><input type="text" id="name" name="name" required></div>
+    <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+    <div class="field"><label for="relationship">Relationship</label><input type="text" id="relationship" name="relationship" placeholder="e.g. Mother, Father, Guardian"></div>
+    <div class="field"><label for="note">Note for the admin (optional)</label><input type="text" id="note" name="note" placeholder="Anything they should know before approving"></div>
+    <button class="btn btn-primary" type="submit" style="width:100%;">Send request to admin</button>
+  </form>
+</div>
+
+{% if pending_requests %}
+<div class="card">
+  <h2>Awaiting admin approval</h2>
+  <table>
+    <tr><th>Name</th><th>Email</th><th>Relationship</th></tr>
+    {% for r in pending_requests %}
+    <tr><td>{{ r.parent_name }}</td><td>{{ r.parent_email }}</td><td>{{ r.relationship or '-' }}</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endif %}
 
 {% if links %}
 <div class="card">
