@@ -106,6 +106,21 @@ CREATE TABLE IF NOT EXISTS pupil_parent_links (
     created_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS parent_access_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    pupil_id INTEGER NOT NULL REFERENCES pupils(id),
+    establishment_id INTEGER NOT NULL REFERENCES establishments(id),
+    requested_by INTEGER NOT NULL REFERENCES users(id),
+    parent_name TEXT NOT NULL,
+    parent_email TEXT NOT NULL,
+    relationship TEXT,
+    note TEXT,
+    status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','declined')),
+    resolved_by INTEGER REFERENCES users(id),
+    resolved_at TEXT,
+    created_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS courses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     module_number INTEGER NOT NULL,
