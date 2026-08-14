@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_book %}
 {% block title %}Mentor home - Phil{% endblock %}
 {% block content %}
 <h1>Hi, {{ user.name }}</h1>
@@ -6,67 +7,87 @@
 
 {% set has_pupil = enrolments|length > 0 %}
 <div class="card gs-checklist" id="gsChecklist">
-  <h3>Getting started</h3>
-  <ul>
-    <li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
-    <li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
-    <li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports/caseload" onclick="localStorage.setItem('gs_report','1')">View your case load report</a></li>
-  </ul>
-  <button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
+<h3>Getting started</h3>
+<ul>
+<li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
+<li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
+<li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports/caseload" onclick="localStorage.setItem('gs_report','1')">View your case load report</a></li>
+</ul>
+<button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
 </div>
 <script>
 (function(){
-  try {
-    if (localStorage.getItem('gs_dismissed')) {
-      var el = document.getElementById('gsChecklist');
-      if (el) el.style.display = 'none';
-    }
-    if (localStorage.getItem('gs_courses')) {
-      var li = document.getElementById('gsCourses');
-      if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
-    }
-    if (localStorage.getItem('gs_report')) {
-      var li2 = document.getElementById('gsReport');
-      if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = '&#10003;'; }
-    }
-  } catch (e) {}
+try {
+if (localStorage.getItem('gs_dismissed')) {
+var el = document.getElementById('gsChecklist');
+if (el) el.style.display = 'none';
+}
+if (localStorage.getItem('gs_courses')) {
+var li = document.getElementById('gsCourses');
+if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+}
+if (localStorage.getItem('gs_report')) {
+var li2 = document.getElementById('gsReport');
+if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+}
+} catch (e) {}
 })();
 </script>
 
-<div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <h2 style="margin:0;">My caseload</h2>
-    <div>
-      <a class="btn btn-secondary btn-sm" href="/mentor/reports/caseload">Case load report</a>
-      <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">+ Add a pupil</a>
-    </div>
-  </div>
+<div style="display:flex; gap:12px; margin-bottom:20px;">
+<div style="flex:1; background:var(--teal-light); border-radius:12px; padding:14px 16px;">
+<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--teal-darker);">{{ pupils|length }}</div>
+<div style="font-size:12px; color:var(--teal-darker); font-weight:600;">Active pupils</div>
+</div>
+<div style="flex:1; background:var(--amber-light); border-radius:12px; padding:14px 16px;">
+<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--amber-dark);">{{ due_this_week }}</div>
+<div style="font-size:12px; color:var(--amber-dark); font-weight:600;">Due this week</div>
+</div>
+</div>
 
-  {% if not enrolments %}
-    <p class="muted">No pupils enrolled yet.</p>
-  {% else %}
-  <table>
-    <tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
-    {% for e in enrolments %}
-    <tr>
-      <td><a href="/mentor/pupils/{{ e.pupil_id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }}</a></td>
-      <td>{{ e.course_title }}</td>
-      <td style="width:140px;">
-        <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
-        <span class="muted" style="font-size:12px;">Week {{ e.current_week }} of 5</span>
-      </td>
-      <td>
-        {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
-        {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
-        {% else %}<span class="badge badge-teal">Active</span>{% endif %}
-      </td>
-      <td>
-        {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
-        {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Certificate</a>{% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% endif %}
+<a href="/courses" style="display:flex; align-items:center; gap:12px; border:1.4px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:20px; text-decoration:none;">
+<div style="width:36px; height:36px; border-radius:10px; background:var(--coral-light); display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ icon_book(color='var(--coral-dark)') }}</div>
+<div style="flex:1; min-width:0;">
+<div style="font-family:var(--font-head); font-weight:700; font-size:13px; color:var(--navy);">Course library</div>
+<div style="font-size:11px; color:var(--muted);">Browse all 20 courses to decide what to enrol a pupil on</div>
+</div>
+<svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" style="width:14px; height:14px; flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+</a>
+
+<div class="card">
+<div style="display:flex; justify-content:space-between; align-items:center;">
+<h2 style="margin:0;">My caseload</h2>
+<div>
+<a class="btn btn-secondary btn-sm" href="/mentor/reports/caseload">Case load report</a>
+<a class="btn btn-primary btn-sm" href="/mentor/pupils/new">+ Add a pupil</a>
+</div>
+</div>
+
+{% if not enrolments %}
+<p class="muted">No pupils enrolled yet.</p>
+{% else %}
+<table>
+<tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
+{% for e in enrolments %}
+<tr>
+<td><a href="/mentor/pupils/{{ e.pupil_id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }}</a></td>
+<td>{{ e.course_title }}</td>
+<td style="width:140px;">
+<div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
+<span class="muted" style="font-size:12px;">Session {{ e.current_week }} of 5</span>
+</td>
+<td>
+{% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
+{% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
+{% else %}<span class="badge badge-teal">Active</span>{% endif %}
+</td>
+<td>
+{% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
+{% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Certificate</a>{% endif %}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
 </div>
 {% endblock %}
