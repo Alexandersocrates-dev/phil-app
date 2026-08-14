@@ -1,20 +1,22 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_shield %}
 {% block title %}Remove {{ mentor.name }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
 <p><a href="/admin">&larr; Admin home</a></p>
-<div class="card" style="border-color:var(--red);">
+<div class="card" style="border-color:var(--red); text-align:center;">
+  <div class="icon-badge" style="background:var(--red-light);">{{ icon_shield(color='var(--red)') }}</div>
   <h1>Remove {{ mentor.name }}</h1>
-  <div class="safeguard-box safeguard-flagged">
+  <div class="safeguard-box safeguard-flagged" style="text-align:left;">
     <p>{{ mentor.name }} loses access immediately, and this frees up their seat. Every pupil record and past
       session they wrote stays exactly as it is, nothing is deleted here.
       {% if active_count > 0 %}They currently have {{ active_count }} active enrolment{{ 's' if active_count != 1 else '' }}, so choose who takes over their case load below.{% endif %}</p>
   </div>
-  <form method="post" action="/admin/mentors/{{ mentor.id }}/remove">
+  <form method="post" action="/admin/mentors/{{ mentor.id }}/remove" style="text-align:left;">
     {% if active_count > 0 %}
     <div class="field">
-      <label>Move their {{ active_count }} active pupil{{ 's' if active_count != 1 else '' }} to</label>
-      <select name="reassign_to" required>
+      <label for="reassign_to">Move their {{ active_count }} active pupil{{ 's' if active_count != 1 else '' }} to</label>
+      <select id="reassign_to" name="reassign_to" required>
         <option value="">Choose a mentor</option>
         {% for m in other_mentors %}
         <option value="{{ m.id }}">{{ m.name }}</option>
@@ -23,10 +25,10 @@
     </div>
     {% endif %}
     <div class="field">
-      <label>Type "{{ mentor.name }}" to confirm</label>
-      <input type="text" name="confirm_name" autocomplete="off" required>
+      <label for="confirm_name">Type "{{ mentor.name }}" to confirm</label>
+      <input type="text" id="confirm_name" name="confirm_name" autocomplete="off" required>
     </div>
-    <button class="btn btn-red" type="submit"
+    <button class="btn btn-red" type="submit" style="width:100%;"
       onclick="return confirm('Remove {{ mentor.name }}? They will lose access immediately.')">
       Remove {{ mentor.name }}
     </button>
