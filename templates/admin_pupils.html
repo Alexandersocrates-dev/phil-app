@@ -17,7 +17,7 @@
     <tr><th>Pupil</th><th>Year</th><th>Courses</th><th></th></tr>
     {% for item in pupil_data %}
     <tr>
-      <td><a href="/mentor/pupils/{{ item.pupil.id }}">{{ item.pupil.forename }} {{ item.pupil.surname }}</a></td>
+      <td><a href="/mentor/pupils/{{ item.pupil.id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ item.pupil.forename[:1] }}{{ item.pupil.surname[:1] }}</span>{{ item.pupil.forename }} {{ item.pupil.surname }}</a></td>
       <td>{{ item.pupil.year_group }}</td>
       <td>
         {% if not item.enrolments %}<span class="muted">Not enrolled</span>{% endif %}
