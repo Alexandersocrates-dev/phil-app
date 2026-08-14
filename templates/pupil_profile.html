@@ -14,7 +14,7 @@
     <div>
       {% if pupil.status == 'active' %}
         <a class="btn btn-secondary btn-sm" href="/mentor/enrol/{{ pupil.id }}">+ Enrol on another course</a>
-        <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">+ Link a parent/carer</a>
+        <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">{{ '+ Link a parent/carer' if user.role == 'admin' else '+ Request parent access' }}</a>
         <form method="post" action="/mentor/pupils/{{ pupil.id }}/archive" style="display:inline;">
           <button class="btn btn-red btn-sm" type="submit" onclick="return confirm('Archive this pupil? Their records are kept and this can be reversed.')">Archive</button>
         </form>
