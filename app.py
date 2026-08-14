@@ -868,29 +868,79 @@ def session_form(request):
     try:
         enrolment = conn.execute(
             """SELECT enrolments.*, pupils.forename, pupils.surname, pupils.id as pupil_id,
-                      courses.title as course_title
-               FROM enrolments
-               JOIN pupils ON pupils.id = enrolments.pupil_id
-               JOIN courses ON courses.id = enrolments.course_id
-               WHERE enrolments.id=?""",
+            courses.title as course_title, courses.module_number as course_module_number
+            FROM enrolments
+            JOIN pupils ON pupils.id = enrolments.pupil_id
+            JOIN courses ON courses.id = enrolments.course_id
+            WHERE enrolments.id=?""",
             (request.params["enrolment_id"],),
         ).fetchone()
         if not enrolment:
             return Response("Enrolment not found", status="404 Not Found")
         next_week_number = enrolment["current_week"] + 1
-        week = None
-        if next_week_number <= 5:
-            week = conn.execute(
-                "SELECT * FROM weeks WHERE course_id=? AND week_number=?",
-                (enrolment["course_id"], next_week_number),
-            ).fetchone()
+        all_weeks = conn.execute(
+            "SELECT * FROM weeks WHERE course_id=? ORDER BY week_number",
+            (enrolment["course_id"],),
+        ).fetchall()
+        week = next((w for w in all_weeks if w["week_number"] == next_week_number), None)
+        completed_records = conn.execute(
+            """SELECT session_records.*, weeks.week_number as wn, weeks.title as week_title,
+            users.name as recorder_name
+            FROM session_records
+            JOIN weeks ON weeks.id = session_records.week_id
+            JOIN users ON users.id = session_records.recorded_by
+            WHERE session_records.enrolment_id=? ORDER BY weeks.week_number""",
+            (enrolment["id"],),
+        ).fetchall()
+        draft = conn.execute(
+            "SELECT * FROM session_drafts WHERE enrolment_id=? AND week_number=?",
+            (enrolment["id"], next_week_number),
+        ).fetchone()
     finally:
         conn.close()
     if week:
         week = dict(week, resources=json.loads(week["resources"] or "[]"))
+    prev_record = completed_records[-1] if completed_records else None
+    progress = [{"number": n, "status": "done" if n < next_week_number else ("current" if n == next_week_number else "locked")} for n in range(1, 6)]
+    upcoming_weeks = [w for w in all_weeks if w["week_number"] > next_week_number]
     return render("session_form.html", user=user, enrolment=enrolment, week=week,
-                  next_week_number=next_week_number, flash=flash_from_query(request))
+                  next_week_number=next_week_number, completed_records=completed_records,
+                  prev_record=prev_record, draft=draft, progress=progress,
+                  upcoming_weeks=upcoming_weeks, flash=flash_from_query(request))
 
+@router.post("/mentor/session/<enrolment_id>/autosave")
+def session_autosave(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    enrolment_id = request.params["enrolment_id"]
+    field_name = request.field("field", "")
+    value = request.field("value", "")
+    allowed = {"checkin_note", "input_note", "activity_note", "reflect_note", "next_session_note"}
+    if field_name not in allowed:
+        return Response(json.dumps({"ok": False, "error": "bad field"}), status="400 Bad Request", content_type="application/json")
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute("SELECT current_week FROM enrolments WHERE id=?", (enrolment_id,)).fetchone()
+        if not enrolment:
+            return Response(json.dumps({"ok": False}), status="404 Not Found", content_type="application/json")
+        week_number = enrolment["current_week"] + 1
+        existing = conn.execute(
+            "SELECT id FROM session_drafts WHERE enrolment_id=? AND week_number=?",
+            (enrolment_id, week_number),
+        ).fetchone()
+        if existing:
+            conn.execute(f"UPDATE session_drafts SET {field_name}=?, updated_at=? WHERE id=?",
+                         (value, db.now(), existing["id"]))
+        else:
+            conn.execute(
+                f"INSERT INTO session_drafts (enrolment_id, week_number, {field_name}, updated_at) VALUES (?,?,?,?)",
+                (enrolment_id, week_number, value, db.now()),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+    return Response(json.dumps({"ok": True}), content_type="application/json")
 
 @router.post("/mentor/session/<enrolment_id>")
 def session_submit(request):
@@ -903,14 +953,28 @@ def session_submit(request):
 
     if not safeguarding_note:
         return with_flash(f"/mentor/session/{enrolment_id}",
-                           "The safeguarding note is mandatory, even to record 'no concerns this session'.", "error")
+            "The safeguarding note is mandatory, even to record 'no concerns this session'.", "error")
+
+    checkin_note = request.field("checkin_note", "").strip()
+    input_note = request.field("input_note", "").strip()
+    activity_note = request.field("activity_note", "").strip()
+    reflect_note = request.field("reflect_note", "").strip()
+    next_session_note = request.field("next_session_note", "").strip()
+    what_happened_parts = []
+    if checkin_note:
+        what_happened_parts.append(f"Check-in: {checkin_note}")
+    if input_note:
+        what_happened_parts.append(f"Input: {input_note}")
+    if activity_note:
+        what_happened_parts.append(f"Activity: {activity_note}")
+    what_happened = "\n\n".join(what_happened_parts)
 
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
             """SELECT enrolments.*, pupils.forename, pupils.surname, courses.title as course_title
-               FROM enrolments JOIN pupils ON pupils.id=enrolments.pupil_id
-               JOIN courses ON courses.id=enrolments.course_id WHERE enrolments.id=?""",
+            FROM enrolments JOIN pupils ON pupils.id=enrolments.pupil_id
+            JOIN courses ON courses.id=enrolments.course_id WHERE enrolments.id=?""",
             (enrolment_id,),
         ).fetchone()
         next_week_number = enrolment["current_week"] + 1
@@ -919,13 +983,13 @@ def session_submit(request):
 
         cur = conn.execute(
             """INSERT INTO session_records (enrolment_id, week_id, date, mood_rating,
-               engagement_rating, safeguarding_flag, safeguarding_note, what_happened,
-               reflection_goal, mentor_notes, resources_used, recorded_by, created_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            engagement_rating, safeguarding_flag, safeguarding_note, what_happened,
+            reflection_goal, mentor_notes, resources_used, recorded_by, created_at)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (enrolment_id, week["id"], datetime.date.today().isoformat(),
              request.field("mood_rating") or None, request.field("engagement_rating") or None,
-             safeguarding_flag, safeguarding_note, request.field("what_happened", ""),
-             request.field("reflection_goal", ""), request.field("mentor_notes", ""),
+             safeguarding_flag, safeguarding_note, what_happened,
+             reflect_note, next_session_note,
              request.field("resources_used", ""), user["id"], db.now()),
         )
         record_id = cur.lastrowid
@@ -940,7 +1004,10 @@ def session_submit(request):
         new_current_week = next_week_number
         new_status = "completed" if new_current_week >= 5 else "active"
         conn.execute("UPDATE enrolments SET current_week=?, status=? WHERE id=?",
-                      (new_current_week, new_status, enrolment_id))
+            (new_current_week, new_status, enrolment_id))
+
+        conn.execute("DELETE FROM session_drafts WHERE enrolment_id=? AND week_number=?",
+                     (enrolment_id, next_week_number))
 
         message = f"Week {next_week_number} session recorded."
         if new_status == "completed":
@@ -957,7 +1024,6 @@ def session_submit(request):
         conn.close()
 
     return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}", message, "ok")
-
 
 @router.get("/mentor/schedule/<enrolment_id>")
 def schedule_form(request):
