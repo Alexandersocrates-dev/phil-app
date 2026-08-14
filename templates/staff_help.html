@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_help_circle, icon_message_circle, icon_list %}
+{% block title %}Get help - Phil{% endblock %}
+{% block content %}
+<p><a href="/staff">&larr; Phil staff</a></p>
+<div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
+<div class="icon-badge" style="background:var(--teal-light); margin:0;">{{ icon_help_circle(color='var(--teal-darker)') }}</div>
+<h1 style="margin:0;">Get help</h1>
+</div>
+<p class="muted" style="margin-bottom:20px;">Quick links for the Phil team.</p>
+
+<div class="card">
+<h2>Contact engineering</h2>
+<p>Found a bug or need something fixed in the platform? Email <a href="mailto:engineering@phileducation.co.uk">engineering@phileducation.co.uk</a> with a description and, if you can, a screenshot.</p>
+</div>
+
+<div class="card">
+<h2>Where to look first</h2>
+<ul class="week-list">
+<li>
+<span class="avatar-row">
+<span class="avatar avatar-sm" style="background:var(--coral-light); color:var(--coral-dark);">{{ icon_message_circle(color='var(--coral-dark)') }}</span>
+<span style="font-family:var(--font-head); font-weight:700; font-size:13.5px; color:var(--navy);">Support inbox</span>
+</span>
+<a class="btn btn-secondary btn-sm" href="/staff/support">Open</a>
+</li>
+<li>
+<span class="avatar-row">
+<span class="avatar avatar-sm" style="background:var(--coral-light); color:var(--coral-dark);">{{ icon_list(color='var(--coral-dark)') }}</span>
+<span style="font-family:var(--font-head); font-weight:700; font-size:13.5px; color:var(--navy);">Audit log</span>
+</span>
+<a class="btn btn-secondary btn-sm" href="/staff/audit-log">Open</a>
+</li>
+</ul>
+</div>
+{% endblock %}
