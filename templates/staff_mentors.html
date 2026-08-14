@@ -8,7 +8,7 @@
     <tr><th>Name</th><th>Email</th><th>Status</th><th></th></tr>
     {% for m in mentors %}
     <tr>
-      <td>{{ m.mentor_name }}</td>
+      <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.mentor_name[:1] }}</span>{{ m.mentor_name }}</span></td>
       <td>{{ m.mentor_email }}</td>
       <td>{% if m.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</td>
       <td>
