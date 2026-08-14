@@ -43,7 +43,7 @@ a{color:var(--teal-dark);}
 .topbar nav a{color:#fff; text-decoration:none; margin-left:18px; font-size:14px; opacity:.85; transition:opacity 150ms ease;}
 .topbar nav a:hover{opacity:1; text-decoration:underline;}
 
-.wrap{max-width:900px; margin:0 auto; padding:28px 20px 60px;}
+.wrap{width:100%; max-width:900px; margin:0 auto; padding:28px 20px 60px; box-sizing:border-box;}
 .wrap.narrow{max-width:520px;}
 
 /* ---------- Cards ---------- */
