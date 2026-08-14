@@ -1,30 +1,32 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_building %}
 {% block title %}Add establishment - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card">
+<div class="card" style="text-align:center;">
+  <div class="icon-badge" style="background:var(--coral-light);">{{ icon_building(color='var(--coral-dark)') }}</div>
   <h1>Add an establishment</h1>
   <p class="muted">For a school that signed up over email or phone rather than self-serve. Creates the same records the self-serve flow would.</p>
-  <form method="post" action="/staff/establishments/new">
-    <div class="field"><label>Establishment name</label><input type="text" name="establishment_name" required></div>
+  <form method="post" action="/staff/establishments/new" style="text-align:left;">
+    <div class="field"><label for="establishment_name">Establishment name</label><input type="text" id="establishment_name" name="establishment_name" required></div>
     <div class="field">
-      <label>Plan</label>
-      <select name="plan_type">
+      <label for="plan_type">Plan</label>
+      <select id="plan_type" name="plan_type">
         <option value="pilot">Free 3-week pilot</option>
         <option value="school">Paid (15 seats)</option>
       </select>
     </div>
     <div class="field">
-      <label>Payment method (paid plan only)</label>
-      <select name="payment_method">
+      <label for="payment_method">Payment method (paid plan only)</label>
+      <select id="payment_method" name="payment_method">
         <option value="invoice">Invoice</option>
         <option value="card">Card</option>
       </select>
     </div>
-    <div class="field"><label>Nominated admin name</label><input type="text" name="admin_name" required></div>
-    <div class="field"><label>Nominated admin email</label><input type="email" name="admin_email" required></div>
-    <div class="field"><label>Temporary password</label><input type="password" name="admin_password" required minlength="8"></div>
-    <button class="btn btn-primary" type="submit">Create establishment</button>
+    <div class="field"><label for="admin_name">Nominated admin name</label><input type="text" id="admin_name" name="admin_name" required></div>
+    <div class="field"><label for="admin_email">Nominated admin email</label><input type="email" id="admin_email" name="admin_email" required></div>
+    <div class="field"><label for="admin_password">Temporary password</label><input type="password" id="admin_password" name="admin_password" required minlength="8"></div>
+    <button class="btn btn-primary" type="submit" style="width:100%;">Create establishment</button>
   </form>
 </div>
 {% endblock %}
