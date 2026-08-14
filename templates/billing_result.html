@@ -1,14 +1,17 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_check_circle, icon_credit_card %}
 {% block title %}{{ 'Payment complete' if outcome == 'success' else 'Payment cancelled' }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card">
+<div class="card" style="text-align:center;">
   {% if outcome == 'success' %}
+  <div class="icon-badge" style="background:var(--teal-light);">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
   <h1>Payment received</h1>
   <p>Thank you. Stripe has confirmed the payment and Phil will update the subscription automatically, usually
     within a few seconds. If the plan on your admin home page still shows the old plan after a moment, refresh
     the page.</p>
   {% else %}
+  <div class="icon-badge" style="background:var(--border);">{{ icon_credit_card(color='var(--muted)') }}</div>
   <h1>Payment cancelled</h1>
   <p>No payment was taken. You can try again any time from your admin home page, or pay by invoice instead.</p>
   {% endif %}
