@@ -1,21 +1,23 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_trash %}
 {% block title %}Delete {{ pupil.forename }} {{ pupil.surname }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
 <p><a href="/mentor/pupils/{{ pupil.id }}">&larr; {{ pupil.forename }} {{ pupil.surname }}</a></p>
-<div class="card" style="border-color:var(--red);">
+<div class="card" style="border-color:var(--red); text-align:center;">
+  <div class="icon-badge" style="background:var(--red-light);">{{ icon_trash(color='var(--red)') }}</div>
   <h1>Delete {{ pupil.forename }} {{ pupil.surname }} permanently</h1>
-  <div class="safeguard-box safeguard-flagged">
+  <div class="safeguard-box safeguard-flagged" style="text-align:left;">
     <p>This removes every enrolment, session record, safeguarding note, certificate and completion reflection
       for {{ pupil.forename }} {{ pupil.surname }} for good. It cannot be undone, and it is different from
       archiving, which keeps the record and can be reversed. Only do this for a genuine data-removal request.</p>
   </div>
-  <form method="post" action="/admin/pupils/{{ pupil.id }}/delete">
+  <form method="post" action="/admin/pupils/{{ pupil.id }}/delete" style="text-align:left;">
     <div class="field">
-      <label>Type "{{ pupil.forename }} {{ pupil.surname }}" to confirm</label>
-      <input type="text" name="confirm_name" autocomplete="off" required>
+      <label for="confirm_name">Type "{{ pupil.forename }} {{ pupil.surname }}" to confirm</label>
+      <input type="text" id="confirm_name" name="confirm_name" autocomplete="off" required>
     </div>
-    <button class="btn btn-red" type="submit"
+    <button class="btn btn-red" type="submit" style="width:100%;"
       onclick="return confirm('Delete {{ pupil.forename }} {{ pupil.surname }} permanently? This cannot be undone.')">
       Delete {{ pupil.forename }} {{ pupil.surname }} permanently
     </button>
