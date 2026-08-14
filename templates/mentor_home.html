@@ -20,7 +20,7 @@
     <tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
     {% for e in enrolments %}
     <tr>
-      <td><a href="/mentor/pupils/{{ e.pupil_id }}">{{ e.forename }} {{ e.surname }}</a></td>
+      <td><a href="/mentor/pupils/{{ e.pupil_id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }}</a></td>
       <td>{{ e.course_title }}</td>
       <td style="width:140px;">
         <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
