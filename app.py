@@ -83,6 +83,22 @@ def seat_limit(sub):
     return sub["included_seats"] + sub["extra_seats"]
 
 
+def days_ago_label(iso_ts):
+    """Human 'suspended X days ago' style label from an ISO timestamp, or None."""
+    if not iso_ts:
+        return None
+    try:
+        dt = datetime.datetime.fromisoformat(iso_ts)
+    except ValueError:
+        return None
+    days = (datetime.datetime.utcnow() - dt).days
+    if days <= 0:
+        return "today"
+    if days == 1:
+        return "1 day ago"
+    return f"{days} days ago"
+
+
 # -------------------------------------------------------------------- home --
 
 def render_done(user, title, message, back_url, back_label="Back", accent="teal"):
@@ -1802,11 +1818,13 @@ def staff_home(request):
         notes = conn.execute(
             "SELECT * FROM notifications WHERE recipient='phil_staff' AND status='unread' ORDER BY sent_at DESC LIMIT 10"
         ).fetchall()
+        suspended_count = conn.execute("SELECT count(*) FROM establishments WHERE status='suspended'").fetchone()[0]
     finally:
         conn.close()
     return render("staff_home.html", user=user, active_estabs=active_estabs,
                   individual_mentors=individual_mentors, open_support=open_support,
-                  pending_requests=pending_requests, notes=notes, flash=flash_from_query(request))
+                  pending_requests=pending_requests, notes=notes, suspended_count=suspended_count,
+                  flash=flash_from_query(request))
 
 
 @router.get("/staff/establishments")
@@ -1978,6 +1996,44 @@ def staff_reactivate_mentor(request):
     finally:
         conn.close()
     return render_done(user, "Mentor reactivated", "This individual mentor account is active again.", "/staff/mentors", back_label="Back to mentors")
+
+
+@router.get("/staff/suspended")
+def staff_suspended_accounts(request):
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        suspended_estabs = conn.execute(
+            "SELECT * FROM establishments WHERE type='school' AND status='suspended' ORDER BY name"
+        ).fetchall()
+        suspended_mentors = conn.execute(
+            """SELECT establishments.*, users.name as mentor_name, users.email as mentor_email
+               FROM establishments JOIN users ON users.establishment_id = establishments.id AND users.role='mentor'
+               WHERE establishments.type='individual' AND establishments.status='suspended' ORDER BY users.name"""
+        ).fetchall()
+        suspend_times = {}
+        for row in conn.execute(
+            """SELECT target_id, MAX(created_at) as at FROM audit_log
+               WHERE action IN ('establishment_suspended','individual_mentor_suspended')
+               GROUP BY target_id"""
+        ).fetchall():
+            suspend_times[row["target_id"]] = row["at"]
+    finally:
+        conn.close()
+    suspend_labels = {tid: days_ago_label(ts) for tid, ts in suspend_times.items()}
+    return render("staff_suspended.html", user=user, suspended_estabs=suspended_estabs,
+                  suspended_mentors=suspended_mentors, suspend_labels=suspend_labels,
+                  flash=flash_from_query(request))
+
+
+@router.get("/staff/help")
+def staff_help(request):
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    return render("staff_help.html", user=user, flash=flash_from_query(request))
 
 
 @router.get("/staff/course-requests")
@@ -2249,7 +2305,8 @@ def mark_notification_read(request):
         conn.commit()
     finally:
         conn.close()
-    dest = "/staff" if user["role"] == "phil_staff" else "/admin"
+    default_dest = "/staff" if user["role"] == "phil_staff" else "/admin"
+    dest = request.field("next", "") or default_dest
     return redirect(dest)
 
 
