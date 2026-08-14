@@ -271,9 +271,16 @@ def mentor_home(request):
                WHERE enrolments.mentor_id=? ORDER BY enrolments.status, pupils.surname""",
             (user["id"],),
         ).fetchall()
+        due_this_week = conn.execute(
+            """SELECT count(*) FROM enrolments
+               WHERE mentor_id=? AND status='active'
+               AND id NOT IN (SELECT enrolment_id FROM session_records WHERE created_at >= date('now','-7 days'))""",
+            (user["id"],),
+        ).fetchone()[0]
     finally:
         conn.close()
     return render("mentor_home.html", user=user, pupils=pupils, enrolments=enrolments,
+                  due_this_week=due_this_week,
                   flash=flash_from_query(request))
 
 
