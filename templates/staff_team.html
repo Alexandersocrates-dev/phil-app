@@ -10,7 +10,7 @@
   <table>
     <tr><th>Name</th><th>Email</th></tr>
     {% for t in team %}
-    <tr><td>{{ t.name }}</td><td>{{ t.email }}</td></tr>
+    <tr><td><span class="avatar-row"><span class="avatar avatar-sm">{{ t.name[:1] }}</span>{{ t.name }}</span></td><td>{{ t.email }}</td></tr>
     {% endfor %}
   </table>
 </div>
