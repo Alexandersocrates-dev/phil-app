@@ -10,31 +10,69 @@
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<div class="topbar">
-  <a class="brand" href="/">Phil</a>
-  <nav>
-    {% if user %}
-      {% if user.role == 'admin' %}<a href="/admin">Admin home</a> <a href="/support/new">Get support</a>{% endif %}
-      {% if user.role == 'mentor' %}<a href="/mentor">Mentor home</a> <a href="/support/new">Get support</a>{% endif %}
-      {% if user.role == 'parent_carer' %}<a href="/parent">Parent home</a>{% endif %}
-      {% if user.role == 'phil_staff' %}<a href="/staff">Phil staff</a>{% endif %}
-      <a href="/courses">Courses</a>
-      <a href="/logout">Sign out ({{ user.name }})</a>
-    {% else %}
-      <a href="/courses">Courses</a>
-      <a href="/login">Sign in</a>
-      <a href="/signup">Get started</a>
-    {% endif %}
-  </nav>
-</div>
-
-<div class="wrap {% block wrapclass %}{% endblock %}">
-  {% if flash %}
-    <div class="flash flash-{{ flash.kind }}">{{ flash.message }}</div>
+{% from "_icons.html" import icon_home, icon_users, icon_book, icon_chart, icon_message_circle, icon_bell, icon_help_circle %}
+{% set is_admin_shell = user and user.role == 'admin' %}
+<div class="{{ 'app-shell' if is_admin_shell else '' }}">
+  {% if is_admin_shell %}
+  <aside class="app-sidebar">
+    <a class="app-sidebar-brand" href="/admin">Phil</a>
+    <nav class="app-sidebar-nav">
+      <a class="app-sidebar-item" href="/admin">{{ icon_home() }}<span>Home</span></a>
+      <a class="app-sidebar-item" href="/admin/pupils">{{ icon_users() }}<span>Pupils</span></a>
+      <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
+      <a class="app-sidebar-item" href="/admin/reports/caseload">{{ icon_chart() }}<span>Reports</span></a>
+      <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
+    </nav>
+    <a class="app-sidebar-item app-sidebar-signout" href="/logout">Sign out</a>
+  </aside>
   {% endif %}
-  {% block content %}{% endblock %}
+  <div class="{{ 'app-main' if is_admin_shell else '' }}">
+    {% if is_admin_shell %}
+    <div class="app-topbar-v2">
+      <div class="app-topbar-user">
+        <span class="avatar avatar-sm">{{ user.name[:1] }}</span>
+        <div><span class="name">{{ user.name }}</span><span class="sub">{{ establishment.name if establishment else 'Admin' }}</span></div>
+      </div>
+      <div class="app-topbar-actions">
+        <a class="app-topbar-icon" href="/admin" title="Notifications">{{ icon_bell() }}</a>
+        <a class="app-topbar-icon" href="/support/new" title="Get help">{{ icon_help_circle() }}</a>
+      </div>
+    </div>
+    {% else %}
+    <div class="topbar">
+      <a class="brand" href="/">Phil</a>
+      <nav>
+        {% if user %}
+          {% if user.role == 'mentor' %}<a href="/mentor">Mentor home</a> <a href="/support/new">Get support</a>{% endif %}
+          {% if user.role == 'parent_carer' %}<a href="/parent">Parent home</a>{% endif %}
+          {% if user.role == 'phil_staff' %}<a href="/staff">Phil staff</a>{% endif %}
+          <a href="/courses">Courses</a>
+          <a href="/logout">Sign out ({{ user.name }})</a>
+        {% else %}
+          <a href="/courses">Courses</a>
+          <a href="/login">Sign in</a>
+          <a href="/signup">Get started</a>
+        {% endif %}
+      </nav>
+    </div>
+    {% endif %}
+    <div class="wrap {% block wrapclass %}{% endblock %}">
+      {% if flash %}
+        <div class="flash flash-{{ flash.kind }}">{{ flash.message }}</div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+    <footer>Phil, structured support, real growth. Local development build.</footer>
+  </div>
 </div>
-
-<footer>Phil, structured support, real growth. Local development build.</footer>
+{% if is_admin_shell %}
+<nav class="app-bottomnav-mobile">
+  <a href="/admin">{{ icon_home() }}Home</a>
+  <a href="/admin/pupils">{{ icon_users() }}Pupils</a>
+  <a href="/courses">{{ icon_book() }}Courses</a>
+  <a href="/admin/reports/caseload">{{ icon_chart() }}Reports</a>
+  <a href="/support/new">{{ icon_message_circle() }}Support</a>
+</nav>
+{% endif %}
 </body>
 </html>
