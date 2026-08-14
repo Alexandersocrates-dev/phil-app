@@ -1,16 +1,18 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_user_plus %}
 {% block title %}Add a pupil - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card">
+<div class="card" style="text-align:center;">
+  <div class="icon-badge" style="background:var(--teal-light);">{{ icon_user_plus(color='var(--teal-darker)') }}</div>
   <h1>Add a pupil</h1>
-  <form method="post" action="/mentor/pupils/new">
-    <div class="field"><label>Forename</label><input type="text" name="forename" required></div>
-    <div class="field"><label>Surname</label><input type="text" name="surname" required></div>
-    <div class="field"><label>Date of birth</label><input type="date" name="date_of_birth" required></div>
-    <div class="field"><label>Year group</label><input type="text" name="year_group" placeholder="e.g. Year 9" required></div>
-    <div class="field"><label>Form class (optional)</label><input type="text" name="form_class"></div>
-    <button class="btn btn-primary" type="submit">Add pupil</button>
+  <form method="post" action="/mentor/pupils/new" style="text-align:left;">
+    <div class="field"><label for="forename">Forename</label><input type="text" id="forename" name="forename" required></div>
+    <div class="field"><label for="surname">Surname</label><input type="text" id="surname" name="surname" required></div>
+    <div class="field"><label for="date_of_birth">Date of birth</label><input type="date" id="date_of_birth" name="date_of_birth" required></div>
+    <div class="field"><label for="year_group">Year group</label><input type="text" id="year_group" name="year_group" placeholder="e.g. Year 9" required></div>
+    <div class="field"><label for="form_class">Form class (optional)</label><input type="text" id="form_class" name="form_class"></div>
+    <button class="btn btn-primary" type="submit" style="width:100%;">Add pupil</button>
   </form>
 </div>
 {% endblock %}
