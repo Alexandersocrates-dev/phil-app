@@ -622,9 +622,17 @@ def link_parent_form(request):
                WHERE pupil_id=?""",
             (pupil["id"],),
         ).fetchall()
+        pending_requests = conn.execute(
+            """SELECT parent_access_requests.*, users.name as requested_by_name
+               FROM parent_access_requests JOIN users ON users.id = parent_access_requests.requested_by
+               WHERE parent_access_requests.pupil_id=? AND parent_access_requests.status='pending'
+               ORDER BY parent_access_requests.created_at DESC""",
+            (pupil["id"],),
+        ).fetchall()
     finally:
         conn.close()
-    return render("link_parent.html", user=user, pupil=pupil, links=links, flash=flash_from_query(request))
+    return render("link_parent.html", user=user, pupil=pupil, links=links,
+                  pending_requests=pending_requests, flash=flash_from_query(request))
 
 
 @router.post("/mentor/pupils/<pupil_id>/link-parent")
@@ -635,12 +643,7 @@ def link_parent_submit(request):
     pupil_id = request.params["pupil_id"]
     name = request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
-    password = request.field("password", "")
     relationship = request.field("relationship", "").strip() or None
-
-    if not name or not email or len(password) < 8:
-        return with_flash(f"/mentor/pupils/{pupil_id}/link-parent",
-                           "Fill in every field. Password needs at least 8 characters.", "error")
 
     conn = db.get_conn()
     try:
@@ -648,6 +651,41 @@ def link_parent_submit(request):
                               (pupil_id, user["establishment_id"])).fetchone()
         if not pupil:
             return Response("Pupil not found", status="404 Not Found")
+
+        if user["role"] == "mentor":
+            # Mentors can only flag that a parent/carer should get access. An
+            # admin has to review and grant it, see the approve/decline routes
+            # below, this never creates an account or a link by itself.
+            note = request.field("note", "").strip() or None
+            if not name or not email:
+                return with_flash(f"/mentor/pupils/{pupil_id}/link-parent",
+                                   "Fill in the parent/carer's name and email.", "error")
+            conn.execute(
+                """INSERT INTO parent_access_requests
+                   (pupil_id, establishment_id, requested_by, parent_name, parent_email,
+                    relationship, note, status, created_at)
+                   VALUES (?,?,?,?,?,?,?,?,?)""",
+                (pupil_id, user["establishment_id"], user["id"], name, email,
+                 relationship, note, "pending", db.now()),
+            )
+            conn.execute(
+                """INSERT INTO notifications (type, recipient, establishment_id, payload, status, sent_at)
+                   VALUES (?,?,?,?,?,?)""",
+                ("parent_access_requested", "admin", user["establishment_id"],
+                 f"{user['name']} requested parent/carer access for {pupil['forename']} {pupil['surname']} "
+                 f"(parent/carer: {name}). Review it from the pupil's page.",
+                 "unread", db.now()),
+            )
+            conn.commit()
+            return with_flash(f"/mentor/pupils/{pupil_id}",
+                               "Request sent. An admin needs to review and approve it before "
+                               f"{name} can sign in.", "ok")
+
+        # Admin: grants access directly, same as before.
+        password = request.field("password", "")
+        if not name or not email or len(password) < 8:
+            return with_flash(f"/mentor/pupils/{pupil_id}/link-parent",
+                               "Fill in every field. Password needs at least 8 characters.", "error")
 
         existing = conn.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone()
         if existing:
@@ -671,6 +709,89 @@ def link_parent_submit(request):
     finally:
         conn.close()
     return with_flash(f"/mentor/pupils/{pupil_id}", f"{name} linked as a parent/carer.", "ok")
+
+
+@router.post("/admin/parent-requests/<request_id>/approve")
+def parent_request_approve(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    request_id = request.params["request_id"]
+    password = request.field("password", "")
+
+    conn = db.get_conn()
+    try:
+        req = conn.execute(
+            "SELECT * FROM parent_access_requests WHERE id=? AND establishment_id=? AND status='pending'",
+            (request_id, user["establishment_id"]),
+        ).fetchone()
+        if not req:
+            return Response("Request not found", status="404 Not Found")
+
+        pupil = conn.execute("SELECT * FROM pupils WHERE id=?", (req["pupil_id"],)).fetchone()
+
+        existing = conn.execute("SELECT id FROM users WHERE email=?", (req["parent_email"],)).fetchone()
+        if existing:
+            parent_user_id = existing["id"]
+        else:
+            if len(password) < 8:
+                return with_flash(f"/mentor/pupils/{req['pupil_id']}/link-parent",
+                                   "Set a temporary password of at least 8 characters to approve this request.",
+                                   "error")
+            parent_user_id = authlib.create_user(conn, None, "parent_carer",
+                                                  req["parent_name"], req["parent_email"], password)
+
+        already_linked = conn.execute(
+            "SELECT id FROM pupil_parent_links WHERE pupil_id=? AND parent_user_id=?",
+            (req["pupil_id"], parent_user_id),
+        ).fetchone()
+        if not already_linked:
+            conn.execute(
+                """INSERT INTO pupil_parent_links (pupil_id, parent_user_id, relationship, verified_by, created_at)
+                   VALUES (?,?,?,?,?)""",
+                (req["pupil_id"], parent_user_id, req["relationship"], user["id"], db.now()),
+            )
+
+        conn.execute(
+            "UPDATE parent_access_requests SET status='approved', resolved_by=?, resolved_at=? WHERE id=?",
+            (user["id"], db.now(), request_id),
+        )
+        db.log_action(conn, user["id"], "parent_access_approved", "pupil", req["pupil_id"],
+                      f"{req['parent_name']} granted parent/carer access to {pupil['forename']} {pupil['surname']}")
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{req['pupil_id']}",
+                       f"{req['parent_name']} has been granted parent/carer access.", "ok")
+
+
+@router.post("/admin/parent-requests/<request_id>/decline")
+def parent_request_decline(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    request_id = request.params["request_id"]
+
+    conn = db.get_conn()
+    try:
+        req = conn.execute(
+            "SELECT * FROM parent_access_requests WHERE id=? AND establishment_id=? AND status='pending'",
+            (request_id, user["establishment_id"]),
+        ).fetchone()
+        if not req:
+            return Response("Request not found", status="404 Not Found")
+
+        conn.execute(
+            "UPDATE parent_access_requests SET status='declined', resolved_by=?, resolved_at=? WHERE id=?",
+            (user["id"], db.now(), request_id),
+        )
+        db.log_action(conn, user["id"], "parent_access_declined", "pupil", req["pupil_id"],
+                      f"Declined parent/carer access request for {req['parent_name']}")
+        conn.commit()
+        pupil_id = req["pupil_id"]
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}", "Request declined.", "ok")
 
 
 @router.get("/mentor/enrol/<pupil_id>")
@@ -999,6 +1120,7 @@ def admin_home(request):
         conn.close()
     return render("admin_home.html", user=user, establishment=establishment, sub=sub, mentors=mentors,
                   pupils=pupils, used=used, limit=seat_limit(sub) if sub else 0, sessions=sessions,
+                  admin_notes=admin_notes,
                   stripe_configured=billing.is_configured(), flash=flash_from_query(request))
 
 
