@@ -2,7 +2,17 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Mentor home - Phil{% endblock %}
 {% block content %}
+{% if user.role == 'admin' %}
+<div class="page-header">
+  <h1>Hi, {{ user.name }}</h1>
+  <div class="segmented">
+    <a href="/admin">Admin</a>
+    <a class="active" href="/mentor">Mentor</a>
+  </div>
+</div>
+{% else %}
 <h1>Hi, {{ user.name }}</h1>
+{% endif %}
 <p class="muted">Your mentees and where each course is up to.</p>
 
 {% set has_pupil = enrolments|length > 0 %}
