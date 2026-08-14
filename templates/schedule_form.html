@@ -1,15 +1,19 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_calendar %}
 {% block title %}Plan session dates - Phil{% endblock %}
 {% block content %}
 <p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
 <div class="card">
-  <h1>Plan session dates</h1>
+  <div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
+    <div class="icon-badge" style="background:var(--amber-light); margin:0;">{{ icon_calendar(color='var(--amber-dark)') }}</div>
+    <h1 style="margin:0;">Plan session dates</h1>
+  </div>
   <p class="muted">{{ enrolment.course_title }}. Optional, a planning aid only, recording a session is what actually advances progress. Leave a week blank if you don't want to plan it.</p>
   <form method="post" action="/mentor/schedule/{{ enrolment.id }}">
     {% for i in range(1,6) %}
     <div class="field">
-      <label>Week {{ i }}{% if i <= enrolment.current_week %} (recorded){% endif %}</label>
-      <input type="date" name="week{{ i }}_date" value="{{ planned.get(i, '') }}">
+      <label for="week{{ i }}_date">Week {{ i }}{% if i <= enrolment.current_week %} (recorded){% endif %}</label>
+      <input type="date" id="week{{ i }}_date" name="week{{ i }}_date" value="{{ planned.get(i, '') }}">
     </div>
     {% endfor %}
     <button class="btn btn-primary" type="submit">Save planned dates</button>
