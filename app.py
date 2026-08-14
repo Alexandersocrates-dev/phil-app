@@ -90,7 +90,7 @@ def home(request):
     user = current_user(request)
     if user:
         dest = {"admin": "/admin", "mentor": "/mentor", "parent_carer": "/parent",
-                "phil_staff": "/admin"}.get(user["role"], "/courses")
+                "phil_staff": "/staff"}.get(user["role"], "/courses")
         return redirect(dest)
     return render("home.html", user=None, flash=flash_from_query(request))
 
@@ -99,7 +99,7 @@ def home(request):
 
 @router.get("/signup")
 def signup_form(request):
-    return render("signup.html", user=None, flash=flash_from_query(request))
+    return render("signup.html", user=None, hide_nav_links=True, flash=flash_from_query(request))
 
 
 @router.post("/signup")
@@ -174,7 +174,7 @@ def signup_submit(request):
 
 @router.get("/login")
 def login_form(request):
-    return render("login.html", user=None, flash=flash_from_query(request))
+    return render("login.html", user=None, hide_nav_links=True, flash=flash_from_query(request))
 
 
 @router.post("/login")
@@ -192,7 +192,7 @@ def login_submit(request):
         conn.close()
 
     dest = {"admin": "/admin", "mentor": "/mentor", "parent_carer": "/parent",
-            "phil_staff": "/admin"}.get(user["role"], "/courses")
+            "phil_staff": "/staff"}.get(user["role"], "/courses")
     response = redirect(dest)
     response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * 14)
     return response
@@ -1063,7 +1063,7 @@ def reflection_submit(request):
 
 @router.get("/admin")
 def admin_home(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["admin"])
     if err:
         return err
     conn = db.get_conn()
