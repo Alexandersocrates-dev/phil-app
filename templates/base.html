@@ -10,31 +10,44 @@
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-{% from "_icons.html" import icon_home, icon_users, icon_book, icon_chart, icon_message_circle, icon_bell, icon_help_circle %}
-{% set is_admin_shell = user and user.role == 'admin' %}
-<div class="{{ 'app-shell' if is_admin_shell else '' }}">
-  {% if is_admin_shell %}
+{% from "_icons.html" import icon_home, icon_users, icon_book, icon_chart, icon_message_circle, icon_bell, icon_help_circle, icon_building %}
+{% set is_app_shell = user and user.role in ['admin', 'mentor', 'parent_carer', 'phil_staff'] %}
+{% set shell_home = {'admin': '/admin', 'mentor': '/mentor', 'parent_carer': '/parent', 'phil_staff': '/staff'}.get(user.role) if user else none %}
+{% set shell_sub = {'admin': establishment.name if establishment else 'Admin', 'mentor': establishment.name if establishment else 'Mentor', 'parent_carer': 'Parent/carer', 'phil_staff': 'Phil staff'}.get(user.role) if user else '' %}
+<div class="{{ 'app-shell' if is_app_shell else '' }}">
+  {% if is_app_shell %}
   <aside class="app-sidebar">
-    <a class="app-sidebar-brand" href="/admin">Phil</a>
+    <a class="app-sidebar-brand" href="{{ shell_home }}">Phil</a>
     <nav class="app-sidebar-nav">
-      <a class="app-sidebar-item" href="/admin">{{ icon_home() }}<span>Home</span></a>
+      <a class="app-sidebar-item" href="{{ shell_home }}">{{ icon_home() }}<span>Home</span></a>
+      {% if user.role == 'admin' %}
       <a class="app-sidebar-item" href="/admin/pupils">{{ icon_users() }}<span>Pupils</span></a>
       <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
       <a class="app-sidebar-item" href="/admin/reports/caseload">{{ icon_chart() }}<span>Reports</span></a>
       <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
+      {% elif user.role == 'mentor' %}
+      <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
+      <a class="app-sidebar-item" href="/mentor/reports/caseload">{{ icon_chart() }}<span>Reports</span></a>
+      <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
+      {% elif user.role == 'phil_staff' %}
+      <a class="app-sidebar-item" href="/staff/establishments">{{ icon_building() }}<span>Establishments</span></a>
+      <a class="app-sidebar-item" href="/staff/mentors">{{ icon_users() }}<span>Mentors</span></a>
+      <a class="app-sidebar-item" href="/staff/course-requests">{{ icon_book() }}<span>Course requests</span></a>
+      <a class="app-sidebar-item" href="/staff/support">{{ icon_message_circle() }}<span>Support</span></a>
+      {% endif %}
     </nav>
     <a class="app-sidebar-item app-sidebar-signout" href="/logout">Sign out</a>
   </aside>
   {% endif %}
-  <div class="{{ 'app-main' if is_admin_shell else '' }}">
-    {% if is_admin_shell %}
+  <div class="{{ 'app-main' if is_app_shell else '' }}">
+    {% if is_app_shell %}
     <div class="app-topbar-v2">
       <div class="app-topbar-user">
         <span class="avatar avatar-sm">{{ user.name[:1] }}</span>
-        <div><span class="name">{{ user.name }}</span><span class="sub">{{ establishment.name if establishment else 'Admin' }}</span></div>
+        <div><span class="name">{{ user.name }}</span><span class="sub">{{ shell_sub }}</span></div>
       </div>
       <div class="app-topbar-actions">
-        <a class="app-topbar-icon" href="/admin" title="Notifications">{{ icon_bell() }}</a>
+        <a class="app-topbar-icon" href="{{ shell_home }}" title="Notifications">{{ icon_bell() }}</a>
         <a class="app-topbar-icon" href="/support/new" title="Get help">{{ icon_help_circle() }}</a>
       </div>
     </div>
@@ -65,13 +78,24 @@
     <footer>Phil, structured support, real growth. Local development build.</footer>
   </div>
 </div>
-{% if is_admin_shell %}
+{% if is_app_shell %}
 <nav class="app-bottomnav-mobile">
-  <a href="/admin">{{ icon_home() }}Home</a>
+  <a href="{{ shell_home }}">{{ icon_home() }}Home</a>
+  {% if user.role == 'admin' %}
   <a href="/admin/pupils">{{ icon_users() }}Pupils</a>
   <a href="/courses">{{ icon_book() }}Courses</a>
   <a href="/admin/reports/caseload">{{ icon_chart() }}Reports</a>
   <a href="/support/new">{{ icon_message_circle() }}Support</a>
+  {% elif user.role == 'mentor' %}
+  <a href="/courses">{{ icon_book() }}Courses</a>
+  <a href="/mentor/reports/caseload">{{ icon_chart() }}Reports</a>
+  <a href="/support/new">{{ icon_message_circle() }}Support</a>
+  {% elif user.role == 'phil_staff' %}
+  <a href="/staff/establishments">{{ icon_building() }}Estabs</a>
+  <a href="/staff/mentors">{{ icon_users() }}Mentors</a>
+  <a href="/staff/course-requests">{{ icon_book() }}Requests</a>
+  <a href="/staff/support">{{ icon_message_circle() }}Support</a>
+  {% endif %}
 </nav>
 {% endif %}
 </body>
