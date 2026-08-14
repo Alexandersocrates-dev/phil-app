@@ -4,19 +4,130 @@
 {% block content %}
 <p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
 <div class="card">
-  <div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
-    <div class="icon-badge" style="background:var(--amber-light); margin:0;">{{ icon_calendar(color='var(--amber-dark)') }}</div>
-    <h1 style="margin:0;">Plan session dates</h1>
-  </div>
-  <p class="muted">{{ enrolment.course_title }}. Optional, a planning aid only, recording a session is what actually advances progress. Leave a week blank if you don't want to plan it.</p>
-  <form method="post" action="/mentor/schedule/{{ enrolment.id }}">
-    {% for i in range(1,6) %}
-    <div class="field">
-      <label for="week{{ i }}_date">Week {{ i }}{% if i <= enrolment.current_week %} (recorded){% endif %}</label>
-      <input type="date" id="week{{ i }}_date" name="week{{ i }}_date" value="{{ planned.get(i, '') }}">
-    </div>
-    {% endfor %}
-    <button class="btn btn-primary" type="submit">Save planned dates</button>
-  </form>
+<div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
+<div class="icon-badge" style="background:var(--amber-light); margin:0;">{{ icon_calendar(color='var(--amber-dark)') }}</div>
+<h1 style="margin:0;">Plan session dates</h1>
 </div>
+<p class="muted">{{ enrolment.course_title }}. Optional, a planning aid only, recording a session is what actually advances progress. Scroll each wheel to set a date, or leave a session blank if you don't want to plan it.</p>
+<form method="post" action="/mentor/schedule/{{ enrolment.id }}">
+{% for i in range(1,6) %}
+<div class="field">
+<label id="wk{{ i }}_label">Session {{ i }}{% if i <= enrolment.current_week %} (recorded){% endif %}</label>
+<div class="wheel-picker" data-week="{{ i }}">
+<div class="wheel-highlight"></div>
+<div class="wheel-col" id="wk{{ i }}_day" aria-labelledby="wk{{ i }}_label"></div>
+<div class="wheel-col" id="wk{{ i }}_month" aria-labelledby="wk{{ i }}_label"></div>
+<div class="wheel-col" id="wk{{ i }}_year" aria-labelledby="wk{{ i }}_label"></div>
+</div>
+<div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px;">
+<p class="muted" id="wk{{ i }}_summary" style="margin:0; font-size:12px;">Not set</p>
+<button type="button" class="btn-ghost" style="font-size:12px; padding:5px 10px;" onclick="wheelClear({{ i }})">Clear</button>
+</div>
+<input type="hidden" id="week{{ i }}_date" name="week{{ i }}_date" value="{{ planned.get(i, '') }}">
+</div>
+{% endfor %}
+<button class="btn btn-primary" type="submit">Save planned dates</button>
+</form>
+</div>
+<script>
+(function(){
+var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var ITEM_H = 26;
+var today = new Date();
+var wheels = {};
+
+function pad(n){ return String(n).padStart(2, '0'); }
+function daysInMonth(y, m){ return new Date(y, m, 0).getDate(); }
+
+function buildCol(el, count, labelFn, selectedIdx, onSettle){
+el.innerHTML = '';
+for (var idx = 0; idx < count; idx++) {
+var d = document.createElement('div');
+d.className = 'wheel-item';
+d.textContent = labelFn(idx);
+el.appendChild(d);
+}
+el.style.scrollSnapType = 'y mandatory';
+el.style.paddingTop = (ITEM_H * 2) + 'px';
+el.style.paddingBottom = (ITEM_H * 2) + 'px';
+var mark = function(idx){
+[].forEach.call(el.children, function(c, i){ c.classList.toggle('active', i === idx); });
+};
+mark(selectedIdx);
+requestAnimationFrame(function(){ el.scrollTop = selectedIdx * ITEM_H; });
+var debounce;
+el.addEventListener('scroll', function(){
+clearTimeout(debounce);
+debounce = setTimeout(function(){
+var idx = Math.round(el.scrollTop / ITEM_H);
+idx = Math.max(0, Math.min(count - 1, idx));
+el.scrollTo({ top: idx * ITEM_H, behavior: 'smooth' });
+mark(idx);
+onSettle(idx);
+}, 120);
+});
+return mark;
+}
+
+function initWeek(i, existingDate){
+var state = { set: false, y: today.getFullYear(), m: today.getMonth() + 1, d: today.getDate() };
+if (existingDate) {
+var parts = existingDate.split('-');
+if (parts.length === 3) {
+state.set = true;
+state.y = parseInt(parts[0], 10);
+state.m = parseInt(parts[1], 10);
+state.d = parseInt(parts[2], 10);
+}
+}
+var dayEl = document.getElementById('wk' + i + '_day');
+var monthEl = document.getElementById('wk' + i + '_month');
+var yearEl = document.getElementById('wk' + i + '_year');
+var hidden = document.getElementById('week' + i + '_date');
+var summary = document.getElementById('wk' + i + '_summary');
+var years = [today.getFullYear(), today.getFullYear() + 1];
+var markDay, markMonth, markYear;
+
+function refresh(){
+var dim = daysInMonth(state.y, state.m);
+if (state.d > dim) state.d = dim;
+markDay = buildCol(dayEl, dim, function(idx){ return idx + 1; }, state.d - 1, function(idx){
+state.set = true; state.d = idx + 1; commit();
+});
+}
+
+function commit(){
+hidden.value = state.y + '-' + pad(state.m) + '-' + pad(state.d);
+var dt = new Date(state.y, state.m - 1, state.d);
+summary.textContent = state.set ? dt.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }) : 'Not set';
+}
+
+refresh();
+markMonth = buildCol(monthEl, 12, function(idx){ return MONTHS[idx]; }, state.m - 1, function(idx){
+state.set = true; state.m = idx + 1; refresh(); commit();
+});
+markYear = buildCol(yearEl, years.length, function(idx){ return years[idx]; }, 0, function(idx){
+state.set = true; state.y = years[idx]; refresh(); commit();
+});
+
+if (state.set) { commit(); } else { hidden.value = ''; summary.textContent = 'Not set'; }
+
+wheels[i] = { state: state, dayEl: dayEl, monthEl: monthEl, yearEl: yearEl, hidden: hidden, summary: summary, refresh: refresh };
+}
+
+window.wheelClear = function(i){
+var w = wheels[i];
+if (!w) return;
+w.state.set = false;
+w.hidden.value = '';
+w.summary.textContent = 'Not set';
+};
+
+document.querySelectorAll('.wheel-picker').forEach(function(el){
+var i = el.getAttribute('data-week');
+var hidden = document.getElementById('week' + i + '_date');
+initWeek(i, hidden.value || null);
+});
+})();
+</script>
 {% endblock %}
