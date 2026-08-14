@@ -2,12 +2,12 @@
 {% from "_icons.html" import icon_building, icon_user %}
 {% block title %}Suspended accounts - Phil{% endblock %}
 {% block content %}
-<p><a href="/staff">&larr; Phil staff</a></p>
-<div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
-<div class="icon-badge" style="background:var(--red-light); margin:0;">{{ icon_building(color='var(--red)') }}</div>
-<h1 style="margin:0;">Suspended accounts</h1>
+<p class="back-link"><a href="/staff">&larr; Phil staff</a></p>
+<div class="page-header-title">
+<div class="icon-badge" style="background:var(--red-light);">{{ icon_building(color='var(--red)') }}</div>
+<h1>Suspended accounts</h1>
 </div>
-<p class="muted" style="margin-bottom:20px;">Blocked from signing in, reactivate any time, nothing is deleted.</p>
+<p class="page-subtitle">Blocked from signing in, reactivate any time, nothing is deleted.</p>
 
 <div class="card">
 <h2>Establishments</h2>
