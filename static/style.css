@@ -68,6 +68,7 @@ h3{font-family:var(--font-head); font-weight:600; font-size:15px; margin:0 0 var
 .page-header-title h1{margin:0;}
 .page-header-title .icon-badge{margin:0; flex-shrink:0;}
 .page-subtitle{margin:0 0 var(--sp-5); color:var(--muted); font-size:13.5px;}
+.page-header:last-child, .page-header-title:last-child{margin-bottom:0;}
 
 .field{margin-bottom:var(--sp-4);}
 .field label{display:block; font-weight:600; font-size:13.5px; margin-bottom:var(--sp-2); font-family:var(--font-body);}
