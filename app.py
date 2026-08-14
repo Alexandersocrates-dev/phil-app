@@ -1286,7 +1286,7 @@ def admin_view_session(request):
 
 @router.get("/admin/courses")
 def admin_courses(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     conn = db.get_conn()
@@ -1320,7 +1320,7 @@ def _save_weeks(conn, course_id, request):
 
 @router.get("/admin/courses/new")
 def new_course_form(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     return render("course_builder.html", user=user, course=None, weeks=None, flash=flash_from_query(request))
@@ -1328,7 +1328,7 @@ def new_course_form(request):
 
 @router.post("/admin/courses/new")
 def new_course_submit(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     title = request.field("title", "").strip()
@@ -1354,7 +1354,7 @@ def new_course_submit(request):
 
 @router.get("/admin/courses/<course_id>/edit")
 def edit_course_form(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     conn = db.get_conn()
@@ -1372,7 +1372,7 @@ def edit_course_form(request):
 
 @router.post("/admin/courses/<course_id>/edit")
 def edit_course_submit(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     course_id = request.params["course_id"]
@@ -1393,7 +1393,7 @@ def edit_course_submit(request):
 
 @router.post("/admin/courses/<course_id>/publish")
 def publish_course(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     conn = db.get_conn()
@@ -1408,7 +1408,7 @@ def publish_course(request):
 
 @router.post("/admin/courses/<course_id>/unpublish")
 def unpublish_course(request):
-    user, err = require(request, roles=["admin", "phil_staff"])
+    user, err = require(request, roles=["phil_staff"])
     if err:
         return err
     conn = db.get_conn()
