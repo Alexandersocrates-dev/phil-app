@@ -8,7 +8,7 @@
 {% for item in enrolments %}
 {% set e = item.enrolment %}
 <div class="card">
-  <h2>{{ e.forename }} {{ e.surname }} &middot; {{ e.course_title }}</h2>
+  <h2 style="display:flex; align-items:center; gap:10px; margin-bottom:8px;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }} &middot; {{ e.course_title }}</h2>
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
   <p class="muted">Week {{ e.current_week }} of 5{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
   {% if item.week %}
