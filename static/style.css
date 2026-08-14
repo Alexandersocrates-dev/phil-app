@@ -306,3 +306,12 @@ details.acc .acc-body{padding:0 14px 12px;}
 .autosave-status.saving .autosave-dot{background:var(--amber); animation:asdotpulse 1s ease-in-out infinite;}
 .autosave-status.saved .autosave-dot{background:var(--teal);}
 @keyframes asdotpulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+.role-card{display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left; background:#fff; border:1.5px solid var(--border); border-radius:14px; padding:14px 15px; margin-bottom:10px; cursor:pointer; font-family:var(--font-body); transition:border-color .15s ease, box-shadow .15s ease;}
+.role-card:hover{border-color:var(--teal);}
+.role-card.selected{border-color:var(--teal); box-shadow:0 0 0 2px var(--teal-light);}
+.role-card .ric{flex-shrink:0; width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;}
+.role-card .rt{font-family:var(--font-head); font-weight:700; font-size:14.5px; color:var(--navy); margin:0 0 3px;}
+.role-card .rd{font-size:12px; color:var(--muted); margin:0; line-height:1.4;}
+.btn-ghost{background:transparent; border:1.5px solid var(--border); color:var(--navy);}
+.btn-ghost:hover{border-color:var(--teal); color:var(--teal-dark);}
