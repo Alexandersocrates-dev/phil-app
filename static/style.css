@@ -284,3 +284,25 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 /* ---------- Section labels within grouped tile sections ---------- */
 .section-label{font-family:var(--font-head); font-weight:700; font-size:12.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin:22px 0 10px;}
 .section-label:first-child{margin-top:0;}
+
+
+/* ---------- Session accordion (completed / upcoming sessions) ---------- */
+details.acc{border:1px solid var(--border); border-radius:14px; margin-bottom:8px; overflow:hidden; background:#fff;}
+details.acc summary{list-style:none; cursor:pointer; padding:12px 14px; font-family:var(--font-head); font-weight:700; font-size:12.5px; color:var(--navy); display:flex; align-items:center; justify-content:space-between;}
+details.acc summary::-webkit-details-marker{display:none;}
+details.acc .chev{width:16px; height:16px; stroke:var(--muted); transition:transform 200ms ease; flex-shrink:0;}
+details.acc[open] .chev{transform:rotate(180deg);}
+details.acc .acc-body{padding:0 14px 12px;}
+
+/* ---------- Session note fields (autosave) ---------- */
+.note-field{width:100%; border:1.5px solid var(--border); border-radius:8px; padding:8px 10px; font-size:13px; font-family:inherit; resize:vertical; background:#fff; box-sizing:border-box;}
+.note-field:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 3px var(--teal-light);}
+.field-save-hint{font-size:11px; color:var(--muted); margin-top:3px; min-height:14px;}
+.field-save-hint.saved{color:var(--teal-dark); font-weight:600;}
+
+/* ---------- Autosave status indicator ---------- */
+.autosave-status{display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:var(--muted); margin-bottom:14px;}
+.autosave-status .autosave-dot{width:6px; height:6px; border-radius:50%; background:var(--border); flex-shrink:0;}
+.autosave-status.saving .autosave-dot{background:var(--amber); animation:asdotpulse 1s ease-in-out infinite;}
+.autosave-status.saved .autosave-dot{background:var(--teal);}
+@keyframes asdotpulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
