@@ -4,6 +4,35 @@
 <h1>Hi, {{ user.name }}</h1>
 <p class="muted">Your mentees and where each course is up to.</p>
 
+{% set has_pupil = enrolments|length > 0 %}
+<div class="card gs-checklist" id="gsChecklist">
+  <h3>Getting started</h3>
+  <ul>
+    <li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
+    <li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
+    <li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports/caseload" onclick="localStorage.setItem('gs_report','1')">View your case load report</a></li>
+  </ul>
+  <button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
+</div>
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('gs_dismissed')) {
+      var el = document.getElementById('gsChecklist');
+      if (el) el.style.display = 'none';
+    }
+    if (localStorage.getItem('gs_courses')) {
+      var li = document.getElementById('gsCourses');
+      if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+    }
+    if (localStorage.getItem('gs_report')) {
+      var li2 = document.getElementById('gsReport');
+      if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+    }
+  } catch (e) {}
+})();
+</script>
+
 <div class="card">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <h2 style="margin:0;">My caseload</h2>
@@ -20,7 +49,7 @@
     <tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
     {% for e in enrolments %}
     <tr>
-      <td><a href="/mentor/pupils/{{ e.pupil_id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }}</a></td>
+      <td><a href="/mentor/pupils/{{ e.pupil_id }}">{{ e.forename }} {{ e.surname }}</a></td>
       <td>{{ e.course_title }}</td>
       <td style="width:140px;">
         <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
