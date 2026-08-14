@@ -184,6 +184,19 @@ CREATE TABLE IF NOT EXISTS session_records (
     created_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS session_drafts (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+enrolment_id INTEGER NOT NULL REFERENCES enrolments(id),
+week_number INTEGER NOT NULL,
+checkin_note TEXT,
+input_note TEXT,
+activity_note TEXT,
+reflect_note TEXT,
+next_session_note TEXT,
+updated_at TEXT NOT NULL,
+UNIQUE(enrolment_id, week_number)
+);
+
 CREATE TABLE IF NOT EXISTS certificates (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     enrolment_id INTEGER NOT NULL UNIQUE REFERENCES enrolments(id),
