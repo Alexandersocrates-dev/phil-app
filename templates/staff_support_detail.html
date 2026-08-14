@@ -1,9 +1,13 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon_message_circle %}
 {% block title %}{{ ticket.subject }} - Phil{% endblock %}
 {% block content %}
 <p><a href="/staff/support">&larr; Support inbox</a></p>
 <div class="card">
-  <h1>{{ ticket.subject }}</h1>
+  <div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
+    <div class="icon-badge" style="background:var(--teal-light); margin:0;">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
+    <h1 style="margin:0;">{{ ticket.subject }}</h1>
+  </div>
   <p class="muted">{{ ticket.establishment_name or 'Independent' }} &middot; from {{ ticket.requester_name }} &middot; {{ ticket.created_at[:10] }}</p>
   <p>{{ ticket.message }}</p>
 
