@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Billing & revenue - Phil{% endblock %}
 {% block content %}
-<p><a href="/staff">&larr; Phil staff</a></p>
+<p class="back-link"><a href="/staff">&larr; Phil staff</a></p>
 <h1>Billing &amp; revenue</h1>
 
-<div class="tile-grid" style="margin-bottom:20px;">
+<div class="tile-grid">
   <div class="tile"><div class="num">&#163;{{ mrr }}</div>Estimated MRR</div>
   <div class="tile"><div class="num">{{ active_paid }}</div>Active paid subscriptions</div>
   <div class="tile"><div class="num">{{ pilots|length }}</div>Pilots in progress</div>
