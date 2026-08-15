@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Record session - Phil{% endblock %}
 {% block content %}
-<p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
+<p class="back-link"><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
 
 {% if not week %}
 <div class="card"><p>This course is already complete, all five sessions are recorded.</p></div>
