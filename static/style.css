@@ -498,3 +498,7 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 .icon-badge--red{background:var(--red-light);}
 .icon-badge--cream{background:var(--cream);}
 .icon-badge--border{background:var(--border);}
+
+.stat-tile--neutral{background:#EFEDE3;}
+.stat-tile--neutral .stat-tile-num{color:var(--navy);}
+.stat-tile--neutral .stat-tile-label{color:var(--muted);}
