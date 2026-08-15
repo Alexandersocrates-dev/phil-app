@@ -3,10 +3,10 @@
 {% block title %}{{ title }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card" style="text-align:center;">
+<div class="card card-center">
 <div class="icon-badge" style="background:var(--{{ accent }}-light);">{{ icon_check_circle(color='var(--' ~ accent ~ '-dark)') }}</div>
 <h1>{{ title }}</h1>
 <p class="muted">{{ message }}</p>
-<a class="btn btn-primary" href="{{ back_url }}" style="width:100%; display:block; text-align:center; box-sizing:border-box;">{{ back_label }}</a>
+<a class="btn btn-primary btn-block" href="{{ back_url }}">{{ back_label }}</a>
 </div>
 {% endblock %}
