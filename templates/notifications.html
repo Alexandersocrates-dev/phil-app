@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_calendar, icon_users, icon_bell, icon_check_circle %}
 {% block title %}Notifications - Phil{% endblock %}
 {% block content %}
-<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:4px;">
+<div class="flex-between" style="margin-bottom:4px;">
   <h1 style="margin:0;">Notifications</h1>
   {% if unread %}
   <form method="post" action="/notifications/read-all">
@@ -13,8 +13,8 @@
 <p class="muted" style="margin-bottom:20px;">Updates about your account, seats and pupils appear here.</p>
 
 {% if not unread and not read %}
-<div class="card" style="text-align:center; padding:40px 24px;">
-  <div class="icon-badge" style="width:48px; height:48px; border-radius:14px; margin:0 auto 14px; background:var(--teal-light); display:flex; align-items:center; justify-content:center;">{{ icon_check_circle(color='var(--teal-dark)') }}</div>
+<div class="card card-center" style="padding:40px 24px;">
+  <div class="icon-badge icon-badge--teal" style="width:48px; height:48px; border-radius:14px; margin:0 auto 14px; display:flex; align-items:center; justify-content:center;">{{ icon_check_circle(color='var(--teal-dark)') }}</div>
   <p style="font-family:var(--font-head); font-weight:700; font-size:15px; color:var(--navy); margin:0 0 4px;">You're all caught up</p>
   <p class="muted" style="margin:0;">Nothing needs your attention right now.</p>
 </div>
@@ -46,7 +46,7 @@
     <div style="display:flex; flex-direction:column; gap:10px;">
       {% for n in read %}
       <div class="card notif-item">
-        <div class="icon-badge" style="width:38px; height:38px; border-radius:11px; background:var(--cream); display:flex; align-items:center; justify-content:center;">
+        <div class="icon-badge icon-badge--cream" style="width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;">
           {% if n.type == 'pilot_ending' %}{{ icon_calendar(color='var(--muted)') }}{% elif n.type == 'seat_alert' %}{{ icon_users(color='var(--muted)') }}{% else %}{{ icon_bell(color='var(--muted)') }}{% endif %}
         </div>
         <div style="flex:1; min-width:0;">
