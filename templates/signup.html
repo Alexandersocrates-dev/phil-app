@@ -3,8 +3,8 @@
 {% block title %}Get started - Phil{% endblock %}
 {% block content %}
 
-<div class="card" id="s1" style="text-align:center;">
-<div class="icon-badge" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+<div class="card card-center" id="s1">
+<div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
 <h1>Who's signing up?</h1>
 <p class="muted">We'll tailor setup to how you'll use Phil.</p>
 <div style="text-align:left; margin-top:14px;">
@@ -23,7 +23,7 @@
 </div>
 
 <div class="card" id="s2" style="text-align:center; display:none;">
-<p style="text-align:left;"><a href="#" onclick="philGoToStep1(); return false;">&larr; Back</a></p>
+<p class="form-left"><a href="#" onclick="philGoToStep1(); return false;">&larr; Back</a></p>
 <h1>Choose how to start</h1>
 <p class="muted" id="s2label">School/Establishment plan</p>
 <div style="background:#fff; border:1px solid var(--border); border-radius:14px; padding:14px 15px; margin:14px 0 12px; text-align:left;">
@@ -46,10 +46,10 @@
 </div>
 
 <div class="card" id="s3" style="text-align:center; display:none;">
-<p style="text-align:left;"><a href="#" onclick="philGoBack(); return false;">&larr; Back</a></p>
+<p class="form-left"><a href="#" onclick="philGoBack(); return false;">&larr; Back</a></p>
 <h1>Create your account</h1>
 <p class="muted" id="s3sub">You'll be the first admin, you can invite mentors once you're in.</p>
-<form method="post" action="/signup" style="text-align:left;">
+<form method="post" action="/signup" class="form-left">
 <input type="hidden" name="signup_type" id="signup_type_input" value="">
 <div class="field" id="estabNameField">
 <label for="establishment_name">School/Establishment name</label>
@@ -72,7 +72,7 @@
 <input type="checkbox" checked required id="agree" style="margin-top:3px;">
 <label for="agree">I agree to Phil's Terms of Service and Privacy policy.</label>
 </div>
-<button class="btn btn-primary" type="submit" style="width:100%;">Create account</button>
+<button class="btn btn-primary btn-block" type="submit">Create account</button>
 </form>
 <p class="muted" style="margin-top:16px;">Already have an account? <a href="/login">Sign in</a></p>
 </div>
