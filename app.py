@@ -37,24 +37,39 @@ def current_user(request):
         conn.close()
 
 
+def unread_notification_count(conn, user):
+    if user["role"] == "phil_staff":
+        row = conn.execute(
+            "SELECT COUNT(*) AS c FROM notifications WHERE recipient='phil_staff' AND status='unread'"
+        ).fetchone()
+    else:
+        row = conn.execute(
+            "SELECT COUNT(*) AS c FROM notifications WHERE recipient=? AND establishment_id=? AND status='unread'",
+            (user["role"], user["establishment_id"]),
+        ).fetchone()
+    return row["c"] if row else 0
+
+
 def require(request, roles=None):
-    """Returns the user row, or a redirect Response if not authorised."""
+    """Returns the user row (as a dict, with unread_notifications attached), or a redirect Response if not authorised."""
     user = current_user(request)
     if not user:
         return None, redirect("/login")
     if roles and user["role"] not in roles:
         return None, Response("Not authorised for this area.", status="403 Forbidden")
-    if user["role"] != "phil_staff" and user["establishment_id"]:
-        conn = db.get_conn()
-        try:
+    user = dict(user)
+    conn = db.get_conn()
+    try:
+        if user["role"] != "phil_staff" and user["establishment_id"]:
             estab = conn.execute("SELECT status FROM establishments WHERE id=?",
                                   (user["establishment_id"],)).fetchone()
-        finally:
-            conn.close()
-        if estab and estab["status"] == "suspended":
-            return None, Response(
-                "This establishment's access has been suspended. Contact Phil support to resolve this.",
-                status="403 Forbidden")
+            if estab and estab["status"] == "suspended":
+                return None, Response(
+                    "This establishment's access has been suspended. Contact Phil support to resolve this.",
+                    status="403 Forbidden")
+        user["unread_notifications"] = unread_notification_count(conn, user)
+    finally:
+        conn.close()
     return user, None
 
 
@@ -2347,6 +2362,76 @@ def mark_notification_read(request):
     default_dest = "/staff" if user["role"] == "phil_staff" else "/admin"
     dest = request.field("next", "") or default_dest
     return redirect(dest)
+
+
+@router.get("/notifications")
+def notifications_page(request):
+    user, err = require(request)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        establishment = None
+        if user["establishment_id"]:
+            establishment = conn.execute(
+                "SELECT * FROM establishments WHERE id=?", (user["establishment_id"],)
+            ).fetchone()
+        if user["role"] == "phil_staff":
+            unread = conn.execute(
+                "SELECT * FROM notifications WHERE recipient='phil_staff' AND status='unread' ORDER BY sent_at DESC"
+            ).fetchall()
+            read = conn.execute(
+                "SELECT * FROM notifications WHERE recipient='phil_staff' AND status='read' ORDER BY sent_at DESC LIMIT 20"
+            ).fetchall()
+        else:
+            unread = conn.execute(
+                "SELECT * FROM notifications WHERE recipient=? AND establishment_id=? AND status='unread' ORDER BY sent_at DESC",
+                (user["role"], user["establishment_id"]),
+            ).fetchall()
+            read = conn.execute(
+                "SELECT * FROM notifications WHERE recipient=? AND establishment_id=? AND status='read' ORDER BY sent_at DESC LIMIT 20",
+                (user["role"], user["establishment_id"]),
+            ).fetchall()
+    finally:
+        conn.close()
+    return render("notifications.html", user=user, establishment=establishment, unread=unread, read=read)
+
+
+@router.post("/notifications/<notification_id>/read")
+def mark_notification_read_own(request):
+    user, err = require(request)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        conn.execute(
+            "UPDATE notifications SET status='read' WHERE id=? AND recipient=?",
+            (request.params["notification_id"], user["role"]),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return redirect("/notifications")
+
+
+@router.post("/notifications/read-all")
+def mark_all_notifications_read(request):
+    user, err = require(request)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        if user["role"] == "phil_staff":
+            conn.execute("UPDATE notifications SET status='read' WHERE recipient='phil_staff' AND status='unread'")
+        else:
+            conn.execute(
+                "UPDATE notifications SET status='read' WHERE recipient=? AND establishment_id=? AND status='unread'",
+                (user["role"], user["establishment_id"]),
+            )
+        conn.commit()
+    finally:
+        conn.close()
+    return redirect("/notifications")
 
 
 @router.post("/admin/convert-pilot")
