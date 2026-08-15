@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Reports - Phil{% endblock %}
+{% block content %}
+<h1>Reports</h1>
+{% if intro %}<p class="muted" style="margin-bottom:20px;">{{ intro }}</p>{% endif %}
+{% for card in cards %}
+<a class="role-card" href="{{ card.href }}" style="text-decoration:none; color:inherit;">
+  <div class="ric" style="background:{{ card.bg }};">{{ card.icon|safe }}</div>
+  <div style="flex:1; min-width:0;">
+    <p class="rt">{{ card.title }}</p>
+    <p class="rd">{{ card.desc }}</p>
+  </div>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="width:18px;height:18px;stroke:var(--muted);flex-shrink:0;margin-top:10px;"><path d="M9 18l6-6-6-6"/></svg>
+</a>
+{% endfor %}
+{% if note %}<p class="muted" style="font-size:12px; margin-top:4px;">{{ note }}</p>{% endif %}
+{% endblock %}
