@@ -34,14 +34,14 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 })();
 </script>
 
-<div style="display:flex; gap:12px; margin-bottom:20px;">
-<div style="flex:1; background:var(--teal-light); border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--teal-darker);">{{ pupils|length }}</div>
-<div style="font-size:12px; color:var(--teal-darker); font-weight:600;">Active pupils</div>
+<div class="stat-row">
+<div class="stat-tile stat-tile--teal">
+<div class="stat-tile-num">{{ pupils|length }}</div>
+<div class="stat-tile-label">Active pupils</div>
 </div>
-<div style="flex:1; background:var(--amber-light); border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--amber-dark);">{{ due_this_week }}</div>
-<div style="font-size:12px; color:var(--amber-dark); font-weight:600;">Due this week</div>
+<div class="stat-tile stat-tile--amber">
+<div class="stat-tile-num">{{ due_this_week }}</div>
+<div class="stat-tile-label">Due this week</div>
 </div>
 </div>
 
