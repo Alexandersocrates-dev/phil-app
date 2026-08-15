@@ -442,3 +442,30 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 @supports not (backdrop-filter: blur(1px)){
   .modal-surface{background:rgba(255,255,255,0.96);}
 }
+
+
+/* ============================================================
+   DESIGN SYSTEM v2 -- Phase 2 (three-tier responsive breakpoints)
+   Adds an explicit tablet tier (600-1023px) between the mobile
+   bottom-nav layout and the desktop full sidebar. This block is
+   appended after the original @media rules, so on 600-767px
+   viewports it correctly overrides the older max-width:767px
+   sidebar-hide/bottom-nav-show rule (later source order wins at
+   equal specificity). Desktop (1024px+) was already the implicit
+   default; this only widens the content wrap slightly there.
+   ============================================================ */
+
+@media (min-width:600px) and (max-width:1023px){
+  .app-bottomnav-mobile{display:none;}
+  .app-sidebar{
+    display:flex; width:76px; padding:var(--sp-4) var(--sp-2);
+  }
+  .app-sidebar-brand{justify-content:center; padding:0 0 var(--sp-4);}
+  .app-sidebar-item{justify-content:center; gap:0; padding:var(--sp-3) var(--sp-1);}
+  .app-sidebar-item span{display:none; position:absolute; left:-9999px;}
+  .app-main .wrap{padding:var(--sp-5) var(--sp-4) 48px;}
+}
+
+@media (min-width:1024px){
+  .wrap{max-width:1080px; padding:var(--sp-6) var(--sp-6) 48px;}
+}
