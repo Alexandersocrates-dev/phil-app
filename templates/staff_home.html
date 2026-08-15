@@ -12,14 +12,14 @@
 </div>
 {% endfor %}
 
-<div style="display:flex; gap:12px; margin-bottom:20px;">
-<div style="flex:1; background:var(--teal-light); border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--teal-darker);">{{ active_estabs }}</div>
-<div style="font-size:12px; color:var(--teal-darker); font-weight:600;">Establishments</div>
+<div class="stat-row">
+<div class="stat-tile stat-tile--teal">
+<div class="stat-tile-num">{{ active_estabs }}</div>
+<div class="stat-tile-label">Establishments</div>
 </div>
-<div style="flex:1; background:var(--amber-light); border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--amber-dark);">{{ pending_requests }}</div>
-<div style="font-size:12px; color:var(--amber-dark); font-weight:600;">Open course requests</div>
+<div class="stat-tile stat-tile--amber">
+<div class="stat-tile-num">{{ pending_requests }}</div>
+<div class="stat-tile-label">Open course requests</div>
 </div>
 </div>
 
