@@ -65,7 +65,7 @@
       </script>
       {% endif %}
       <div class="app-topbar-actions">
-        <a class="app-topbar-icon" href="{{ shell_home }}" title="Notifications">{{ icon_bell() }}</a>
+        <a class="app-topbar-icon" href="/notifications" title="Notifications">{{ icon_bell() }}{% if user.unread_notifications %}<span class="notif-badge">{{ user.unread_notifications if user.unread_notifications <= 9 else '9+' }}</span>{% endif %}</a>
         <a class="app-topbar-icon" href="{{ '/staff/help' if user.role == 'phil_staff' else '/support/new' }}" title="Get help">{{ icon_help_circle() }}</a>
       </div>
     </div>
