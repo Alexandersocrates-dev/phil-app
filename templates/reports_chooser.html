@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Reports - Phil{% endblock %}
 {% block content %}
+<p class="back-link"><a href="{{ '/staff' if user.role == 'phil_staff' else ('/admin' if user.role == 'admin' else '/mentor') }}">&larr; Home</a></p>
 <h1>Reports</h1>
 {% if intro %}<p class="muted" style="margin-bottom:20px;">{{ intro }}</p>{% endif %}
 {% for card in cards %}
