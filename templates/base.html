@@ -23,11 +23,11 @@
       {% if user.role == 'admin' %}
       <a class="app-sidebar-item" href="/admin/pupils">{{ icon_users() }}<span>Pupils</span></a>
       <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
-      <a class="app-sidebar-item" href="/admin/reports/caseload">{{ icon_chart() }}<span>Reports</span></a>
+      <a class="app-sidebar-item" href="/admin/reports">{{ icon_chart() }}<span>Reports</span></a>
       <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
       {% elif user.role == 'mentor' %}
       <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
-      <a class="app-sidebar-item" href="/mentor/reports/caseload">{{ icon_chart() }}<span>Reports</span></a>
+      <a class="app-sidebar-item" href="/mentor/reports">{{ icon_chart() }}<span>Reports</span></a>
       <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
       {% elif user.role == 'phil_staff' %}
       <a class="app-sidebar-item" href="/staff/establishments">{{ icon_building() }}<span>Establishments</span></a>
@@ -102,11 +102,11 @@
   {% if user.role == 'admin' %}
   <a href="/admin/pupils">{{ icon_users() }}Pupils</a>
   <a href="/courses">{{ icon_book() }}Courses</a>
-  <a href="/admin/reports/caseload">{{ icon_chart() }}Reports</a>
+  <a href="/admin/reports">{{ icon_chart() }}Reports</a>
   <a href="/support/new">{{ icon_message_circle() }}Support</a>
   {% elif user.role == 'mentor' %}
   <a href="/courses">{{ icon_book() }}Courses</a>
-  <a href="/mentor/reports/caseload">{{ icon_chart() }}Reports</a>
+  <a href="/mentor/reports">{{ icon_chart() }}Reports</a>
   <a href="/support/new">{{ icon_message_circle() }}Support</a>
   {% elif user.role == 'phil_staff' %}
   <a href="/staff/establishments">{{ icon_building() }}Estabs</a>
