@@ -70,14 +70,14 @@
 })();
 </script>
 
-<div style="display:flex; gap:12px; margin-bottom:20px;">
-<div style="flex:1; background:var(--teal-light); border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--teal-darker);">{{ pupils|length }}</div>
-<div style="font-size:12px; color:var(--teal-darker); font-weight:600;">Pupils enrolled</div>
+<div class="stat-row">
+<div class="stat-tile stat-tile--teal">
+<div class="stat-tile-num">{{ pupils|length }}</div>
+<div class="stat-tile-label">Pupils enrolled</div>
 </div>
-<div style="flex:1; background:#EFEDE3; border-radius:12px; padding:14px 16px;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:22px; color:var(--navy);">{{ mentors|length }}</div>
-<div style="font-size:12px; color:var(--muted); font-weight:600;">Mentors and admins</div>
+<div class="stat-tile stat-tile--neutral">
+<div class="stat-tile-num">{{ mentors|length }}</div>
+<div class="stat-tile-label">Mentors and admins</div>
 </div>
 </div>
 
