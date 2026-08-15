@@ -3,13 +3,13 @@
 {% block title %}Get support - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card" style="text-align:center;">
-  <div class="icon-badge" style="background:var(--teal-light);">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--teal">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
   <h1>Get support</h1>
-  <form method="post" action="/support/new" style="text-align:left;">
+  <form method="post" action="/support/new" class="form-left">
     <div class="field"><label for="subject">Subject</label><input type="text" id="subject" name="subject" required></div>
     <div class="field"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
-    <button class="btn btn-primary" type="submit" style="width:100%;">Send</button>
+    <button class="btn btn-primary btn-block" type="submit">Send</button>
   </form>
 </div>
 {% endblock %}
