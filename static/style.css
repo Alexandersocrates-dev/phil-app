@@ -242,6 +242,7 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 .app-topbar-toggle{flex-shrink:0;}
 .app-topbar-actions{display:flex; align-items:center; gap:var(--sp-2);}
 .app-topbar-icon{
+  position:relative;
   width:36px; height:36px; border-radius:50%; background:#EFEDE3; border:none;
   display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--muted);
   transition:background 150ms ease, color 150ms ease;
@@ -340,3 +341,9 @@ details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 .chip-row::-webkit-scrollbar{display:none;}
 .chip{font-size:11px; font-weight:600; color:var(--muted); background:#fff; border:1px solid var(--border); padding:var(--sp-2) var(--sp-3); border-radius:999px; white-space:nowrap; cursor:pointer; font-family:var(--font-body);}
 .chip.active{color:var(--navy); background:#EFEDE3; border-color:#EFEDE3; font-weight:700;}
+
+
+.notif-item{display:flex; align-items:flex-start; gap:var(--sp-3); padding:var(--sp-3) var(--sp-4);}
+.notif-item form{flex-shrink:0; margin:0;}
+.notif-unread{border-color:var(--teal); box-shadow:0 1px 3px rgba(15,110,86,0.08);}
+.notif-badge{position:absolute; top:-4px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--coral); color:#fff; font-size:9.5px; font-weight:800; line-height:16px; text-align:center; font-family:var(--font-head); box-shadow:0 0 0 2px var(--card);}
