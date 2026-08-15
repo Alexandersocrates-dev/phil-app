@@ -502,3 +502,5 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 .stat-tile--neutral{background:#EFEDE3;}
 .stat-tile--neutral .stat-tile-num{color:var(--navy);}
 .stat-tile--neutral .stat-tile-label{color:var(--muted);}
+
+.card--danger{border-color:var(--red);}
