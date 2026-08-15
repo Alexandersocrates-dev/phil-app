@@ -45,7 +45,7 @@
 
 {% if completed_records %}
 <details class="acc">
-<summary><span>Sessions 1&ndash;{{ completed_records|length }} &middot; Completed</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<summary><span>Sessions 1&ndash;{{ completed_records|length }} &middot; Completed</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
 <div class="acc-body">
 {% for r in completed_records %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
@@ -185,7 +185,7 @@
 
 {% if upcoming_weeks %}
 <details class="acc">
-<summary><span>Sessions {{ upcoming_weeks[0].week_number }}&ndash;5 &middot; Coming up</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<summary><span>Sessions {{ upcoming_weeks[0].week_number }}&ndash;5 &middot; Coming up</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
 <div class="acc-body">
 {% for w in upcoming_weeks %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;opacity:0.6;display:flex;align-items:center;gap:10px;">
