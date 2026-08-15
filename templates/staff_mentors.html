@@ -13,11 +13,11 @@
       <td>{% if m.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</td>
       <td>
         {% if m.status == 'active' %}
-        <form method="post" action="/staff/mentors/{{ m.id }}/suspend" style="display:inline;" onsubmit="return confirm('Suspend {{ m.mentor_name }}?')">
+        <form method="post" action="/staff/mentors/{{ m.id }}/suspend" class="form-inline" onsubmit="return confirm('Suspend {{ m.mentor_name }}?')">
           <button class="btn btn-red btn-sm" type="submit">Suspend</button>
         </form>
         {% else %}
-        <form method="post" action="/staff/mentors/{{ m.id }}/reactivate" style="display:inline;">
+        <form method="post" action="/staff/mentors/{{ m.id }}/reactivate" class="form-inline">
           <button class="btn btn-secondary btn-sm" type="submit">Reactivate</button>
         </form>
         {% endif %}
