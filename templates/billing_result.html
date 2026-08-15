@@ -3,9 +3,9 @@
 {% block title %}{{ 'Payment complete' if outcome == 'success' else 'Payment cancelled' }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card" style="text-align:center;">
+<div class="card card-center">
   {% if outcome == 'success' %}
-  <div class="icon-badge" style="background:var(--teal-light);">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
+  <div class="icon-badge icon-badge--teal">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
   <h1>Payment received</h1>
   <p>Thank you. Stripe has confirmed the payment and Phil will update the subscription automatically, usually
     within a few seconds. If the plan on your admin home page still shows the old plan after a moment, refresh
