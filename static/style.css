@@ -325,12 +325,17 @@ details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 .wheel-item{height:26px; line-height:26px; font-size:13px; color:var(--muted); opacity:0.55; scroll-snap-align:center; user-select:none;}
 .wheel-item.active{font-family:var(--font-head); font-weight:700; font-size:14px; color:var(--navy); opacity:1;}
 
-.course-row{display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-3) 0; border-bottom:1px solid var(--border); text-decoration:none; color:inherit;}
+.course-row{display:flex; align-items:center; gap:var(--sp-3); padding:var(--sp-3); margin:0 calc(-1 * var(--sp-3)); border-radius:10px; border-bottom:1px solid var(--border); text-decoration:none; color:inherit; transition:background 150ms ease;}
 .course-row:last-child{border-bottom:none;}
-.course-row .ric{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.course-row:hover{background:var(--teal-light);}
+.course-row .ric{width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:transform 150ms ease;}
+.course-row:hover .ric{transform:scale(1.06);}
 .course-row .crt{flex:1; min-width:0;}
-.course-row .crtitle{font-family:var(--font-head); font-weight:700; font-size:13px; color:var(--navy); margin:0 0 2px;}
+.course-row .crtitle{font-family:var(--font-head); font-weight:700; font-size:13px; color:var(--navy); margin:0 0 2px; transition:color 150ms ease;}
+.course-row:hover .crtitle{color:var(--teal-dark);}
 .course-row .crmeta{font-size:11px; color:var(--muted); margin:0;}
+.course-row .crchev{stroke:#5F5E5A; flex-shrink:0; transition:transform 150ms ease, stroke 150ms ease;}
+.course-row:hover .crchev{stroke:#0F6E56; transform:translateX(3px);}
 .chip-row{display:flex; gap:var(--sp-2); margin-bottom:var(--sp-4); overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;}
 .chip-row::-webkit-scrollbar{display:none;}
 .chip{font-size:11px; font-weight:600; color:var(--muted); background:#fff; border:1px solid var(--border); padding:var(--sp-2) var(--sp-3); border-radius:999px; white-space:nowrap; cursor:pointer; font-family:var(--font-body);}
