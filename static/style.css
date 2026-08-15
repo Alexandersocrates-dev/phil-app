@@ -469,3 +469,32 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 @media (min-width:1024px){
   .wrap{max-width:1080px; padding:var(--sp-6) var(--sp-6) 48px;}
 }
+
+
+/* Phase 3: layout & pattern utility classes (extracted from template inline styles) */
+.card-center{text-align:center;}
+.form-left{text-align:left;}
+.form-inline{display:inline;}
+.btn-block{width:100%; box-sizing:border-box; display:block; text-align:center;}
+.flex-row{display:flex; align-items:center; gap:var(--sp-3);}
+.flex-between{display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap;}
+.flex-col{display:flex; flex-direction:column;}
+.flex-wrap{flex-wrap:wrap;}
+.gap-2{gap:var(--sp-2);}
+.gap-3{gap:var(--sp-3);}
+.mt-0{margin-top:0;}
+.mb-0{margin-bottom:0;}
+.stat-row{display:flex; gap:var(--sp-3); margin-bottom:var(--sp-5);}
+.stat-tile{flex:1; border-radius:var(--radius-md); padding:14px 16px;}
+.stat-tile-num{font-family:var(--font-head); font-weight:700; font-size:22px;}
+.stat-tile-label{font-size:12px; font-weight:600;}
+.stat-tile--teal{background:var(--teal-light);}
+.stat-tile--teal .stat-tile-num, .stat-tile--teal .stat-tile-label{color:var(--teal-darker);}
+.stat-tile--amber{background:var(--amber-light);}
+.stat-tile--amber .stat-tile-num, .stat-tile--amber .stat-tile-label{color:var(--amber-dark);}
+.icon-badge--teal{background:var(--teal-light);}
+.icon-badge--coral{background:var(--coral-light);}
+.icon-badge--amber{background:var(--amber-light);}
+.icon-badge--red{background:var(--red-light);}
+.icon-badge--cream{background:var(--cream);}
+.icon-badge--border{background:var(--border);}
