@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_edit %}
 {% block title %}Completion reflection - Phil{% endblock %}
 {% block content %}
-<p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
+<p class="back-link"><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
 <div class="card">
   <div style="display:flex; align-items:center; gap:14px; margin-bottom:6px;">
     <div class="icon-badge" style="background:var(--teal-light); margin:0;">{{ icon_edit(color='var(--teal-darker)') }}</div>
