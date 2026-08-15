@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_calendar, icon_users, icon_bell, icon_check_circle %}
+{% block title %}Notifications - Phil{% endblock %}
+{% block content %}
+<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:4px;">
+  <h1 style="margin:0;">Notifications</h1>
+  {% if unread %}
+  <form method="post" action="/notifications/read-all">
+    <button class="btn btn-secondary btn-sm" type="submit">Mark all as read</button>
+  </form>
+  {% endif %}
+</div>
+<p class="muted" style="margin-bottom:20px;">Updates about your account, seats and pupils appear here.</p>
+
+{% if not unread and not read %}
+<div class="card" style="text-align:center; padding:40px 24px;">
+  <div class="icon-badge" style="width:48px; height:48px; border-radius:14px; margin:0 auto 14px; background:var(--teal-light); display:flex; align-items:center; justify-content:center;">{{ icon_check_circle(color='var(--teal-dark)') }}</div>
+  <p style="font-family:var(--font-head); font-weight:700; font-size:15px; color:var(--navy); margin:0 0 4px;">You're all caught up</p>
+  <p class="muted" style="margin:0;">Nothing needs your attention right now.</p>
+</div>
+{% endif %}
+
+{% if unread %}
+<div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+  {% for n in unread %}
+  <div class="card notif-item notif-unread">
+    <div class="icon-badge" style="width:38px; height:38px; border-radius:11px; background:{{ '#FAECE7' if n.type == 'pilot_ending' else '#FAEEDA' if n.type == 'seat_alert' else 'var(--teal-light)' }}; display:flex; align-items:center; justify-content:center;">
+      {% if n.type == 'pilot_ending' %}{{ icon_calendar(color='var(--coral-dark)') }}{% elif n.type == 'seat_alert' %}{{ icon_users(color='var(--amber-dark)') }}{% else %}{{ icon_bell(color='var(--teal-dark)') }}{% endif %}
+    </div>
+    <div style="flex:1; min-width:0;">
+      <p style="margin:0 0 3px; font-size:13.5px; color:var(--ink); line-height:1.5;">{{ n.payload }}</p>
+      <p class="muted" style="margin:0; font-size:11.5px;">{{ n.sent_at[:10] }}</p>
+    </div>
+    <form method="post" action="/notifications/{{ n.id }}/read">
+      <button class="btn btn-secondary btn-sm" type="submit">Mark as read</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if read %}
+<details class="acc">
+  <summary><span>Earlier</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="acc-body">
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      {% for n in read %}
+      <div class="card notif-item">
+        <div class="icon-badge" style="width:38px; height:38px; border-radius:11px; background:var(--cream); display:flex; align-items:center; justify-content:center;">
+          {% if n.type == 'pilot_ending' %}{{ icon_calendar(color='var(--muted)') }}{% elif n.type == 'seat_alert' %}{{ icon_users(color='var(--muted)') }}{% else %}{{ icon_bell(color='var(--muted)') }}{% endif %}
+        </div>
+        <div style="flex:1; min-width:0;">
+          <p style="margin:0 0 3px; font-size:13.5px; color:var(--muted); line-height:1.5;">{{ n.payload }}</p>
+          <p class="muted" style="margin:0; font-size:11.5px;">{{ n.sent_at[:10] }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</details>
+{% endif %}
+{% endblock %}
