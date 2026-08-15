@@ -3,6 +3,7 @@
 {% block title %}{{ 'Link a parent/carer' if user.role == 'admin' else 'Request parent access' }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
+<p class="back-link"><a href="/mentor/pupils/{{ pupil.id }}">&larr; {{ pupil.forename }} {{ pupil.surname }}</a></p>
 {% if user.role == 'admin' %}
 <div class="card card-center">
   <div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
@@ -33,7 +34,7 @@
       <button class="btn btn-primary btn-sm" type="submit">Approve</button>
     </form>
     <form method="post" action="/admin/parent-requests/{{ r.id }}/decline" style="margin-top:8px;">
-      <button class="btn btn-secondary btn-sm" type="submit" onclick="return confirm('Decline this request?')">Decline</button>
+      <button class="btn btn-red btn-sm" type="submit" onclick="return confirm('Decline this request?')">Decline</button>
     </form>
   </div>
   {% endfor %}
