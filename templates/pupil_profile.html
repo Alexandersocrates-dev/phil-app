@@ -3,7 +3,7 @@
 {% block content %}
 <p><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
 <div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
+  <div class="flex-between">
     <div style="display:flex; align-items:center; gap:14px;">
       <span class="avatar avatar-lg">{{ pupil.forename[:1] }}{{ pupil.surname[:1] }}</span>
       <div>
@@ -15,7 +15,7 @@
       {% if pupil.status == 'active' %}
         <a class="btn btn-secondary btn-sm" href="/mentor/enrol/{{ pupil.id }}">+ Enrol on another course</a>
         <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">{{ '+ Link a parent/carer' if user.role == 'admin' else '+ Request parent access' }}</a>
-        <form method="post" action="/mentor/pupils/{{ pupil.id }}/archive" style="display:inline;">
+        <form method="post" action="/mentor/pupils/{{ pupil.id }}/archive" class="form-inline">
           <button class="btn btn-red btn-sm" type="submit" onclick="return confirm('Archive this pupil? Their records are kept and this can be reversed.')">Archive</button>
         </form>
         {% if user.role == 'admin' %}
@@ -23,7 +23,7 @@
         {% endif %}
       {% else %}
         <span class="badge badge-muted">Archived</span>
-        <form method="post" action="/mentor/pupils/{{ pupil.id }}/reactivate" style="display:inline;">
+        <form method="post" action="/mentor/pupils/{{ pupil.id }}/reactivate" class="form-inline">
           <button class="btn btn-secondary btn-sm" type="submit">Reactivate</button>
         </form>
         {% if user.role == 'admin' %}
@@ -37,7 +37,7 @@
 {% for item in enrolment_data %}
 {% set e = item.enrolment %}
 <div class="card">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
+  <div class="flex-between">
     <h2>{{ e.course_title }}</h2>
     {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
     {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
