@@ -4,15 +4,15 @@
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
 <p><a href="/admin">&larr; Admin home</a></p>
-<div class="card" style="border-color:var(--red); text-align:center;">
-  <div class="icon-badge" style="background:var(--red-light);">{{ icon_shield(color='var(--red)') }}</div>
+<div class="card card-center card--danger">
+  <div class="icon-badge icon-badge--red">{{ icon_shield(color='var(--red)') }}</div>
   <h1>Remove {{ mentor.name }}</h1>
-  <div class="safeguard-box safeguard-flagged" style="text-align:left;">
+  <div class="safeguard-box safeguard-flagged form-left">
     <p>{{ mentor.name }} loses access immediately, and this frees up their seat. Every pupil record and past
       session they wrote stays exactly as it is, nothing is deleted here.
       {% if active_count > 0 %}They currently have {{ active_count }} active enrolment{{ 's' if active_count != 1 else '' }}, so choose who takes over their case load below.{% endif %}</p>
   </div>
-  <form method="post" action="/admin/mentors/{{ mentor.id }}/remove" style="text-align:left;">
+  <form method="post" action="/admin/mentors/{{ mentor.id }}/remove" class="form-left">
     {% if active_count > 0 %}
     <div class="field">
       <label for="reassign_to">Move their {{ active_count }} active pupil{{ 's' if active_count != 1 else '' }} to</label>
