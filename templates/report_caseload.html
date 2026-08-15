@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ title }} - Phil{% endblock %}
 {% block content %}
+<p class="back-link"><a href="{{ '/admin/reports' if user.role in ['admin','phil_staff'] else '/mentor/reports' }}">&larr; Reports</a></p>
 <div class="flex-between">
   <h1>{{ title }}</h1>
   <div class="flex-row gap-2">
