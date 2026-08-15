@@ -3,7 +3,7 @@
 {% block title %}Delete {{ pupil.forename }} {{ pupil.surname }} - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<p><a href="/mentor/pupils/{{ pupil.id }}">&larr; {{ pupil.forename }} {{ pupil.surname }}</a></p>
+<p class="back-link"><a href="/mentor/pupils/{{ pupil.id }}">&larr; {{ pupil.forename }} {{ pupil.surname }}</a></p>
 <div class="card card-center card--danger">
   <div class="icon-badge icon-badge--red">{{ icon_trash(color='var(--red)') }}</div>
   <h1>Delete {{ pupil.forename }} {{ pupil.surname }} permanently</h1>
