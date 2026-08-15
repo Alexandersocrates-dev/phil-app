@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}{{ title }} - Phil{% endblock %}
 {% block content %}
-<div style="display:flex; justify-content:space-between; align-items:center;">
+<div class="flex-between">
   <h1>{{ title }}</h1>
-  <div style="display:flex; gap:8px;">
+  <div class="flex-row gap-2">
     <a class="btn btn-secondary btn-sm" href="{{ pdf_url }}" target="_blank">Download PDF</a>
     {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Download Excel</a>{% endif %}
   </div>
