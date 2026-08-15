@@ -3,6 +3,7 @@
 {% block title %}Add a pupil - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
+<p class="back-link"><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
 <div class="card card-center">
   <div class="icon-badge icon-badge--teal">{{ icon_user_plus(color='var(--teal-darker)') }}</div>
   <h1>Add a pupil</h1>
