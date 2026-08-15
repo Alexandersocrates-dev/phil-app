@@ -3,14 +3,14 @@
 {% block title %}Request a course - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card" style="text-align:center;">
-  <div class="icon-badge" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--amber">{{ icon_message_circle(color='var(--amber-dark)') }}</div>
   <h1>Request a new course topic</h1>
   <p class="muted">Sent to the Phil team to review and build.</p>
-  <form method="post" action="/admin/course-requests/new" style="text-align:left;">
+  <form method="post" action="/admin/course-requests/new" class="form-left">
     <div class="field"><label for="topic">Topic</label><input type="text" id="topic" name="topic" required placeholder="e.g. Selective mutism"></div>
     <div class="field"><label for="note">Note (optional)</label><textarea id="note" name="note" placeholder="Why this would help your pupils"></textarea></div>
-    <button class="btn btn-primary" type="submit" style="width:100%;">Send request</button>
+    <button class="btn btn-primary btn-block" type="submit">Send request</button>
   </form>
 </div>
 {% endblock %}
