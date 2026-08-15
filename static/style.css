@@ -293,7 +293,7 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 details.acc{border:1px solid var(--border); border-radius:14px; margin-bottom:var(--sp-2); overflow:hidden; background:#fff;}
 details.acc summary{list-style:none; cursor:pointer; padding:var(--sp-3) var(--sp-4); font-family:var(--font-head); font-weight:700; font-size:12.5px; color:var(--navy); display:flex; align-items:center; justify-content:space-between;}
 details.acc summary::-webkit-details-marker{display:none;}
-details.acc .chev{width:16px; height:16px; stroke:var(--muted); transition:transform 200ms ease; flex-shrink:0;}
+details.acc .chev{width:16px; height:16px; stroke:#5F5E5A; transition:transform 200ms ease; flex-shrink:0;}
 details.acc[open] .chev{transform:rotate(180deg);}
 details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 
