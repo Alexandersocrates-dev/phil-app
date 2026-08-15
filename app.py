@@ -1478,6 +1478,45 @@ def parent_home(request):
 
 # ---------------------------------------------------------------- reports --
 
+_ICON_LIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>'
+_ICON_DOC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>'
+_ICON_USERS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
+
+
+@router.get("/admin/reports")
+def admin_reports_chooser(request):
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    cards = [
+        {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
+         "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},
+        {"title": "Pupil report", "desc": "Search for a pupil, their details, courses and progress in one file.",
+         "href": "/admin/reports/full", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
+        {"title": "Mentor reports", "desc": "Choose a mentor, then download their mentoring list as a PDF or spreadsheet.",
+         "href": "/admin/reports/caseload", "icon": _ICON_USERS, "bg": "var(--amber-light)"},
+    ]
+    return render("reports_chooser.html", user=user, cards=cards, intro=None, note=None,
+                  flash=flash_from_query(request))
+
+
+@router.get("/mentor/reports")
+def mentor_reports_chooser(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    cards = [
+        {"title": "Your mentoring list", "desc": "Every mentee, one file \u00b7 progress only, no notes.",
+         "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
+        {"title": "Pupil report", "desc": "One mentee's full report, courses, progress and session notes. Open your mentoring list below, then pick a mentee to view.",
+         "href": "/mentor/reports/caseload", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
+    ]
+    return render("reports_chooser.html", user=user, cards=cards,
+                  intro="Download your mentoring list, or a full report for one of your mentees.",
+                  note="Limited to pupils you mentor. For anyone else, ask an admin.",
+                  flash=flash_from_query(request))
+
+
 def _mentee_report_context(conn, enrolment_id, user):
     """Returns (enrolment, weeks_covered, reflection_or_None) or (None, None, None) if not authorised."""
     enrolment = conn.execute(
