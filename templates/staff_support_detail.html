@@ -5,7 +5,7 @@
 <p class="back-link"><a href="/staff/support">&larr; Support inbox</a></p>
 <div class="card">
   <div class="page-header-title" style="margin-bottom:var(--sp-2);">
-    <div class="icon-badge" style="background:var(--teal-light);">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
+    <div class="icon-badge icon-badge--teal">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
     <h1>{{ ticket.subject }}</h1>
   </div>
   <p class="muted">{{ ticket.establishment_name or 'Independent' }} &middot; from {{ ticket.requester_name }} &middot; {{ ticket.created_at[:10] }}</p>
