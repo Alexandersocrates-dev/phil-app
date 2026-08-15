@@ -4,8 +4,8 @@
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
 <p><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; {{ enrolment.forename }} {{ enrolment.surname }}</a></p>
-<div class="card" style="text-align:center;">
-  <div class="icon-badge" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--teal">{{ icon_users(color='var(--teal-darker)') }}</div>
   <h1>Reassign mentor</h1>
   <p class="muted">{{ enrolment.forename }} {{ enrolment.surname }}'s "{{ enrolment.course_title }}" enrolment is
     currently mentored by {{ enrolment.mentor_name }}. Choose who should take it over. Every session record and
@@ -13,7 +13,7 @@
   {% if not mentors %}
     <p class="muted">There is no other active mentor or admin at your establishment to reassign to yet.</p>
   {% else %}
-  <form method="post" action="/admin/enrolments/{{ enrolment.id }}/reassign" style="text-align:left;">
+  <form method="post" action="/admin/enrolments/{{ enrolment.id }}/reassign" class="form-left">
     <div class="field">
       <label for="mentor_id">New mentor</label>
       <select id="mentor_id" name="mentor_id" required>
@@ -23,7 +23,7 @@
         {% endfor %}
       </select>
     </div>
-    <button class="btn btn-primary" type="submit" style="width:100%;">Reassign</button>
+    <button class="btn btn-primary btn-block" type="submit">Reassign</button>
   </form>
   {% endif %}
 </div>
