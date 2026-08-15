@@ -18,7 +18,7 @@
       </td>
       <td>
         {% if r.status != 'in_progress' %}
-        <form method="post" action="/staff/course-requests/{{ r.id }}/status" style="display:inline;">
+        <form method="post" action="/staff/course-requests/{{ r.id }}/status" class="form-inline">
           <input type="hidden" name="status" value="in_progress">
           <button class="btn btn-secondary btn-sm" type="submit">Mark in progress</button>
         </form>
