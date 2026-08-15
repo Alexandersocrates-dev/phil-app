@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ pupil.forename }} {{ pupil.surname }} - Phil{% endblock %}
 {% block content %}
-<p><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
+<p class="back-link"><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Pupils' if user.role == 'admin' else 'My caseload' }}</a></p>
 <div class="card">
   <div class="flex-between">
     <div style="display:flex; align-items:center; gap:14px;">
