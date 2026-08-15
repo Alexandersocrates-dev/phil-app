@@ -3,15 +3,15 @@
 {% block title %}Add a mentor - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<div class="card" style="text-align:center;">
-<div class="icon-badge" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+<div class="card card-center">
+<div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
 <h1>Add a mentor</h1>
 <p class="muted">Creates their account directly for this local build. In production this sends an email invite instead.</p>
-<form method="post" action="/admin/mentors/new" style="text-align:left;">
+<form method="post" action="/admin/mentors/new" class="form-left">
 <div class="field"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
 <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
 <div class="field"><label for="password">Temporary password</label><input type="password" id="password" name="password" required minlength="8"></div>
-<button class="btn btn-primary" type="submit" style="width:100%;">Add mentor</button>
+<button class="btn btn-primary btn-block" type="submit">Add mentor</button>
 </form>
 </div>
 {% endblock %}
