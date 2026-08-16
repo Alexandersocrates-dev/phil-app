@@ -97,17 +97,14 @@
   <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
 </div>
 
-<details class="acc">
-  <summary><span>More admin actions</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
-  <div class="acc-body">
-    <div class="tile-grid">
-      <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
-      <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
-      <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
-      <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
-    </div>
-  </div>
-</details>
+<div class="section-label">More admin actions</div>
+<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Reassigning, permissions and role changes.</p>
+<div class="tile-grid" style="margin-bottom:20px;">
+  <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
+  <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
+  <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
+  <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
+</div>
 
 <div class="card">
   <h2>Mentors and admins</h2>
