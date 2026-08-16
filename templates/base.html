@@ -116,5 +116,13 @@
   {% endif %}
 </nav>
 {% endif %}
+<script>
+document.querySelectorAll('.js-back').forEach(function(el){
+  el.addEventListener('click', function(e){
+    e.preventDefault();
+    history.back();
+  });
+});
+</script>
 </body>
 </html>
