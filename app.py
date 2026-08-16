@@ -34,6 +34,19 @@ def _load_resource_packs():
     return _resource_packs_cache
 
 
+LEGAL_DOCS_PATH = os.path.join(os.path.dirname(__file__), "data", "legal_docs.json")
+_legal_docs_cache = None
+
+
+def _load_legal_docs():
+    global _legal_docs_cache
+    if _legal_docs_cache is None:
+        with open(LEGAL_DOCS_PATH, "r", encoding="utf-8") as f:
+            _legal_docs_cache = json.load(f)
+    return _legal_docs_cache
+
+
+
 PILOT_DAYS = 21
 
 
@@ -2626,6 +2639,29 @@ def session_pdf_download(request):
     if not record or not record["pdf_path"] or not os.path.exists(record["pdf_path"]):
         return Response("Session record not found", status="404 Not Found")
     return pdf_response(record["pdf_path"], "session-record.pdf")
+
+
+_LEGAL_DOC_ROUTES = {
+    "white-paper": ("white_paper", "phil-white-paper.pdf"),
+    "privacy-policy": ("privacy_policy", "phil-privacy-policy.pdf"),
+    "terms-of-service": ("terms_of_service", "phil-terms-of-service.pdf"),
+    "safeguarding-policy": ("safeguarding_policy", "phil-safeguarding-policy-template.pdf"),
+}
+
+
+@router.get("/legal/<doc_slug>")
+def legal_doc_pdf(request):
+    slug = request.params["doc_slug"]
+    entry = _LEGAL_DOC_ROUTES.get(slug)
+    if not entry:
+        return Response("Document not found", status="404 Not Found")
+    key, filename = entry
+    docs = _load_legal_docs()
+    paras = docs.get(key)
+    if not paras:
+        return Response("Document not found", status="404 Not Found")
+    path = pdfgen.legal_doc_pdf(key, paras)
+    return pdf_response(path, filename)
 
 
 # --------------------------------------------------------------------- wsgi --
