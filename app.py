@@ -274,6 +274,50 @@ def logout(request):
     return response
 
 
+@router.get("/account/password")
+def account_password_form(request):
+    user, err = require(request)
+    if err:
+        return err
+    return render("account_password.html", user=user, flash=flash_from_query(request))
+
+
+@router.post("/account/password")
+def account_password_submit(request):
+    user, err = require(request)
+    if err:
+        return err
+
+    current_password = request.field("current_password", "")
+    new_password = request.field("new_password", "")
+    confirm_password = request.field("confirm_password", "")
+
+    if len(new_password) < 8:
+        return with_flash("/account/password", "New password needs at least 8 characters.", "error")
+    if new_password != confirm_password:
+        return with_flash("/account/password", "The two new passwords do not match.", "error")
+    if new_password == current_password:
+        return with_flash("/account/password",
+                          "That is the password you already have. Choose a different one.", "error")
+
+    conn = db.get_conn()
+    try:
+        # Re-authenticate rather than trusting the session alone: without this,
+        # anyone holding a live session token could lock the real owner out of
+        # their own account.
+        if not authlib.authenticate(conn, user["email"], current_password):
+            return with_flash("/account/password", "Current password is not correct.", "error")
+        authlib.set_password(conn, user["id"], new_password)
+        authlib.destroy_other_sessions(conn, user["id"], request.cookie(authlib.SESSION_COOKIE))
+        conn.commit()
+    finally:
+        conn.close()
+
+    home = {"admin": "/admin", "mentor": "/mentor",
+            "parent_carer": "/parent", "phil_staff": "/staff"}.get(user["role"], "/")
+    return with_flash(home, "Password changed. Any other device signed in as you has been signed out.", "ok")
+
+
 # ------------------------------------------------------------------ courses --
 
 @router.get("/courses")
