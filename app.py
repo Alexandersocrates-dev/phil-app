@@ -22,6 +22,17 @@ from pdf import generate as pdfgen
 
 router = Router()
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
+_resource_packs_cache = None
+
+
+def _load_resource_packs():
+    global _resource_packs_cache
+    if _resource_packs_cache is None:
+        with open(RESOURCE_PACKS_PATH, "r", encoding="utf-8") as f:
+            _resource_packs_cache = json.load(f)
+    return _resource_packs_cache
+
 
 PILOT_DAYS = 21
 
@@ -280,6 +291,28 @@ def course_detail(request):
         return Response("Course not found", status="404 Not Found")
     weeks = [dict(w, resources=json.loads(w["resources"] or "[]")) for w in weeks]
     return render("course_detail.html", user=user, course=course, weeks=weeks, flash=flash_from_query(request))
+
+@router.get("/courses/<course_id>/resources/pdf")
+def course_resources_pdf(request):
+    conn = db.get_conn()
+    try:
+        course = conn.execute("SELECT * FROM courses WHERE id=?", (request.params["course_id"],)).fetchone()
+    finally:
+        conn.close()
+    if not course:
+        return Response("Course not found", status="404 Not Found")
+    packs = _load_resource_packs()
+    entry = None
+    course_num = None
+    for k, v in packs.items():
+        if v.get("title") == course["title"]:
+            entry = v
+            course_num = k
+            break
+    if not entry:
+        return Response("Resource pack not available for this course yet", status="404 Not Found")
+    path = pdfgen.resource_pack_pdf(course_num, course["title"], entry.get("items", []))
+    return pdf_response(path, f"resource-pack-{course_num}.pdf")
 
 
 # ------------------------------------------------------------------- mentor --
