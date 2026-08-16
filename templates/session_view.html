@@ -10,6 +10,13 @@
   <h3>Reflection / goal</h3><p>{{ record.reflection_goal }}</p>
   <h3>Mentor notes</h3><p>{{ record.mentor_notes }}</p>
 
+  {% if record.resources_used %}
+  <h3>Resources used</h3>
+  <div class="pill-row">
+  {% for r in record.resources_used.split(', ') %}<span class="pill">{{ r }}</span>{% endfor %}
+  </div>
+  {% endif %}
+
   <div class="safeguard-box {{ 'safeguard-flagged' if record.safeguarding_flag else 'safeguard-clear' }}">
     <h3>{{ 'Safeguarding: flagged' if record.safeguarding_flag else 'Safeguarding: not flagged' }}</h3>
     <p>{{ record.safeguarding_note }}</p>
