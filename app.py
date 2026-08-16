@@ -647,7 +647,7 @@ def admin_mentor_remove_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Mentor removed", f"{mentor['name']} has lost access immediately. Every pupil record and past session they wrote stays exactly as it is.", "/admin", back_label="Admin home")
+    return render_done(user, "Mentor removed", f"{mentor['name']} has lost access immediately. Every pupil record and past session they wrote stays exactly as it is.", "/admin", back_label="Continue")
 
 
 @router.get("/mentor/pupils/<pupil_id>/link-parent")
@@ -1285,7 +1285,7 @@ def new_mentor_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Mentor added", f"{name} can now sign in and start mentoring.", "/admin", back_label="Admin home")
+    return render_done(user, "Mentor added", f"{name} can now sign in and start mentoring.", "/admin", back_label="Continue")
 
 
 @router.get("/admin/session/<record_id>")
@@ -2152,7 +2152,7 @@ def new_course_request_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Request sent", "The Phil team will review your course request.", "/admin", back_label="Admin home")
+    return render_done(user, "Request sent", "The Phil team will review your course request.", "/admin", back_label="Continue")
 
 
 @router.get("/support/new")
