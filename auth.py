@@ -79,3 +79,26 @@ def user_from_token(conn, token):
         (token, db.now()),
     ).fetchone()
     return row
+
+
+def set_password(conn, user_id, new_password):
+    """Rehashes and stores a new password for one user, with a new salt."""
+    password_hash, salt = hash_password(new_password)
+    conn.execute(
+        "UPDATE users SET password_hash = ?, password_salt = ? WHERE id = ?",
+        (password_hash, salt, user_id),
+    )
+
+
+def destroy_other_sessions(conn, user_id, keep_token=None):
+    """Signs a user out everywhere except the session they are using now.
+
+    Changing the stored hash does not touch rows already in the sessions table,
+    so without this anyone already signed in as that user stays signed in for
+    the full SESSION_LIFETIME_DAYS."""
+    if keep_token:
+        conn.execute(
+            "DELETE FROM sessions WHERE user_id = ? AND token != ?", (user_id, keep_token)
+        )
+    else:
+        conn.execute("DELETE FROM sessions WHERE user_id = ?", (user_id,))
