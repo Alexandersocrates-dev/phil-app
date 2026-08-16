@@ -82,15 +82,18 @@
 </div>
 
 <div class="section-label">Day-to-day</div>
+<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Pupils, mentors, the course library and reports.</p>
 <div class="tile-grid" style="margin-bottom:20px;">
   <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><div class="num">{{ pupils|length }}</div><span class="tlabel">Active pupils</span></a>
   <a class="tile" href="/admin/mentors/new"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Add a mentor</span></a>
   <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><div class="num">20</div><span class="tlabel">Course library</span></a>
+  <a class="tile" href="/admin/reports"><div class="ati" style="background:var(--coral-light);">{{ icon_folder(color='var(--coral-dark)') }}</div><span class="tlabel">Reports</span></a>
 </div>
 
 <div class="section-label">Account &amp; establishment</div>
+<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Billing, plan and course requests.</p>
 <div class="tile-grid" style="margin-bottom:20px;">
-  <div class="tile"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><div class="num">{{ mentors|length }}</div><span class="tlabel">Mentors and admins</span></div>
+  <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
   <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
 </div>
 
