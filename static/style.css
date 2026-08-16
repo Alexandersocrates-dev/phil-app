@@ -169,6 +169,8 @@ tbody tr:hover{background:var(--teal-light);}
 .safeguard-box{border-radius:12px; padding:var(--sp-4); margin:var(--sp-4) 0;}
 .safeguard-flagged{background:var(--red-light); border:1px solid var(--red);}
 .safeguard-clear{background:var(--teal-light); border:1px solid var(--teal);}
+.safeguard-box .field label{display:flex; align-items:center; gap:var(--sp-2); font-weight:500; cursor:pointer;}
+.safeguard-box .field input[type="radio"]{width:auto; margin:0; flex-shrink:0; accent-color:var(--teal-dark);}
 
 .flash{padding:var(--sp-3) var(--sp-4); border-radius:10px; margin-bottom:var(--sp-4); font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:var(--sp-3);}
 .flash-error{background:var(--red-light); color:var(--red);}
@@ -317,7 +319,7 @@ details.acc .chev{width:16px; height:16px; stroke:#5F5E5A; transition:transform 
 details.acc[open] .chev{transform:rotate(180deg);}
 details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 
-.note-field{width:100%; border:1.5px solid var(--border); border-radius:8px; padding:var(--sp-2) var(--sp-3); font-size:13px; font-family:inherit; resize:vertical; background:#fff; box-sizing:border-box;}
+.note-field{width:100%; border:1.5px solid var(--border); border-radius:8px; padding:var(--sp-2) var(--sp-3); font-size:14px; font-family:inherit; resize:vertical; background:#fff; box-sizing:border-box;}
 .note-field:focus{outline:none; border-color:var(--teal); box-shadow:0 0 0 3px var(--teal-light);}
 .field-save-hint{font-size:11px; color:var(--muted); margin-top:3px; min-height:14px;}
 .field-save-hint.saved{color:var(--teal-dark); font-weight:600;}
