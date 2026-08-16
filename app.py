@@ -404,7 +404,7 @@ def pupil_profile(request):
         if not pupil:
             return Response("Pupil not found", status="404 Not Found")
         enrolments = conn.execute(
-            """SELECT enrolments.*, courses.title as course_title, courses.id as course_id,
+            """SELECT enrolments.*, courses.id as course_id, courses.title as course_title, courses.id as course_id,
                       users.name as mentor_name
                FROM enrolments
                JOIN courses ON courses.id = enrolments.course_id
@@ -1329,7 +1329,7 @@ def admin_view_session(request):
     conn = db.get_conn()
     try:
         record = conn.execute(
-            """SELECT session_records.*, pupils.forename, pupils.surname, courses.title as course_title,
+            """SELECT session_records.*, pupils.forename, pupils.surname, courses.id as course_id, courses.title as course_title,
                       weeks.title as week_title, weeks.week_number, users.name as mentor_name,
                       pupils.establishment_id as pupil_establishment_id
                FROM session_records
