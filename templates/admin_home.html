@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "_icons.html" import icon_users, icon_user, icon_user_plus, icon_book, icon_edit, icon_folder, icon_file_text, icon_message_circle %}
+{% from "_icons.html" import icon_users, icon_user, icon_user_plus, icon_book, icon_edit, icon_folder, icon_file_text, icon_message_circle, icon_shield %}
 {% block title %}Admin - Phil{% endblock %}
 {% block content %}
 <h1>{{ establishment.name }}</h1>
@@ -96,6 +96,17 @@
   <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
   <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
 </div>
+
+<details class="acc">
+  <summary><span>More admin actions</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+  <div class="acc-body">
+    <div class="tile-grid">
+      <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
+      <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
+      <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
+    </div>
+  </div>
+</details>
 
 <div class="card">
   <h2>Mentors and admins</h2>
