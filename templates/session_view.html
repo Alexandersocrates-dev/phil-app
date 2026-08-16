@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Session record - Phil{% endblock %}
 {% block content %}
-<p><a href="/admin">&larr; Admin home</a></p>
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card">
   <h1>{{ record.forename }} {{ record.surname }} &middot; {{ record.course_title }}</h1>
   <p class="muted">Week {{ record.week_number }}: {{ record.week_title }} &middot; {{ record.date }} &middot; recorded by {{ record.mentor_name }}</p>
