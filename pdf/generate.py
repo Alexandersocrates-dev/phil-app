@@ -10,6 +10,8 @@ reusing this logic rather than rewriting it.
 
 import os
 import datetime
+import re
+import math
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
@@ -445,6 +447,133 @@ def _clean_pdf_text(text):
     return text.replace("\uf0b7", "-").replace("\ue0b7", "-")
 
 
+_STEP_RE = re.compile(r"^(\d+)[.\)]?\s+(.+)$")
+
+
+def _parse_numbered_steps(body):
+    """Pull out numbered lines like '1 Trigger - something happens' or
+    '2. Craving builds: the brain signals it' into short node labels plus
+    the full line for a legend underneath the diagram."""
+    steps = []
+    for line in (body or "").split("\n"):
+        m = _STEP_RE.match(line.strip())
+        if not m:
+            continue
+        num, rest = m.group(1), m.group(2)
+        short = re.split(r"\s[-:]\s|:\s", rest, maxsplit=1)[0].strip()
+        if len(short) > 22:
+            short = short[:20].rstrip() + "..."
+        steps.append({"num": num, "short": short, "full": f"{num}. {rest}"})
+    return steps
+
+
+def _draw_cycle_diagram(c, cx, cy, radius, steps, color=TEAL_DARK):
+    """Draws a circular cycle diagram: numbered nodes arranged in a ring,
+    connected by arrows showing the cycle repeating."""
+    n = len(steps)
+    if n == 0:
+        return
+    node_r = 8.5 * mm
+    for i, step in enumerate(steps):
+        angle = math.pi / 2 - (2 * math.pi * i / n)
+        step["_pos"] = (cx + radius * math.cos(angle), cy + radius * math.sin(angle))
+
+    c.setStrokeColor(color)
+    c.setLineWidth(1.4)
+    for i in range(n):
+        x1, y1 = steps[i]["_pos"]
+        x2, y2 = steps[(i + 1) % n]["_pos"]
+        dx, dy = x2 - x1, y2 - y1
+        dist = math.hypot(dx, dy)
+        if dist == 0:
+            continue
+        ux, uy = dx / dist, dy / dist
+        sx, sy = x1 + ux * node_r * 1.35, y1 + uy * node_r * 1.35
+        ex, ey = x2 - ux * node_r * 1.35, y2 - uy * node_r * 1.35
+        c.line(sx, sy, ex, ey)
+        ah = 2.6 * mm
+        line_angle = math.atan2(ey - sy, ex - sx)
+        left = (ex - ah * math.cos(line_angle - math.radians(28)), ey - ah * math.sin(line_angle - math.radians(28)))
+        right = (ex - ah * math.cos(line_angle + math.radians(28)), ey - ah * math.sin(line_angle + math.radians(28)))
+        p = c.beginPath()
+        p.moveTo(ex, ey)
+        p.lineTo(*left)
+        p.lineTo(*right)
+        p.close()
+        c.setFillColor(color)
+        c.drawPath(p, fill=1, stroke=0)
+
+    for step in steps:
+        nx, ny = step["_pos"]
+        c.setFillColor(color)
+        c.circle(nx, ny, node_r, fill=1, stroke=0)
+        c.setFillColor(CARD)
+        c.setFont("Helvetica-Bold", 10)
+        c.drawCentredString(nx, ny - 3.3, step["num"])
+        c.setFillColor(INK)
+        c.setFont("Helvetica-Bold", 7.3)
+        label_y = ny - node_r - 4.2 * mm if ny <= cy + 1 else ny + node_r + 2.4 * mm
+        c.drawCentredString(nx, label_y, step["short"])
+
+
+_SCALE_RE = re.compile(r"^(\d+)\s+(.+)$")
+
+
+def _parse_scale_points(body):
+    points = []
+    for line in (body or "").split("\n"):
+        m = _SCALE_RE.match(line.strip())
+        if m:
+            points.append({"num": int(m.group(1)), "label": m.group(2).strip()})
+    return points
+
+
+def _draw_scale_diagram(c, x, y, width, points, color_low=TEAL, color_high=RED):
+    """Draws a horizontal numbered scale/thermometer bar, low to high,
+    colour-graded, with each point's label beneath its tick."""
+    if not points:
+        return
+    points = sorted(points, key=lambda p: p["num"])
+    n = len(points)
+    bar_h = 9 * mm
+    seg_w = width / n
+    for i, pt in enumerate(points):
+        t = i / max(1, n - 1)
+        col = HexColor(_blend_hex(color_low, color_high, t))
+        c.setFillColor(col)
+        c.rect(x + i * seg_w, y - bar_h, seg_w, bar_h, fill=1, stroke=0)
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.75)
+    c.rect(x, y - bar_h, width, bar_h, fill=0, stroke=1)
+    for i, pt in enumerate(points):
+        cx_ = x + i * seg_w + seg_w / 2
+        c.setFillColor(CARD if i / max(1, n - 1) > 0.35 else INK)
+        c.setFont("Helvetica-Bold", 8.5)
+        c.drawCentredString(cx_, y - bar_h / 2 - 3, str(pt["num"]))
+    label_y = y - bar_h - 5 * mm
+    c.setFillColor(INK)
+    c.setFont("Helvetica", 6.6)
+    for i, pt in enumerate(points):
+        cx_ = x + i * seg_w + seg_w / 2
+        label = pt["label"]
+        if len(label) > 14:
+            label = label[:12].rstrip() + "..."
+        c.drawCentredString(cx_, label_y, label)
+
+
+def _blend_hex(c1, c2, t):
+    r1, g1, b1 = c1.red, c1.green, c1.blue
+    r2, g2, b2 = c2.red, c2.green, c2.blue
+    r = r1 + (r2 - r1) * t
+    g = g1 + (g2 - g1) * t
+    b = b1 + (b2 - b1) * t
+    return "#%02X%02X%02X" % (int(r * 255), int(g * 255), int(b * 255))
+
+
+CYCLE_KEYWORDS = ("cycle diagram", "cycle chart")
+SCALE_KEYWORDS = ("thermometer", "scale")
+
+
 def resource_pack_pdf(course_num, course_title, items):
     """
     Generates the full downloadable resource pack for a course, containing
@@ -482,20 +611,60 @@ def resource_pack_pdf(course_num, course_title, items):
     header()
 
     for item in items:
-        if state["y"] < margin + 28 * mm:
+        name = item.get("name", "")
+        name_lower = name.lower()
+        is_cycle = any(k in name_lower for k in CYCLE_KEYWORDS)
+        is_scale = any(k in name_lower for k in SCALE_KEYWORDS)
+
+        needed = 140 * mm if is_cycle else (55 * mm if is_scale else 28 * mm)
+        if state["y"] < margin + needed:
             new_page()
 
         c.setFillColor(TEAL_DARK)
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(margin, state["y"], _clean_pdf_text(item.get("name", "")))
+        c.drawString(margin, state["y"], _clean_pdf_text(name))
         state["y"] -= 7 * mm
 
         body = _clean_pdf_text(item.get("body", ""))
-        for para in body.split("\n"):
-            if state["y"] < margin + 14 * mm:
-                new_page()
-            state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-        state["y"] -= 7 * mm
+
+        if is_cycle:
+            steps = _parse_numbered_steps(body)
+            intro = body.split("\n")[0] if body else ""
+            if intro and not _STEP_RE.match(intro.strip()):
+                state["y"] = _wrap(c, intro, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+                state["y"] -= 3 * mm
+            if steps:
+                diagram_h = 76 * mm
+                cx = margin + max_width / 2
+                cy = state["y"] - 37 * mm
+                radius = 22 * mm
+                _draw_cycle_diagram(c, cx, cy, radius, steps)
+                state["y"] -= diagram_h + 6 * mm
+                for step in steps:
+                    state["y"] = _wrap(c, step["full"], margin, state["y"], max_width, font="Helvetica", size=8.5, leading=11.5, color=MUTED)
+                state["y"] -= 3 * mm
+            else:
+                for para in body.split("\n"):
+                    state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+                state["y"] -= 7 * mm
+
+        elif is_scale:
+            points = _parse_scale_points(body)
+            intro_lines = [ln for ln in body.split("\n") if not _SCALE_RE.match(ln.strip())]
+            for ln in intro_lines:
+                state["y"] = _wrap(c, ln, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            if points:
+                _draw_scale_diagram(c, margin, state["y"], max_width, points)
+                state["y"] -= 22 * mm
+            state["y"] -= 4 * mm
+
+        else:
+            for para in body.split("\n"):
+                if state["y"] < margin + 14 * mm:
+                    new_page()
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 7 * mm
 
     c.showPage()
     c.save()
