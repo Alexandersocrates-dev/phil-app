@@ -30,9 +30,16 @@ module.exports = [
         "resources": [
           "Body map handout",
           "Anger cycle diagram",
-          "1–5 mood scale card"
+          "Mood scale card"
         ],
-        "home": "Ask the pupil to show you where the anger shows up in the body, in the pupil's own words, no fixing, just naming. Try it together with a recent moment of your own frustration, so it feels shared rather than a test."
+        "home": "Ask the pupil to show you where the anger shows up in the body, in the pupil's own words, no fixing, just naming. Try it together with a recent moment of your own frustration, so it feels shared rather than a test.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Spotting my triggers",
@@ -43,10 +50,17 @@ module.exports = [
         "reflect": "Which trigger comes up most at school? Agree to track one specific trigger this week using a simple tally on a card.",
         "lookfor": "Some pupils find it easier to identify triggers through drawing or examples from TV or games rather than direct discussion, adapt the format if needed.",
         "resources": [
-          "Trigger list template",
+          "Trigger list",
           "Tally tracking card"
         ],
-        "home": "Quietly notice one thing that seems to trigger the pupil at home this week, and mention it gently: 'I noticed that seemed to bother you, was I right?' This builds trigger awareness outside school too."
+        "home": "Quietly notice one thing that seems to trigger the pupil at home this week, and mention it gently: 'I noticed that seemed to bother you, was I right?' This builds trigger awareness outside school too.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My calm-down toolkit",
@@ -58,9 +72,16 @@ module.exports = [
         "lookfor": "Strategies only work if rehearsed when calm, resist the urge to introduce them for the first time during an actual incident.",
         "resources": [
           "Calm-down strategy cards",
-          "Signal or exit card for classroom use"
+          "My signal card"
         ],
-        "home": "Practise the breathing technique together for two minutes at a calm moment, not mid-argument, so it becomes a rehearsed habit rather than something new when it's needed."
+        "home": "Practise the breathing technique together for two minutes at a calm moment, not mid-argument, so it becomes a rehearsed habit rather than something new when it's needed.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Practising in the moment",
@@ -74,7 +95,14 @@ module.exports = [
           "Restorative conversation prompt card",
           "Role-play scenario cards"
         ],
-        "home": "If a small frustration comes up at home this week, pause and ask 'what could we try?' before jumping in, give the pupil the chance to try the strategy first."
+        "home": "If a small frustration comes up at home this week, pause and ask 'what could we try?' before jumping in, give the pupil the chance to try the strategy first.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -85,10 +113,17 @@ module.exports = [
         "reflect": "What's one thing you're most confident about now? What still feels hard?",
         "lookfor": "Agree a review point (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
-          "One-page support plan template",
+          "My hot and cold plan",
           "Copy for class teacher or pastoral file"
         ],
-        "home": "Read through the one-page plan together and ask what part the pupil feels most confident about. Keep a copy somewhere visible at home."
+        "home": "Read through the one-page plan together and ask what part the pupil feels most confident about. Keep a copy somewhere visible at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -124,7 +159,14 @@ module.exports = [
           "Rule card set",
           "Notice-and-note tracking card"
         ],
-        "home": "Pick one household rule together and ask what makes it feel fair or unfair. Listening without arguing back matters more than reaching the 'right' answer."
+        "home": "Pick one household rule together and ask what makes it feel fair or unfair. Listening without arguing back matters more than reaching the 'right' answer.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "The choices game",
@@ -137,7 +179,14 @@ module.exports = [
         "resources": [
           "Choices game scenario cards"
         ],
-        "home": "Notice one choice-and-consequence moment together this week ('if we leave now, we won't be late') and keep it factual, not a lecture."
+        "home": "Notice one choice-and-consequence moment together this week ('if we leave now, we won't be late') and keep it factual, not a lecture.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Listening and following instructions",
@@ -150,7 +199,14 @@ module.exports = [
         "resources": [
           "First/then visual cue cards"
         ],
-        "home": "Try 'first, then' language for one instruction this week ('first shoes on, then we can go') and give a short pause before expecting a response."
+        "home": "Try 'first, then' language for one instruction this week ('first shoes on, then we can go') and give a short pause before expecting a response.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "When I disagree",
@@ -163,7 +219,14 @@ module.exports = [
         "resources": [
           "Assertive disagreement script card"
         ],
-        "home": "If the pupil disagrees with something at home, prompt: 'can you tell me that a different way?' and praise any attempt at a calmer version, even an imperfect one."
+        "home": "If the pupil disagrees with something at home, prompt: 'can you tell me that a different way?' and praise any attempt at a calmer version, even an imperfect one.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My agreement",
@@ -176,7 +239,14 @@ module.exports = [
         "resources": [
           "Behaviour agreement template"
         ],
-        "home": "Read the agreement together and ask what support the pupil would like from you at home to help keep it."
+        "home": "Read the agreement together and ask what support the pupil would like from you at home to help keep it.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -213,7 +283,14 @@ module.exports = [
           "Zones chart",
           "Emotion word cards"
         ],
-        "home": "Try asking 'what zone are you in?' instead of 'what's wrong?' this week, it can feel easier to answer."
+        "home": "Try asking 'what zone are you in?' instead of 'what's wrong?' this week, it can feel easier to answer.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My body and my feelings",
@@ -226,7 +303,14 @@ module.exports = [
         "resources": [
           "Body map handout"
         ],
-        "home": "Next time something happens, notice together where the feeling shows up in the body, 'my stomach felt tight' is a great start."
+        "home": "Next time something happens, notice together where the feeling shows up in the body, 'my stomach felt tight' is a great start.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Calming strategies",
@@ -239,7 +323,14 @@ module.exports = [
         "resources": [
           "Grounding technique cards"
         ],
-        "home": "Practise one grounding technique together at a calm moment so it's familiar before it's actually needed."
+        "home": "Practise one grounding technique together at a calm moment so it's familiar before it's actually needed.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Riding the wave",
@@ -252,7 +343,14 @@ module.exports = [
         "resources": [
           "Wave diagram template"
         ],
-        "home": "When a strong feeling passes, point it out afterwards: 'that felt big, and it did pass', reinforcing that emotions rise and fall."
+        "home": "When a strong feeling passes, point it out afterwards: 'that felt big, and it did pass', reinforcing that emotions rise and fall.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My emotional toolkit",
@@ -265,7 +363,14 @@ module.exports = [
         "resources": [
           "Personal toolkit template"
         ],
-        "home": "Look at the pupil's toolkit together and agree one way you can remind the pupil of it at home, like a note on the fridge."
+        "home": "Look at the pupil's toolkit together and agree one way you can remind the pupil of it at home, like a note on the fridge.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -300,7 +405,14 @@ module.exports = [
         "resources": [
           "Restorative question prompt card"
         ],
-        "home": "Ask what happened using 'what happened, and how did that feel?' rather than 'whose fault was it?'"
+        "home": "Ask what happened using 'what happened, and how did that feel?' rather than 'whose fault was it?'",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Seeing it their way",
@@ -313,7 +425,14 @@ module.exports = [
         "resources": [
           "Perspective-taking worksheet"
         ],
-        "home": "Gently ask 'why do you think they did that?' about a recent friendship issue, practising perspective-taking without judgement."
+        "home": "Gently ask 'why do you think they did that?' about a recent friendship issue, practising perspective-taking without judgement.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Bullying: bystander, target, or both",
@@ -326,7 +445,14 @@ module.exports = [
         "resources": [
           "Roles-in-bullying handout"
         ],
-        "home": "Let the pupil know it's always OK to tell you if something's happening with friends, and that you'll listen first before acting."
+        "home": "Let the pupil know it's always OK to tell you if something's happening with friends, and that you'll listen first before acting.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Sorting it out",
@@ -339,7 +465,14 @@ module.exports = [
         "resources": [
           "I statement card"
         ],
-        "home": "Practise an 'I felt X when Y happened' sentence together for something small at home, so the structure feels familiar."
+        "home": "Practise an 'I felt X when Y happened' sentence together for something small at home, so the structure feels familiar.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Building better relationships",
@@ -352,7 +485,14 @@ module.exports = [
         "resources": [
           "Social goals plan template"
         ],
-        "home": "Ask about one positive step with friends this week and celebrate it, however small."
+        "home": "Ask about one positive step with friends this week and celebrate it, however small.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -387,7 +527,14 @@ module.exports = [
         "resources": [
           "Tally card"
         ],
-        "home": "Notice together, without judgement, one moment this week the pupil spoke over someone at home, just noticing, not correcting."
+        "home": "Notice together, without judgement, one moment this week the pupil spoke over someone at home, just noticing, not correcting.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Impulse and attention",
@@ -400,7 +547,14 @@ module.exports = [
         "resources": [
           "Stop-think-choose technique card"
         ],
-        "home": "Practise 'pause, notice, choose' with a fun game at home, like waiting your turn to answer a question."
+        "home": "Practise 'pause, notice, choose' with a fun game at home, like waiting your turn to answer a question.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Getting attention the right way",
@@ -413,7 +567,14 @@ module.exports = [
         "resources": [
           "Signal card options"
         ],
-        "home": "Agree a home version of the pupil's signal, a hand up or a word, for when the pupil wants your attention while you're busy."
+        "home": "Agree a home version of the pupil's signal, a hand up or a word, for when the pupil wants your attention while you're busy.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Practising self-control",
@@ -426,7 +587,14 @@ module.exports = [
         "resources": [
           "Self-monitoring chart"
         ],
-        "home": "Ask the pupil to rate how control felt in one moment this week, out of 5, just like the school chart."
+        "home": "Ask the pupil to rate how control felt in one moment this week, out of 5, just like the school chart.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My classroom plan",
@@ -437,10 +605,17 @@ module.exports = [
         "reflect": "What's the one strategy you're most likely to keep using?",
         "lookfor": "Agree a review date to check whether the classroom system is still being used and is still effective.",
         "resources": [
-          "Finalised self-monitoring chart",
+          "Self-monitoring chart",
           "Teacher briefing note"
         ],
-        "home": "Ask what's helped most from the pupil's chart, and mention you're proud of the effort, not just the result."
+        "home": "Ask what's helped most from the pupil's chart, and mention you're proud of the effort, not just the result.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -461,7 +636,7 @@ module.exports = [
       "Build confidence gradually through small, achievable steps",
       "Agree a realistic plan for maintaining or rebuilding attendance"
     ],
-    "approachNote": "This module follows a graded-exposure approach informed by cognitive behavioural therapy and the DfE's statutory guidance Working together to improve school attendance, which addresses emotionally based school avoidance directly and emphasises small, achievable steps over forcing full attendance immediately. It also reflects the DfE's Mental health and behaviour in schools advice on recognising anxiety-driven behaviour, and is designed to run alongside close work with pastoral and SENCO staff. Supporting a pupil back into regular attendance also contributes to the attendance evidence considered under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "This module follows a graded-exposure approach (building tolerance through small, manageable steps rather than avoiding the trigger) informed by cognitive behavioural therapy and the DfE's statutory guidance Working together to improve school attendance, which addresses emotionally based school avoidance directly and emphasises small, achievable steps over forcing full attendance immediately. It also reflects the DfE's Mental health and behaviour in schools advice on recognising anxiety-driven behaviour, and is designed to run alongside close work with pastoral and SENCO staff. Supporting a pupil back into regular attendance also contributes to the attendance evidence considered under Ofsted's behaviour and attitudes judgement.",
     "relatedModule": "Social withdrawal (Module 9)",
     "weeks": [
       {
@@ -473,9 +648,16 @@ module.exports = [
         "reflect": "What's one thing that makes your worry feel a bit smaller?",
         "lookfor": "This session should feel validating, not diagnostic, avoid over-questioning if the pupil seems overwhelmed.",
         "resources": [
-          "Worry thermometer handout"
+          "Worry thermometer"
         ],
-        "home": "Ask what number the worry is on today, using the pupil's thermometer language, rather than 'are you okay?'"
+        "home": "Ask what number the worry is on today, using the pupil's thermometer language, rather than 'are you okay?'",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Mapping my avoidance",
@@ -488,7 +670,14 @@ module.exports = [
         "resources": [
           "Avoidance ladder template"
         ],
-        "home": "Look at the avoidance ladder together if the pupil is happy to share it, and ask which step feels smallest."
+        "home": "Look at the avoidance ladder together if the pupil is happy to share it, and ask which step feels smallest.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Small steps",
@@ -501,7 +690,14 @@ module.exports = [
         "resources": [
           "Step-planning worksheet"
         ],
-        "home": "Support the agreed first step this week, just showing up counts as success, however it feels."
+        "home": "Support the agreed first step this week, just showing up counts as success, however it feels.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Calming my body",
@@ -514,7 +710,14 @@ module.exports = [
         "resources": [
           "Grounding technique card"
         ],
-        "home": "Practise the grounding technique together at home so it's familiar before a harder morning."
+        "home": "Practise the grounding technique together at home so it's familiar before a harder morning.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My return-to-school plan",
@@ -525,9 +728,16 @@ module.exports = [
         "reflect": "What's the one thing that's helped most so far?",
         "lookfor": "This type of plan needs regular review, weekly or fortnightly, rather than a single course, build in a clear next check-in date.",
         "resources": [
-          "Support plan template"
+          "My return-to-school plan"
         ],
-        "home": "Read the plan together and ask what would help most from you specifically."
+        "home": "Read the plan together and ask what would help most from you specifically.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -562,7 +772,14 @@ module.exports = [
         "resources": [
           "Focus timeline template"
         ],
-        "home": "Ask about one moment this week focus wandered during homework, without frustration, just curious."
+        "home": "Ask about one moment this week focus wandered during homework, without frustration, just curious.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What switches me off",
@@ -575,7 +792,14 @@ module.exports = [
         "resources": [
           "Disengagement trigger cards"
         ],
-        "home": "Notice which trigger, tired, bored, distracted, shows up most during homework time at home."
+        "home": "Notice which trigger, tired, bored, distracted, shows up most during homework time at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Tools to stay on track",
@@ -588,7 +812,14 @@ module.exports = [
         "resources": [
           "Chunking checklist template"
         ],
-        "home": "Try the chosen focus strategy together for one piece of homework this week."
+        "home": "Try the chosen focus strategy together for one piece of homework this week.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Setting goals that matter",
@@ -601,7 +832,14 @@ module.exports = [
         "resources": [
           "Goal-mapping worksheet"
         ],
-        "home": "Ask how tonight's homework connects to something the pupil cares about, even a loose link helps."
+        "home": "Ask how tonight's homework connects to something the pupil cares about, even a loose link helps.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My engagement plan",
@@ -614,7 +852,14 @@ module.exports = [
         "resources": [
           "Engagement plan template"
         ],
-        "home": "Read the plan together and ask what's changed since the start of the course."
+        "home": "Read the plan together and ask what's changed since the start of the course.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -649,7 +894,14 @@ module.exports = [
         "resources": [
           "Trusted-adult discussion prompts"
         ],
-        "home": "Ask about an adult, in or out of school, the pupil trusts, and what makes that relationship feel good."
+        "home": "Ask about an adult, in or out of school, the pupil trusts, and what makes that relationship feel good.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Seeing the adult's side",
@@ -660,9 +912,16 @@ module.exports = [
         "reflect": "Does this change how you see what happened, even slightly?",
         "lookfor": "Balance this carefully, the goal is perspective, not making the pupil feel at fault for an adult's poor handling of a situation.",
         "resources": [
-          "Perspective-taking worksheet, adapted for staff relationships"
+          "Perspective-taking worksheet (staff)"
         ],
-        "home": "Gently point out a moment where an adult, including you, was under pressure, to build the same perspective-taking at home."
+        "home": "Gently point out a moment where an adult, including you, was under pressure, to build the same perspective-taking at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Communicating respectfully",
@@ -675,7 +934,14 @@ module.exports = [
         "resources": [
           "Respectful disagreement script card"
         ],
-        "home": "Practise the respectful-disagreement script on something small at home this week, like bedtime."
+        "home": "Practise the respectful-disagreement script on something small at home this week, like bedtime.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Repair and restore",
@@ -688,7 +954,14 @@ module.exports = [
         "resources": [
           "Restorative conversation prompt card"
         ],
-        "home": "If there's been a difficult moment at home, model a short repair conversation yourself so the pupil can see how it works."
+        "home": "If there's been a difficult moment at home, model a short repair conversation yourself so the pupil can see how it works.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My working relationship plan",
@@ -701,7 +974,14 @@ module.exports = [
         "resources": [
           "Working relationship plan template"
         ],
-        "home": "Ask what one change the pupil is hopeful about, and how you can support it at home."
+        "home": "Ask what one change the pupil is hopeful about, and how you can support it at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -734,9 +1014,16 @@ module.exports = [
         "reflect": "Is there anything about school socially that feels hard at the moment? Only ask if the pupil seems ready.",
         "lookfor": "Do not rush this session, for withdrawn pupils, trust-building may need to extend beyond one session before real progress is possible.",
         "resources": [
-          "Choice of low-pressure activity materials"
+          "Low-pressure activity ideas"
         ],
-        "home": "Spend a few minutes doing something low-pressure together, like a shared activity, without pushing conversation about friends."
+        "home": "Spend a few minutes doing something low-pressure together, like a shared activity, without pushing conversation about friends.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What's holding me back",
@@ -749,7 +1036,14 @@ module.exports = [
         "resources": [
           "Barriers-to-connecting card sort"
         ],
-        "home": "If the pupil is ready, gently ask what feels hardest about socialising, and just listen without trying to fix it."
+        "home": "If the pupil is ready, gently ask what feels hardest about socialising, and just listen without trying to fix it.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Small steps to connect",
@@ -762,7 +1056,14 @@ module.exports = [
         "resources": [
           "Conversation starter cards"
         ],
-        "home": "Practise the conversation starter with you first, so it feels rehearsed before trying it at school."
+        "home": "Practise the conversation starter with you first, so it feels rehearsed before trying it at school.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Building my circle",
@@ -775,7 +1076,14 @@ module.exports = [
         "resources": [
           "Circle-of-support mapping worksheet"
         ],
-        "home": "Ask if there's a club or activity outside school the pupil would like to try, even just once."
+        "home": "Ask if there's a club or activity outside school the pupil would like to try, even just once.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My connection plan",
@@ -788,7 +1096,14 @@ module.exports = [
         "resources": [
           "Connection plan template"
         ],
-        "home": "Ask what's felt most different since the start of the course, however small."
+        "home": "Ask what's felt most different since the start of the course, however small.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -823,7 +1138,14 @@ module.exports = [
         "resources": [
           "Incident timeline template"
         ],
-        "home": "Talk through a recent incident calmly, focusing on what happened before it, not what happened after."
+        "home": "Talk through a recent incident calmly, focusing on what happened before it, not what happened after.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What was I feeling",
@@ -837,7 +1159,14 @@ module.exports = [
           "Body map handout",
           "Feelings scale"
         ],
-        "home": "Notice together what feeling usually comes right before frustration builds at home too."
+        "home": "Notice together what feeling usually comes right before frustration builds at home too.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Alternative outlets",
@@ -848,9 +1177,16 @@ module.exports = [
         "reflect": "Which alternative would you actually reach for in the moment?",
         "lookfor": "The replacement needs to be immediately accessible during a real trigger, agree the practical logistics, such as where it's kept and how it's requested, with the class teacher.",
         "resources": [
-          "Sample sensory or physical outlet items, such as a stress ball or scrap paper"
+          "Safe outlet ideas"
         ],
-        "home": "Keep the chosen safe outlet, like a stress ball or paper to tear, somewhere accessible at home."
+        "home": "Keep the chosen safe outlet, like a stress ball or paper to tear, somewhere accessible at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Making it right",
@@ -863,7 +1199,14 @@ module.exports = [
         "resources": [
           "Restorative conversation prompt card"
         ],
-        "home": "If something's been damaged at home, involve the pupil in putting it right together, calmly and without shame."
+        "home": "If something's been damaged at home, involve the pupil in putting it right together, calmly and without shame.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan",
@@ -874,9 +1217,16 @@ module.exports = [
         "reflect": "What's the one part of this plan you feel most confident about?",
         "lookfor": "Agree a review point and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
-          "One-page prevention and response plan template"
+          "Prevention and response plan template"
         ],
-        "home": "Read the plan together and agree where the safe outlet will be kept at home."
+        "home": "Read the plan together and agree where the safe outlet will be kept at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -909,10 +1259,17 @@ module.exports = [
         "reflect": "Which word did you find yourself reaching for this week? Agree to silently name one moment of irritation before it grows, without needing to act on it yet.",
         "lookfor": "Watch for pupils who can only access 'fine' or 'angry' as options, model naming smaller, milder feelings first to widen the vocabulary.",
         "resources": [
-          "Anger thermometer handout",
+          "Anger thermometer",
           "Feeling word cards"
         ],
-        "home": "Notice out loud when you're mildly annoyed this week ('I'm a bit frustrated, not furious') so the pupil sees the wider vocabulary modelled at home too."
+        "home": "Notice out loud when you're mildly annoyed this week ('I'm a bit frustrated, not furious') so the pupil sees the wider vocabulary modelled at home too.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What sets me off",
@@ -923,9 +1280,16 @@ module.exports = [
         "reflect": "Which column has the most triggers, and which single trigger comes up most? Agree to track that one this week.",
         "lookfor": "Some pupils may reveal home stressors while mapping triggers, handle sensitively and follow your school's safeguarding procedure if anything raises concern.",
         "resources": [
-          "Triggers map template"
+          "Triggers map"
         ],
-        "home": "If something at home seems to be a trigger, ask gently rather than dismissing it, 'I noticed that seemed to frustrate you, want to tell me about it?'"
+        "home": "If something at home seems to be a trigger, ask gently rather than dismissing it, 'I noticed that seemed to frustrate you, want to tell me about it?'",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "The gap between feeling and doing",
@@ -939,7 +1303,14 @@ module.exports = [
           "STOP technique card",
           "Role-play scenario cards"
         ],
-        "home": "Practise the STOP technique together for two minutes at a calm moment, so it's a rehearsed habit rather than something new when it's actually needed."
+        "home": "Practise the STOP technique together for two minutes at a calm moment, so it's a rehearsed habit rather than something new when it's actually needed.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Speaking up without blowing up",
@@ -950,10 +1321,17 @@ module.exports = [
         "reflect": "Which assertive phrase felt most natural to say? Agree to try it once at school this week.",
         "lookfor": "Some pupils confuse assertiveness with rudeness, reinforce that tone and body language matter as much as the words chosen.",
         "resources": [
-          "Passive / aggressive / assertive comparison cards",
+          "Passive / aggressive / assertive cards",
           "Assertive phrase bank"
         ],
-        "home": "If a small frustration comes up at home this week, model an assertive phrase yourself ('I'm getting annoyed, can we pause?') so the pupil hears it used naturally."
+        "home": "If a small frustration comes up at home this week, model an assertive phrase yourself ('I'm getting annoyed, can we pause?') so the pupil hears it used naturally.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -964,10 +1342,17 @@ module.exports = [
         "reflect": "What's one thing you're most confident about now? What still feels hard?",
         "lookfor": "Agree a review point (two to three weeks later) rather than ending support abruptly.",
         "resources": [
-          "One-page anger-management plan template",
+          "My anger-management plan",
           "Copy for class teacher or pastoral file"
         ],
-        "home": "Read through the plan together and ask which part the pupil feels most confident about. Keep a copy somewhere visible at home."
+        "home": "Read through the plan together and ask which part the pupil feels most confident about. Keep a copy somewhere visible at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1002,7 +1387,14 @@ module.exports = [
         "resources": [
           "Attendance story template"
         ],
-        "home": "Try to understand rather than immediately correct, ask what's making mornings hard this week, and listen before responding."
+        "home": "Try to understand rather than immediately correct, ask what's making mornings hard this week, and listen before responding.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What's pulling me away from school",
@@ -1015,7 +1407,14 @@ module.exports = [
         "resources": [
           "Push/pull factor card set"
         ],
-        "home": "Notice what seems to make attendance easier or harder this week, without pressure, small practical patterns matter more than a single conversation, and the pattern may not be about mornings at all."
+        "home": "Notice what seems to make attendance easier or harder this week, without pressure, small practical patterns matter more than a single conversation, and the pattern may not be about mornings at all.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What school could give me",
@@ -1028,7 +1427,14 @@ module.exports = [
         "resources": [
           "Reasons-to-be-here mapping sheet"
         ],
-        "home": "Ask what or who the pupil is looking forward to seeing at school this week, and encourage that connection specifically."
+        "home": "Ask what or who the pupil is looking forward to seeing at school this week, and encourage that connection specifically.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Solving my biggest barrier",
@@ -1041,7 +1447,14 @@ module.exports = [
         "resources": [
           "Barrier-specific action plan template"
         ],
-        "home": "Support whichever specific change was agreed this week, that might mean an adjusted routine, transport, or something else entirely, consistency in following through matters more than what the change actually is."
+        "home": "Support whichever specific change was agreed this week, that might mean an adjusted routine, transport, or something else entirely, consistency in following through matters more than what the change actually is.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -1053,9 +1466,16 @@ module.exports = [
         "lookfor": "Agree a review point with the attendance team, and loop in the Education Welfare Officer if statutory thresholds are a concern.",
         "resources": [
           "Graded attendance plan template",
-          "Copy for the attendance file"
+          "Attendance file note"
         ],
-        "home": "Read through the plan together and agree how you'll support the first small target, consistency at home makes the biggest difference here."
+        "home": "Read through the plan together and agree how you'll support the first small target, consistency at home makes the biggest difference here.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1078,7 +1498,7 @@ module.exports = [
       "Reduce frequency of use, or stay vape-free, using an agreed personal plan",
       "Know who to go to for ongoing support, without fear of blanket punishment"
     ],
-    "approachNote": "Sessions use a non-judgemental, harm-reduction and motivational-interviewing style rather than a lecture on rules, research shows shame-based approaches push vaping further underground rather than reducing it. The course reflects DfE's wider tobacco and vaping strategy and NHS Smokefree guidance, and supports the Personal Development judgement in Ofsted's Education Inspection Framework, which expects schools to help pupils understand risks to their physical health. Where a pupil discloses supply to other pupils, follow your school's usual safeguarding and behaviour procedures alongside this course.",
+    "approachNote": "Sessions use a non-judgemental, harm-reduction and motivational-interviewing style (guiding the pupil to find their own reasons for change, rather than being told what to do) rather than a lecture on rules, research shows shame-based approaches push vaping further underground rather than reducing it. The course reflects DfE's wider tobacco and vaping strategy and NHS Smokefree guidance, and supports the Personal Development judgement in Ofsted's Education Inspection Framework, which expects schools to help pupils understand risks to their physical health. Where a pupil discloses supply to other pupils, follow your school's usual safeguarding and behaviour procedures alongside this course.",
     "relatedModule": "Anxiety and avoidance (Module 6)",
     "weeks": [
       {
@@ -1094,7 +1514,14 @@ module.exports = [
           "Nicotine cycle diagram",
           "Where am I now scale"
         ],
-        "home": "If this comes up naturally, ask an open, curious question like 'what do you know about what's actually in a vape?' rather than starting with rules, this keeps the door open for honest conversation."
+        "home": "If this comes up naturally, ask an open, curious question like 'what do you know about what's actually in a vape?' rather than starting with rules, this keeps the door open for honest conversation.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My triggers and social pressure",
@@ -1108,7 +1535,14 @@ module.exports = [
           "Trigger map template",
           "Trigger difficulty ranking card"
         ],
-        "home": "Notice, without commenting, any moments this week where the pupil seems to be around vaping-related pressure (friends, social media). This is for your awareness, not to raise with the pupil unless the pupil brings it up."
+        "home": "Notice, without commenting, any moments this week where the pupil seems to be around vaping-related pressure (friends, social media). This is for your awareness, not to raise with the pupil unless the pupil brings it up.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Refusal skills that don't feel awkward",
@@ -1122,7 +1556,14 @@ module.exports = [
           "Refusal script cards",
           "Role-play offer scenario cards"
         ],
-        "home": "No specific task this week, the focus is on the pupil trying something with friends, which works best without a parent watching for it directly."
+        "home": "No specific task this week, the focus is on the pupil trying something with friends, which works best without a parent watching for it directly.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Cutting down or staying vape-free",
@@ -1136,7 +1577,14 @@ module.exports = [
           "Reduction strategy cards",
           "Habit-swap prompt card"
         ],
-        "home": "If the pupil mentions trying something different this week, respond with simple acknowledgement rather than a big reaction either way, this keeps the door open for the pupil to keep talking."
+        "home": "If the pupil mentions trying something different this week, respond with simple acknowledgement rather than a big reaction either way, this keeps the door open for the pupil to keep talking.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and who to go to",
@@ -1150,7 +1598,14 @@ module.exports = [
           "One-page vaping support plan",
           "Copy for pastoral file"
         ],
-        "home": "Read through the plan together if the pupil is happy to share it, and make sure the pupil knows who at school to go to, this matters more than any single conversation about the vaping itself."
+        "home": "Read through the plan together if the pupil is happy to share it, and make sure the pupil knows who at school to go to, this matters more than any single conversation about the vaping itself.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1188,7 +1643,14 @@ module.exports = [
           "My day timeline template",
           "What is a young carer? briefing card"
         ],
-        "home": "No specific task this week, simply be aware that home routines may be more complex than usual, and keep communication with school open if anything changes."
+        "home": "No specific task this week, simply be aware that home routines may be more complex than usual, and keep communication with school open if anything changes.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Balancing my time",
@@ -1202,7 +1664,14 @@ module.exports = [
           "Time balance chart",
           "Weekly activity card set"
         ],
-        "home": "If it feels appropriate, ask the pupil what part of the week feels busiest, this is for understanding, not to add anything extra to the pupil's plate."
+        "home": "If it feels appropriate, ask the pupil what part of the week feels busiest, this is for understanding, not to add anything extra to the pupil's plate.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "What helps me cope",
@@ -1216,7 +1685,14 @@ module.exports = [
           "What helps me list template",
           "Five-minute reset ideas card"
         ],
-        "home": "If the pupil mentions wanting a small moment of downtime, support this where you can, even five minutes protected and uninterrupted can matter."
+        "home": "If the pupil mentions wanting a small moment of downtime, support this where you can, even five minutes protected and uninterrupted can matter.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Getting support",
@@ -1230,7 +1706,14 @@ module.exports = [
           "My support network map",
           "Local young carers services info card"
         ],
-        "home": "If comfortable, let the pupil know the pupil's school has staff who understand caring roles and are there if things ever feel like too much, this reassurance matters more coming from home too."
+        "home": "If comfortable, let the pupil know the pupil's school has staff who understand caring roles and are there if things ever feel like too much, this reassurance matters more coming from home too.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and staying connected",
@@ -1244,7 +1727,14 @@ module.exports = [
           "One-page young carer support plan",
           "Copy for pastoral file"
         ],
-        "home": "Keep a copy of the plan somewhere accessible, and know that reaching out to the named school contact is welcome any time circumstances at home change."
+        "home": "Keep a copy of the plan somewhere accessible, and know that reaching out to the named school contact is welcome any time circumstances at home change.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1282,7 +1772,14 @@ module.exports = [
           "My digital day map",
           "Colour-code feelings key"
         ],
-        "home": "Show a genuine, non-judgemental interest in what the pupil enjoys online this week, this builds the trust needed for harder conversations later in the course."
+        "home": "Show a genuine, non-judgemental interest in what the pupil enjoys online this week, this builds the trust needed for harder conversations later in the course.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Spotting cyberbullying and online harm",
@@ -1296,7 +1793,14 @@ module.exports = [
           "Cyberbullying scenario sort cards",
           "What counts as cyberbullying briefing card"
         ],
-        "home": "Avoid reacting strongly if the topic comes up this week, a calm, curious response makes it much more likely the pupil will keep talking rather than shut the conversation down."
+        "home": "Avoid reacting strongly if the topic comes up this week, a calm, curious response makes it much more likely the pupil will keep talking rather than shut the conversation down.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Staying safe online",
@@ -1310,7 +1814,14 @@ module.exports = [
           "Block, report, save evidence step card",
           "Privacy settings checklist"
         ],
-        "home": "If comfortable, sit with the pupil for five minutes to check privacy settings together on a device the pupil uses, this works best as a shared activity, not an inspection."
+        "home": "If comfortable, sit with the pupil for five minutes to check privacy settings together on a device the pupil uses, this works best as a shared activity, not an inspection.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Speaking up",
@@ -1324,7 +1835,14 @@ module.exports = [
           "Telling a trusted adult opening line cards",
           "Role-play scenario cards"
         ],
-        "home": "Let the pupil know you're always a safe person to come to about anything online, without needing a 'big enough' reason, this lowers the barrier to speaking up early."
+        "home": "Let the pupil know you're always a safe person to come to about anything online, without needing a 'big enough' reason, this lowers the barrier to speaking up early.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My digital wellbeing plan",
@@ -1338,7 +1856,14 @@ module.exports = [
           "One-page digital wellbeing plan",
           "Copy for pastoral file"
         ],
-        "home": "Read through the plan together and support the screen time or bedtime boundary the pupil has chosen, rather than adding new rules on top."
+        "home": "Read through the plan together and support the screen time or bedtime boundary the pupil has chosen, rather than adding new rules on top.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1376,7 +1901,14 @@ module.exports = [
           "Body map handout",
           "Exam stress thermometer"
         ],
-        "home": "Notice quietly whether physical symptoms (sleep, appetite, headaches) change around key dates this week, without commenting directly unless the pupil raises it."
+        "home": "Notice quietly whether physical symptoms (sleep, appetite, headaches) change around key dates this week, without commenting directly unless the pupil raises it.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Unhelpful thoughts",
@@ -1390,7 +1922,14 @@ module.exports = [
           "Thought-balance worksheet",
           "Catastrophic thinking examples card"
         ],
-        "home": "If the pupil mentions an exam worry this week, try gently asking 'what's the evidence for that?' rather than reassuring immediately, this helps build the same skill practised in session."
+        "home": "If the pupil mentions an exam worry this week, try gently asking 'what's the evidence for that?' rather than reassuring immediately, this helps build the same skill practised in session.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Building a workable routine",
@@ -1404,7 +1943,14 @@ module.exports = [
           "Weekly routine template",
           "Revision session length guide"
         ],
-        "home": "Support the routine the pupil has built, including the rest periods, protecting downtime often needs more active support from home than protecting study time does."
+        "home": "Support the routine the pupil has built, including the rest periods, protecting downtime often needs more active support from home than protecting study time does.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Coping on the day",
@@ -1418,7 +1964,14 @@ module.exports = [
           "Exam-day coping strategy cards",
           "Breathing technique guide"
         ],
-        "home": "Practise the breathing technique together for two minutes at a calm moment this week, so it's a familiar habit rather than something new when an exam is close."
+        "home": "Practise the breathing technique together for two minutes at a calm moment this week, so it's a familiar habit rather than something new when an exam is close.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -1432,7 +1985,14 @@ module.exports = [
           "One-page exam wellbeing plan",
           "Copy for pastoral file"
         ],
-        "home": "Read through the plan together ahead of the next assessment period, and remind the pupil which coping strategy worked best."
+        "home": "Read through the plan together ahead of the next assessment period, and remind the pupil which coping strategy worked best.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1470,7 +2030,14 @@ module.exports = [
           "Sensory profile scale",
           "Sense-by-sense examples card"
         ],
-        "home": "If it comes up naturally, ask which parts of a typical day feel most overwhelming, this builds a fuller picture without turning it into a formal check-in."
+        "home": "If it comes up naturally, ask which parts of a typical day feel most overwhelming, this builds a fuller picture without turning it into a formal check-in.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My triggers",
@@ -1484,7 +2051,14 @@ module.exports = [
           "School day sensory timeline",
           "Difficult environments card"
         ],
-        "home": "Notice whether the pupil seems more tired, irritable or shut down after school on particularly busy days, this pattern is useful information, not something to fix immediately."
+        "home": "Notice whether the pupil seems more tired, irritable or shut down after school on particularly busy days, this pattern is useful information, not something to fix immediately.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My sensory toolkit",
@@ -1498,7 +2072,14 @@ module.exports = [
           "Sensory toolkit options card",
           "My personal toolkit list template"
         ],
-        "home": "If the pupil has chosen a tool to try (like ear defenders on a busy journey), support the pupil in having access to it without making it a big event."
+        "home": "If the pupil has chosen a tool to try (like ear defenders on a busy journey), support the pupil in having access to it without making it a big event.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Communicating my needs",
@@ -1512,7 +2093,14 @@ module.exports = [
           "Signal or exit card template",
           "Role-play scenario cards"
         ],
-        "home": "If the pupil has agreed a signal with school, be aware of it and support consistent use at home too, if a similar system would help there."
+        "home": "If the pupil has agreed a signal with school, be aware of it and support consistent use at home too, if a similar system would help there.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -1526,7 +2114,14 @@ module.exports = [
           "One-page sensory support plan",
           "Copy for SENCO or pastoral file"
         ],
-        "home": "Keep a copy of the plan somewhere accessible, and let the pupil know the pupil's sensory needs are understood and planned for, not something to hide or push through."
+        "home": "Keep a copy of the plan somewhere accessible, and let the pupil know the pupil's sensory needs are understood and planned for, not something to hide or push through.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1564,7 +2159,14 @@ module.exports = [
           "Grief feeling word cards",
           "Grief isn't one feeling briefing card"
         ],
-        "home": "Follow the pupil's lead on how much the pupil wants to talk about the loss this week, availability without pressure matters more than prompting conversation."
+        "home": "Follow the pupil's lead on how much the pupil wants to talk about the loss this week, availability without pressure matters more than prompting conversation.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My feelings",
@@ -1578,7 +2180,14 @@ module.exports = [
           "Feelings thermometer",
           "Private note template"
         ],
-        "home": "If the pupil shares a drawing or note, respond with simple acknowledgement ('thank you for showing me') rather than trying to interpret or fix the feeling behind it."
+        "home": "If the pupil shares a drawing or note, respond with simple acknowledgement ('thank you for showing me') rather than trying to interpret or fix the feeling behind it.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Coping with hard days",
@@ -1592,7 +2201,14 @@ module.exports = [
           "Hard day toolkit template",
           "Anniversary planning card"
         ],
-        "home": "If you're aware of an upcoming anniversary or difficult date, a small acknowledgement ('I know this week might be hard') can mean a lot, without needing to make it a big conversation."
+        "home": "If you're aware of an upcoming anniversary or difficult date, a small acknowledgement ('I know this week might be hard') can mean a lot, without needing to make it a big conversation.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Keeping memories",
@@ -1606,7 +2222,14 @@ module.exports = [
           "Memory box list template",
           "Letter-writing prompt card"
         ],
-        "home": "If the pupil wants to share the memory activity, receive it warmly. If the pupil would rather keep it private, that's equally okay, the value is in making it, not in sharing it."
+        "home": "If the pupil wants to share the memory activity, receive it warmly. If the pupil would rather keep it private, that's equally okay, the value is in making it, not in sharing it.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and ongoing support",
@@ -1621,7 +2244,14 @@ module.exports = [
           "Bereavement support services info card",
           "Copy for pastoral file"
         ],
-        "home": "Keep a copy of the support services information somewhere accessible, and know that grief doesn't follow a five-week timeline, ongoing patience and small check-ins matter more than any single conversation."
+        "home": "Keep a copy of the support services information somewhere accessible, and know that grief doesn't follow a five-week timeline, ongoing patience and small check-ins matter more than any single conversation.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1659,7 +2289,14 @@ module.exports = [
           "Healthy vs unhealthy relationship scenario cards",
           "What makes a relationship feel safe? briefing card"
         ],
-        "home": "No specific task this week, this session is designed to build general understanding, not to prompt disclosure at home."
+        "home": "No specific task this week, this session is designed to build general understanding, not to prompt disclosure at home.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Spotting the tactics",
@@ -1673,7 +2310,14 @@ module.exports = [
           "Grooming and exploitation tactics card set",
           "Why it's hard to spot briefing note"
         ],
-        "home": "No specific task this week, avoid direct questioning about this topic at home, which can feel like an interrogation; general availability and warmth matter more."
+        "home": "No specific task this week, avoid direct questioning about this topic at home, which can feel like an interrogation; general availability and warmth matter more.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My strength and self-worth",
@@ -1686,7 +2330,14 @@ module.exports = [
         "resources": [
           "My strengths and values worksheet"
         ],
-        "home": "Genuinely reinforce a strength or quality you admire in the pupil this week, this kind of affirmation is a real protective factor."
+        "home": "Genuinely reinforce a strength or quality you admire in the pupil this week, this kind of affirmation is a real protective factor.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Staying safe and saying no",
@@ -1700,7 +2351,14 @@ module.exports = [
           "Assertive refusal script cards",
           "Role-play scenario cards (general)"
         ],
-        "home": "No specific task, simply continue to be a calm, non-judgemental presence the pupil could come to if something ever felt wrong."
+        "home": "No specific task, simply continue to be a calm, non-judgemental presence the pupil could come to if something ever felt wrong.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My safety plan",
@@ -1714,7 +2372,14 @@ module.exports = [
           "My safety card template",
           "Reporting routes information card"
         ],
-        "home": "Keep the safety card somewhere the pupil can access privately, and reinforce that coming to you, or any trusted adult, with a concern is always the right choice, however small it seems."
+        "home": "Keep the safety card somewhere the pupil can access privately, and reinforce that coming to you, or any trusted adult, with a concern is always the right choice, however small it seems.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   },
@@ -1752,7 +2417,14 @@ module.exports = [
           "Worries and hopes chart",
           "It's normal to feel mixed briefing card"
         ],
-        "home": "Ask what the pupil is most looking forward to about the move, as well as what worries the pupil, balancing both sides helps keep the conversation from feeling one-sided."
+        "home": "Ask what the pupil is most looking forward to about the move, as well as what worries the pupil, balancing both sides helps keep the conversation from feeling one-sided.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Finding my way",
@@ -1766,7 +2438,14 @@ module.exports = [
           "New setting layout and route guide",
           "First day checklist template"
         ],
-        "home": "If possible, visit the route to the new setting together before the move, even just once, this small step of familiarity can meaningfully reduce first-day anxiety."
+        "home": "If possible, visit the route to the new setting together before the move, even just once, this small step of familiarity can meaningfully reduce first-day anxiety.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Making friends",
@@ -1780,7 +2459,14 @@ module.exports = [
           "Starting a conversation prompt cards",
           "Joining a club or group ideas card"
         ],
-        "home": "If the new setting offers early clubs, taster days, or induction events, encourage attending at least one, shared activities make starting conversations much easier."
+        "home": "If the new setting offers early clubs, taster days, or induction events, encourage attending at least one, shared activities make starting conversations much easier.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "Coping with the unknown",
@@ -1794,7 +2480,14 @@ module.exports = [
           "Coping with uncertainty strategy cards",
           "My go-to person and place card"
         ],
-        "home": "Practise the chosen calming technique together at a quiet moment this week, so it's familiar rather than new on a stressful day."
+        "home": "Practise the chosen calming technique together at a quiet moment this week, so it's familiar rather than new on a stressful day.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       },
       {
         "title": "My plan and review",
@@ -1808,7 +2501,14 @@ module.exports = [
           "One-page transition plan",
           "Copy for receiving school or pastoral file"
         ],
-        "home": "Check in gently a few weeks after the move to see how things are settling, since some transition worries only appear once the pupil is actually in the new routine."
+        "home": "Check in gently a few weeks after the move to see how things are settling, since some transition worries only appear once the pupil is actually in the new routine.",
+        "timing": {
+          "checkin": 5,
+          "input": 10,
+          "activity": 20,
+          "reflect": 5,
+          "home": 5
+        }
       }
     ]
   }
