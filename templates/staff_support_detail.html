@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_message_circle %}
 {% block title %}{{ ticket.subject }} - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><a href="/staff/support">&larr; Support inbox</a></p>
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card">
   <div class="page-header-title" style="margin-bottom:var(--sp-2);">
     <div class="icon-badge icon-badge--teal">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
