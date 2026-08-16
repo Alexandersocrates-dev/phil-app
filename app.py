@@ -2801,3 +2801,164 @@ def legal_doc_pdf(request):
 # --------------------------------------------------------------------- wsgi --
 
 wsgi_app = make_wsgi_app(router, static_dir=STATIC_DIR)
+
+
+# ---------------------------------------------------------- password reset --
+# Routes register on import, so their position in this file does not matter.
+# Everything below is self-contained: no new imports at the top of the file,
+# no new modules.
+
+
+def _send_reset_email(to_email, link):
+    """Emails one reset link. Returns True only if a provider accepted it.
+
+    Phil has no email delivery anywhere else: invites create accounts directly
+    and alerts are in-app. Set RESEND_API_KEY or POSTMARK_SERVER_TOKEN, plus
+    MAIL_FROM, to turn real sending on. With neither set the link is written to
+    the server log instead, so the flow still completes and can be tested
+    before an email provider exists.
+
+    Never raises: a provider outage must not take down the page that triggered
+    it, and the caller shows the same message either way so a wrong email
+    address cannot be told apart from a right one."""
+    import urllib.request
+
+    subject = "Reset your Phil password"
+    body = ("Someone asked to reset the password on your Phil account.\n\n"
+            f"Set a new one here, within the next hour:\n{link}\n\n"
+            "If this wasn't you, ignore this email. Your password has not changed.")
+
+    resend_key = os.environ.get("RESEND_API_KEY")
+    postmark_token = os.environ.get("POSTMARK_SERVER_TOKEN")
+    mail_from = os.environ.get("MAIL_FROM", "Phil <no-reply@phileducation.co.uk>")
+
+    if not (resend_key or postmark_token):
+        print(f"[reset] No email provider configured. Link for {to_email}: {link}")
+        return False
+
+    try:
+        if resend_key:
+            url = "https://api.resend.com/emails"
+            payload = {"from": mail_from, "to": [to_email], "subject": subject, "text": body}
+            headers = {"Authorization": f"Bearer {resend_key}",
+                       "Content-Type": "application/json"}
+        else:
+            url = "https://api.postmarkapp.com/email"
+            payload = {"From": mail_from, "To": to_email, "Subject": subject, "TextBody": body}
+            headers = {"X-Postmark-Server-Token": postmark_token,
+                       "Content-Type": "application/json",
+                       "Accept": "application/json"}
+        request_obj = urllib.request.Request(
+            url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+        with urllib.request.urlopen(request_obj, timeout=10) as resp:
+            return 200 <= resp.status < 300
+    except Exception as exc:
+        print(f"[reset] Send to {to_email} failed: {exc}")
+        return False
+
+
+@router.get("/forgot-password")
+def forgot_password_form(request):
+    return render("forgot_password.html", user=None, flash=flash_from_query(request))
+
+
+@router.post("/forgot-password")
+def forgot_password_submit(request):
+    email = request.field("email", "").strip().lower()
+    conn = db.get_conn()
+    try:
+        row = conn.execute(
+            "SELECT * FROM users WHERE email = ? AND status = 'active'", (email,)
+        ).fetchone()
+        if row:
+            token = authlib.create_reset_token(conn, row["id"])
+            conn.commit()
+            base = os.environ.get("APP_BASE_URL", "http://localhost:8000").rstrip("/")
+            _send_reset_email(row["email"], f"{base}/reset-password/{token}")
+    finally:
+        conn.close()
+    # The same answer either way. Anything else turns this form into a way of
+    # testing which staff emails are registered with which school.
+    return with_flash("/login", "If that email has a Phil account, a reset link is on its way.", "ok")
+
+
+@router.get("/reset-password/<token>")
+def reset_password_form(request):
+    token = request.params["token"]
+    conn = db.get_conn()
+    try:
+        row = authlib.user_for_reset_token(conn, token)
+    finally:
+        conn.close()
+    if not row:
+        return with_flash("/forgot-password",
+                          "That link has expired or has already been used. Request a new one.", "error")
+    return render("reset_password.html", user=None, email=row["email"], token=token,
+                  flash=flash_from_query(request))
+
+
+@router.post("/reset-password/<token>")
+def reset_password_submit(request):
+    token = request.params["token"]
+    new_password = request.field("new_password", "")
+    confirm_password = request.field("confirm_password", "")
+    conn = db.get_conn()
+    try:
+        row = authlib.user_for_reset_token(conn, token)
+        if not row:
+            return with_flash("/forgot-password",
+                              "That link has expired or has already been used. Request a new one.", "error")
+        if len(new_password) < 8:
+            return with_flash(f"/reset-password/{token}",
+                              "New password needs at least 8 characters.", "error")
+        if new_password != confirm_password:
+            return with_flash(f"/reset-password/{token}",
+                              "The two passwords do not match.", "error")
+        authlib.set_password(conn, row["id"], new_password)
+        authlib.consume_reset_token(conn, token)
+        authlib.destroy_other_sessions(conn, row["id"])
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash("/login", "Password updated. Sign in with your new password.", "ok")
+
+
+@router.post("/admin/mentors/<mentor_id>/reset-password")
+def admin_mentor_reset_password(request):
+    """Issues a new temporary password for one of this establishment's own
+    mentors, shown once for the admin to pass on in person.
+
+    Email is the wrong channel in a school: staff inboxes are filtered, shared,
+    or only checked on site, and a mentor locked out ten minutes before a
+    session cannot wait for one. Scoped hard to the admin's own establishment
+    and to role='mentor', so this can never become a way to take over the
+    account that could remove you."""
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        mentor = conn.execute(
+            "SELECT * FROM users WHERE id=? AND establishment_id=? AND role='mentor' AND status='active'",
+            (request.params["mentor_id"], user["establishment_id"]),
+        ).fetchone()
+        if not mentor:
+            return Response("Not found", status="404 Not Found")
+        temporary = authlib.generate_temporary_password()
+        authlib.set_password(conn, mentor["id"], temporary)
+        authlib.destroy_other_sessions(conn, mentor["id"])
+        db.log_action(conn, user["id"], "password_reset_by_admin", "user", mentor["id"],
+                      f"Temporary password issued for {mentor['name']}")
+        conn.commit()
+    finally:
+        conn.close()
+    return render_done(
+        user,
+        "Temporary password issued",
+        f"{mentor['name']}'s password is now {temporary}. Write it down before you leave this "
+        f"page, it is not shown again and nobody, including you, can look it up later. Give it to "
+        f"them directly and ask them to set their own from Change password once they are in. Any "
+        f"device they were signed in on has been signed out.",
+        "/admin",
+        back_label="Back to admin home",
+    )
