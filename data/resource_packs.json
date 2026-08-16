@@ -4,11 +4,41 @@
     "items": [
       {
         "name": "Incident timeline template",
-        "body": "Facts only - what happened before, during and after.\nStage What happened\nBefore\nDuring\nAfter"
+        "body": "Facts only - what happened before, during and after.",
+        "table": {
+          "headers": [
+            "Stage",
+            "What happened"
+          ],
+          "rows": [
+            [
+              "Before",
+              ""
+            ],
+            [
+              "During",
+              ""
+            ],
+            [
+              "After",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Body map handout",
-        "body": "Where do I feel the urge to damage or destroy something? Tick the areas where you notice a change, and write\nwhat it feels like there.\nHead and face\nChest\nStomach\nHands and arms\nLegs and feet\nWhole body"
+        "body": "Where do I feel the urge to damage or destroy something? Tick the areas where you notice a change, and write what it feels like there.",
+        "checklist": {
+          "items": [
+            "Head and face",
+            "Chest",
+            "Stomach",
+            "Hands and arms",
+            "Legs and feet",
+            "Whole body"
+          ]
+        }
       },
       {
         "name": "Feelings scale",
@@ -24,7 +54,17 @@
       },
       {
         "name": "Prevention and response plan template",
-        "body": "My personal plan, shared with my class teacher and pastoral lead.\nMy triggers\nMy early signs\nMy safe outlet, and where to find it\nWhat happens if an incident still occurs\nHow I'll help repair it\nReview date"
+        "body": "My personal plan, shared with my class teacher and pastoral lead.",
+        "form": {
+          "fields": [
+            "My triggers",
+            "My early signs",
+            "My safe outlet, and where to find it",
+            "What happens if an incident still occurs",
+            "How I'll help repair it",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -42,7 +82,27 @@
       },
       {
         "name": "Triggers map",
-        "body": "What tends to trigger your anger in each setting?\nSetting My triggers here\nSchool\nSocial (friends and peers)\nHome"
+        "body": "What tends to trigger your anger in each setting?",
+        "table": {
+          "headers": [
+            "Setting",
+            "My triggers here"
+          ],
+          "rows": [
+            [
+              "School",
+              ""
+            ],
+            [
+              "Social (friends and peers)",
+              ""
+            ],
+            [
+              "Home",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "STOP technique card",
@@ -58,7 +118,17 @@
       },
       {
         "name": "My anger-management plan",
-        "body": "My personal plan, agreed with my mentor.\nMy triggers\nMy early signs\nMy go-to strategies\nPhrases I can use\nWho I go to for support\nReview date"
+        "body": "My personal plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My triggers",
+            "My early signs",
+            "My go-to strategies",
+            "Phrases I can use",
+            "Who I go to for support",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Role-play scenario cards",
@@ -78,7 +148,27 @@
     "items": [
       {
         "name": "Attendance story template",
-        "body": "A non-judgemental timeline, in your own words.\nWhen What was happening\nA while ago, things were fine because...\nThen things started to change when...\nNow, the pattern is..."
+        "body": "A non-judgemental timeline, in your own words.",
+        "table": {
+          "headers": [
+            "When",
+            "What was happening"
+          ],
+          "rows": [
+            [
+              "A while ago, things were fine because...",
+              ""
+            ],
+            [
+              "Then things started to change when...",
+              ""
+            ],
+            [
+              "Now, the pattern is...",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Push/pull factor card set",
@@ -86,7 +176,31 @@
       },
       {
         "name": "Reasons-to-be-here mapping sheet",
-        "body": "Rate how strongly each reason pulls you towards school, 1-10.\nReason How strong (1-10)\nA friend I look forward to seeing\nA subject or club I enjoy\nA member of staff I get on with\nAn achievement or target I'm working towards"
+        "body": "Rate how strongly each reason pulls you towards school, 1-10.",
+        "table": {
+          "headers": [
+            "Reason",
+            "How strong (1-10)"
+          ],
+          "rows": [
+            [
+              "A friend I look forward to seeing",
+              ""
+            ],
+            [
+              "A subject or club I enjoy",
+              ""
+            ],
+            [
+              "A member of staff I get on with",
+              ""
+            ],
+            [
+              "An achievement or target I'm working towards",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Barrier type card sort",
@@ -94,11 +208,29 @@
       },
       {
         "name": "Barrier-specific action plan template",
-        "body": "Targeting the specific barrier identified - not a generic routine.\nMy specific barrier\nWhat would help\nWho needs to be involved\nWhat I'll try first\nReview date"
+        "body": "Targeting the specific barrier identified - not a generic routine.",
+        "form": {
+          "fields": [
+            "My specific barrier",
+            "What would help",
+            "Who needs to be involved",
+            "What I'll try first",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Graded attendance plan template",
-        "body": "Realistic short-term targets, agreed with my mentor and the attendance team.\nMy current attendance pattern\nMy first small target\nMy next target, once the first is steady\nWho's supporting me\nReview date"
+        "body": "Realistic short-term targets, agreed with my mentor and the attendance team.",
+        "form": {
+          "fields": [
+            "My current attendance pattern",
+            "My first small target",
+            "My next target, once the first is steady",
+            "Who's supporting me",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Attendance file note",
@@ -112,7 +244,35 @@
     "items": [
       {
         "name": "True/false myth-busting cards",
-        "body": "Sort each statement: true or false?\nStatement True / False\n\"Vaping is basically harmless.\"\n\"Nicotine is addictive within days for some people.\"\n\"Most vapes contain only water vapour.\"\n\"You can become dependent on vaping just like\nsmoking.\"\n\"Second-hand vapour has zero effect on people\nnearby.\""
+        "body": "Sort each statement: true or false?",
+        "table": {
+          "headers": [
+            "Statement",
+            "True / False"
+          ],
+          "rows": [
+            [
+              "\"Vaping is basically harmless.\"",
+              ""
+            ],
+            [
+              "\"Nicotine is addictive within days for some people.\"",
+              ""
+            ],
+            [
+              "\"Most vapes contain only water vapour.\"",
+              ""
+            ],
+            [
+              "\"You can become dependent on vaping just like smoking.\"",
+              ""
+            ],
+            [
+              "\"Second-hand vapour has zero effect on people nearby.\"",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Nicotine cycle diagram",
@@ -124,7 +284,35 @@
       },
       {
         "name": "Trigger map template",
-        "body": "Map who, where and when vaping is most likely to happen.\nWho / where / when How hard to say no (1-10)\nExample: at break with friends\n1.\n2.\n3.\n4."
+        "body": "Map who, where and when vaping is most likely to happen.",
+        "table": {
+          "headers": [
+            "Who / where / when",
+            "How hard to say no (1-10)"
+          ],
+          "rows": [
+            [
+              "Example: at break with friends",
+              ""
+            ],
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ],
+            [
+              "4.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Trigger difficulty ranking card",
@@ -162,7 +350,31 @@
     "items": [
       {
         "name": "My day timeline template",
-        "body": "Map a typical day, including caring tasks.\nTime What I'm doing\nMorning\nSchool day\nAfter school\nEvening"
+        "body": "Map a typical day, including caring tasks.",
+        "table": {
+          "headers": [
+            "Time",
+            "What I'm doing"
+          ],
+          "rows": [
+            [
+              "Morning",
+              ""
+            ],
+            [
+              "School day",
+              ""
+            ],
+            [
+              "After school",
+              ""
+            ],
+            [
+              "Evening",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "What is a young carer? briefing card",
@@ -170,7 +382,36 @@
       },
       {
         "name": "Time balance chart",
-        "body": "Sort a typical week's activities into balance.\nCaring School Personal time"
+        "body": "Sort a typical week's activities into balance.",
+        "table": {
+          "headers": [
+            "Caring",
+            "School",
+            "Personal time"
+          ],
+          "rows": [
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Weekly activity card set",
@@ -178,7 +419,27 @@
       },
       {
         "name": "What helps me list template",
-        "body": "What makes things feel a bit more manageable?\nWhat helps How often I get to do it\n1.\n2.\n3."
+        "body": "What makes things feel a bit more manageable?",
+        "table": {
+          "headers": [
+            "What helps",
+            "How often I get to do it"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Five-minute reset ideas card",
@@ -186,7 +447,27 @@
       },
       {
         "name": "My support network map",
-        "body": "Who's around me, and who could I go to?\nPerson or service What they could help with\n1.\n2.\n3."
+        "body": "Who's around me, and who could I go to?",
+        "table": {
+          "headers": [
+            "Person or service",
+            "What they could help with"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Local young carers services info card",
@@ -208,7 +489,31 @@
     "items": [
       {
         "name": "My digital day map",
-        "body": "Map a typical day's online activity.\nApp or platform How it makes me feel\n1.\n2.\n3.\n4."
+        "body": "Map a typical day's online activity.",
+        "table": {
+          "headers": [
+            "App or platform",
+            "How it makes me feel"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ],
+            [
+              "4.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Colour-code feelings key",
@@ -216,7 +521,31 @@
       },
       {
         "name": "Cyberbullying scenario sort cards",
-        "body": "Sort each scenario: cyberbullying, unkind but not bullying, or not sure?\nScenario Cyberbullying / Unkind / Not sure\nLeft out of a group chat on purpose\nOne unkind comment from a stranger\nFake account made to mock someone\nEmbarrassing photo shared without asking"
+        "body": "Sort each scenario: cyberbullying, unkind but not bullying, or not sure?",
+        "table": {
+          "headers": [
+            "Scenario",
+            "Cyberbullying / Unkind / Not sure"
+          ],
+          "rows": [
+            [
+              "Left out of a group chat on purpose",
+              ""
+            ],
+            [
+              "One unkind comment from a stranger",
+              ""
+            ],
+            [
+              "Fake account made to mock someone",
+              ""
+            ],
+            [
+              "Embarrassing photo shared without asking",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "What counts as cyberbullying briefing card",
@@ -262,7 +591,23 @@
       },
       {
         "name": "Thought-balance worksheet",
-        "body": "Work through one exam-related thought.\nThe thought A more balanced version\n1.\n2."
+        "body": "Work through one exam-related thought.",
+        "table": {
+          "headers": [
+            "The thought",
+            "A more balanced version"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Catastrophic thinking examples card",
@@ -270,7 +615,46 @@
       },
       {
         "name": "Weekly routine template",
-        "body": "Block in revision, rest and social time.\nDay Revision Rest / social\nMon\nTue\nWed\nThu\nFri\nWeekend"
+        "body": "Block in revision, rest and social time.",
+        "table": {
+          "headers": [
+            "Day",
+            "Revision",
+            "Rest / social"
+          ],
+          "rows": [
+            [
+              "Mon",
+              "",
+              ""
+            ],
+            [
+              "Tue",
+              "",
+              ""
+            ],
+            [
+              "Wed",
+              "",
+              ""
+            ],
+            [
+              "Thu",
+              "",
+              ""
+            ],
+            [
+              "Fri",
+              "",
+              ""
+            ],
+            [
+              "Weekend",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Revision session length guide",
@@ -308,7 +692,35 @@
       },
       {
         "name": "School day sensory timeline",
-        "body": "Map the day and mark the hardest sensory moments.\nTime / place How it feels\nCorridors\nAssembly\nLunch hall\nPE / changing rooms\nClassroom"
+        "body": "Map the day and mark the hardest sensory moments.",
+        "table": {
+          "headers": [
+            "Time / place",
+            "How it feels"
+          ],
+          "rows": [
+            [
+              "Corridors",
+              ""
+            ],
+            [
+              "Assembly",
+              ""
+            ],
+            [
+              "Lunch hall",
+              ""
+            ],
+            [
+              "PE / changing rooms",
+              ""
+            ],
+            [
+              "Classroom",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Difficult environments card",
@@ -320,7 +732,27 @@
       },
       {
         "name": "My personal toolkit list template",
-        "body": "Which tools felt most helpful?\nTool How helpful (1-5)\n1.\n2.\n3."
+        "body": "Which tools felt most helpful?",
+        "table": {
+          "headers": [
+            "Tool",
+            "How helpful (1-5)"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Signal or exit card template",
@@ -370,7 +802,27 @@
       },
       {
         "name": "Memory box list template",
-        "body": "Things I'd want to remember.\nMemory or item Why it matters\n1.\n2.\n3."
+        "body": "Things I'd want to remember.",
+        "table": {
+          "headers": [
+            "Memory or item",
+            "Why it matters"
+          ],
+          "rows": [
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Letter-writing prompt card",
@@ -397,7 +849,31 @@
     "items": [
       {
         "name": "Healthy vs unhealthy relationship scenario cards",
-        "body": "Sort each: healthy, unhealthy, or not sure?\nScenario Healthy / Unhealthy / Not sure\nSomeone respects it when you say no\nSomeone gets angry if you spend time with other\nfriends\nSomeone gives expensive gifts and expects things\nback\nSomeone is proud of your other friendships"
+        "body": "Sort each: healthy, unhealthy, or not sure?",
+        "table": {
+          "headers": [
+            "Scenario",
+            "Healthy / Unhealthy / Not sure"
+          ],
+          "rows": [
+            [
+              "Someone respects it when you say no",
+              ""
+            ],
+            [
+              "Someone gets angry if you spend time with other friends",
+              ""
+            ],
+            [
+              "Someone gives expensive gifts and expects things back",
+              ""
+            ],
+            [
+              "Someone is proud of your other friendships",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "What makes a relationship feel safe? briefing card",
@@ -413,7 +889,27 @@
       },
       {
         "name": "My strengths and values worksheet",
-        "body": "What matters to me, and what I'm proud of.\nMy strengths What I value\n1.\n2.\n3."
+        "body": "What matters to me, and what I'm proud of.",
+        "table": {
+          "headers": [
+            "My strengths",
+            "What I value"
+          ],
+          "rows": [
+            [
+              "1.",
+              "1."
+            ],
+            [
+              "2.",
+              "2."
+            ],
+            [
+              "3.",
+              "3."
+            ]
+          ]
+        }
       },
       {
         "name": "Assertive refusal script cards",
@@ -439,7 +935,27 @@
     "items": [
       {
         "name": "Worries and hopes chart",
-        "body": "Sort thoughts about the move into two columns.\nWorries Hopes\n1.\n2.\n3."
+        "body": "Sort thoughts about the move into two columns.",
+        "table": {
+          "headers": [
+            "Worries",
+            "Hopes"
+          ],
+          "rows": [
+            [
+              "1.",
+              "1."
+            ],
+            [
+              "2.",
+              "2."
+            ],
+            [
+              "3.",
+              "3."
+            ]
+          ]
+        }
       },
       {
         "name": "It's normal to feel mixed briefing card",
@@ -447,7 +963,31 @@
       },
       {
         "name": "New setting layout and route guide",
-        "body": "Map the route and key locations for the new setting.\nLocation Notes\nGetting there\nMain entrance\nKey rooms\nLunch hall"
+        "body": "Map the route and key locations for the new setting.",
+        "table": {
+          "headers": [
+            "Location",
+            "Notes"
+          ],
+          "rows": [
+            [
+              "Getting there",
+              ""
+            ],
+            [
+              "Main entrance",
+              ""
+            ],
+            [
+              "Key rooms",
+              ""
+            ],
+            [
+              "Lunch hall",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "First day checklist template",
@@ -485,7 +1025,17 @@
     "items": [
       {
         "name": "Body map handout",
-        "body": "Where do I feel anger in my body? Tick the areas where you notice a change, and write what it feels like there.\nHead and face\nChest\nStomach\nHands and arms\nLegs and feet\nWhole body"
+        "body": "Where do I feel anger in my body? Tick the areas where you notice a change, and write what it feels like there.",
+        "checklist": {
+          "items": [
+            "Head and face",
+            "Chest",
+            "Stomach",
+            "Hands and arms",
+            "Legs and feet",
+            "Whole body"
+          ]
+        }
       },
       {
         "name": "Anger cycle diagram",
@@ -497,11 +1047,75 @@
       },
       {
         "name": "Trigger list",
-        "body": "List what triggers your anger and how strong it feels (1-10).\nMy trigger How strong (1-10)\nExample: being laughed at\n1.\n2.\n3.\n4.\n5.\n6."
+        "body": "List what triggers your anger and how strong it feels (1-10).",
+        "table": {
+          "headers": [
+            "My trigger",
+            "How strong (1-10)"
+          ],
+          "rows": [
+            [
+              "Example: being laughed at",
+              ""
+            ],
+            [
+              "1.",
+              ""
+            ],
+            [
+              "2.",
+              ""
+            ],
+            [
+              "3.",
+              ""
+            ],
+            [
+              "4.",
+              ""
+            ],
+            [
+              "5.",
+              ""
+            ],
+            [
+              "6.",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Tally tracking card",
-        "body": "Mark a tally each day for how many times you noticed the first body signal of anger.\nMon Tue Wed Thu Fri\nRating (1-5)\nOne word for today"
+        "body": "Mark a tally each day for how many times you noticed the first body signal of anger.",
+        "table": {
+          "headers": [
+            "",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri"
+          ],
+          "rows": [
+            [
+              "Rating (1-5)",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "One word for today",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Calm-down strategy cards",
@@ -521,7 +1135,17 @@
       },
       {
         "name": "My hot and cold plan",
-        "body": "My personal support plan, agreed with my mentor.\nMy known triggers\nMy early warning signs\nMy calm-down strategies\nWho I go to for support\nWhat staff will do to support me\nReview date"
+        "body": "My personal support plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My known triggers",
+            "My early warning signs",
+            "My calm-down strategies",
+            "Who I go to for support",
+            "What staff will do to support me",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for class teacher or pastoral file",
@@ -540,7 +1164,35 @@
       },
       {
         "name": "Notice-and-note tracking card",
-        "body": "Which rule was hardest to follow today?\nDay Hardest rule today\nMonday\nTuesday\nWednesday\nThursday\nFriday"
+        "body": "Which rule was hardest to follow today?",
+        "table": {
+          "headers": [
+            "Day",
+            "Hardest rule today"
+          ],
+          "rows": [
+            [
+              "Monday",
+              ""
+            ],
+            [
+              "Tuesday",
+              ""
+            ],
+            [
+              "Wednesday",
+              ""
+            ],
+            [
+              "Thursday",
+              ""
+            ],
+            [
+              "Friday",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Choices game scenario cards",
@@ -556,7 +1208,17 @@
       },
       {
         "name": "Behaviour agreement template",
-        "body": "My behaviour agreement, agreed with my mentor and class teacher.\nMy commitments\nWhat support I get in return\nSigned: pupil\nSigned: mentor\nSigned: class teacher\nReview date"
+        "body": "My behaviour agreement, agreed with my mentor and class teacher.",
+        "form": {
+          "fields": [
+            "My commitments",
+            "What support I get in return",
+            "Signed: pupil",
+            "Signed: mentor",
+            "Signed: class teacher",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -566,11 +1228,59 @@
     "items": [
       {
         "name": "Emotions wheel",
-        "body": "Related feeling words for each core emotion.\nCore emotion Related words\nHappy - proud, excited, content\nSad - lonely, disappointed, hurt\nAngry - frustrated, irritated, furious\nScared - nervous, worried, panicked"
+        "body": "Related feeling words for each core emotion.",
+        "table": {
+          "headers": [
+            "Core emotion",
+            "Related words"
+          ],
+          "rows": [
+            [
+              "Happy",
+              "proud, excited, content"
+            ],
+            [
+              "Sad",
+              "lonely, disappointed, hurt"
+            ],
+            [
+              "Angry",
+              "frustrated, irritated, furious"
+            ],
+            [
+              "Scared",
+              "nervous, worried, panicked"
+            ]
+          ]
+        }
       },
       {
         "name": "Zones chart",
-        "body": "Which zone am I in right now?\nBlue zone Green zone\nLow energy - sad, tired, bored. Try: a short walk, a Calm and ready to learn. Try: keep doing what's\nchat, a drink of water. working.\nYellow zone Red zone\nWobbly - silly, nervous, excited. Try: a movement Overwhelmed - angry, out of control. Try: safe\nbreak, deep breaths. space, calm-down strategy."
+        "body": "Which zone am I in right now?",
+        "table": {
+          "headers": [
+            "Zone",
+            "What it looks like - try"
+          ],
+          "rows": [
+            [
+              "Blue zone",
+              "Low energy - sad, tired, bored. Try: a short walk, a chat, a drink of water."
+            ],
+            [
+              "Green zone",
+              "Calm and ready to learn. Try: keep doing what's working."
+            ],
+            [
+              "Yellow zone",
+              "Wobbly - silly, nervous, excited. Try: a movement break, deep breaths."
+            ],
+            [
+              "Red zone",
+              "Overwhelmed - angry, out of control. Try: safe space, calm-down strategy."
+            ]
+          ]
+        }
       },
       {
         "name": "Emotion word cards",
@@ -578,7 +1288,17 @@
       },
       {
         "name": "Body map handout",
-        "body": "Where do I feel this emotion in my body? Tick the areas where you notice a change, and write what it feels like\nthere.\nHead and face\nChest\nStomach\nHands and arms\nLegs and feet\nWhole body"
+        "body": "Where do I feel this emotion in my body? Tick the areas where you notice a change, and write what it feels like there.",
+        "checklist": {
+          "items": [
+            "Head and face",
+            "Chest",
+            "Stomach",
+            "Hands and arms",
+            "Legs and feet",
+            "Whole body"
+          ]
+        }
       },
       {
         "name": "Grounding technique cards",
@@ -586,11 +1306,40 @@
       },
       {
         "name": "Wave diagram template",
-        "body": "Rate the intensity of a recent strong emotion, before / during / after.\nStage Intensity (1-10) and notes\nBefore\nDuring (the peak)\nAfter"
+        "body": "Rate the intensity of a recent strong emotion, before / during / after.",
+        "table": {
+          "headers": [
+            "Stage",
+            "Intensity (1-10) and notes"
+          ],
+          "rows": [
+            [
+              "Before",
+              ""
+            ],
+            [
+              "During (the peak)",
+              ""
+            ],
+            [
+              "After",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Personal toolkit template",
-        "body": "My emotional toolkit, to share with my class teacher.\nMy zones - what each one looks like for me\nMy earliest warning signs\nMy top 3 go-to strategies\nWho can help me\nReview date"
+        "body": "My emotional toolkit, to share with my class teacher.",
+        "form": {
+          "fields": [
+            "My zones - what each one looks like for me",
+            "My earliest warning signs",
+            "My top 3 go-to strategies",
+            "Who can help me",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -604,11 +1353,59 @@
       },
       {
         "name": "Perspective-taking worksheet",
-        "body": "Fill in your view, then try to fill in theirs.\nQuestion My answer\nWhat I think happened\nWhat I was feeling\nWhat they might have been thinking\nWhat they might have been feeling"
+        "body": "Fill in your view, then try to fill in theirs.",
+        "table": {
+          "headers": [
+            "Question",
+            "My answer"
+          ],
+          "rows": [
+            [
+              "What I think happened",
+              ""
+            ],
+            [
+              "What I was feeling",
+              ""
+            ],
+            [
+              "What they might have been thinking",
+              ""
+            ],
+            [
+              "What they might have been feeling",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Roles-in-bullying handout",
-        "body": "Most pupils move between roles rather than fitting one label.\nRole What this looks like / what this role needs\nTarget\nInstigator\nBystander\nDefender"
+        "body": "Most pupils move between roles rather than fitting one label.",
+        "table": {
+          "headers": [
+            "Role",
+            "What this looks like / what this role needs"
+          ],
+          "rows": [
+            [
+              "Target",
+              ""
+            ],
+            [
+              "Instigator",
+              ""
+            ],
+            [
+              "Bystander",
+              ""
+            ],
+            [
+              "Defender",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "I statement card",
@@ -616,7 +1413,15 @@
       },
       {
         "name": "Social goals plan template",
-        "body": "My social goals, agreed with my mentor.\nMy goal\nWho can support me\nMy first step\nReview date"
+        "body": "My social goals, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My goal",
+            "Who can support me",
+            "My first step",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -626,7 +1431,32 @@
     "items": [
       {
         "name": "Tally card",
-        "body": "Mark a tally each lesson for how many times you called out or talked over instructions.\nLesson 1 Lesson 2 Lesson 3 Lesson 4\nRating (1-5)\nOne word for today"
+        "body": "Mark a tally each lesson for how many times you called out or talked over instructions.",
+        "table": {
+          "headers": [
+            "",
+            "Lesson 1",
+            "Lesson 2",
+            "Lesson 3",
+            "Lesson 4"
+          ],
+          "rows": [
+            [
+              "Rating (1-5)",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "One word for today",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Stop-think-choose technique card",
@@ -638,7 +1468,35 @@
       },
       {
         "name": "Self-monitoring chart",
-        "body": "Rate your self-control each lesson, 1 (hard) to 5 (great).\nLesson Rating (1-5) and note\nLesson 1\nLesson 2\nLesson 3\nLesson 4\nLesson 5"
+        "body": "Rate your self-control each lesson, 1 (hard) to 5 (great).",
+        "table": {
+          "headers": [
+            "Lesson",
+            "Rating (1-5) and note"
+          ],
+          "rows": [
+            [
+              "Lesson 1",
+              ""
+            ],
+            [
+              "Lesson 2",
+              ""
+            ],
+            [
+              "Lesson 3",
+              ""
+            ],
+            [
+              "Lesson 4",
+              ""
+            ],
+            [
+              "Lesson 5",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Teacher briefing note",
@@ -656,11 +1514,67 @@
       },
       {
         "name": "Avoidance ladder template",
-        "body": "List situations from least to most anxiety-provoking, and rate each 1-10.\nStep Situation and worry rating (1-10)\n1 (easiest)\n2\n3\n4\n5\n6 (hardest)"
+        "body": "List situations from least to most anxiety-provoking, and rate each 1-10.",
+        "table": {
+          "headers": [
+            "Step",
+            "Situation and worry rating (1-10)"
+          ],
+          "rows": [
+            [
+              "1 (easiest)",
+              ""
+            ],
+            [
+              "2",
+              ""
+            ],
+            [
+              "3",
+              ""
+            ],
+            [
+              "4",
+              ""
+            ],
+            [
+              "5",
+              ""
+            ],
+            [
+              "6 (hardest)",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Step-planning worksheet",
-        "body": "Plan the practical details of one ladder step.\nQuestion Answer\nWhich step?\nWho will support me?\nWhen will I try it?\nWhat if it's too hard?"
+        "body": "Plan the practical details of one ladder step.",
+        "table": {
+          "headers": [
+            "Question",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "Which step?",
+              ""
+            ],
+            [
+              "Who will support me?",
+              ""
+            ],
+            [
+              "When will I try it?",
+              ""
+            ],
+            [
+              "What if it's too hard?",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Grounding technique card",
@@ -668,7 +1582,16 @@
       },
       {
         "name": "My return-to-school plan",
-        "body": "Shared with the SENCO, pastoral lead and family.\nMy next 2-3 ladder steps\nMy support at each step\nMy grounding technique\nWho to contact if I'm struggling\nReview date"
+        "body": "Shared with the SENCO, pastoral lead and family.",
+        "form": {
+          "fields": [
+            "My next 2-3 ladder steps",
+            "My support at each step",
+            "My grounding technique",
+            "Who to contact if I'm struggling",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -678,7 +1601,31 @@
     "items": [
       {
         "name": "Focus timeline template",
-        "body": "Mark whether you were on task at each point in the lesson.\nPoint in lesson On task? Notes\nStart\nMiddle\nEnd"
+        "body": "Mark whether you were on task at each point in the lesson.",
+        "table": {
+          "headers": [
+            "Point in lesson",
+            "On task?",
+            "Notes"
+          ],
+          "rows": [
+            [
+              "Start",
+              "",
+              ""
+            ],
+            [
+              "Middle",
+              "",
+              ""
+            ],
+            [
+              "End",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Disengagement trigger cards",
@@ -686,15 +1633,71 @@
       },
       {
         "name": "Chunking checklist template",
-        "body": "Break a task into small steps and tick each one off.\nStep Done?\nStep 1\nStep 2\nStep 3\nStep 4\nStep 5"
+        "body": "Break a task into small steps and tick each one off.",
+        "table": {
+          "headers": [
+            "Step",
+            "Done?"
+          ],
+          "rows": [
+            [
+              "Step 1",
+              ""
+            ],
+            [
+              "Step 2",
+              ""
+            ],
+            [
+              "Step 3",
+              ""
+            ],
+            [
+              "Step 4",
+              ""
+            ],
+            [
+              "Step 5",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Goal-mapping worksheet",
-        "body": "Connect your work to something you care about.\nQuestion Answer\nMy personal goal\nHow this subject connects to it\nOne thing I'll do differently this week"
+        "body": "Connect your work to something you care about.",
+        "table": {
+          "headers": [
+            "Question",
+            "Answer"
+          ],
+          "rows": [
+            [
+              "My personal goal",
+              ""
+            ],
+            [
+              "How this subject connects to it",
+              ""
+            ],
+            [
+              "One thing I'll do differently this week",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Engagement plan template",
-        "body": "Shared with my class teacher.\nMy main triggers\nMy go-to strategy\nMy goal\nReview date"
+        "body": "Shared with my class teacher.",
+        "form": {
+          "fields": [
+            "My main triggers",
+            "My go-to strategy",
+            "My goal",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -708,7 +1711,31 @@
       },
       {
         "name": "Perspective-taking worksheet (staff)",
-        "body": "Explore a recent incident with a specific staff member.\nQuestion My answer\nWhat happened\nWhat I was thinking\nWhat the adult might have been managing\nWhat I could try differently"
+        "body": "Explore a recent incident with a specific staff member.",
+        "table": {
+          "headers": [
+            "Question",
+            "My answer"
+          ],
+          "rows": [
+            [
+              "What happened",
+              ""
+            ],
+            [
+              "What I was thinking",
+              ""
+            ],
+            [
+              "What the adult might have been managing",
+              ""
+            ],
+            [
+              "What I could try differently",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Respectful disagreement script card",
@@ -720,7 +1747,15 @@
       },
       {
         "name": "Working relationship plan template",
-        "body": "Agreed with one or two key staff.\nStaff member\nWhat I need from them\nWhat they can expect from me\nReview date"
+        "body": "Agreed with one or two key staff.",
+        "form": {
+          "fields": [
+            "Staff member",
+            "What I need from them",
+            "What they can expect from me",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
@@ -742,11 +1777,39 @@
       },
       {
         "name": "Circle-of-support mapping worksheet",
-        "body": "Map out your circle of support, from closest to widest.\nCircle Who or what\nClosest support (people I trust most)\nFriendly faces (people who are kind to me)\nSpaces that feel safe (places I feel comfortable)"
+        "body": "Map out your circle of support, from closest to widest.",
+        "table": {
+          "headers": [
+            "Circle",
+            "Who or what"
+          ],
+          "rows": [
+            [
+              "Closest support (people I trust most)",
+              ""
+            ],
+            [
+              "Friendly faces (people who are kind to me)",
+              ""
+            ],
+            [
+              "Spaces that feel safe (places I feel comfortable)",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Connection plan template",
-        "body": "My social connection plan.\nMy social goal\nMy support (person or club)\nMy first step\nReview date"
+        "body": "My social connection plan.",
+        "form": {
+          "fields": [
+            "My social goal",
+            "My support (person or club)",
+            "My first step",
+            "Review date"
+          ]
+        }
       }
     ],
     "missing": []
