@@ -1,11 +1,534 @@
-{% extends "base.html" %}
-{% from "_icons.html" import icon_book %}
-{% block title %}Phil{% endblock %}
-{% block content %}
-<div class="card card-center">
-  <div class="icon-badge icon-badge--teal">{{ icon_book(color='var(--teal-darker)') }}</div>
-  <h1>Phil</h1>
-  <p class="muted">Structured mentoring courses for schools, now running as a real signed-in web app.</p>
-  <p><a class="btn btn-primary" href="/signup">Get started</a> <a class="btn btn-secondary" href="/login">Sign in</a> <a class="btn btn-secondary" href="/courses">Browse courses</a></p>
-</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phil: structured mentoring courses for schools</title>
+<meta name="description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK secondary schools. Structured sessions, a safeguarding step every time, and governance-ready reporting.">
+<meta property="og:title" content="Phil: structured mentoring courses for schools">
+<meta property="og:description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK secondary schools.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Base ===== */
+:root{ --navy:#1B2A4A; --teal:#1D9E75; --teal-dark:#0F6E56; --teal-darker:#085041; --teal-light:#E1F5EE; --amber:#EF9F27; --amber-dark:#854F0B; --amber-light:#FAEEDA; --coral:#D85A30; --coral-dark:#993C1D; --coral-light:#FAECE7; --red:#A32D2D; --red-light:#FCEBEB; --cream:#FBF8F2; --card:#FFFFFF; --ink:#2C2C2A; --muted:#5F5E5A; --border:#8F8A7D; --font-head:'Sora',sans-serif; --font-body:'Plus Jakarta Sans',sans-serif; --ease-spring: cubic-bezier(0.34,1.56,0.64,1); }
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:#EFECE2;font-family:var(--font-body);color:var(--ink);}
+.statusbar{height:26px;flex-shrink:0;background:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;font-weight:600;color:var(--navy);}
+.screen{padding:4px 16px 20px;flex:1 1 auto;min-height:0;overflow-y:auto;display:flex;flex-direction:column;scrollbar-width:thin;scrollbar-color:var(--border) transparent;width:100%;position:relative;}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;min-height:30px;}
+.back{width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--navy);cursor:pointer;flex-shrink:0;}
+.spacer{flex:1;}
+p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;}
+
+/* ===== Marketing site, mobile-first base ===== */
+.mkt-container{max-width:1120px;margin:0 auto;padding:0 20px;}
+.mkt-section{padding:48px 0;}
+.mkt-section.tight{padding:40px 0;}
+.mkt-eyebrow{display:inline-block;font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--teal-darker);background:var(--teal-light);padding:5px 12px;border-radius:999px;margin-bottom:14px;}
+.mkt-section-head{max-width:640px;margin:0 0 40px;}
+.mkt-section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.mkt-section-head h2{font-family:var(--font-head);font-weight:800;font-size:30px;color:var(--navy);margin:0 0 12px;letter-spacing:-0.01em;}
+.mkt-section-head p{font-size:15px;color:var(--muted);line-height:1.6;margin:0;}
+.mkt-nav{position:sticky;top:0;z-index:20;background:rgba(251,248,242,0.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);border-top:3px solid var(--teal);}
+.mkt-nav-inner{max-width:1120px;margin:0 auto;padding:0 20px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+.mkt-logo{display:flex;align-items:center;gap:9px;}
+.mkt-logo svg{width:26px;height:26px;flex-shrink:0;}
+.mkt-logo span{font-family:var(--font-head);font-weight:800;font-size:16px;color:var(--navy);letter-spacing:-0.01em;}
+.mkt-nav-links{display:none;align-items:center;gap:22px;}
+.mkt-nav-links a{font-family:var(--font-body);font-weight:600;font-size:13.5px;color:var(--ink);text-decoration:none;cursor:pointer;}
+.mkt-nav-links a:hover{color:var(--teal-darker);}
+.mkt-nav-actions{display:flex;align-items:center;gap:10px;}
+.mkt-nav-signin{font-family:var(--font-body);font-weight:700;font-size:13.5px;color:var(--navy);text-decoration:none;cursor:pointer;padding:9px 14px;display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;}
+.mkt-nav-signin:hover{color:var(--teal-darker);}
+.btn-mkt-primary,.btn-mkt-secondary{font-family:var(--font-body);font-weight:700;font-size:13.5px;border-radius:11px;padding:12px 20px;cursor:pointer;border:none;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:transform 180ms var(--ease-spring),box-shadow 180ms ease,filter 180ms ease,background 150ms ease;width:auto;min-height:44px;box-sizing:border-box;}
+.btn-mkt-primary{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);color:#fff;box-shadow:0 4px 14px rgba(15,110,86,0.28);}
+.btn-mkt-primary:hover{transform:translateY(-2px);filter:brightness(1.05);}
+.btn-mkt-secondary{background:#fff;color:var(--navy);border:1.5px solid var(--border);}
+.btn-mkt-secondary:hover{border-color:var(--teal);color:var(--teal-darker);}
+.mkt-nav-actions .btn-mkt-primary{padding:10px 16px;font-size:12.5px;min-height:44px;}
+.mkt-hero{background:linear-gradient(180deg,#F3F0E6 0%,#FBF8F2 100%);border-bottom:1px solid var(--border);}
+.mkt-hero-grid{max-width:1120px;margin:0 auto;padding:48px 20px 40px;display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
+.mkt-hero-copy h1{font-family:var(--font-head);font-weight:800;font-size:30px;line-height:1.15;color:var(--navy);margin:0 0 18px;letter-spacing:-0.015em;}
+.mkt-hero-copy h1 em{font-style:normal;color:var(--teal-dark);}
+.mkt-section-head h2 em{font-style:normal;color:var(--teal-dark);}
+.mkt-hero-copy p{font-size:16.5px;line-height:1.65;color:var(--muted);margin:0 0 28px;max-width:520px;}
+.mkt-hero-ctas{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.mkt-hero-ctas .btn-mkt-primary,.mkt-hero-ctas .btn-mkt-secondary{padding:14px 22px;font-size:14px;}
+.mkt-hero-note{font-size:12.5px;color:var(--muted);}
+.mkt-hero-note strong{color:var(--navy);}
+.mkt-hero-visual{display:flex;justify-content:center;position:relative;}
+.mkt-device-mock{width:280px;height:572px;flex-shrink:0;overflow:hidden;background:var(--cream);border-radius:32px;border:7px solid #14213A;box-shadow:0 24px 60px rgba(20,33,58,0.28);position:relative;display:flex;flex-direction:column;}
+.mkt-device-mock .statusbar{flex-shrink:0;}
+.mkt-device-mock .screen{flex:1 1 auto;overflow:hidden;}
+.mkt-device-fade{position:absolute;left:7px;right:7px;bottom:7px;height:70px;background:linear-gradient(180deg,rgba(251,248,242,0) 0%,rgba(251,248,242,0.96) 85%);pointer-events:none;border-radius:0 0 25px 25px;}
+.mkt-device-glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.22) 0%,rgba(29,158,117,0) 70%);top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;}
+.mkt-device-mock{z-index:1;}
+.mkt-stats{background:var(--navy);}
+.mkt-stats-intro{max-width:640px;margin:0 0 40px;}
+.mkt-stats-intro .mkt-eyebrow{background:rgba(29,158,117,0.22);color:#9FD6C2;}
+.mkt-stats-intro h2{font-family:var(--font-head);font-weight:800;font-size:26px;color:#fff;margin:0 0 10px;letter-spacing:-0.01em;}
+.mkt-stats-intro p{font-size:14.5px;color:#B9C3D6;line-height:1.6;margin:0;}
+.mkt-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.mkt-stat-num{font-family:var(--font-head);font-weight:800;font-size:34px;color:#fff;letter-spacing:-0.02em;margin-bottom:6px;}
+.mkt-stat-label{font-size:13px;color:#D7DEEA;line-height:1.5;margin-bottom:8px;}
+.mkt-stat-cite{font-size:10.5px;color:#8494AE;}
+.mkt-feature-grid{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+.mkt-feature-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;transition:transform 200ms var(--ease-spring),box-shadow 200ms ease,border-color 200ms ease;flex:0 0 82%;scroll-snap-align:start;}
+.mkt-feature-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,33,58,0.08);border-color:rgba(29,158,117,0.3);}
+.mkt-feature-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.mkt-feature-icon svg{width:21px;height:21px;}
+.mkt-feature-card h3{font-family:var(--font-head);font-weight:700;font-size:15.5px;color:var(--navy);margin:0 0 8px;}
+.mkt-feature-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.mkt-platforms{background:#fff;}
+.mkt-platform-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+.mkt-platform-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:26px 24px;text-align:left;}
+.mkt-platform-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.mkt-platform-icon svg{width:22px;height:22px;}
+.mkt-platform-card h3{font-family:var(--font-head);font-weight:700;font-size:15.5px;color:var(--navy);margin:0 0 8px;}
+.mkt-platform-card p{font-size:13px;color:var(--muted);line-height:1.6;margin:0;}
+.mkt-how{background:linear-gradient(180deg,#EAF3EC 0%,#F3F0E6 100%);}
+.mkt-how-grid{display:grid;grid-template-columns:1fr;gap:16px;position:relative;}
+.mkt-how-step{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px 20px;position:relative;}
+.mkt-how-num{font-family:var(--font-head);font-weight:800;font-size:13px;color:#fff;background:var(--teal-dark);width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.mkt-how-step h3{font-family:var(--font-head);font-weight:700;font-size:14.5px;color:var(--navy);margin:0 0 7px;}
+.mkt-how-step p{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0;}
+.mkt-courses{background:linear-gradient(180deg,#EAF3EC 0%,#FBF8F2 100%);}
+.mkt-course-group-label{font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);text-transform:uppercase;letter-spacing:0.05em;margin:0 0 12px;}
+.mkt-course-group{margin-bottom:26px;}
+.mkt-course-group:last-child{margin-bottom:0;}
+.mkt-course-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.mkt-course-pill{display:flex;align-items:baseline;gap:9px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 13px;}
+.mkt-course-pill .mkt-course-num{font-family:var(--font-head);font-weight:800;font-size:11.5px;color:var(--teal-darker);flex-shrink:0;}
+.mkt-course-pill.is-new .mkt-course-num{color:var(--amber-dark);}
+.mkt-course-pill span.mkt-course-title{font-size:12.5px;color:var(--ink);line-height:1.4;}
+.mkt-courses-note{margin-top:26px;text-align:center;font-size:13px;color:var(--muted);}
+.mkt-courses-note a{color:var(--teal-darker);font-weight:700;text-decoration:none;}
+.mkt-courses-note a:hover{text-decoration:underline;}
+.mkt-pricing-promo{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--teal-light);border:1px solid var(--teal);border-radius:999px;padding:10px 22px;margin:0 auto 28px;max-width:fit-content;color:var(--teal-darker);font-size:13px;font-weight:600;}
+.mkt-pricing-promo svg{width:16px;height:16px;flex-shrink:0;color:var(--teal-dark);}
+.mkt-price-grid{display:grid;grid-template-columns:1fr;gap:20px;align-items:stretch;margin-bottom:28px;max-width:420px;margin-left:auto;margin-right:auto;}
+.mkt-price-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:32px 30px;display:flex;flex-direction:column;}
+.mkt-price-card.featured{border-color:var(--teal);box-shadow:0 18px 40px rgba(15,110,86,0.14);position:relative;}
+.mkt-price-badge{position:absolute;top:-13px;left:30px;background:var(--teal-dark);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;letter-spacing:0.04em;text-transform:uppercase;padding:5px 12px;border-radius:999px;}
+.mkt-price-card h3{font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--navy);margin:0 0 6px;}
+.mkt-price-desc{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0 0 20px;min-height:36px;}
+.mkt-price-amount{display:flex;align-items:baseline;gap:6px;margin-bottom:4px;}
+.mkt-price-amount .num{font-family:var(--font-head);font-weight:800;font-size:38px;color:var(--navy);letter-spacing:-0.02em;}
+.mkt-price-period{font-size:13px;color:var(--muted);font-weight:600;}
+.mkt-price-alt{font-size:12px;color:var(--muted);margin-bottom:22px;}
+.mkt-price-list{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:10px;flex:1 1 auto;}
+.mkt-price-list li{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:var(--ink);line-height:1.5;}
+.mkt-price-list li svg{width:15px;height:15px;flex-shrink:0;margin-top:1.5px;color:var(--teal-dark);}
+.mkt-price-note{font-size:11px;color:var(--muted);margin-top:12px;text-align:center;}
+.mkt-multiyear{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px 26px;}
+.mkt-multiyear h4{font-family:var(--font-head);font-weight:700;font-size:13.5px;color:var(--navy);margin:0 0 14px;}
+.mkt-multiyear table{width:100%;border-collapse:collapse;font-size:12.5px;}
+.mkt-multiyear th{text-align:left;font-family:var(--font-head);font-weight:700;font-size:10.5px;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);padding:0 0 9px;border-bottom:1px solid var(--border);}
+.mkt-multiyear td{padding:10px 0;border-bottom:1px solid var(--border);color:var(--ink);}
+.mkt-multiyear tr:last-child td{border-bottom:none;}
+.mkt-multiyear td.hl{color:var(--teal-darker);font-weight:700;}
+.mkt-safeguard{background:var(--navy);}
+.mkt-safeguard .mkt-section-head h2{color:#fff;}
+.mkt-safeguard .mkt-section-head p{color:#B9C3D6;}
+.mkt-safeguard .mkt-eyebrow{background:rgba(239,159,39,0.18);color:#F6CE8E;}
+.mkt-safeguard-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+.mkt-safeguard-point{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 22px;}
+.mkt-safeguard-point .sgi{width:36px;height:36px;border-radius:10px;background:rgba(239,159,39,0.16);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.mkt-safeguard-point .sgi svg{width:18px;height:18px;color:#F6CE8E;}
+.mkt-safeguard-point h3{font-family:var(--font-head);font-weight:700;font-size:14.5px;color:#fff;margin:0 0 8px;}
+.mkt-safeguard-point p{font-size:12.5px;color:#B9C3D6;line-height:1.6;margin:0;}
+.mkt-testimonial-grid{display:flex;gap:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;}
+.mkt-testimonial-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;flex:0 0 82%;scroll-snap-align:start;}
+.mkt-testimonial-quote{font-size:13.5px;color:var(--ink);line-height:1.65;margin:0 0 16px;font-style:italic;}
+.mkt-testimonial-role{display:flex;align-items:center;gap:10px;}
+.mkt-testimonial-avatar{width:32px;height:32px;border-radius:50%;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11px;color:var(--teal-darker);flex-shrink:0;}
+.mkt-testimonial-role div{font-family:var(--font-body);font-weight:700;font-size:12px;color:var(--navy);}
+.mkt-testimonial-role span{display:block;font-size:11px;color:var(--muted);font-weight:400;}
+.mkt-cta-band{background:linear-gradient(135deg,#0F6E56 0%,#1D9E75 60%,#0B5847 100%);text-align:center;}
+.mkt-cta-band h2{font-family:var(--font-head);font-weight:800;font-size:28px;color:#fff;margin:0 0 12px;letter-spacing:-0.01em;}
+.mkt-cta-band p{font-size:14.5px;color:#D7EFE6;margin:0 0 28px;}
+.mkt-cta-band .mkt-hero-ctas{justify-content:center;margin-bottom:0;}
+.mkt-cta-band .btn-mkt-secondary{background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.35);}
+.mkt-cta-band .btn-mkt-secondary:hover{background:rgba(255,255,255,0.18);}
+.mkt-cta-band .btn-mkt-primary{background:#fff;color:var(--teal-darker);box-shadow:0 4px 14px rgba(0,0,0,0.18);}
+.mkt-cta-band .btn-mkt-primary:hover{filter:none;background:#F3EFE4;}
+.mkt-footer{background:#101B30;padding:56px 0 26px;}
+.mkt-footer-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:32px;}
+.mkt-footer-brand .mkt-logo span{color:#fff;}
+.mkt-footer-brand p{font-size:12.5px;color:#8494AE;line-height:1.6;margin:12px 0 0;max-width:240px;}
+.mkt-footer-col h4{font-family:var(--font-head);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:0.05em;color:#8494AE;margin:0 0 14px;}
+.mkt-footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.mkt-footer-col a{font-size:13px;color:#D7DEEA;text-decoration:none;cursor:pointer;}
+.mkt-footer-col a:hover{color:#7FE3C0;}
+.mkt-footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:#6B7A94;}
+
+/* ===== Tablet (>=700px) ===== */
+@media (min-width: 700px) {
+.mkt-container{padding:0 32px;}
+.mkt-section{padding:60px 0;}
+.mkt-section.tight{padding:48px 0;}
+.mkt-nav-inner{padding:0 32px;}
+.mkt-logo svg{width:30px;height:30px;}
+.mkt-logo span{font-size:18px;}
+.mkt-hero-grid{padding:64px 32px 52px;gap:48px;}
+.mkt-hero-copy h1{font-size:36px;line-height:1.13;}
+.mkt-stat-grid{gap:24px;}
+.mkt-feature-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+.mkt-platform-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+.mkt-how-grid{grid-template-columns:repeat(2,1fr);gap:20px;}
+.mkt-course-grid{grid-template-columns:repeat(3,1fr);}
+.mkt-price-grid{grid-template-columns:repeat(2,1fr);gap:24px;max-width:none;}
+.mkt-safeguard-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+.mkt-testimonial-grid{grid-template-columns:repeat(2,1fr);gap:16px;}
+.mkt-footer-grid{grid-template-columns:repeat(2,1fr);gap:28px;}
+  p.scr-body{font-size:13.5px;}
+}
+
+/* ===== Desktop (>=1200px) ===== */
+@media (min-width: 1200px) {
+.mkt-container{padding:0 40px;}
+.mkt-section{padding:72px 0;}
+.mkt-section.tight{padding:56px 0;}
+.mkt-nav-inner{padding:0 40px;}
+.mkt-logo svg{width:36px;height:36px;}
+.mkt-logo span{font-size:20px;}
+.mkt-nav-links{display:flex;gap:30px;}
+.mkt-hero-grid{padding:76px 40px 64px;grid-template-columns:1.05fr 0.95fr;gap:56px;}
+.mkt-hero-copy h1{font-size:42px;line-height:1.12;}
+.mkt-stat-grid{grid-template-columns:repeat(4,1fr);gap:28px;}
+.mkt-feature-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
+.mkt-platform-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
+.mkt-how-grid{grid-template-columns:repeat(4,1fr);gap:24px;}
+.mkt-course-grid{grid-template-columns:repeat(4,1fr);gap:12px;}
+.mkt-safeguard-grid{grid-template-columns:repeat(3,1fr);gap:24px;}
+.mkt-testimonial-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
+.mkt-footer-grid{grid-template-columns:1.4fr repeat(3,1fr);gap:32px;margin-bottom:40px;}
+  p.scr-body{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+      <header class="mkt-nav">
+        <div class="mkt-nav-inner">
+          <div class="mkt-logo"><svg viewBox="0 0 120 120" role="img" aria-label="Phil"><rect x="30" y="16" width="66" height="90" rx="4" fill="#EAE2CC" stroke="#D9CFB4" stroke-width="1"/><rect x="62" y="2" width="7" height="14" fill="#D85A30"/><rect x="30" y="16" width="56" height="84" rx="6" fill="#0F6E56"/><path fill-rule="evenodd" fill="#F3EFE4" d="M 35.5,28 L 35.5,88 L 50.5,88 L 50.5,63 L 60.5,63 C 73.5,63 80.5,56 80.5,45 C 80.5,34 73.5,28 60.5,28 Z M 50.5,40 L 60.5,40 C 65.5,40 67.5,42 67.5,45 C 67.5,48 65.5,50 60.5,50 L 50.5,50 Z"/></svg><span>Phil</span></div>
+          <nav class="mkt-nav-links">
+            <a href="#mkt-features">Features</a>
+            <a href="#mkt-platforms">App &amp; web</a>
+            <a href="#mkt-how">How it works</a>
+            <a href="#mkt-courses">Courses</a>
+            <a href="#mkt-pricing">Pricing</a>
+            <a href="#mkt-safeguard">Safeguarding</a>
+          </nav>
+          <div class="mkt-nav-actions">
+            <a class="mkt-nav-signin" href="/login">Sign in</a>
+            <a class="btn-mkt-primary" href="/signup">Get started</a>
+          </div>
+        </div>
+      </header>
+      <main>
+      <section class="mkt-hero">
+        <div class="mkt-hero-grid">
+          <div class="mkt-hero-copy">
+            <span class="mkt-eyebrow">For staff working in schools and educational establishments</span>
+            <h1>The structured mentoring courses English schools have been <em>missing</em>.</h1>
+            <p>Phil gives every mentor a library of ready-made, evidence-grounded five-week courses related to the obstacles pupils face in schools and educational establishments, combined with fully downloadable reports.</p>
+            <div class="mkt-hero-ctas">
+              <a class="btn-mkt-primary" href="/signup">Start your free 3-week pilot</a>
+              <a class="btn-mkt-secondary" href="#mkt-how">See how it works</a>
+            </div>
+            <p class="mkt-hero-note"><strong>No card required</strong> for the establishment pilot &middot; individual mentors from <strong>&pound;22/month</strong></p>
+          </div>
+          <div class="mkt-hero-visual">
+            <div class="mkt-device-glow"></div>
+            <div class="mkt-device-mock">
+              <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
+              <div class="screen">
+          <div class="topbar">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11px;color:var(--amber-dark);">JO</div>
+              <div><div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--navy);">Hi, J. Okafor</div><div style="font-size:10px;color:var(--muted);">Elmswood Academy</div></div>
+            </div>
+            <div class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+          </div>
+
+          <p style="font-size:9px;color:var(--muted);margin:0 0 14px;">No admin/mentor switch here, J. Okafor isn't an admin, so this is the only home screen he has.</p>
+
+          <div style="display:flex;gap:8px;margin-bottom:16px;">
+            <div style="flex:1;background:var(--teal-light);border-radius:12px;padding:10px 12px;">
+              <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--teal-darker);">3</div>
+              <div style="font-size:10px;color:var(--teal-darker);font-weight:600;">Active pupils</div>
+            </div>
+            <div style="flex:1;background:var(--amber-light);border-radius:12px;padding:10px 12px;">
+              <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--amber-dark);">1</div>
+              <div style="font-size:10px;color:var(--amber-dark);font-weight:600;">Due this week</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:10px;border:1.4px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:16px;">
+            <div style="width:30px;height:30px;border-radius:9px;background:var(--coral-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:11.5px;color:var(--navy);">Course library</div><div style="font-size:9.5px;color:var(--muted);">Browse all 12 courses to decide what to enrol a pupil on</div></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" style="width:13px;height:13px;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+
+          <p class="scr-body" style="margin-bottom:2px;"><strong style="color:var(--navy);">Mentoring list</strong></p>
+          <p style="font-size:9px;color:var(--muted);margin:0 0 8px;">Tap a pupil to open their profile, then their course to open it directly.</p>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
+            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">MB</div>
+            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Marcus B.</div><div style="font-size:9.5px;color:var(--muted);">Course 1: Physical aggression</div></div>
+            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">4/5</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
+            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">SK</div>
+            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Sam K.</div><div style="font-size:9.5px;color:var(--muted);">Course 4: Peer conflict and bullying</div></div>
+            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">1/5</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;">
+            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">AA</div>
+            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Aiyana A.</div><div style="font-size:9.5px;color:var(--muted);">Course 12</div></div>
+            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">2/5</span>
+          </div>
+          <div class="spacer"></div>
+        </div>
+              <div class="mkt-device-fade"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-stats">
+        <div class="mkt-container">
+          <div class="mkt-stats-intro">
+            <span class="mkt-eyebrow">Why this matters</span>
+            <h2>Persistent disruptive behaviour makes the headlines, but anxiety, low mood, disengagement and social withdrawal sit behind just as many pastoral referrals, and there&rsquo;s still no shared national standard for the mentoring meant to help with any of it.</h2>
+          </div>
+          <div class="mkt-stat-grid">
+            <div class="mkt-stat">
+              <div class="mkt-stat-num">335,671</div>
+              <div class="mkt-stat-label">Suspensions recorded in England in a single autumn term</div>
+              <div class="mkt-stat-cite">DfE, Autumn Term 2024/25</div>
+            </div>
+            <div class="mkt-stat">
+              <div class="mkt-stat-num">17.63%</div>
+              <div class="mkt-stat-label">Persistent absence rate, over 60% above pre-pandemic levels</div>
+              <div class="mkt-stat-cite">DfE, Pupil Absence 2024/25</div>
+            </div>
+            <div class="mkt-stat">
+              <div class="mkt-stat-num">4.6&times;</div>
+              <div class="mkt-stat-label">Higher suspension rate for FSM-eligible pupils than their peers</div>
+              <div class="mkt-stat-cite">DfE, Suspensions &amp; Permanent Exclusions, 2024/25</div>
+            </div>
+            <div class="mkt-stat">
+              <div class="mkt-stat-num">86%</div>
+              <div class="mkt-stat-label">Of teachers &amp; leaders report work-related stress, behaviour a leading cause</div>
+              <div class="mkt-stat-cite">DfE, Working Lives of Teachers &amp; Leaders, 2025</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-section" id="mkt-features">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">What Phil gives you</span>
+            <h2>Everything a structured mentoring offer needs, <em>in one place</em></h2>
+            <p>Not a generic behaviour app, a library of courses, a safeguarding-conscious record, and reporting built specifically for how English schools work.</p>
+          </div>
+          <div class="mkt-feature-grid">
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>20 evidence-grounded courses</h3><p>Five structured weekly sessions per course, each mapped to published DfE, Ofsted and EEF guidance, not a generic behaviour template.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>A safeguarding step on every session</h3><p>A mandatory flag and note on every session record, consistent with the vigilance culture KCSIE asks every member of staff to hold.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></div><h3>Continuity that survives a staff change</h3><p>A CompletionReflection travels with the pupil, so a new mentor picks up from what&rsquo;s already known, not from nothing.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg></div><h3>Governance-ready reporting</h3><p>Caseload, whole-establishment and individual pupil reports schools can hand straight to governors, a parents&rsquo; evening, or an Ofsted conversation.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 6 22l6-3 6 3-2.5-8.5"/></svg></div><h3>Visible, tangible progress</h3><p>A live progress bar and an automatically issued certificate give every pupil a concrete sense of what they&rsquo;ve achieved.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div><h3>Scales from one mentor to a trust</h3><p>The same structured content and reporting work for an independent mentor, a single school, or a multi-academy trust.</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-section mkt-platforms" id="mkt-platforms">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">Available today, with more on the way</span>
+            <h2>On the web now, in your pocket soon</h2>
+            <p>Every session record works the same way on a phone, tablet or desktop browser, built for how staff actually move through their day. Native iOS and Android apps are coming soon.</p>
+          </div>
+          <div class="mkt-platform-grid">
+            <div class="mkt-platform-card">
+              <div class="mkt-platform-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/></svg></div>
+              <h3>Available now: the web app</h3>
+              <p>Log a session the moment it ends, browse the course library and download reports, all from any browser. Nothing to install, no separate login.</p>
+            </div>
+            <div class="mkt-platform-card">
+              <div class="mkt-platform-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+              <h3>iOS and Android: coming soon</h3>
+              <p>Native apps are in development, so mentors will be able to log a session even faster, straight from the mentoring room. Start your pilot now and we&rsquo;ll let you know the moment they launch.</p>
+            </div>
+            <div class="mkt-platform-card">
+              <div class="mkt-platform-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M3 16v5h5"/><path d="M16 3h5v5"/></svg></div>
+              <h3>Always in sync</h3>
+              <p>When the apps launch, everything logged on the web carries straight over: same pupil, same course, same safeguarding step. Nothing to reconcile, nothing recorded twice.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-how" id="mkt-how">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">How it works</span>
+            <h2>From enrolment to evidence, <em>in four steps</em></h2>
+          </div>
+          <div class="mkt-how-grid">
+            <div class="mkt-how-step"><div class="mkt-how-num">1</div><h3>Enrol a pupil</h3><p>An admin or mentor enrols a pupil onto one of the twenty courses in minutes.</p></div>
+            <div class="mkt-how-step"><div class="mkt-how-num">2</div><h3>Run five structured sessions</h3><p>Each session follows the course&rsquo;s defined objective and activities, with a mandatory safeguarding step every time.</p></div>
+            <div class="mkt-how-step"><div class="mkt-how-num">3</div><h3>Reflect and certify</h3><p>A CompletionReflection and an automatically issued certificate close out the course.</p></div>
+            <div class="mkt-how-step"><div class="mkt-how-num">4</div><h3>Report with confidence</h3><p>Pull caseload, establishment or individual reports whenever governors, Ofsted or a parent need to see the evidence.</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-section mkt-courses" id="mkt-courses">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">The course library</span>
+            <h2>Twenty courses, <em>ready to assign</em></h2>
+            <p>Every course is a five-week structured plan grounded in DfE, Ofsted and clinical guidance. Titles are below, sign up to see full session plans, activities and resources for each one.</p>
+          </div>
+          <div class="mkt-course-group">
+            <p class="mkt-course-group-label">Classroom and behaviour</p>
+            <div class="mkt-course-grid"><div class="mkt-course-pill"><span class="mkt-course-num">01</span><span class="mkt-course-title">Physical aggression</span></div><div class="mkt-course-pill"><span class="mkt-course-num">02</span><span class="mkt-course-title">Defiance and non-compliance</span></div><div class="mkt-course-pill"><span class="mkt-course-num">03</span><span class="mkt-course-title">Emotional regulation</span></div><div class="mkt-course-pill"><span class="mkt-course-num">04</span><span class="mkt-course-title">Peer conflict and bullying</span></div><div class="mkt-course-pill"><span class="mkt-course-num">05</span><span class="mkt-course-title">Verbal disruption</span></div><div class="mkt-course-pill"><span class="mkt-course-num">06</span><span class="mkt-course-title">Anxiety and avoidance</span></div><div class="mkt-course-pill"><span class="mkt-course-num">07</span><span class="mkt-course-title">Low-level disengagement</span></div><div class="mkt-course-pill"><span class="mkt-course-num">08</span><span class="mkt-course-title">Disrespect to authority</span></div><div class="mkt-course-pill"><span class="mkt-course-num">09</span><span class="mkt-course-title">Social withdrawal</span></div><div class="mkt-course-pill"><span class="mkt-course-num">10</span><span class="mkt-course-title">Property damage and destructive behaviour</span></div><div class="mkt-course-pill"><span class="mkt-course-num">11</span><span class="mkt-course-title">Anger management</span></div><div class="mkt-course-pill"><span class="mkt-course-num">12</span><span class="mkt-course-title">Truancy and school avoidance</span></div></div>
+          </div>
+          <div class="mkt-course-group">
+            <p class="mkt-course-group-label">Wellbeing and safeguarding</p>
+            <div class="mkt-course-grid"><div class="mkt-course-pill is-new"><span class="mkt-course-num">13</span><span class="mkt-course-title">Vaping and nicotine use</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">14</span><span class="mkt-course-title">Young carers: balancing care and school</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">15</span><span class="mkt-course-title">Online safety, cyberbullying and digital wellbeing</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">16</span><span class="mkt-course-title">Exam and academic pressure</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">17</span><span class="mkt-course-title">Sensory regulation for neurodivergent pupils</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">18</span><span class="mkt-course-title">Bereavement and loss</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">19</span><span class="mkt-course-title">Safeguarding: exploitation and county lines awareness</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">20</span><span class="mkt-course-title">Moving up: primary-to-secondary and other school transitions</span></div></div>
+          </div>
+          <p class="mkt-courses-note">Full session plans, activities and mentor guidance unlock once your school signs up. <a href="#mkt-pricing">See plans and pricing &rarr;</a></p>
+        </div>
+      </section>
+      <section class="mkt-section" id="mkt-pricing">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">Pricing</span>
+            <h2>Priced against <em>real comparables</em>, not generic software</h2>
+            <p>Benchmarked against UK solo-practitioner tools and school safeguarding/SEND software, not invented from scratch.</p>
+          </div>
+          <div class="mkt-pricing-promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg><span>Free 3-week pilot for every new establishment, up to 3 seats, 10 pupils, no card required</span></div>
+          <div class="mkt-price-grid">
+            <div class="mkt-price-card">
+              <h3>Individual</h3>
+              <p class="mkt-price-desc">For a mentor not attached to a school subscription, private practice, alternative provision, or independent work with families.</p>
+              <div class="mkt-price-amount"><span class="num">&pound;22</span><span class="mkt-price-period">/month</span></div>
+              <div class="mkt-price-alt">or &pound;220/year, roughly 2 months free</div>
+              <ul class="mkt-price-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>1 seat, card payment only</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Full product: sessions, courses, certificates</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Safeguarding-compliant records</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Cancel anytime, no minimum term</span></li>
+              </ul>
+              <a class="btn-mkt-secondary" style="width:100%;" href="/signup">Get started</a>
+            </div>
+            <div class="mkt-price-card featured">
+              <span class="mkt-price-badge">Most common</span>
+              <h3>Establishment</h3>
+              <p class="mkt-price-desc">For a school or setting, includes 15 mentor seats under one subscription.</p>
+              <div class="mkt-price-amount"><span class="num">&pound;750</span><span class="mkt-price-period">/year</span></div>
+              <div class="mkt-price-alt">Additional seats beyond 15: &pound;35/seat/year</div>
+              <ul class="mkt-price-list">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>15 mentor seats, everything the individual plan includes</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Card or invoice, with PO reference</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>One annual charge, a single budget line, not a recurring approval</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Free 3-week pilot: up to 3 seats, 10 pupils, no card required</span></li>
+              </ul>
+              <a class="btn-mkt-primary" style="width:100%;" href="/signup">Start your free 3-week pilot</a>
+            </div>
+          </div>
+          <div class="mkt-multiyear">
+            <h4>Multi-year establishment pricing</h4>
+            <table>
+              <tr><th>Term</th><th>Discount</th><th>Effective annual price (15 seats)</th></tr>
+              <tr><td>1 year (standard)</td><td>-</td><td>&pound;750/year</td></tr>
+              <tr><td>2 years, paid upfront</td><td>10%</td><td class="hl">&pound;675/year</td></tr>
+              <tr><td>3 years, paid upfront</td><td>15%</td><td class="hl">&pound;637.50/year</td></tr>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-safeguard" id="mkt-safeguard">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">Safeguarding &amp; trust</span>
+            <h2>Built to sit alongside your safeguarding procedures, not replace them</h2>
+            <p>Phil is a session-recording and course-delivery tool, not a safeguarding reporting system. Adopting it clarifies exactly where the platform&rsquo;s role ends and your school&rsquo;s normal procedure begins.</p>
+          </div>
+          <div class="mkt-safeguard-grid">
+            <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>A mandatory step, every session</h3><p>Every mentor ticks a safeguarding flag and factual note on every session, keeping vigilance active regardless of experience.</p></div>
+            <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Never a substitute for your DSL</h3><p>Phil doesn&rsquo;t send alerts, notify a DSL, or monitor content. Mentors report concerns through the school&rsquo;s normal route, the same day, exactly as KCSIE requires.</p></div>
+            <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Clear, reviewable access</h3><p>Admin accounts can look up any pupil&rsquo;s records, including safeguarding notes. A ready-made policy template sets out exactly who sees what.</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-section tight">
+        <div class="mkt-container">
+          <div class="mkt-section-head center">
+            <span class="mkt-eyebrow">What a Phil rollout could look like</span>
+            <h2>Illustrative, real school and mentor feedback to follow</h2>
+          </div>
+          <div class="mkt-testimonial-grid">
+            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;Every mentor now works from the same structured course, no more two pupils getting two completely different experiences depending who they see.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">PL</div><div>Pastoral Lead<span>UK secondary school</span></div></div></div>
+            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;The safeguarding step means nothing gets missed, without turning Phil into another system we have to monitor.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">DSL</div><div>Designated Safeguarding Lead<span>UK secondary school</span></div></div></div>
+            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;I finally have a caseload view instead of a mental list in my head.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">M</div><div>Mentor<span>Independent practice</span></div></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="mkt-section mkt-cta-band">
+        <div class="mkt-container">
+          <h2>Ready to bring structured courses to your mentoring?</h2>
+          <p>Free three-week pilot for establishments &middot; no card required &middot; existing records carry over if you convert.</p>
+          <div class="mkt-hero-ctas">
+            <a class="btn-mkt-primary" href="/signup">Start your free 3-week pilot</a>
+            <a class="btn-mkt-secondary" href="/signup">Get started as an individual mentor</a>
+          </div>
+        </div>
+      </section>
+      </main>
+      <footer class="mkt-footer">
+        <div class="mkt-container">
+          <div class="mkt-footer-grid">
+            <div class="mkt-footer-brand">
+              <div class="mkt-logo"><svg viewBox="0 0 120 120" role="img" aria-label="Phil"><rect x="30" y="16" width="66" height="90" rx="4" fill="#EAE2CC" stroke="#D9CFB4" stroke-width="1"/><rect x="62" y="2" width="7" height="14" fill="#D85A30"/><rect x="30" y="16" width="56" height="84" rx="6" fill="#0F6E56"/><path fill-rule="evenodd" fill="#F3EFE4" d="M 35.5,28 L 35.5,88 L 50.5,88 L 50.5,63 L 60.5,63 C 73.5,63 80.5,56 80.5,45 C 80.5,34 73.5,28 60.5,28 Z M 50.5,40 L 60.5,40 C 65.5,40 67.5,42 67.5,45 C 67.5,48 65.5,50 60.5,50 L 50.5,50 Z"/></svg><span>Phil</span></div>
+              <p>Structured support, real growth. A library of five-week, evidence-grounded mentoring courses for UK secondary schools.</p>
+            </div>
+            <div class="mkt-footer-col">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#mkt-features">Features</a></li>
+                <li><a href="#mkt-how">How it works</a></li>
+                <li><a href="#mkt-pricing">Pricing</a></li>
+                <li><a href="#mkt-safeguard">Safeguarding</a></li>
+              </ul>
+            </div>
+            <div class="mkt-footer-col">
+              <h4>Resources</h4>
+              <ul>
+                <li><a href="/legal/white-paper" target="_blank" rel="noopener">White paper</a></li>
+                <li><a href="/legal/safeguarding-policy" target="_blank" rel="noopener">Safeguarding policy template</a></li>
+                <li><a href="/legal/privacy-policy" target="_blank" rel="noopener">Privacy policy</a></li>
+                <li><a href="/legal/terms-of-service" target="_blank" rel="noopener">Terms of service</a></li>
+              </ul>
+            </div>
+            <div class="mkt-footer-col">
+              <h4>Get in touch</h4>
+              <ul>
+                <li><a href="/signup">Get started</a></li>
+                <li><a href="/login">Sign in</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="mkt-footer-bottom">
+            <span>&copy; 2026 Phil: structured support, real growth.</span>
+          </div>
+        </div>
+      </footer>
+    
+</body>
+</html>
