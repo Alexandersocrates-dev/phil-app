@@ -3,7 +3,7 @@
 {% block title %}Get support - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<p class="back-link"><a href="{{ '/staff' if user.role == 'phil_staff' else ('/admin' if user.role == 'admin' else ('/parent' if user.role == 'parent_carer' else '/mentor')) }}">&larr; Home</a></p>
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card card-center">
   <div class="icon-badge icon-badge--teal">{{ icon_message_circle(color='var(--teal-darker)') }}</div>
   <h1>Get support</h1>
