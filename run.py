@@ -33,7 +33,14 @@ if __name__ == "__main__":
     has_courses = conn.execute("SELECT 1 FROM courses LIMIT 1").fetchone() is not None
     if not has_courses:
         seed.seed_courses(conn)
-    seed.seed_phil_staff(conn)
+    staff_password = seed.seed_phil_staff(conn)
+    if staff_password:
+        # Only ever printed on the boot that actually creates the account, and
+        # only when no PHIL_STAFF_PASSWORD was supplied. Without this the
+        # generated password would be unrecoverable and the staff console
+        # unreachable on a fresh volume.
+        print(f"Created the first Phil staff account: {seed.PHIL_STAFF_EMAIL}")
+        print(f"Sign-in password (shown once, change it after first sign-in): {staff_password}")
     conn.close()
     # Railway (and most hosts) inject PORT as an env var rather than a CLI
     # arg; an explicit CLI arg still wins for local dev, e.g. `python3
