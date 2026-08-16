@@ -53,9 +53,6 @@
     <a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ e.id }}/reassign">Reassign mentor</a>
     {% endif %}
   {% endif %}
-  {% if e.current_week > 0 %}
-    <a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank">Progress report</a>
-  {% endif %}
   {% if item.certificate %}
     <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Download certificate</a>
   {% endif %}
