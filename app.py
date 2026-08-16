@@ -885,6 +885,73 @@ def parent_request_decline(request):
     return with_flash(f"/mentor/pupils/{pupil_id}", "Request declined.", "ok")
 
 
+@router.get("/admin/parent-requests")
+def admin_parent_requests(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        pending_requests = conn.execute(
+            """SELECT parent_access_requests.*, users.name as requested_by_name,
+                      pupils.forename, pupils.surname
+               FROM parent_access_requests
+               JOIN users ON users.id = parent_access_requests.requested_by
+               JOIN pupils ON pupils.id = parent_access_requests.pupil_id
+               WHERE parent_access_requests.establishment_id=? AND parent_access_requests.status='pending'
+               ORDER BY parent_access_requests.created_at""",
+            (user["establishment_id"],),
+        ).fetchall()
+    finally:
+        conn.close()
+    return render("parent_requests.html", user=user, pending_requests=pending_requests,
+                  flash=flash_from_query(request))
+
+
+@router.get("/admin/reassign-admin")
+def admin_reassign_admin_form(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        mentors = conn.execute(
+            "SELECT id, name, email FROM users WHERE establishment_id=? AND role='mentor' AND status='active' ORDER BY name",
+            (user["establishment_id"],),
+        ).fetchall()
+    finally:
+        conn.close()
+    return render("reassign_admin.html", user=user, mentors=mentors, flash=flash_from_query(request))
+
+
+@router.post("/admin/reassign-admin")
+def admin_reassign_admin_submit(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    new_admin_id = request.field("mentor_id")
+    if not new_admin_id:
+        return with_flash("/admin/reassign-admin", "Choose a mentor to become the new admin.", "error")
+    conn = db.get_conn()
+    try:
+        new_admin = conn.execute(
+            "SELECT * FROM users WHERE id=? AND establishment_id=? AND role='mentor' AND status='active'",
+            (new_admin_id, user["establishment_id"]),
+        ).fetchone()
+        if not new_admin:
+            return with_flash("/admin/reassign-admin", "That mentor could not be found.", "error")
+        conn.execute("UPDATE users SET role='mentor' WHERE id=?", (user["id"],))
+        conn.execute("UPDATE users SET role='admin' WHERE id=?", (new_admin["id"],))
+        db.log_action(conn, user["id"], "admin_role_reassigned", "user", new_admin["id"],
+                      f"{user['name']} handed the admin role to {new_admin['name']}")
+        conn.commit()
+    finally:
+        conn.close()
+    return render_done(user, "Admin role reassigned",
+                        f"{new_admin['name']} is now the admin for your establishment. You're now a mentor.",
+                        "/mentor", back_label="Go to Mentor home")
+
+
 @router.get("/mentor/enrol/<pupil_id>")
 def enrol_form(request):
     user, err = require(request, roles=["mentor", "admin"])
