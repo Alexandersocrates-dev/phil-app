@@ -61,7 +61,8 @@ h2{font-family:var(--font-head); font-weight:600; font-size:19px; margin:0 0 var
 h3{font-family:var(--font-head); font-weight:600; font-size:15px; margin:0 0 var(--sp-2); color:var(--teal-dark);}
 .muted{color:var(--muted); font-size:13.5px;}
 
-.back-link{display:inline-block; margin:0 0 var(--sp-4); font-size:13.5px; font-weight:600;}
+.back-link{display:inline-block; margin:0 0 var(--sp-4); font-size:13.5px; font-weight:600; background:none; border:none; padding:0; color:var(--teal-dark); font-family:inherit; cursor:pointer; text-decoration:underline;}
+.back-link:hover{color:var(--teal-darker);}
 .page-header{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--sp-4); margin-bottom:var(--sp-5);}
 .page-header h1{margin:0;}
 .page-header-title{display:flex; align-items:center; gap:var(--sp-3); min-width:0; margin-bottom:var(--sp-2);}
@@ -219,8 +220,10 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 }
 .app-sidebar-brand{
   font-family:var(--font-head); font-weight:800; font-size:19px; color:var(--navy);
-  text-decoration:none; padding:0 var(--sp-3) var(--sp-4); display:flex; align-items:center; gap:var(--sp-2);
+  text-decoration:none; padding:var(--sp-2) var(--sp-3) var(--sp-4); display:flex; align-items:center; gap:var(--sp-2);
+  border-radius:10px; transition:background 150ms ease, color 150ms ease;
 }
+.app-sidebar-brand:hover{background:var(--teal-light); color:var(--teal-darker);}
 .app-sidebar-brand svg{width:26px; height:26px; flex-shrink:0;}
 .app-sidebar-nav{display:flex; flex-direction:column; gap:var(--sp-1); flex:1;}
 .app-sidebar-item{
@@ -231,7 +234,8 @@ footer{text-align:center; color:var(--muted); font-size:12.5px; padding:30px 0;}
 .app-sidebar-item:hover{background:rgba(29,158,117,0.12); color:var(--teal-dark);}
 .app-sidebar-item.active{background:var(--teal-light); color:var(--teal-darker);}
 .app-sidebar-item svg{width:18px; height:18px; flex-shrink:0; stroke:currentColor;}
-.app-sidebar-signout{margin-top:auto; border-top:1px solid var(--border); padding-top:var(--sp-4);}
+.app-sidebar-signout{margin-top:auto; border-top:1px solid var(--border); padding-top:var(--sp-4); color:var(--red);}
+.app-sidebar-signout:hover{background:var(--red-light); color:var(--red);}
 
 .app-topbar-v2{
   display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
