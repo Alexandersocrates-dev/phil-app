@@ -437,3 +437,66 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
     c.showPage()
     c.save()
     return path
+
+
+def _clean_pdf_text(text):
+    if not text:
+        return ""
+    return text.replace("\uf0b7", "-").replace("\ue0b7", "-")
+
+
+def resource_pack_pdf(course_num, course_title, items):
+    """
+    Generates the full downloadable resource pack for a course, containing
+    every handout/card/template referenced by that course's sessions.
+    course_num: two-digit string, e.g. "01"
+    course_title: str
+    items: list of {"name": str, "body": str}
+    """
+    path = os.path.join(PDF_DIR, f"resource_pack_{course_num}.pdf")
+    w, h = A4
+    c = canvas.Canvas(path, pagesize=A4)
+    margin = 18 * mm
+    max_width = w - margin * 2
+    state = {"y": h - margin}
+
+    def header():
+        state["y"] = h - margin
+        c.setFillColor(NAVY)
+        c.setFont("Helvetica-Bold", 16)
+        c.drawString(margin, state["y"], "Phil - Resource Pack")
+        state["y"] -= 7 * mm
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 10)
+        c.drawString(margin, state["y"], _clean_pdf_text(course_title))
+        state["y"] -= 6 * mm
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.75)
+        c.line(margin, state["y"], w - margin, state["y"])
+        state["y"] -= 9 * mm
+
+    def new_page():
+        c.showPage()
+        header()
+
+    header()
+
+    for item in items:
+        if state["y"] < margin + 28 * mm:
+            new_page()
+
+        c.setFillColor(TEAL_DARK)
+        c.setFont("Helvetica-Bold", 12)
+        c.drawString(margin, state["y"], _clean_pdf_text(item.get("name", "")))
+        state["y"] -= 7 * mm
+
+        body = _clean_pdf_text(item.get("body", ""))
+        for para in body.split("\n"):
+            if state["y"] < margin + 14 * mm:
+                new_page()
+            state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+        state["y"] -= 7 * mm
+
+    c.showPage()
+    c.save()
+    return path
