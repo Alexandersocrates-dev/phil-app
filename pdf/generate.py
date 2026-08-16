@@ -669,3 +669,106 @@ def resource_pack_pdf(course_num, course_title, items):
     c.showPage()
     c.save()
     return path
+
+
+def legal_doc_pdf(key, paras):
+    path = os.path.join(PDF_DIR, f"legal_{key}.pdf")
+    w, h = A4
+    c = canvas.Canvas(path, pagesize=A4)
+    margin = 20 * mm
+    max_width = w - margin * 2
+    state = {"y": h - margin}
+
+    def new_page():
+        c.showPage()
+        state["y"] = h - margin
+
+    cover = []
+    body = paras
+    for i, item in enumerate(paras):
+        if item[0] == "h1":
+            cover = paras[:i]
+            body = paras[i:]
+            break
+
+    if cover:
+        kicker = cover[0][1] if len(cover) > 0 else ""
+        title = cover[1][1] if len(cover) > 1 else ""
+        meta_lines = [t for s, t in cover[2:] if s != "blank" and t]
+
+        c.setFillColor(TEAL_DARK)
+        c.setFont("Helvetica-Bold", 9.5)
+        c.drawString(margin, state["y"], _clean_pdf_text(kicker.upper()))
+        state["y"] -= 9 * mm
+
+        c.setFillColor(NAVY)
+        c.setFont("Helvetica-Bold", 20)
+        title_lines = simpleSplit(_clean_pdf_text(title), "Helvetica-Bold", 20, max_width)
+        for line in title_lines:
+            c.drawString(margin, state["y"], line)
+            state["y"] -= 8.5 * mm
+        state["y"] -= 2 * mm
+
+        for line in meta_lines:
+            state["y"] = _wrap(c, line, margin, state["y"], max_width, font="Helvetica", size=10, leading=14, color=MUTED)
+        state["y"] -= 4 * mm
+
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.75)
+        c.line(margin, state["y"], w - margin, state["y"])
+        state["y"] -= 10 * mm
+
+    for style, text in body:
+        text = _clean_pdf_text(text)
+        if style == "blank":
+            state["y"] -= 3 * mm
+            continue
+        if style == "h1":
+            if state["y"] < margin + 24 * mm:
+                new_page()
+            state["y"] -= 4 * mm
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 13.5)
+            lines = simpleSplit(text, "Helvetica-Bold", 13.5, max_width)
+            for line in lines:
+                if state["y"] < margin + 14 * mm:
+                    new_page()
+                c.drawString(margin, state["y"], line)
+                state["y"] -= 6.2 * mm
+            state["y"] -= 2 * mm
+        elif style == "h2":
+            if state["y"] < margin + 18 * mm:
+                new_page()
+            state["y"] -= 2 * mm
+            c.setFillColor(NAVY)
+            c.setFont("Helvetica-Bold", 11)
+            lines = simpleSplit(text, "Helvetica-Bold", 11, max_width)
+            for line in lines:
+                if state["y"] < margin + 12 * mm:
+                    new_page()
+                c.drawString(margin, state["y"], line)
+                state["y"] -= 5.4 * mm
+            state["y"] -= 1.5 * mm
+        elif style == "li":
+            if state["y"] < margin + 12 * mm:
+                new_page()
+            bullet_indent = 4 * mm
+            c.setFont("Helvetica", 9.5)
+            c.setFillColor(INK)
+            c.drawString(margin, state["y"], "-")
+            lines = simpleSplit(text, "Helvetica", 9.5, max_width - bullet_indent)
+            for line in lines:
+                if state["y"] < margin + 10 * mm:
+                    new_page()
+                c.drawString(margin + bullet_indent, state["y"], line)
+                state["y"] -= 12.5
+            state["y"] -= 1 * mm
+        else:
+            if state["y"] < margin + 12 * mm:
+                new_page()
+            state["y"] = _wrap(c, text, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 2 * mm
+
+    c.showPage()
+    c.save()
+    return path
