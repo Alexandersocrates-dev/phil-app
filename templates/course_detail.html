@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ course.title }} - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><a href="/courses">&larr; Course library</a></p>
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card">
   <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
   <h1>{{ course.title }}</h1>
