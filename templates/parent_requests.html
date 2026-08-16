@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_user_plus %}
+{% block title %}Parent permissions - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+  <h1>Parent permissions</h1>
+  <p class="muted">Pending requests for parent/carer access across your establishment. Review each one and approve or decline.</p>
+</div>
+
+{% if pending_requests %}
+<div class="card">
+  {% for r in pending_requests %}
+  <div class="card" style="background:var(--cream); margin-bottom:12px;">
+    <p style="margin:0 0 4px;"><strong>{{ r.parent_name }}</strong> &middot; {{ r.parent_email }}{% if r.relationship %} &middot; {{ r.relationship }}{% endif %}</p>
+    <p class="muted" style="font-size:12.5px; margin:0 0 10px;">For {{ r.forename }} {{ r.surname }} &middot; requested by {{ r.requested_by_name }}{% if r.note %} &middot; "{{ r.note }}"{% endif %}</p>
+    <form method="post" action="/admin/parent-requests/{{ r.id }}/approve" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
+      <div class="field" style="margin:0; flex:1; min-width:180px;">
+        <label for="approve-password-{{ r.id }}">Temporary password</label>
+        <input type="password" id="approve-password-{{ r.id }}" name="password" minlength="8" placeholder="Only needed for a new account">
+      </div>
+      <button class="btn btn-primary btn-sm" type="submit">Approve</button>
+    </form>
+    <form method="post" action="/admin/parent-requests/{{ r.id }}/decline" style="margin-top:8px;">
+      <button class="btn btn-red btn-sm" type="submit" onclick="return confirm('Decline this request?')">Decline</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card card-center">
+  <p class="muted">No pending parent/carer access requests right now.</p>
+</div>
+{% endif %}
+{% endblock %}
