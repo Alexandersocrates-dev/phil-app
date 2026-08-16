@@ -570,6 +570,108 @@ def _blend_hex(c1, c2, t):
     return "#%02X%02X%02X" % (int(r * 255), int(g * 255), int(b * 255))
 
 
+HEADER_FILL = HexColor("#F2EFE6")
+
+
+def _cell_lines(text, font, size, w):
+    return simpleSplit(str(text), font, size, max(w, 4))
+
+
+def _draw_grid_table(c, x, top_y, max_width, headers, rows, row_h=9 * mm):
+    """Draws a bordered grid table: a shaded bold header row plus ruled data
+    rows. Blank cells are left empty, leaving real writable space rather than
+    flattening the table into run-on paragraph text."""
+    n_cols = len(headers)
+    col_w = max_width / n_cols
+    header_h = 8 * mm
+    y = top_y
+
+    c.setFillColor(HEADER_FILL)
+    c.rect(x, y - header_h, max_width, header_h, fill=1, stroke=0)
+    c.setFont("Helvetica-Bold", 8.5)
+    c.setFillColor(NAVY)
+    for i, htext in enumerate(headers):
+        if not htext:
+            continue
+        lines = _cell_lines(htext, "Helvetica-Bold", 8.5, col_w - 4)[:2]
+        ty = y - header_h / 2 - (len(lines) - 1) * 4.5 + 3
+        for line in lines:
+            c.drawString(x + i * col_w + 2, ty, line)
+            ty -= 9
+    y -= header_h
+
+    c.setFont("Helvetica", 8.5)
+    for row in rows:
+        c.setFillColor(INK)
+        for i, val in enumerate(row):
+            if val:
+                lines = _cell_lines(val, "Helvetica", 8.5, col_w - 4)[:2]
+                ty = y - row_h / 2 - (len(lines) - 1) * 4.5 + 3
+                for line in lines:
+                    c.drawString(x + i * col_w + 2, ty, line)
+                    ty -= 9
+        y -= row_h
+
+    total_h = header_h + row_h * len(rows)
+    bottom_y = top_y - total_h
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.75)
+    c.rect(x, bottom_y, max_width, total_h, fill=0, stroke=1)
+    c.line(x, top_y - header_h, x + max_width, top_y - header_h)
+    ry = top_y - header_h
+    for _ in rows:
+        ry -= row_h
+        c.line(x, ry, x + max_width, ry)
+    for i in range(1, n_cols):
+        cx = x + i * col_w
+        c.line(cx, top_y, cx, bottom_y)
+
+    return bottom_y - 5 * mm
+
+
+def _draw_form_fields(c, x, top_y, max_width, fields, line_h=13 * mm):
+    """Draws each field label with a ruled blank line beneath it to write on,
+    for plan/agreement templates that are a list of labels, not a table."""
+    y = top_y
+    for label in fields:
+        c.setFont("Helvetica-Bold", 9)
+        c.setFillColor(TEAL_DARK)
+        c.drawString(x, y, label)
+        y -= 5 * mm
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.75)
+        c.line(x, y, x + max_width, y)
+        y -= (line_h - 5 * mm)
+    return y
+
+
+def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
+    """Draws a tick-box list: an empty square before each item."""
+    y = top_y
+    box = 3.6 * mm
+    for item_text in items:
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(1)
+        c.rect(x, y - box, box, box, fill=0, stroke=1)
+        c.setFont("Helvetica", 9.5)
+        c.setFillColor(INK)
+        c.drawString(x + box + 3 * mm, y - box + 0.6 * mm, item_text)
+        y -= row_h
+    return y - 2 * mm
+
+
+def _table_height(headers, rows, row_h=9 * mm):
+    return 8 * mm + row_h * len(rows)
+
+
+def _form_height(fields, line_h=13 * mm):
+    return line_h * len(fields)
+
+
+def _checklist_height(items, row_h=7 * mm):
+    return row_h * len(items)
+
+
 CYCLE_KEYWORDS = ("cycle diagram", "cycle chart")
 SCALE_KEYWORDS = ("thermometer", "scale")
 
@@ -613,10 +715,24 @@ def resource_pack_pdf(course_num, course_title, items):
     for item in items:
         name = item.get("name", "")
         name_lower = name.lower()
+        table = item.get("table")
+        form = item.get("form")
+        checklist = item.get("checklist")
         is_cycle = any(k in name_lower for k in CYCLE_KEYWORDS)
         is_scale = any(k in name_lower for k in SCALE_KEYWORDS)
 
-        needed = 140 * mm if is_cycle else (55 * mm if is_scale else 28 * mm)
+        if table:
+            needed = 24 * mm + _table_height(table["headers"], table["rows"])
+        elif form:
+            needed = 24 * mm + _form_height(form["fields"])
+        elif checklist:
+            needed = 24 * mm + _checklist_height(checklist["items"])
+        elif is_cycle:
+            needed = 140 * mm
+        elif is_scale:
+            needed = 55 * mm
+        else:
+            needed = 28 * mm
         if state["y"] < margin + needed:
             new_page()
 
@@ -627,7 +743,26 @@ def resource_pack_pdf(course_num, course_title, items):
 
         body = _clean_pdf_text(item.get("body", ""))
 
-        if is_cycle:
+        if table:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_grid_table(c, margin, state["y"], max_width, table["headers"], table["rows"])
+
+        elif form:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
+            state["y"] -= 3 * mm
+
+        elif checklist:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+
+        elif is_cycle:
             steps = _parse_numbered_steps(body)
             intro = body.split("\n")[0] if body else ""
             if intro and not _STEP_RE.match(intro.strip()):
@@ -642,11 +777,11 @@ def resource_pack_pdf(course_num, course_title, items):
                 state["y"] -= diagram_h + 6 * mm
                 for step in steps:
                     state["y"] = _wrap(c, step["full"], margin, state["y"], max_width, font="Helvetica", size=8.5, leading=11.5, color=MUTED)
-                state["y"] -= 3 * mm
+                    state["y"] -= 3 * mm
             else:
                 for para in body.split("\n"):
                     state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-                state["y"] -= 7 * mm
+                    state["y"] -= 7 * mm
 
         elif is_scale:
             points = _parse_scale_points(body)
