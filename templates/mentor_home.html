@@ -11,7 +11,7 @@
 <ul>
 <li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
 <li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
-<li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports/caseload" onclick="localStorage.setItem('gs_report','1')">View your case load report</a></li>
+<li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports" onclick="localStorage.setItem('gs_report','1')">View your reports</a></li>
 </ul>
 <button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
 </div>
