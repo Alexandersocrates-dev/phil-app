@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_calendar, icon_users, icon_bell, icon_check_circle %}
 {% block title %}Notifications - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><a href="{{ '/staff' if user.role == 'phil_staff' else ('/admin' if user.role == 'admin' else ('/parent' if user.role == 'parent_carer' else '/mentor')) }}">&larr; Home</a></p>
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="flex-between" style="margin-bottom:4px;">
   <h1 style="margin:0;">Notifications</h1>
   {% if unread %}
