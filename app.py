@@ -507,6 +507,29 @@ def admin_pupils(request):
                   flash=flash_from_query(request))
 
 
+@router.get("/admin/reassign-mentor")
+def admin_reassign_mentor_list(request):
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        rows = conn.execute(
+            """SELECT enrolments.id as enrolment_id, pupils.id as pupil_id, pupils.forename, pupils.surname,
+                      courses.title as course_title, users.name as mentor_name
+               FROM enrolments
+               JOIN pupils ON pupils.id = enrolments.pupil_id
+               JOIN courses ON courses.id = enrolments.course_id
+               JOIN users ON users.id = enrolments.mentor_id
+               WHERE pupils.establishment_id=? AND pupils.status='active' AND enrolments.status='active'
+               ORDER BY pupils.surname, pupils.forename""",
+            (user["establishment_id"],),
+        ).fetchall()
+    finally:
+        conn.close()
+    return render("reassign_mentor_list.html", user=user, rows=rows, flash=flash_from_query(request))
+
+
 @router.get("/admin/enrolments/<enrolment_id>/reassign")
 def admin_reassign_form(request):
     user, err = require(request, roles=["admin"])
