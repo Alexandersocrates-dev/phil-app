@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_shield %}
+{% block title %}Reassign admin role - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--amber">{{ icon_shield(color='var(--amber-dark)') }}</div>
+  <h1>Reassign admin role</h1>
+  <p class="muted">Hand the admin role for your establishment to another active mentor. You'll become a mentor and they'll get full admin access straight away.</p>
+</div>
+
+{% if mentors %}
+<div class="card">
+  <form method="post" action="/admin/reassign-admin" class="form-left" onsubmit="return confirm('Make this mentor the new admin? You will become a mentor.')">
+    <div class="field">
+      <label for="mentor_id">New admin</label>
+      <select id="mentor_id" name="mentor_id" required>
+        <option value="">Choose a mentor</option>
+        {% for m in mentors %}
+        <option value="{{ m.id }}">{{ m.name }} ({{ m.email }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Make this mentor the admin</button>
+  </form>
+</div>
+{% else %}
+<div class="card card-center">
+  <p class="muted">There are no other active mentors at your establishment to hand the admin role to yet. Invite a mentor first.</p>
+</div>
+{% endif %}
+{% endblock %}
