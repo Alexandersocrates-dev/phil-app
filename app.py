@@ -2913,7 +2913,11 @@ def stripe_webhook(request):
 
         if event["type"] == "checkout.session.completed":
             session_obj = event["data"]["object"]
-            estab_id = session_obj.get("client_reference_id") or session_obj.get("metadata", {}).get("establishment_id")
+            # Stripe objects are not dicts: their .get() takes no default, so
+            # session_obj.get("metadata", {}) raises rather than returning {}.
+            # Read metadata first and coalesce, which also survives it being None.
+            metadata = session_obj.get("metadata") or {}
+            estab_id = session_obj.get("client_reference_id") or metadata.get("establishment_id")
             if estab_id:
                 estab = conn.execute("SELECT * FROM establishments WHERE id=?", (estab_id,)).fetchone()
                 sub = conn.execute(
