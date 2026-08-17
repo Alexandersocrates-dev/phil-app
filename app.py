@@ -129,9 +129,11 @@ def weeks_allowed(user):
     step for anyone to remember."""
     if not user:
         return WEEKS_VISITOR
-    if user.get("role") == "phil_staff":
+    # current_user() returns a sqlite3.Row and require() returns a dict. Both
+    # support ["key"]; only the dict supports .get(), so index, never .get().
+    if user["role"] == "phil_staff":
         return WEEKS_FULL
-    if not user.get("establishment_id"):
+    if not user["establishment_id"]:
         return WEEKS_VISITOR
     conn = db.get_conn()
     try:
