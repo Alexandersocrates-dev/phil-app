@@ -411,10 +411,25 @@ def course_detail(request):
     if not course:
         return Response("Course not found", status="404 Not Found")
     weeks = [dict(w, resources=json.loads(w["resources"] or "[]")) for w in weeks]
-    return render("course_detail.html", user=user, course=course, weeks=weeks, flash=flash_from_query(request))
+
+    # The course content is the product. A signed-out visitor sees week 1 in
+    # full, which is enough for a school to judge quality, and the rest is
+    # held back. Anyone signed in has paid or is on a pilot, which is the
+    # right bar: evaluating properly is the whole point of a pilot.
+    locked_weeks = 0
+    if not user:
+        locked_weeks = max(len(weeks) - 1, 0)
+        weeks = weeks[:1]
+    return render("course_detail.html", user=user, course=course, weeks=weeks,
+                  locked_weeks=locked_weeks, flash=flash_from_query(request))
 
 @router.get("/courses/<course_id>/resources/pdf")
 def course_resources_pdf(request):
+    # The resource packs are the deliverable a school actually pays for, so
+    # they are never public. Any signed-in role is fine, including a pilot.
+    user, err = require(request)
+    if err:
+        return err
     conn = db.get_conn()
     try:
         course = conn.execute("SELECT * FROM courses WHERE id=?", (request.params["course_id"],)).fetchone()

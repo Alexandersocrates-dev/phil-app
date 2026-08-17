@@ -6,7 +6,12 @@
   <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
   <h1>{{ course.title }}</h1>
   <p class="muted">{{ course.description }}</p>
-<p><a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
+  {# The resource packs are the deliverable, so the download is only offered to
+     signed-in users. Showing the button to a visitor and then bouncing them to
+     a login screen is a worse experience than not showing it. #}
+  {% if user %}
+  <p><a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
+  {% endif %}
 </div>
 
 <h2>Five-week session flow</h2>
@@ -29,4 +34,20 @@
   </li>
   {% endfor %}
 </ul>
+
+{% if locked_weeks %}
+{# Shown to signed-out visitors in place of the weeks they can't see. The point
+   is to convert rather than just refuse: the pilot needs no card, so the ask
+   here is small. #}
+<div class="card card-center">
+  <span class="badge badge-teal">Weeks 2&ndash;{{ locked_weeks + 1 }}</span>
+  <h2>The rest of this course is for Phil members</h2>
+  <p class="muted">You're seeing week 1 in full. The remaining {{ locked_weeks }} session{{ 's' if locked_weeks != 1 }}, along with the printable resource packs, are available once you have an account.</p>
+  <p class="muted">Schools can start a free three-week pilot with up to 3 mentor seats and 10 pupils. No card required.</p>
+  <p>
+    <a class="btn btn-primary" href="/signup">Start a free pilot</a>
+    <a class="btn btn-secondary" href="/login">Sign in</a>
+  </p>
+</div>
+{% endif %}
 {% endblock %}
