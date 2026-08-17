@@ -123,6 +123,11 @@ def require_active_subscription(user):
         conn.close()
     if not row:
         return None
+    # Anything other than 'active' means unpaid. New individual signups start
+    # as 'expired' rather than a clearer word like 'pending' because the
+    # subscriptions table has a CHECK constraint allowing only
+    # active/expired/cancelled, and altering a CHECK in SQLite means rebuilding
+    # the table. Not worth a migration against live data for a label.
     if row["estab_type"] == "individual" and row["sub_status"] != "active":
         return redirect("/account/billing")
     return None
@@ -224,7 +229,7 @@ def signup_submit(request):
                 """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
                    pupil_cap, status, payment_method, created_at)
                    VALUES (?,?,?,?,?,?,?)""",
-                (establishment_id, "individual", 1, None, "pending", "card", now),
+                (establishment_id, "individual", 1, None, "expired", "card", now),
             )
             role = "mentor"
         else:
