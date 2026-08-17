@@ -97,6 +97,23 @@ def require(request, roles=None):
     return user, None
 
 
+def stripe_field(obj, key, default=None):
+    """Reads one field from a Stripe API object.
+
+    Stripe's objects are not dicts and, in this version of the library, expose
+    no .get() at all: attribute lookup falls through to __getattr__, which
+    raises AttributeError(key), and item access raises KeyError for a missing
+    key. So neither obj.get(key) nor a bare obj[key] is safe. This tries item
+    access, then attribute access, and returns the default rather than raising,
+    which is what a webhook handler wants: a missing optional field should
+    never turn a real payment into a 500."""
+    try:
+        value = obj[key]
+    except (KeyError, TypeError, AttributeError):
+        value = getattr(obj, key, None)
+    return default if value is None else value
+
+
 def require_active_subscription(user):
     """Returns None when this user's establishment may use the product, or a
     redirect to the billing page when it may not.
@@ -2913,11 +2930,9 @@ def stripe_webhook(request):
 
         if event["type"] == "checkout.session.completed":
             session_obj = event["data"]["object"]
-            # Stripe objects are not dicts: their .get() takes no default, so
-            # session_obj.get("metadata", {}) raises rather than returning {}.
-            # Read metadata first and coalesce, which also survives it being None.
-            metadata = session_obj.get("metadata") or {}
-            estab_id = session_obj.get("client_reference_id") or metadata.get("establishment_id")
+            metadata = stripe_field(session_obj, "metadata", {})
+            estab_id = (stripe_field(session_obj, "client_reference_id")
+                        or stripe_field(metadata, "establishment_id"))
             if estab_id:
                 estab = conn.execute("SELECT * FROM establishments WHERE id=?", (estab_id,)).fetchone()
                 sub = conn.execute(
@@ -2932,14 +2947,15 @@ def stripe_webhook(request):
                         """UPDATE subscriptions SET plan_type=?, included_seats=?, pupil_cap=?,
                            payment_method='card', stripe_customer_id=?, stripe_subscription_id=?,
                            status='active', pilot_ends_at=NULL WHERE id=?""",
-                        (plan_type, included_seats, pupil_cap, session_obj.get("customer"),
-                         session_obj.get("subscription"), sub["id"]),
+                        (plan_type, included_seats, pupil_cap,
+                         stripe_field(session_obj, "customer"),
+                         stripe_field(session_obj, "subscription"), sub["id"]),
                     )
                     db.log_action(conn, None, "card_payment_completed", "subscription", sub["id"],
                                   f"Stripe checkout completed for {estab['name']}")
 
         elif event["type"] in ("customer.subscription.deleted", "customer.subscription.paused"):
-            stripe_sub_id = event["data"]["object"].get("id")
+            stripe_sub_id = stripe_field(event["data"]["object"], "id")
             sub = conn.execute(
                 "SELECT * FROM subscriptions WHERE stripe_subscription_id=?", (stripe_sub_id,)
             ).fetchone()
