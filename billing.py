@@ -32,6 +32,7 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
 STRIPE_PRICE_ID_SCHOOL = os.environ.get("STRIPE_PRICE_ID_SCHOOL")
 STRIPE_PRICE_ID_INDIVIDUAL = os.environ.get("STRIPE_PRICE_ID_INDIVIDUAL")
+STRIPE_PRICE_ID_INDIVIDUAL_ANNUAL = os.environ.get("STRIPE_PRICE_ID_INDIVIDUAL_ANNUAL")
 # Where Stripe should send the establishment admin after checkout. Set this
 # to your real domain once you have one, e.g. https://app.phileducation.co.uk
 APP_BASE_URL = os.environ.get("APP_BASE_URL", "http://localhost:8000")
@@ -58,7 +59,18 @@ def create_checkout_session(establishment_id, establishment_name, admin_email, p
     if not is_configured():
         raise RuntimeError("Card payments are not set up yet on this deployment.")
 
-    price_id = STRIPE_PRICE_ID_SCHOOL if plan_type == "school" else STRIPE_PRICE_ID_INDIVIDUAL
+    # An explicit map rather than an if/else: the old two-way version sent
+    # every non-school plan to the monthly individual price, so adding an
+    # annual option silently billed people monthly. Unknown plans now fail
+    # loudly instead of quietly charging the wrong amount.
+    prices = {
+        "school": STRIPE_PRICE_ID_SCHOOL,
+        "individual": STRIPE_PRICE_ID_INDIVIDUAL,
+        "individual_annual": STRIPE_PRICE_ID_INDIVIDUAL_ANNUAL,
+    }
+    if plan_type not in prices:
+        raise RuntimeError(f"Unknown plan '{plan_type}'.")
+    price_id = prices[plan_type]
     if not price_id:
         raise RuntimeError(f"No Stripe price is configured for the '{plan_type}' plan.")
 
@@ -71,6 +83,25 @@ def create_checkout_session(establishment_id, establishment_name, admin_email, p
         client_reference_id=str(establishment_id),
         metadata={"establishment_id": str(establishment_id), "establishment_name": establishment_name},
         subscription_data={"metadata": {"establishment_id": str(establishment_id)}},
+    )
+    return session.url
+
+
+def create_portal_session(stripe_customer_id, return_url=None):
+    """Returns a URL to Stripe's hosted billing portal for one customer.
+
+    Stripe hosts cancellation, card updates and invoice history. Building
+    those in Phil would mean handling proration, failed payments and dunning
+    ourselves, which is a great deal of work to end up with something worse
+    than what Stripe already runs. The portal has to be enabled once in the
+    Stripe dashboard under Settings, Billing, Customer portal."""
+    if not is_configured():
+        raise RuntimeError("Card payments are not set up yet on this deployment.")
+    if not stripe_customer_id:
+        raise RuntimeError("This subscription has no Stripe customer on record yet.")
+    session = stripe.billing_portal.Session.create(
+        customer=stripe_customer_id,
+        return_url=return_url or f"{APP_BASE_URL}/account/billing",
     )
     return session.url
 

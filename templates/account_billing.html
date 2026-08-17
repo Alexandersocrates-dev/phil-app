@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_lock %}
+{% block title %}Billing - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card card-center">
+  <h1>Your subscription</h1>
+
+  {% if subscription and subscription.status == 'active' %}
+    <p class="muted">Individual plan, one mentor seat.</p>
+    <p><strong>Active</strong>{% if subscription.renewal_date %} &mdash; renews {{ subscription.renewal_date }}{% endif %}</p>
+    {% if subscription.stripe_customer_id %}
+      <a class="btn btn-secondary btn-block mt-4" href="/account/billing/portal">Manage subscription</a>
+      <p class="muted">Change your card, download invoices or cancel. Cancelling keeps your access until the end of the period you've paid for.</p>
+    {% else %}
+      <p class="muted mt-4">This subscription wasn't set up by card. Email <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a> to make changes.</p>
+    {% endif %}
+
+  {% else %}
+    <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+    <p class="muted">Phil is &pound;22 per month for one mentor seat: the full product, including sessions, all twenty courses, certificates and safeguarding-compliant records. Cancel any time, no minimum term.</p>
+    {% if card_ready %}
+      <a class="btn btn-primary btn-block" href="/account/billing/checkout">Subscribe &mdash; &pound;22/month</a>
+      <a class="btn btn-secondary btn-block mt-4" href="/account/billing/checkout?plan=annual">Or pay yearly &mdash; &pound;220 (roughly 2 months free)</a>
+    {% else %}
+      <p class="muted">Card payments aren't available right now. Please try again shortly, or email <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a>.</p>
+    {% endif %}
+    <p class="muted mt-4">You'll be taken to Stripe to pay. Phil never sees or stores your card details.</p>
+  {% endif %}
+</div>
+{% endblock %}

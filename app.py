@@ -97,6 +97,37 @@ def require(request, roles=None):
     return user, None
 
 
+def require_active_subscription(user):
+    """Returns None when this user's establishment may use the product, or a
+    redirect to the billing page when it may not.
+
+    Individuals are blocked until they subscribe: they self-serve by card, so
+    an unpaid individual is simply someone who hasn't paid yet.
+
+    Schools are deliberately NOT blocked here. A school on the invoice path or
+    a pilot is legitimately unpaid as far as Stripe is concerned, and locking a
+    mentor out mid-session because a finance office is slow would cost more
+    goodwill than the revenue it protects. Establishment access is handled by
+    Phil staff suspending the establishment instead."""
+    conn = db.get_conn()
+    try:
+        row = conn.execute(
+            """SELECT s.status AS sub_status, e.type AS estab_type
+               FROM subscriptions s
+               JOIN establishments e ON e.id = s.establishment_id
+               WHERE s.establishment_id = ?
+               ORDER BY s.id DESC LIMIT 1""",
+            (user["establishment_id"],),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not row:
+        return None
+    if row["estab_type"] == "individual" and row["sub_status"] != "active":
+        return redirect("/account/billing")
+    return None
+
+
 def flash_from_query(request):
     kind = request.query.get("flash_kind", [None])[0]
     message = request.query.get("flash", [None])[0]
@@ -193,7 +224,7 @@ def signup_submit(request):
                 """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
                    pupil_cap, status, payment_method, created_at)
                    VALUES (?,?,?,?,?,?,?)""",
-                (establishment_id, "individual", 1, None, "active", "card", now),
+                (establishment_id, "individual", 1, None, "pending", "card", now),
             )
             role = "mentor"
         else:
@@ -379,6 +410,9 @@ def mentor_home(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         pupils = conn.execute(
@@ -416,6 +450,9 @@ def new_pupil_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     return render("pupil_new.html", user=user, flash=flash_from_query(request))
 
 
@@ -424,6 +461,9 @@ def new_pupil_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     forename = request.field("forename", "").strip()
     surname = request.field("surname", "").strip()
     dob = request.field("date_of_birth", "").strip()
@@ -454,6 +494,9 @@ def pupil_profile(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         pupil = conn.execute("SELECT * FROM pupils WHERE id=? AND establishment_id=?",
@@ -497,6 +540,9 @@ def archive_pupil(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         conn.execute("UPDATE pupils SET status='archived' WHERE id=? AND establishment_id=?",
@@ -512,6 +558,9 @@ def reactivate_pupil(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         conn.execute("UPDATE pupils SET status='active' WHERE id=? AND establishment_id=?",
@@ -768,6 +817,9 @@ def link_parent_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         pupil = conn.execute("SELECT * FROM pupils WHERE id=? AND establishment_id=?",
@@ -798,6 +850,9 @@ def link_parent_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     pupil_id = request.params["pupil_id"]
     name = request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
@@ -1024,6 +1079,9 @@ def enrol_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         pupil = conn.execute("SELECT * FROM pupils WHERE id=? AND establishment_id=?",
@@ -1041,6 +1099,9 @@ def enrol_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     pupil_id = request.params["pupil_id"]
     course_id = request.field("course_id")
     parent_access_enabled = 1 if request.field("parent_access_enabled") == "on" else 0
@@ -1082,6 +1143,9 @@ def session_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1131,6 +1195,9 @@ def session_autosave(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     enrolment_id = request.params["enrolment_id"]
     field_name = request.field("field", "")
     value = request.field("value", "")
@@ -1165,6 +1232,9 @@ def session_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     enrolment_id = request.params["enrolment_id"]
     safeguarding_flag = 1 if request.field("safeguarding_flag") == "yes" else 0
     safeguarding_note = request.field("safeguarding_note", "").strip()
@@ -1248,6 +1318,9 @@ def schedule_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1276,6 +1349,9 @@ def schedule_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     enrolment_id = request.params["enrolment_id"]
     conn = db.get_conn()
     try:
@@ -1299,6 +1375,9 @@ def reflection_form(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1320,6 +1399,9 @@ def reflection_submit(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     enrolment_id = request.params["enrolment_id"]
     pupil_engagement = request.field("pupil_engagement", "")
     course_effectiveness = request.field("course_effectiveness", "")
@@ -1683,6 +1765,9 @@ def admin_reports_chooser(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     cards = [
         {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
          "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},
@@ -1700,6 +1785,9 @@ def mentor_reports_chooser(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     cards = [
         {"title": "Your mentoring list", "desc": "Every mentee, one file \u00b7 progress only, no notes.",
          "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
@@ -1848,6 +1936,9 @@ def mentor_caseload(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         rows = _caseload_rows(conn, mentor_id=user["id"])
@@ -1864,6 +1955,9 @@ def mentor_caseload_pdf(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         rows = _caseload_rows(conn, mentor_id=user["id"])
@@ -1902,6 +1996,9 @@ def admin_caseload_pdf(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     mentor_filter = request.query.get("mentor_id", ["all"])[0]
     conn = db.get_conn()
     try:
@@ -1920,6 +2017,9 @@ def mentor_caseload_xlsx(request):
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
     conn = db.get_conn()
     try:
         rows = _caseload_rows(conn, mentor_id=user["id"])
@@ -2667,6 +2767,110 @@ def billing_checkout(request):
     except RuntimeError as exc:
         return with_flash("/admin", str(exc), "error")
     return redirect(checkout_url)
+
+
+@router.get("/account/billing")
+def account_billing(request):
+    """Billing home for an independent mentor: what they're on, what state it
+    is in, and the one button that changes it.
+
+    Establishment mentors are sent to their own home instead. Their school
+    pays, so there is nothing here for them to act on and showing a price
+    would only confuse."""
+    user, err = require(request, roles=["mentor"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        estab = conn.execute(
+            "SELECT * FROM establishments WHERE id=?", (user["establishment_id"],)
+        ).fetchone()
+        sub = conn.execute(
+            """SELECT * FROM subscriptions WHERE establishment_id=?
+               ORDER BY id DESC LIMIT 1""",
+            (user["establishment_id"],),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not estab or estab["type"] != "individual":
+        return with_flash("/mentor", "Your establishment handles billing.", "ok")
+    return render(
+        "account_billing.html",
+        user=user,
+        subscription=sub,
+        card_ready=billing.is_configured(),
+        flash=flash_from_query(request),
+    )
+
+
+@router.get("/account/billing/checkout")
+def individual_billing_checkout(request):
+    """Starts Stripe Checkout for an independent mentor's own seat.
+
+    Separate from /admin/billing/checkout because that one is admin-only and
+    buys a school's plan. Both land in the same webhook, which resolves
+    client_reference_id to an establishment either way, so an individual is
+    simply an establishment of one."""
+    user, err = require(request, roles=["mentor"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        estab = conn.execute(
+            "SELECT * FROM establishments WHERE id=?", (user["establishment_id"],)
+        ).fetchone()
+    finally:
+        conn.close()
+    if not estab or estab["type"] != "individual":
+        return with_flash("/mentor", "Your establishment handles billing.", "error")
+    if not billing.is_configured():
+        return with_flash("/account/billing",
+                          "Card payments aren't set up yet. Please try again shortly.", "error")
+    # Monthly unless the annual button was used. Anything unrecognised falls
+    # back to monthly rather than erroring: a mangled link should not stop
+    # someone paying, and monthly is the cheaper commitment of the two.
+    plan = "individual_annual" if request.field("plan", "") == "annual" else "individual"
+    try:
+        checkout_url = billing.create_checkout_session(
+            estab["id"], estab["name"], user["email"], plan)
+    except RuntimeError as exc:
+        return with_flash("/account/billing", str(exc), "error")
+    return redirect(checkout_url)
+
+
+@router.get("/account/billing/portal")
+def individual_billing_portal(request):
+    """Sends an independent mentor to Stripe's hosted billing portal, where
+    they can cancel, change card and download invoices.
+
+    Deliberately not rebuilt inside Phil: cancellation alone means handling
+    proration and end-of-period access, and card updates mean handling failed
+    payments and retries. Stripe already does all of it."""
+    user, err = require(request, roles=["mentor"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        estab = conn.execute(
+            "SELECT * FROM establishments WHERE id=?", (user["establishment_id"],)
+        ).fetchone()
+        sub = conn.execute(
+            """SELECT * FROM subscriptions WHERE establishment_id=?
+               ORDER BY id DESC LIMIT 1""",
+            (user["establishment_id"],),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not estab or estab["type"] != "individual":
+        return with_flash("/mentor", "Your establishment handles billing.", "error")
+    if not sub or not sub["stripe_customer_id"]:
+        return with_flash("/account/billing",
+                          "There's no card subscription on this account yet.", "error")
+    try:
+        portal_url = billing.create_portal_session(sub["stripe_customer_id"])
+    except RuntimeError as exc:
+        return with_flash("/account/billing", str(exc), "error")
+    return redirect(portal_url)
 
 
 @router.get("/billing/success")
