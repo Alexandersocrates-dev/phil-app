@@ -39,6 +39,12 @@
   <p class="muted">Currently billed by invoice. Switch to card payments if you'd rather pay automatically going forward.</p>
   <a class="btn btn-secondary btn-sm" href="/admin/billing/checkout">Pay by card instead</a>
 </div>
+{% elif sub and stripe_configured and sub.stripe_customer_id %}
+<div class="card">
+  <h3>Billing</h3>
+  <p class="muted">Paid by card. You can change the card, download invoices or cancel the subscription. Cancelling keeps access until the end of the period you've paid for.</p>
+  <a class="btn btn-secondary btn-sm" href="/admin/billing/portal">Manage subscription</a>
+</div>
 {% endif %}
 
 {% set has_mentor = mentors|selectattr('role', 'equalto', 'mentor')|list|length > 0 %}

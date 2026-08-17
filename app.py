@@ -209,6 +209,17 @@ def home(request):
     return render("home.html", user=None, flash=flash_from_query(request))
 
 
+@router.get("/home")
+def marketing_home(request):
+    """The public homepage, always, even when signed in.
+
+    "/" redirects a signed-in user to their dashboard, which is right for
+    someone typing the address but wrong for the logo in the app shell: that
+    should take you to the public site, not bounce you back where you came
+    from. This route is what the logo points at."""
+    return render("home.html", user=None, flash=flash_from_query(request))
+
+
 # --------------------------------------------------------------- auth/signup --
 
 @router.get("/signup")
@@ -2892,6 +2903,37 @@ def individual_billing_portal(request):
         portal_url = billing.create_portal_session(sub["stripe_customer_id"])
     except RuntimeError as exc:
         return with_flash("/account/billing", str(exc), "error")
+    return redirect(portal_url)
+
+
+@router.get("/admin/billing/portal")
+def admin_billing_portal(request):
+    """Sends an establishment admin to Stripe's hosted billing portal to cancel,
+    change card or download invoices. Same reasoning as the individual portal:
+    cancellation, proration and dunning are Stripe's job, not Phil's.
+
+    Only useful for a card-paying establishment. Invoice-billed schools have no
+    Stripe customer, so they are told to email instead of hitting an error."""
+    user, err = require(request, roles=["admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        sub = conn.execute(
+            """SELECT * FROM subscriptions WHERE establishment_id=?
+               ORDER BY id DESC LIMIT 1""",
+            (user["establishment_id"],),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not sub or not sub["stripe_customer_id"]:
+        return with_flash("/admin",
+                          "This establishment is billed by invoice. Email hello@phileducation.co.uk to change or cancel.",
+                          "error")
+    try:
+        portal_url = billing.create_portal_session(sub["stripe_customer_id"])
+    except RuntimeError as exc:
+        return with_flash("/admin", str(exc), "error")
     return redirect(portal_url)
 
 

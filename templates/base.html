@@ -17,7 +17,7 @@
 <div class="{{ 'app-shell' if is_app_shell else '' }}">
   {% if is_app_shell %}
   <aside class="app-sidebar">
-    <a class="app-sidebar-brand" href="https://phileducation.co.uk/"><svg viewBox="0 0 120 120" width="26" height="26" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="0" y="0" width="120" height="120" rx="22" fill="#FBF8F2"/><rect x="30" y="16" width="66" height="90" rx="4" fill="#EAE2CC" stroke="#D9CFB4" stroke-width="1"/><rect x="62" y="2" width="7" height="14" fill="#D85A30"/><rect x="30" y="16" width="56" height="84" rx="6" fill="#0F6E56"/><path fill-rule="evenodd" fill="#F3EFE4" d="M 35.5,28 L 35.5,88 L 50.5,88 L 50.5,63 L 60.5,63 C 73.5,63 80.5,56 80.5,45 C 80.5,34 73.5,28 60.5,28 Z M 50.5,40 L 60.5,40 C 65.5,40 67.5,42 67.5,45 C 67.5,48 65.5,50 60.5,50 L 50.5,50 Z"/></svg><span>Phil</span></a>
+    <a class="app-sidebar-brand" href="/home"><svg viewBox="0 0 120 120" width="26" height="26" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="0" y="0" width="120" height="120" rx="22" fill="#FBF8F2"/><rect x="30" y="16" width="66" height="90" rx="4" fill="#EAE2CC" stroke="#D9CFB4" stroke-width="1"/><rect x="62" y="2" width="7" height="14" fill="#D85A30"/><rect x="30" y="16" width="56" height="84" rx="6" fill="#0F6E56"/><path fill-rule="evenodd" fill="#F3EFE4" d="M 35.5,28 L 35.5,88 L 50.5,88 L 50.5,63 L 60.5,63 C 73.5,63 80.5,56 80.5,45 C 80.5,34 73.5,28 60.5,28 Z M 50.5,40 L 60.5,40 C 65.5,40 67.5,42 67.5,45 C 67.5,48 65.5,50 60.5,50 L 50.5,50 Z"/></svg><span>Phil</span></a>
     <nav class="app-sidebar-nav">
       <a class="app-sidebar-item" href="{{ shell_home }}">{{ icon_home() }}<span>Home</span></a>
       {% if user.role == 'admin' %}
@@ -72,7 +72,7 @@
     </div>
     {% else %}
     <div class="topbar">
-      <a class="brand" href="/">Phil</a>
+      <a class="brand" href="/home">Phil</a>
       <nav>
         {% if user %}
           {% if user.role == 'mentor' %}<a href="/mentor">Mentor home</a> <a href="/support/new">Get support</a>{% endif %}
