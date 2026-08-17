@@ -457,6 +457,30 @@ def course_library(request):
     return render("courses.html", user=user, courses=courses, flash=flash_from_query(request))
 
 
+@router.get("/courses/module/<module_number>")
+def course_by_module(request):
+    """Finds a course by its module number (01-20) rather than its database id.
+
+    The marketing homepage lists courses by module number, which is the stable,
+    human-facing identifier. Database ids happen to match today but nothing
+    guarantees that after a reseed, and a homepage full of links to the wrong
+    courses would be a quiet, embarrassing failure."""
+    try:
+        num = int(request.params["module_number"])
+    except (KeyError, ValueError):
+        return redirect("/courses")
+    conn = db.get_conn()
+    try:
+        row = conn.execute(
+            "SELECT id FROM courses WHERE module_number=? AND status='published'", (num,)
+        ).fetchone()
+    finally:
+        conn.close()
+    if not row:
+        return redirect("/courses")
+    return redirect(f"/courses/{row['id']}")
+
+
 @router.get("/courses/<course_id>")
 def course_detail(request):
     user = current_user(request)
