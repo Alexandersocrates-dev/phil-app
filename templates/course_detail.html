@@ -6,11 +6,13 @@
   <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
   <h1>{{ course.title }}</h1>
   <p class="muted">{{ course.description }}</p>
-  {# The resource packs are the deliverable, so the download is only offered to
-     signed-in users. Showing the button to a visitor and then bouncing them to
-     a login screen is a worse experience than not showing it. #}
+  {# Offered only to signed-in users. On a pilot the pack contains the sheets
+     for the sessions they can see, so the download is still worth having. #}
   {% if user %}
-  <p><a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
+  <p>
+    <a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a>
+    {% if outline_weeks %}<span class="muted" style="font-size:12px;">Sessions 1&ndash;{{ weeks_limit }} only</span>{% endif %}
+  </p>
   {% endif %}
 </div>
 
@@ -33,12 +35,27 @@
     <p class="muted"><strong>Parent/carer take-home:</strong> {{ w.home_activity }}</p>
   </li>
   {% endfor %}
+
+  {# Pilot accounts: the remaining sessions in outline, so the arc of the course
+     is visible without handing over the session plans themselves. #}
+  {% for w in outline_weeks %}
+  <li style="display:block; opacity:0.75;">
+    <h3>Week {{ w.week_number }}: {{ w.title }} <span class="badge badge-amber">Paid plan</span></h3>
+    <p><strong>Objective:</strong> {{ w.objective }}</p>
+    <p class="muted">The full session plan, activity and mentor guidance for this week are included on a paid plan.</p>
+  </li>
+  {% endfor %}
 </ul>
 
+{% if outline_weeks %}
+<div class="card card-center">
+  <h2>Your pilot covers the first {{ weeks_limit }} sessions</h2>
+  <p class="muted">That's one session for each week of your three-week trial, with the printable resources to match. Weeks {{ weeks_limit + 1 }} onwards, and the resources for them, unlock as soon as your establishment moves to a paid plan.</p>
+  <p><a class="btn btn-primary" href="/admin">Go to billing</a></p>
+</div>
+{% endif %}
+
 {% if locked_weeks %}
-{# Shown to signed-out visitors in place of the weeks they can't see. The point
-   is to convert rather than just refuse: the pilot needs no card, so the ask
-   here is small. #}
 <div class="card card-center">
   <span class="badge badge-teal">Weeks 2&ndash;{{ locked_weeks + 1 }}</span>
   <h2>The rest of this course is for Phil members</h2>

@@ -114,6 +114,66 @@ def stripe_field(obj, key, default=None):
     return default if value is None else value
 
 
+# How much of a course each kind of visitor may see. A five-session course is
+# the deliverable, so it is released in step with what someone has committed to.
+WEEKS_VISITOR = 1   # not signed in: enough to judge quality
+WEEKS_PILOT = 3     # a 21-day pilot, so three sessions: one per week of trial
+WEEKS_FULL = 99     # a paid plan: everything
+
+
+def weeks_allowed(user):
+    """Returns how many weeks of any course this user may see in full.
+
+    Reads the live subscription every time rather than caching anything, so a
+    pilot that converts to paid unlocks the rest immediately, with no extra
+    step for anyone to remember."""
+    if not user:
+        return WEEKS_VISITOR
+    if user.get("role") == "phil_staff":
+        return WEEKS_FULL
+    if not user.get("establishment_id"):
+        return WEEKS_VISITOR
+    conn = db.get_conn()
+    try:
+        sub = conn.execute(
+            """SELECT plan_type, status FROM subscriptions
+               WHERE establishment_id=? ORDER BY id DESC LIMIT 1""",
+            (user["establishment_id"],),
+        ).fetchone()
+    finally:
+        conn.close()
+    if not sub:
+        return WEEKS_VISITOR
+    if sub["plan_type"] == "pilot":
+        return WEEKS_PILOT
+    return WEEKS_FULL if sub["status"] == "active" else WEEKS_PILOT
+
+
+def weeks_for_pack(conn, course_id, limit):
+    """Returns the set of resource names a user at this limit may download.
+
+    Pack items carry no session tag of their own, but every week lists the
+    resources it uses, so the week's own list is what assigns an item to a
+    session. An item no week claims is treated as beyond the limit: withholding
+    one sheet is a smaller error than handing over a paid resource."""
+    if limit >= WEEKS_FULL:
+        return None  # None means "no filtering"
+    rows = conn.execute(
+        "SELECT week_number, resources FROM weeks WHERE course_id=? ORDER BY week_number",
+        (course_id,),
+    ).fetchall()
+    allowed = set()
+    for r in rows:
+        if r["week_number"] <= limit:
+            for name in json.loads(r["resources"] or "[]"):
+                allowed.add(_norm_resource(name))
+    return allowed
+
+
+def _norm_resource(name):
+    return "".join(ch for ch in (name or "").lower() if ch.isalnum())
+
+
 def require_active_subscription(user):
     """Returns None when this user's establishment may use the product, or a
     redirect to the billing page when it may not.
@@ -416,12 +476,23 @@ def course_detail(request):
     # full, which is enough for a school to judge quality, and the rest is
     # held back. Anyone signed in has paid or is on a pilot, which is the
     # right bar: evaluating properly is the whole point of a pilot.
+    limit = weeks_allowed(user)
+    outline_weeks = []
     locked_weeks = 0
-    if not user:
-        locked_weeks = max(len(weeks) - 1, 0)
-        weeks = weeks[:1]
+    if limit < len(weeks):
+        rest = weeks[limit:]
+        weeks = weeks[:limit]
+        if user:
+            # A pilot sees where the course goes, in title and objective only.
+            # Hiding the ending entirely reads as an incomplete product rather
+            # than a gated one, and a school is judging the whole arc.
+            outline_weeks = [{"week_number": w["week_number"], "title": w["title"],
+                              "objective": w["objective"]} for w in rest]
+        else:
+            locked_weeks = len(rest)
     return render("course_detail.html", user=user, course=course, weeks=weeks,
-                  locked_weeks=locked_weeks, flash=flash_from_query(request))
+                  outline_weeks=outline_weeks, locked_weeks=locked_weeks,
+                  weeks_limit=limit, flash=flash_from_query(request))
 
 @router.get("/courses/<course_id>/resources/pdf")
 def course_resources_pdf(request):
@@ -447,7 +518,20 @@ def course_resources_pdf(request):
             break
     if not entry:
         return Response("Resource pack not available for this course yet", status="404 Not Found")
-    path = pdfgen.resource_pack_pdf(course_num, course["title"], entry.get("items", []))
+
+    items = entry.get("items", [])
+    limit = weeks_allowed(user)
+    conn = db.get_conn()
+    try:
+        allowed = weeks_for_pack(conn, course["id"], limit)
+    finally:
+        conn.close()
+    if allowed is not None:
+        items = [it for it in items if _norm_resource(it.get("name")) in allowed]
+        if not items:
+            return with_flash("/courses/" + str(course["id"]),
+                              "The resource pack for these sessions unlocks on a paid plan.", "error")
+    path = pdfgen.resource_pack_pdf(course_num, course["title"], items)
     return pdf_response(path, f"resource-pack-{course_num}.pdf")
 
 
