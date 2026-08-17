@@ -2614,6 +2614,59 @@ def staff_team(request):
     return render("staff_team.html", user=user, team=rows, flash=flash_from_query(request))
 
 
+@router.post("/staff/team/<member_id>/status")
+def staff_team_set_status(request):
+    """Suspends or reactivates a Phil staff account.
+
+    Deliberately a status change rather than a delete: these accounts author
+    courses, audit entries and seeded data, so removing the row would orphan
+    records. Suspended accounts can't sign in, which is the security outcome
+    that matters, and the change is reversible.
+
+    You can't suspend yourself. Phil staff is the top of the tree, with no one
+    above to undo it, so a misclick would otherwise mean database surgery to
+    get back in."""
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    try:
+        member_id = int(request.params.get("member_id"))
+    except (TypeError, ValueError):
+        return with_flash("/staff/team", "Unknown team member.", "error")
+    if member_id == user["id"]:
+        return with_flash("/staff/team", "You can't suspend your own account.", "error")
+
+    conn = db.get_conn()
+    try:
+        member = conn.execute(
+            "SELECT * FROM users WHERE id=? AND role='phil_staff'", (member_id,)
+        ).fetchone()
+        if not member:
+            return with_flash("/staff/team", "Unknown team member.", "error")
+        new_status = "active" if member["status"] != "active" else "suspended"
+        if new_status == "suspended":
+            others = conn.execute(
+                """SELECT COUNT(*) AS n FROM users
+                   WHERE role='phil_staff' AND status='active' AND id != ?""",
+                (member_id,),
+            ).fetchone()["n"]
+            if others == 0:
+                return with_flash("/staff/team",
+                                  "That's the last active Phil staff account, so it can't be suspended.",
+                                  "error")
+        conn.execute("UPDATE users SET status=? WHERE id=?", (new_status, member_id))
+        if new_status == "suspended":
+            # End any sessions they already have, or suspending only stops the
+            # next sign-in and leaves an open browser working.
+            conn.execute("DELETE FROM sessions WHERE user_id=?", (member_id,))
+        db.log_action(conn, user["id"], f"phil_staff_{new_status}", "user", member_id, member["email"])
+        conn.commit()
+    finally:
+        conn.close()
+    word = "reactivated" if new_status == "active" else "suspended"
+    return with_flash("/staff/team", f"{member['name']} {word}.", "ok")
+
+
 @router.get("/staff/team/new")
 def staff_team_new_form(request):
     user, err = require(request, roles=["phil_staff"])
