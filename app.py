@@ -2841,15 +2841,15 @@ def _send_reset_email(to_email, link):
             url = "https://api.resend.com/emails"
             payload = {"from": mail_from, "to": [to_email], "subject": subject, "text": body}
             headers = {"Authorization": f"Bearer {resend_key}",
-                       "Content-Type": "application/json"},
-            "User-Agent": "Phil/1.0"}
+                       "Content-Type": "application/json",
+                       "User-Agent": "Phil/1.0"}
         else:
             url = "https://api.postmarkapp.com/email"
             payload = {"From": mail_from, "To": to_email, "Subject": subject, "TextBody": body}
             headers = {"X-Postmark-Server-Token": postmark_token,
                        "Content-Type": "application/json",
-                       "Accept": "application/json"}
-            "User-Agent": "Phil/1.0"
+                       "Accept": "application/json",
+                       "User-Agent": "Phil/1.0"}
         request_obj = urllib.request.Request(
             url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
         with urllib.request.urlopen(request_obj, timeout=10) as resp:
