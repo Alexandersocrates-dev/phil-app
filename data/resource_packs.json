@@ -78,46 +78,93 @@
       },
       {
         "name": "Feeling word cards",
-        "body": "Sort these onto the thermometer scale.",
+        "body": "Sort these onto the anger thermometer, coolest to hottest.",
         "cards": [
           {
-            "text": "Irritated"
+            "cat": "Level 1",
+            "title": "On edge",
+            "art": "art-level-1",
+            "text": "Not angry yet, but ready to be.",
+            "note": "Coolest end"
           },
           {
-            "text": "Annoyed"
+            "cat": "Level 1",
+            "title": "Irritated",
+            "art": "art-level-1",
+            "text": "Small things are scraping at you.",
+            "note": "Coolest end"
           },
           {
-            "text": "Frustrated"
+            "cat": "Level 1",
+            "title": "Tense",
+            "art": "art-level-1",
+            "text": "Your body has tightened before your mind noticed.",
+            "note": "Coolest end"
           },
           {
-            "text": "Wound up"
+            "cat": "Level 2",
+            "title": "Annoyed",
+            "art": "art-level-2",
+            "text": "You'd say something if it happened again.",
+            "note": "Middle"
           },
           {
-            "text": "Cross"
+            "cat": "Level 2",
+            "title": "Riled",
+            "art": "art-level-2",
+            "text": "Someone has got to you on purpose.",
+            "note": "Middle"
           },
           {
-            "text": "Seething"
+            "cat": "Level 2",
+            "title": "Cross",
+            "art": "art-level-2",
+            "text": "Clearly angry, and it shows.",
+            "note": "Middle"
           },
           {
-            "text": "Furious"
+            "cat": "Level 3",
+            "title": "Frustrated",
+            "art": "art-level-3",
+            "text": "Blocked, with no way through it.",
+            "note": "Middle"
           },
           {
-            "text": "Fuming"
+            "cat": "Level 3",
+            "title": "Wound up",
+            "art": "art-level-3",
+            "text": "Built up over time, not one moment.",
+            "note": "Middle"
           },
           {
-            "text": "On edge"
+            "cat": "Level 4",
+            "title": "Fuming",
+            "art": "art-level-4",
+            "text": "Holding it in, but only just.",
+            "note": "Hot end"
           },
           {
-            "text": "Enraged"
+            "cat": "Level 4",
+            "title": "Furious",
+            "art": "art-level-4",
+            "text": "Too big to talk through right now.",
+            "note": "Hot end"
           },
           {
-            "text": "Tense"
+            "cat": "Level 5",
+            "title": "Seething",
+            "art": "art-level-5",
+            "text": "Quiet on the outside, boiling underneath.",
+            "note": "Hottest end"
           },
           {
-            "text": "Riled"
+            "cat": "Level 5",
+            "title": "Enraged",
+            "art": "art-level-5",
+            "text": "Past the point of choosing what you do.",
+            "note": "Hottest end"
           }
         ],
-        "card_kind": "word",
         "tone": "red"
       },
       {
@@ -153,37 +200,48 @@
         "body": "Same situation, three different responses. Which gets the best result?",
         "cards": [
           {
-            "text": "Passive",
-            "art": "passive",
-            "note": "\"It’s fine, I guess...\""
+            "cat": "Passive",
+            "title": "Says nothing",
+            "art": "art-passive",
+            "text": "“It's fine, I guess...”",
+            "note": "What happens next?"
           },
           {
-            "text": "Aggressive",
-            "art": "aggressive",
-            "note": "\"This is stupid, I’m not doing it!\""
+            "cat": "Aggressive",
+            "title": "Hits back",
+            "art": "art-aggressive",
+            "text": "“This is stupid, I'm not doing it!”",
+            "note": "What happens next?"
           },
           {
-            "text": "Assertive",
-            "art": "assertive",
-            "note": "\"I’m finding this frustrating, can I have a minute?\""
+            "cat": "Assertive",
+            "title": "Names it calmly",
+            "art": "art-assertive",
+            "text": "“I'm finding this frustrating, can I have a minute?”",
+            "note": "What happens next?"
           },
           {
-            "text": "Passive",
-            "art": "passive",
-            "note": "Says nothing, walks away upset"
+            "cat": "Passive",
+            "title": "Walks away upset",
+            "art": "art-passive",
+            "text": "Says nothing and leaves it inside.",
+            "note": "What happens next?"
           },
           {
-            "text": "Aggressive",
-            "art": "aggressive",
-            "note": "\"Just leave me alone!\""
+            "cat": "Aggressive",
+            "title": "Shuts it down",
+            "art": "art-aggressive",
+            "text": "“Just leave me alone!”",
+            "note": "What happens next?"
           },
           {
-            "text": "Assertive",
-            "art": "assertive",
-            "note": "\"I need a minute to calm down, can we talk after?\""
+            "cat": "Assertive",
+            "title": "Asks for time",
+            "art": "art-assertive",
+            "text": "“I need a minute to calm down, can we talk after?”",
+            "note": "What happens next?"
           }
         ],
-        "card_kind": "scenario",
         "tone": "coral"
       },
       {
@@ -206,28 +264,51 @@
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Pause and name the feeling, use the STOP technique, then try an assertive phrase.",
+        "body": "Pause, name the feeling, use the STOP technique, then try an assertive phrase.",
         "cards": [
           {
-            "text": "A friend takes something without asking"
+            "cat": "Scenario",
+            "title": "Something taken",
+            "art": "art-share",
+            "text": "A friend takes something without asking.",
+            "note": "Name the feeling first"
           },
           {
-            "text": "A teacher corrects your work in front of the class"
+            "cat": "Scenario",
+            "title": "Corrected in public",
+            "art": "art-redo",
+            "text": "A teacher corrects your work in front of the class.",
+            "note": "Name the feeling first"
           },
           {
-            "text": "Someone cuts in front of you in the queue"
+            "cat": "Scenario",
+            "title": "Queue jumped",
+            "art": "art-queue-cut",
+            "text": "Someone cuts in front of you in the queue.",
+            "note": "Name the feeling first"
           },
           {
-            "text": "You're blamed for something you didn't do"
+            "cat": "Scenario",
+            "title": "Wrongly blamed",
+            "art": "art-blamed",
+            "text": "You're blamed for something you didn't do.",
+            "note": "Name the feeling first"
           },
           {
-            "text": "Your plan for the day changes at the last minute"
+            "cat": "Scenario",
+            "title": "Plans changed",
+            "art": "art-plan-change",
+            "text": "Your plan for the day changes at the last minute.",
+            "note": "Name the feeling first"
           },
           {
-            "text": "Someone talks over you while you're speaking"
+            "cat": "Scenario",
+            "title": "Talked over",
+            "art": "art-talked-over",
+            "text": "Someone talks over you while you're speaking.",
+            "note": "Name the feeling first"
           }
         ],
-        "card_kind": "scenario",
         "tone": "coral"
       },
       {
@@ -269,47 +350,62 @@
         "body": "Sort into push (making school unappealing) and pull (drawing you away).",
         "cards": [
           {
-            "text": "Boring lessons",
-            "art": null,
-            "note": "push"
+            "cat": "Push",
+            "title": "Boring lessons",
+            "art": "art-clock",
+            "text": "Time drags and nothing holds you.",
+            "note": "Pushes me away"
           },
           {
-            "text": "A tough lesson or subject",
-            "art": null,
-            "note": "push"
+            "cat": "Push",
+            "title": "A tough lesson or subject",
+            "art": "art-too-hard",
+            "text": "One subject you dread all week.",
+            "note": "Pushes me away"
           },
           {
-            "text": "Friends outside school",
-            "art": null,
-            "note": "pull"
+            "cat": "Pull",
+            "title": "Friends outside school",
+            "art": "art-friends-out",
+            "text": "People to be with who aren't here.",
+            "note": "Pulls me away"
           },
           {
-            "text": "Looking after a sibling",
-            "art": null,
-            "note": "pull"
+            "cat": "Pull",
+            "title": "Looking after a sibling",
+            "art": "art-caring",
+            "text": "Someone at home needs you.",
+            "note": "Pulls me away"
           },
           {
-            "text": "Avoiding a specific person",
-            "art": null,
-            "note": "push"
+            "cat": "Push",
+            "title": "Avoiding a specific person",
+            "art": "art-avoid",
+            "text": "One person you'd rather not run into.",
+            "note": "Pushes me away"
           },
           {
-            "text": "A part-time job",
-            "art": null,
-            "note": "pull"
+            "cat": "Pull",
+            "title": "A part-time job",
+            "art": "art-job",
+            "text": "Work, money, and being treated as an adult.",
+            "note": "Pulls me away"
           },
           {
-            "text": "Feeling behind with work",
-            "art": null,
-            "note": "push"
+            "cat": "Push",
+            "title": "Feeling behind with work",
+            "art": "art-behind",
+            "text": "Catching up feels impossible, so why start.",
+            "note": "Pushes me away"
           },
           {
-            "text": "An unsettled routine at home",
-            "art": null,
-            "note": "pull"
+            "cat": "Pull",
+            "title": "An unsettled routine at home",
+            "art": "art-unsettled",
+            "text": "Mornings that don't work make school harder.",
+            "note": "Pulls me away"
           }
         ],
-        "card_kind": "sort",
         "tone": "amber"
       },
       {
@@ -345,31 +441,62 @@
         "body": "Which is closest to your biggest barrier? There's no single right answer.",
         "cards": [
           {
-            "text": "Transport"
+            "cat": "Barrier",
+            "title": "Transport",
+            "art": "art-transport",
+            "text": "Getting here is the hard part.",
+            "note": "Pick the closest"
           },
           {
-            "text": "Uniform or equipment"
+            "cat": "Barrier",
+            "title": "Uniform or equipment",
+            "art": "art-uniform",
+            "text": "Not having the right things to turn up with.",
+            "note": "Pick the closest"
           },
           {
-            "text": "A specific lesson or teacher"
+            "cat": "Barrier",
+            "title": "A specific lesson or teacher",
+            "art": "art-avoid",
+            "text": "One place on the timetable you dread.",
+            "note": "Pick the closest"
           },
           {
-            "text": "Sleep and routine"
+            "cat": "Barrier",
+            "title": "Sleep and routine",
+            "art": "art-tired",
+            "text": "Mornings are the part that fails.",
+            "note": "Pick the closest"
           },
           {
-            "text": "A part-time job"
+            "cat": "Barrier",
+            "title": "A part-time job",
+            "art": "art-job",
+            "text": "Work is taking the hours school needs.",
+            "note": "Pick the closest"
           },
           {
-            "text": "Caring responsibilities"
+            "cat": "Barrier",
+            "title": "Caring responsibilities",
+            "art": "art-caring",
+            "text": "Someone at home depends on you.",
+            "note": "Pick the closest"
           },
           {
-            "text": "A peer relationship"
+            "cat": "Barrier",
+            "title": "A peer relationship",
+            "art": "art-past-hurt",
+            "text": "Someone here makes it hard to come in.",
+            "note": "Pick the closest"
           },
           {
-            "text": "Something else"
+            "cat": "Barrier",
+            "title": "Something else",
+            "art": "art-something-else",
+            "text": "Not on this list, and that's fine.",
+            "note": "Pick the closest"
           }
         ],
-        "card_kind": "sort",
         "tone": "blue"
       },
       {
@@ -2154,23 +2281,34 @@
         "body": "Choose one with your class teacher.",
         "cards": [
           {
-            "text": "Hand up",
-            "art": "hand-up"
+            "cat": "Signal",
+            "title": "Hand up",
+            "art": "art-hand-up",
+            "text": "Raise your hand and wait, without speaking.",
+            "note": "Agree it first"
           },
           {
-            "text": "Name card on the desk",
-            "art": "name-card"
+            "cat": "Signal",
+            "title": "Name card on the desk",
+            "art": "art-name-card",
+            "text": "Put your card where the teacher can see it.",
+            "note": "Agree it first"
           },
           {
-            "text": "Thumbs signal",
-            "art": "thumb"
+            "cat": "Signal",
+            "title": "Thumbs signal",
+            "art": "art-thumb",
+            "text": "A quiet thumb up or down at your desk.",
+            "note": "Agree it first"
           },
           {
-            "text": "Agreed word or gesture",
-            "art": "agreed-word"
+            "cat": "Signal",
+            "title": "Agreed word or gesture",
+            "art": "art-agreed-word",
+            "text": "One word or movement only you and the teacher know.",
+            "note": "Agree it first"
           }
         ],
-        "card_kind": "technique",
         "tone": "teal"
       },
       {
@@ -2288,25 +2426,34 @@
         "body": "Techniques for an anxious moment.",
         "cards": [
           {
-            "text": "Slow breathing",
-            "art": "breath-count",
-            "note": "In 4 · out 6"
+            "cat": "Breathing",
+            "title": "Slow breathing: 4 in, 6 out",
+            "art": "art-breath-count",
+            "text": "In through your nose for 4 seconds, out through your mouth for 6.",
+            "note": "Repeat 5 times"
           },
           {
-            "text": "5-4-3-2-1 senses",
-            "art": "five-senses",
-            "note": "5 see · 4 hear · 3 feel"
+            "cat": "Grounding",
+            "title": "5-4-3-2-1 senses",
+            "art": "art-five-senses",
+            "text": "Name 5 things you see, 4 you hear, 3 you feel.",
+            "note": "Say them out loud"
           },
           {
-            "text": "Hold something with texture",
-            "art": "texture"
+            "cat": "Body",
+            "title": "Hold something with texture",
+            "art": "art-texture",
+            "text": "Hold an object and describe how it feels to yourself.",
+            "note": "Keep one in your bag"
           },
           {
-            "text": "Name where you are, out loud or in your head",
-            "art": "locate"
+            "cat": "Grounding",
+            "title": "Name where you are",
+            "art": "art-locate",
+            "text": "Say the room, the day and the time, out loud or in your head.",
+            "note": "Anchors you to now"
           }
         ],
-        "card_kind": "technique",
         "tone": "teal"
       },
       {
@@ -2361,31 +2508,62 @@
         "body": "Sort into most-relevant-to-me order.",
         "cards": [
           {
-            "text": "Task feels too hard"
+            "cat": "Trigger",
+            "title": "Task feels too hard",
+            "art": "art-too-hard",
+            "text": "You can't see a way into it.",
+            "note": "Rank me"
           },
           {
-            "text": "Task feels too easy"
+            "cat": "Trigger",
+            "title": "Task feels too easy",
+            "art": "art-too-easy",
+            "text": "There's nothing in it to hold you.",
+            "note": "Rank me"
           },
           {
-            "text": "Room is too noisy"
+            "cat": "Trigger",
+            "title": "Room is too noisy",
+            "art": "art-noise",
+            "text": "Too much sound to think through.",
+            "note": "Rank me"
           },
           {
-            "text": "I feel tired"
+            "cat": "Trigger",
+            "title": "I feel tired",
+            "art": "art-tired",
+            "text": "Not enough sleep, or a long day already.",
+            "note": "Rank me"
           },
           {
-            "text": "Distracted by a friend"
+            "cat": "Trigger",
+            "title": "Distracted by a friend",
+            "art": "art-distract",
+            "text": "Someone nearby keeps pulling your attention.",
+            "note": "Rank me"
           },
           {
-            "text": "Don't understand the instructions"
+            "cat": "Trigger",
+            "title": "Don't understand the instructions",
+            "art": "art-confused",
+            "text": "You missed the start and didn't ask.",
+            "note": "Rank me"
           },
           {
-            "text": "I feel bored"
+            "cat": "Trigger",
+            "title": "I feel bored",
+            "art": "art-clock",
+            "text": "Time is dragging and nothing holds you.",
+            "note": "Rank me"
           },
           {
-            "text": "I feel hungry"
+            "cat": "Trigger",
+            "title": "I feel hungry",
+            "art": "art-hungry",
+            "text": "Your body needs something before your brain works.",
+            "note": "Rank me"
           }
         ],
-        "card_kind": "sort",
         "tone": "amber"
       },
       {
@@ -2529,31 +2707,62 @@
         "body": "Sort into most-relevant-to-me order.",
         "cards": [
           {
-            "text": "Feeling different"
+            "cat": "Barrier",
+            "title": "Feeling different",
+            "art": "art-odd-one",
+            "text": "Like you don't fit the group you're in.",
+            "note": "Rank me"
           },
           {
-            "text": "Past rejection or bullying"
+            "cat": "Barrier",
+            "title": "Past rejection or bullying",
+            "art": "art-past-hurt",
+            "text": "It went badly before, so why try again.",
+            "note": "Rank me"
           },
           {
-            "text": "Not knowing how to join in"
+            "cat": "Barrier",
+            "title": "Not knowing how to join in",
+            "art": "art-join",
+            "text": "You want to, but not how to start.",
+            "note": "Rank me"
           },
           {
-            "text": "Loud or busy spaces"
+            "cat": "Barrier",
+            "title": "Loud or busy spaces",
+            "art": "art-noise",
+            "text": "Crowds make it harder to think or speak.",
+            "note": "Rank me"
           },
           {
-            "text": "Worried about saying the wrong thing"
+            "cat": "Barrier",
+            "title": "Worried about saying the wrong thing",
+            "art": "art-worry-words",
+            "text": "You replay it before you've said it.",
+            "note": "Rank me"
           },
           {
-            "text": "Preferring to be alone sometimes"
+            "cat": "Barrier",
+            "title": "Preferring to be alone sometimes",
+            "art": "art-alone-ok",
+            "text": "Not every quiet moment is a problem.",
+            "note": "Rank me"
           },
           {
-            "text": "Low confidence"
+            "cat": "Barrier",
+            "title": "Low confidence",
+            "art": "art-low-conf",
+            "text": "You assume they'd rather you weren't there.",
+            "note": "Rank me"
           },
           {
-            "text": "Not knowing who to sit with"
+            "cat": "Barrier",
+            "title": "Not knowing who to sit with",
+            "art": "art-empty-seat",
+            "text": "The moment at the door when you have to choose.",
+            "note": "Rank me"
           }
         ],
-        "card_kind": "sort",
         "tone": "blue"
       },
       {
@@ -2561,25 +2770,48 @@
         "body": "Simple openers to try.",
         "cards": [
           {
-            "text": "\"Can I sit here?\""
+            "cat": "Opener",
+            "title": "“Can I sit here?”",
+            "art": "art-empty-seat",
+            "text": "Short, direct, and easy to say yes to.",
+            "note": "Try one this week"
           },
           {
-            "text": "\"What are you playing?\""
+            "cat": "Opener",
+            "title": "“What are you playing?”",
+            "art": "art-join",
+            "text": "Asks about them, not about you.",
+            "note": "Try one this week"
           },
           {
-            "text": "\"That looks fun, can I join?\""
+            "cat": "Opener",
+            "title": "“That looks fun, can I join?”",
+            "art": "art-join",
+            "text": "Names what you noticed, then asks.",
+            "note": "Try one this week"
           },
           {
-            "text": "\"What did you think of that?\""
+            "cat": "Opener",
+            "title": "“What did you think of that?”",
+            "art": "art-talk",
+            "text": "Works after any shared lesson or event.",
+            "note": "Try one this week"
           },
           {
-            "text": "\"Have you played this before?\""
+            "cat": "Opener",
+            "title": "“Have you played this before?”",
+            "art": "art-talk",
+            "text": "Gives them something easy to answer.",
+            "note": "Try one this week"
           },
           {
-            "text": "\"Mind if I watch for a bit?\""
+            "cat": "Opener",
+            "title": "“Mind if I watch for a bit?”",
+            "art": "art-watch",
+            "text": "A way in without having to join straight away.",
+            "note": "Try one this week"
           }
         ],
-        "card_kind": "prompt",
         "tone": "green"
       },
       {
