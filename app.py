@@ -19,10 +19,31 @@ import db
 import auth as authlib
 import billing
 from framework import Router, Request, Response, render, redirect, pdf_response, make_wsgi_app
+from framework import jinja_env as framework_jinja
 from pdf import generate as pdfgen
 
 router = Router()
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+
+
+def _static_version():
+    """A cache-busting stamp derived from the stylesheet's own timestamp.
+
+    Browsers cache /static/style.css hard, so a colour change can sit invisible
+    for days on a returning mentor's machine while looking fine to whoever
+    deployed it. Deriving the stamp from the file's modification time means it
+    changes exactly when the CSS does, with nobody having to remember to bump a
+    number. Falls back to a fixed value if the file can't be read, which only
+    costs the cache-busting, never the page."""
+    try:
+        return str(int(os.path.getmtime(os.path.join(STATIC_DIR, "style.css"))))
+    except OSError:
+        return "1"
+
+
+# Exposed to every template, so the link tag in base.html needs no per-render
+# plumbing and no route has to remember to pass it.
+framework_jinja.globals["static_v"] = _static_version()
 RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
 _resource_packs_cache = None
 
