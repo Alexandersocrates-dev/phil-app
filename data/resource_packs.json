@@ -42,35 +42,7 @@
       },
       {
         "name": "Feelings scale",
-        "body": "How strong is the feeling right now?",
-        "table": {
-          "headers": [
-            "Rating",
-            "What it feels like"
-          ],
-          "rows": [
-            [
-              "1",
-              "Calm"
-            ],
-            [
-              "2",
-              "A little agitated"
-            ],
-            [
-              "3",
-              "Frustrated"
-            ],
-            [
-              "4",
-              "Very frustrated"
-            ],
-            [
-              "5",
-              "About to lose control"
-            ]
-          ]
-        }
+        "body": "How strong is the feeling right now?\n1 Calm\n2 A little agitated\n3 Frustrated\n4 Very frustrated\n5 About to lose control"
       },
       {
         "name": "Safe outlet ideas",
@@ -306,35 +278,7 @@
       },
       {
         "name": "Where am I now scale",
-        "body": "How would I describe my vaping right now?",
-        "table": {
-          "headers": [
-            "Rating",
-            "What it feels like"
-          ],
-          "rows": [
-            [
-              "1",
-              "Never tried it"
-            ],
-            [
-              "2",
-              "Tried it once or twice"
-            ],
-            [
-              "3",
-              "Occasional use"
-            ],
-            [
-              "4",
-              "Regular use"
-            ],
-            [
-              "5",
-              "Feels hard to go without"
-            ]
-          ]
-        }
+        "body": "How would I describe my vaping right now?\n1 Never tried it\n2 Tried it once or twice\n3 Occasional use\n4 Regular use\n5 Feels hard to go without"
       },
       {
         "name": "Trigger map template",
@@ -770,27 +714,7 @@
     "items": [
       {
         "name": "Sensory profile scale",
-        "body": "How do sounds, light, touch and crowding feel to me?",
-        "table": {
-          "headers": [
-            "Rating",
-            "What it feels like"
-          ],
-          "rows": [
-            [
-              "1",
-              "Comfortable"
-            ],
-            [
-              "2",
-              "Tolerable"
-            ],
-            [
-              "3",
-              "Overwhelming"
-            ]
-          ]
-        }
+        "body": "How do sounds, light, touch and crowding feel to me?\n1 Comfortable\n2 Tolerable\n3 Overwhelming"
       },
       {
         "name": "Sense-by-sense examples card",
@@ -1217,35 +1141,7 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How intense does my anger feel right now?",
-        "table": {
-          "headers": [
-            "Rating",
-            "What it feels like"
-          ],
-          "rows": [
-            [
-              "1",
-              "Very calm"
-            ],
-            [
-              "2",
-              "Calm"
-            ],
-            [
-              "3",
-              "Mildly unsettled"
-            ],
-            [
-              "4",
-              "Agitated"
-            ],
-            [
-              "5",
-              "About to lose control"
-            ]
-          ]
-        }
+        "body": "How intense does my anger feel right now?\n1 Very calm\n2 Calm\n3 Mildly unsettled\n4 Agitated\n5 About to lose control"
       },
       {
         "name": "Trigger list",

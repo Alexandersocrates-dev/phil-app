@@ -89,7 +89,60 @@
 {% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}
 <p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
 </div>
+
+{# The content itself, so a session can be run from the screen. Anything the
+   pupil writes on is marked, because that still needs printing. #}
+{% for item in week.resource_items %}
+<details class="res-item">
+  <summary>
+    <span class="res-name">{{ item.name }}</span>
+    {% if item.table or item.form or item.checklist %}<span class="res-tag">print for pupil</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+  </summary>
+  <div class="res-body">
+    {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p>{{ para }}</p>{% endif %}{% endfor %}{% endif %}
+
+    {% if item.table %}
+    <table class="res-table">
+      <tr>{% for hd in item.table.headers %}<th>{{ hd }}</th>{% endfor %}</tr>
+      {% for row in item.table.rows %}
+      <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if item.form %}
+    <table class="res-table">
+      {% for f in item.form.fields %}<tr><th style="width:45%;">{{ f }}</th><td></td></tr>{% endfor %}
+    </table>
+    {% endif %}
+
+    {% if item.checklist %}
+    <ul class="res-check">
+      {% for ci in item.checklist['items'] %}<li>{{ ci }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</details>
+{% endfor %}
 </div>
+<style>
+.res-item{border:1px solid var(--border);border-radius:10px;margin:8px 0 0;background:#fff;}
+.res-item summary{cursor:pointer;padding:9px 12px;font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px;}
+.res-item summary::-webkit-details-marker{display:none;}
+.res-item summary::before{content:"\25B8";color:var(--teal-darker);font-size:11px;transition:transform .12s ease;}
+.res-item[open] summary::before{transform:rotate(90deg);}
+.res-name{flex:1;}
+.res-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 8px;}
+.res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
+.res-body{padding:0 12px 12px;font-size:13px;line-height:1.5;color:var(--navy);}
+.res-body p{margin:0 0 6px;}
+.res-table{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:12.5px;}
+.res-table th,.res-table td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:top;}
+.res-table th{background:#F6F3EA;font-weight:600;}
+.res-table td:empty{height:26px;}
+.res-check{margin:8px 0 0;padding-left:18px;}
+.res-check li{margin:0 0 4px;}
+</style>
 {% endif %}
 
 <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 10px;">Session flow{% if week.timing %} <span style="text-transform:none;letter-spacing:0;font-weight:400;">&middot; about {{ (week.timing.checkin|default(0)) + (week.timing.input|default(0)) + (week.timing.activity|default(0)) + (week.timing.reflect|default(0)) + (week.timing.home|default(0)) }} min total</span>{% endif %}</p>

@@ -26,6 +26,22 @@ RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_
 _resource_packs_cache = None
 
 
+def resource_items_for(module_number, resource_names):
+    """Returns the full pack entries for a list of resource names, in the order
+    the week lists them. Names are matched loosely because a week's list and the
+    pack are maintained separately; an exact-match requirement would fail
+    silently on a stray capital and show the mentor nothing."""
+    packs = _load_resource_packs()
+    entry = packs.get(str(module_number).zfill(2)) or {}
+    by_name = {_norm_resource(i.get("name")): i for i in entry.get("items", [])}
+    out = []
+    for name in resource_names or []:
+        item = by_name.get(_norm_resource(name))
+        if item:
+            out.append(item)
+    return out
+
+
 def _load_resource_packs():
     global _resource_packs_cache
     if _resource_packs_cache is None:
@@ -1340,6 +1356,12 @@ def session_form(request):
         conn.close()
     if week:
         week = dict(week, resources=json.loads(week["resources"] or "[]"))
+        # Attach the actual content of this week's resources. Until now the
+        # session screen showed only their names, so a mentor had to print the
+        # pack to use anything. The pack is still there for what the pupil
+        # writes on; this makes the mentor-facing material usable in the room.
+        week["resource_items"] = resource_items_for(
+            enrolment["course_module_number"], week["resources"])
     prev_record = completed_records[-1] if completed_records else None
     progress = [{"number": n, "status": "done" if n < next_week_number else ("current" if n == next_week_number else "locked")} for n in range(1, 6)]
     upcoming_weeks = [w for w in all_weeks if w["week_number"] > next_week_number]

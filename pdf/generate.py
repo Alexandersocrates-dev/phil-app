@@ -710,9 +710,27 @@ def resource_pack_pdf(course_num, course_title, items):
         c.showPage()
         header()
 
+    def cut_line():
+        """A dashed rule between assets, so a pack can be cut into separate
+        sheets. Drawn between items only, never at the top or bottom of a page:
+        a cut mark with nothing under it invites someone to cut off a margin."""
+        state["y"] -= 7 * mm
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.6)
+        c.setDash(2, 3)
+        c.line(margin, state["y"], w - margin, state["y"])
+        c.setDash()
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 6.5)
+        c.drawRightString(w - margin, state["y"] + 1.6 * mm, "cut here")
+        state["y"] -= 9 * mm
+
     header()
 
-    for item in items:
+    SEPARATOR_H = 16 * mm
+
+    for index, item in enumerate(items):
+        first_on_page = state["y"] >= h - margin - 26 * mm
         name = item.get("name", "")
         name_lower = name.lower()
         table = item.get("table")
@@ -733,8 +751,13 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 55 * mm
         else:
             needed = 28 * mm
-        if state["y"] < margin + needed:
+        if state["y"] < margin + needed + SEPARATOR_H:
             new_page()
+            first_on_page = True
+
+        # Separate this asset from the previous one, unless it starts a page.
+        if index > 0 and not first_on_page:
+            cut_line()
 
         c.setFillColor(TEAL_DARK)
         c.setFont("Helvetica-Bold", 12)
