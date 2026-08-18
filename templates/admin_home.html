@@ -47,9 +47,21 @@
 </div>
 {% endif %}
 
+<div class="stat-row">
+<div class="stat-tile stat-tile--teal">
+<div class="stat-tile-num">{{ pupils|length }}</div>
+<div class="stat-tile-label">Pupils enrolled</div>
+</div>
+<div class="stat-tile stat-tile--neutral">
+<div class="stat-tile-num">{{ mentors|length }}</div>
+<div class="stat-tile-label">Mentors and admins</div>
+</div>
+</div>
+
 {% set has_mentor = mentors|selectattr('role', 'equalto', 'mentor')|list|length > 0 %}
 <div class="card gs-checklist" id="gsChecklist">
   <h3>Getting started</h3>
+  <p class="muted" style="font-size:12px;margin:-4px 0 8px;">Three things worth doing once. This panel disappears when they're done.</p>
   <ul>
     <li class="{{ 'done' if has_mentor else '' }}"><span class="gs-tick">{% if has_mentor %}&#10003;{% endif %}</span><a href="/admin/mentors/new">Invite a mentor</a></li>
     <li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
@@ -64,6 +76,17 @@
       var el = document.getElementById('gsChecklist');
       if (el) el.style.display = 'none';
     }
+    // Once all three are done the panel has nothing left to teach, so it goes
+    // without the user having to dismiss it.
+    if (localStorage.getItem('gs_courses') && localStorage.getItem('gs_request')
+        && document.querySelector('#gsChecklist li.done')) {
+      var all = document.querySelectorAll('#gsChecklist li');
+      var done = document.querySelectorAll('#gsChecklist li.done');
+      if (all.length && done.length === all.length) {
+        var box = document.getElementById('gsChecklist');
+        if (box) box.style.display = 'none';
+      }
+    }
     if (localStorage.getItem('gs_courses')) {
       var li = document.getElementById('gsCourses');
       if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
@@ -75,17 +98,6 @@
   } catch (e) {}
 })();
 </script>
-
-<div class="stat-row">
-<div class="stat-tile stat-tile--teal">
-<div class="stat-tile-num">{{ pupils|length }}</div>
-<div class="stat-tile-label">Pupils enrolled</div>
-</div>
-<div class="stat-tile stat-tile--neutral">
-<div class="stat-tile-num">{{ mentors|length }}</div>
-<div class="stat-tile-label">Mentors and admins</div>
-</div>
-</div>
 
 <div class="section-label">Day-to-day</div>
 <p class="muted" style="font-size:12px;margin:-8px 0 10px;">Pupils, mentors, the course library and reports.</p>
