@@ -2,6 +2,30 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Record session - Phil{% endblock %}
 {% block content %}
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="art-breath-count" viewBox="0 0 100 74"><circle cx="50" cy="44" r="15" fill="#fff" stroke="currentColor" stroke-width="2.2"/><circle cx="50" cy="44" r="25" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 5" opacity=".55"/><path d="M50 6v13" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M44 12l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-walk" viewBox="0 0 100 74"><circle cx="46" cy="15" r="7" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M46 24v20M46 44l-9 17M46 44l10 17M36 31l10 4 12-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 69q22-8 44 0t36-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="5 4" stroke-linecap="round" opacity=".55"/></symbol>
+<symbol id="art-countdown" viewBox="0 0 100 74"><g font-family="sans-serif" font-weight="500" text-anchor="middle" fill="currentColor"><text x="50" y="24" font-size="21">20</text><text x="50" y="46" font-size="16" opacity=".8">19</text><text x="50" y="63" font-size="13" opacity=".6">18</text></g><path d="M50 68v5" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3" stroke-linecap="round" opacity=".55"/></symbol>
+<symbol id="art-door-exit" viewBox="0 0 100 74"><path d="M56 70V12q0-4 4-4h24q4 0 4 4v58z" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="80" cy="38" r="2.6" fill="currentColor"/><circle cx="30" cy="20" r="9" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M30 30v18M30 48l-9 18M30 48l10 18M19 38l11 3 12-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-cold-water" viewBox="0 0 100 74"><path d="M26 8h20v10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><rect x="40" y="18" width="14" height="7" rx="2" fill="#fff" stroke="currentColor" stroke-width="2"/><path d="M47 30v10M41 34v7M53 34v7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".6"/><path d="M24 70q0-18 23-18t23 18" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+<symbol id="art-squeeze" viewBox="0 0 100 74"><circle cx="52" cy="40" r="14" fill="currentColor" opacity=".25"/><circle cx="52" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="2"/><path d="M30 62q-6-8-6-16v-8q0-4 4-4t4 4v4q0-6 4-6t4 6v-2q0-6 4-6t4 6v2q0-5 4-5t4 5v18q0 8-5 12z" fill="#fff" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M78 26l-6 5M78 54l-6-5M84 40h-8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="art-quiet" viewBox="0 0 100 74"><circle cx="36" cy="22" r="9" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M23 62V48q0-10 13-10t13 10v14" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M66 28q8 10 0 20M76 22q13 16 0 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".55"/><path d="M64 22l22 32" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+<symbol id="art-talk" viewBox="0 0 100 74"><path d="M10 14h44q5 0 5 5v19q0 5-5 5H26l-11 9v-9h-5q-5 0-5-5V19q0-5 5-5z" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M52 30h32q5 0 5 5v15q0 5-5 5h-4v8l-10-8H52q-5 0-5-5V35q0-5 5-5z" fill="currentColor" opacity=".25"/><path d="M52 30h32q5 0 5 5v15q0 5-5 5h-4v8l-10-8H52q-5 0-5-5V35q0-5 5-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+<symbol id="art-scoreboard" viewBox="0 0 100 74"><rect x="14" y="17" width="72" height="40" rx="5" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M50 17v40" stroke="currentColor" stroke-width="1.6"/><g font-family="sans-serif" font-weight="500" text-anchor="middle" fill="currentColor"><text x="32" y="45" font-size="18">2</text><text x="68" y="45" font-size="18">3</text></g><path d="M68 64v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M63 68l5 4 5-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-hourglass" viewBox="0 0 100 74"><path d="M32 10h36M32 63h36" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M36 10q0 18 14 26-14 8-14 27" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M64 10q0 18-14 26 14 8 14 27" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M42 16h16q-2 12-8 16-6-4-8-16z" fill="currentColor" opacity=".4"/><path d="M50 40v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/></symbol>
+<symbol id="art-bump" viewBox="0 0 100 74"><g fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><circle cx="28" cy="23" r="8"/><path d="M17 61V45q0-10 11-10t11 10v16z"/><circle cx="72" cy="23" r="8"/><path d="M61 61V45q0-10 11-10t11 10v16z"/></g><path d="M50 29v6M44 33l-4 4M56 33l4 4M50 43v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+<symbol id="art-laughter" viewBox="0 0 100 74"><path d="M12 13h30q4 0 4 4v14q0 4-4 4H24l-8 7v-7h-4q-4 0-4-4V17q0-4 4-4z" fill="currentColor" opacity=".25"/><path d="M12 13h30q4 0 4 4v14q0 4-4 4H24l-8 7v-7h-4q-4 0-4-4V17q0-4 4-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M56 19h30q4 0 4 4v12q0 4-4 4H70l-8 6v-6h-6q-4 0-4-4V23q0-4 4-4z" fill="currentColor" opacity=".25"/><path d="M56 19h30q4 0 4 4v12q0 4-4 4H70l-8 6v-6h-6q-4 0-4-4V23q0-4 4-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="50" cy="55" r="7" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M40 73v-6q0-6 10-6t10 6v6" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+<symbol id="art-redo" viewBox="0 0 100 74"><rect x="26" y="7" width="42" height="54" rx="4" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M34 21h26M34 31h26M34 41h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".5"/><path d="M74 45a16 16 0 1 1-6-13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M62 29h8v-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-share" viewBox="0 0 100 74"><path d="M4 58q0-9 9-11l16-3v18q-11 3-16 3-9 0-9-7z" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M96 58q0-9-9-11l-16-3v18q11 3 16 3 9 0 9-7z" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><g transform="rotate(-8 50 37)"><rect x="28" y="33" width="44" height="9" rx="2" fill="currentColor" opacity=".3"/><rect x="28" y="33" width="44" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M70 29l8 3-8 4z" fill="currentColor"/></g><path d="M36 21h28" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="4 3"/><path d="M58 16l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-raise-card" viewBox="0 0 100 74"><rect x="58" y="4" width="26" height="19" rx="3" fill="currentColor" opacity=".3"/><rect x="58" y="4" width="26" height="19" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="36" cy="26" r="9" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M25 54V43q0-9 11-9t11 9v11" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M47 40l12-14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M8 54h78" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M18 54v14M76 54v14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+<symbol id="art-nod" viewBox="0 0 100 74"><circle cx="30" cy="24" r="9" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M18 62V48q0-10 12-10t12 10v14" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M46 10q7 5 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/><path d="M58 32l8 9 16-18" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-return-seat" viewBox="0 0 100 74"><rect x="54" y="26" width="28" height="6" rx="2" fill="currentColor" opacity=".3"/><rect x="54" y="26" width="28" height="6" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M58 32v22M78 32v22M78 26V12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="22" cy="22" r="9" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M22 32v16M22 48l-8 14M22 48l9 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M46 36h-8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M44 31l6 5-6 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="art-trigger" viewBox="0 0 100 74"><path d="M56 8L36 40h14l-8 26 26-34H54z" fill="currentColor" opacity=".3"/><path d="M56 8L36 40h14l-8 26 26-34H54z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></symbol>
+<symbol id="art-body-signals" viewBox="0 0 100 74"><circle cx="50" cy="38" r="10" fill="#fff" stroke="currentColor" stroke-width="2.2"/><path d="M36 70v-9q0-10 14-10t14 10v9" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M34 18q5-8 0-14M50 14q5-8 0-14M66 18q5-8 0-14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></symbol>
+<symbol id="art-thoughts" viewBox="0 0 100 74"><path d="M20 12h56q6 0 6 6v22q0 6-6 6H40l-10 9v-9h-10q-6 0-6-6V18q0-6 6-6z" fill="#fff" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M32 26h32M32 35h20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".5"/></symbol>
+<symbol id="art-fork" viewBox="0 0 100 74"><path d="M50 70V44" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M50 44q0-18-24-18M50 44q0-18 24-18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M26 26l-6-5M26 26l6-5M74 26l-6-5M74 26l6-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+</svg>
+
 {% macro resource_card(item, context='') %}
 <div class="res-inline">
   <div class="res-inline-head">
@@ -22,6 +46,32 @@
   {% endif %}
   {% if item.checklist %}
   <ul class="res-check">{% for ci in item.checklist['items'] %}<li>{{ ci }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if item.steps %}
+  <div class="res-steps">
+    {% for st in item.steps %}
+    <div class="res-step tone-{{ item.tone|default('teal') }}">
+      <div class="res-step-head"><span class="res-step-n">{{ loop.index }}</span><span>{{ st.title }}</span></div>
+      {% if st.art %}<svg class="res-art" viewBox="0 0 100 74" aria-hidden="true"><use href="#{{ st.art }}"></use></svg>{% endif %}
+      <p class="res-step-text">{{ st.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% if item.note %}<p class="res-foot">{{ item.note }}</p>{% endif %}
+  {% endif %}
+  {% if item.cards %}
+  <div class="res-cards">
+    {% for cd in item.cards %}
+    <div class="res-card tone-{{ item.tone|default('teal') }}">
+      {% if cd.cat %}<p class="res-card-cat">{{ cd.cat }}</p>{% endif %}
+      <p class="res-card-title">{{ cd.title|default(cd.text) }}</p>
+      {% if cd.art %}<svg class="res-art" viewBox="0 0 100 74" aria-hidden="true"><use href="#{{ cd.art }}"></use></svg>{% endif %}
+      {% if cd.title and cd.text %}<p class="res-card-text">{{ cd.text }}</p>{% endif %}
+      {% if cd.note %}<p class="res-card-note">{{ cd.note }}</p>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <p class="res-cards-hint">{{ item.cards|length }} cards &middot; scroll for more, or print the pack to cut them out</p>
   {% endif %}
 </div>
 {% endmacro %}
@@ -300,5 +350,39 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-prev{border:1px dashed var(--border);border-radius:8px;background:#FBF8F2;margin:0 0 8px;}
 .res-prev summary{cursor:pointer;padding:8px 11px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
 .res-prev-body{padding:0 11px 10px;}
+.res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:6px 0 0;}
+.res-step{background:#fff;border-radius:10px;padding:10px;}
+.res-step-head{display:flex;align-items:center;gap:7px;margin:0 0 7px;font-size:12px;font-weight:600;}
+.res-step-n{flex:0 0 20px;height:20px;border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.res-step-text{font-size:11.5px;line-height:1.4;margin:6px 0 0;}
+.res-art{width:100%;height:52px;display:block;}
+.res-cards{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+.res-card{scroll-snap-align:start;flex:0 0 152px;display:flex;flex-direction:column;border-radius:12px;padding:12px;border:1.5px dashed;}
+.res-card-cat{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px;}
+.res-card-title{font-size:12.5px;font-weight:600;margin:0 0 8px;min-height:48px;line-height:1.3;}
+.res-card .res-art{height:60px;margin:0 0 8px;}
+.res-card-text{font-size:11.5px;line-height:1.4;margin:0 0 auto;min-height:46px;}
+.res-card-note{font-size:10.5px;margin:8px 0 0;padding-top:7px;border-top:1px solid;}
+.res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
+.res-foot{font-size:11px;color:var(--muted);margin:8px 0 0;}
+.tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}
+.tone-teal .res-card-title,.tone-teal .res-card-text{color:#04342C;}
+.tone-teal .res-step-n{background:var(--teal-darker);}
+.tone-teal .res-card-note{border-top-color:#9FE1CB;}
+.tone-coral{background:var(--coral-light);border-color:var(--coral-dark);color:var(--coral-dark);}
+.tone-coral .res-card-title,.tone-coral .res-card-text{color:#4A1B0C;}
+.tone-coral .res-step-n{background:var(--coral-dark);}
+.tone-coral .res-card-note{border-top-color:#F5C4B3;}
+.tone-amber{background:var(--amber-light);border-color:var(--amber-dark);color:var(--amber-dark);}
+.tone-amber .res-card-title,.tone-amber .res-card-text{color:#412402;}
+.tone-amber .res-step-n{background:var(--amber-dark);}
+.tone-amber .res-card-note{border-top-color:#FAC775;}
+.res-prev-body{padding:0 11px 10px;}
+.res-steps{list-style:none;counter-reset:none;margin:6px 0 0;padding:0;}
+.res-steps li{display:flex;gap:9px;align-items:flex-start;background:var(--teal-light);border-radius:8px;padding:8px 10px;margin:0 0 6px;font-size:13px;line-height:1.45;color:var(--teal-darker);}
+.res-step-n{flex:0 0 20px;height:20px;border-radius:50%;background:var(--teal-darker);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.res-cards{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 10px;margin:4px 0 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+.res-card{scroll-snap-align:start;flex:0 0 148px;min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 10px;border:1.5px dashed var(--teal-darker);border-radius:10px;background:#fff;font-size:13px;font-weight:600;line-height:1.35;color:var(--navy);}
+.res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
 </style>
 {% endblock %}

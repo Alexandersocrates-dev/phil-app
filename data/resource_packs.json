@@ -78,7 +78,47 @@
       },
       {
         "name": "Feeling word cards",
-        "body": "Sort onto the thermometer scale - Cut out each card along the lines.\nIrritated Annoyed Frustrated\nWound up Cross Seething\nFurious Fuming On edge\nEnraged Tense Riled"
+        "body": "Sort these onto the thermometer scale.",
+        "cards": [
+          {
+            "text": "Irritated"
+          },
+          {
+            "text": "Annoyed"
+          },
+          {
+            "text": "Frustrated"
+          },
+          {
+            "text": "Wound up"
+          },
+          {
+            "text": "Cross"
+          },
+          {
+            "text": "Seething"
+          },
+          {
+            "text": "Furious"
+          },
+          {
+            "text": "Fuming"
+          },
+          {
+            "text": "On edge"
+          },
+          {
+            "text": "Enraged"
+          },
+          {
+            "text": "Tense"
+          },
+          {
+            "text": "Riled"
+          }
+        ],
+        "card_kind": "word",
+        "tone": "red"
       },
       {
         "name": "Triggers map",
@@ -110,7 +150,41 @@
       },
       {
         "name": "Passive / aggressive / assertive cards",
-        "body": "Same situation, three different responses - which gets the best result? Cut out each card along the lines.\nAggressive: \"This is stupid, I'm Assertive: \"I'm finding this\nPassive: \"It's fine, I guess...\"\nnot doing it!\" frustrating, can I have a minute?\"\nPassive: says nothing, walks Aggressive: \"Just leave me Assertive: \"I need a minute to\naway upset alone!\" calm down, can we talk after?\""
+        "body": "Same situation, three different responses. Which gets the best result?",
+        "cards": [
+          {
+            "text": "Passive",
+            "art": "passive",
+            "note": "\"It’s fine, I guess...\""
+          },
+          {
+            "text": "Aggressive",
+            "art": "aggressive",
+            "note": "\"This is stupid, I’m not doing it!\""
+          },
+          {
+            "text": "Assertive",
+            "art": "assertive",
+            "note": "\"I’m finding this frustrating, can I have a minute?\""
+          },
+          {
+            "text": "Passive",
+            "art": "passive",
+            "note": "Says nothing, walks away upset"
+          },
+          {
+            "text": "Aggressive",
+            "art": "aggressive",
+            "note": "\"Just leave me alone!\""
+          },
+          {
+            "text": "Assertive",
+            "art": "assertive",
+            "note": "\"I need a minute to calm down, can we talk after?\""
+          }
+        ],
+        "card_kind": "scenario",
+        "tone": "coral"
       },
       {
         "name": "Assertive phrase bank",
@@ -132,7 +206,29 @@
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practice scenarios - cut out each card along the lines.\nA friend takes something without asking\nA teacher corrects your work in front of the class\nSomeone cuts in front of you in the queue\nYou're blamed for something you didn't do\nYour plan for the day changes at the last minute\nSomeone talks over you while you're speaking\nFor each scenario: pause and name the feeling, use the STOP technique, then try an assertive phrase instead of reacting straight away."
+        "body": "Pause and name the feeling, use the STOP technique, then try an assertive phrase.",
+        "cards": [
+          {
+            "text": "A friend takes something without asking"
+          },
+          {
+            "text": "A teacher corrects your work in front of the class"
+          },
+          {
+            "text": "Someone cuts in front of you in the queue"
+          },
+          {
+            "text": "You're blamed for something you didn't do"
+          },
+          {
+            "text": "Your plan for the day changes at the last minute"
+          },
+          {
+            "text": "Someone talks over you while you're speaking"
+          }
+        ],
+        "card_kind": "scenario",
+        "tone": "coral"
       },
       {
         "name": "Copy for class teacher or pastoral file",
@@ -170,7 +266,51 @@
       },
       {
         "name": "Push/pull factor card set",
-        "body": "Sort into push (things making school unappealing) and pull (things drawing you away) - Cut out each card\nalong the lines.\nBoring lessons (push) A tough lesson or subject (push)\nFriends outside school (pull) Looking after a sibling (pull)\nAvoiding a specific person (push) A part-time job (pull)\nFeeling behind with work (push) An unsettled routine at home (pull)"
+        "body": "Sort into push (making school unappealing) and pull (drawing you away).",
+        "cards": [
+          {
+            "text": "Boring lessons",
+            "art": null,
+            "note": "push"
+          },
+          {
+            "text": "A tough lesson or subject",
+            "art": null,
+            "note": "push"
+          },
+          {
+            "text": "Friends outside school",
+            "art": null,
+            "note": "pull"
+          },
+          {
+            "text": "Looking after a sibling",
+            "art": null,
+            "note": "pull"
+          },
+          {
+            "text": "Avoiding a specific person",
+            "art": null,
+            "note": "push"
+          },
+          {
+            "text": "A part-time job",
+            "art": null,
+            "note": "pull"
+          },
+          {
+            "text": "Feeling behind with work",
+            "art": null,
+            "note": "push"
+          },
+          {
+            "text": "An unsettled routine at home",
+            "art": null,
+            "note": "pull"
+          }
+        ],
+        "card_kind": "sort",
+        "tone": "amber"
       },
       {
         "name": "Reasons-to-be-here mapping sheet",
@@ -202,7 +342,35 @@
       },
       {
         "name": "Barrier type card sort",
-        "body": "Which of these is closest to your actual biggest barrier? There's no single right answer. Cut out each card\nalong the lines.\nTransport Uniform or equipment\nA specific lesson or teacher Sleep and routine\nA part-time job Caring responsibilities\nA peer relationship Something else"
+        "body": "Which is closest to your biggest barrier? There's no single right answer.",
+        "cards": [
+          {
+            "text": "Transport"
+          },
+          {
+            "text": "Uniform or equipment"
+          },
+          {
+            "text": "A specific lesson or teacher"
+          },
+          {
+            "text": "Sleep and routine"
+          },
+          {
+            "text": "A part-time job"
+          },
+          {
+            "text": "Caring responsibilities"
+          },
+          {
+            "text": "A peer relationship"
+          },
+          {
+            "text": "Something else"
+          }
+        ],
+        "card_kind": "sort",
+        "tone": "blue"
       },
       {
         "name": "Barrier-specific action plan template",
@@ -1137,7 +1305,31 @@
       },
       {
         "name": "Anger cycle diagram",
-        "body": "The anger cycle - how anger builds.\n1 Trigger - something happens (I'm told what to do, I'm laughed at, I'm interrupted)\n2 Body signals - my body reacts (clenched fists, hot face, fast heartbeat)\n3 Thoughts - what I tell myself (\"this isn't fair\", \"they're against me\")\n4 Action - what I do next (shout, push, walk away, use a strategy)\nThe cycle repeats - the action at step 4 often shapes the next trigger. Catching it early, at step 1 or 2, is the\ngoal."
+        "body": "Anger runs in a loop. Catching it at stage 1 or 2 is what stops the loop repeating.",
+        "steps": [
+          {
+            "title": "Trigger",
+            "art": "art-trigger",
+            "text": "Something happens."
+          },
+          {
+            "title": "Body signals",
+            "art": "art-body-signals",
+            "text": "Hot face, fists, fast heart."
+          },
+          {
+            "title": "Thoughts",
+            "art": "art-thoughts",
+            "text": "“This isn't fair.”"
+          },
+          {
+            "title": "Action",
+            "art": "art-fork",
+            "text": "React, or use a strategy."
+          }
+        ],
+        "tone": "coral",
+        "note": "Stage 4 often becomes the next stage 1"
       },
       {
         "name": "Mood scale card",
@@ -1223,11 +1415,95 @@
       },
       {
         "name": "Calm-down strategy cards",
-        "body": "My calm-down toolkit - Cut out each card along the lines.\nSlow breathing: 4 in, 6 out Ask for a movement break\nCount backwards from 20 Go to my safe space\nCold water on my hands Squeeze a stress ball\nAsk for 2 minutes of quiet Talk to my trusted adult"
+        "body": "My calm-down toolkit. Pick one that works for you.",
+        "cards": [
+          {
+            "cat": "Breathing",
+            "title": "Slow breathing: 4 in, 6 out",
+            "art": "art-breath-count",
+            "text": "Breathe in through your nose for 4 seconds, then out through your mouth for 6.",
+            "note": "Repeat 5 times"
+          },
+          {
+            "cat": "Movement",
+            "title": "Ask for a movement break",
+            "art": "art-walk",
+            "text": "Walk to the water fountain and back, or once around the corridor.",
+            "note": "Agree the signal first"
+          },
+          {
+            "cat": "Focus",
+            "title": "Count backwards from 20",
+            "art": "art-countdown",
+            "text": "Count down in your head, slowly, one number per breath.",
+            "note": "Start again if you lose track"
+          },
+          {
+            "cat": "Space",
+            "title": "Go to my safe space",
+            "art": "art-door-exit",
+            "text": "Go to the place you agreed with staff, and stay until it settles.",
+            "note": "Come back when you're ready"
+          },
+          {
+            "cat": "Body",
+            "title": "Cold water on my hands",
+            "art": "art-cold-water",
+            "text": "Run cold water over your hands and the inside of your wrists.",
+            "note": "30 seconds is enough"
+          },
+          {
+            "cat": "Body",
+            "title": "Squeeze a stress ball",
+            "art": "art-squeeze",
+            "text": "Squeeze hard for 5 seconds, then let go completely. Your fists work too.",
+            "note": "Repeat 3 times"
+          },
+          {
+            "cat": "Space",
+            "title": "Ask for 2 minutes of quiet",
+            "art": "art-quiet",
+            "text": "Ask for 2 minutes with no talking and no questions.",
+            "note": "Set a timer if it helps"
+          },
+          {
+            "cat": "People",
+            "title": "Talk to my trusted adult",
+            "art": "art-talk",
+            "text": "Find the adult you named and tell them how you're feeling.",
+            "note": "Name them in advance"
+          }
+        ],
+        "card_kind": "technique",
+        "tone": "teal"
       },
       {
         "name": "My signal card",
-        "body": "How I ask for a break without saying a word.\nShow this card, or place it on my desk, to let staff know I need a short break using my agreed calm-down\nstrategy.\n1. I place the card on my desk or hold it up.\n2. Staff acknowledge with a nod or agreed signal.\n3. I go to my safe space or take my agreed break.\n4. I return when I'm ready, or after the agreed time."
+        "body": "How I ask for a break without saying a word.",
+        "steps": [
+          {
+            "title": "Raise the card",
+            "art": "art-raise-card",
+            "text": "Hold the card up, or put it on your desk."
+          },
+          {
+            "title": "Staff nod back",
+            "art": "art-nod",
+            "text": "They acknowledge without stopping the lesson."
+          },
+          {
+            "title": "Walk out",
+            "art": "art-door-exit",
+            "text": "Go to your agreed break place."
+          },
+          {
+            "title": "Come back",
+            "art": "art-return-seat",
+            "text": "Return when you're ready, or after the agreed time."
+          }
+        ],
+        "tone": "teal",
+        "note": "Agree the card and the break place with staff before you need it"
       },
       {
         "name": "Restorative conversation prompt card",
@@ -1235,7 +1511,53 @@
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practice scenarios - Cut out each card along the lines.\nYou lose a game you were winning You're told to wait your turn\nSomeone bumps into you by accident Someone laughs near you\nYou're asked to redo your work You're asked to share something"
+        "body": "Pause, name the feeling, then choose your response.",
+        "cards": [
+          {
+            "cat": "Scenario",
+            "title": "Losing a game",
+            "art": "art-scoreboard",
+            "text": "You lose a game you were winning.",
+            "note": "Name the feeling first"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Waiting your turn",
+            "art": "art-hourglass",
+            "text": "You're told to wait your turn.",
+            "note": "Name the feeling first"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Being bumped into",
+            "art": "art-bump",
+            "text": "Someone bumps into you by accident.",
+            "note": "Was it meant?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Hearing laughter",
+            "art": "art-laughter",
+            "text": "Someone laughs near you.",
+            "note": "At you, or not?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Redoing your work",
+            "art": "art-redo",
+            "text": "You're asked to redo your work.",
+            "note": "Name the feeling first"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Sharing something",
+            "art": "art-share",
+            "text": "You're asked to share something of yours.",
+            "note": "Name the feeling first"
+          }
+        ],
+        "card_kind": "scenario",
+        "tone": "coral"
       },
       {
         "name": "My hot and cold plan",
@@ -1263,7 +1585,35 @@
     "items": [
       {
         "name": "Rule card set",
-        "body": "Sort each rule into 'makes sense to me' or 'feels unfair' - Cut out each card along the lines.\nArrive to lessons on time Follow instructions the first time\nNo phones in lessons Move around school calmly\nWear the correct uniform Put rubbish in the bin\nPut your hand up instead of calling out Respect other people's space"
+        "body": "Sort each rule into 'makes sense to me' or 'feels unfair'.",
+        "cards": [
+          {
+            "text": "Arrive to lessons on time"
+          },
+          {
+            "text": "Follow instructions the first time"
+          },
+          {
+            "text": "No phones in lessons"
+          },
+          {
+            "text": "Move around school calmly"
+          },
+          {
+            "text": "Wear the correct uniform"
+          },
+          {
+            "text": "Put rubbish in the bin"
+          },
+          {
+            "text": "Put your hand up instead of calling out"
+          },
+          {
+            "text": "Respect other people's space"
+          }
+        ],
+        "card_kind": "sort",
+        "tone": "blue"
       },
       {
         "name": "Notice-and-note tracking card",
@@ -1299,11 +1649,57 @@
       },
       {
         "name": "Choices game scenario cards",
-        "body": "For each scenario, think: what could happen if I refuse? What could happen if I comply? Cut out each card\nalong the lines.\nYou're told to move seats You're asked to hand in your phone\nYou're told to stop talking You're asked to redo work neatly\nYou're told to wait your turn You're asked to tidy up"
+        "body": "For each one: what could happen if I refuse? What could happen if I comply?",
+        "cards": [
+          {
+            "text": "You're told to move seats"
+          },
+          {
+            "text": "You're asked to hand in your phone"
+          },
+          {
+            "text": "You're told to stop talking"
+          },
+          {
+            "text": "You're asked to redo work neatly"
+          },
+          {
+            "text": "You're told to wait your turn"
+          },
+          {
+            "text": "You're asked to tidy up"
+          }
+        ],
+        "card_kind": "scenario",
+        "tone": "coral"
       },
       {
         "name": "First/then visual cue cards",
-        "body": "Examples and blank cards to complete - Cut out each card along the lines.\nFirst: finish this question Then: break First: put phone away Then: continue lesson\nFirst: ______ Then: ______ First: ______ Then: ______"
+        "body": "Two worked examples, then two to fill in together.",
+        "cards": [
+          {
+            "text": "First: finish this question",
+            "art": "first-then",
+            "note": "Then: break"
+          },
+          {
+            "text": "First: put phone away",
+            "art": "first-then",
+            "note": "Then: continue lesson"
+          },
+          {
+            "text": "First: ______________",
+            "art": "first-then",
+            "note": "Then: ______________"
+          },
+          {
+            "text": "First: ______________",
+            "art": "first-then",
+            "note": "Then: ______________"
+          }
+        ],
+        "card_kind": "prompt",
+        "tone": "amber"
       },
       {
         "name": "Assertive disagreement script card",
@@ -1387,7 +1783,47 @@
       },
       {
         "name": "Emotion word cards",
-        "body": "Sort into zones - Cut out each card along the lines.\nFrustrated Anxious Embarrassed\nProud Disappointed Overwhelmed\nContent Jealous Hopeful\nLonely Confident Irritated"
+        "body": "Sort these into zones.",
+        "cards": [
+          {
+            "text": "Frustrated"
+          },
+          {
+            "text": "Anxious"
+          },
+          {
+            "text": "Embarrassed"
+          },
+          {
+            "text": "Proud"
+          },
+          {
+            "text": "Disappointed"
+          },
+          {
+            "text": "Overwhelmed"
+          },
+          {
+            "text": "Content"
+          },
+          {
+            "text": "Jealous"
+          },
+          {
+            "text": "Hopeful"
+          },
+          {
+            "text": "Lonely"
+          },
+          {
+            "text": "Confident"
+          },
+          {
+            "text": "Irritated"
+          }
+        ],
+        "card_kind": "word",
+        "tone": "purple"
       },
       {
         "name": "Body map handout",
@@ -1405,7 +1841,29 @@
       },
       {
         "name": "Grounding technique cards",
-        "body": "Try each one and rate it out of 10 - Cut out each card along the lines.\n5-4-3-2-1: name 5 things you see, 4 you hear, 3 you\nBox breathing: 4 in, hold 4, 4 out, hold 4\nfeel\nHand on heart, slow breaths Grounding through touch or texture\nName 5 things you can see now"
+        "body": "Try each one and rate it out of 10.",
+        "cards": [
+          {
+            "text": "5-4-3-2-1 senses",
+            "art": "five-senses",
+            "note": "5 see · 4 hear · 3 feel"
+          },
+          {
+            "text": "Box breathing",
+            "art": "box-breath",
+            "note": "4 in · hold 4 · 4 out · hold 4"
+          },
+          {
+            "text": "Hand on heart, slow breaths",
+            "art": "hand-heart"
+          },
+          {
+            "text": "Grounding through touch or texture",
+            "art": "texture"
+          }
+        ],
+        "card_kind": "technique",
+        "tone": "purple"
       },
       {
         "name": "Wave diagram template",
@@ -1576,7 +2034,27 @@
       },
       {
         "name": "Signal card options",
-        "body": "Choose one with your class teacher - Cut out each card along the lines.\nHand up Name card on the desk\nThumbs signal Agreed word or gesture with teacher"
+        "body": "Choose one with your class teacher.",
+        "cards": [
+          {
+            "text": "Hand up",
+            "art": "hand-up"
+          },
+          {
+            "text": "Name card on the desk",
+            "art": "name-card"
+          },
+          {
+            "text": "Thumbs signal",
+            "art": "thumb"
+          },
+          {
+            "text": "Agreed word or gesture",
+            "art": "agreed-word"
+          }
+        ],
+        "card_kind": "technique",
+        "tone": "teal"
       },
       {
         "name": "Self-monitoring chart",
@@ -1690,7 +2168,29 @@
       },
       {
         "name": "Grounding technique card",
-        "body": "Techniques for an anxious moment - Cut out each card along the lines.\nSlow breathing: 4 in, 6 out 5-4-3-2-1 senses technique\nHold something with texture Name where you are, out loud or in your head"
+        "body": "Techniques for an anxious moment.",
+        "cards": [
+          {
+            "text": "Slow breathing",
+            "art": "breath-count",
+            "note": "In 4 · out 6"
+          },
+          {
+            "text": "5-4-3-2-1 senses",
+            "art": "five-senses",
+            "note": "5 see · 4 hear · 3 feel"
+          },
+          {
+            "text": "Hold something with texture",
+            "art": "texture"
+          },
+          {
+            "text": "Name where you are, out loud or in your head",
+            "art": "locate"
+          }
+        ],
+        "card_kind": "technique",
+        "tone": "teal"
       },
       {
         "name": "My return-to-school plan",
@@ -1741,7 +2241,35 @@
       },
       {
         "name": "Disengagement trigger cards",
-        "body": "Sort into most-relevant-to-me order - Cut out each card along the lines.\nTask feels too hard Task feels too easy\nRoom is too noisy I feel tired\nDistracted by a friend Don't understand the instructions\nI feel bored I feel hungry"
+        "body": "Sort into most-relevant-to-me order.",
+        "cards": [
+          {
+            "text": "Task feels too hard"
+          },
+          {
+            "text": "Task feels too easy"
+          },
+          {
+            "text": "Room is too noisy"
+          },
+          {
+            "text": "I feel tired"
+          },
+          {
+            "text": "Distracted by a friend"
+          },
+          {
+            "text": "Don't understand the instructions"
+          },
+          {
+            "text": "I feel bored"
+          },
+          {
+            "text": "I feel hungry"
+          }
+        ],
+        "card_kind": "sort",
+        "tone": "amber"
       },
       {
         "name": "Chunking checklist template",
@@ -1881,11 +2409,61 @@
       },
       {
         "name": "Barriers-to-connecting card sort",
-        "body": "Sort into most-relevant-to-me order - Cut out each card along the lines.\nFeeling different Past rejection or bullying\nNot knowing how to join in Loud or busy spaces\nWorried about saying the wrong thing Preferring to be alone sometimes\nLow confidence Not knowing who to sit with"
+        "body": "Sort into most-relevant-to-me order.",
+        "cards": [
+          {
+            "text": "Feeling different"
+          },
+          {
+            "text": "Past rejection or bullying"
+          },
+          {
+            "text": "Not knowing how to join in"
+          },
+          {
+            "text": "Loud or busy spaces"
+          },
+          {
+            "text": "Worried about saying the wrong thing"
+          },
+          {
+            "text": "Preferring to be alone sometimes"
+          },
+          {
+            "text": "Low confidence"
+          },
+          {
+            "text": "Not knowing who to sit with"
+          }
+        ],
+        "card_kind": "sort",
+        "tone": "blue"
       },
       {
         "name": "Conversation starter cards",
-        "body": "Simple openers to try - Cut out each card along the lines.\n\"Can I sit here?\" \"What are you playing?\"\n\"That looks fun, can I join?\" \"What did you think of that?\"\n\"Have you played this before?\" \"Mind if I watch for a bit?\""
+        "body": "Simple openers to try.",
+        "cards": [
+          {
+            "text": "\"Can I sit here?\""
+          },
+          {
+            "text": "\"What are you playing?\""
+          },
+          {
+            "text": "\"That looks fun, can I join?\""
+          },
+          {
+            "text": "\"What did you think of that?\""
+          },
+          {
+            "text": "\"Have you played this before?\""
+          },
+          {
+            "text": "\"Mind if I watch for a bit?\""
+          }
+        ],
+        "card_kind": "prompt",
+        "tone": "green"
       },
       {
         "name": "Circle-of-support mapping worksheet",
