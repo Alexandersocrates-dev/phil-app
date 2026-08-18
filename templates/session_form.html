@@ -395,7 +395,6 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .session-sticky .btn{min-height:44px;padding-left:18px;padding-right:18px;}
 @media print{.session-sticky{display:none;}}
 </style>
-{% endblock %}
 <script>
 (function(){
   var bar = document.getElementById('sessionSticky');
@@ -416,3 +415,4 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   window.addEventListener('resize', update);
 })();
 </script>
+{% endblock %}
