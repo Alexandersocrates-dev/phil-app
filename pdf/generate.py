@@ -676,6 +676,75 @@ CYCLE_KEYWORDS = ("cycle diagram", "cycle chart")
 SCALE_KEYWORDS = ("thermometer", "scale")
 
 
+# --- card artwork -----------------------------------------------------------
+# The screen and the printed pack draw from one sprite file, templates/_card_art.svg,
+# so a motif is never redrawn twice or allowed to drift between the two.
+# svglib is optional: if it isn't installed the cards still print, just without
+# the illustration. A missing drawing is a lesser fault than a pack that won't
+# generate at all.
+
+_ART_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "templates", "_card_art.svg")
+_art_cache = {}
+_svg2rlg = None
+_svg2rlg_checked = False
+
+
+def _get_svg2rlg():
+    global _svg2rlg, _svg2rlg_checked
+    if not _svg2rlg_checked:
+        _svg2rlg_checked = True
+        try:
+            from svglib.svglib import svg2rlg
+            _svg2rlg = svg2rlg
+        except Exception:
+            _svg2rlg = None
+    return _svg2rlg
+
+
+def _art_symbol(art_id):
+    """Pulls one <symbol> out of the sprite and returns it as a standalone SVG."""
+    if art_id in _art_cache:
+        return _art_cache[art_id]
+    try:
+        with open(_ART_PATH, "r", encoding="utf-8") as f:
+            sprite = f.read()
+    except OSError:
+        _art_cache[art_id] = None
+        return None
+    m = re.search(r'<symbol id="%s"[^>]*>(.*?)</symbol>' % re.escape(art_id), sprite, re.S)
+    if not m:
+        _art_cache[art_id] = None
+        return None
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 74" '
+           'width="100" height="74" fill="none" stroke="#0F6E56">%s</svg>' % m.group(1))
+    _art_cache[art_id] = svg
+    return svg
+
+
+def _draw_art(c, art_id, x, y, width, height):
+    """Draws a motif, or quietly does nothing if it can't."""
+    svg2rlg = _get_svg2rlg()
+    if not svg2rlg or not art_id:
+        return False
+    svg = _art_symbol(art_id)
+    if not svg:
+        return False
+    try:
+        import io
+        from reportlab.graphics import renderPDF
+        drawing = svg2rlg(io.StringIO(svg))
+        if drawing is None:
+            return False
+        scale = min(width / drawing.width, height / drawing.height)
+        drawing.width *= scale
+        drawing.height *= scale
+        drawing.scale(scale, scale)
+        renderPDF.draw(drawing, c, x + (width - drawing.width) / 2, y)
+        return True
+    except Exception:
+        return False
+
+
 def _card_height(card):
     """A printed card is a fixed box: title, optional body, optional note."""
     return 30 * mm
@@ -715,6 +784,8 @@ def _draw_cut_cards(c, x, y, max_width, cards):
         if body:
             ty -= 1 * mm
             ty = _wrap(c, body, cx + 3 * mm, ty, col_w - 6 * mm, size=8, leading=10, color=INK)
+        _draw_art(c, card.get("art"), cx + 3 * mm, y - card_h + 8 * mm,
+                  col_w - 6 * mm, 14 * mm)
         note = _clean_pdf_text(card.get("note", ""))
         if note:
             c.setFillColor(MUTED)
@@ -726,7 +797,7 @@ def _draw_cut_cards(c, x, y, max_width, cards):
 
 def _cards_height(cards):
     rows = (len(cards) + 1) // 2
-    return rows * 30 * mm + (rows - 1) * 4 * mm
+    return rows * 42 * mm + (rows - 1) * 4 * mm
 
 
 def _draw_steps(c, x, y, max_width, steps):
