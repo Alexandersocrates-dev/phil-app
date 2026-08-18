@@ -32,7 +32,8 @@
       {% elif user.role == 'phil_staff' %}
       <a class="app-sidebar-item" href="/staff/establishments">{{ icon_building() }}<span>Establishments</span></a>
       <a class="app-sidebar-item" href="/staff/mentors">{{ icon_users() }}<span>Mentors</span></a>
-      <a class="app-sidebar-item" href="/staff/course-requests">{{ icon_book() }}<span>Course requests</span></a>
+      <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
+      <a class="app-sidebar-item" href="/staff/course-requests">{{ icon_message_circle() }}<span>Course requests</span></a>
       <a class="app-sidebar-item" href="/staff/support">{{ icon_message_circle() }}<span>Support</span></a>
       {% endif %}
     </nav>
@@ -112,7 +113,8 @@
   {% elif user.role == 'phil_staff' %}
   <a href="/staff/establishments">{{ icon_building() }}Estabs</a>
   <a href="/staff/mentors">{{ icon_users() }}Mentors</a>
-  <a href="/staff/course-requests">{{ icon_book() }}Requests</a>
+  <a href="/courses">{{ icon_book() }}Courses</a>
+  <a href="/staff/course-requests">{{ icon_message_circle() }}Requests</a>
   <a href="/staff/support">{{ icon_message_circle() }}Support</a>
   {% endif %}
 </nav>
