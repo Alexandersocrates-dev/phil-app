@@ -17,6 +17,13 @@
   --ink:#2C2C2A;
   --muted:#5F5E5A;
   --border:#E4E1D6;
+  /* The amber fill sits behind white text, so it has to be dark enough on its
+     own: #EF9F27 gives white only 2.17:1. --amber itself is unchanged and still
+     correct for tints, dots and icons. */
+  --amber-fill:#A9660B;
+  /* Card edges can be soft, but an input's border IS the affordance, and WCAG
+     1.4.11 asks 3:1 for that. --border is 1.31:1 on white, fine for dividers. */
+  --border-input:#8F8978;
   --font-head:'Sora',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --font-body:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
@@ -89,7 +96,7 @@ a.back-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 .field{margin-bottom:var(--sp-4);}
 .field label{display:block; font-weight:600; font-size:13.5px; margin-bottom:var(--sp-2); font-family:var(--font-body);}
 .field input, .field select, .field textarea{
-  width:100%; padding:var(--sp-3); border:1px solid var(--border); border-radius:9px;
+  width:100%; padding:var(--sp-3); border:1px solid var(--border-input); border-radius:9px;
   font-size:14px; font-family:inherit; background:#fff; min-height:44px;
   transition:border-color 150ms ease, box-shadow 150ms ease;
 }
@@ -120,11 +127,11 @@ a.back-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 .btn-secondary:hover{background:var(--teal-light); border-color:var(--teal-dark); transform:translateY(-1px);}
 .btn-secondary:active{transform:translateY(0) scale(0.98);}
 .btn-amber{
-  background:linear-gradient(135deg,var(--amber) 0%,var(--amber-dark) 100%);
+  background:linear-gradient(135deg,var(--amber-fill) 0%,var(--amber-dark) 100%);
   color:#fff;
   box-shadow:0 2px 8px rgba(133,79,11,0.28);
 }
-.btn-amber:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(133,79,11,0.32); filter:brightness(1.05);}
+.btn-amber:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(133,79,11,0.24);}
 .btn-amber:active{transform:translateY(0) scale(0.97);}
 .btn-red{
   background:#fff; color:var(--red); border:1.5px solid #F0C7C7;
