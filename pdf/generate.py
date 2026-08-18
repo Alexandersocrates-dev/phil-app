@@ -721,8 +721,18 @@ def _art_symbol(art_id):
     return svg
 
 
+# Off until the scaling is fixed and verified. svglib renders the symbol at its
+# native size rather than inside the box it is given, so the artwork landed on
+# top of the card text in the printed pack. The screen version is unaffected —
+# it uses the sprite directly and is correct. A text-only card that prints
+# properly beats an illustrated one that doesn't.
+ART_IN_PDF = False
+
+
 def _draw_art(c, art_id, x, y, width, height):
     """Draws a motif, or quietly does nothing if it can't."""
+    if not ART_IN_PDF:
+        return False
     svg2rlg = _get_svg2rlg()
     if not svg2rlg or not art_id:
         return False
@@ -797,7 +807,7 @@ def _draw_cut_cards(c, x, y, max_width, cards):
 
 def _cards_height(cards):
     rows = (len(cards) + 1) // 2
-    return rows * 42 * mm + (rows - 1) * 4 * mm
+    return rows * 32 * mm + (rows - 1) * 4 * mm
 
 
 def _draw_steps(c, x, y, max_width, steps):
