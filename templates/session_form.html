@@ -2,6 +2,31 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Record session - Phil{% endblock %}
 {% block content %}
+{% macro resource_card(item, context='') %}
+<div class="res-inline">
+  <div class="res-inline-head">
+    <span class="res-inline-name">{{ item.name }}</span>
+    {% if item.table or item.form or item.checklist %}<span class="res-tag">print for pupil</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+  </div>
+  {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p class="res-inline-p">{{ para }}</p>{% endif %}{% endfor %}{% endif %}
+  {% if item.table %}
+  <table class="res-table">
+    <tr>{% for hd in item.table.headers %}<th>{{ hd }}</th>{% endfor %}</tr>
+    {% for row in item.table.rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% endfor %}
+  </table>
+  {% endif %}
+  {% if item.form %}
+  <table class="res-table">
+    {% for f in item.form.fields %}<tr><th style="width:45%;">{{ f }}</th><td></td></tr>{% endfor %}
+  </table>
+  {% endif %}
+  {% if item.checklist %}
+  <ul class="res-check">{% for ci in item.checklist['items'] %}<li>{{ ci }}</li>{% endfor %}</ul>
+  {% endif %}
+</div>
+{% endmacro %}
+
+
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 
 {% if not week %}
@@ -84,65 +109,12 @@
 
 {% if week.resources %}
 <div style="margin:0 0 14px 32px;">
-<p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session</p>
+<p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
 <div class="pill-row" style="margin:0;">
 {% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}
 <p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
 </div>
-
-{# The content itself, so a session can be run from the screen. Anything the
-   pupil writes on is marked, because that still needs printing. #}
-{% for item in week.resource_items %}
-<details class="res-item">
-  <summary>
-    <span class="res-name">{{ item.name }}</span>
-    {% if item.table or item.form or item.checklist %}<span class="res-tag">print for pupil</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
-  </summary>
-  <div class="res-body">
-    {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p>{{ para }}</p>{% endif %}{% endfor %}{% endif %}
-
-    {% if item.table %}
-    <table class="res-table">
-      <tr>{% for hd in item.table.headers %}<th>{{ hd }}</th>{% endfor %}</tr>
-      {% for row in item.table.rows %}
-      <tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>
-      {% endfor %}
-    </table>
-    {% endif %}
-
-    {% if item.form %}
-    <table class="res-table">
-      {% for f in item.form.fields %}<tr><th style="width:45%;">{{ f }}</th><td></td></tr>{% endfor %}
-    </table>
-    {% endif %}
-
-    {% if item.checklist %}
-    <ul class="res-check">
-      {% for ci in item.checklist['items'] %}<li>{{ ci }}</li>{% endfor %}
-    </ul>
-    {% endif %}
-  </div>
-</details>
-{% endfor %}
 </div>
-<style>
-.res-item{border:1px solid var(--border);border-radius:10px;margin:8px 0 0;background:#fff;}
-.res-item summary{cursor:pointer;padding:9px 12px;font-size:13px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:8px;}
-.res-item summary::-webkit-details-marker{display:none;}
-.res-item summary::before{content:"\25B8";color:var(--teal-darker);font-size:11px;transition:transform .12s ease;}
-.res-item[open] summary::before{transform:rotate(90deg);}
-.res-name{flex:1;}
-.res-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 8px;}
-.res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
-.res-body{padding:0 12px 12px;font-size:13px;line-height:1.5;color:var(--navy);}
-.res-body p{margin:0 0 6px;}
-.res-table{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:12.5px;}
-.res-table th,.res-table td{border:1px solid var(--border);padding:6px 8px;text-align:left;vertical-align:top;}
-.res-table th{background:#F6F3EA;font-weight:600;}
-.res-table td:empty{height:26px;}
-.res-check{margin:8px 0 0;padding-left:18px;}
-.res-check li{margin:0 0 4px;}
-</style>
 {% endif %}
 
 <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 10px;">Session flow{% if week.timing %} <span style="text-transform:none;letter-spacing:0;font-weight:400;">&middot; about {{ (week.timing.checkin|default(0)) + (week.timing.input|default(0)) + (week.timing.activity|default(0)) + (week.timing.reflect|default(0)) + (week.timing.home|default(0)) }} min total</span>{% endif %}</p>
@@ -154,6 +126,20 @@
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Check-in <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
 {% if week.checkin %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.checkin }}</p>{% endif %}
+{% if prev_week_items or prev_record %}
+<details class="res-prev">
+  <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
+  <div class="res-prev-body">
+    {% if prev_record %}
+      {% if prev_record.reflection_goal %}<p class="res-inline-p"><strong>Goal set:</strong> {{ prev_record.reflection_goal }}</p>{% endif %}
+      {% if prev_record.what_happened %}<p class="res-inline-p"><strong>What happened:</strong> {{ prev_record.what_happened }}</p>{% endif %}
+      {% if prev_record.resources_used %}<p class="res-inline-p"><strong>Resources used:</strong> {{ prev_record.resources_used }}</p>{% endif %}
+    {% endif %}
+    {% for item in prev_week_items %}{{ resource_card(item) }}{% endfor %}
+  </div>
+</details>
+{% endif %}
+{% for item in week.resource_steps['checkin'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the pupil seemed today&hellip;">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -164,6 +150,7 @@
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Input <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
 {% if week.input_content %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.input_content }}</p>{% endif %}
+{% for item in week.resource_steps['input'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="input_note" data-field="input_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's thoughts&hellip;">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -174,6 +161,7 @@
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Activity <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
 {% if week.activity %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.activity }}</p>{% endif %}
+{% for item in week.resource_steps['activity'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="activity_note" data-field="activity_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the activity went&hellip;">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -184,6 +172,7 @@
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Reflect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
 {% if week.reflect %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.reflect }}</p>{% endif %}
+{% for item in week.resource_steps['reflect'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's answer&hellip;">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -198,6 +187,7 @@
 <p style="font-size:13.5px;color:var(--teal-darker);line-height:1.5;margin:0;">{{ week.home_activity }}</p>
 </div>
 {% endif %}
+{% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
 <p style="font-size:11px;color:var(--muted);margin:0 0 4px;">Notes for next session</p>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Add a reminder to open Session {{ next_week_number + 1 }} with&hellip;">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
@@ -293,4 +283,22 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 </script>
 
 {% endif %}
+
+<style>
+.res-inline{border:1px solid var(--border);border-left:3px solid var(--teal-darker);border-radius:8px;background:#fff;padding:10px 12px;margin:0 0 8px;}
+.res-inline-head{display:flex;align-items:center;gap:8px;margin:0 0 6px;}
+.res-inline-name{font-size:12.5px;font-weight:700;color:var(--teal-darker);}
+.res-inline-p{font-size:13px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
+.res-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
+.res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
+.res-table{width:100%;border-collapse:collapse;margin:6px 0 0;font-size:12px;}
+.res-table th,.res-table td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top;}
+.res-table th{background:#F6F3EA;font-weight:600;}
+.res-table td:empty{height:24px;}
+.res-check{margin:6px 0 0;padding-left:18px;font-size:13px;}
+.res-check li{margin:0 0 4px;}
+.res-prev{border:1px dashed var(--border);border-radius:8px;background:#FBF8F2;margin:0 0 8px;}
+.res-prev summary{cursor:pointer;padding:8px 11px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
+.res-prev-body{padding:0 11px 10px;}
+</style>
 {% endblock %}

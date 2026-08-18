@@ -13,6 +13,7 @@ Run with: python3 run.py, then open http://localhost:8000
 import datetime
 import json
 import os
+import re
 
 import db
 import auth as authlib
@@ -24,6 +25,40 @@ router = Router()
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
 _resource_packs_cache = None
+
+
+SESSION_STEPS = ("checkin", "input", "activity", "reflect", "home")
+_STEP_TEXT_FIELD = {"checkin": "checkin", "input": "input_content",
+                    "activity": "activity", "reflect": "reflect", "home": "home_activity"}
+_RESOURCE_STOPWORDS = {"template", "card", "cards", "sheet", "handout", "set", "options",
+                       "note", "notes", "plan", "chart", "log", "the", "and", "for", "my"}
+
+
+def _resource_keywords(name):
+    return {w for w in re.findall(r"[a-z]+", (name or "").lower())
+            if w not in _RESOURCE_STOPWORDS and len(w) > 2}
+
+
+def assign_resources_to_steps(week, items):
+    """Works out which step of the session each resource belongs to, so it can be
+    shown at the point of use rather than in a list at the top.
+
+    Nothing in the data records this, but the step text names its own resources:
+    'agree to track one trigger using a simple tally on a card' is what places
+    the tally card at Reflect. Matching on the distinctive words in the resource
+    name recovers that. Anything with no clear match goes to Activity, which is
+    where most resources are used and where a mentor would look first."""
+    texts = {step: (week.get(_STEP_TEXT_FIELD[step]) or "") for step in SESSION_STEPS}
+    by_step = {step: [] for step in SESSION_STEPS}
+    for item in items:
+        keywords = _resource_keywords(item.get("name"))
+        best, best_score = None, 0
+        for step in SESSION_STEPS:
+            score = len(keywords & _resource_keywords(texts[step]))
+            if score > best_score:
+                best, best_score = step, score
+        by_step[best or "activity"].append(item)
+    return by_step
 
 
 def resource_items_for(module_number, resource_names):
@@ -1362,12 +1397,21 @@ def session_form(request):
         # writes on; this makes the mentor-facing material usable in the room.
         week["resource_items"] = resource_items_for(
             enrolment["course_module_number"], week["resources"])
+        week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
     prev_record = completed_records[-1] if completed_records else None
+    # What the pupil took away last week. Several courses open by reviewing it,
+    # so the mentor should not have to go and find it.
+    prev_week_items = []
+    prev_week = next((w for w in all_weeks if w["week_number"] == next_week_number - 1), None)
+    if prev_week is not None:
+        prev_week_items = resource_items_for(
+            enrolment["course_module_number"], json.loads(prev_week["resources"] or "[]"))
     progress = [{"number": n, "status": "done" if n < next_week_number else ("current" if n == next_week_number else "locked")} for n in range(1, 6)]
     upcoming_weeks = [w for w in all_weeks if w["week_number"] > next_week_number]
     return render("session_form.html", user=user, enrolment=enrolment, week=week,
                   next_week_number=next_week_number, completed_records=completed_records,
-                  prev_record=prev_record, draft=draft, progress=progress,
+                  prev_record=prev_record, prev_week_items=prev_week_items,
+                  draft=draft, progress=progress,
                   upcoming_weeks=upcoming_weeks, flash=flash_from_query(request))
 
 @router.post("/mentor/session/<enrolment_id>/autosave")
