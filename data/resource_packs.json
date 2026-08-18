@@ -1588,32 +1588,63 @@
         "body": "Sort each rule into 'makes sense to me' or 'feels unfair'.",
         "cards": [
           {
-            "text": "Arrive to lessons on time"
+            "cat": "School rule",
+            "title": "Arrive on time",
+            "art": "art-clock",
+            "text": "Be in the room before the lesson starts.",
+            "note": "Sort me"
           },
           {
-            "text": "Follow instructions the first time"
+            "cat": "School rule",
+            "title": "Follow instructions first time",
+            "art": "art-instruction",
+            "text": "Do what's asked without needing it repeated.",
+            "note": "Sort me"
           },
           {
-            "text": "No phones in lessons"
+            "cat": "School rule",
+            "title": "No phones in lessons",
+            "art": "art-phone-off",
+            "text": "Phone away and out of sight during class.",
+            "note": "Sort me"
           },
           {
-            "text": "Move around school calmly"
+            "cat": "School rule",
+            "title": "Move around calmly",
+            "art": "art-corridor",
+            "text": "Walk in corridors and on stairs.",
+            "note": "Sort me"
           },
           {
-            "text": "Wear the correct uniform"
+            "cat": "School rule",
+            "title": "Wear the correct uniform",
+            "art": "art-uniform",
+            "text": "Full uniform, worn as the school asks.",
+            "note": "Sort me"
           },
           {
-            "text": "Put rubbish in the bin"
+            "cat": "School rule",
+            "title": "Put rubbish in the bin",
+            "art": "art-bin",
+            "text": "Clear your own things at the end.",
+            "note": "Sort me"
           },
           {
-            "text": "Put your hand up instead of calling out"
+            "cat": "School rule",
+            "title": "Hand up, don't call out",
+            "art": "art-hand-up",
+            "text": "Raise your hand and wait to be asked.",
+            "note": "Sort me"
           },
           {
-            "text": "Respect other people's space"
+            "cat": "School rule",
+            "title": "Respect others' space",
+            "art": "art-space",
+            "text": "Don't touch other people or their belongings.",
+            "note": "Sort me"
           }
         ],
-        "card_kind": "sort",
-        "tone": "blue"
+        "tone": "amber"
       },
       {
         "name": "Notice-and-note tracking card",
@@ -1652,25 +1683,48 @@
         "body": "For each one: what could happen if I refuse? What could happen if I comply?",
         "cards": [
           {
-            "text": "You're told to move seats"
+            "cat": "Scenario",
+            "title": "Told to move seats",
+            "art": "art-move-seat",
+            "text": "You're told to move to a different seat.",
+            "note": "Two outcomes"
           },
           {
-            "text": "You're asked to hand in your phone"
+            "cat": "Scenario",
+            "title": "Asked for your phone",
+            "art": "art-phone-off",
+            "text": "You're asked to hand in your phone.",
+            "note": "Two outcomes"
           },
           {
-            "text": "You're told to stop talking"
+            "cat": "Scenario",
+            "title": "Told to stop talking",
+            "art": "art-quiet",
+            "text": "You're told to stop talking.",
+            "note": "Two outcomes"
           },
           {
-            "text": "You're asked to redo work neatly"
+            "cat": "Scenario",
+            "title": "Asked to redo work",
+            "art": "art-redo",
+            "text": "You're asked to redo work more neatly.",
+            "note": "Two outcomes"
           },
           {
-            "text": "You're told to wait your turn"
+            "cat": "Scenario",
+            "title": "Told to wait",
+            "art": "art-hourglass",
+            "text": "You're told to wait your turn.",
+            "note": "Two outcomes"
           },
           {
-            "text": "You're asked to tidy up"
+            "cat": "Scenario",
+            "title": "Asked to tidy up",
+            "art": "art-bin",
+            "text": "You're asked to tidy up.",
+            "note": "Two outcomes"
           }
         ],
-        "card_kind": "scenario",
         "tone": "coral"
       },
       {
@@ -1678,27 +1732,34 @@
         "body": "Two worked examples, then two to fill in together.",
         "cards": [
           {
-            "text": "First: finish this question",
-            "art": "first-then",
-            "note": "Then: break"
+            "cat": "Example",
+            "title": "First: finish this question",
+            "art": "art-first-then",
+            "text": "Then: a short break.",
+            "note": "Worked example"
           },
           {
-            "text": "First: put phone away",
-            "art": "first-then",
-            "note": "Then: continue lesson"
+            "cat": "Example",
+            "title": "First: put the phone away",
+            "art": "art-first-then",
+            "text": "Then: carry on with the lesson.",
+            "note": "Worked example"
           },
           {
-            "text": "First: ______________",
-            "art": "first-then",
-            "note": "Then: ______________"
+            "cat": "Blank",
+            "title": "First: ______________",
+            "art": "art-first-then",
+            "text": "Then: ______________",
+            "note": "Fill in together"
           },
           {
-            "text": "First: ______________",
-            "art": "first-then",
-            "note": "Then: ______________"
+            "cat": "Blank",
+            "title": "First: ______________",
+            "art": "art-first-then",
+            "text": "Then: ______________",
+            "note": "Fill in together"
           }
         ],
-        "card_kind": "prompt",
         "tone": "amber"
       },
       {
@@ -1783,47 +1844,94 @@
       },
       {
         "name": "Emotion word cards",
-        "body": "Sort these into zones.",
+        "body": "Sort these into zones: calm, wobbly, or overwhelmed.",
         "cards": [
           {
-            "text": "Frustrated"
+            "cat": "Emotion",
+            "title": "Frustrated",
+            "art": "art-tangle",
+            "text": "Things aren't working and it's building up.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Anxious"
+            "cat": "Emotion",
+            "title": "Anxious",
+            "art": "art-jagged",
+            "text": "Something ahead feels unsafe or uncertain.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Embarrassed"
+            "cat": "Emotion",
+            "title": "Embarrassed",
+            "art": "art-hide",
+            "text": "You want to disappear for a moment.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Proud"
+            "cat": "Emotion",
+            "title": "Proud",
+            "art": "art-rise",
+            "text": "You did something that mattered to you.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Disappointed"
+            "cat": "Emotion",
+            "title": "Disappointed",
+            "art": "art-fall",
+            "text": "You hoped for something and it didn't come.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Overwhelmed"
+            "cat": "Emotion",
+            "title": "Overwhelmed",
+            "art": "art-overload",
+            "text": "Too much at once, and no room to think.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Content"
+            "cat": "Emotion",
+            "title": "Content",
+            "art": "art-level",
+            "text": "Nothing's wrong, and that's enough.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Jealous"
+            "cat": "Emotion",
+            "title": "Jealous",
+            "art": "art-compare",
+            "text": "Someone has what you wanted.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Hopeful"
+            "cat": "Emotion",
+            "title": "Hopeful",
+            "art": "art-sprout",
+            "text": "Something might get better from here.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Lonely"
+            "cat": "Emotion",
+            "title": "Lonely",
+            "art": "art-apart",
+            "text": "People are around, but not with you.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Confident"
+            "cat": "Emotion",
+            "title": "Confident",
+            "art": "art-stand",
+            "text": "You know you can handle this one.",
+            "note": "Sort into a zone"
           },
           {
-            "text": "Irritated"
+            "cat": "Emotion",
+            "title": "Irritated",
+            "art": "art-friction",
+            "text": "Small things are scraping at you.",
+            "note": "Sort into a zone"
           }
         ],
-        "card_kind": "word",
-        "tone": "purple"
+        "tone": "pink"
       },
       {
         "name": "Body map handout",
@@ -1844,26 +1952,35 @@
         "body": "Try each one and rate it out of 10.",
         "cards": [
           {
-            "text": "5-4-3-2-1 senses",
-            "art": "five-senses",
-            "note": "5 see · 4 hear · 3 feel"
+            "cat": "Grounding",
+            "title": "5-4-3-2-1 senses",
+            "art": "art-five-senses",
+            "text": "Name 5 things you see, 4 you hear, 3 you feel.",
+            "note": "Say them out loud"
           },
           {
-            "text": "Box breathing",
-            "art": "box-breath",
-            "note": "4 in · hold 4 · 4 out · hold 4"
+            "cat": "Breathing",
+            "title": "Box breathing",
+            "art": "art-box-breath",
+            "text": "In for 4 seconds, hold 4, out 4, hold 4.",
+            "note": "Repeat 4 times"
           },
           {
-            "text": "Hand on heart, slow breaths",
-            "art": "hand-heart"
+            "cat": "Body",
+            "title": "Hand on heart",
+            "art": "art-hand-heart",
+            "text": "One hand on your chest, and slow your breathing to match it.",
+            "note": "1 minute is enough"
           },
           {
-            "text": "Grounding through touch or texture",
-            "art": "texture"
+            "cat": "Body",
+            "title": "Grounding through touch",
+            "art": "art-texture",
+            "text": "Hold something with a texture and describe it to yourself.",
+            "note": "Keep one in your bag"
           }
         ],
-        "card_kind": "technique",
-        "tone": "purple"
+        "tone": "teal"
       },
       {
         "name": "Wave diagram template",
