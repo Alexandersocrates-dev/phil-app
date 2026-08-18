@@ -676,6 +676,78 @@ CYCLE_KEYWORDS = ("cycle diagram", "cycle chart")
 SCALE_KEYWORDS = ("thermometer", "scale")
 
 
+def _card_height(card):
+    """A printed card is a fixed box: title, optional body, optional note."""
+    return 30 * mm
+
+
+def _draw_cut_cards(c, x, y, max_width, cards):
+    """Draws a card set as a grid of dashed boxes, two per row, so the sheet can
+    be cut up. Text only: reportlab cannot render the SVG motifs the screen uses,
+    so the printed card carries the words and the mentor supplies the rest."""
+    gap = 4 * mm
+    col_w = (max_width - gap) / 2
+    card_h = 30 * mm
+    for i, card in enumerate(cards):
+        col = i % 2
+        if col == 0 and i > 0:
+            y -= card_h + gap
+        cx = x + col * (col_w + gap)
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.9)
+        c.setDash(3, 2)
+        c.rect(cx, y - card_h, col_w, card_h, fill=0, stroke=1)
+        c.setDash()
+
+        ty = y - 6 * mm
+        cat = _clean_pdf_text(card.get("cat", ""))
+        if cat:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Bold", 6.5)
+            c.drawString(cx + 3 * mm, ty + 1.5 * mm, cat.upper())
+            ty -= 1 * mm
+        c.setFillColor(TEAL_DARK)
+        c.setFont("Helvetica-Bold", 9)
+        title = _clean_pdf_text(card.get("title") or card.get("text", ""))
+        ty = _wrap(c, title, cx + 3 * mm, ty, col_w - 6 * mm,
+                   font="Helvetica-Bold", size=9, leading=11, color=TEAL_DARK)
+        body = _clean_pdf_text(card.get("text", "")) if card.get("title") else ""
+        if body:
+            ty -= 1 * mm
+            ty = _wrap(c, body, cx + 3 * mm, ty, col_w - 6 * mm, size=8, leading=10, color=INK)
+        note = _clean_pdf_text(card.get("note", ""))
+        if note:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 7)
+            c.drawString(cx + 3 * mm, y - card_h + 3 * mm, note)
+    rows = (len(cards) + 1) // 2
+    return y - card_h - (rows - 1) * 0 if rows == 1 else y - card_h
+
+
+def _cards_height(cards):
+    rows = (len(cards) + 1) // 2
+    return rows * 30 * mm + (rows - 1) * 4 * mm
+
+
+def _draw_steps(c, x, y, max_width, steps):
+    """Numbered steps, one per line, kept together as a sequence."""
+    for i, st in enumerate(steps, start=1):
+        c.setFillColor(TEAL_DARK)
+        c.setFont("Helvetica-Bold", 9)
+        title = _clean_pdf_text(st.get("title", ""))
+        c.drawString(x, y, f"{i}. {title}")
+        y -= 4.5 * mm
+        text = _clean_pdf_text(st.get("text", ""))
+        if text:
+            y = _wrap(c, text, x + 5 * mm, y, max_width - 5 * mm, size=8.5, leading=10.5, color=INK)
+        y -= 2.5 * mm
+    return y
+
+
+def _steps_height(steps):
+    return len(steps) * 14 * mm
+
+
 def resource_pack_pdf(course_num, course_title, items):
     """
     Generates the full downloadable resource pack for a course, containing
@@ -739,7 +811,13 @@ def resource_pack_pdf(course_num, course_title, items):
         is_cycle = any(k in name_lower for k in CYCLE_KEYWORDS)
         is_scale = any(k in name_lower for k in SCALE_KEYWORDS)
 
-        if table:
+        cards = item.get("cards")
+        steps = item.get("steps")
+        if cards:
+            needed = 24 * mm + _cards_height(cards)
+        elif steps:
+            needed = 24 * mm + _steps_height(steps)
+        elif table:
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
         elif form:
             needed = 24 * mm + _form_height(form["fields"])
@@ -766,7 +844,25 @@ def resource_pack_pdf(course_num, course_title, items):
 
         body = _clean_pdf_text(item.get("body", ""))
 
-        if table:
+        if cards:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards)
+            state["y"] -= 3 * mm
+
+        elif steps:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
+            if item.get("note"):
+                c.setFillColor(MUTED)
+                c.setFont("Helvetica-Oblique", 7.5)
+                c.drawString(margin, state["y"], _clean_pdf_text(item["note"]))
+                state["y"] -= 5 * mm
+
+        elif table:
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
