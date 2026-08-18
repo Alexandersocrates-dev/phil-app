@@ -98,7 +98,7 @@
 
 {% if completed_records %}
 <details class="acc">
-<summary><span>Sessions 1&ndash;{{ completed_records|length }} &middot; Completed</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<summary><span>Sessions 1&ndash;{{ completed_records|length }} &middot; Completed</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
 <div class="acc-body">
 {% for r in completed_records %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
@@ -140,7 +140,7 @@
 <p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
 <div class="pill-row" style="margin:0;">
 {% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}
-<p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
+<p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf" target="_blank" rel="noopener">Download resources (PDF)</a></p>
 </div>
 </div>
 {% endif %}
@@ -168,7 +168,7 @@
 </details>
 {% endif %}
 {% for item in week.resource_steps['checkin'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the pupil seemed today&hellip;">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
+<textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the pupil seemed today&hellip;" aria-label="Check-in notes">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -179,7 +179,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Input <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
 {% if week.input_content %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.input_content }}</p>{% endif %}
 {% for item in week.resource_steps['input'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="input_note" data-field="input_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's thoughts&hellip;">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
+<textarea class="note-field" name="input_note" data-field="input_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's thoughts&hellip;" aria-label="Notes on the input step">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -190,7 +190,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Activity <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
 {% if week.activity %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.activity }}</p>{% endif %}
 {% for item in week.resource_steps['activity'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="activity_note" data-field="activity_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the activity went&hellip;">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
+<textarea class="note-field" name="activity_note" data-field="activity_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on how the activity went&hellip;" aria-label="Notes on the activity">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -201,7 +201,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Reflect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
 {% if week.reflect %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.reflect }}</p>{% endif %}
 {% for item in week.resource_steps['reflect'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's answer&hellip;">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
+<textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Notes on the pupil's answer&hellip;" aria-label="Notes on the reflection">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -217,7 +217,7 @@
 {% endif %}
 {% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
 <p style="font-size:11px;color:var(--muted);margin:0 0 4px;">Notes for next session</p>
-<textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Add a reminder to open Session {{ next_week_number + 1 }} with&hellip;">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
+<textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="noteFieldChanged(this)" rows="2" placeholder="Add a reminder to open Session {{ next_week_number + 1 }} with&hellip;" aria-label="Notes for the next session">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">Private to you, shown again as "Notes from previous session" when Session {{ next_week_number + 1 }} begins.</p>
 </div>
@@ -227,13 +227,13 @@
 
 <div class="field">
 <label>Mood rating (1-5)</label>
-<select name="mood_rating">
+<select name="mood_rating" aria-label="Mood rating, 1 to 5">
 {% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
 </select>
 </div>
 <div class="field">
 <label>Engagement rating (1-5)</label>
-<select name="engagement_rating">
+<select name="engagement_rating" aria-label="Engagement rating, 1 to 5">
 {% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
 </select>
 </div>
@@ -241,12 +241,12 @@
 <div class="safeguard-box safeguard-clear" id="sgBox">
 <h3>Safeguarding, every session</h3>
 <div class="field">
-<label><input type="radio" name="safeguarding_flag" value="no" checked style="width:auto; display:inline-block;"> No concerns to flag this session</label><br>
-<label><input type="radio" name="safeguarding_flag" value="yes" style="width:auto; display:inline-block;"> Flag a concern</label>
+<label><input type="radio" name="safeguarding_flag" value="no" checked style="width:auto; display:inline-block;" aria-label="Flag a safeguarding concern"> No concerns to flag this session</label><br>
+<label><input type="radio" name="safeguarding_flag" value="yes" style="width:auto; display:inline-block;" aria-label="Flag a safeguarding concern"> Flag a concern</label>
 </div>
 <div class="field">
 <label>Safeguarding note (mandatory, even when not flagged)</label>
-<textarea name="safeguarding_note" required placeholder="e.g. 'No concerns this session.'"></textarea>
+<textarea name="safeguarding_note" required placeholder="e.g. 'No concerns this session.'" aria-label="Safeguarding note"></textarea>
 </div>
 <p class="muted" style="font-size:12px;">This record is not a safeguarding report and Phil takes no action on it. You remain responsible for following your establishment's own safeguarding procedure.</p>
 </div>
@@ -257,7 +257,7 @@
 
 {% if upcoming_weeks %}
 <details class="acc">
-<summary><span>Sessions {{ upcoming_weeks[0].week_number }}&ndash;5 &middot; Coming up</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+<summary><span>Sessions {{ upcoming_weeks[0].week_number }}&ndash;5 &middot; Coming up</span><svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
 <div class="acc-body">
 {% for w in upcoming_weeks %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;opacity:0.6;display:flex;align-items:center;gap:10px;">

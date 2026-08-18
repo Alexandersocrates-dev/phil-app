@@ -5,7 +5,7 @@
 <div class="flex-between">
   <h1>{{ title }}</h1>
   <div class="flex-row gap-2">
-    <a class="btn btn-secondary btn-sm" href="{{ pdf_url }}" target="_blank">Download PDF</a>
+    <a class="btn btn-secondary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">Download PDF</a>
     {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Download Excel</a>{% endif %}
   </div>
 </div>
@@ -15,7 +15,7 @@
   <form method="get" action="/admin/reports/caseload">
     <div class="field" style="max-width:280px;">
       <label>Filter by mentor</label>
-      <select name="mentor_id" onchange="this.form.submit()">
+      <select name="mentor_id" onchange="this.form.submit()" aria-label="Choose a mentor">
         <option value="all" {% if selected_mentor == 'all' %}selected{% endif %}>All mentors</option>
         {% for m in mentors %}
         <option value="{{ m.id }}" {% if selected_mentor == m.id|string %}selected{% endif %}>{{ m.name }}</option>

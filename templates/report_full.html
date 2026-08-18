@@ -12,7 +12,7 @@
   <form method="get" action="/admin/reports/full">
     <div class="field" style="max-width:320px;">
       <label>Pupil</label>
-      <select name="pupil_id" onchange="this.form.submit()">
+      <select name="pupil_id" onchange="this.form.submit()" aria-label="Choose a pupil">
         <option value="all" {% if selected_pupil == 'all' %}selected{% endif %}>All active pupils (bulk export)</option>
         {% for p in pupils %}
         <option value="{{ p.id }}" {% if selected_pupil == p.id|string %}selected{% endif %}>{{ p.forename }} {{ p.surname }}</option>
@@ -27,7 +27,7 @@
     <p class="muted">No active pupils yet, so there is nothing to export.</p>
   {% else %}
     <p>Export the report selected above as a PDF.</p>
-    <a class="btn btn-primary" href="/admin/reports/full/pdf?pupil_id={{ selected_pupil }}" target="_blank">Download PDF</a>
+    <a class="btn btn-primary" href="/admin/reports/full/pdf?pupil_id={{ selected_pupil }}" target="_blank" rel="noopener">Download PDF</a>
   {% endif %}
 </div>
 {% endblock %}

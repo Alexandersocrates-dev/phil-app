@@ -21,6 +21,6 @@
     <h3>{{ 'Safeguarding: flagged' if record.safeguarding_flag else 'Safeguarding: not flagged' }}</h3>
     <p>{{ record.safeguarding_note }}</p>
   </div>
-  <a class="btn btn-secondary btn-sm" href="/courses/{{ record.course_id }}/resources/pdf" target="_blank">Download resources (PDF)</a> <a class="btn btn-secondary btn-sm" href="/session/{{ record.id }}/pdf" target="_blank">Download PDF</a>
+  <a class="btn btn-secondary btn-sm" href="/courses/{{ record.course_id }}/resources/pdf" target="_blank" rel="noopener">Download resources (PDF)</a> <a class="btn btn-secondary btn-sm" href="/session/{{ record.id }}/pdf" target="_blank" rel="noopener">Download PDF</a>
 </div>
 {% endblock %}

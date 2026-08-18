@@ -6,23 +6,23 @@
   <h1>{{ 'Edit course' if course else 'New course' }}</h1>
   <p class="muted">New courses start as draft and won't appear to mentors until published.</p>
   <form method="post" action="{{ '/admin/courses/%d/edit'|format(course.id) if course else '/admin/courses/new' }}">
-    <div class="field"><label>Title</label><input type="text" name="title" value="{{ course.title if course else '' }}" required></div>
-    <div class="field"><label>Focus area</label><input type="text" name="focus_area" value="{{ course.focus_area if course else '' }}"></div>
-    <div class="field"><label>Description</label><textarea name="description">{{ course.description if course else '' }}</textarea></div>
+    <div class="field"><label>Title</label><input type="text" name="title" value="{{ course.title if course else '' }}" required aria-label="Title"></div>
+    <div class="field"><label>Focus area</label><input type="text" name="focus_area" value="{{ course.focus_area if course else '' }}" aria-label="Focus area"></div>
+    <div class="field"><label>Description</label><textarea name="description" aria-label="Description">{{ course.description if course else '' }}</textarea></div>
 
     {% for i in range(1,6) %}
     {% set w = weeks[i-1] if weeks else None %}
     <div class="card" style="background:var(--cream); border-style:dashed;">
       <h3>Week {{ i }}</h3>
-      <div class="field"><label>Title</label><input type="text" name="week{{ i }}_title" value="{{ w.title if w else '' }}"></div>
-      <div class="field"><label>Objective</label><textarea name="week{{ i }}_objective">{{ w.objective if w else '' }}</textarea></div>
-      <div class="field"><label>Check-in</label><textarea name="week{{ i }}_checkin">{{ w.checkin if w else '' }}</textarea></div>
-      <div class="field"><label>Input</label><textarea name="week{{ i }}_input">{{ w.input_content if w else '' }}</textarea></div>
-      <div class="field"><label>Activity</label><textarea name="week{{ i }}_activity">{{ w.activity if w else '' }}</textarea></div>
-      <div class="field"><label>Reflect</label><textarea name="week{{ i }}_reflect">{{ w.reflect if w else '' }}</textarea></div>
-      <div class="field"><label>Watch for</label><textarea name="week{{ i }}_lookfor">{{ w.lookfor if w else '' }}</textarea></div>
-      <div class="field"><label>Resources (comma separated)</label><input type="text" name="week{{ i }}_resources" value="{{ w.resources|join(', ') if w else '' }}"></div>
-      <div class="field"><label>Parent/carer take-home</label><textarea name="week{{ i }}_home">{{ w.home_activity if w else '' }}</textarea></div>
+      <div class="field"><label>Title</label><input type="text" name="week{{ i }}_title" value="{{ w.title if w else '' }}" aria-label="Week{{ i }} title"></div>
+      <div class="field"><label>Objective</label><textarea name="week{{ i }}_objective" aria-label="Week{{ i }} objective">{{ w.objective if w else '' }}</textarea></div>
+      <div class="field"><label>Check-in</label><textarea name="week{{ i }}_checkin" aria-label="Week{{ i }} checkin">{{ w.checkin if w else '' }}</textarea></div>
+      <div class="field"><label>Input</label><textarea name="week{{ i }}_input" aria-label="Week{{ i }} input">{{ w.input_content if w else '' }}</textarea></div>
+      <div class="field"><label>Activity</label><textarea name="week{{ i }}_activity" aria-label="Week{{ i }} activity">{{ w.activity if w else '' }}</textarea></div>
+      <div class="field"><label>Reflect</label><textarea name="week{{ i }}_reflect" aria-label="Week{{ i }} reflect">{{ w.reflect if w else '' }}</textarea></div>
+      <div class="field"><label>Watch for</label><textarea name="week{{ i }}_lookfor" aria-label="Week{{ i }} lookfor">{{ w.lookfor if w else '' }}</textarea></div>
+      <div class="field"><label>Resources (comma separated)</label><input type="text" name="week{{ i }}_resources" value="{{ w.resources|join(', ') if w else '' }}" aria-label="Week{{ i }} resources"></div>
+      <div class="field"><label>Parent/carer take-home</label><textarea name="week{{ i }}_home" aria-label="Week{{ i }} home">{{ w.home_activity if w else '' }}</textarea></div>
     </div>
     {% endfor %}
 

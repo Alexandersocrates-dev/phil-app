@@ -15,9 +15,9 @@
 <h3>This week's home activity</h3>
 <p>{{ item.week.home_activity }}</p>
 {% endif %}
-<a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank">View full progress report</a>
+<a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank" rel="noopener">View full progress report</a>
 {% if item.certificate %}
-<a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Download certificate</a>
+<a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
 {% endif %}
 </div>
 {% endfor %}

@@ -19,7 +19,7 @@
     <form method="post" action="/admin/parent-requests/{{ r.id }}/approve" style="display:flex; gap:8px; align-items:flex-end; flex-wrap:wrap;">
       <div class="field" style="margin:0; flex:1; min-width:180px;">
         <label for="approve-password-{{ r.id }}">Temporary password</label>
-        <input type="password" id="approve-password-{{ r.id }}" name="password" minlength="8" placeholder="Only needed for a new account">
+        <input type="password" id="approve-password-{{ r.id }}" name="password" minlength="8" placeholder="Only needed for a new account" autocomplete="new-password">
       </div>
       <button class="btn btn-primary btn-sm" type="submit">Approve</button>
     </form>

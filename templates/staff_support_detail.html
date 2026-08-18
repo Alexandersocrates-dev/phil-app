@@ -20,7 +20,7 @@
 
   {% if ticket.status == 'open' %}
   <form method="post" action="/staff/support/{{ ticket.id }}/resolve">
-    <div class="field"><label>Response</label><textarea name="response" required></textarea></div>
+    <div class="field"><label>Response</label><textarea name="response" required aria-label="Your response"></textarea></div>
     <button class="btn btn-primary" type="submit">Resolve</button>
   </form>
   {% else %}

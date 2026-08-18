@@ -7,7 +7,7 @@
   <form method="post" action="/mentor/enrol/{{ pupil.id }}">
     <div class="field">
       <label>Course</label>
-      <select name="course_id" required>
+      <select name="course_id" required aria-label="Choose a course">
         {% for c in courses %}<option value="{{ c.id }}">{{ '%02d'|format(c.module_number) }} - {{ c.title }}</option>{% endfor %}
       </select>
     </div>
@@ -15,7 +15,7 @@
       <label class="switch-row">
         <span>Parent/carer access enabled</span>
         <span class="switch">
-          <input type="checkbox" name="parent_access_enabled" checked>
+          <input type="checkbox" name="parent_access_enabled" checked aria-label="Give the parent or carer access">
           <span class="track"></span>
           <span class="thumb"></span>
         </span>

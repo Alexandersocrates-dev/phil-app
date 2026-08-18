@@ -54,7 +54,7 @@
     {% endif %}
   {% endif %}
   {% if item.certificate %}
-    <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank">Download certificate</a>
+    <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
   {% endif %}
   {% if e.status == 'completed' %}
     <a class="btn btn-secondary btn-sm" href="/mentor/reflection/{{ e.id }}">{{ 'Edit' if item.reflection else 'Write' }} completion reflection</a>
@@ -69,7 +69,7 @@
       <td>{{ r.week_number }}: {{ r.week_title }}</td>
       <td>{{ r.date }}</td>
       <td>{% if r.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
-      <td><a href="/session/{{ r.id }}/pdf" target="_blank">PDF</a></td>
+      <td><a href="/session/{{ r.id }}/pdf" target="_blank" rel="noopener">PDF</a></td>
     </tr>
     {% endfor %}
   </table>

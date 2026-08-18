@@ -10,7 +10,7 @@
      for the sessions they can see, so the download is still worth having. #}
   {% if user %}
   <p>
-    <a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a>
+    <a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank" rel="noopener">Download resources (PDF)</a>
     {% if outline_weeks %}<span class="muted" style="font-size:12px;">Sessions 1&ndash;{{ weeks_limit }} only</span>{% endif %}
   </p>
   {% endif %}
