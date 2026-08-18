@@ -68,7 +68,15 @@ def resource_items_for(module_number, resource_names):
     silently on a stray capital and show the mentor nothing."""
     packs = _load_resource_packs()
     entry = packs.get(str(module_number).zfill(2)) or {}
-    by_name = {_norm_resource(i.get("name")): i for i in entry.get("items", [])}
+    # A week and a pack are edited separately, so the same sheet ends up with two
+    # names: "Trigger list" in the pack, "Trigger list template" in the week. An
+    # item's aliases carry those alternatives, so a rewording never silently
+    # leaves a mentor with a resource that has no content behind it.
+    by_name = {}
+    for item in entry.get("items", []):
+        by_name[_norm_resource(item.get("name"))] = item
+        for alias in item.get("aliases", []):
+            by_name.setdefault(_norm_resource(alias), item)
     out = []
     for name in resource_names or []:
         item = by_name.get(_norm_resource(name))

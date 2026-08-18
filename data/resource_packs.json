@@ -46,7 +46,10 @@
       },
       {
         "name": "Safe outlet ideas",
-        "body": "For mentor and class teacher - agree where these are kept and how they're accessed.\n• A stress ball or squeezable object, kept somewhere the pupil can access quickly.\n• Scrap paper set aside for tearing up, kept in an agreed spot.\n• A resistance band or something similar for a physical outlet.\n• Wall or chair push-ups - a few seconds of controlled physical effort.\n• A short, supervised movement break outside the classroom."
+        "body": "For mentor and class teacher - agree where these are kept and how they're accessed.\n• A stress ball or squeezable object, kept somewhere the pupil can access quickly.\n• Scrap paper set aside for tearing up, kept in an agreed spot.\n• A resistance band or something similar for a physical outlet.\n• Wall or chair push-ups - a few seconds of controlled physical effort.\n• A short, supervised movement break outside the classroom.",
+        "aliases": [
+          "Sample sensory or physical outlet items, such as a stress ball or scrap paper"
+        ]
       },
       {
         "name": "Restorative conversation prompt card",
@@ -64,7 +67,10 @@
             "How I'll help repair it",
             "Review date"
           ]
-        }
+        },
+        "aliases": [
+          "One-page prevention and response plan template"
+        ]
       }
     ],
     "missing": []
@@ -74,7 +80,10 @@
     "items": [
       {
         "name": "Anger thermometer",
-        "body": "How intense does the anger feel right now?\n10 About to lose control\n9 Furious\n8 Very angry\n7 Angry\n6 Agitated\n5 Frustrated\n4 Annoyed\n3 Slightly annoyed\n2 Relaxed\n1 Totally calm"
+        "body": "How intense does the anger feel right now?\n10 About to lose control\n9 Furious\n8 Very angry\n7 Angry\n6 Agitated\n5 Frustrated\n4 Annoyed\n3 Slightly annoyed\n2 Relaxed\n1 Totally calm",
+        "aliases": [
+          "Anger thermometer handout"
+        ]
       },
       {
         "name": "Feeling word cards",
@@ -189,7 +198,10 @@
               ""
             ]
           ]
-        }
+        },
+        "aliases": [
+          "Triggers map template"
+        ]
       },
       {
         "name": "STOP technique card",
@@ -242,7 +254,10 @@
             "note": "What happens next?"
           }
         ],
-        "tone": "coral"
+        "tone": "coral",
+        "aliases": [
+          "Passive / aggressive / assertive comparison cards"
+        ]
       },
       {
         "name": "Assertive phrase bank",
@@ -260,7 +275,10 @@
             "Who I go to for support",
             "Review date"
           ]
-        }
+        },
+        "aliases": [
+          "One-page anger-management plan template"
+        ]
       },
       {
         "name": "Role-play scenario cards",
@@ -527,7 +545,10 @@
       },
       {
         "name": "Attendance file note",
-        "body": "For the school's attendance lead, to accompany the graded attendance plan.\n• This pupil has completed a 5-week mentoring course on attendance and is working from an agreed graded\nattendance plan, not an immediate jump to full attendance.\n• The barrier identified through this course is specific to this pupil - please refer to the pupil's action plan\nrather than assuming a generic cause.\n• Please let the mentor know of any pattern changes, positive or otherwise, so the plan can be adjusted at the\nnext review date.\n• If statutory attendance thresholds are a concern, please loop in the Education Welfare Officer alongside this\nplan, not instead of it."
+        "body": "For the school's attendance lead, to accompany the graded attendance plan.\n• This pupil has completed a 5-week mentoring course on attendance and is working from an agreed graded\nattendance plan, not an immediate jump to full attendance.\n• The barrier identified through this course is specific to this pupil - please refer to the pupil's action plan\nrather than assuming a generic cause.\n• Please let the mentor know of any pattern changes, positive or otherwise, so the plan can be adjusted at the\nnext review date.\n• If statutory attendance thresholds are a concern, please loop in the Education Welfare Officer alongside this\nplan, not instead of it.",
+        "aliases": [
+          "Copy for the attendance file"
+        ]
       }
     ],
     "missing": []
@@ -1460,7 +1481,10 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How intense does my anger feel right now?\n1 Very calm\n2 Calm\n3 Mildly unsettled\n4 Agitated\n5 About to lose control"
+        "body": "How intense does my anger feel right now?\n1 Very calm\n2 Calm\n3 Mildly unsettled\n4 Agitated\n5 About to lose control",
+        "aliases": [
+          "1-5 mood scale card"
+        ]
       },
       {
         "name": "Trigger list",
@@ -1500,7 +1524,10 @@
               ""
             ]
           ]
-        }
+        },
+        "aliases": [
+          "Trigger list template"
+        ]
       },
       {
         "name": "Tally tracking card",
@@ -1630,7 +1657,10 @@
           }
         ],
         "tone": "teal",
-        "note": "Agree the card and the break place with staff before you need it"
+        "note": "Agree the card and the break place with staff before you need it",
+        "aliases": [
+          "Signal or exit card for classroom use"
+        ]
       },
       {
         "name": "Restorative conversation prompt card",
@@ -1698,7 +1728,10 @@
             "What staff will do to support me",
             "Review date"
           ]
-        }
+        },
+        "aliases": [
+          "One-page support plan template"
+        ]
       },
       {
         "name": "Copy for class teacher or pastoral file",
@@ -2341,7 +2374,10 @@
               ""
             ]
           ]
-        }
+        },
+        "aliases": [
+          "Finalised self-monitoring chart"
+        ]
       },
       {
         "name": "Teacher briefing note",
@@ -2355,7 +2391,10 @@
     "items": [
       {
         "name": "Worry thermometer",
-        "body": "How big does the worry feel right now?\n10 Panic\n9 Almost panicking\n8 Hard to think of anything else\n7 Very worried\n6 Quite worried\n5 Uncomfortable\n4 Noticeable worry\n3 A little uneasy\n2 Barely noticeable\n1 No worry at all"
+        "body": "How big does the worry feel right now?\n10 Panic\n9 Almost panicking\n8 Hard to think of anything else\n7 Very worried\n6 Quite worried\n5 Uncomfortable\n4 Noticeable worry\n3 A little uneasy\n2 Barely noticeable\n1 No worry at all",
+        "aliases": [
+          "Worry thermometer handout"
+        ]
       },
       {
         "name": "Avoidance ladder template",
@@ -2467,7 +2506,10 @@
             "Who to contact if I'm struggling",
             "Review date"
           ]
-        }
+        },
+        "aliases": [
+          "Support plan template"
+        ]
       }
     ],
     "missing": []
@@ -2670,7 +2712,10 @@
               ""
             ]
           ]
-        }
+        },
+        "aliases": [
+          "Perspective-taking worksheet, adapted for staff relationships"
+        ]
       },
       {
         "name": "Respectful disagreement script card",
@@ -2700,7 +2745,10 @@
     "items": [
       {
         "name": "Low-pressure activity ideas",
-        "body": "For the mentor to choose from in Week 1 - let the pupil pick.\n• A drawing or colouring activity with no pressure to talk.\n• A simple shared game (cards, a puzzle, a quiz).\n• A conversation about the pupil's own interests - games, shows, music, sport.\n• A shared task, such as tidying or organising something together, which allows conversation without eye\ncontact."
+        "body": "For the mentor to choose from in Week 1 - let the pupil pick.\n• A drawing or colouring activity with no pressure to talk.\n• A simple shared game (cards, a puzzle, a quiz).\n• A conversation about the pupil's own interests - games, shows, music, sport.\n• A shared task, such as tidying or organising something together, which allows conversation without eye\ncontact.",
+        "aliases": [
+          "Choice of low-pressure activity materials"
+        ]
       },
       {
         "name": "Barriers-to-connecting card sort",
