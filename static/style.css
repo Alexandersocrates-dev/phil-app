@@ -111,14 +111,14 @@ a.back-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
   padding:var(--sp-3) var(--sp-5); border-radius:11px; border:none;
   font-family:var(--font-body); font-weight:600; font-size:14px; cursor:pointer; text-decoration:none;
   line-height:1.2;
-  transition:transform 180ms var(--ease-spring), box-shadow 180ms ease, background 180ms ease, filter 180ms ease, border-color 180ms ease;
+  transition:transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 .btn-primary{
-  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);
+  background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal-darker) 100%);
   color:#fff;
   box-shadow:0 2px 8px rgba(15,110,86,0.30);
 }
-.btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(15,110,86,0.35); filter:brightness(1.06);}
+.btn-primary:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(15,110,86,0.28); background:var(--teal-hover);}
 .btn-primary:active{transform:translateY(0) scale(0.97); box-shadow:0 2px 6px rgba(15,110,86,0.30);}
 .btn-secondary{
   background:#fff; color:var(--teal-darker); border:1.5px solid var(--teal);
@@ -131,7 +131,7 @@ a.back-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
   color:#fff;
   box-shadow:0 2px 8px rgba(133,79,11,0.28);
 }
-.btn-amber:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(133,79,11,0.24);}
+.btn-amber:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(133,79,11,0.24); background:var(--amber-hover);}
 .btn-amber:active{transform:translateY(0) scale(0.97);}
 .btn-red{
   background:#fff; color:var(--red); border:1.5px solid #F0C7C7;
@@ -404,7 +404,12 @@ details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
   --shadow-2: 0 1px 3px rgba(27,42,74,0.06), 0 4px 10px rgba(27,42,74,0.05);
   --shadow-3: 0 2px 6px rgba(27,42,74,0.07), 0 10px 24px rgba(27,42,74,0.08);
   --shadow-brand: 0 2px 8px rgba(15,110,86,0.28), 0 6px 16px rgba(15,110,86,0.12);
-  --shadow-focus-ring: 0 0 0 3px var(--teal-light);
+  /* The inner hairline carries the required 3:1 (5.85:1 on cream); the soft
+     halo does the visual work. The previous value was --teal-light at 1.07:1,
+     which is invisible on this background. */
+  --shadow-focus-ring: 0 0 0 1px var(--teal-dark), 0 0 0 4px rgba(15,110,86,0.28);
+  --amber-hover:#8F5709;
+  --teal-hover:#0C5C48;
 
   --radius-sm:8px; --radius-md:11px; --radius-lg:14px; --radius-pill:999px;
 
@@ -428,7 +433,7 @@ details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 .btn-secondary.is-loading::after{border-color:rgba(15,110,86,0.25); border-top-color:var(--teal-dark);}
 .btn-secondary:hover:not(:disabled){background:var(--teal-light); border-color:var(--teal-dark);}
 .btn-secondary:active:not(:disabled){background:var(--teal-light); transform:scale(0.98);}
-.btn-amber:hover:not(:disabled){filter:brightness(1.05); transform:translateY(-1px);}
+.btn-amber:hover:not(:disabled){transform:translateY(-1px); background:var(--amber-hover);}
 .btn-red:hover:not(:disabled){background:var(--red-light);}
 @keyframes btn-spin{to{transform:rotate(360deg);}}
 
@@ -541,3 +546,29 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 .stat-tile--neutral .stat-tile-label{color:var(--muted);}
 
 .card--danger{border-color:var(--red);}
+
+/* ============================================================
+   Reduced motion
+   For users who have asked their system to limit animation —
+   often because motion triggers nausea or dizziness. Transitions
+   of colour and shadow are kept, so nothing loses its hover or
+   focus affordance; only movement and looping animation stop.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  /* Colour and shadow are safe to animate, so give them back deliberately. */
+  .btn, .tile, .card, .mkt-course-pill, .field input, .field select, .field textarea{
+    transition:background-color 120ms linear, border-color 120ms linear,
+               color 120ms linear, box-shadow 120ms linear !important;
+  }
+  .btn:hover, .btn:active, .tile:hover, .card:hover, .mkt-course-pill:hover,
+  .segmented a, .segmented button{
+    transform:none !important;
+  }
+  .autosave-status.saving .autosave-dot{animation:none !important;}
+}
