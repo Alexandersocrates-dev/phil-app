@@ -131,7 +131,7 @@ a.back-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 }
 .btn-red:hover{background:var(--red-light); border-color:var(--red); transform:translateY(-1px);}
 .btn-red:active{transform:translateY(0) scale(0.98);}
-.btn-sm{min-height:36px; padding:var(--sp-2) var(--sp-3); font-size:13px; border-radius:9px;}
+.btn-sm{min-height:40px; padding:var(--sp-2) var(--sp-3); font-size:13px; border-radius:9px;}
 /* Small buttons sit at 36px for visual density on data-heavy tables. On touch
    the extra 8px matters more than the density does. */
 @media (pointer:coarse){
@@ -201,10 +201,10 @@ tbody tr:hover{background:var(--teal-light);}
 .avatar-sm{width:26px; height:26px; font-size:11px;}
 .avatar-lg{width:52px; height:52px; font-size:18px;}
 
-.segmented{display:inline-flex; background:var(--border); border-radius:11px; padding:3px; gap:2px;}
+.segmented{display:inline-flex; align-items:stretch; background:var(--border); border-radius:11px; padding:3px; gap:2px; min-height:44px;}
 .segmented a, .segmented button{
   border:none; background:transparent; padding:11px var(--sp-4); border-radius:8px; cursor:pointer;
-  line-height:1.2; min-height:38px; display:inline-flex; align-items:center;
+  line-height:1.2; display:inline-flex; align-items:center;
   font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--muted); text-decoration:none;
   transition:background 150ms ease, color 150ms ease, box-shadow 150ms ease;
 }
