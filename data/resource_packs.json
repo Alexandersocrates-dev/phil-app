@@ -42,7 +42,35 @@
       },
       {
         "name": "Feelings scale",
-        "body": "How strong is the feeling right now?\n1 Calm\n2 A little agitated\n3 Frustrated\n4 Very frustrated\n5 About to lose control"
+        "body": "How strong is the feeling right now?",
+        "table": {
+          "headers": [
+            "Rating",
+            "What it feels like"
+          ],
+          "rows": [
+            [
+              "1",
+              "Calm"
+            ],
+            [
+              "2",
+              "A little agitated"
+            ],
+            [
+              "3",
+              "Frustrated"
+            ],
+            [
+              "4",
+              "Very frustrated"
+            ],
+            [
+              "5",
+              "About to lose control"
+            ]
+          ]
+        }
       },
       {
         "name": "Safe outlet ideas",
@@ -132,13 +160,11 @@
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practice scenarios - cut out each card along the lines.\nA friend takes something without asking\nA teacher corrects your work in front of the class\nSomeone cuts in front of you in the queue\nYou're blamed for something you didn't do\nYour plan for the day changes at the last minute\nSomeone talks over you while you're speaking\nFor each scenario: pause and name the feeling, use the STOP technique, then try an assertive phrase instead of reacting straight away.",
-        "missing": []
+        "body": "Practice scenarios - cut out each card along the lines.\nA friend takes something without asking\nA teacher corrects your work in front of the class\nSomeone cuts in front of you in the queue\nYou're blamed for something you didn't do\nYour plan for the day changes at the last minute\nSomeone talks over you while you're speaking\nFor each scenario: pause and name the feeling, use the STOP technique, then try an assertive phrase instead of reacting straight away."
       },
       {
         "name": "Copy for class teacher or pastoral file",
-        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week anger-management course, focused on naming feelings early, widening the gap between feeling and reacting, and speaking up assertively rather than through outbursts or shutdown.\n• The pupil's known triggers and go-to strategies are listed on the attached one-page plan.\n• A brief, private word works better than a public correction when the pupil needs a reminder to use the agreed strategy.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed.",
-        "missing": []
+        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week anger-management course, focused on naming feelings early, widening the gap between feeling and reacting, and speaking up assertively rather than through outbursts or shutdown.\n• The pupil's known triggers and go-to strategies are listed on the attached one-page plan.\n• A brief, private word works better than a public correction when the pupil needs a reminder to use the agreed strategy.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed."
       }
     ],
     "missing": []
@@ -280,7 +306,35 @@
       },
       {
         "name": "Where am I now scale",
-        "body": "How would I describe my vaping right now?\n1 Never tried it\n2 Tried it once or twice\n3 Occasional use\n4 Regular use\n5 Feels hard to go without"
+        "body": "How would I describe my vaping right now?",
+        "table": {
+          "headers": [
+            "Rating",
+            "What it feels like"
+          ],
+          "rows": [
+            [
+              "1",
+              "Never tried it"
+            ],
+            [
+              "2",
+              "Tried it once or twice"
+            ],
+            [
+              "3",
+              "Occasional use"
+            ],
+            [
+              "4",
+              "Regular use"
+            ],
+            [
+              "5",
+              "Feels hard to go without"
+            ]
+          ]
+        }
       },
       {
         "name": "Trigger map template",
@@ -336,7 +390,15 @@
       },
       {
         "name": "One-page vaping support plan",
-        "body": "My personal plan, agreed with my mentor.\nMy known triggers:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy refusal or reduction strategy:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nWho I can go to for support:\n__________________________________________________________________________________________\nReview date:\n__________________________________________________________________________________________"
+        "body": "My personal plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My known triggers",
+            "My refusal or reduction strategy",
+            "Who I can go to for support",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for pastoral file",
@@ -475,7 +537,15 @@
       },
       {
         "name": "One-page young carer support plan",
-        "body": "My plan, agreed with my mentor.\nMy named contact at school:\n__________________________________________________________________________________________\nWhat helps me cope:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nHow to flag if things change at home:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nReview date:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My named contact at school",
+            "What helps me cope",
+            "How to flag if things change at home",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for pastoral file",
@@ -569,7 +639,15 @@
       },
       {
         "name": "One-page digital wellbeing plan",
-        "body": "My plan, agreed with my mentor.\nPrivacy steps I'll keep in place:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy screen time or bedtime boundary:\n__________________________________________________________________________________________\nWho I'd go to if something happened:\n__________________________________________________________________________________________\nReview date:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "Privacy steps I'll keep in place",
+            "My screen time or bedtime boundary",
+            "Who I'd go to if something happened",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for pastoral file",
@@ -670,7 +748,15 @@
       },
       {
         "name": "One-page exam wellbeing plan",
-        "body": "My plan, agreed with my mentor.\nMy routine that works:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy coping strategy for exam day:\n__________________________________________________________________________________________\nWho I can talk to if pressure builds:\n__________________________________________________________________________________________\nReview date:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My routine that works",
+            "My coping strategy for exam day",
+            "Who I can talk to if pressure builds",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for pastoral file",
@@ -684,7 +770,27 @@
     "items": [
       {
         "name": "Sensory profile scale",
-        "body": "How do sounds, light, touch and crowding feel to me?\n1 Comfortable\n2 Tolerable\n3 Overwhelming"
+        "body": "How do sounds, light, touch and crowding feel to me?",
+        "table": {
+          "headers": [
+            "Rating",
+            "What it feels like"
+          ],
+          "rows": [
+            [
+              "1",
+              "Comfortable"
+            ],
+            [
+              "2",
+              "Tolerable"
+            ],
+            [
+              "3",
+              "Overwhelming"
+            ]
+          ]
+        }
       },
       {
         "name": "Sense-by-sense examples card",
@@ -764,7 +870,16 @@
       },
       {
         "name": "One-page sensory support plan",
-        "body": "My plan, agreed with my mentor.\nMy known triggers:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy toolkit:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy agreed signal:\n__________________________________________________________________________________________\nEnvironment adjustments requested:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nReview date:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My known triggers",
+            "My toolkit",
+            "My agreed signal",
+            "Environment adjustments requested",
+            "Review date"
+          ]
+        }
       },
       {
         "name": "Copy for SENCO or pastoral file",
@@ -790,11 +905,25 @@
       },
       {
         "name": "Private note template",
-        "body": "A note that doesn't need to be shared.\n• Something I'm feeling today...\n• Something I miss...\n• Something I want to say..."
+        "body": "A note that doesn't need to be shared.",
+        "form": {
+          "fields": [
+            "Something I'm feeling today",
+            "Something I miss",
+            "Something I want to say"
+          ]
+        }
       },
       {
         "name": "Hard day toolkit template",
-        "body": "What helps on particularly difficult days.\nPeople I want to be near:\n__________________________________________________________________________________________\nActivities that help:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nIt's okay to ask for a quieter day:\n__________________________________________________________________________________________"
+        "body": "What helps on particularly difficult days.",
+        "form": {
+          "fields": [
+            "People I want to be near",
+            "Activities that help",
+            "It's okay to ask for a quieter day"
+          ]
+        }
       },
       {
         "name": "Anniversary planning card",
@@ -830,7 +959,14 @@
       },
       {
         "name": "One-page bereavement support plan",
-        "body": "My plan, agreed with my mentor.\nA coping strategy that works:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nUpcoming hard dates to be aware of:\n__________________________________________________________________________________________\nWho I can talk to:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "A coping strategy that works",
+            "Upcoming hard dates to be aware of",
+            "Who I can talk to"
+          ]
+        }
       },
       {
         "name": "Bereavement support services info card",
@@ -838,8 +974,7 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted\n• Grief can resurface unexpectedly around anniversaries or reminders, not just in the weeks immediately after the loss",
-        "missing": []
+        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted\n• Grief can resurface unexpectedly around anniversaries or reminders, not just in the weeks immediately after the loss"
       }
     ],
     "missing": []
@@ -921,7 +1056,31 @@
       },
       {
         "name": "My safety card template",
-        "body": "Kept somewhere private and accessible.\nTrusted adult 1:\n__________________________________________________________________________________________\nTrusted adult 2:\n__________________________________________________________________________________________\nSchool safeguarding contact:\n__________________________________________________________________________________________\nChildline: 0800 1111:\n__________________________________________________________________________________________"
+        "body": "Kept somewhere private and accessible.",
+        "table": {
+          "headers": [
+            "Who",
+            "Name and number"
+          ],
+          "rows": [
+            [
+              "Trusted adult 1",
+              ""
+            ],
+            [
+              "Trusted adult 2",
+              ""
+            ],
+            [
+              "School safeguarding contact",
+              ""
+            ],
+            [
+              "Childline",
+              "0800 1111"
+            ]
+          ]
+        }
       },
       {
         "name": "Reporting routes information card",
@@ -991,7 +1150,15 @@
       },
       {
         "name": "First day checklist template",
-        "body": "What to prepare ahead of time.\n• Route and timing checked in advance\n• Equipment and bag packed the night before\n• Timetable or map kept somewhere accessible\n• Name of a go-to person or place agreed"
+        "body": "What to prepare ahead of time. Tick each one off.",
+        "checklist": {
+          "items": [
+            "Route and timing checked in advance",
+            "Equipment and bag packed the night before",
+            "Timetable or map kept somewhere accessible",
+            "Name of a go-to person or place agreed"
+          ]
+        }
       },
       {
         "name": "Starting a conversation prompt cards",
@@ -1011,7 +1178,14 @@
       },
       {
         "name": "One-page transition plan",
-        "body": "My plan, agreed with my mentor.\nMy biggest worry and how to manage it:\n__________________________________________________________________________________________\n__________________________________________________________________________________________\nMy go-to coping strategy:\n__________________________________________________________________________________________\nA trusted adult in the new setting:\n__________________________________________________________________________________________"
+        "body": "My plan, agreed with my mentor.",
+        "form": {
+          "fields": [
+            "My biggest worry and how to manage it",
+            "My go-to coping strategy",
+            "A trusted adult in the new setting"
+          ]
+        }
       },
       {
         "name": "Copy for receiving school or pastoral file",
@@ -1043,7 +1217,35 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How intense does my anger feel right now?\n1 Very calm\n2 Calm\n3 Mildly unsettled\n4 Agitated\n5 About to lose control"
+        "body": "How intense does my anger feel right now?",
+        "table": {
+          "headers": [
+            "Rating",
+            "What it feels like"
+          ],
+          "rows": [
+            [
+              "1",
+              "Very calm"
+            ],
+            [
+              "2",
+              "Calm"
+            ],
+            [
+              "3",
+              "Mildly unsettled"
+            ],
+            [
+              "4",
+              "Agitated"
+            ],
+            [
+              "5",
+              "About to lose control"
+            ]
+          ]
+        }
       },
       {
         "name": "Trigger list",
@@ -1087,30 +1289,36 @@
       },
       {
         "name": "Tally tracking card",
-        "body": "Mark a tally each day for how many times you noticed the first body signal of anger.",
+        "body": "Mark a tally each time you notice the first body signal of anger. Add up your total at the end of each day.",
         "table": {
           "headers": [
-            "",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri"
+            "Day",
+            "Tally",
+            "Total"
           ],
           "rows": [
             [
-              "Rating (1-5)",
-              "",
-              "",
-              "",
+              "Mon",
               "",
               ""
             ],
             [
-              "One word for today",
+              "Tue",
               "",
+              ""
+            ],
+            [
+              "Wed",
               "",
+              ""
+            ],
+            [
+              "Thu",
               "",
+              ""
+            ],
+            [
+              "Fri",
               "",
               ""
             ]
@@ -1149,8 +1357,7 @@
       },
       {
         "name": "Copy for class teacher or pastoral file",
-        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week course on physical aggression, focused on recognising early body signals of anger and using calming strategies before things escalate.\n• The pupil's agreed triggers, early warning signs and calming strategies are listed on the attached one-page plan.\n• A calm, private reminder of the agreed strategy in the moment works better than a warning about consequences.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed.",
-        "missing": []
+        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week course on physical aggression, focused on recognising early body signals of anger and using calming strategies before things escalate.\n• The pupil's agreed triggers, early warning signs and calming strategies are listed on the attached one-page plan.\n• A calm, private reminder of the agreed strategy in the moment works better than a warning about consequences.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed."
       }
     ],
     "missing": []
@@ -1431,27 +1638,36 @@
     "items": [
       {
         "name": "Tally card",
-        "body": "Mark a tally each lesson for how many times you called out or talked over instructions.",
+        "body": "Mark a tally each time you call out or talk over instructions. Add up your total at the end of each lesson.",
         "table": {
           "headers": [
-            "",
-            "Lesson 1",
-            "Lesson 2",
-            "Lesson 3",
-            "Lesson 4"
+            "Lesson",
+            "Tally",
+            "Total"
           ],
           "rows": [
             [
-              "Rating (1-5)",
-              "",
-              "",
+              "Lesson 1",
               "",
               ""
             ],
             [
-              "One word for today",
+              "Lesson 2",
               "",
+              ""
+            ],
+            [
+              "Lesson 3",
               "",
+              ""
+            ],
+            [
+              "Lesson 4",
+              "",
+              ""
+            ],
+            [
+              "Lesson 5",
               "",
               ""
             ]

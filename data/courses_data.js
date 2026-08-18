@@ -1445,6 +1445,7 @@ module.exports = [
         "reflect": "What's most likely to get in the way of this specific plan, and what's the backup if it does?",
         "lookfor": "Don't default to assuming the barrier is 'mornings', for many pupils it's a specific lesson, a social situation, transport, or a responsibility at home. Let what the pupil told you in Weeks 1 and 2 drive this session, not a template.",
         "resources": [
+          "Barrier type card sort",
           "Barrier-specific action plan template"
         ],
         "home": "Support whichever specific change was agreed this week, that might mean an adjusted routine, transport, or something else entirely, consistency in following through matters more than what the change actually is.",
