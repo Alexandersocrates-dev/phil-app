@@ -55,8 +55,19 @@ _RESOURCE_STOPWORDS = {"template", "card", "cards", "sheet", "handout", "set", "
                        "note", "notes", "plan", "chart", "log", "the", "and", "for", "my"}
 
 
+def _stem(word):
+    """Crude suffix stripping, enough to match a resource name against the prose
+    that introduces it. "Calm-down strategy cards" has to match "practical
+    calming strategies", which exact-word matching misses entirely."""
+    for suffix in ("ing", "ies", "ed", "es", "s"):
+        if word.endswith(suffix) and len(word) - len(suffix) >= 3:
+            base = word[: -len(suffix)]
+            return base + "y" if suffix == "ies" else base
+    return word
+
+
 def _resource_keywords(name):
-    return {w for w in re.findall(r"[a-z]+", (name or "").lower())
+    return {_stem(w) for w in re.findall(r"[a-z]+", (name or "").lower())
             if w not in _RESOURCE_STOPWORDS and len(w) > 2}
 
 
@@ -626,6 +637,31 @@ def course_resources_pdf(request):
         return Response("Resource pack not available for this course yet", status="404 Not Found")
 
     items = entry.get("items", [])
+
+    # ?week=N narrows the pack to that session's own resources. A mentor mid
+    # session wants the two sheets for today, not all eleven for the course.
+    week_param = (request.query.get("week") or [None])[0]
+    if week_param and week_param.isdigit():
+        wk = conn0 = db.get_conn()
+        try:
+            row = conn0.execute(
+                "SELECT resources FROM weeks WHERE course_id=? AND week_number=?",
+                (course["id"], int(week_param)),
+            ).fetchone()
+        finally:
+            conn0.close()
+        if row:
+            wanted = {_norm_resource(n) for n in json.loads(row["resources"] or "[]")}
+            # Match on aliases too, exactly as the session page does.
+            scoped = []
+            for it in items:
+                names = {_norm_resource(it.get("name"))}
+                names |= {_norm_resource(a) for a in it.get("aliases", [])}
+                if names & wanted:
+                    scoped.append(it)
+            if scoped:
+                items = scoped
+
     limit = weeks_allowed(user)
     conn = db.get_conn()
     try:
@@ -1518,9 +1554,17 @@ def session_submit(request):
             JOIN courses ON courses.id=enrolments.course_id WHERE enrolments.id=?""",
             (enrolment_id,),
         ).fetchone()
+        if enrolment is None:
+            return with_flash("/mentor", "That enrolment no longer exists.", "error")
         next_week_number = enrolment["current_week"] + 1
         week = conn.execute("SELECT * FROM weeks WHERE course_id=? AND week_number=?",
                              (enrolment["course_id"], next_week_number)).fetchone()
+        if week is None:
+            # Every session is already recorded. Reached by a double submit, a
+            # refreshed form, or a second tab, so say so plainly rather than
+            # crashing on week["id"].
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              "All five sessions are already recorded for this course.", "ok")
 
         cur = conn.execute(
             """INSERT INTO session_records (enrolment_id, week_id, date, mood_rating,

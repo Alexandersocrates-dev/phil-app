@@ -140,7 +140,7 @@
 <p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
 <div class="pill-row" style="margin:0;">
 {% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}
-<p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf" target="_blank">Download resources (PDF)</a></p>
+<p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">Download this session&rsquo;s resources (PDF)</a></p>
 </div>
 </div>
 {% endif %}
@@ -153,6 +153,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Check-in <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
+<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>, then review last session&rsquo;s task.</p>
 {% if week.checkin %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.checkin }}</p>{% endif %}
 {% if prev_week_items or prev_record %}
 <details class="res-prev">
@@ -413,6 +414,15 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   update();
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', update);
+
+  // One submission only: a second click while the first is in flight pushes the
+  // course past its last week, which is what produced the error page.
+  form.addEventListener('submit', function(){
+    [].forEach.call(form.querySelectorAll('button[type=submit]'), function(b){
+      b.disabled = true;
+      b.textContent = 'Saving...';
+    });
+  });
 })();
 </script>
 {% endblock %}
