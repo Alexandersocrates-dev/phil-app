@@ -42,18 +42,118 @@
       },
       {
         "name": "Feelings scale",
-        "body": "How strong is the feeling right now?\n1 Calm\n2 A little agitated\n3 Frustrated\n4 Very frustrated\n5 About to lose control"
+        "body": "How strong is it right now?",
+        "tone": "red",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Calm",
+            "art": "art-level-1",
+            "text": "Nothing building.",
+            "note": ""
+          },
+          {
+            "cat": "2",
+            "title": "A little agitated",
+            "art": "art-level-2",
+            "text": "Something's started.",
+            "note": "Easiest point to stop it"
+          },
+          {
+            "cat": "3",
+            "title": "Frustrated",
+            "art": "art-level-3",
+            "text": "Hard to shake off.",
+            "note": "Use the outlet now"
+          },
+          {
+            "cat": "4",
+            "title": "Very frustrated",
+            "art": "art-level-4",
+            "text": "Close to the urge.",
+            "note": "Leave the situation"
+          },
+          {
+            "cat": "5",
+            "title": "About to lose control",
+            "art": "art-level-5",
+            "text": "Past thinking.",
+            "note": "Adult help, not self-management"
+          }
+        ]
       },
       {
         "name": "Safe outlet ideas",
-        "body": "For mentor and class teacher - agree where these are kept and how they're accessed.\n• A stress ball or squeezable object, kept somewhere the pupil can access quickly.\n• Scrap paper set aside for tearing up, kept in an agreed spot.\n• A resistance band or something similar for a physical outlet.\n• Wall or chair push-ups - a few seconds of controlled physical effort.\n• A short, supervised movement break outside the classroom.",
+        "body": "Agree with the class teacher where each is kept. An outlet you can't reach is no use.",
         "aliases": [
           "Sample sensory or physical outlet items, such as a stress ball or scrap paper"
+        ],
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Squeeze",
+            "title": "Stress ball",
+            "art": "art-squeeze",
+            "text": "Kept somewhere the pupil can reach quickly.",
+            "note": "Not in a teacher's drawer"
+          },
+          {
+            "cat": "Tear",
+            "title": "Scrap paper",
+            "art": "art-jagged",
+            "text": "Set aside for tearing up, in an agreed spot.",
+            "note": "Cheap and effective"
+          },
+          {
+            "cat": "Push",
+            "title": "Resistance band",
+            "art": "art-texture",
+            "text": "A physical outlet that isn't destructive.",
+            "note": "Works for some, not all"
+          },
+          {
+            "cat": "Move",
+            "title": "A walk with a purpose",
+            "art": "art-walk",
+            "text": "An errand is easier to ask for than a break.",
+            "note": "Agree the route"
+          }
         ]
       },
       {
         "name": "Restorative conversation prompt card",
-        "body": "Questions to talk through impact and repair.\nUse these questions calmly, one at a time.\nWhat happened?\nWhat were you feeling right before?\nWho or what was affected, and how?\nWhat can you do to help put this right?"
+        "body": "About impact and repair, not blame.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Question 1",
+            "title": "What happened?",
+            "art": "art-thoughts",
+            "text": "Work backwards if it's easier.",
+            "note": ""
+          },
+          {
+            "cat": "Question 2",
+            "title": "What were you feeling right before?",
+            "art": "art-body-signals",
+            "text": "The feeling, not the action.",
+            "note": ""
+          },
+          {
+            "cat": "Question 3",
+            "title": "Who or what was affected, and how?",
+            "art": "art-apart",
+            "text": "Name a cost and a person.",
+            "note": ""
+          },
+          {
+            "cat": "Question 4",
+            "title": "What can you do to help put this right?",
+            "art": "art-hand-heart",
+            "text": "Keep it achievable.",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "Prevention and response plan template",
@@ -80,9 +180,47 @@
     "items": [
       {
         "name": "Anger thermometer",
-        "body": "How intense does the anger feel right now?\n10 About to lose control\n9 Furious\n8 Very angry\n7 Angry\n6 Agitated\n5 Frustrated\n4 Annoyed\n3 Slightly annoyed\n2 Relaxed\n1 Totally calm",
+        "body": "Most people use one word for all of this. Point at where you are.",
         "aliases": [
           "Anger thermometer handout"
+        ],
+        "tone": "red",
+        "cards": [
+          {
+            "cat": "1–2",
+            "title": "Calm",
+            "art": "art-level-1",
+            "text": "Totally settled.",
+            "note": ""
+          },
+          {
+            "cat": "3–4",
+            "title": "Annoyed",
+            "art": "art-level-2",
+            "text": "Slightly irritated.",
+            "note": "You can act on this one"
+          },
+          {
+            "cat": "5–6",
+            "title": "Frustrated",
+            "art": "art-level-3",
+            "text": "Building now.",
+            "note": "The gap is still open"
+          },
+          {
+            "cat": "7–8",
+            "title": "Angry",
+            "art": "art-level-4",
+            "text": "Hard to think past it.",
+            "note": "STOP goes here"
+          },
+          {
+            "cat": "9–10",
+            "title": "Furious",
+            "art": "art-level-5",
+            "text": "About to lose control.",
+            "note": "Leave, then talk later"
+          }
         ]
       },
       {
@@ -205,7 +343,30 @@
       },
       {
         "name": "STOP technique card",
-        "body": "A four-step routine for the moment before you react.\nUse this whenever you notice anger starting to build.\nStop - pause before you do or say anything.\nTake a breath - one slow breath in, one slow breath out.\nObserve - what am I feeling, and how strong is it?\nProceed - choose what to do next, rather than reacting automatically."
+        "body": "For the moment anger starts building. The gap already exists — this makes it longer.",
+        "tone": "teal",
+        "steps": [
+          {
+            "title": "Stop",
+            "art": "art-hand-up",
+            "text": "Pause before you do or say anything."
+          },
+          {
+            "title": "Take a breath",
+            "art": "art-breath-count",
+            "text": "One slow breath in, one slow breath out."
+          },
+          {
+            "title": "Observe",
+            "art": "art-body-signals",
+            "text": "What am I feeling, and how strong is it?"
+          },
+          {
+            "title": "Proceed",
+            "art": "art-fork",
+            "text": "Choose what to do next, rather than react."
+          }
+        ]
       },
       {
         "name": "Passive / aggressive / assertive cards",
@@ -261,7 +422,38 @@
       },
       {
         "name": "Assertive phrase bank",
-        "body": "Phrases to try instead of shouting or shutting down.\nPractise saying these out loud until they feel natural.\n\"I'm finding this really frustrating right now.\"\n\"Can I have a minute before we carry on?\"\n\"I don't agree, but I'm willing to talk about it.\"\n\"I need some space, I'll come back to this.\""
+        "body": "Say these out loud until they sound like you. Reading them silently isn't practice.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Name it",
+            "title": "“I'm finding this really frustrating.”",
+            "art": "art-talk",
+            "text": "Says the feeling before it says itself.",
+            "note": ""
+          },
+          {
+            "cat": "Buy time",
+            "title": "“Can I have a minute before we carry on?”",
+            "art": "art-hourglass",
+            "text": "Asks for the gap out loud.",
+            "note": "Most adults will say yes"
+          },
+          {
+            "cat": "Disagree",
+            "title": "“I don't agree, but I'm willing to talk about it.”",
+            "art": "art-nod",
+            "text": "Holds your position without a fight.",
+            "note": ""
+          },
+          {
+            "cat": "Withdraw",
+            "title": "“I need some space, I'll come back to this.”",
+            "art": "art-door-exit",
+            "text": "Leaving on purpose, not storming off.",
+            "note": "Say the second half"
+          }
+        ]
       },
       {
         "name": "My anger-management plan",
@@ -331,7 +523,31 @@
       },
       {
         "name": "Copy for class teacher or pastoral file",
-        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week anger-management course, focused on naming feelings early, widening the gap between feeling and reacting, and speaking up assertively rather than through outbursts or shutdown.\n• The pupil's known triggers and go-to strategies are listed on the attached one-page plan.\n• A brief, private word works better than a public correction when the pupil needs a reminder to use the agreed strategy.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed."
+        "body": "What the class teacher needs, on one side of paper.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Context",
+            "title": "Course completed",
+            "art": "art-agreed-word",
+            "text": "Five weeks on naming feelings early and widening the gap before reacting.",
+            "note": ""
+          },
+          {
+            "cat": "Act on this",
+            "title": "Their early signs",
+            "art": "art-body-signals",
+            "text": "What it looks like before an outburst.",
+            "note": "Act here, not later"
+          },
+          {
+            "cat": "Act on this",
+            "title": "The phrase they'll use",
+            "art": "art-talk",
+            "text": "How they'll ask for a minute. Allow it.",
+            "note": "Refusing it undoes the work"
+          }
+        ]
       }
     ],
     "missing": []
@@ -545,9 +761,33 @@
       },
       {
         "name": "Attendance file note",
-        "body": "For the school's attendance lead, to accompany the graded attendance plan.\n• This pupil has completed a 5-week mentoring course on attendance and is working from an agreed graded\nattendance plan, not an immediate jump to full attendance.\n• The barrier identified through this course is specific to this pupil - please refer to the pupil's action plan\nrather than assuming a generic cause.\n• Please let the mentor know of any pattern changes, positive or otherwise, so the plan can be adjusted at the\nnext review date.\n• If statutory attendance thresholds are a concern, please loop in the Education Welfare Officer alongside this\nplan, not instead of it.",
+        "body": "For the attendance lead, alongside the graded plan.",
         "aliases": [
           "Copy for the attendance file"
+        ],
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Context",
+            "title": "A graded plan, not full attendance",
+            "art": "art-rise",
+            "text": "The pupil is working up in steps, from what they already manage.",
+            "note": "Pushing to full undoes it"
+          },
+          {
+            "cat": "The finding",
+            "title": "The specific barrier",
+            "art": "art-locate",
+            "text": "Named through the course, in the pupil's words.",
+            "note": "Not assumed"
+          },
+          {
+            "cat": "Act on this",
+            "title": "What's been agreed",
+            "art": "art-agreed-word",
+            "text": "The practical change and who is doing it.",
+            "note": "Needs someone's name on it"
+          }
         ]
       }
     ],
@@ -953,7 +1193,38 @@
       },
       {
         "name": "What is a young carer? briefing card",
-        "body": "A young carer is any young person who helps look after a family member.\n• Could involve physical care, emotional support, or household tasks\n• Applies to caring for a parent, sibling, or other family member\n• A recognised, valued role, not something to be ashamed of\n• Support exists that doesn't take the role away from you"
+        "body": "Say this plainly and early. Many young carers don't use the term about themselves.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "What counts",
+            "title": "Practical care",
+            "art": "art-caring",
+            "text": "Medication, cooking, cleaning, appointments.",
+            "note": ""
+          },
+          {
+            "cat": "What counts",
+            "title": "Emotional support",
+            "art": "art-hand-heart",
+            "text": "Being the one who listens, or keeps things calm.",
+            "note": "Counts just as much"
+          },
+          {
+            "cat": "Who for",
+            "title": "Anyone in the family",
+            "art": "art-apart",
+            "text": "A parent, a sibling, a grandparent.",
+            "note": ""
+          },
+          {
+            "cat": "Say this",
+            "title": "A recognised role",
+            "art": "art-stand",
+            "text": "Not a secret, and nothing to be ashamed of.",
+            "note": "Support exists that doesn't take over"
+          }
+        ]
       },
       {
         "name": "Time balance chart",
@@ -990,7 +1261,52 @@
       },
       {
         "name": "Weekly activity card set",
-        "body": "Sort each into caring, school, or personal time:\nHomework Helping with medication\nSeeing friends Cooking or cleaning\nRest or hobbies Looking after a sibling"
+        "body": "Sort each into caring, school, or time that's yours. Build the real week, not an ideal one.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Sort it",
+            "title": "Homework",
+            "art": "art-behind",
+            "text": "",
+            "note": ""
+          },
+          {
+            "cat": "Sort it",
+            "title": "Helping with medication",
+            "art": "art-caring",
+            "text": "",
+            "note": ""
+          },
+          {
+            "cat": "Sort it",
+            "title": "Seeing friends",
+            "art": "art-friends-out",
+            "text": "",
+            "note": ""
+          },
+          {
+            "cat": "Sort it",
+            "title": "Cooking or cleaning",
+            "art": "art-caring",
+            "text": "",
+            "note": ""
+          },
+          {
+            "cat": "Sort it",
+            "title": "Rest or hobbies",
+            "art": "art-quiet",
+            "text": "",
+            "note": ""
+          },
+          {
+            "cat": "Sort it",
+            "title": "Looking after a sibling",
+            "art": "art-caring",
+            "text": "",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "What helps me list template",
@@ -1018,7 +1334,52 @@
       },
       {
         "name": "Five-minute reset ideas card",
-        "body": "Small moments that can help:\nMusic for 5 minutes A short walk\nTexting a friend Quiet time with a drink\nStretching or movement Drawing or writing"
+        "body": "Five minutes is not nothing. Long blocks of free time may never arrive.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Reset",
+            "title": "Music for five minutes",
+            "art": "art-quiet",
+            "text": "Headphones, one song.",
+            "note": "Works almost anywhere"
+          },
+          {
+            "cat": "Reset",
+            "title": "A short walk",
+            "art": "art-walk",
+            "text": "Round the block, or the corridor.",
+            "note": ""
+          },
+          {
+            "cat": "Reset",
+            "title": "Text a friend",
+            "art": "art-talk",
+            "text": "One message, no obligation.",
+            "note": ""
+          },
+          {
+            "cat": "Reset",
+            "title": "Quiet time with a drink",
+            "art": "art-hungry",
+            "text": "Sitting down counts.",
+            "note": ""
+          },
+          {
+            "cat": "Reset",
+            "title": "Stretching or movement",
+            "art": "art-texture",
+            "text": "Shoulders, back, hands.",
+            "note": "Good after lifting"
+          },
+          {
+            "cat": "Reset",
+            "title": "Drawing or writing",
+            "art": "art-thoughts",
+            "text": "Nothing anyone else reads.",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "My support network map",
@@ -1046,7 +1407,31 @@
       },
       {
         "name": "Local young carers services info card",
-        "body": "Support built specifically for young carers.\n• Young carers services offer breaks, activities and someone to talk to\n• School may have a young carers lead or pastoral contact\n• Accessing support helps the whole family, not just the pupil\n• Nothing shared here changes your caring role unless you want it to"
+        "body": "These exist because the role is recognised, not because anything has gone wrong.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Outside school",
+            "title": "Young carers services",
+            "art": "art-join",
+            "text": "Breaks, activities, and someone to talk to.",
+            "note": "Often free"
+          },
+          {
+            "cat": "In school",
+            "title": "Young carers or pastoral lead",
+            "art": "art-hand-heart",
+            "text": "Name the actual person before the session ends.",
+            "note": "A name, not a role"
+          },
+          {
+            "cat": "Say this",
+            "title": "Nothing changes without you",
+            "art": "art-stand",
+            "text": "Getting support doesn't take the caring role away.",
+            "note": "The fear that stops most referrals"
+          }
+        ]
       },
       {
         "name": "One-page young carer support plan",
@@ -1062,7 +1447,31 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted\n• Flexible: updated if caring responsibilities change"
+        "body": "What gets shared onward, and how it stays useful.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "The review date",
+            "art": "art-clock",
+            "text": "Set before this is filed.",
+            "note": ""
+          },
+          {
+            "cat": "Important",
+            "title": "Caring load changes",
+            "art": "art-plan-change",
+            "text": "Update this when it does. A fixed plan stops matching quickly.",
+            "note": ""
+          }
+        ]
       }
     ],
     "missing": []
@@ -1638,11 +2047,73 @@
     "items": [
       {
         "name": "Sensory profile scale",
-        "body": "How do sounds, light, touch and crowding feel to me?\n1 Comfortable\n2 Tolerable\n3 Overwhelming"
+        "body": "How does each sense feel to you at school? Take a reading now and again in week five.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Comfortable",
+            "art": "art-level-1",
+            "text": "I barely notice it.",
+            "note": ""
+          },
+          {
+            "cat": "2",
+            "title": "Tolerable",
+            "art": "art-level-3",
+            "text": "I notice it, but I can carry on.",
+            "note": "Watch this one on a bad day"
+          },
+          {
+            "cat": "3",
+            "title": "Overwhelming",
+            "art": "art-overload",
+            "text": "I can't think past it.",
+            "note": "This is what the toolkit is for"
+          }
+        ]
       },
       {
         "name": "Sense-by-sense examples card",
-        "body": "Everyone's senses work a little differently.\n• Sound: loud rooms, sudden noises, background chatter\n• Light: bright or flickering lights\n• Touch: certain fabrics, tags, or textures\n• Smell: strong smells like food or cleaning products\n• Crowding: busy corridors or packed spaces"
+        "body": "Go through one sense at a time — easier to answer than an open question.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Sound",
+            "title": "Noise",
+            "art": "art-noise",
+            "text": "Loud rooms, sudden noises, background chatter.",
+            "note": "Often the most common"
+          },
+          {
+            "cat": "Light",
+            "title": "Brightness",
+            "art": "art-overload",
+            "text": "Bright or flickering lights.",
+            "note": "Strip lighting especially"
+          },
+          {
+            "cat": "Touch",
+            "title": "Textures",
+            "art": "art-texture",
+            "text": "Certain fabrics, labels, or seams.",
+            "note": "Uniform is often the issue"
+          },
+          {
+            "cat": "Smell",
+            "title": "Strong smells",
+            "art": "art-hungry",
+            "text": "Food, cleaning products, aerosols.",
+            "note": "Peaks near the lunch hall"
+          },
+          {
+            "cat": "Crowding",
+            "title": "Busy spaces",
+            "art": "art-corridor",
+            "text": "Packed corridors, close bodies.",
+            "note": "Worst between lessons"
+          }
+        ]
       },
       {
         "name": "School day sensory timeline",
@@ -1678,11 +2149,87 @@
       },
       {
         "name": "Difficult environments card",
-        "body": "Why some moments are harder than others.\n• Busy corridors combine noise, crowding and unpredictability at once\n• Assembly often means sitting still in a loud, echoey space\n• Lunch halls combine noise, smell and crowding together\n• Naming the hardest moments makes it possible to plan around them"
+        "body": "These stack several demands at once. That's why it isn't the lesson that's hard.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Stacked",
+            "title": "Corridors",
+            "art": "art-corridor",
+            "text": "Noise, crowding and unpredictability together.",
+            "note": "Try leaving two minutes early"
+          },
+          {
+            "cat": "Stacked",
+            "title": "Assembly",
+            "art": "art-quiet",
+            "text": "Sitting still in a loud, echoey space.",
+            "note": "An end-of-row seat helps"
+          },
+          {
+            "cat": "Stacked",
+            "title": "Lunch hall",
+            "art": "art-hungry",
+            "text": "Noise, smell and crowding at once.",
+            "note": "An alternative room is reasonable"
+          },
+          {
+            "cat": "Worth saying",
+            "title": "Naming helps",
+            "art": "art-locate",
+            "text": "Naming the hardest moments makes them plannable.",
+            "note": "You can't plan around a vague bad day"
+          }
+        ]
       },
       {
         "name": "Sensory toolkit options card",
-        "body": "Tools that can help:\nEar defenders or earplugs Fidget tool\nSunglasses or a cap Quiet space or pass\nMovement break Weighted or textured item"
+        "body": "These are aids, not treats. They shouldn't be earned or removed as a sanction.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Sound",
+            "title": "Ear defenders or plugs",
+            "art": "art-noise",
+            "text": "Takes the edge off without blocking speech.",
+            "note": "Discreet options exist"
+          },
+          {
+            "cat": "Hands",
+            "title": "Fidget tool",
+            "art": "art-squeeze",
+            "text": "Somewhere for the restlessness to go.",
+            "note": "Agree which ones are fine in class"
+          },
+          {
+            "cat": "Light",
+            "title": "Cap or sunglasses",
+            "art": "art-overload",
+            "text": "For bright or flickering rooms.",
+            "note": "Needs a word with staff first"
+          },
+          {
+            "cat": "Space",
+            "title": "Quiet space or pass",
+            "art": "art-space",
+            "text": "Somewhere to go before it tips over.",
+            "note": "Best used early, not late"
+          },
+          {
+            "cat": "Body",
+            "title": "Movement break",
+            "art": "art-walk",
+            "text": "A short walk with a purpose.",
+            "note": "An errand is easier than a request"
+          },
+          {
+            "cat": "Touch",
+            "title": "Weighted or textured item",
+            "art": "art-texture",
+            "text": "Something steady to hold.",
+            "note": "Try before deciding"
+          }
+        ]
       },
       {
         "name": "My personal toolkit list template",
@@ -1710,11 +2257,65 @@
       },
       {
         "name": "Signal or exit card template",
-        "body": "How I ask for a sensory break.\n• 1. I show this card or use my agreed signal.\n• 2. Staff acknowledge with a nod or agreed response.\n• 3. I go to my quiet space or take my break.\n• 4. I return when I'm ready."
+        "body": "The point is asking without explaining yourself mid-lesson.",
+        "tone": "teal",
+        "steps": [
+          {
+            "title": "Show the card or signal",
+            "art": "art-raise-card",
+            "text": "No words needed, and no audience."
+          },
+          {
+            "title": "Staff acknowledge",
+            "art": "art-nod",
+            "text": "A nod, or whatever you've agreed. No questions in front of the class."
+          },
+          {
+            "title": "Go",
+            "art": "art-door-exit",
+            "text": "To the quiet space, or for the agreed break."
+          },
+          {
+            "title": "Return when ready",
+            "art": "art-return-seat",
+            "text": "Back in without a conversation about it."
+          }
+        ]
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practise using the signal in each situation:\nBusy corridor Loud assembly\nCrowded lunch hall Sudden fire drill or alarm"
+        "body": "Practise the signal in each of these, so the first real use isn't the first attempt.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Scenario",
+            "title": "Busy corridor",
+            "art": "art-corridor",
+            "text": "Between lessons, everyone moving at once.",
+            "note": "Where can you step aside?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Loud assembly",
+            "art": "art-quiet",
+            "text": "Sitting still, echoey hall.",
+            "note": "Who do you signal to?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Crowded lunch hall",
+            "art": "art-hungry",
+            "text": "Noise, smell and people together.",
+            "note": "Is there another room?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Fire alarm",
+            "art": "art-overload",
+            "text": "Sudden, unpredictable, unavoidable.",
+            "note": "Plan this one in advance"
+          }
+        ]
       },
       {
         "name": "One-page sensory support plan",
@@ -1731,7 +2332,31 @@
       },
       {
         "name": "Copy for SENCO or pastoral file",
-        "body": "Shared with relevant staff for continuity.\n• Plan summary as agreed with the pupil\n• Complements, does not replace, any existing EHC plan\n• Review point set"
+        "body": "What gets shared onward, and what it does and doesn't replace.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Important",
+            "title": "Complements an EHC plan",
+            "art": "art-agreed-word",
+            "text": "This does not replace any existing plan or assessment.",
+            "note": "Say so to the SENCO"
+          },
+          {
+            "cat": "Shared",
+            "title": "Review point",
+            "art": "art-clock",
+            "text": "Set before the plan is filed.",
+            "note": ""
+          }
+        ]
       }
     ],
     "missing": []
@@ -1741,15 +2366,136 @@
     "items": [
       {
         "name": "Grief feeling word cards",
-        "body": "Pick any that have felt true recently:\nSad Angry\nNumb Relieved\nGuilty Confused\nOkay sometimes Lonely"
+        "body": "Pick any that have felt true recently. You don't have to explain why, and you can pick none.",
+        "tone": "pink",
+        "cards": [
+          {
+            "cat": "Feeling",
+            "title": "Sad",
+            "art": "art-fall",
+            "text": "The one people expect.",
+            "note": "No need to justify it"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Angry",
+            "art": "art-jagged",
+            "text": "At someone, or at nothing in particular.",
+            "note": "Common, rarely said out loud"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Numb",
+            "art": "art-level",
+            "text": "Feeling not much at all.",
+            "note": "Not the same as being fine"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Relieved",
+            "art": "art-rise",
+            "text": "Especially after a long illness.",
+            "note": "Doesn't mean you loved them less"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Guilty",
+            "art": "art-past-hurt",
+            "text": "About something said, or not said.",
+            "note": "Almost everyone has this"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Confused",
+            "art": "art-confused",
+            "text": "Not sure what you feel.",
+            "note": "That's an answer too"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Okay sometimes",
+            "art": "art-thumb",
+            "text": "Laughing, enjoying things.",
+            "note": "Doesn't undo the grief"
+          },
+          {
+            "cat": "Feeling",
+            "title": "Lonely",
+            "art": "art-alone-ok",
+            "text": "Even with people around.",
+            "note": "Grief is isolating by nature"
+          }
+        ]
       },
       {
         "name": "Grief isn't one feeling briefing card",
-        "body": "Grief can look many different ways.\n• Anger, numbness, guilt and relief can all be part of grief\n• There's no fixed order or timeline\n• Moments of ordinary happiness don't mean you're not grieving\n• Everyone's grief looks a little different"
+        "body": "For the mentor to say out loud, early. Most young people think they're grieving wrongly.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "True",
+            "title": "It isn't only sadness",
+            "art": "art-thoughts",
+            "text": "Anger, numbness, guilt and relief are all part of it.",
+            "note": ""
+          },
+          {
+            "cat": "True",
+            "title": "There's no order",
+            "art": "art-tangle",
+            "text": "No stages to work through, no timeline to be behind.",
+            "note": "Stages are a myth"
+          },
+          {
+            "cat": "True",
+            "title": "Happiness is allowed",
+            "art": "art-thumb",
+            "text": "Ordinary good moments don't mean you're not grieving.",
+            "note": "Guilt about this is very common"
+          },
+          {
+            "cat": "True",
+            "title": "Everyone's differs",
+            "art": "art-apart",
+            "text": "Yours won't look like anyone else's.",
+            "note": "Including your family's"
+          }
+        ]
       },
       {
         "name": "Feelings thermometer",
-        "body": "How does today feel, on a scale?\n1 Really hard\n2 A bit hard\n3 Okay\n4 Good"
+        "body": "However today is, is fine to say here.",
+        "tone": "pink",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Really hard",
+            "art": "art-level-1",
+            "text": "Getting through it, not much more.",
+            "note": "Worth telling someone"
+          },
+          {
+            "cat": "2",
+            "title": "A bit hard",
+            "art": "art-level-2",
+            "text": "Heavier than usual.",
+            "note": ""
+          },
+          {
+            "cat": "3",
+            "title": "Okay",
+            "art": "art-level-3",
+            "text": "Getting on with things.",
+            "note": ""
+          },
+          {
+            "cat": "4",
+            "title": "Good",
+            "art": "art-level-4",
+            "text": "A genuinely alright day.",
+            "note": "These are allowed"
+          }
+        ]
       },
       {
         "name": "Private note template",
@@ -1775,7 +2521,38 @@
       },
       {
         "name": "Anniversary planning card",
-        "body": "Hard dates can bring feelings back strongly.\n• Birthdays, anniversaries and holidays are common triggers\n• It's normal to feel it more even after things felt settled\n• A small plan for the day ahead can help\n• Unexpected triggers (a smell, a song) are also normal"
+        "body": "Hard dates arrive whether or not you've thought about them. A small plan helps.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Expected",
+            "title": "Birthdays",
+            "art": "art-clock",
+            "text": "Theirs, and sometimes yours.",
+            "note": "Decide in advance what you'll do"
+          },
+          {
+            "cat": "Expected",
+            "title": "Anniversaries",
+            "art": "art-clock",
+            "text": "The date itself, and the run-up.",
+            "note": "The week before is often worse"
+          },
+          {
+            "cat": "Expected",
+            "title": "Holidays",
+            "art": "art-friends-out",
+            "text": "Christmas, Mother's or Father's Day, results day.",
+            "note": "School may not realise"
+          },
+          {
+            "cat": "Unexpected",
+            "title": "A smell or a song",
+            "art": "art-thoughts",
+            "text": "Arrives with no warning at all.",
+            "note": "Normal, and not a setback"
+          }
+        ]
       },
       {
         "name": "Memory box list template",
@@ -1803,7 +2580,32 @@
       },
       {
         "name": "Letter-writing prompt card",
-        "body": "If you'd like to write a letter, no need to share it.\n• Something I want to tell you...\n• Something I remember about you...\n• Something I want you to know I'm doing..."
+        "body": "Only if you'd like to. Nobody reads this — not your mentor, not your family, not the file.",
+        "tone": "teal",
+        "table": {
+          "headers": [
+            "Prompt",
+            "What I'd write"
+          ],
+          "rows": [
+            [
+              "Something I want to tell you…",
+              ""
+            ],
+            [
+              "Something I remember about you…",
+              ""
+            ],
+            [
+              "Something I want you to know I'm doing…",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "One-page bereavement support plan",
@@ -1818,11 +2620,59 @@
       },
       {
         "name": "Bereavement support services info card",
-        "body": "Further support if wanted.\n• School counsellor or pastoral lead\n• Winston's Wish: childhood bereavement charity\n• Childhood Bereavement Network: local service finder"
+        "body": "Five weeks is rarely enough for grief. These are here for after, and there's no wrong time to use them.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "In school",
+            "title": "Pastoral lead or counsellor",
+            "art": "art-hand-heart",
+            "text": "Name the actual person before this session ends.",
+            "note": "A name, not a role"
+          },
+          {
+            "cat": "Charity",
+            "title": "Winston's Wish",
+            "art": "art-talk",
+            "text": "Childhood bereavement support, including a helpline.",
+            "note": "For the pupil and the family"
+          },
+          {
+            "cat": "Finder",
+            "title": "Childhood Bereavement Network",
+            "art": "art-locate",
+            "text": "Finds local services near you.",
+            "note": "Useful if school support runs out"
+          }
+        ]
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted\n• Grief can resurface unexpectedly around anniversaries or reminders, not just in the weeks immediately after the loss"
+        "body": "What gets shared onward, and the one thing staff most often get wrong.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "The review date",
+            "art": "art-clock",
+            "text": "Set before this is filed.",
+            "note": ""
+          },
+          {
+            "cat": "Important",
+            "title": "Grief comes back",
+            "art": "art-rise",
+            "text": "It resurfaces at anniversaries and reminders, not just in the weeks after.",
+            "note": "Months later is not a relapse"
+          }
+        ]
       }
     ],
     "missing": []
@@ -1860,15 +2710,108 @@
       },
       {
         "name": "What makes a relationship feel safe? briefing card",
-        "body": "Features of a healthy relationship.\n• Mutual respect and equal say\n• No pressure to keep secrets from people who care about you\n• A 'no' is respected without punishment\n• You feel like yourself around them, not smaller"
+        "body": "The test isn't whether someone is nice to you. It's these four.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Safe",
+            "title": "Equal say",
+            "art": "art-level",
+            "text": "Mutual respect. Decisions aren't one-sided.",
+            "note": ""
+          },
+          {
+            "cat": "Safe",
+            "title": "No secrets from people who care",
+            "art": "art-talk",
+            "text": "Nothing you'd have to hide from family or friends.",
+            "note": "Secrecy is the clearest warning sign"
+          },
+          {
+            "cat": "Safe",
+            "title": "A no is accepted",
+            "art": "art-stand",
+            "text": "Without pressure, sulking or punishment.",
+            "note": "This is the real test"
+          },
+          {
+            "cat": "Safe",
+            "title": "You feel like yourself",
+            "art": "art-hand-heart",
+            "text": "Not smaller, not on edge.",
+            "note": "Trust that feeling"
+          }
+        ]
       },
       {
         "name": "Grooming and exploitation tactics card set",
-        "body": "Common tactics, explained plainly.\n• Being singled out for special attention\n• Gifts or money that create a sense of obligation\n• Being isolated from friends or family\n• Being told to keep secrets from people who care about you"
+        "body": "Read these plainly, one at a time. Anyone can be drawn in — including confident people.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Tactic",
+            "title": "Singled out",
+            "art": "art-odd-one",
+            "text": "Special attention, just for you.",
+            "note": "Feels good before it feels wrong"
+          },
+          {
+            "cat": "Tactic",
+            "title": "Gifts and money",
+            "art": "art-share",
+            "text": "Given freely, then remembered later.",
+            "note": "Creates a debt you never agreed to"
+          },
+          {
+            "cat": "Tactic",
+            "title": "Isolation",
+            "art": "art-apart",
+            "text": "Slowly, one friendship at a time.",
+            "note": "Rarely happens all at once"
+          },
+          {
+            "cat": "Tactic",
+            "title": "Secrets",
+            "art": "art-hide",
+            "text": "“Don't tell your mum, she wouldn't get it.”",
+            "note": "The line that gives it away"
+          }
+        ]
       },
       {
         "name": "Why it's hard to spot briefing note",
-        "body": "These tactics work because they don't feel wrong at first.\n• Attention can feel flattering before it feels controlling\n• Small favours can build a sense of debt gradually\n• Isolation often happens slowly, one friendship at a time\n• It's never the young person's fault if this happens to them"
+        "body": "This matters because shame stops young people telling anyone. Say it out loud.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Why",
+            "title": "Attention feels flattering",
+            "art": "art-rise",
+            "text": "Before it feels controlling.",
+            "note": "That's the design, not a failing"
+          },
+          {
+            "cat": "Why",
+            "title": "Debt builds slowly",
+            "art": "art-level",
+            "text": "Small favours, then bigger asks.",
+            "note": "No single moment to refuse"
+          },
+          {
+            "cat": "Why",
+            "title": "Isolation is gradual",
+            "art": "art-apart",
+            "text": "One friendship at a time.",
+            "note": "Hard to notice from inside"
+          },
+          {
+            "cat": "Say this",
+            "title": "Never their fault",
+            "art": "art-hand-heart",
+            "text": "If this happens, it is not the young person's fault.",
+            "note": "Say it in these words"
+          }
+        ]
       },
       {
         "name": "My strengths and values worksheet",
@@ -1896,11 +2839,73 @@
       },
       {
         "name": "Assertive refusal script cards",
-        "body": "Clear, simple ways to say no.\n• \"No, I'm not doing that.\"\n• \"I'm not comfortable with this.\"\n• \"I need to go now.\"\n• No explanation is ever required."
+        "body": "Short, and no reason given. You never owe an explanation, however much has been given to you.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Script",
+            "title": "“No, I'm not doing that.”",
+            "art": "art-stand",
+            "text": "Plain and final.",
+            "note": "Repeat it, don't expand it"
+          },
+          {
+            "cat": "Script",
+            "title": "“I'm not comfortable with this.”",
+            "art": "art-unsettled",
+            "text": "Names how you feel, not what they did.",
+            "note": "Harder to argue with"
+          },
+          {
+            "cat": "Script",
+            "title": "“I need to go now.”",
+            "art": "art-door-exit",
+            "text": "Ends it without a debate.",
+            "note": "Have an exit in mind first"
+          },
+          {
+            "cat": "Remember",
+            "title": "No reason required",
+            "art": "art-hand-heart",
+            "text": "You don't have to justify a no.",
+            "note": "Not to anyone, ever"
+          }
+        ]
       },
       {
         "name": "Role-play scenario cards (general)",
-        "body": "Practise a calm, clear no in each situation:\nBeing asked to keep a secret Being offered something with strings attached\nBeing pressured to go somewhere Being asked to do something risky"
+        "body": "General situations only — never role-play something the pupil has actually described.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Scenario",
+            "title": "Asked to keep a secret",
+            "art": "art-hide",
+            "text": "“Don't tell anyone about this.”",
+            "note": "Which script fits?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Something with strings",
+            "art": "art-share",
+            "text": "A gift, then a favour asked later.",
+            "note": "Naming the string is the skill"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Pressured to go somewhere",
+            "art": "art-transport",
+            "text": "Somewhere you don't know, with people you don't.",
+            "note": "Plan the exit first"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Asked to do something risky",
+            "art": "art-jagged",
+            "text": "Carry something, hold something, deliver something.",
+            "note": "A no needs no reason"
+          }
+        ]
       },
       {
         "name": "My safety card template",
@@ -1932,7 +2937,31 @@
       },
       {
         "name": "Reporting routes information card",
-        "body": "Who to go to if something doesn't feel right.\n• The school's designated safeguarding lead\n• Childline, 0800 1111, free and confidential\n• Police, 999 in an emergency, 101 for non-urgent concerns"
+        "body": "Fill in the name before this session ends. A role isn't a person.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "In school",
+            "title": "Designated safeguarding lead",
+            "art": "art-hand-heart",
+            "text": "Write their actual name and where to find them.",
+            "note": "Ask for them by name"
+          },
+          {
+            "cat": "Anytime",
+            "title": "Childline — 0800 1111",
+            "art": "art-talk",
+            "text": "Free, confidential, day or night.",
+            "note": "Doesn't show on a phone bill"
+          },
+          {
+            "cat": "Urgent",
+            "title": "Police — 999, or 101",
+            "art": "art-raise-card",
+            "text": "999 in an emergency, 101 for non-urgent concerns.",
+            "note": "You can report about a friend"
+          }
+        ]
       }
     ],
     "missing": []
@@ -1966,7 +2995,31 @@
       },
       {
         "name": "It's normal to feel mixed briefing card",
-        "body": "Feeling both excited and worried is completely normal.\n• Naming a specific worry makes it easier to plan for\n• Most pupils feel some nerves about a big change\n• You can feel excited and anxious about the same thing at once"
+        "body": "Both at once is the usual answer, not a contradiction.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "True",
+            "title": "Excited and worried together",
+            "art": "art-compare",
+            "text": "You can feel both about the same thing.",
+            "note": "Most people do"
+          },
+          {
+            "cat": "True",
+            "title": "Nerves are normal",
+            "art": "art-level",
+            "text": "Most pupils feel some about a big change.",
+            "note": "Including the loud ones"
+          },
+          {
+            "cat": "Useful",
+            "title": "Name the specific worry",
+            "art": "art-locate",
+            "text": "A named worry can be planned for. A vague one can't.",
+            "note": "That's this week's job"
+          }
+        ]
       },
       {
         "name": "New setting layout and route guide",
@@ -2010,19 +3063,114 @@
       },
       {
         "name": "Starting a conversation prompt cards",
-        "body": "Simple ways to start talking to someone new:\n\"What do you think of this place so far?\" \"Do you know where room X is?\"\n\"Have you played this game?\" \"Can I sit here?\""
+        "body": "Pick two you'd actually say. Short openers need short answers, which is easier for both of you.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Opener",
+            "title": "“What do you think of it so far?”",
+            "art": "art-talk",
+            "text": "Everyone has an opinion in week one.",
+            "note": "Safe with anyone"
+          },
+          {
+            "cat": "Opener",
+            "title": "“Do you know where room X is?”",
+            "art": "art-locate",
+            "text": "A real question with a real answer.",
+            "note": "Easiest of the four"
+          },
+          {
+            "cat": "Opener",
+            "title": "“Have you played this?”",
+            "art": "art-join",
+            "text": "Games, shows, sport — anything you're into.",
+            "note": "Finds people like you"
+          },
+          {
+            "cat": "Opener",
+            "title": "“Can I sit here?”",
+            "art": "art-return-seat",
+            "text": "Four words, and it usually works.",
+            "note": "Hardest to say, most useful"
+          }
+        ]
       },
       {
         "name": "Joining a club or group ideas card",
-        "body": "Shared activities make friendships easier to start.\n• Clubs give a natural reason to talk to new people\n• Friendships often take weeks, not days, to form\n• It's okay to try a few different groups before finding the right fit"
+        "body": "A shared activity gives you a reason to talk. That's easier than talking for its own sake.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Why",
+            "title": "A built-in reason",
+            "art": "art-join",
+            "text": "You're there for the thing, not to make friends.",
+            "note": "Takes the pressure off"
+          },
+          {
+            "cat": "Expect",
+            "title": "Weeks, not days",
+            "art": "art-hourglass",
+            "text": "Friendships take longer than the first fortnight.",
+            "note": "That's normal, not failure"
+          },
+          {
+            "cat": "Allowed",
+            "title": "Try a few",
+            "art": "art-fork",
+            "text": "You can leave one and try another.",
+            "note": "Nobody is watching"
+          }
+        ]
       },
       {
         "name": "Coping with uncertainty strategy cards",
-        "body": "Tools for moments that feel overwhelming:\nSlow breathing A comforting object or reminder\nFinding my go-to person Reminding myself: it's okay not to know everything"
+        "body": "Some uncertainty stays. These are for coping with it, not removing it.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Body",
+            "title": "Slow breathing",
+            "art": "art-breath-count",
+            "text": "In for four, out for six.",
+            "note": "Works anywhere, unnoticed"
+          },
+          {
+            "cat": "Object",
+            "title": "Something to carry",
+            "art": "art-texture",
+            "text": "A small reminder in your pocket.",
+            "note": "Nobody needs to know"
+          },
+          {
+            "cat": "People",
+            "title": "Your go-to person",
+            "art": "art-hand-heart",
+            "text": "One name you can find.",
+            "note": "Agree it before day one"
+          },
+          {
+            "cat": "Thought",
+            "title": "“I don't have to know everything yet.”",
+            "art": "art-agreed-word",
+            "text": "Nobody does in week one.",
+            "note": "Including the confident ones"
+          }
+        ]
       },
       {
         "name": "My go-to person and place card",
-        "body": "Who and where, for the first few weeks.\n• My go-to person is...\n• My go-to place is...\n• If I can't find them, I will..."
+        "body": "Fill this in before the first day, not after. Write real names.",
+        "tone": "blue",
+        "form": {
+          "fields": [
+            "My go-to person is…",
+            "Where I'd find them…",
+            "My go-to place is…",
+            "If I can't find them, I will…"
+          ]
+        }
       },
       {
         "name": "One-page transition plan",
@@ -2037,7 +3185,31 @@
       },
       {
         "name": "Copy for receiving school or pastoral file",
-        "body": "Shared for continuity across the transition.\n• Plan summary as agreed with the pupil\n• Review point set a few weeks into the new setting"
+        "body": "What travels with the pupil to the new setting.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "What they'd want known",
+            "art": "art-talk",
+            "text": "One sentence, chosen by the pupil, for a new teacher.",
+            "note": "The most useful line on the page"
+          },
+          {
+            "cat": "Shared",
+            "title": "Review a few weeks in",
+            "art": "art-clock",
+            "text": "Once the new setting is real, not before.",
+            "note": ""
+          }
+        ]
       }
     ],
     "missing": []
@@ -2089,9 +3261,47 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How intense does my anger feel right now?\n1 Very calm\n2 Calm\n3 Mildly unsettled\n4 Agitated\n5 About to lose control",
+        "body": "How intense does it feel right now? Point at one.",
         "aliases": [
           "1-5 mood scale card"
+        ],
+        "tone": "red",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Very calm",
+            "art": "art-level-1",
+            "text": "Nothing bothering me.",
+            "note": ""
+          },
+          {
+            "cat": "2",
+            "title": "Calm",
+            "art": "art-level-2",
+            "text": "Settled.",
+            "note": ""
+          },
+          {
+            "cat": "3",
+            "title": "Mildly unsettled",
+            "art": "art-level-3",
+            "text": "Something's niggling.",
+            "note": "Easiest point to act"
+          },
+          {
+            "cat": "4",
+            "title": "Agitated",
+            "art": "art-level-4",
+            "text": "Hard to let go of.",
+            "note": "Use a strategy now"
+          },
+          {
+            "cat": "5",
+            "title": "About to lose control",
+            "art": "art-level-5",
+            "text": "Past thinking clearly.",
+            "note": "Get out of the situation"
+          }
         ]
       },
       {
@@ -2272,7 +3482,38 @@
       },
       {
         "name": "Restorative conversation prompt card",
-        "body": "Questions to talk through what happened.\nUse these questions calmly, one at a time, without judgement.\nWhat happened?\nWhat were you thinking at the time?\nWho has been affected, and how?\nWhat needs to happen now to put things right?"
+        "body": "Ask one at a time, calmly, and leave silence after each. The first answer is rarely the full one.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Question 1",
+            "title": "What happened?",
+            "art": "art-thoughts",
+            "text": "Their version. Don't correct it.",
+            "note": ""
+          },
+          {
+            "cat": "Question 2",
+            "title": "What were you thinking at the time?",
+            "art": "art-body-signals",
+            "text": "Thinking, not justifying.",
+            "note": ""
+          },
+          {
+            "cat": "Question 3",
+            "title": "Who has been affected, and how?",
+            "art": "art-apart",
+            "text": "Often the first time they've considered this.",
+            "note": ""
+          },
+          {
+            "cat": "Question 4",
+            "title": "What needs to happen now to put things right?",
+            "art": "art-hand-heart",
+            "text": "Their idea beats yours.",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "Role-play scenario cards",
@@ -2343,7 +3584,31 @@
       },
       {
         "name": "Copy for class teacher or pastoral file",
-        "body": "To hand to the pupil's class teacher, or file with the pastoral team.\n• This pupil has completed a 5-week course on physical aggression, focused on recognising early body signals of anger and using calming strategies before things escalate.\n• The pupil's agreed triggers, early warning signs and calming strategies are listed on the attached one-page plan.\n• A calm, private reminder of the agreed strategy in the moment works better than a warning about consequences.\n• Please let the mentor know of any recurring triggers or incidents so the plan can be reviewed."
+        "body": "What the class teacher needs, on one side of paper.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Context",
+            "title": "Course completed",
+            "art": "art-agreed-word",
+            "text": "Five weeks on recognising early body signals of anger.",
+            "note": ""
+          },
+          {
+            "cat": "Act on this",
+            "title": "Triggers and early signs",
+            "art": "art-trigger",
+            "text": "The pupil's own list, in their words.",
+            "note": "Watch for these first"
+          },
+          {
+            "cat": "Act on this",
+            "title": "The agreed strategy",
+            "art": "art-hand-up",
+            "text": "What they'll do, and what you can do to allow it.",
+            "note": "Needs your consistency"
+          }
+        ]
       }
     ],
     "missing": []
@@ -2848,7 +4113,38 @@
     "items": [
       {
         "name": "Restorative question prompt card",
-        "body": "Questions to talk through a conflict.\nUse these questions calmly, one at a time.\nWhat happened?\nWhat were you thinking at the time?\nWho has been affected, and how?\nWhat do you think needs to happen now?"
+        "body": "Asked of everyone involved, not just one pupil. One at a time.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Question 1",
+            "title": "What happened?",
+            "art": "art-thoughts",
+            "text": "Collect it, don't test it.",
+            "note": ""
+          },
+          {
+            "cat": "Question 2",
+            "title": "What were you thinking at the time?",
+            "art": "art-body-signals",
+            "text": "The thinking behind the action.",
+            "note": ""
+          },
+          {
+            "cat": "Question 3",
+            "title": "Who has been affected, and how?",
+            "art": "art-apart",
+            "text": "Widen it beyond the two of them.",
+            "note": ""
+          },
+          {
+            "cat": "Question 4",
+            "title": "What do you think needs to happen now?",
+            "art": "art-hand-heart",
+            "text": "Their answer, then negotiate.",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "Perspective-taking worksheet",
@@ -2908,7 +4204,38 @@
       },
       {
         "name": "I statement card",
-        "body": "A structure for saying how you feel without blame.\nStructure: \"I felt ___ when ___ happened, and I need ___.\"\n\"I felt embarrassed when you laughed in front of others, and I need you to stop.\"\n\"I felt left out when I wasn't invited, and I need to know why.\"\n\"I felt angry when my things were taken, and I need them back.\""
+        "body": "I felt ___ when ___ happened, and I need ___. All three parts matter.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "The structure",
+            "title": "I felt … when … and I need …",
+            "art": "art-talk",
+            "text": "How you felt, what caused it, what you want instead.",
+            "note": "Harder to argue with than blame"
+          },
+          {
+            "cat": "Example",
+            "title": "Being laughed at",
+            "art": "art-laughter",
+            "text": "“I felt embarrassed when you laughed in front of others, and I need you to stop.”",
+            "note": ""
+          },
+          {
+            "cat": "Example",
+            "title": "Being left out",
+            "art": "art-apart",
+            "text": "“I felt left out when I wasn't invited, and I need to know why.”",
+            "note": ""
+          },
+          {
+            "cat": "Example",
+            "title": "Things taken",
+            "art": "art-share",
+            "text": "“I felt angry when my things were taken, and I need you to ask first.”",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "Social goals plan template",
@@ -2968,7 +4295,25 @@
       },
       {
         "name": "Stop-think-choose technique card",
-        "body": "A simple routine for the moment before you speak.\nUse this three-step routine when you notice the urge to call out.\nStop - pause before you speak.\nThink - what do I actually want to say or ask?\nChoose - use my agreed signal instead of calling out."
+        "body": "For the moment you notice the urge to call out.",
+        "tone": "teal",
+        "steps": [
+          {
+            "title": "Stop",
+            "art": "art-hand-up",
+            "text": "Pause before you speak. That pause is the whole skill."
+          },
+          {
+            "title": "Think",
+            "art": "art-thoughts",
+            "text": "What do I actually want to say or ask?"
+          },
+          {
+            "title": "Choose",
+            "art": "art-raise-card",
+            "text": "Use the agreed signal instead of calling out."
+          }
+        ]
       },
       {
         "name": "Signal card options",
@@ -3042,7 +4387,31 @@
       },
       {
         "name": "Teacher briefing note",
-        "body": "To hand to the pupil's class teacher.\n• This pupil is working on reducing calling out and talking over instructions, as part of a 5-week mentoring\ncourse.\n• We've agreed a signal (see 'Signal card options') for the pupil to request your attention instead of calling\nout - please respond to it consistently where possible.\n• The pupil is using a self-monitoring chart to rate self-control each lesson - a brief, positive comment from\nyou at the end of the lesson helps reinforce this.\n• Please let the mentor know of any patterns you notice, good or otherwise."
+        "body": "One side of paper for the class teacher. The middle card is the one that needs them.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Context",
+            "title": "What the pupil is working on",
+            "art": "art-agreed-word",
+            "text": "Reducing calling out and talking over instructions.",
+            "note": "Not a sanction"
+          },
+          {
+            "cat": "Needs you",
+            "title": "Respond to the signal",
+            "art": "art-raise-card",
+            "text": "The pupil will signal instead of calling out. Acknowledge it consistently.",
+            "note": "An ignored signal stops being used"
+          },
+          {
+            "cat": "Helps",
+            "title": "Notice the effort",
+            "art": "art-thumb",
+            "text": "A quiet word when they manage it does more than a correction when they don't.",
+            "note": ""
+          }
+        ]
       }
     ],
     "missing": []
@@ -3052,9 +4421,47 @@
     "items": [
       {
         "name": "Worry thermometer",
-        "body": "How big does the worry feel right now?\n10 Panic\n9 Almost panicking\n8 Hard to think of anything else\n7 Very worried\n6 Quite worried\n5 Uncomfortable\n4 Noticeable worry\n3 A little uneasy\n2 Barely noticeable\n1 No worry at all",
+        "body": "Where is the worry right now? Take a reading each week.",
         "aliases": [
           "Worry thermometer handout"
+        ],
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "1–2",
+            "title": "Barely there",
+            "art": "art-level-1",
+            "text": "Not on my mind.",
+            "note": ""
+          },
+          {
+            "cat": "3–4",
+            "title": "A little uneasy",
+            "art": "art-level-2",
+            "text": "Noticeable, but I can carry on.",
+            "note": "Good time to practise"
+          },
+          {
+            "cat": "5–6",
+            "title": "Uncomfortable",
+            "art": "art-level-3",
+            "text": "Taking up space in my head.",
+            "note": "A ladder step is possible here"
+          },
+          {
+            "cat": "7–8",
+            "title": "Very worried",
+            "art": "art-level-4",
+            "text": "Hard to think about much else.",
+            "note": "Grounding first, then decide"
+          },
+          {
+            "cat": "9–10",
+            "title": "Panic",
+            "art": "art-level-5",
+            "text": "Body has taken over.",
+            "note": "Not a moment for a new step"
+          }
         ]
       },
       {
@@ -3345,7 +4752,31 @@
     "items": [
       {
         "name": "Trusted-adult discussion prompts",
-        "body": "Questions to explore trust and respect.\nUse these to open a conversation, not as a checklist.\nWho is an adult you trust, in or out of school?\nWhat makes that relationship feel different?\nWhat's one thing an adult could do that would make you more likely to listen to them?"
+        "body": "Openers for a conversation, not a checklist to work through.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Ask",
+            "title": "Who do you trust?",
+            "art": "art-hand-heart",
+            "text": "An adult in or out of school.",
+            "note": "Out of school counts"
+          },
+          {
+            "cat": "Ask",
+            "title": "What's different about them?",
+            "art": "art-compare",
+            "text": "What do they do that others don't?",
+            "note": "The most useful answer here"
+          },
+          {
+            "cat": "Ask",
+            "title": "What would make you more likely to listen?",
+            "art": "art-talk",
+            "text": "One thing an adult could do differently.",
+            "note": "Take a critical answer seriously"
+          }
+        ]
       },
       {
         "name": "Perspective-taking worksheet (staff)",
@@ -3380,11 +4811,66 @@
       },
       {
         "name": "Respectful disagreement script card",
-        "body": "Tone, timing and wording for disagreeing respectfully.\nStructure: state what you disagree with, calmly, at the right moment - not in front of the whole class.\n\"Can I talk to you about this after the lesson?\"\n\"I don't think that's fair, can you explain why?\"\n\"I hear you, but can we find another way?\""
+        "body": "Three parts: tone, timing, wording. Timing is the one that gets missed.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Timing",
+            "title": "“Can I talk to you about this after the lesson?”",
+            "art": "art-clock",
+            "text": "Not in front of the class, not in the first ten seconds.",
+            "note": "This one does most of the work"
+          },
+          {
+            "cat": "Wording",
+            "title": "“I don't think that's fair — can you explain why?”",
+            "art": "art-talk",
+            "text": "Asks rather than accuses.",
+            "note": "Leaves them room to answer"
+          },
+          {
+            "cat": "Tone",
+            "title": "“I hear you, but can we find another way?”",
+            "art": "art-nod",
+            "text": "Acknowledges them first.",
+            "note": "Hard to argue with"
+          }
+        ]
       },
       {
         "name": "Restorative conversation prompt card",
-        "body": "Questions to repair a staff relationship.\nUse these questions calmly, one at a time.\nWhat happened?\nWhat were you thinking at the time?\nWho has been affected, and how?\nWhat would help this relationship going forward?"
+        "body": "For repairing one working relationship the pupil still needs.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Question 1",
+            "title": "What happened?",
+            "art": "art-thoughts",
+            "text": "Both sides get asked this.",
+            "note": ""
+          },
+          {
+            "cat": "Question 2",
+            "title": "What were you thinking at the time?",
+            "art": "art-body-signals",
+            "text": "Not an excuse — context.",
+            "note": ""
+          },
+          {
+            "cat": "Question 3",
+            "title": "Who has been affected, and how?",
+            "art": "art-apart",
+            "text": "Including the wider class.",
+            "note": ""
+          },
+          {
+            "cat": "Question 4",
+            "title": "What would help this relationship going forward?",
+            "art": "art-hand-heart",
+            "text": "Something specific and small.",
+            "note": ""
+          }
+        ]
       },
       {
         "name": "Working relationship plan template",
@@ -3406,9 +4892,40 @@
     "items": [
       {
         "name": "Low-pressure activity ideas",
-        "body": "For the mentor to choose from in Week 1 - let the pupil pick.\n• A drawing or colouring activity with no pressure to talk.\n• A simple shared game (cards, a puzzle, a quiz).\n• A conversation about the pupil's own interests - games, shows, music, sport.\n• A shared task, such as tidying or organising something together, which allows conversation without eye\ncontact.",
+        "body": "For week one. Let the pupil pick, and work side by side rather than face to face.",
         "aliases": [
           "Choice of low-pressure activity materials"
+        ],
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Option",
+            "title": "Drawing or colouring",
+            "art": "art-texture",
+            "text": "No pressure to talk at all.",
+            "note": "Silence is fine"
+          },
+          {
+            "cat": "Option",
+            "title": "A shared game",
+            "art": "art-join",
+            "text": "Cards, a puzzle, a quiz.",
+            "note": "Gives the talking a purpose"
+          },
+          {
+            "cat": "Option",
+            "title": "Their own interests",
+            "art": "art-talk",
+            "text": "Games, shows, music, sport.",
+            "note": "Follow it properly"
+          },
+          {
+            "cat": "Option",
+            "title": "A shared task",
+            "art": "art-walk",
+            "text": "Tidying or organising something together.",
+            "note": "Easiest for some pupils"
+          }
         ]
       },
       {
