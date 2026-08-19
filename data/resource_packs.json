@@ -835,17 +835,17 @@
         "steps": [
           {
             "title": "Craving builds",
-            "art": "art-rise",
+            "art": "art-brain",
             "text": "The brain signals that it wants nicotine."
           },
           {
             "title": "Use",
-            "art": "art-phone-off",
+            "art": "art-vape",
             "text": "Vaping delivers a fast hit."
           },
           {
             "title": "Short boost",
-            "art": "art-level",
+            "art": "art-boost",
             "text": "A brief feel-good effect."
           },
           {
@@ -855,7 +855,7 @@
           },
           {
             "title": "Craving builds again",
-            "art": "art-rise",
+            "art": "art-craving",
             "text": "The dip is what drives the next one. That's chemistry, not weakness."
           }
         ]
@@ -963,7 +963,7 @@
           {
             "cat": "Worth saying",
             "title": "Naming isn't doing",
-            "art": "art-thoughts",
+            "art": "art-brain",
             "text": "Naming a trigger doesn't mean acting on it.",
             "note": "It just makes it visible"
           }
@@ -1012,7 +1012,7 @@
           {
             "cat": "Scenario",
             "title": "Offered at break",
-            "art": "art-friends-out",
+            "art": "art-vape",
             "text": "A friend holds one out to you at break.",
             "note": "Which script fits?"
           },
@@ -1082,7 +1082,7 @@
           {
             "cat": "Notice",
             "title": "Wait it out",
-            "art": "art-level",
+            "art": "art-lungs",
             "text": "Notice the urge and let it fall on its own.",
             "note": "It always does"
           }
@@ -2758,7 +2758,7 @@
           {
             "cat": "Tactic",
             "title": "Gifts and money",
-            "art": "art-share",
+            "art": "art-money-strings",
             "text": "Given freely, then remembered later.",
             "note": "Creates a debt you never agreed to"
           },
