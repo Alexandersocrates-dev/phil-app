@@ -547,6 +547,20 @@ h1{font-size:clamp(21px, 4vw, 26px);}
 
 .card--danger{border-color:var(--red);}
 
+/* ------------------------------------------------------------
+   Table action links
+   A bare "View" in a table cell inherits no padding, so it ends
+   up an 18px target — unusable on a tablet and awkward with a
+   mouse. Padding gets it to 44px without changing how it looks,
+   because the extra space is inside the row that already exists.
+   ------------------------------------------------------------ */
+table td a:not(.btn){
+  display:inline-flex; align-items:center; min-height:44px;
+  padding:0 var(--sp-2); border-radius:var(--radius-sm, 8px);
+}
+table td a:not(.btn):hover{ background:var(--teal-light); text-decoration:none; }
+table td a:not(.btn):focus-visible{ outline:none; box-shadow:var(--shadow-focus-ring); }
+
 /* ============================================================
    Reduced motion
    For users who have asked their system to limit animation —
