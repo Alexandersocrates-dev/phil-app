@@ -43,7 +43,15 @@ def _static_version():
 
 # Exposed to every template, so the link tag in base.html needs no per-render
 # plumbing and no route has to remember to pass it.
+# Five sessions with the pupil, then a sixth the mentor writes alone. Named
+# rather than repeated as a literal: it appeared in six places and they would
+# have drifted apart.
+SESSIONS_PER_COURSE = 6
+PUPIL_SESSIONS = 5
+
 framework_jinja.globals["static_v"] = _static_version()
+framework_jinja.globals["sessions_total"] = SESSIONS_PER_COURSE
+framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
 RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
 _resource_packs_cache = None
 
@@ -1815,7 +1823,7 @@ def session_submit(request):
         conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?", (pdf_path, record_id))
 
         new_current_week = next_week_number
-        new_status = "completed" if new_current_week >= 5 else "active"
+        new_status = "completed" if new_current_week >= SESSIONS_PER_COURSE else "active"
         conn.execute("UPDATE enrolments SET current_week=?, status=? WHERE id=?",
             (new_current_week, new_status, enrolment_id))
 
@@ -2451,7 +2459,8 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
         scheduled_end = (start + datetime.timedelta(days=35)).isoformat()
         cert = conn.execute("SELECT id FROM certificates WHERE enrolment_id=?", (r["id"],)).fetchone()
         reflection = conn.execute("SELECT id FROM completion_reflections WHERE enrolment_id=?", (r["id"],)).fetchone()
-        progress = "Completed" if r["status"] == "completed" else f"Week {r['current_week']} of 5"
+        progress = ("Completed" if r["status"] == "completed"
+                    else f"Week {r['current_week']} of {SESSIONS_PER_COURSE}")
         row = {
             "pupil": f"{r['forename']} {r['surname']}",
             "course": r["course_title"],

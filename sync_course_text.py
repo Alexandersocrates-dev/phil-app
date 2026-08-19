@@ -38,6 +38,13 @@ FIELDS = {
     "home": "home_activity",
 }
 
+# Fields that aren't free text and so aren't part of the text sync, but do need
+# to exist when a week is created for the first time.
+EXTRA = {
+    "resources": lambda w: json.dumps(w.get("resources") or []),
+    "staff_only": lambda w: 1 if w.get("staff_only") else 0,
+}
+
 
 def load_courses():
     with open(DATA, encoding="utf-8") as fh:
@@ -57,6 +64,7 @@ def main():
     courses = load_courses()
     conn = db.get_conn()
     changes = []
+    created = []
 
     for course in courses:
         if only is not None and course["num"] != only:
@@ -71,7 +79,10 @@ def main():
                 "SELECT * FROM weeks WHERE course_id=? AND week_number=?",
                 (row["id"], index)).fetchone()
             if not current:
-                print(f"  ! M{course['num']:02d} week {index} missing from the database, skipped")
+                # A week in the file but not the database is a new session, such
+                # as the staff-only session 6. Create it rather than skipping,
+                # or the file could never introduce one.
+                created.append((course["num"], index, row["id"], week))
                 continue
             for file_key, column in FIELDS.items():
                 new = (week.get(file_key) or "").strip()
@@ -79,7 +90,13 @@ def main():
                 if new and new != old:
                     changes.append((course["num"], index, column, old, new, current["id"]))
 
-    print(("DRY RUN — nothing written\n" if dry else "") + f"{len(changes)} field(s) differ\n")
+    print(("DRY RUN — nothing written\n" if dry else "")
+          + f"{len(changes)} field(s) differ, {len(created)} week(s) to create\n")
+    for num, index, _, week in created:
+        flag = " [staff only]" if week.get("staff_only") else ""
+        print(f"CREATE M{num:02d} week {index}: {week.get('title', '')}{flag}")
+    if created:
+        print()
     for num, wk, column, old, new, _ in changes:
         print(f"M{num:02d} w{wk} {column}")
         print(f"   was: {old[:100]}{'…' if len(old) > 100 else ''}")
@@ -88,12 +105,19 @@ def main():
 
     if dry:
         print("Re-run with --confirm to apply.")
-    elif changes:
+    elif changes or created:
         try:
+            for _, index, course_id, week in created:
+                cols = ["course_id", "week_number"] + list(FIELDS.values()) + list(EXTRA)
+                vals = [course_id, index] + [(week.get(k) or "").strip() for k in FIELDS] \
+                    + [fn(week) for fn in EXTRA.values()]
+                conn.execute(
+                    f"INSERT INTO weeks ({', '.join(cols)}) VALUES ({', '.join('?' * len(cols))})",
+                    vals)
             for _, _, column, _, new, week_id in changes:
                 conn.execute(f"UPDATE weeks SET {column}=? WHERE id=?", (new, week_id))
             conn.commit()
-            print(f"Applied {len(changes)} change(s).")
+            print(f"Applied {len(changes)} change(s), created {len(created)} week(s).")
         except Exception:
             conn.rollback()
             print("Failed — nothing was written.")

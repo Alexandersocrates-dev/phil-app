@@ -143,8 +143,8 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
     <tr>
       <td>{{ e.course_title }}</td>
       <td style="width:150px;">
-        <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
-        <span class="muted" style="font-size:12px;">Session {{ e.current_week }} of 5</span>
+        <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/sessions_total*100)|round|int }}%"></div></div>
+        <span class="muted" style="font-size:12px;">Session {{ e.current_week }} of {{ sessions_total }}</span>
       </td>
       <td style="width:110px;">
         {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>

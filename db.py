@@ -144,7 +144,11 @@ CREATE TABLE IF NOT EXISTS weeks (
     reflect TEXT,
     lookfor TEXT,
     resources TEXT,
-    home_activity TEXT
+    home_activity TEXT,
+    -- Session 6 is the mentor writing up the support plan, with no pupil in the
+    -- room. Flagged rather than inferred from the week number, so a course could
+    -- have a different shape later without the meaning being lost.
+    staff_only INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS enrolments (

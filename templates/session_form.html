@@ -90,14 +90,24 @@
 <span class="autosave-dot"></span><span class="autosave-label">Notes save automatically</span>
 </div>
 
+{% if week.staff_only %}
+<div class="staff-only-banner">
+  <div class="staff-only-badge">Staff only</div>
+  <div>
+    <strong>No pupil in this session.</strong>
+    <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
+  </div>
+</div>
+{% endif %}
+
 <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 12px 10px;margin-bottom:14px;">
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
 <span style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Your progress</span>
-<span style="font-size:11px;color:var(--muted);">Session {{ next_week_number }} of 5</span>
+<span style="font-size:11px;color:var(--muted);">Session {{ next_week_number }} of {{ sessions_total }}</span>
 </div>
 <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 2px;">
 <div style="position:absolute;left:14px;right:14px;top:12px;height:2px;background:var(--border);border-radius:2px;"></div>
-<div style="position:absolute;left:14px;top:12px;height:2px;width:{{ ((next_week_number-1)/4*100)|round|int }}%;background:linear-gradient(90deg,var(--teal),var(--teal-dark));border-radius:2px;"></div>
+<div style="position:absolute;left:14px;top:12px;height:2px;width:{{ ((next_week_number-1)/(sessions_total-1)*100)|round|int }}%;background:linear-gradient(90deg,var(--teal),var(--teal-dark));border-radius:2px;"></div>
 {% for p in progress %}
 <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;">
 {% if p.status == 'done' %}
@@ -393,6 +403,12 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 /* The five steps ran into one another as a single column of text. A rule and
    real space above each makes the boundary obvious at a glance, which matters
    when a mentor is finding their place mid-session. */
+.staff-only-banner{display:flex; align-items:flex-start; gap:12px; background:var(--navy); color:#fff;
+  border-radius:14px; padding:13px 15px; margin:0 0 14px; font-size:13.5px; line-height:1.5;}
+.staff-only-banner strong{display:block; margin-bottom:2px;}
+.staff-only-banner span{color:#C9D3E4;}
+.staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:10.5px; font-weight:800;
+  text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:6px; margin-top:2px;}
 .step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px; padding-left:20px; text-indent:-20px;}
 .step-line:last-child{margin-bottom:6px;}
 .step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
