@@ -1473,11 +1473,16 @@ def session_form(request):
             enrolment["course_module_number"], json.loads(prev_week["resources"] or "[]"))
     progress = [{"number": n, "status": "done" if n < next_week_number else ("current" if n == next_week_number else "locked")} for n in range(1, 6)]
     upcoming_weeks = [w for w in all_weeks if w["week_number"] > next_week_number]
-    return render("session_form.html", user=user, enrolment=enrolment, week=week,
+    # No-store, so the browser's own Back button re-fetches instead of showing a
+    # cached copy of a form that has already been submitted. Combined with the
+    # for_week check on POST, a stale form can neither be shown nor accepted.
+    response = render("session_form.html", user=user, enrolment=enrolment, week=week,
                   next_week_number=next_week_number, completed_records=completed_records,
                   prev_record=prev_record, prev_week_items=prev_week_items,
                   draft=draft, progress=progress,
                   upcoming_weeks=upcoming_weeks, flash=flash_from_query(request))
+    response.headers.append(("Cache-Control", "no-store, must-revalidate"))
+    return response
 
 @router.post("/mentor/session/<enrolment_id>/autosave")
 def session_autosave(request):
