@@ -48,51 +48,133 @@ PDF_DIR = _pdf_dir()
 os.makedirs(PDF_DIR, exist_ok=True)
 
 
-def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id):
+def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
+                    establishment_name=None, mentor_name=None, module_number=None):
+    """A certificate a pupil would be happy to take home and a school happy to file.
+
+    Modelled on the conventions of an awarding-body certificate: portrait, serif,
+    the issuing body named at the top, a unique reference, and signature lines.
+    Those details are what make a certificate read as a record rather than a
+    printout — the reference in particular, because it implies something was
+    written down somewhere."""
     path = os.path.join(PDF_DIR, f"certificate_{enrolment_id}.pdf")
-    w, h = landscape(A4)
+    w, h = A4  # portrait, as awarding bodies use
     c = canvas.Canvas(path, pagesize=(w, h))
 
-    c.setFillColor(CREAM)
+    c.setFillColor(HexColor("#FFFFFF"))
     c.rect(0, 0, w, h, fill=1, stroke=0)
 
-    margin = 14 * mm
-    c.setStrokeColor(TEAL)
-    c.setLineWidth(3)
+    # A double rule: heavy outer, hairline inner. Restraint reads as official;
+    # ornament reads as a template.
+    margin = 16 * mm
+    c.setStrokeColor(NAVY)
+    c.setLineWidth(2.2)
     c.rect(margin, margin, w - 2 * margin, h - 2 * margin, fill=0, stroke=1)
-    c.setStrokeColor(AMBER)
-    c.setLineWidth(1)
-    c.rect(margin + 4 * mm, margin + 4 * mm, w - 2 * margin - 8 * mm,
-           h - 2 * margin - 8 * mm, fill=0, stroke=1)
+    c.setStrokeColor(TEAL)
+    c.setLineWidth(0.6)
+    c.rect(margin + 3 * mm, margin + 3 * mm, w - 2 * margin - 6 * mm,
+           h - 2 * margin - 6 * mm, fill=0, stroke=1)
 
+    y = h - 46 * mm
+
+    # Issuing body, at the top, as on any awarding-body certificate.
     c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 14)
-    c.drawCentredString(w / 2, h - 34 * mm, "PHIL")
-
-    c.setFillColor(TEAL_DARK)
-    c.setFont("Helvetica-Bold", 30)
-    c.drawCentredString(w / 2, h - 52 * mm, "Certificate of Completion")
-
-    c.setFillColor(INK)
-    c.setFont("Helvetica", 13)
-    c.drawCentredString(w / 2, h - 68 * mm, "This certifies that")
-
-    c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 26)
-    c.drawCentredString(w / 2, h - 82 * mm, pupil_name)
-
-    c.setFillColor(INK)
-    c.setFont("Helvetica", 13)
-    c.drawCentredString(w / 2, h - 96 * mm, "has completed the five-week course")
-
-    c.setFillColor(TEAL_DARK)
-    c.setFont("Helvetica-Bold", 18)
-    c.drawCentredString(w / 2, h - 110 * mm, course_title)
-
+    c.setFont("Times-Bold", 22)
+    c.drawCentredString(w / 2, y, "PHIL")
+    y -= 6 * mm
     c.setFillColor(MUTED)
-    c.setFont("Helvetica", 11)
-    c.drawCentredString(w / 2, margin + 16 * mm, f"Issued {issued_date}")
-    c.drawCentredString(w / 2, margin + 10 * mm, "Phil, structured support, real growth.")
+    c.setFont("Times-Roman", 9.5)
+    c.drawCentredString(w / 2, y, "STRUCTURED MENTORING FOR SCHOOLS")
+
+    y -= 6 * mm
+    c.setStrokeColor(TEAL)
+    c.setLineWidth(0.8)
+    c.line(w / 2 - 32 * mm, y, w / 2 + 32 * mm, y)
+
+    y -= 18 * mm
+    c.setFillColor(NAVY)
+    c.setFont("Times-Bold", 26)
+    c.drawCentredString(w / 2, y, "Certificate of Completion")
+
+    y -= 20 * mm
+    c.setFillColor(INK)
+    c.setFont("Times-Roman", 12)
+    c.drawCentredString(w / 2, y, "This is to certify that")
+
+    y -= 16 * mm
+    c.setFillColor(NAVY)
+    c.setFont("Times-Bold", 28)
+    c.drawCentredString(w / 2, y, _clean_pdf_text(pupil_name))
+
+    # A rule under the name, as a certificate would have.
+    y -= 4 * mm
+    name_width = max(c.stringWidth(_clean_pdf_text(pupil_name), "Times-Bold", 28), 60 * mm)
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.6)
+    c.line(w / 2 - name_width / 2 - 8 * mm, y, w / 2 + name_width / 2 + 8 * mm, y)
+
+    if establishment_name:
+        y -= 10 * mm
+        c.setFillColor(MUTED)
+        c.setFont("Times-Roman", 11.5)
+        c.drawCentredString(w / 2, y, f"of {_clean_pdf_text(establishment_name)}")
+
+    y -= 16 * mm
+    c.setFillColor(INK)
+    c.setFont("Times-Roman", 12)
+    c.drawCentredString(w / 2, y, "has successfully completed the five-session mentoring course")
+
+    y -= 16 * mm
+    c.setFillColor(TEAL_DARK)
+    c.setFont("Times-Bold", 19)
+    c.drawCentredString(w / 2, y, _clean_pdf_text(course_title))
+
+    if module_number:
+        y -= 8 * mm
+        c.setFillColor(MUTED)
+        c.setFont("Times-Roman", 10)
+        c.drawCentredString(w / 2, y, f"Module {str(module_number).zfill(2)} of the Phil course library")
+
+    # Signature lines. An unsigned line still says a person stands behind this.
+    sig_y = margin + 62 * mm
+    left_x, right_x = w / 2 - 62 * mm, w / 2 + 12 * mm
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.7)
+    c.setFillColor(MUTED)
+    c.setFont("Times-Roman", 9)
+    if establishment_name:
+        # Two signatories: the mentor who ran it, and the school that stands
+        # behind it.
+        c.line(left_x, sig_y, left_x + 50 * mm, sig_y)
+        c.line(right_x, sig_y, right_x + 50 * mm, sig_y)
+        c.drawString(left_x, sig_y - 5 * mm, "Mentor")
+        c.drawString(right_x, sig_y - 5 * mm, "Signed on behalf of the school")
+        name_x = left_x + 1 * mm
+    else:
+        # An individual mentor has no school to sign for it, so one centred line
+        # rather than a second line nobody can sign.
+        centre_x = w / 2 - 25 * mm
+        c.line(centre_x, sig_y, centre_x + 50 * mm, sig_y)
+        c.drawCentredString(w / 2, sig_y - 5 * mm, "Mentor")
+        name_x = centre_x + 1 * mm
+    if mentor_name:
+        c.setFillColor(INK)
+        c.setFont("Times-Italic", 11)
+        c.drawString(name_x, sig_y + 2.5 * mm, _clean_pdf_text(mentor_name))
+
+    # Date and reference, footer left and right, as on a real certificate.
+    foot_y = margin + 38 * mm
+    c.setFillColor(MUTED)
+    c.setFont("Times-Roman", 10)
+    c.drawString(left_x, foot_y, f"Date of issue: {issued_date}")
+    c.drawRightString(right_x + 50 * mm, foot_y,
+                      f"Certificate no. PHL-{str(enrolment_id).zfill(6)}")
+
+    c.setFont("Times-Roman", 8)
+    c.setFillColor(MUTED)
+    c.drawCentredString(w / 2, margin + 14 * mm,
+                        "This certificate records completion of a mentoring course. "
+                        "It is not a formal qualification.")
 
     c.showPage()
     c.save()

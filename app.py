@@ -1610,7 +1610,17 @@ def session_submit(request):
         completed_now = new_status == "completed"
         if new_status == "completed":
             issued = datetime.date.today().isoformat()
-            cert_path = pdfgen.certificate_pdf(pupil_name, enrolment["course_title"], issued, enrolment_id)
+            estab = conn.execute(
+                """SELECT e.name FROM establishments e
+                   JOIN pupils p ON p.establishment_id = e.id
+                   WHERE p.id = ?""", (enrolment["pupil_id"],)).fetchone()
+            module_row = conn.execute("SELECT module_number FROM courses WHERE id=?",
+                                      (enrolment["course_id"],)).fetchone()
+            cert_path = pdfgen.certificate_pdf(
+                pupil_name, enrolment["course_title"], issued, enrolment_id,
+                establishment_name=estab["name"] if estab else None,
+                mentor_name=mentor_name,
+                module_number=module_row["module_number"] if module_row else None)
             conn.execute(
                 "INSERT INTO certificates (enrolment_id, issued_date, pdf_path) VALUES (?,?,?)",
                 (enrolment_id, issued, cert_path),
@@ -3373,16 +3383,25 @@ def certificate_download(request):
         conn = db.get_conn()
         try:
             row = conn.execute(
-                """SELECT p.forename, p.surname, c.title AS course_title
+                """SELECT p.forename, p.surname, c.title AS course_title,
+                          c.module_number AS module_number,
+                          est.name AS establishment_name,
+                          u.name AS mentor_name
                    FROM enrolments e JOIN pupils p ON p.id=e.pupil_id
-                   JOIN courses c ON c.id=e.course_id WHERE e.id=?""",
+                   JOIN courses c ON c.id=e.course_id
+                   LEFT JOIN establishments est ON est.id = p.establishment_id
+                   LEFT JOIN users u ON u.id = e.mentor_id
+                   WHERE e.id=?""",
                 (request.params["enrolment_id"],),
             ).fetchone()
             if not row:
                 return Response("Certificate not found", status="404 Not Found")
-            path = pdfgen.certificate_pdf(f"{row['forename']} {row['surname']}",
-                                          row["course_title"], cert["issued_date"],
-                                          request.params["enrolment_id"])
+            path = pdfgen.certificate_pdf(
+                f"{row['forename']} {row['surname']}", row["course_title"],
+                cert["issued_date"], request.params["enrolment_id"],
+                establishment_name=row["establishment_name"],
+                mentor_name=row["mentor_name"],
+                module_number=row["module_number"])
             conn.execute("UPDATE certificates SET pdf_path=? WHERE enrolment_id=?",
                          (path, request.params["enrolment_id"]))
             conn.commit()
