@@ -137,8 +137,11 @@
   </table>
 </div>
 
-<div class="card">
-  <h2>Recent session records, establishment-wide</h2>
+<details class="card collapse-card">
+  <summary class="collapse-summary">
+    <h2>Recent session records, establishment-wide</h2>
+    <span class="collapse-hint">{{ sessions|length }} record{{ '' if sessions|length == 1 else 's' }} &middot; show</span>
+  </summary>
   <p class="muted" style="font-size:12.5px;">As admin you can open any session record at your establishment, including safeguarding notes. Phil never pushes a notification when one is flagged; this is a look-it-up capability only.</p>
   {% if not sessions %}
     <p class="muted">No sessions recorded yet.</p>
@@ -157,5 +160,17 @@
     {% endfor %}
   </table>
   {% endif %}
-</div>
+</details>
+
+<style>
+.collapse-card{padding-top:0;}
+.collapse-summary{display:flex; align-items:center; justify-content:space-between; gap:12px;
+  cursor:pointer; list-style:none; padding:var(--sp-4) 0;}
+.collapse-summary::-webkit-details-marker{display:none;}
+.collapse-summary h2{margin:0; display:inline-flex; align-items:center; gap:9px;}
+.collapse-summary h2::before{content:"\25B8"; color:var(--teal-darker); font-size:12px; transition:transform .12s ease;}
+.collapse-card[open] .collapse-summary h2::before{transform:rotate(90deg);}
+.collapse-hint{font-size:12px; color:var(--muted); white-space:nowrap;}
+.collapse-card[open] .collapse-hint{visibility:hidden;}
+</style>
 {% endblock %}

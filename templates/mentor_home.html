@@ -127,15 +127,15 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 {# One row per pupil, not per enrolment. A pupil on three courses used to appear
    three times with the same name, which reads as three children. #}
 {% for p in mentoring_list %}
-<details class="ml-pupil" {% if p.active %}open{% endif %}>
+<details class="ml-pupil">
   <summary class="ml-summary">
     <span class="avatar avatar-sm">{{ p.forename[:1] }}{{ p.surname[:1] }}</span>
     <span class="ml-name">{{ p.forename }} {{ p.surname }}</span>
     <span class="ml-count">
-      {%- if p.active %}{{ p.active }} active{% endif -%}
-      {%- if p.active and p.completed %} &middot; {% endif -%}
-      {%- if p.completed %}{{ p.completed }} completed{% endif -%}
+      {%- if p.active %}<span class="badge badge-teal">{{ p.active }} active</span>{% endif -%}
+      {%- if p.completed %} <span class="badge badge-muted">{{ p.completed }} done</span>{% endif -%}
     </span>
+    <span class="ml-toggle">Show courses</span>
   </summary>
 
   <table class="ml-courses">
@@ -169,10 +169,15 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .ml-pupil:first-of-type{border-top:none;}
 .ml-summary{display:flex; align-items:center; gap:10px; cursor:pointer; list-style:none; padding:10px 0;}
 .ml-summary::-webkit-details-marker{display:none;}
-.ml-summary::before{content:"\25B8"; color:var(--teal-darker); font-size:11px; transition:transform .12s ease;}
+.ml-summary::before{content:"\25B8"; color:var(--teal-darker); font-size:13px; transition:transform .12s ease; flex-shrink:0;}
+.ml-summary:hover{background:var(--teal-light); border-radius:8px;}
 .ml-pupil[open] .ml-summary::before{transform:rotate(90deg);}
 .ml-name{font-family:var(--font-head); font-weight:700; color:var(--navy); flex:1; min-width:0;}
-.ml-count{font-size:12px; color:var(--muted); white-space:nowrap;}
+.ml-count{font-size:12px; color:var(--muted); white-space:nowrap; display:flex; gap:5px;}
+.ml-toggle{font-size:12px; font-weight:600; color:var(--teal-darker); white-space:nowrap; min-width:88px; text-align:right;}
+.ml-pupil[open] .ml-toggle::after{content:"Hide courses";}
+.ml-pupil[open] .ml-toggle{font-size:0;}
+.ml-pupil[open] .ml-toggle::after{font-size:12px;}
 .ml-courses{margin:0 0 4px 30px; width:calc(100% - 30px);}
 .ml-courses td{padding:8px 8px 8px 0; vertical-align:middle;}
 .ml-link{font-size:12.5px; margin-left:30px;}
