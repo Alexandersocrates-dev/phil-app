@@ -3394,39 +3394,78 @@ def certificate_download(request):
 
 @router.get("/mentor/session/record/<record_id>/edit")
 def session_record_edit(request):
-    """Lets a mentor correct a session they have already recorded.
+    """Reopens a recorded session as the full session page, notes in place.
 
-    Editing does not move the course forward or backward: current_week and the
-    enrolment status are untouched. Only the written record changes, which is
-    what a mentor means by "I typed that wrong"."""
+    The mentor sees exactly what they saw when recording it — the course text,
+    the steps, the resource cards — rather than a stripped-down form. Editing
+    does not move the course: current_week and status are untouched."""
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
     conn = db.get_conn()
     try:
-        record = conn.execute(
-            """SELECT r.*, w.week_number AS wn, w.title AS week_title,
-                      p.forename, p.surname, c.title AS course_title, e.id AS enrolment_id
-               FROM session_records r
-               JOIN enrolments e ON e.id = r.enrolment_id
-               JOIN weeks w ON w.id = r.week_id
-               JOIN pupils p ON p.id = e.pupil_id
-               JOIN courses c ON c.id = e.course_id
-               WHERE r.id=?""",
-            (request.params["record_id"],),
-        ).fetchone()
+        record = conn.execute("SELECT * FROM session_records WHERE id=?",
+                              (request.params["record_id"],)).fetchone()
         if not record:
             return Response("Session record not found", status="404 Not Found")
-        # Same establishment only: a mentor must not edit another school's record.
-        estab = conn.execute(
-            "SELECT establishment_id FROM pupils WHERE id=(SELECT pupil_id FROM enrolments WHERE id=?)",
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.establishment_id,
+                      c.title AS course_title, c.module_number AS course_module_number
+               FROM enrolments e JOIN pupils p ON p.id=e.pupil_id
+               JOIN courses c ON c.id=e.course_id WHERE e.id=?""",
             (record["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+
+        week = conn.execute("SELECT * FROM weeks WHERE id=?", (record["week_id"],)).fetchone()
+        completed_records = conn.execute(
+            """SELECT r.*, w.week_number AS wn, w.title AS week_title
+               FROM session_records r JOIN weeks w ON w.id=r.week_id
+               WHERE r.enrolment_id=? ORDER BY w.week_number""",
+            (record["enrolment_id"],)).fetchall()
     finally:
         conn.close()
-    if not estab or estab["establishment_id"] != user["establishment_id"]:
-        return Response("Not authorised for this area.", status="403 Forbidden")
-    return render("session_edit.html", user=user, record=record,
-                  flash=flash_from_query(request))
+
+    week = dict(week, resources=json.loads(week["resources"] or "[]"))
+    week["resource_items"] = resource_items_for(
+        enrolment["course_module_number"], week["resources"])
+    week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
+
+    # what_happened was written as "Check-in: ... / Input: ... / Activity: ...",
+    # a format this app controls, so it can be split back into the three fields
+    # the mentor originally typed into.
+    draft = _split_what_happened(record["what_happened"])
+    draft["reflect_note"] = record["reflection_goal"] or ""
+    draft["next_session_note"] = record["mentor_notes"] or ""
+
+    response = render("session_form.html", user=user, enrolment=enrolment, week=week,
+                      next_week_number=week["week_number"], completed_records=completed_records,
+                      prev_record=None, prev_week_items=[], draft=draft, progress=[],
+                      upcoming_weeks=[], editing_record=record,
+                      flash=flash_from_query(request))
+    response.headers.append(("Cache-Control", "no-store, must-revalidate"))
+    return response
+
+
+def _split_what_happened(text):
+    """Turns the stored summary back into the three note fields it came from."""
+    out = {"checkin_note": "", "input_note": "", "activity_note": ""}
+    labels = [("Check-in:", "checkin_note"), ("Input:", "input_note"), ("Activity:", "activity_note")]
+    if not text:
+        return out
+    positions = []
+    for label, key in labels:
+        idx = text.find(label)
+        if idx >= 0:
+            positions.append((idx, len(label), key))
+    positions.sort()
+    for i, (idx, label_len, key) in enumerate(positions):
+        end = positions[i + 1][0] if i + 1 < len(positions) else len(text)
+        out[key] = text[idx + label_len:end].strip()
+    if not positions:
+        # Written before this format, or edited by hand: keep it rather than lose it.
+        out["checkin_note"] = text.strip()
+    return out
 
 
 @router.post("/mentor/session/record/<record_id>/edit")
@@ -3451,15 +3490,24 @@ def session_record_edit_submit(request):
         if not estab or estab["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
 
+        # The edit form is the full session page, so it posts the same five note
+        # fields as recording does. Rebuild what_happened the same way, or the
+        # two paths would store the record in different shapes.
+        parts = []
+        for label, field in (("Check-in", "checkin_note"), ("Input", "input_note"),
+                             ("Activity", "activity_note")):
+            value = request.field(field, "").strip()
+            if value:
+                parts.append(f"{label}: {value}")
         conn.execute(
             """UPDATE session_records
                SET what_happened=?, reflection_goal=?, mentor_notes=?,
                    mood_rating=?, engagement_rating=?,
                    safeguarding_flag=?, safeguarding_note=?, pdf_path=NULL
                WHERE id=?""",
-            (request.field("what_happened", "").strip(),
-             request.field("reflection_goal", "").strip(),
-             request.field("mentor_notes", "").strip(),
+            ("\n\n".join(parts),
+             request.field("reflect_note", "").strip(),
+             request.field("next_session_note", "").strip(),
              request.field("mood_rating") or None,
              request.field("engagement_rating") or None,
              1 if request.field("safeguarding_flag") == "yes" else 0,
