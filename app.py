@@ -805,7 +805,13 @@ def pupil_profile(request):
                                     "next_planned": next_planned["planned_date"] if next_planned else None})
     finally:
         conn.close()
+    # today is used to mark a review overdue; the default is the same three-week
+    # gap the completion screen suggests, so both routes agree.
     return render("pupil_profile.html", user=user, pupil=pupil, enrolment_data=enrolment_data,
+                  today=datetime.date.today().isoformat(),
+                  review_week_of=review_week_of,
+                  review_overdue_from=review_overdue_from,
+                  default_review_date=(datetime.date.today() + datetime.timedelta(days=21)).isoformat(),
                   flash=flash_from_query(request))
 
 
@@ -1635,10 +1641,14 @@ def session_submit(request):
     # other four sessions keep the quiet flash message: a celebration every week
     # would be noise by week three.
     if completed_now:
+        # Three weeks is the default because it's long enough for a strategy to
+        # be tested in real life and short enough that the pupil still connects
+        # it to the course.
+        suggested = (datetime.date.today() + datetime.timedelta(days=21)).isoformat()
         return render("course_complete.html", user=user,
                       pupil_name=pupil_name, course_title=enrolment["course_title"],
                       enrolment_id=enrolment_id, pupil_id=enrolment["pupil_id"],
-                      flash=None)
+                      suggested_review_date=suggested, flash=None)
     return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}", message, "ok")
 
 @router.get("/mentor/schedule/<enrolment_id>")
@@ -3543,6 +3553,130 @@ def session_record_edit_submit(request):
     finally:
         conn.close()
     return with_flash(f"/mentor/pupils/{pupil_id}", "Session record updated.", "ok")
+
+
+# A review point is a target, not a deadline. Schools lose whole weeks to
+# holidays, trips and exams, so a date that turns red the morning after is
+# wrong and trains mentors to ignore it. Two weeks of grace covers a half-term
+# break; anything longer than that genuinely has been forgotten.
+REVIEW_GRACE_DAYS = 14
+
+
+def review_week_of(date_string):
+    """The Monday of the week a review falls in. Schools plan in weeks, not days."""
+    try:
+        d = datetime.date.fromisoformat(date_string)
+    except (TypeError, ValueError):
+        return None
+    return (d - datetime.timedelta(days=d.weekday())).isoformat()
+
+
+def review_overdue_from(date_string):
+    """The date after which a review counts as genuinely missed."""
+    try:
+        d = datetime.date.fromisoformat(date_string)
+    except (TypeError, ValueError):
+        return None
+    return (d + datetime.timedelta(days=REVIEW_GRACE_DAYS)).isoformat()
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/review")
+def set_review_point(request):
+    """Agrees a date to check back in after a course ends.
+
+    Support stopping dead at session five is the thing schools notice. A date
+    and a note is the smallest thing that fixes it: the mentor sees it coming,
+    and the pupil is told it's coming."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    review_date = request.field("review_date", "").strip()
+    review_note = request.field("review_note", "").strip()
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.establishment_id FROM enrolments e
+               JOIN pupils p ON p.id = e.pupil_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        conn.execute(
+            "UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
+            (review_date or None, review_note or None, request.params["enrolment_id"]))
+        db.log_action(conn, user["id"], "review_point_set", "enrolment",
+                      enrolment["id"], review_date)
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+    finally:
+        conn.close()
+    message = (f"Review point set for {review_date}." if review_date
+               else "Review point cleared.")
+    return with_flash(f"/mentor/pupils/{pupil_id}", message, "ok")
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/review/push")
+def push_review_point(request):
+    """Moves a review later by a set number of weeks.
+
+    The common case is a holiday landing on top of the review, and the mentor
+    knowing that in advance. Retyping a date is enough friction that they
+    wouldn't bother."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    try:
+        weeks = max(1, min(8, int(request.field("weeks", "2"))))
+    except ValueError:
+        weeks = 2
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.establishment_id FROM enrolments e
+               JOIN pupils p ON p.id = e.pupil_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        # Push from today when the date has already passed, so a long-overdue
+        # review doesn't land in the past again.
+        try:
+            base = datetime.date.fromisoformat(enrolment["review_date"])
+        except (TypeError, ValueError):
+            base = datetime.date.today()
+        base = max(base, datetime.date.today())
+        new_date = (base + datetime.timedelta(weeks=weeks)).isoformat()
+        conn.execute("UPDATE enrolments SET review_date=?, review_done=0 WHERE id=?",
+                     (new_date, request.params["enrolment_id"]))
+        db.log_action(conn, user["id"], "review_point_pushed", "enrolment",
+                      enrolment["id"], f"+{weeks}w to {new_date}")
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}",
+                      f"Review moved to the week of {review_week_of(new_date)}.", "ok")
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/review/done")
+def complete_review_point(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.establishment_id FROM enrolments e
+               JOIN pupils p ON p.id = e.pupil_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        conn.execute("UPDATE enrolments SET review_done=1 WHERE id=?",
+                     (request.params["enrolment_id"],))
+        db.log_action(conn, user["id"], "review_point_completed", "enrolment", enrolment["id"])
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}", "Review marked as done.", "ok")
 
 
 @router.get("/session/<record_id>/pdf")

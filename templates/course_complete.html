@@ -22,12 +22,33 @@
     </p>
     <p><a class="cc-back" href="/mentor/pupils/{{ pupil_id }}">Back to {{ pupil_name }}</a></p>
   </div>
+
+  {# Sustained change needs a follow-up, not a single course. Asking here, while
+     the mentor is still in the moment, is the only time they reliably will. #}
+  <div class="card cc-review">
+    <h2>Agree a review point</h2>
+    <p class="muted">Support shouldn't stop the moment the fifth session ends. Set a date to check back in, and it'll show on {{ pupil_name }}'s record.</p>
+    <form method="post" action="/mentor/enrolment/{{ enrolment_id }}/review">
+      <div class="field">
+        <label for="review_date">Review date</label>
+        <input type="date" id="review_date" name="review_date" value="{{ suggested_review_date }}">
+        <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap: long enough to test a strategy for real, short enough that it still connects to the course.</p>
+      </div>
+      <div class="field">
+        <label for="review_note">What to check at the review</label>
+        <textarea id="review_note" name="review_note" rows="2" placeholder="e.g. is the signal card still being used in maths?"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Set review point</button>
+    </form>
+  </div>
 </div>
 
 <style>
 .cc-wrap{position:relative;}
 .cc-card{position:relative; z-index:1;}
 .cc-lead{font-size:15px; color:var(--ink); margin:0 0 6px;}
+.cc-review{margin-top:14px;text-align:left;}
+.cc-review h2{margin-top:0;}
 .cc-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:18px 0 10px;}
 .cc-back{font-size:13px; color:var(--muted);}
 .cc-badge{animation:cc-pop 420ms var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)) both;}

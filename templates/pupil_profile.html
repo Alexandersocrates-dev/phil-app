@@ -60,6 +60,44 @@
     {% else %}<span class="badge badge-teal">Active</span>{% endif %}
   </div>
   </summary>
+  {# A review point set at completion has to be visible here, or it's a date
+     nobody ever sees again. Overdue is called out; a done review stays as a
+     record that the follow-up happened. #}
+  {% if e.review_date %}
+  {# A review is a target, not a deadline: it shows as a week rather than a day,
+     and only turns amber once the grace period has passed, so a half-term
+     break doesn't make a mentor look like they've missed something. #}
+  {% set overdue = review_overdue_from(e.review_date) and today > review_overdue_from(e.review_date) %}
+  <div class="review-strip {% if e.review_done %}review-done{% elif overdue %}review-overdue{% endif %}">
+    <div>
+      <strong>
+        {%- if e.review_done %}Review completed
+        {%- elif overdue %}Review overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
+        {%- else %}Review due the week of {{ review_week_of(e.review_date) }}{% endif -%}
+      </strong>
+      {% if e.review_note %}<span class="review-note">{{ e.review_note }}</span>{% endif %}
+    </div>
+    {% if not e.review_done %}
+    <div class="review-actions">
+      <form method="post" action="/mentor/enrolment/{{ e.id }}/review/push" class="form-inline">
+        <input type="hidden" name="weeks" value="2">
+        <button class="btn btn-secondary btn-sm" type="submit" title="Move the review two weeks later">Push back 2 weeks</button>
+      </form>
+      <form method="post" action="/mentor/enrolment/{{ e.id }}/review/done" class="form-inline">
+        <button class="btn btn-secondary btn-sm" type="submit">Mark done</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+  {% elif e.status == 'completed' %}
+  <div class="review-strip review-none">
+    <div><strong>No review point set</strong><span class="review-note">Support usually needs a follow-up, not a single course.</span></div>
+    <form method="post" action="/mentor/enrolment/{{ e.id }}/review" class="form-inline">
+      <input type="hidden" name="review_date" value="{{ default_review_date }}">
+      <button class="btn btn-secondary btn-sm" type="submit">Set for {{ default_review_date }}</button>
+    </form>
+  </div>
+  {% endif %}
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
   <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; Session {{ e.current_week }} of 5 &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
 
@@ -118,6 +156,13 @@
 .enrol-summary h2{display:inline-flex; align-items:center; gap:8px;}
 .enrol-summary h2::before{content:"\25B8"; color:var(--teal-darker); font-size:12px; transition:transform .12s ease;}
 .enrol-card[open] .enrol-summary h2::before{transform:rotate(90deg);}
+.review-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:var(--teal-light);border:1px solid #9FE1CB;border-radius:10px;padding:9px 12px;margin:0 0 12px;font-size:13px;color:#04342C;}
+.review-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.review-strip .review-note{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+.review-overdue{background:var(--amber-light);border-color:#FAC775;color:#412402;}
+.review-done{background:#F3F2EC;border-color:var(--border);color:var(--muted);}
+.review-none{background:#fff;border-style:dashed;color:var(--muted);}
 .record-goal{display:block; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4;}
 </style>
 {% endblock %}

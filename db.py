@@ -156,6 +156,11 @@ CREATE TABLE IF NOT EXISTS enrolments (
     status TEXT NOT NULL DEFAULT 'active' CHECK(status IN ('active','completed','withdrawn')),
     current_week INTEGER NOT NULL DEFAULT 0,
     parent_access_enabled INTEGER NOT NULL DEFAULT 1,
+    -- A review point agreed at the end of a course, so support doesn't stop
+    -- dead at session five. Nullable: not every course gets one.
+    review_date TEXT,
+    review_note TEXT,
+    review_done INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL
 );
 
