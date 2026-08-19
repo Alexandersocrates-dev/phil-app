@@ -714,8 +714,35 @@ def mentor_home(request):
         ).fetchone()[0]
     finally:
         conn.close()
+    # Reviews the mentor agreed at the end of a course. Only ones that have come
+    # round: a review three weeks away isn't work yet, and listing it would
+    # teach them to ignore the list.
+    today = datetime.date.today().isoformat()
+    conn = db.get_conn()
+    try:
+        rows = conn.execute(
+            """SELECT e.id, e.review_date, e.review_note, e.pupil_id,
+                      p.forename, p.surname, c.title AS course_title
+               FROM enrolments e
+               JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id
+               WHERE e.mentor_id = ? AND e.review_date IS NOT NULL
+                 AND e.review_done = 0 AND p.status = 'active'
+               ORDER BY e.review_date""",
+            (user["id"],)).fetchall()
+    finally:
+        conn.close()
+    reviews_due = []
+    for row in rows:
+        if row["review_date"] > today:
+            continue
+        overdue_after = review_overdue_from(row["review_date"])
+        reviews_due.append(dict(row,
+                                week_of=review_week_of(row["review_date"]),
+                                overdue=bool(overdue_after and today > overdue_after)))
+
     return render("mentor_home.html", user=user, pupils=pupils, enrolments=enrolments,
-                  due_this_week=due_this_week,
+                  due_this_week=due_this_week, reviews_due=reviews_due,
                   flash=flash_from_query(request))
 
 

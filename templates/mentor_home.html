@@ -54,6 +54,69 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" style="stroke:#5F5E5A; width:14px; height:14px; flex-shrink:0;" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
 </a>
 
+{# A review that only shows on the pupil's record is a review nobody sees. This
+   sits above the caseload because it's the work that has no other prompt —
+   an active course reminds you by being active. #}
+{% if reviews_due %}
+{% set overdue_count = reviews_due | selectattr('overdue') | list | length %}
+<div class="card review-due-card {% if overdue_count %}review-card-late{% endif %}">
+  <div class="review-card-head">
+    <h2 style="margin:0;">Reviews due</h2>
+    <span class="review-count {% if overdue_count %}review-count-late{% endif %}">
+      {{ reviews_due|length }}{% if overdue_count %} &middot; {{ overdue_count }} overdue{% endif %}
+    </span>
+  </div>
+  <p class="muted" style="font-size:12.5px;margin:0 0 12px;">Follow-ups you agreed at the end of a course.</p>
+  {% for r in reviews_due %}
+  <div class="review-due-row {% if r.overdue %}review-due-late{% endif %}">
+    <div style="flex:1;min-width:0;">
+      <a href="/mentor/pupils/{{ r.pupil_id }}"><strong>{{ r.forename }} {{ r.surname }}</strong></a>
+      <span class="review-due-meta">{{ r.course_title }} &middot;
+        {% if r.overdue %}overdue, was due the week of {{ r.week_of }}
+        {%- else %}due the week of {{ r.week_of }}{% endif %}</span>
+      {% if r.review_note %}<span class="review-due-meta">{{ r.review_note }}</span>{% endif %}
+    </div>
+    <div class="review-due-actions">
+      <form method="post" action="/mentor/enrolment/{{ r.id }}/review/push" class="form-inline">
+        <input type="hidden" name="weeks" value="2">
+        <button class="btn btn-secondary btn-sm" type="submit">Push back 2 weeks</button>
+      </form>
+      <form method="post" action="/mentor/enrolment/{{ r.id }}/review/done" class="form-inline">
+        <button class="btn btn-secondary btn-sm" type="submit">Mark done</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<style>
+/* The card has to look different from every other card on the page, or a due
+   review reads as just more content. The accent is teal when reviews are simply
+   due and amber once any is overdue, so the signal is proportionate. */
+.review-due-card{border-left:4px solid var(--teal-darker);}
+.review-card-late{border-left-color:var(--amber-dark);}
+.review-card-head{display:flex;align-items:center;gap:10px;margin:0 0 4px;}
+.review-count{font-size:12px;font-weight:700;letter-spacing:.02em;color:#04342C;
+  background:var(--teal-light);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+.review-count-late{color:#412402;background:var(--amber-light);
+  animation:review-pulse 3.2s ease-in-out infinite;}
+@keyframes review-pulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(133,79,11,0);}
+  50%{box-shadow:0 0 0 5px rgba(133,79,11,0.16);}
+}
+/* Runs until the overdue reviews are cleared, so it can't be waited out. Kept
+   slow and soft deliberately: it has to persist without becoming irritating to
+   sit next to all day. */
+@media (prefers-reduced-motion:reduce){
+  .review-count-late{animation:none;}
+}
+.review-due-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:var(--teal-light);border:1px solid #9FE1CB;border-radius:10px;padding:10px 12px;margin:0 0 8px;font-size:13px;}
+.review-due-late{background:var(--amber-light);border-color:#FAC775;}
+.review-due-meta{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+.review-due-actions{display:flex;gap:6px;flex-wrap:wrap;}
+</style>
+{% endif %}
+
 <div class="card">
 <div style="display:flex; justify-content:space-between; align-items:center;">
 <h2 style="margin:0;">My caseload</h2>
