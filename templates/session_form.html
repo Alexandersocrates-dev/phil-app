@@ -254,15 +254,7 @@
 
 <button class="btn btn-amber btn-block" type="submit">Mark session complete</button>
 
-{# A sticky duplicate of the same submit. The page runs to roughly 2,500px, so
-   the real button sits two screens below the fold; a mentor finishing a session
-   should never have to scroll to save it. It shares the form via the form
-   attribute rather than being a second form, and only appears once the mentor
-   has scrolled past the first step, so it doesn't cover content on arrival. #}
-<div class="session-sticky" id="sessionSticky" hidden>
-  <span class="session-sticky-label">Session {{ next_week_number }} of 5</span>
-  <button class="btn btn-amber btn-sm" type="submit" form="sessionForm">Mark session complete</button>
-</div>
+
 </form>
 </div>
 
@@ -389,34 +381,14 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-cards{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 10px;margin:4px 0 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 .res-card{scroll-snap-align:start;flex:0 0 148px;min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 10px;border:1.5px dashed var(--teal-darker);border-radius:10px;background:#fff;font-size:13px;font-weight:600;line-height:1.35;color:var(--navy);}
 .res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
-.session-sticky{position:sticky;bottom:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  margin:14px -4px 0;padding:10px 14px;background:#fff;border:1px solid var(--border);border-radius:12px;
-  box-shadow:0 -2px 14px rgba(27,42,74,0.10);}
-.session-sticky-label{font-size:12px;font-weight:600;color:var(--muted);}
-.session-sticky .btn{min-height:44px;padding-left:18px;padding-right:18px;}
-@media print{.session-sticky{display:none;}}
+
 </style>
 <script>
 (function(){
-  var bar = document.getElementById('sessionSticky');
-  if (!bar) return;
   var form = document.getElementById('sessionForm');
   if (!form) return;
-  function update(){
-    // Show it once the form itself has started scrolling past the top, and hide
-    // it again when the real button is on screen, so there are never two live
-    // copies of the same action competing for attention.
-    var box = form.getBoundingClientRect();
-    var realBtn = form.querySelector('button[type=submit]');
-    var realVisible = realBtn && realBtn.getBoundingClientRect().top < window.innerHeight - 60;
-    bar.hidden = !(box.top < 0 && !realVisible);
-  }
-  update();
-  window.addEventListener('scroll', update, {passive:true});
-  window.addEventListener('resize', update);
-
   // One submission only: a second click while the first is in flight pushes the
-  // course past its last week, which is what produced the error page.
+  // course past its last week, which produced an error page.
   form.addEventListener('submit', function(){
     [].forEach.call(form.querySelectorAll('button[type=submit]'), function(b){
       b.disabled = true;
