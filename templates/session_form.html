@@ -122,10 +122,12 @@
 {% endif %}
 
 {% if prev_record and prev_record.mentor_notes %}
-<div style="background:var(--coral-light);border:1px solid #EFC7B4;border-radius:12px;padding:10px 12px;margin:0 0 12px;">
-<p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--coral-dark);margin:0 0 4px;">Notes from previous session</p>
-<p style="font-size:13.5px;color:var(--coral-dark);line-height:1.5;margin:0 0 3px;">{{ prev_record.mentor_notes }}</p>
-<p style="font-size:11px;color:var(--coral-dark);opacity:0.75;margin:0;">{{ prev_record.recorder_name }}, end of Session {{ prev_record.wn }}</p>
+{# Was coral throughout, which reads as a warning. This is a helpful reminder
+   the mentor left themselves, so it should look like information. #}
+<div style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:12px;padding:10px 12px;margin:0 0 12px;">
+<p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--teal-darker);margin:0 0 4px;">Notes from previous session</p>
+<p style="font-size:13.5px;color:#04342C;line-height:1.5;margin:0 0 3px;">{{ prev_record.mentor_notes }}</p>
+<p style="font-size:11px;color:var(--teal-darker);opacity:0.8;margin:0;">{{ prev_record.recorder_name }}, end of Session {{ prev_record.wn }}</p>
 </div>
 {% endif %}
 

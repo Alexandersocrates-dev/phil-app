@@ -1889,42 +1889,95 @@
       },
       {
         "name": "First/then visual cue cards",
-        "body": "Two worked examples, then two to fill in together.",
+        "body": "Show the two examples first, then fill in the empty rows with the pupil using something from their own timetable.",
         "cards": [
           {
-            "cat": "Example",
-            "title": "First: finish this question",
+            "cat": "Worked example",
+            "title": "Finish this question",
             "art": "art-first-then",
             "text": "Then: a short break.",
-            "note": "Worked example"
+            "note": "First, then → break"
           },
           {
-            "cat": "Example",
-            "title": "First: put the phone away",
+            "cat": "Worked example",
+            "title": "Put the phone away",
             "art": "art-first-then",
             "text": "Then: carry on with the lesson.",
-            "note": "Worked example"
-          },
-          {
-            "cat": "Blank",
-            "title": "First: ______________",
-            "art": "art-first-then",
-            "text": "Then: ______________",
-            "note": "Fill in together"
-          },
-          {
-            "cat": "Blank",
-            "title": "First: ______________",
-            "art": "art-first-then",
-            "text": "Then: ______________",
-            "note": "Fill in together"
+            "note": "First, then → back to work"
           }
         ],
-        "tone": "amber"
+        "tone": "amber",
+        "table": {
+          "headers": [
+            "First, I will…",
+            "Then, I get…"
+          ],
+          "rows": [
+            [
+              "",
+              ""
+            ],
+            [
+              "",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Assertive disagreement script card",
-        "body": "A respectful way to disagree.\nStructure: \"I don't want to do X because Y. Can we agree to Z instead?\"\n\"I don't want to move seats because I can't see the board from there. Can I move somewhere else instead?\"\n\"I don't want to stop now because I'm nearly finished. Can I have two more minutes?\"\n\"I don't understand this instruction. Can you explain it a different way?\""
+        "body": "A respectful way to disagree. Read the structure, look at the examples, then write two of your own for situations that come up for you.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "The structure",
+            "title": "I don't want to do X because Y. Can we agree to Z instead?",
+            "art": "art-assertive",
+            "text": "Say what you want, give the reason, offer an alternative.",
+            "note": "All three parts matter"
+          },
+          {
+            "cat": "Example",
+            "title": "Being moved seats",
+            "art": "art-move-seat",
+            "text": "“I don't want to move because I can't see the board from there. Can I move somewhere else instead?”",
+            "note": "Reason, then alternative"
+          },
+          {
+            "cat": "Example",
+            "title": "Being told to stop",
+            "art": "art-hourglass",
+            "text": "“I don't want to stop now because I'm nearly finished. Can I have two more minutes?”",
+            "note": "Asks for something specific"
+          },
+          {
+            "cat": "Example",
+            "title": "Not understanding",
+            "art": "art-confused",
+            "text": "“I don't understand this instruction. Can you explain it a different way?”",
+            "note": "Disagreeing isn't always refusing"
+          }
+        ],
+        "table": {
+          "headers": [
+            "A situation that happens to me",
+            "What I could say instead"
+          ],
+          "rows": [
+            [
+              "",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Behaviour agreement template",
