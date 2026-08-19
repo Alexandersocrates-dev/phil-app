@@ -202,6 +202,14 @@ tbody tr:hover{background:var(--teal-light);}
 
 .pill-row{display:flex; flex-wrap:wrap; gap:var(--sp-2); margin:var(--sp-3) 0;}
 .pill{display:inline-flex; align-items:center; min-height:40px; background:var(--teal-light); color:var(--teal-darker); padding:var(--sp-1) var(--sp-3); border-radius:100px; font-size:12.5px; font-weight:500;}
+/* A pill and a button sitting in the same row are different components with
+   different padding, borders and font sizes, so matching their min-height is
+   not enough — the taller line box wins. Fixing the height outright, with the
+   padding removed vertically, makes them identical whatever is inside them. */
+.pill-row .pill, .pill-row .btn, .pill-row .btn-sm{
+  height:42px; min-height:42px; padding-top:0; padding-bottom:0;
+  display:inline-flex; align-items:center; box-sizing:border-box;
+}
 
 .avatar{display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:var(--teal-light); color:var(--teal-darker); font-family:var(--font-head); font-weight:700; font-size:13px; flex-shrink:0;}
 .avatar-row{display:flex; align-items:center; gap:var(--sp-3);}
