@@ -590,11 +590,77 @@
       },
       {
         "name": "Nicotine cycle diagram",
-        "body": "How the nicotine cycle works.\n1. Craving builds: the brain signals it wants nicotine\n2. Use: vaping delivers a fast hit of nicotine\n3. Short dopamine boost: a brief feel-good effect\n4. Dip: the feeling fades, often below where it started\n5. Craving builds again: the cycle repeats"
+        "body": "Why cutting down is hard, and why it isn't about willpower.",
+        "tone": "blue",
+        "steps": [
+          {
+            "title": "Craving builds",
+            "art": "art-rise",
+            "text": "The brain signals that it wants nicotine."
+          },
+          {
+            "title": "Use",
+            "art": "art-phone-off",
+            "text": "Vaping delivers a fast hit."
+          },
+          {
+            "title": "Short boost",
+            "art": "art-level",
+            "text": "A brief feel-good effect."
+          },
+          {
+            "title": "Dip",
+            "art": "art-fall",
+            "text": "The feeling fades, often below where it started."
+          },
+          {
+            "title": "Craving builds again",
+            "art": "art-rise",
+            "text": "The dip is what drives the next one. That's chemistry, not weakness."
+          }
+        ]
       },
       {
         "name": "Where am I now scale",
-        "body": "How would I describe my vaping right now?\n1 Never tried it\n2 Tried it once or twice\n3 Occasional use\n4 Regular use\n5 Feels hard to go without"
+        "body": "Pick the line that's closest to true today. There's no wrong answer here.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Never tried it",
+            "art": "art-level-1",
+            "text": "I haven't vaped.",
+            "note": "Nothing to change"
+          },
+          {
+            "cat": "2",
+            "title": "Tried it once or twice",
+            "art": "art-level-2",
+            "text": "I've had a go, but that's all.",
+            "note": "Worth knowing your triggers"
+          },
+          {
+            "cat": "3",
+            "title": "Occasional use",
+            "art": "art-level-3",
+            "text": "Sometimes, usually with other people.",
+            "note": "Social triggers matter most"
+          },
+          {
+            "cat": "4",
+            "title": "Regular use",
+            "art": "art-level-4",
+            "text": "Most days, or most weeks.",
+            "note": "Cutting down is the realistic goal"
+          },
+          {
+            "cat": "5",
+            "title": "Hard to go without",
+            "art": "art-level-5",
+            "text": "I notice when I haven't.",
+            "note": "Ask for help, not just willpower"
+          }
+        ]
       },
       {
         "name": "Trigger map template",
@@ -630,23 +696,186 @@
       },
       {
         "name": "Trigger difficulty ranking card",
-        "body": "Some triggers are harder to resist than others.\n• Social triggers (friends offering) are often the hardest to resist\n• Emotional triggers (boredom, stress) can sneak up unnoticed\n• Habit triggers (same time, same place) are easiest to plan around\n• Naming a trigger doesn't mean acting on it, it just makes it visible"
+        "body": "Some triggers are much harder to resist than others. Knowing which is which is what makes a plan realistic.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Hardest",
+            "title": "Social",
+            "art": "art-friends-out",
+            "text": "A friend offers you one.",
+            "note": "Needs a script, not willpower"
+          },
+          {
+            "cat": "Sneaky",
+            "title": "Emotional",
+            "art": "art-unsettled",
+            "text": "Boredom, stress, or a bad day.",
+            "note": "Often unnoticed until after"
+          },
+          {
+            "cat": "Easiest to plan for",
+            "title": "Habit",
+            "art": "art-clock",
+            "text": "Same time, same place, same people.",
+            "note": "Change the place, break the habit"
+          },
+          {
+            "cat": "Worth saying",
+            "title": "Naming isn't doing",
+            "art": "art-thoughts",
+            "text": "Naming a trigger doesn't mean acting on it.",
+            "note": "It just makes it visible"
+          }
+        ]
       },
       {
         "name": "Refusal script cards",
-        "body": "Short, natural ways to say no.\n• \"No thanks, I'm trying to cut back.\"\n• \"Nah, not for me.\" (then change the subject)\n• \"I'm good, thanks.\"\n• \"Maybe later\", and just don't come back to it."
+        "body": "Short and low-key beats a speech. Pick one that sounds like you — read them out loud to find out which.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Script",
+            "title": "“No thanks, I'm cutting back.”",
+            "art": "art-talk",
+            "text": "Gives a reason without an argument.",
+            "note": "Works with people you know"
+          },
+          {
+            "cat": "Script",
+            "title": "“Nah, not for me.”",
+            "art": "art-nod",
+            "text": "Then change the subject straight away.",
+            "note": "Short is stronger"
+          },
+          {
+            "cat": "Script",
+            "title": "“I'm good, thanks.”",
+            "art": "art-thumb",
+            "text": "No reason offered, and none needed.",
+            "note": "You don't owe an explanation"
+          },
+          {
+            "cat": "Script",
+            "title": "“Maybe later.”",
+            "art": "art-hourglass",
+            "text": "Then simply don't come back to it.",
+            "note": "Buys time without a scene"
+          }
+        ]
       },
       {
         "name": "Role-play offer scenario cards",
-        "body": "Practise responding to each situation:\nOffered at break by a friend Offered at a party\nSomeone insists \"just try it\" Offered somewhere you can't easily leave"
+        "body": "Deal one at a time. The mentor plays the other person; the pupil answers in their own words.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Scenario",
+            "title": "Offered at break",
+            "art": "art-friends-out",
+            "text": "A friend holds one out to you at break.",
+            "note": "Which script fits?"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Offered at a party",
+            "art": "art-join",
+            "text": "Someone you don't know well offers you one.",
+            "note": "Harder: you want to fit in"
+          },
+          {
+            "cat": "Scenario",
+            "title": "“Just try it”",
+            "art": "art-talked-over",
+            "text": "Someone insists after you've said no.",
+            "note": "Repeat the same words, don't escalate"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Nowhere to go",
+            "art": "art-corridor",
+            "text": "Offered somewhere you can't easily leave.",
+            "note": "Plan an exit before you need one"
+          }
+        ]
       },
       {
         "name": "Reduction strategy cards",
-        "body": "Ways to cut down or stay vape-free:\nDelay by 10 minutes Swap for a fidget or drink\nChew gum instead Step away from the usual spot\nText a friend instead Notice the urge and wait"
+        "body": "Pick one to try this week. One that happens beats three that don't.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Delay",
+            "title": "Wait ten minutes",
+            "art": "art-hourglass",
+            "text": "Most cravings peak and pass inside that.",
+            "note": "Set a timer if it helps"
+          },
+          {
+            "cat": "Swap",
+            "title": "Fidget or a drink",
+            "art": "art-squeeze",
+            "text": "Give your hands and mouth something else.",
+            "note": "Keep it with you"
+          },
+          {
+            "cat": "Swap",
+            "title": "Chew gum",
+            "art": "art-texture",
+            "text": "A different taste in the same moment.",
+            "note": "Cheap and unremarkable"
+          },
+          {
+            "cat": "Place",
+            "title": "Step away",
+            "art": "art-walk",
+            "text": "Leave the usual spot at the usual time.",
+            "note": "Habit triggers are place-shaped"
+          },
+          {
+            "cat": "People",
+            "title": "Text someone",
+            "art": "art-talk",
+            "text": "Message a friend instead.",
+            "note": "Works when the trigger is boredom"
+          },
+          {
+            "cat": "Notice",
+            "title": "Wait it out",
+            "art": "art-level",
+            "text": "Notice the urge and let it fall on its own.",
+            "note": "It always does"
+          }
+        ]
       },
       {
         "name": "Habit-swap prompt card",
-        "body": "What could I do instead, in the moment?\n• When I feel bored, I could try...\n• When I feel stressed, I could try...\n• When my friends are vaping, I could try..."
+        "body": "Fill these in together, in the pupil's own words. A swap they chose is one they'll use.",
+        "tone": "teal",
+        "table": {
+          "headers": [
+            "When I feel…",
+            "I could try…"
+          ],
+          "rows": [
+            [
+              "Bored",
+              ""
+            ],
+            [
+              "Stressed",
+              ""
+            ],
+            [
+              "My friends are vaping",
+              ""
+            ],
+            [
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "One-page vaping support plan",
@@ -662,7 +891,31 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted\n• No punitive action attached to this record"
+        "body": "What gets shared onward, and what doesn't.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "The review date",
+            "art": "art-clock",
+            "text": "So the follow-up doesn't depend on one adult.",
+            "note": ""
+          },
+          {
+            "cat": "Not shared",
+            "title": "No punitive action",
+            "art": "art-hand-heart",
+            "text": "This record carries no sanction with it.",
+            "note": "Say this to the pupil out loud"
+          }
+        ]
       }
     ],
     "missing": []
@@ -847,7 +1100,31 @@
       },
       {
         "name": "Colour-code feelings key",
-        "body": "Rate how each part of my online day feels.\n1 Uncomfortable\n2 Neutral\n3 Good"
+        "body": "Mark each part of your online day with one of these.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Uncomfortable",
+            "art": "art-unsettled",
+            "text": "I'd rather this part wasn't there.",
+            "note": "Worth looking at"
+          },
+          {
+            "cat": "2",
+            "title": "Neutral",
+            "art": "art-level",
+            "text": "It's just part of the day.",
+            "note": ""
+          },
+          {
+            "cat": "3",
+            "title": "Good",
+            "art": "art-thumb",
+            "text": "I'd miss this if it went.",
+            "note": "Not everything online is a problem"
+          }
+        ]
       },
       {
         "name": "Cyberbullying scenario sort cards",
@@ -879,23 +1156,156 @@
       },
       {
         "name": "What counts as cyberbullying briefing card",
-        "body": "Cyberbullying can take many forms.\n• Being excluded from group chats deliberately\n• Nasty comments or messages, repeated or one-off\n• Sharing embarrassing content without consent\n• Impersonation or fake accounts\n• It can follow you home: that makes it different from in-person bullying"
+        "body": "It isn't only nasty comments. Sort these together into 'this counts' and 'this doesn't'.",
+        "tone": "amber",
+        "cards": [
+          {
+            "cat": "Counts",
+            "title": "Deliberate exclusion",
+            "art": "art-apart",
+            "text": "Being left out of group chats on purpose.",
+            "note": "Harder to prove, still counts"
+          },
+          {
+            "cat": "Counts",
+            "title": "Nasty messages",
+            "art": "art-jagged",
+            "text": "Repeated, or even just once if it lands hard.",
+            "note": "One-off still counts"
+          },
+          {
+            "cat": "Counts",
+            "title": "Sharing without consent",
+            "art": "art-share",
+            "text": "Passing on embarrassing content.",
+            "note": "Even if it was sent to them first"
+          },
+          {
+            "cat": "Counts",
+            "title": "Fake accounts",
+            "art": "art-hide",
+            "text": "Impersonation, or an account made about you.",
+            "note": "Report to the platform too"
+          },
+          {
+            "cat": "Why it's different",
+            "title": "It follows you home",
+            "art": "art-door-exit",
+            "text": "There's no end of the school day.",
+            "note": "That's what makes it heavier"
+          }
+        ]
       },
       {
         "name": "Block, report, save evidence step card",
-        "body": "Steps to take if something happens online.\n• 1. Take a screenshot before doing anything else.\n• 2. Block the person or account.\n• 3. Report it on the platform.\n• 4. Tell a trusted adult what happened."
+        "body": "Order matters here — blocking first can hide the evidence.",
+        "tone": "teal",
+        "steps": [
+          {
+            "title": "Screenshot first",
+            "art": "art-watch",
+            "text": "Before anything else. Blocking can hide the original message."
+          },
+          {
+            "title": "Block",
+            "art": "art-hide",
+            "text": "Stop it reaching you while you decide what to do."
+          },
+          {
+            "title": "Report on the platform",
+            "art": "art-raise-card",
+            "text": "Every app has a route. Find it together now, not later."
+          },
+          {
+            "title": "Tell a trusted adult",
+            "art": "art-hand-heart",
+            "text": "Earlier means more options, not fewer."
+          }
+        ]
       },
       {
         "name": "Privacy settings checklist",
-        "body": "Quick checks for staying safer online.\n• Who can see my profile: friends only, or everyone?\n• Who can message me directly?\n• Is my location shared anywhere?\n• Do I know how to block and report on this app?"
+        "body": "Go through these on one app now, with the pupil doing the tapping.",
+        "tone": "blue",
+        "checklist": {
+          "items": [
+            "Who can see my profile — friends only, or everyone?",
+            "Who can message me directly?",
+            "Is my location shared anywhere?",
+            "Do I know how to block on this app?",
+            "Do I know how to report on this app?"
+          ]
+        }
       },
       {
         "name": "Telling a trusted adult opening line cards",
-        "body": "Ways to start the conversation:\n\"Something's been bothering me online\" \"Can I show you something?\"\n\"This happened and I'm not sure what to do\" \"I need to tell you something\""
+        "body": "The first sentence is the hard part. Pick one and say it out loud.",
+        "tone": "green",
+        "cards": [
+          {
+            "cat": "Opener",
+            "title": "“Something's been bothering me online.”",
+            "art": "art-talk",
+            "text": "Vague on purpose — you can stop there.",
+            "note": "Good when you're not ready for detail"
+          },
+          {
+            "cat": "Opener",
+            "title": "“Can I show you something?”",
+            "art": "art-share",
+            "text": "Lets the screen do the explaining.",
+            "note": "Easiest if you have a screenshot"
+          },
+          {
+            "cat": "Opener",
+            "title": "“This happened and I'm not sure what to do.”",
+            "art": "art-fork",
+            "text": "Asks for help without asking for action.",
+            "note": "Keeps you in control"
+          },
+          {
+            "cat": "Opener",
+            "title": "“I need to tell you something.”",
+            "art": "art-stand",
+            "text": "Direct. Buys you their full attention.",
+            "note": "Use when it's serious"
+          }
+        ]
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practise telling someone about each situation:\nA nasty comment on a post Being left out of a group chat\nA fake account made about you Someone sharing a private message"
+        "body": "Practise telling someone about each of these. The mentor plays the adult.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "Scenario",
+            "title": "A nasty comment",
+            "art": "art-jagged",
+            "text": "Someone comments on your post.",
+            "note": "Screenshot before replying"
+          },
+          {
+            "cat": "Scenario",
+            "title": "Left out of a chat",
+            "art": "art-apart",
+            "text": "You find out there's a group you're not in.",
+            "note": "Hard to explain — practise it"
+          },
+          {
+            "cat": "Scenario",
+            "title": "A fake account",
+            "art": "art-hide",
+            "text": "An account pretending to be you.",
+            "note": "Report to the platform as well"
+          },
+          {
+            "cat": "Scenario",
+            "title": "A private message shared",
+            "art": "art-share",
+            "text": "Something you sent has gone further.",
+            "note": "Not your fault"
+          }
+        ]
       },
       {
         "name": "One-page digital wellbeing plan",
@@ -911,7 +1321,31 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review date noted"
+        "body": "What gets shared onward, and what doesn't.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "The review date",
+            "art": "art-clock",
+            "text": "So the follow-up doesn't rest on one adult.",
+            "note": ""
+          },
+          {
+            "cat": "Not shared",
+            "title": "Nothing punitive",
+            "art": "art-hand-heart",
+            "text": "This record carries no sanction.",
+            "note": "Say so out loud"
+          }
+        ]
       }
     ],
     "missing": []
@@ -921,11 +1355,60 @@
     "items": [
       {
         "name": "Body map handout",
-        "body": "Where do I feel exam stress in my body?\n(Draw a simple body outline here and mark where the feeling shows up.)"
+        "body": "Tick where exam stress shows up for you. This is your early warning.",
+        "tone": "teal",
+        "checklist": {
+          "items": [
+            "Head — racing thoughts, blank mind",
+            "Chest — tight, fast heartbeat",
+            "Stomach — churning, no appetite",
+            "Hands — shaky, sweaty",
+            "Shoulders and jaw — clenched",
+            "Whole body — restless or heavy"
+          ]
+        }
       },
       {
         "name": "Exam stress thermometer",
-        "body": "How intense does exam stress feel right now?\n1 Very calm\n2 A little uneasy\n3 Noticeably stressed\n4 Very stressed\n5 Overwhelmed"
+        "body": "Where are you right now? Take a reading now and again in week five.",
+        "tone": "red",
+        "cards": [
+          {
+            "cat": "1",
+            "title": "Very calm",
+            "art": "art-level-1",
+            "text": "Exams aren't on my mind.",
+            "note": ""
+          },
+          {
+            "cat": "2",
+            "title": "A little uneasy",
+            "art": "art-level-2",
+            "text": "There in the background.",
+            "note": "Useful amount"
+          },
+          {
+            "cat": "3",
+            "title": "Noticeably stressed",
+            "art": "art-level-3",
+            "text": "I'm thinking about it a lot.",
+            "note": "Still workable"
+          },
+          {
+            "cat": "4",
+            "title": "Very stressed",
+            "art": "art-level-4",
+            "text": "It's affecting sleep or eating.",
+            "note": "Tell someone"
+          },
+          {
+            "cat": "5",
+            "title": "Overwhelmed",
+            "art": "art-level-5",
+            "text": "I can't revise at all.",
+            "note": "Needs an adult today"
+          }
+        ]
       },
       {
         "name": "Thought-balance worksheet",
@@ -949,7 +1432,31 @@
       },
       {
         "name": "Catastrophic thinking examples card",
-        "body": "Spotting all-or-nothing exam thoughts.\n• \"If I fail this, everything's ruined\", one result rarely decides everything\n• \"I have to get it perfect or it's pointless\", good enough is still good\n• \"Everyone else finds this easier than me\", most people feel this way privately"
+        "body": "Read each thought, then the fairer version. Aim for balanced, not positive.",
+        "tone": "coral",
+        "cards": [
+          {
+            "cat": "The thought",
+            "title": "“If I fail this, everything's ruined.”",
+            "art": "art-thoughts",
+            "text": "Fairer: one result rarely decides everything. There are routes past a bad grade.",
+            "note": "All-or-nothing"
+          },
+          {
+            "cat": "The thought",
+            "title": "“It has to be perfect or it's pointless.”",
+            "art": "art-too-hard",
+            "text": "Fairer: good enough is still good. Perfect isn't on the mark scheme.",
+            "note": "Sets an impossible bar"
+          },
+          {
+            "cat": "The thought",
+            "title": "“Everyone finds this easier than me.”",
+            "art": "art-compare",
+            "text": "Fairer: most people feel this privately and say nothing.",
+            "note": "Comparison with a guess"
+          }
+        ]
       },
       {
         "name": "Weekly routine template",
@@ -996,15 +1503,92 @@
       },
       {
         "name": "Revision session length guide",
-        "body": "Short, regular sessions work better than long ones.\n• 20-30 minutes of focused revision, then a short break\n• Rest is part of the plan, not a reward for finishing\n• A realistic routine beats a perfect one you can't stick to"
+        "body": "A routine you'll actually keep beats a better one you won't.",
+        "tone": "green",
+        "steps": [
+          {
+            "title": "20 to 30 minutes",
+            "art": "art-clock",
+            "text": "Focused revision on one thing. Phone in another room."
+          },
+          {
+            "title": "Short break",
+            "art": "art-walk",
+            "text": "Five minutes, and actually leave the desk."
+          },
+          {
+            "title": "Repeat, then stop",
+            "art": "art-level",
+            "text": "Two or three rounds is a good session. More isn't better."
+          },
+          {
+            "title": "Rest is in the plan",
+            "art": "art-hand-heart",
+            "text": "Not a reward for finishing. Build it in from the start."
+          }
+        ]
       },
       {
         "name": "Exam-day coping strategy cards",
-        "body": "Tools to use before or during an exam:\nSlow breathing: 4 in, 6 out Ground yourself: name 5 things you see\nA short phrase to repeat Remind yourself: one exam, one moment"
+        "body": "Pick two before the day, not on it.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Before",
+            "title": "Slow breathing",
+            "art": "art-breath-count",
+            "text": "In for four, out for six. Five times.",
+            "note": "Works in the corridor"
+          },
+          {
+            "cat": "During",
+            "title": "Ground yourself",
+            "art": "art-five-senses",
+            "text": "Name five things you can see in the hall.",
+            "note": "Takes ten seconds"
+          },
+          {
+            "cat": "During",
+            "title": "A short phrase",
+            "art": "art-agreed-word",
+            "text": "One line you've chosen in advance.",
+            "note": "Write it on the front of your pencil case"
+          },
+          {
+            "cat": "If it goes blank",
+            "title": "Start anywhere",
+            "art": "art-fork",
+            "text": "Answer any question you can. Momentum returns.",
+            "note": "Don't sit staring at question one"
+          }
+        ]
       },
       {
         "name": "Breathing technique guide",
-        "body": "A simple technique to practise ahead of time.\n• Breathe in slowly for a count of 4\n• Hold for a count of 2\n• Breathe out slowly for a count of 6\n• Repeat 4-5 times"
+        "body": "Practise this now, in the room. It has to be familiar before it's needed.",
+        "tone": "teal",
+        "steps": [
+          {
+            "title": "In for four",
+            "art": "art-breath-count",
+            "text": "Through the nose, slowly."
+          },
+          {
+            "title": "Hold for two",
+            "art": "art-hourglass",
+            "text": "No need to strain."
+          },
+          {
+            "title": "Out for six",
+            "art": "art-breath-count",
+            "text": "Through the mouth. Longer out than in is the whole trick."
+          },
+          {
+            "title": "Four or five times",
+            "art": "art-level",
+            "text": "Any more and you'll feel light-headed."
+          }
+        ]
       },
       {
         "name": "One-page exam wellbeing plan",
@@ -1020,7 +1604,31 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "Shared with the pupil's pastoral lead for continuity.\n• Plan summary as agreed with the pupil\n• Review point set ahead of the next assessment period"
+        "body": "What gets shared onward, and what doesn't.",
+        "tone": "blue",
+        "cards": [
+          {
+            "cat": "Shared",
+            "title": "The plan, as agreed",
+            "art": "art-agreed-word",
+            "text": "The summary the pupil signed up to.",
+            "note": "In their words where possible"
+          },
+          {
+            "cat": "Shared",
+            "title": "Review before the next assessment",
+            "art": "art-clock",
+            "text": "Set ahead of the next exam period.",
+            "note": ""
+          },
+          {
+            "cat": "Not shared",
+            "title": "Nothing punitive",
+            "art": "art-hand-heart",
+            "text": "This record carries no sanction.",
+            "note": "Say so out loud"
+          }
+        ]
       }
     ],
     "missing": []
