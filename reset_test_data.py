@@ -112,9 +112,19 @@ def main():
         conn.close()
         return
 
-    for table, where in DELETE_ORDER:
-        conn.execute(f"DELETE FROM {table} WHERE {where}")
-    conn.commit()
+    try:
+        # Anything that points at a user we are about to delete, but which we
+        # want to keep, has its reference cleared first.
+        conn.execute("""UPDATE audit_log SET actor_user_id = NULL
+                        WHERE actor_user_id IN
+                              (SELECT id FROM users WHERE role != 'phil_staff')""")
+        for table, where in DELETE_ORDER:
+            conn.execute(f"DELETE FROM {table} WHERE {where}")
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        print("\nFailed — nothing was deleted. The error follows:")
+        raise
     print("\nDeleted.")
 
     if "--seed" in sys.argv:
