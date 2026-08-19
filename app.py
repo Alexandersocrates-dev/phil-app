@@ -3342,8 +3342,32 @@ def certificate_download(request):
                              (request.params["enrolment_id"],)).fetchone()
     finally:
         conn.close()
-    if not cert or not cert["pdf_path"] or not os.path.exists(cert["pdf_path"]):
+    if not cert:
         return Response("Certificate not found", status="404 Not Found")
+    # The file may be missing even though the record exists: PDFs used to be
+    # written inside the container, so anything generated before a deploy was
+    # destroyed. Rebuild it from the database rather than showing a dead end —
+    # everything needed is still stored.
+    if not cert["pdf_path"] or not os.path.exists(cert["pdf_path"]):
+        conn = db.get_conn()
+        try:
+            row = conn.execute(
+                """SELECT p.forename, p.surname, c.title AS course_title
+                   FROM enrolments e JOIN pupils p ON p.id=e.pupil_id
+                   JOIN courses c ON c.id=e.course_id WHERE e.id=?""",
+                (request.params["enrolment_id"],),
+            ).fetchone()
+            if not row:
+                return Response("Certificate not found", status="404 Not Found")
+            path = pdfgen.certificate_pdf(f"{row['forename']} {row['surname']}",
+                                          row["course_title"], cert["issued_date"],
+                                          request.params["enrolment_id"])
+            conn.execute("UPDATE certificates SET pdf_path=? WHERE enrolment_id=?",
+                         (path, request.params["enrolment_id"]))
+            conn.commit()
+        finally:
+            conn.close()
+        return pdf_response(path, "certificate.pdf")
     return pdf_response(cert["pdf_path"], "certificate.pdf")
 
 
@@ -3358,8 +3382,38 @@ def session_pdf_download(request):
                                (request.params["record_id"],)).fetchone()
     finally:
         conn.close()
-    if not record or not record["pdf_path"] or not os.path.exists(record["pdf_path"]):
+    if not record:
         return Response("Session record not found", status="404 Not Found")
+    # Same self-heal as the certificate: the record survives, the file may not.
+    if not record["pdf_path"] or not os.path.exists(record["pdf_path"]):
+        conn = db.get_conn()
+        try:
+            ctx = conn.execute(
+                """SELECT e.id AS enrolment_id, p.forename, p.surname,
+                          c.title AS course_title, w.title AS week_title,
+                          u.name AS mentor_name
+                   FROM session_records r
+                   JOIN enrolments e ON e.id=r.enrolment_id
+                   JOIN pupils p ON p.id=e.pupil_id
+                   JOIN courses c ON c.id=e.course_id
+                   JOIN weeks w ON w.id=r.week_id
+                   LEFT JOIN users u ON u.id=r.recorded_by
+                   WHERE r.id=?""",
+                (request.params["record_id"],),
+            ).fetchone()
+            if not ctx:
+                return Response("Session record not found", status="404 Not Found")
+            enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
+                                      (ctx["enrolment_id"],)).fetchone()
+            path = pdfgen.session_record_pdf(
+                record, enrolment, f"{ctx['forename']} {ctx['surname']}",
+                ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor")
+            conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?",
+                         (path, request.params["record_id"]))
+            conn.commit()
+        finally:
+            conn.close()
+        return pdf_response(path, "session-record.pdf")
     return pdf_response(record["pdf_path"], "session-record.pdf")
 
 

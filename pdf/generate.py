@@ -29,7 +29,22 @@ RED = HexColor("#A32D2D")
 CARD = HexColor("#FFFFFF")
 BORDER = HexColor("#E4E1D6")
 
-PDF_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "pdfs")
+# Generated PDFs must live on the same persistent volume as the database. The
+# previous location, <repo>/data/pdfs, is inside the container image, so every
+# certificate and session record was destroyed on the next deploy while the
+# database kept a pdf_path pointing at the missing file — which is what produced
+# "Certificate not found". PHIL_PDF_DIR overrides; otherwise sit beside the DB.
+def _pdf_dir():
+    explicit = os.environ.get("PHIL_PDF_DIR")
+    if explicit:
+        return explicit
+    db_path = os.environ.get("PHIL_DB_PATH")
+    if db_path:
+        return os.path.join(os.path.dirname(db_path), "pdfs")
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "pdfs")
+
+
+PDF_DIR = _pdf_dir()
 os.makedirs(PDF_DIR, exist_ok=True)
 
 
