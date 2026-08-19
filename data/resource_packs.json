@@ -529,7 +529,7 @@
           {
             "cat": "Context",
             "title": "Course completed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "Five weeks on naming feelings early and widening the gap before reacting.",
             "note": ""
           },
@@ -784,7 +784,7 @@
           {
             "cat": "Act on this",
             "title": "What's been agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The practical change and who is doing it.",
             "note": "Needs someone's name on it"
           }
@@ -1075,7 +1075,7 @@
           {
             "cat": "People",
             "title": "Text someone",
-            "art": "art-talk",
+            "art": "art-message",
             "text": "Message a friend instead.",
             "note": "Works when the trigger is boredom"
           },
@@ -1137,7 +1137,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -1206,7 +1206,7 @@
           {
             "cat": "What counts",
             "title": "Emotional support",
-            "art": "art-hand-heart",
+            "art": "art-listen",
             "text": "Being the one who listens, or keeps things calm.",
             "note": "Counts just as much"
           },
@@ -1354,14 +1354,14 @@
           {
             "cat": "Reset",
             "title": "Text a friend",
-            "art": "art-talk",
+            "art": "art-message",
             "text": "One message, no obligation.",
             "note": ""
           },
           {
             "cat": "Reset",
             "title": "Quiet time with a drink",
-            "art": "art-hungry",
+            "art": "art-rest",
             "text": "Sitting down counts.",
             "note": ""
           },
@@ -1420,7 +1420,7 @@
           {
             "cat": "In school",
             "title": "Young carers or pastoral lead",
-            "art": "art-hand-heart",
+            "art": "art-person-pin",
             "text": "Name the actual person before the session ends.",
             "note": "A name, not a role"
           },
@@ -1453,7 +1453,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -1627,7 +1627,7 @@
           },
           {
             "title": "Tell a trusted adult",
-            "art": "art-hand-heart",
+            "art": "art-shield",
             "text": "Earlier means more options, not fewer."
           }
         ]
@@ -1736,7 +1736,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -1932,7 +1932,7 @@
           },
           {
             "title": "Rest is in the plan",
-            "art": "art-hand-heart",
+            "art": "art-rest",
             "text": "Not a reward for finishing. Build it in from the start."
           }
         ]
@@ -2019,7 +2019,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -2338,14 +2338,14 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
           {
             "cat": "Important",
             "title": "Complements an EHC plan",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "This does not replace any existing plan or assessment.",
             "note": "Say so to the SENCO"
           },
@@ -2527,7 +2527,7 @@
           {
             "cat": "Expected",
             "title": "Birthdays",
-            "art": "art-clock",
+            "art": "art-cake",
             "text": "Theirs, and sometimes yours.",
             "note": "Decide in advance what you'll do"
           },
@@ -2626,14 +2626,14 @@
           {
             "cat": "In school",
             "title": "Pastoral lead or counsellor",
-            "art": "art-hand-heart",
+            "art": "art-person-pin",
             "text": "Name the actual person before this session ends.",
             "note": "A name, not a role"
           },
           {
             "cat": "Charity",
             "title": "Winston's Wish",
-            "art": "art-talk",
+            "art": "art-helpline",
             "text": "Childhood bereavement support, including a helpline.",
             "note": "For the pupil and the family"
           },
@@ -2654,7 +2654,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -2943,21 +2943,21 @@
           {
             "cat": "In school",
             "title": "Designated safeguarding lead",
-            "art": "art-hand-heart",
+            "art": "art-shield",
             "text": "Write their actual name and where to find them.",
             "note": "Ask for them by name"
           },
           {
             "cat": "Anytime",
             "title": "Childline — 0800 1111",
-            "art": "art-talk",
+            "art": "art-helpline",
             "text": "Free, confidential, day or night.",
             "note": "Doesn't show on a phone bill"
           },
           {
             "cat": "Urgent",
             "title": "Police — 999, or 101",
-            "art": "art-raise-card",
+            "art": "art-shield",
             "text": "999 in an emergency, 101 for non-urgent concerns.",
             "note": "You can report about a friend"
           }
@@ -3146,7 +3146,7 @@
           {
             "cat": "People",
             "title": "Your go-to person",
-            "art": "art-hand-heart",
+            "art": "art-person-pin",
             "text": "One name you can find.",
             "note": "Agree it before day one"
           },
@@ -3191,7 +3191,7 @@
           {
             "cat": "Shared",
             "title": "The plan, as agreed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "The summary the pupil signed up to.",
             "note": "In their words where possible"
           },
@@ -3590,7 +3590,7 @@
           {
             "cat": "Context",
             "title": "Course completed",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "Five weeks on recognising early body signals of anger.",
             "note": ""
           },
@@ -4393,7 +4393,7 @@
           {
             "cat": "Context",
             "title": "What the pupil is working on",
-            "art": "art-agreed-word",
+            "art": "art-document",
             "text": "Reducing calling out and talking over instructions.",
             "note": "Not a sanction"
           },
@@ -4758,14 +4758,14 @@
           {
             "cat": "Ask",
             "title": "Who do you trust?",
-            "art": "art-hand-heart",
+            "art": "art-listen",
             "text": "An adult in or out of school.",
             "note": "Out of school counts"
           },
           {
             "cat": "Ask",
             "title": "What's different about them?",
-            "art": "art-compare",
+            "art": "art-listen",
             "text": "What do they do that others don't?",
             "note": "The most useful answer here"
           },
