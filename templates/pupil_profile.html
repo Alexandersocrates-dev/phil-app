@@ -49,13 +49,17 @@
 
 {% for item in enrolment_data %}
 {% set e = item.enrolment %}
-<div class="card">
+{# Collapsible: a pupil with four finished courses shouldn't have to scroll
+   past all of them to reach the one being worked on. Active ones open. #}
+<details class="card enrol-card" {% if e.status == 'active' %}open{% endif %}>
+  <summary class="enrol-summary">
   <div class="flex-between">
     <h2>{{ e.course_title }}</h2>
     {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
     {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
     {% else %}<span class="badge badge-teal">Active</span>{% endif %}
   </div>
+  </summary>
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
   <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; Session {{ e.current_week }} of 5 &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
 
@@ -79,7 +83,12 @@
     <tr><th>Week</th><th>Date</th><th>Safeguarding</th><th></th></tr>
     {% for r in item.records %}
     <tr>
-      <td>{{ r.week_number }}: {{ r.week_title }}</td>
+      <td>
+        {{ r.week_number }}: {{ r.week_title }}
+        {# The goal was only ever visible in the session PDF. It belongs here,
+           where a mentor looks before the next session. #}
+        {% if r.reflection_goal %}<span class="record-goal">Goal: {{ r.reflection_goal }}</span>{% endif %}
+      </td>
       <td>{{ r.date }}</td>
       <td>{% if r.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
       <td class="record-actions">
@@ -90,7 +99,7 @@
     {% endfor %}
   </table>
   {% endif %}
-</div>
+</details>
 {% endfor %}
 
 <style>
@@ -103,5 +112,12 @@
   .pupil-actions-danger{padding-left:0; border-left:none; width:100%; margin-top:4px;}
 }
 .record-actions{display:flex; gap:6px; align-items:center; white-space:nowrap;}
+.enrol-card{padding-top:0;}
+.enrol-summary{cursor:pointer; list-style:none; padding:var(--sp-4) 0 0;}
+.enrol-summary::-webkit-details-marker{display:none;}
+.enrol-summary h2{display:inline-flex; align-items:center; gap:8px;}
+.enrol-summary h2::before{content:"\25B8"; color:var(--teal-darker); font-size:12px; transition:transform .12s ease;}
+.enrol-card[open] .enrol-summary h2::before{transform:rotate(90deg);}
+.record-goal{display:block; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4;}
 </style>
 {% endblock %}

@@ -317,7 +317,7 @@ module.exports = [
         "objective": "Pupil can try two grounding or calming techniques.",
         "checkin": "1. Zones check-in.\n2. Ask whether they noticed any of the body signals from last week.\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Do 5-4-3-2-1 together now: five things you can see, four you can hear, three you can feel.\n3. Then box breathing: in for four, hold four, out four, hold four.\n4. Say plainly that one will suit them and one won't, and that's the point of trying both.",
-        "activity": "Practise each technique together; pupil rates how each felt out of 10.",
+        "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.",
         "reflect": "Which strategy would you actually use? Agree to try it once this week in a low-stakes moment.",
         "lookfor": "Strategies need to feel natural to the individual pupil, don't force a technique that clearly isn't landing.",
         "resources": [
@@ -934,7 +934,7 @@ module.exports = [
         "resources": [
           "Respectful disagreement script card"
         ],
-        "home": "Practise the respectful-disagreement script on something small at home this week, like bedtime.",
+        "home": "1. Use the respectful disagreement script once at home this week, on something small — bedtime, screens, a chore.\n2. Home is lower stakes than a classroom, which is the point.\n3. Note what the other person said back, so we can look at it next week.",
         "timing": {
           "checkin": 5,
           "input": 10,
