@@ -99,6 +99,89 @@ def resource_slug(name):
     return re.sub(r"[^a-z0-9]+", "-", (name or "").lower()).strip("-")[:60]
 
 
+def resource_work_for(conn, enrolment_id, week_id):
+    """The pupil's written work, grouped by resource and formatted for the PDF.
+
+    Shape matters here. A tally printed as a flat list of cells is unreadable —
+    it has to come out as rows. A ticked checklist has to print what was ticked,
+    not the word "yes"."""
+    rows = conn.execute(
+        """SELECT resource_slug, field_key, value FROM resource_entries
+           WHERE enrolment_id=? AND week_id=? ORDER BY resource_slug, field_key""",
+        (enrolment_id, week_id)).fetchall()
+    if not rows:
+        return []
+
+    items = {}
+    for pack in _load_resource_packs().values():
+        for item in pack.get("items", []):
+            items[resource_slug(item.get("name"))] = item
+
+    by_slug = {}
+    for row in rows:
+        by_slug.setdefault(row["resource_slug"], {})[row["field_key"]] = row["value"]
+
+    out = []
+    for slug, fields in by_slug.items():
+        item = items.get(slug, {})
+        name = item.get("name") or slug.replace("-", " ").capitalize()
+        lines = []
+
+        # Table cells come back as t<row>_<col>; rebuild the rows so a tally
+        # reads across rather than down.
+        table_rows = {}
+        for key, value in fields.items():
+            if key.startswith("t"):
+                try:
+                    r, c = key[1:].split("_")
+                    table_rows.setdefault(int(r), {})[int(c)] = value
+                except ValueError:
+                    continue
+        table = item.get("table") or {}
+        headers = table.get("headers") or []
+        for r in sorted(table_rows):
+            cells = table_rows[r]
+            # Include the printed cells around what was written, so a row that
+            # was partly pre-filled still makes sense.
+            source = (table.get("rows") or [])
+            width = len(source[r]) if r < len(source) else (max(cells) + 1)
+            parts = []
+            for c in range(width):
+                value = cells.get(c) or (source[r][c] if r < len(source) and c < len(source[r]) else "")
+                if value:
+                    label = headers[c] if c < len(headers) else ""
+                    parts.append(f"{label}: {value}" if label and len(headers) > 2 else value)
+            if parts:
+                lines.append("  \u00b7  ".join(parts))
+
+        # Plan fields: print the question with the answer.
+        form_fields = (item.get("form") or {}).get("fields") or []
+        for key in sorted(k for k in fields if k.startswith("f")):
+            try:
+                i = int(key[1:])
+            except ValueError:
+                continue
+            label = form_fields[i] if i < len(form_fields) else "Answer"
+            lines.append(f"{label}: {fields[key]}")
+
+        # Checklists: print what was ticked, not the word "yes".
+        check_items = (item.get("checklist") or {}).get("items") or []
+        ticked = []
+        for key in sorted(k for k in fields if k.startswith("c")):
+            try:
+                i = int(key[1:])
+            except ValueError:
+                continue
+            if i < len(check_items):
+                ticked.append(check_items[i])
+        if ticked:
+            lines.append("Ticked: " + ", ".join(ticked))
+
+        if lines:
+            out.append((name, lines))
+    return sorted(out)
+
+
 def resource_entries_for(conn, enrolment_id, week_id):
     """Everything written on this week's resources, as {slug: {field: value}}."""
     rows = conn.execute(
@@ -1688,8 +1771,10 @@ def session_submit(request):
         pupil_name = f"{enrolment['forename']} {enrolment['surname']}"
         mentor_name = user["name"]
         record = conn.execute("SELECT * FROM session_records WHERE id=?", (record_id,)).fetchone()
+        resource_work = resource_work_for(conn, enrolment_id, week["id"])
         pdf_path = pdfgen.session_record_pdf(record, enrolment, pupil_name, enrolment["course_title"],
-                                              week["title"], mentor_name)
+                                              week["title"], mentor_name,
+                                              resource_work=resource_work)
         conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?", (pdf_path, record_id))
 
         new_current_week = next_week_number
@@ -3923,15 +4008,7 @@ def session_pdf_download(request):
                 return Response("Session record not found", status="404 Not Found")
             enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
                                       (ctx["enrolment_id"],)).fetchone()
-            work = conn.execute(
-                """SELECT resource_slug, field_key, value FROM resource_entries
-                   WHERE enrolment_id=? AND week_id=? ORDER BY resource_slug, field_key""",
-                (ctx["enrolment_id"], record["week_id"])).fetchall()
-            grouped = {}
-            for row in work:
-                label = row["resource_slug"].replace("-", " ").capitalize()
-                grouped.setdefault(label, []).append(row["value"])
-            resource_work = sorted(grouped.items())
+            resource_work = resource_work_for(conn, ctx["enrolment_id"], record["week_id"])
             path = pdfgen.session_record_pdf(
                 record, enrolment, f"{ctx['forename']} {ctx['surname']}",
                 ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor",

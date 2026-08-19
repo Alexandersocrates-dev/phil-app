@@ -21,6 +21,9 @@ from reportlab.lib.utils import simpleSplit
 NAVY = HexColor("#1B2A4A")
 TEAL = HexColor("#1D9E75")
 TEAL_DARK = HexColor("#0F6E56")
+# The book cover in the Phil mark. The masthead uses it so the band and the logo
+# are the same green rather than two greens.
+TEAL_DARKER = HexColor("#085041")
 AMBER = HexColor("#EF9F27")
 CREAM = HexColor("#FBF8F2")
 INK = HexColor("#2C2C2A")
@@ -46,6 +49,125 @@ def _pdf_dir():
 
 PDF_DIR = _pdf_dir()
 os.makedirs(PDF_DIR, exist_ok=True)
+
+
+def _phil_mark(c, x, y, size=13 * mm):
+    """Draws the Phil mark: a green book with a cream P, a page behind it and a
+    coral bookmark. Redrawn in reportlab primitives rather than embedded as an
+    image, so it stays crisp at any size and needs no asset file on the volume.
+
+    Coordinates are proportional to size, taken from the SVG the app uses, so
+    the two can't drift apart."""
+    u = size / 120.0  # the source artwork is on a 120-unit grid
+
+    # Page behind the book
+    c.setFillColor(HexColor("#EAE2CC"))
+    c.roundRect(x + 30 * u, y + 14 * u, 66 * u, 90 * u, 4 * u, fill=1, stroke=0)
+
+    # Bookmark
+    c.setFillColor(HexColor("#D85A30"))
+    c.rect(x + 62 * u, y + 104 * u, 7 * u, 14 * u, fill=1, stroke=0)
+
+    # Book cover
+    c.setFillColor(HexColor("#0F6E56"))
+    c.roundRect(x + 30 * u, y + 20 * u, 56 * u, 84 * u, 6 * u, fill=1, stroke=0)
+
+    # The P as a glyph rather than a transcribed path. Converting the SVG's
+    # bezier curves by hand meant flipping the y-axis, and getting that subtly
+    # wrong produced a shape that wasn't the letter at all. A font draws it
+    # correctly at any size.
+    c.setFillColor(HexColor("#F3EFE4"))
+    glyph = 62 * u
+    c.setFont("Helvetica-Bold", glyph)
+    # Optically centred on the cover: the cap sits slightly above the baseline
+    # centre, so nudge down rather than using the exact midpoint.
+    c.drawCentredString(x + 58 * u, y + 46 * u, "P")
+
+
+def _doc_header(c, w, h, margin, doc_title, meta=None, subtitle="Structured mentoring for schools"):
+    """The masthead every Phil report shares.
+
+    A report that gets tabled at a governors' meeting or sent to a parent has to
+    look like it came from somewhere. That means a consistent masthead, the
+    document's name stated plainly, and the identifying details set out as
+    labelled pairs rather than run together in a sentence."""
+    y = h - margin
+
+    # Masthead in the logo's own deep green, so the band and the mark belong to
+    # each other rather than sitting side by side in different palettes.
+    # At 13mm the mark was legible on screen but muddy in print, so the band is
+    # taller and the mark larger.
+    band_h = 25 * mm
+    band_y = y - 6 * mm
+    c.setFillColor(TEAL_DARKER)
+    c.rect(0, band_y, w, band_h, fill=1, stroke=0)
+    # A cream hairline along the bottom edge, picking up the page colour in the
+    # mark, so the band reads as designed rather than as a block of colour.
+    c.setStrokeColor(HexColor("#EAE2CC"))
+    c.setLineWidth(1.2)
+    c.line(0, band_y, w, band_y)
+
+    _phil_mark(c, margin, band_y + 5 * mm, size=15 * mm)
+
+    text_x = margin + 20 * mm
+    c.setFillColor(HexColor("#FFFFFF"))
+    c.setFont("Helvetica-Bold", 15)
+    c.drawString(text_x, band_y + 12.5 * mm, "Phil")
+    c.setFont("Helvetica", 7.5)
+    c.setFillColor(HexColor("#A7D9C8"))
+    c.drawString(text_x, band_y + 8 * mm, subtitle.upper())
+
+    c.setFillColor(HexColor("#EAE2CC"))
+    c.setFont("Helvetica-Bold", 9)
+    c.drawRightString(w - margin, band_y + 10.5 * mm, doc_title.upper())
+
+    y -= 23 * mm
+
+    # Identifying details as labelled pairs, two per row.
+    if meta:
+        c.setFont("Helvetica", 9)
+        col_w = (w - 2 * margin) / 2
+        for i, (label, value) in enumerate(meta):
+            col = i % 2
+            if col == 0 and i:
+                y -= 5.5 * mm
+            cx = margin + col * col_w
+            c.setFillColor(MUTED)
+            c.drawString(cx, y, f"{label}:")
+            c.setFillColor(INK)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(cx + c.stringWidth(f"{label}:", "Helvetica", 9) + 2 * mm, y, str(value))
+            c.setFont("Helvetica", 9)
+        y -= 7 * mm
+
+    c.setStrokeColor(TEAL_DARKER)
+    c.setLineWidth(1.2)
+    c.line(margin, y, w - margin, y)
+    return y - 9 * mm
+
+
+def _doc_footer(c, w, margin, page_no, note="Confidential. Share only with those who need it."):
+    """Page number and a confidentiality line, on every page of every report."""
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.5)
+    c.line(margin, 14 * mm, w - margin, 14 * mm)
+    c.setFillColor(MUTED)
+    c.setFont("Helvetica", 7.5)
+    c.drawString(margin, 10 * mm, note)
+    c.drawRightString(w - margin, 10 * mm, f"Page {page_no}")
+
+
+def _doc_section(c, x, y, label, max_width):
+    """A section heading with a hairline under it, so sections actually read as
+    sections rather than as bold text in a wall."""
+    c.setFillColor(TEAL_DARKER)
+    c.setFont("Helvetica-Bold", 10.5)
+    c.drawString(x, y, label.upper())
+    y -= 2.5 * mm
+    c.setStrokeColor(BORDER)
+    c.setLineWidth(0.5)
+    c.line(x, y, x + max_width, y)
+    return y - 5 * mm
 
 
 def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
@@ -203,56 +325,70 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
     x = margin
     y = h - margin
 
-    c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(x, y, "Phil - Session Record")
-    y -= 8 * mm
-
-    c.setFillColor(MUTED)
-    c.setFont("Helvetica", 10)
-    c.drawString(x, y, f"Pupil: {pupil_name}    Course: {course_title}    Week: {week_title}")
-    y -= 5 * mm
-    c.drawString(x, y, f"Date: {record['date']}    Mentor: {mentor_name}")
-    y -= 5 * mm
-    c.setStrokeColor(BORDER)
-    c.line(x, y, w - margin, y)
-    y -= 8 * mm
-
     max_width = w - 2 * margin
+    y = _doc_header(c, w, h, margin, "Session record", meta=[
+        ("Pupil", pupil_name),
+        ("Course", course_title),
+        ("Session", week_title),
+        ("Date", record["date"]),
+        ("Mentor", mentor_name),
+    ])
 
     def section(label, text):
         nonlocal y
-        c.setFillColor(TEAL_DARK)
-        c.setFont("Helvetica-Bold", 11)
-        c.drawString(x, y, label)
-        y -= 5 * mm
+        y = _doc_section(c, x, y, label, max_width)
+        c.setFillColor(INK)
         y = _wrap(c, text or "-", x, y, max_width)
-        y -= 4 * mm
+        y -= 5 * mm
 
     c.setFillColor(INK)
     c.setFont("Helvetica", 10)
-    c.drawString(x, y, f"Mood rating: {record['mood_rating']}/5    Engagement rating: {record['engagement_rating']}/5")
+    mood = f"{record['mood_rating']}/5" if record["mood_rating"] else "not rated"
+    engagement = f"{record['engagement_rating']}/5" if record["engagement_rating"] else "not rated"
+    c.drawString(x, y, f"Mood rating: {mood}    Engagement rating: {engagement}")
     y -= 8 * mm
 
     section("What happened", record["what_happened"])
-    section("Reflection / goal for the pupil", record["reflection_goal"])
-    section("Mentor notes", record["mentor_notes"])
-    section("Resources used", record["resources_used"])
-
-    # What the pupil actually wrote on the resources. Without this the work only
-    # ever exists on screen, and the record of the session is incomplete.
-    if resource_work:
-        for title, lines in resource_work:
-            if lines:
-                section(title, "\n".join(lines))
+    section("Reflect", record["reflection_goal"])
+    section("Notes for next session", record["mentor_notes"])
+    # What the pupil actually wrote, under the resource's own name. Resources
+    # used but not written on are listed separately, so the record distinguishes
+    # "we used this" from "here is what came of it".
+    written_on = {title for title, lines in (resource_work or []) if lines}
+    for title, lines in (resource_work or []):
+        if lines:
+            section(title, "\n".join(lines))
+    others = [r.strip() for r in (record["resources_used"] or "").split(",")
+              if r.strip() and r.strip() not in written_on]
+    if others:
+        section("Other resources used", ", ".join(others))
 
     # Safeguarding block, always rendered, matching the mandatory-step convention
     # established across the project's other PDF exports.
     flagged = bool(record["safeguarding_flag"])
-    box_h = 26 * mm
+    label = "Safeguarding: flagged" if flagged else "Safeguarding: not flagged this session"
+    disclaimer = ("This record is not a safeguarding report and Phil takes no action on it. "
+                  "The mentor remains responsible for following their establishment's own "
+                  "safeguarding procedure.")
+    note_text = record["safeguarding_note"] or "-"
+
+    # The box used to be a fixed 26mm whatever it contained, so a longer note
+    # pushed the disclaimer out through the bottom edge. Measure first, then draw
+    # a box that fits.
+    inner_w = max_width - 8 * mm
+    note_lines = simpleSplit(note_text, "Helvetica", 9, inner_w)
+    disc_lines = simpleSplit(disclaimer, "Helvetica-Oblique", 7.5, inner_w)
+    box_h = (9 * mm                      # label
+             + len(note_lines) * 4.6 * mm
+             + 3 * mm                     # gap
+             + len(disc_lines) * 3.2 * mm
+             + 5 * mm)                    # bottom padding
+    box_h = max(box_h, 22 * mm)
+
     if y - box_h < margin:
         c.showPage()
         y = h - margin
+
     c.setFillColor(HexColor("#FCEBEB") if flagged else HexColor("#E1F5EE"))
     c.rect(x, y - box_h, max_width, box_h, fill=1, stroke=0)
     c.setStrokeColor(RED if flagged else TEAL)
@@ -261,20 +397,23 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
 
     c.setFillColor(RED if flagged else TEAL_DARK)
     c.setFont("Helvetica-Bold", 11)
-    label = "Safeguarding: flagged" if flagged else "Safeguarding: not flagged this session"
     c.drawString(x + 4 * mm, y - 7 * mm, label)
 
     c.setFillColor(INK)
     c.setFont("Helvetica", 9)
-    note_y = _wrap(c, record["safeguarding_note"] or "-", x + 4 * mm, y - 12 * mm, max_width - 8 * mm, size=9)
+    text_y = y - 12 * mm
+    for line in note_lines:
+        c.drawString(x + 4 * mm, text_y, line)
+        text_y -= 4.6 * mm
 
     c.setFillColor(MUTED)
     c.setFont("Helvetica-Oblique", 7.5)
-    disclaimer = ("This record is not a safeguarding report and Phil takes no action on it. "
-                  "The mentor remains responsible for following their establishment's own "
-                  "safeguarding procedure.")
-    _wrap(c, disclaimer, x + 4 * mm, y - box_h + 3 * mm, max_width - 8 * mm, size=7.5, leading=9, color=MUTED)
+    text_y -= 3 * mm
+    for line in disc_lines:
+        c.drawString(x + 4 * mm, text_y, line)
+        text_y -= 3.2 * mm
 
+    _doc_footer(c, w, margin, 1)
     c.showPage()
     c.save()
     return path
@@ -295,31 +434,26 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
     y = h - margin
     max_width = w - 2 * margin
 
-    c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(x, y, "Phil - Individual Mentee Report")
-    y -= 8 * mm
+    y = _doc_header(c, w, h, margin, "Mentee report", meta=[
+        ("Pupil", pupil_name),
+        ("Course", course_title),
+        ("Mentor", mentor_name),
+        ("Started", start_date),
+        ("Status", "Completed" if status == "completed" else f"Week {current_week} of 5"),
+        ("Issued", datetime.date.today().isoformat()),
+    ])
 
-    c.setFillColor(MUTED)
-    c.setFont("Helvetica", 10)
-    c.drawString(x, y, f"Pupil: {pupil_name}    Course: {course_title}")
-    y -= 5 * mm
-    c.drawString(x, y, f"Mentor: {mentor_name}    Started: {start_date}    "
-                        f"Status: {'Completed' if status == 'completed' else f'Week {current_week} of 5'}")
-    y -= 6 * mm
-    c.setStrokeColor(BORDER)
-    c.line(x, y, w - margin, y)
-    y -= 8 * mm
-
-    c.setFillColor(TEAL_DARK)
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(x, y, "Coverage so far")
-    y -= 7 * mm
+    page_no = 1
+    y = _doc_section(c, x, y, "Sessions covered", max_width)
 
     for wk in weeks:
-        if y < margin + 20 * mm:
+        if y < margin + 30 * mm:
+            _doc_footer(c, w, margin, page_no)
             c.showPage()
-            y = h - margin
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Mentee report",
+                            meta=[("Pupil", pupil_name), ("Course", course_title)])
+            y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
         c.setFillColor(INK)
         c.setFont("Helvetica-Bold", 10.5)
         c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({wk.get('date','')})")
@@ -334,27 +468,26 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         y -= 6 * mm
 
     if reflection:
-        if y < margin + 40 * mm:
+        if y < margin + 55 * mm:
+            _doc_footer(c, w, margin, page_no)
             c.showPage()
-            y = h - margin
-        y -= 4 * mm
-        c.setStrokeColor(BORDER)
-        c.line(x, y, w - margin, y)
-        y -= 8 * mm
-        c.setFillColor(AMBER)
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(x, y, "Completion reflection")
-        y -= 7 * mm
-        for label, key in (("Pupil engagement", "pupil_engagement"),
-                            ("Course effectiveness", "course_effectiveness"),
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Mentee report",
+                            meta=[("Pupil", pupil_name), ("Course", course_title)])
+        y -= 3 * mm
+        y = _doc_section(c, x, y, "Completion reflection", max_width)
+        for label, key in (("How the pupil engaged", "pupil_engagement"),
+                            ("Whether the course suited them", "course_effectiveness"),
                             ("Recommended next steps", "recommended_next_steps")):
             c.setFillColor(TEAL_DARK)
-            c.setFont("Helvetica-Bold", 10)
+            c.setFont("Helvetica-Bold", 9.5)
             c.drawString(x, y, label)
             y -= 5 * mm
+            c.setFillColor(INK)
             y = _wrap(c, reflection.get(key, "") or "-", x + 4 * mm, y, max_width - 4 * mm, size=9.5)
-            y -= 4 * mm
+            y -= 5 * mm
 
+    _doc_footer(c, w, margin, page_no)
     c.showPage()
     c.save()
     return path
@@ -377,15 +510,17 @@ def full_mentoring_report_pdf(title, entries, out_name):
     x = margin
     y = h - margin
 
-    c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(x, y, title)
-    y -= 10 * mm
+    y = _doc_header(c, w, h, margin, "Mentoring report", meta=[
+        ("Report", title),
+        ("Issued", datetime.date.today().isoformat()),
+        ("Enrolments", len(entries)),
+    ])
 
     if not entries:
         c.setFillColor(MUTED)
         c.setFont("Helvetica-Oblique", 11)
         c.drawString(x, y, "No enrolments to report.")
+        _doc_footer(c, w, margin, 1)
         c.showPage()
         c.save()
         return path
@@ -504,10 +639,11 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
     x = margin
     y = h - margin
 
-    c.setFillColor(NAVY)
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(x, y, title)
-    y -= 10 * mm
+    y = _doc_header(c, w, h, margin, "Caseload report", meta=[
+        ("Report", title),
+        ("Issued", datetime.date.today().isoformat()),
+        ("Pupils", len(rows)),
+    ])
 
     cols = ["Pupil", "Course"]
     if show_mentor_col:

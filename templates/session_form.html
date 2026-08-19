@@ -244,7 +244,16 @@
 </div>
 {% endif %}
 {% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
-<p style="font-size:11px;color:var(--muted);margin:0 0 4px;">Notes for next session</p>
+</div>
+</div>
+
+{# Notes for the next session were tucked inside the home task, so they read as
+   part of it rather than as a step of their own. They're the last thing a
+   mentor does, and the first thing they see next week. #}
+<div class="step-block" style="display:flex;gap:10px;">
+<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">6</div>
+<div style="flex:1;min-width:0;">
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Notes for next session</h5>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Add a reminder to open Session {{ next_week_number + 1 }} with&hellip;">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">Private to you, shown again as "Notes from previous session" when Session {{ next_week_number + 1 }} begins.</p>
@@ -254,16 +263,22 @@
 <input type="hidden" name="resources_used" value="{{ week.resources|join(', ') }}">
 <input type="hidden" name="for_week" value="{{ next_week_number }}">
 
+{# Both had "1" preselected, so a mentor who never touched them recorded the
+   pupil's mood as 1 out of 5 — the worst possible score, by accident, on the
+   only structured data the reports use. A blank first option means an
+   unanswered rating stays unanswered. #}
 <div class="field">
-<label>Mood rating (1-5)</label>
-<select name="mood_rating">
-{% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+<label for="mood_rating">Mood rating (1&ndash;5)</label>
+<select id="mood_rating" name="mood_rating">
+<option value="">Not rated</option>
+{% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.mood_rating|string == i|string %}selected{% endif %}>{{ i }}</option>{% endfor %}
 </select>
 </div>
 <div class="field">
-<label>Engagement rating (1-5)</label>
-<select name="engagement_rating">
-{% for i in range(1,6) %}<option value="{{ i }}">{{ i }}</option>{% endfor %}
+<label for="engagement_rating">Engagement rating (1&ndash;5)</label>
+<select id="engagement_rating" name="engagement_rating">
+<option value="">Not rated</option>
+{% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.engagement_rating|string == i|string %}selected{% endif %}>{{ i }}</option>{% endfor %}
 </select>
 </div>
 
