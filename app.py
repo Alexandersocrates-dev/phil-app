@@ -1641,7 +1641,6 @@ def session_submit(request):
 
         message = f"Week {next_week_number} session recorded."
         completed_now = new_status == "completed"
-                (enrolment_id, issued, cert_path),
         if completed_now:
             # The certificate is issued by the wrap-up, not by the fifth session:
             # the reflection and the review date are part of finishing a course,
