@@ -13,34 +13,53 @@
 
   <div class="card card-center cc-card">
     <div class="icon-badge icon-badge--teal cc-badge">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
-    <h1>Course complete</h1>
-    <p class="cc-lead">{{ pupil_name }} has finished all five sessions of {{ course_title }}.</p>
-    <p class="muted">Their certificate is ready, and the full report is available whenever you need it.</p>
-    <p class="cc-actions">
-      <a class="btn btn-primary" href="/certificate/{{ enrolment_id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
-      <a class="btn btn-secondary" href="/report/mentee/{{ enrolment_id }}">View report</a>
-    </p>
-    <p><a class="cc-back" href="/mentor/pupils/{{ pupil_id }}">Back to {{ pupil_name }}</a></p>
+    <h1>All five sessions recorded</h1>
+    <p class="cc-lead">{{ pupil_name }} has finished {{ course_title }}.</p>
+    <p class="muted">Two things left, then the course is closed and the certificate issues.</p>
   </div>
 
-  {# Sustained change needs a follow-up, not a single course. Asking here, while
-     the mentor is still in the moment, is the only time they reliably will. #}
-  <div class="card cc-review">
-    <h2>Agree a review point</h2>
-    <p class="muted">Support shouldn't stop the moment the fifth session ends. Set a date to check back in, and it'll show on {{ pupil_name }}'s record.</p>
-    <form method="post" action="/mentor/enrolment/{{ enrolment_id }}/review">
+  {# The reflection and the follow-up are the two things that never get done when
+     they're optional, and the two things a school is actually buying. Both are
+     asked for here, in one form, while the mentor is still in the moment. #}
+  <form method="post" action="/mentor/enrolment/{{ enrolment_id }}/wrap-up">
+    <div class="card cc-review">
+      <h2>1. How did the course go?</h2>
       <div class="field">
-        <label for="review_date">Review date</label>
-        <input type="date" id="review_date" name="review_date" value="{{ suggested_review_date }}">
-        <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap: long enough to test a strategy for real, short enough that it still connects to the course.</p>
+        <label for="pupil_engagement">How did {{ pupil_name }} engage? <span class="req">Required</span></label>
+        <textarea id="pupil_engagement" name="pupil_engagement" rows="3" required
+                  placeholder="What changed, what didn&rsquo;t, how they took to it&hellip;">{{ reflection.pupil_engagement if reflection else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="course_effectiveness">Did the course suit them?</label>
+        <textarea id="course_effectiveness" name="course_effectiveness" rows="2"
+                  placeholder="Which sessions landed, which didn&rsquo;t&hellip;">{{ reflection.course_effectiveness if reflection else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="recommended_next_steps">What should happen next?</label>
+        <textarea id="recommended_next_steps" name="recommended_next_steps" rows="2"
+                  placeholder="Another course, a referral, or nothing further&hellip;">{{ reflection.recommended_next_steps if reflection else '' }}</textarea>
+      </div>
+    </div>
+
+    <div class="card cc-review">
+      <h2>2. When will you check back in?</h2>
+      <p class="muted">Sustained change needs a follow-up, not a single course. This shows on {{ pupil_name }}&rsquo;s record and on your home page when it comes round.</p>
+      <div class="field">
+        <label for="review_date">Review date <span class="req">Required</span></label>
+        <input type="date" id="review_date" name="review_date" value="{{ suggested_review_date }}" required>
+        <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap. You get two weeks&rsquo; grace, and can push it back if a holiday lands on it.</p>
       </div>
       <div class="field">
         <label for="review_note">What to check at the review</label>
         <textarea id="review_note" name="review_note" rows="2" placeholder="e.g. is the signal card still being used in maths?"></textarea>
       </div>
-      <button class="btn btn-primary" type="submit">Set review point</button>
-    </form>
-  </div>
+    </div>
+
+    <p class="cc-actions">
+      <button class="btn btn-primary" type="submit">Close the course and issue certificate</button>
+    </p>
+    <p style="text-align:center;"><a class="cc-back" href="/mentor/pupils/{{ pupil_id }}">Finish this later</a></p>
+  </form>
 </div>
 
 <style>
@@ -48,6 +67,7 @@
 .cc-card{position:relative; z-index:1;}
 .cc-lead{font-size:15px; color:var(--ink); margin:0 0 6px;}
 .cc-review{margin-top:14px;text-align:left;}
+.req{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--coral-dark);margin-left:6px;}
 .cc-review h2{margin-top:0;}
 .cc-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:18px 0 10px;}
 .cc-back{font-size:13px; color:var(--muted);}

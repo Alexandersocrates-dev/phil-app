@@ -90,12 +90,11 @@
     {% endif %}
   </div>
   {% elif e.status == 'completed' %}
+  {# Finished the sessions but never closed the course. The certificate is
+     waiting on this, so it needs a route back rather than just a warning. #}
   <div class="review-strip review-none">
-    <div><strong>No review point set</strong><span class="review-note">Support usually needs a follow-up, not a single course.</span></div>
-    <form method="post" action="/mentor/enrolment/{{ e.id }}/review" class="form-inline">
-      <input type="hidden" name="review_date" value="{{ default_review_date }}">
-      <button class="btn btn-secondary btn-sm" type="submit">Set for {{ default_review_date }}</button>
-    </form>
+    <div><strong>Course not closed yet</strong><span class="review-note">The reflection and a review date are needed before {{ pupil.forename }}&rsquo;s certificate is issued.</span></div>
+    <a class="btn btn-primary btn-sm" href="/mentor/enrolment/{{ e.id }}/wrap-up">Finish and issue certificate</a>
   </div>
   {% endif %}
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>

@@ -1641,24 +1641,13 @@ def session_submit(request):
 
         message = f"Week {next_week_number} session recorded."
         completed_now = new_status == "completed"
-        if new_status == "completed":
-            issued = datetime.date.today().isoformat()
-            estab = conn.execute(
-                """SELECT e.name FROM establishments e
-                   JOIN pupils p ON p.establishment_id = e.id
-                   WHERE p.id = ?""", (enrolment["pupil_id"],)).fetchone()
-            module_row = conn.execute("SELECT module_number FROM courses WHERE id=?",
-                                      (enrolment["course_id"],)).fetchone()
-            cert_path = pdfgen.certificate_pdf(
-                pupil_name, enrolment["course_title"], issued, enrolment_id,
-                establishment_name=estab["name"] if estab else None,
-                mentor_name=mentor_name,
-                module_number=module_row["module_number"] if module_row else None)
-            conn.execute(
-                "INSERT INTO certificates (enrolment_id, issued_date, pdf_path) VALUES (?,?,?)",
                 (enrolment_id, issued, cert_path),
-            )
-            message = f"Course complete. {pupil_name}'s certificate has been issued."
+        if completed_now:
+            # The certificate is issued by the wrap-up, not by the fifth session:
+            # the reflection and the review date are part of finishing a course,
+            # not optional extras. Both are done in the next two minutes, so the
+            # pupil isn't waiting on anything.
+            message = "Course complete."
 
         conn.commit()
     finally:
@@ -1675,7 +1664,7 @@ def session_submit(request):
         return render("course_complete.html", user=user,
                       pupil_name=pupil_name, course_title=enrolment["course_title"],
                       enrolment_id=enrolment_id, pupil_id=enrolment["pupil_id"],
-                      suggested_review_date=suggested, flash=None)
+                      suggested_review_date=suggested, reflection=None, flash=None)
     return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}", message, "ok")
 
 @router.get("/mentor/schedule/<enrolment_id>")
@@ -3411,6 +3400,17 @@ def certificate_download(request):
     finally:
         conn.close()
     if not cert:
+        # Not an error: the course simply hasn't been closed yet. Say which step
+        # is outstanding rather than showing a dead end.
+        conn2 = db.get_conn()
+        try:
+            row = conn2.execute("SELECT pupil_id, status FROM enrolments WHERE id=?",
+                                (request.params["enrolment_id"],)).fetchone()
+        finally:
+            conn2.close()
+        if row and row["status"] == "completed":
+            return with_flash(f"/mentor/enrolment/{request.params['enrolment_id']}/wrap-up",
+                              "The certificate is issued once the course is closed.", "error")
         return Response("Certificate not found", status="404 Not Found")
     # The file may be missing even though the record exists: PDFs used to be
     # written inside the container, so anything generated before a deploy was
@@ -3605,6 +3605,119 @@ def review_overdue_from(date_string):
     except (TypeError, ValueError):
         return None
     return (d + datetime.timedelta(days=REVIEW_GRACE_DAYS)).isoformat()
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/wrap-up")
+def course_wrap_up(request):
+    """Closes a course: the reflection, the review date, then the certificate.
+
+    Gating the certificate on this is deliberate. Left optional, the reflection
+    and the follow-up are the two things that never get done — and they are the
+    two things a school is actually buying. Both are asked for while the mentor
+    is still on the completion screen, so nothing is delayed for the pupil."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    enrolment_id = request.params["enrolment_id"]
+
+    pupil_engagement = request.field("pupil_engagement", "").strip()
+    course_effectiveness = request.field("course_effectiveness", "").strip()
+    recommended_next_steps = request.field("recommended_next_steps", "").strip()
+    review_date = request.field("review_date", "").strip()
+    review_note = request.field("review_note", "").strip()
+
+    missing = []
+    if not pupil_engagement:
+        missing.append("how the pupil engaged")
+    if not review_date:
+        missing.append("a review date")
+    if missing:
+        return with_flash(f"/mentor/enrolment/{enrolment_id}/wrap-up",
+                          "Still needed: " + " and ".join(missing) + ".", "error")
+
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.establishment_id,
+                      c.title AS course_title, c.module_number
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id WHERE e.id=?""",
+            (enrolment_id,)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+
+        now = db.now()
+        existing = conn.execute("SELECT id FROM completion_reflections WHERE enrolment_id=?",
+                                (enrolment_id,)).fetchone()
+        if existing:
+            conn.execute(
+                """UPDATE completion_reflections SET pupil_engagement=?, course_effectiveness=?,
+                   recommended_next_steps=?, updated_at=? WHERE enrolment_id=?""",
+                (pupil_engagement, course_effectiveness, recommended_next_steps, now, enrolment_id))
+        else:
+            conn.execute(
+                """INSERT INTO completion_reflections (enrolment_id, pupil_engagement,
+                   course_effectiveness, recommended_next_steps, completed_by, completed_at, updated_at)
+                   VALUES (?,?,?,?,?,?,?)""",
+                (enrolment_id, pupil_engagement, course_effectiveness, recommended_next_steps,
+                 user["id"], now, now))
+
+        conn.execute("UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
+                     (review_date, review_note or None, enrolment_id))
+
+        # Issue the certificate now that both are in place.
+        pupil_name = f"{enrolment['forename']} {enrolment['surname']}"
+        already = conn.execute("SELECT id FROM certificates WHERE enrolment_id=?",
+                               (enrolment_id,)).fetchone()
+        if not already:
+            issued = datetime.date.today().isoformat()
+            estab = conn.execute("SELECT name FROM establishments WHERE id=?",
+                                 (enrolment["establishment_id"],)).fetchone()
+            cert_path = pdfgen.certificate_pdf(
+                pupil_name, enrolment["course_title"], issued, enrolment_id,
+                establishment_name=estab["name"] if estab else None,
+                mentor_name=user["name"],
+                module_number=enrolment["module_number"])
+            conn.execute(
+                "INSERT INTO certificates (enrolment_id, issued_date, pdf_path) VALUES (?,?,?)",
+                (enrolment_id, issued, cert_path))
+        db.log_action(conn, user["id"], "course_wrapped_up", "enrolment", enrolment_id, review_date)
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}",
+                      f"Course closed and {pupil_name}'s certificate issued.", "ok")
+
+
+@router.get("/mentor/enrolment/<enrolment_id>/wrap-up")
+def course_wrap_up_form(request):
+    """The wrap-up screen, reachable again if it wasn't finished first time."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.establishment_id, p.id AS pupil_id,
+                      c.title AS course_title
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        reflection = conn.execute("SELECT * FROM completion_reflections WHERE enrolment_id=?",
+                                  (request.params["enrolment_id"],)).fetchone()
+    finally:
+        conn.close()
+    suggested = enrolment["review_date"] or (
+        datetime.date.today() + datetime.timedelta(days=21)).isoformat()
+    return render("course_complete.html", user=user,
+                  pupil_name=f"{enrolment['forename']} {enrolment['surname']}",
+                  course_title=enrolment["course_title"],
+                  enrolment_id=enrolment["id"], pupil_id=enrolment["pupil_id"],
+                  suggested_review_date=suggested, reflection=reflection,
+                  flash=flash_from_query(request))
 
 
 @router.post("/mentor/enrolment/<enrolment_id>/review")
