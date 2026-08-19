@@ -851,6 +851,22 @@ def mentor_home(request):
         ).fetchone()[0]
     finally:
         conn.close()
+    # The list is about pupils, not enrolments. A pupil on three courses was
+    # appearing as three rows with the same name, which reads as three children.
+    by_pupil = {}
+    for e in enrolments:
+        entry = by_pupil.setdefault(e["pupil_id"], {
+            "pupil_id": e["pupil_id"],
+            "forename": e["forename"],
+            "surname": e["surname"],
+            "courses": [],
+        })
+        entry["courses"].append(e)
+    mentoring_list = sorted(by_pupil.values(), key=lambda p: (p["surname"], p["forename"]))
+    for entry in mentoring_list:
+        entry["active"] = sum(1 for c in entry["courses"] if c["status"] == "active")
+        entry["completed"] = sum(1 for c in entry["courses"] if c["status"] == "completed")
+
     # Reviews the mentor agreed at the end of a course. Only ones that have come
     # round: a review three weeks away isn't work yet, and listing it would
     # teach them to ignore the list.
@@ -879,6 +895,7 @@ def mentor_home(request):
                                 overdue=bool(overdue_after and today > overdue_after)))
 
     return render("mentor_home.html", user=user, pupils=pupils, enrolments=enrolments,
+                  mentoring_list=mentoring_list,
                   due_this_week=due_this_week, reviews_due=reviews_due,
                   flash=flash_from_query(request))
 
@@ -1015,18 +1032,36 @@ def reactivate_pupil(request):
     return render_done(user, "Pupil reactivated", "They're active again and back on their mentor's list.", f"/mentor/pupils/{request.params['pupil_id']}", back_label="View pupil")
 
 
+@router.get("/mentor/pupils")
+def mentor_pupils(request):
+    """A mentor's own pupils. Same page as the admin list, scoped to them."""
+    return _pupils_list(request, roles=["mentor", "admin"], own_only=True)
+
+
 @router.get("/admin/pupils")
 def admin_pupils(request):
-    user, err = require(request, roles=["admin"])
+    return _pupils_list(request, roles=["admin"], own_only=False)
+
+
+def _pupils_list(request, roles, own_only):
+    user, err = require(request, roles=roles)
     if err:
         return err
     status_filter = request.query.get("status", ["active"])[0]
     conn = db.get_conn()
     try:
-        pupils = conn.execute(
-            "SELECT * FROM pupils WHERE establishment_id=? AND status=? ORDER BY surname, forename",
-            (user["establishment_id"], status_filter),
-        ).fetchall()
+        if own_only:
+            pupils = conn.execute(
+                """SELECT * FROM pupils WHERE establishment_id=? AND status=?
+                     AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)
+                   ORDER BY surname, forename""",
+                (user["establishment_id"], status_filter, user["id"]),
+            ).fetchall()
+        else:
+            pupils = conn.execute(
+                "SELECT * FROM pupils WHERE establishment_id=? AND status=? ORDER BY surname, forename",
+                (user["establishment_id"], status_filter),
+            ).fetchall()
         pupil_data = []
         for p in pupils:
             enrolments = conn.execute(
@@ -1040,7 +1075,9 @@ def admin_pupils(request):
             pupil_data.append({"pupil": p, "enrolments": enrolments})
     finally:
         conn.close()
-    return render("admin_pupils.html", user=user, pupil_data=pupil_data, status_filter=status_filter,
+    return render("admin_pupils.html", user=user, pupil_data=pupil_data,
+                  status_filter=status_filter, own_only=own_only,
+                  base_path="/mentor/pupils" if own_only else "/admin/pupils",
                   flash=flash_from_query(request))
 
 

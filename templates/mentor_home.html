@@ -118,38 +118,63 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 {% endif %}
 
 <div class="card">
-<div style="display:flex; justify-content:space-between; align-items:center;">
-<h2 style="margin:0;">My caseload</h2>
-<div>
-<a class="btn btn-primary btn-sm" href="/mentor/pupils/new">+ Add a pupil</a>
-</div>
-</div>
+<h2 style="margin:0 0 4px;">My mentoring list</h2>
+<p class="muted" style="font-size:12.5px;margin:0 0 14px;">Everyone you're currently mentoring. Open a name to see their courses.</p>
 
-{% if not enrolments %}
-<p class="muted">No pupils enrolled yet.</p>
+{% if not mentoring_list %}
+<p class="muted">Nobody on your list yet. Add a pupil from the Pupils page.</p>
 {% else %}
-<table>
-<tr><th>Pupil</th><th>Course</th><th>Progress</th><th>Status</th><th></th></tr>
-{% for e in enrolments %}
-<tr>
-<td><a href="/mentor/pupils/{{ e.pupil_id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }}</a></td>
-<td>{{ e.course_title }}</td>
-<td style="width:140px;">
-<div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
-<span class="muted" style="font-size:12px;">Session {{ e.current_week }} of 5</span>
-</td>
-<td>
-{% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
-{% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
-{% else %}<span class="badge badge-teal">Active</span>{% endif %}
-</td>
-<td>
-{% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
-{% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
-</td>
-</tr>
+{# One row per pupil, not per enrolment. A pupil on three courses used to appear
+   three times with the same name, which reads as three children. #}
+{% for p in mentoring_list %}
+<details class="ml-pupil" {% if p.active %}open{% endif %}>
+  <summary class="ml-summary">
+    <span class="avatar avatar-sm">{{ p.forename[:1] }}{{ p.surname[:1] }}</span>
+    <span class="ml-name">{{ p.forename }} {{ p.surname }}</span>
+    <span class="ml-count">
+      {%- if p.active %}{{ p.active }} active{% endif -%}
+      {%- if p.active and p.completed %} &middot; {% endif -%}
+      {%- if p.completed %}{{ p.completed }} completed{% endif -%}
+    </span>
+  </summary>
+
+  <table class="ml-courses">
+  {% for e in p.courses %}
+    <tr>
+      <td>{{ e.course_title }}</td>
+      <td style="width:150px;">
+        <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
+        <span class="muted" style="font-size:12px;">Session {{ e.current_week }} of 5</span>
+      </td>
+      <td style="width:110px;">
+        {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
+        {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
+        {% else %}<span class="badge badge-teal">Active</span>{% endif %}
+      </td>
+      <td class="record-actions">
+        {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
+        {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </table>
+  <p style="margin:6px 0 0;"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a></p>
+</details>
 {% endfor %}
-</table>
 {% endif %}
 </div>
+
+<style>
+.ml-pupil{border-top:1px solid var(--border); padding:4px 0;}
+.ml-pupil:first-of-type{border-top:none;}
+.ml-summary{display:flex; align-items:center; gap:10px; cursor:pointer; list-style:none; padding:10px 0;}
+.ml-summary::-webkit-details-marker{display:none;}
+.ml-summary::before{content:"\25B8"; color:var(--teal-darker); font-size:11px; transition:transform .12s ease;}
+.ml-pupil[open] .ml-summary::before{transform:rotate(90deg);}
+.ml-name{font-family:var(--font-head); font-weight:700; color:var(--navy); flex:1; min-width:0;}
+.ml-count{font-size:12px; color:var(--muted); white-space:nowrap;}
+.ml-courses{margin:0 0 4px 30px; width:calc(100% - 30px);}
+.ml-courses td{padding:8px 8px 8px 0; vertical-align:middle;}
+.ml-link{font-size:12.5px; margin-left:30px;}
+</style>
 {% endblock %}
