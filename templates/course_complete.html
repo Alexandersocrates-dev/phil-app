@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_check_circle %}
+{% block title %}Course complete - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="cc-wrap">
+  {# Purely decorative, and hidden from screen readers: the heading below already
+     says what happened. Twelve pieces is enough to read as celebration without
+     becoming a performance a mentor has to sit through. #}
+  <div class="cc-confetti" aria-hidden="true">
+    {% for i in range(12) %}<span class="cc-piece cc-p{{ i % 4 }}"></span>{% endfor %}
+  </div>
+
+  <div class="card card-center cc-card">
+    <div class="icon-badge icon-badge--teal cc-badge">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
+    <h1>Course complete</h1>
+    <p class="cc-lead">{{ pupil_name }} has finished all five sessions of {{ course_title }}.</p>
+    <p class="muted">Their certificate is ready, and the full report is available whenever you need it.</p>
+    <p class="cc-actions">
+      <a class="btn btn-primary" href="/certificate/{{ enrolment_id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
+      <a class="btn btn-secondary" href="/report/mentee/{{ enrolment_id }}">View report</a>
+    </p>
+    <p><a class="cc-back" href="/mentor/pupils/{{ pupil_id }}">Back to {{ pupil_name }}</a></p>
+  </div>
+</div>
+
+<style>
+.cc-wrap{position:relative;}
+.cc-card{position:relative; z-index:1;}
+.cc-lead{font-size:15px; color:var(--ink); margin:0 0 6px;}
+.cc-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:18px 0 10px;}
+.cc-back{font-size:13px; color:var(--muted);}
+.cc-badge{animation:cc-pop 420ms var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)) both;}
+@keyframes cc-pop{from{transform:scale(0.6); opacity:0;} to{transform:scale(1); opacity:1;}}
+
+.cc-confetti{position:absolute; inset:-20px 0 auto; height:180px; pointer-events:none; overflow:hidden;}
+.cc-piece{position:absolute; top:-14px; width:8px; height:12px; border-radius:2px; opacity:0;
+  animation:cc-fall 1500ms ease-in forwards;}
+.cc-p0{background:var(--teal);}
+.cc-p1{background:var(--amber);}
+.cc-p2{background:var(--coral);}
+.cc-p3{background:var(--teal-dark);}
+.cc-piece:nth-child(1){left:6%;  animation-delay:0ms;}
+.cc-piece:nth-child(2){left:16%; animation-delay:120ms;}
+.cc-piece:nth-child(3){left:26%; animation-delay:60ms;}
+.cc-piece:nth-child(4){left:36%; animation-delay:200ms;}
+.cc-piece:nth-child(5){left:46%; animation-delay:20ms;}
+.cc-piece:nth-child(6){left:56%; animation-delay:160ms;}
+.cc-piece:nth-child(7){left:66%; animation-delay:90ms;}
+.cc-piece:nth-child(8){left:76%; animation-delay:240ms;}
+.cc-piece:nth-child(9){left:86%; animation-delay:40ms;}
+.cc-piece:nth-child(10){left:94%; animation-delay:180ms;}
+.cc-piece:nth-child(11){left:11%; animation-delay:280ms;}
+.cc-piece:nth-child(12){left:71%; animation-delay:320ms;}
+@keyframes cc-fall{
+  0%{opacity:0; transform:translateY(0) rotate(0deg);}
+  10%{opacity:1;}
+  100%{opacity:0; transform:translateY(190px) rotate(320deg);}
+}
+/* Motion can cause nausea, and the message does not depend on it. */
+@media (prefers-reduced-motion:reduce){
+  .cc-confetti{display:none;}
+  .cc-badge{animation:none;}
+}
+</style>
+{% endblock %}

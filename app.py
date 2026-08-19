@@ -1595,6 +1595,7 @@ def session_submit(request):
                      (enrolment_id, next_week_number))
 
         message = f"Week {next_week_number} session recorded."
+        completed_now = new_status == "completed"
         if new_status == "completed":
             issued = datetime.date.today().isoformat()
             cert_path = pdfgen.certificate_pdf(pupil_name, enrolment["course_title"], issued, enrolment_id)
@@ -1608,6 +1609,14 @@ def session_submit(request):
     finally:
         conn.close()
 
+    # Finishing a five-week course with a pupil is worth marking properly. The
+    # other four sessions keep the quiet flash message: a celebration every week
+    # would be noise by week three.
+    if completed_now:
+        return render("course_complete.html", user=user,
+                      pupil_name=pupil_name, course_title=enrolment["course_title"],
+                      enrolment_id=enrolment_id, pupil_id=enrolment["pupil_id"],
+                      flash=None)
     return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}", message, "ok")
 
 @router.get("/mentor/schedule/<enrolment_id>")
