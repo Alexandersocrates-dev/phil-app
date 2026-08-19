@@ -191,7 +191,8 @@ def _wrap(c, text, x, y, max_width, font="Helvetica", size=9, leading=12, color=
     return y
 
 
-def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, mentor_name):
+def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, mentor_name,
+                       resource_work=None):
     """
     record: sqlite3.Row from session_records
     """
@@ -237,6 +238,13 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
     section("Reflection / goal for the pupil", record["reflection_goal"])
     section("Mentor notes", record["mentor_notes"])
     section("Resources used", record["resources_used"])
+
+    # What the pupil actually wrote on the resources. Without this the work only
+    # ever exists on screen, and the record of the session is incomplete.
+    if resource_work:
+        for title, lines in resource_work:
+            if lines:
+                section(title, "\n".join(lines))
 
     # Safeguarding block, always rendered, matching the mandatory-step convention
     # established across the project's other PDF exports.

@@ -209,6 +209,24 @@ CREATE TABLE IF NOT EXISTS certificates (
     pdf_path TEXT
 );
 
+-- What a pupil actually wrote on a resource: the blank cells of a table, the
+-- fields of a plan, the ticks on a checklist. Keyed by enrolment and week so it
+-- follows the pupil through the course, and by field_key so a resource can
+-- change shape without orphaning what was written.
+CREATE TABLE IF NOT EXISTS resource_entries (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    enrolment_id INTEGER NOT NULL REFERENCES enrolments(id),
+    week_id INTEGER NOT NULL REFERENCES weeks(id),
+    resource_slug TEXT NOT NULL,
+    field_key TEXT NOT NULL,
+    value TEXT,
+    updated_by INTEGER REFERENCES users(id),
+    updated_at TEXT NOT NULL,
+    UNIQUE(enrolment_id, week_id, resource_slug, field_key)
+);
+CREATE INDEX IF NOT EXISTS idx_resource_entries_enrolment
+    ON resource_entries(enrolment_id, week_id);
+
 CREATE TABLE IF NOT EXISTS completion_reflections (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     enrolment_id INTEGER NOT NULL UNIQUE REFERENCES enrolments(id),

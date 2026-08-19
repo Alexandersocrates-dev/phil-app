@@ -93,6 +93,57 @@ def assign_resources_to_steps(week, items):
     return by_step
 
 
+def resource_slug(name):
+    """A stable key for a resource, so entries survive a rename of the display
+    text. Deliberately not the display name."""
+    return re.sub(r"[^a-z0-9]+", "-", (name or "").lower()).strip("-")[:60]
+
+
+def resource_entries_for(conn, enrolment_id, week_id):
+    """Everything written on this week's resources, as {slug: {field: value}}."""
+    rows = conn.execute(
+        """SELECT resource_slug, field_key, value FROM resource_entries
+           WHERE enrolment_id=? AND week_id=?""",
+        (enrolment_id, week_id)).fetchall()
+    out = {}
+    for row in rows:
+        out.setdefault(row["resource_slug"], {})[row["field_key"]] = row["value"]
+    return out
+
+
+def save_resource_entries(conn, enrolment_id, week_id, request, user_id):
+    """Stores what was typed into a resource this session.
+
+    Fields arrive named res__<slug>__<field>. An empty value deletes the row
+    rather than storing a blank, so a cleared cell doesn't linger as data and
+    the table only holds what a pupil actually wrote."""
+    saved = 0
+    for name, values in request.form.items():
+        if not name.startswith("res__"):
+            continue
+        parts = name.split("__", 2)
+        if len(parts) != 3:
+            continue
+        _, slug, field_key = parts
+        value = (values[0] if isinstance(values, list) else values or "").strip()
+        if value:
+            conn.execute(
+                """INSERT INTO resource_entries
+                   (enrolment_id, week_id, resource_slug, field_key, value, updated_by, updated_at)
+                   VALUES (?,?,?,?,?,?,?)
+                   ON CONFLICT(enrolment_id, week_id, resource_slug, field_key)
+                   DO UPDATE SET value=excluded.value, updated_by=excluded.updated_by,
+                                 updated_at=excluded.updated_at""",
+                (enrolment_id, week_id, slug, field_key, value, user_id, db.now()))
+            saved += 1
+        else:
+            conn.execute(
+                """DELETE FROM resource_entries
+                   WHERE enrolment_id=? AND week_id=? AND resource_slug=? AND field_key=?""",
+                (enrolment_id, week_id, slug, field_key))
+    return saved
+
+
 def resource_items_for(module_number, resource_names):
     """Returns the full pack entries for a list of resource names, in the order
     the week lists them. Names are matched loosely because a week's list and the
@@ -113,7 +164,10 @@ def resource_items_for(module_number, resource_names):
     for name in resource_names or []:
         item = by_name.get(_norm_resource(name))
         if item:
-            out.append(item)
+            # The slug keys anything a pupil writes on this resource, so it comes
+            # from the pack's own name rather than the week's wording — the two
+            # differ, and entries must not move when a week is reworded.
+            out.append(dict(item, slug=resource_slug(item.get("name"))))
     return out
 
 
@@ -1509,7 +1563,14 @@ def session_form(request):
     # No-store, so the browser's own Back button re-fetches instead of showing a
     # cached copy of a form that has already been submitted. Combined with the
     # for_week check on POST, a stale form can neither be shown nor accepted.
+    conn2 = db.get_conn()
+    try:
+        entries = resource_entries_for(conn2, enrolment["id"], week["id"])
+    finally:
+        conn2.close()
+
     response = render("session_form.html", user=user, enrolment=enrolment, week=week,
+                  entries=entries,
                   next_week_number=next_week_number, completed_records=completed_records,
                   prev_record=prev_record, prev_week_items=prev_week_items,
                   draft=draft, progress=progress,
@@ -1639,6 +1700,7 @@ def session_submit(request):
         conn.execute("DELETE FROM session_drafts WHERE enrolment_id=? AND week_number=?",
                      (enrolment_id, next_week_number))
 
+        save_resource_entries(conn, enrolment_id, week["id"], request, user["id"])
         message = f"Week {next_week_number} session recorded."
         completed_now = new_status == "completed"
         if completed_now:
@@ -3493,7 +3555,14 @@ def session_record_edit(request):
     draft["reflect_note"] = record["reflection_goal"] or ""
     draft["next_session_note"] = record["mentor_notes"] or ""
 
+    conn3 = db.get_conn()
+    try:
+        entries = resource_entries_for(conn3, record["enrolment_id"], record["week_id"])
+    finally:
+        conn3.close()
+
     response = render("session_form.html", user=user, enrolment=enrolment, week=week,
+                      entries=entries,
                       next_week_number=week["week_number"], completed_records=completed_records,
                       prev_record=None, prev_week_items=[], draft=draft, progress=[],
                       upcoming_weeks=[], editing_record=record,
@@ -3554,6 +3623,8 @@ def session_record_edit_submit(request):
             value = request.field(field, "").strip()
             if value:
                 parts.append(f"{label}: {value}")
+        save_resource_entries(conn, record["enrolment_id"], record["week_id"],
+                              request, user["id"])
         conn.execute(
             """UPDATE session_records
                SET what_happened=?, reflection_goal=?, mentor_notes=?,
@@ -3852,9 +3923,19 @@ def session_pdf_download(request):
                 return Response("Session record not found", status="404 Not Found")
             enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
                                       (ctx["enrolment_id"],)).fetchone()
+            work = conn.execute(
+                """SELECT resource_slug, field_key, value FROM resource_entries
+                   WHERE enrolment_id=? AND week_id=? ORDER BY resource_slug, field_key""",
+                (ctx["enrolment_id"], record["week_id"])).fetchall()
+            grouped = {}
+            for row in work:
+                label = row["resource_slug"].replace("-", " ").capitalize()
+                grouped.setdefault(label, []).append(row["value"])
+            resource_work = sorted(grouped.items())
             path = pdfgen.session_record_pdf(
                 record, enrolment, f"{ctx['forename']} {ctx['surname']}",
-                ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor")
+                ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor",
+                resource_work=resource_work)
             conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?",
                          (path, request.params["record_id"]))
             conn.commit()

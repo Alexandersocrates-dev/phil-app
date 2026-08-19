@@ -8,22 +8,39 @@
 <div class="res-inline">
   <div class="res-inline-head">
     <span class="res-inline-name">{{ item.name }}</span>
-    {% if item.table or item.form or item.checklist %}<span class="res-tag">print for pupil</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+    {% if item.table or item.form or item.checklist %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
   </div>
   {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p class="res-inline-p">{{ para }}</p>{% endif %}{% endfor %}{% endif %}
   {% if item.table %}
   <table class="res-table">
     <tr>{% for hd in item.table.headers %}<th>{{ hd }}</th>{% endfor %}</tr>
-    {% for row in item.table.rows %}<tr>{% for cell in row %}<td>{{ cell }}</td>{% endfor %}</tr>{% endfor %}
+    {% for row in item.table.rows %}{% set row_i = loop.index0 %}{% set row_n = loop.index %}<tr>
+    {%- for cell in row %}
+      {% if cell %}<td>{{ cell }}</td>
+      {% else %}{% set fk = 't' ~ row_i ~ '_' ~ loop.index0 %}
+      <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
+        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}"
+        aria-label="{{ item.table.headers[loop.index0] if item.table.headers|length > loop.index0 else 'Entry' }}, row {{ row_n }}"></td>
+      {% endif %}
+    {%- endfor %}</tr>{% endfor %}
   </table>
   {% endif %}
   {% if item.form %}
   <table class="res-table">
-    {% for f in item.form.fields %}<tr><th style="width:45%;">{{ f }}</th><td></td></tr>{% endfor %}
+    {% for f in item.form.fields %}{% set fk = 'f' ~ loop.index0 %}
+    <tr><th style="width:45%;">{{ f }}</th>
+      <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
+        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}" aria-label="{{ f }}"></td>
+    </tr>{% endfor %}
   </table>
   {% endif %}
   {% if item.checklist %}
-  <ul class="res-check">{% for ci in item.checklist['items'] %}<li>{{ ci }}</li>{% endfor %}</ul>
+  <ul class="res-check">{% for ci in item.checklist['items'] %}{% set fk = 'c' ~ loop.index0 %}
+    <li><label class="res-check-label">
+      <input type="checkbox" name="res__{{ item.slug }}__{{ fk }}" value="yes"
+             {% if entries and (entries.get(item.slug, {})).get(fk) %}checked{% endif %}>
+      <span>{{ ci }}</span>
+    </label></li>{% endfor %}</ul>
   {% endif %}
   {% if item.steps %}
   <div class="res-steps">
@@ -365,6 +382,12 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .step-line:last-child{margin-bottom:6px;}
 .step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
 .step-block:first-of-type{border-top:none; padding-top:4px;}
+.res-writable{padding:0 !important;}
+.res-writable input[type=text]{width:100%; border:none; background:#FFFDF7; padding:9px 10px;
+  font-family:var(--font-body); font-size:13.5px; color:var(--ink); border-radius:0;}
+.res-writable input[type=text]:focus{outline:none; box-shadow:inset 0 0 0 2px var(--teal-dark); background:#fff;}
+.res-check-label{display:flex; align-items:flex-start; gap:9px; cursor:pointer; padding:3px 0;}
+.res-check-label input{margin-top:2px; width:18px; height:18px; accent-color:var(--teal-dark); flex-shrink:0;}
 .res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:6px 0 0;}
 .res-step{background:#fff;border-radius:10px;padding:10px;}
 .res-step-head{display:flex;align-items:center;gap:7px;margin:0 0 7px;font-size:12px;font-weight:600;}
