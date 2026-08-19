@@ -164,7 +164,7 @@
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Check-in <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>, then review last session&rsquo;s task.</p>
-{% if week.checkin %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.checkin }}</p>{% endif %}
+{% if week.checkin %}{% for line in week.checkin.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% if prev_week_items or prev_record %}
 <details class="res-prev">
   <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
@@ -188,7 +188,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Input <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
-{% if week.input_content %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.input_content }}</p>{% endif %}
+{% if week.input_content %}{% for line in week.input_content.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['input'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on the pupil's thoughts&hellip;">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
@@ -199,7 +199,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Activity <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
-{% if week.activity %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.activity }}</p>{% endif %}
+{% if week.activity %}{% for line in week.activity.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['activity'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="activity_note" data-field="activity_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on how the activity went&hellip;">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
 <div class="field-save-hint"></div>
@@ -210,7 +210,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Reflect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
-{% if week.reflect %}<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;">{{ week.reflect }}</p>{% endif %}
+{% if week.reflect %}{% for line in week.reflect.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['reflect'] %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on the pupil's answer&hellip;">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
 <div class="field-save-hint"></div>
@@ -223,7 +223,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Home task <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
 {% if week.home_activity %}
 <div style="background:var(--teal-light);border-radius:10px;padding:9px 11px;margin-bottom:8px;">
-<p style="font-size:13.5px;color:var(--teal-darker);line-height:1.5;margin:0;">{{ week.home_activity }}</p>
+{% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line" style="color:var(--teal-darker);font-size:13.5px;">{{ line }}</p>{% endif %}{% endfor %}
 </div>
 {% endif %}
 {% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
@@ -361,6 +361,8 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 /* The five steps ran into one another as a single column of text. A rule and
    real space above each makes the boundary obvious at a glance, which matters
    when a mentor is finding their place mid-session. */
+.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px; padding-left:20px; text-indent:-20px;}
+.step-line:last-child{margin-bottom:6px;}
 .step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
 .step-block:first-of-type{border-top:none; padding-top:4px;}
 .res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:6px 0 0;}
