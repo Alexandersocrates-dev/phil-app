@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ course.title }} - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+<p class="back-link"><a href="/courses">&larr; Back to all courses</a></p>
 <div class="card">
   <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
   <h1>{{ course.title }}</h1>
@@ -10,7 +10,7 @@
      for the sessions they can see, so the download is still worth having. #}
   {% if user %}
   <p>
-    <a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank" rel="noopener">Download resources (PDF)</a>
+    <a class="btn btn-secondary btn-sm" href="/courses/{{ course.id }}/resources/pdf" target="_blank">Download resources (PDF)</a>
     {% if outline_weeks %}<span class="muted" style="font-size:12px;">Sessions 1&ndash;{{ weeks_limit }} only</span>{% endif %}
   </p>
   {% endif %}

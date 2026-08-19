@@ -55,7 +55,7 @@
 {% endmacro %}
 
 
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+
 
 {% if not week %}
 <div class="card"><p>This course is already complete, all five sessions are recorded.</p></div>
@@ -140,7 +140,9 @@
 <div style="margin:0 0 14px 32px;">
 <p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
 <div class="pill-row" style="margin:0;">
-{% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}
+{# Show the pack's own name, so the pill and the downloaded sheet agree. The
+   week's wording can differ ("1-5 mood scale card" vs "Mood scale card"). #}
+{% if week.resource_items %}{% for item in week.resource_items %}<span class="pill">{{ item.name }}</span>{% endfor %}{% else %}{% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}{% endif %}
 <p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">Download this session&rsquo;s resources (PDF)</a></p>
 </div>
 </div>
@@ -155,7 +157,7 @@
 
 <form method="post" action="{{ ("/mentor/session/record/" ~ editing_record.id ~ "/edit") if editing_record else ("/mentor/session/" ~ enrolment.id) }}" id="sessionForm">
 
-<div style="display:flex;gap:10px;margin-bottom:14px;">
+<div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Check-in <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
@@ -180,7 +182,7 @@
 </div>
 </div>
 
-<div style="display:flex;gap:10px;margin-bottom:10px;">
+<div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Input <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
@@ -191,7 +193,7 @@
 </div>
 </div>
 
-<div style="display:flex;gap:10px;margin-bottom:10px;">
+<div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Activity <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
@@ -202,7 +204,7 @@
 </div>
 </div>
 
-<div style="display:flex;gap:10px;margin-bottom:10px;">
+<div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Reflect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
@@ -213,7 +215,7 @@
 </div>
 </div>
 
-<div style="display:flex;gap:10px;margin-bottom:16px;">
+<div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Home task <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
@@ -259,7 +261,7 @@
 <p class="muted" style="font-size:12px;">This record is not a safeguarding report and Phil takes no action on it. You remain responsible for following your establishment's own safeguarding procedure.</p>
 </div>
 
-<button class="btn btn-amber btn-block" type="submit">{{ "Save changes" if editing_record else "Mark session complete" }}</button>
+<button class="btn btn-primary btn-block" type="submit">{{ "Save changes" if editing_record else "Mark session complete" }}</button>
 
 
 </form>
@@ -354,6 +356,11 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .tone-red .res-step-n{background:#A32D2D;}
 .tone-red .res-card-note{border-top-color:#F7C1C1;}
 .res-prev-body{padding:0 11px 10px;}
+/* The five steps ran into one another as a single column of text. A rule and
+   real space above each makes the boundary obvious at a glance, which matters
+   when a mentor is finding their place mid-session. */
+.step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
+.step-block:first-of-type{border-top:none; padding-top:4px;}
 .res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:6px 0 0;}
 .res-step{background:#fff;border-radius:10px;padding:10px;}
 .res-step-head{display:flex;align-items:center;gap:7px;margin:0 0 7px;font-size:12px;font-weight:600;}
