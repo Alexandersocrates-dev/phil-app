@@ -1559,6 +1559,13 @@ def session_submit(request):
         next_week_number = enrolment["current_week"] + 1
         week = conn.execute("SELECT * FROM weeks WHERE course_id=? AND week_number=?",
                              (enrolment["course_id"], next_week_number)).fetchone()
+        submitted_for = request.field("for_week", "").strip()
+        if submitted_for.isdigit() and int(submitted_for) != next_week_number:
+            return with_flash(
+                f"/mentor/pupils/{enrolment['pupil_id']}",
+                f"Session {submitted_for} is already recorded. Nothing was saved twice.",
+                "error")
+
         if week is None:
             # Every session is already recorded. Reached by a double submit, a
             # refreshed form, or a second tab, so say so plainly rather than
@@ -3378,6 +3385,92 @@ def certificate_download(request):
             conn.close()
         return pdf_response(path, "certificate.pdf")
     return pdf_response(cert["pdf_path"], "certificate.pdf")
+
+
+@router.get("/mentor/session/record/<record_id>/edit")
+def session_record_edit(request):
+    """Lets a mentor correct a session they have already recorded.
+
+    Editing does not move the course forward or backward: current_week and the
+    enrolment status are untouched. Only the written record changes, which is
+    what a mentor means by "I typed that wrong"."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        record = conn.execute(
+            """SELECT r.*, w.week_number AS wn, w.title AS week_title,
+                      p.forename, p.surname, c.title AS course_title, e.id AS enrolment_id
+               FROM session_records r
+               JOIN enrolments e ON e.id = r.enrolment_id
+               JOIN weeks w ON w.id = r.week_id
+               JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id
+               WHERE r.id=?""",
+            (request.params["record_id"],),
+        ).fetchone()
+        if not record:
+            return Response("Session record not found", status="404 Not Found")
+        # Same establishment only: a mentor must not edit another school's record.
+        estab = conn.execute(
+            "SELECT establishment_id FROM pupils WHERE id=(SELECT pupil_id FROM enrolments WHERE id=?)",
+            (record["enrolment_id"],)).fetchone()
+    finally:
+        conn.close()
+    if not estab or estab["establishment_id"] != user["establishment_id"]:
+        return Response("Not authorised for this area.", status="403 Forbidden")
+    return render("session_edit.html", user=user, record=record,
+                  flash=flash_from_query(request))
+
+
+@router.post("/mentor/session/record/<record_id>/edit")
+def session_record_edit_submit(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    safeguarding_note = request.field("safeguarding_note", "").strip()
+    if not safeguarding_note:
+        return with_flash(f"/mentor/session/record/{request.params['record_id']}/edit",
+                          "The safeguarding note is mandatory, even to record 'no concerns'.",
+                          "error")
+    conn = db.get_conn()
+    try:
+        record = conn.execute("SELECT * FROM session_records WHERE id=?",
+                              (request.params["record_id"],)).fetchone()
+        if not record:
+            return Response("Session record not found", status="404 Not Found")
+        estab = conn.execute(
+            "SELECT establishment_id FROM pupils WHERE id=(SELECT pupil_id FROM enrolments WHERE id=?)",
+            (record["enrolment_id"],)).fetchone()
+        if not estab or estab["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+
+        conn.execute(
+            """UPDATE session_records
+               SET what_happened=?, reflection_goal=?, mentor_notes=?,
+                   mood_rating=?, engagement_rating=?,
+                   safeguarding_flag=?, safeguarding_note=?, pdf_path=NULL
+               WHERE id=?""",
+            (request.field("what_happened", "").strip(),
+             request.field("reflection_goal", "").strip(),
+             request.field("mentor_notes", "").strip(),
+             request.field("mood_rating") or None,
+             request.field("engagement_rating") or None,
+             1 if request.field("safeguarding_flag") == "yes" else 0,
+             safeguarding_note,
+             request.params["record_id"]))
+        # pdf_path is cleared rather than regenerated here: the download route
+        # rebuilds it on demand, so the PDF can never disagree with the record.
+        db.log_action(conn, user["id"], "session_record_edited", "session_record",
+                      record["id"], f"week {record['week_id']}")
+        conn.commit()
+        enrolment_id = record["enrolment_id"]
+        pupil_id = conn.execute("SELECT pupil_id FROM enrolments WHERE id=?",
+                                (enrolment_id,)).fetchone()["pupil_id"]
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}", "Session record updated.", "ok")
 
 
 @router.get("/session/<record_id>/pdf")

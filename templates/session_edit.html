@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Edit session {{ record.wn }} - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+
+<div class="card">
+  <span class="badge badge-teal">Session {{ record.wn }} of 5</span>
+  <h1>{{ record.week_title }}</h1>
+  <p class="muted">{{ record.forename }} {{ record.surname }} &middot; {{ record.course_title }} &middot; recorded {{ record.date }}</p>
+  <p class="muted" style="font-size:12.5px;">Correcting this record does not change the course's progress. Session {{ record.wn }} stays recorded.</p>
+</div>
+
+<form method="post" action="/mentor/session/record/{{ record.id }}/edit">
+  <div class="card">
+    <div class="field">
+      <label for="what_happened">What happened</label>
+      <textarea id="what_happened" name="what_happened" rows="6">{{ record.what_happened or '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="reflection_goal">Reflection or goal for the pupil</label>
+      <textarea id="reflection_goal" name="reflection_goal" rows="3">{{ record.reflection_goal or '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="mentor_notes">Notes for the next session</label>
+      <textarea id="mentor_notes" name="mentor_notes" rows="3">{{ record.mentor_notes or '' }}</textarea>
+    </div>
+    <div class="field">
+      <label for="mood_rating">Mood rating, 1 to 5</label>
+      <select id="mood_rating" name="mood_rating">
+        <option value="">Not recorded</option>
+        {% for n in [1,2,3,4,5] %}
+        <option value="{{ n }}" {% if record.mood_rating == n %}selected{% endif %}>{{ n }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="engagement_rating">Engagement rating, 1 to 5</label>
+      <select id="engagement_rating" name="engagement_rating">
+        <option value="">Not recorded</option>
+        {% for n in [1,2,3,4,5] %}
+        <option value="{{ n }}" {% if record.engagement_rating == n %}selected{% endif %}>{{ n }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="card safeguard-box">
+    <h3>Safeguarding</h3>
+    <p class="muted" style="font-size:12.5px;">Phil takes no action on this note. You remain responsible for following your establishment's own procedure.</p>
+    <div class="field">
+      <label>
+        <input type="checkbox" name="safeguarding_flag" value="yes"
+               {% if record.safeguarding_flag %}checked{% endif %}>
+        Flag a safeguarding concern for this session
+      </label>
+    </div>
+    <div class="field">
+      <label for="safeguarding_note">Safeguarding note (required)</label>
+      <textarea id="safeguarding_note" name="safeguarding_note" rows="3" required>{{ record.safeguarding_note or '' }}</textarea>
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-block" type="submit">Save changes</button>
+</form>
+{% endblock %}
