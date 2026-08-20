@@ -350,7 +350,7 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
 
     section("What happened", record["what_happened"])
     section("Reflect", record["reflection_goal"])
-    section("Notes for next session", record["mentor_notes"])
+    section("Summary for this session", record["mentor_notes"])
     # What the pupil actually wrote, under the resource's own name. Resources
     # used but not written on are listed separately, so the record distinguishes
     # "we used this" from "here is what came of it".
@@ -414,6 +414,84 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         text_y -= 3.2 * mm
 
     _doc_footer(c, w, margin, 1)
+    c.showPage()
+    c.save()
+    return path
+
+
+def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, rows):
+    """The five session summaries on one sheet, for writing the support plan.
+
+    Session 6 asks the mentor to review the course before writing anything. Left
+    to themselves that means opening five records in five tabs, so most wouldn't.
+    One sheet they can put beside them is the difference between the instruction
+    being followed and ignored."""
+    path = os.path.join(PDF_DIR, f"summaries_{enrolment_id}.pdf")
+    w, h = A4
+    c = canvas.Canvas(path, pagesize=A4)
+    margin = 18 * mm
+    x = margin
+    max_width = w - 2 * margin
+
+    y = _doc_header(c, w, h, margin, "Session summaries", meta=[
+        ("Pupil", pupil_name),
+        ("Course", course_title),
+        ("Mentor", mentor_name),
+        ("Printed", datetime.date.today().isoformat()),
+    ])
+
+    c.setFillColor(MUTED)
+    c.setFont("Helvetica-Oblique", 9)
+    y = _wrap(c, "For writing the support plan in session 6. Read these in order before you start.",
+              x, y, max_width, size=9)
+    y -= 6 * mm
+
+    page_no = 1
+    if not rows:
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica-Oblique", 10)
+        c.drawString(x, y, "No sessions recorded yet.")
+
+    for row in rows:
+        block = 34 * mm
+        if y - block < margin + 24 * mm:
+            _doc_footer(c, w, margin, page_no)
+            c.showPage()
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Session summaries",
+                            meta=[("Pupil", pupil_name), ("Course", course_title)])
+
+        y = _doc_section(c, x, y, f"Session {row['week_number']} \u00b7 {row['week_title']}", max_width)
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 8.5)
+        mood = f"{row['mood_rating']}/5" if row["mood_rating"] else "not rated"
+        engagement = f"{row['engagement_rating']}/5" if row["engagement_rating"] else "not rated"
+        c.drawString(x, y, f"{row['date']}    Mood {mood}    Engagement {engagement}"
+                           + ("    Safeguarding flagged" if row["safeguarding_flag"] else ""))
+        y -= 6 * mm
+
+        # The summary is the point of the sheet, so it leads.
+        c.setFillColor(INK)
+        summary = (row["mentor_notes"] or "").strip()
+        if summary:
+            y = _wrap(c, summary, x, y, max_width, size=10)
+        else:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 9.5)
+            c.drawString(x, y, "No summary written for this session.")
+            y -= 5 * mm
+
+        goal = (row["reflection_goal"] or "").strip()
+        if goal:
+            y -= 2 * mm
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(x, y, "Goal set:")
+            c.setFillColor(INK)
+            y = _wrap(c, goal, x + 18 * mm, y, max_width - 18 * mm, size=9.5)
+        y -= 7 * mm
+
+    _doc_footer(c, w, margin, page_no)
     c.showPage()
     c.save()
     return path

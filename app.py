@@ -4028,6 +4028,41 @@ def complete_review_point(request):
     return with_flash(f"/mentor/pupils/{pupil_id}", "Review marked as done.", "ok")
 
 
+@router.get("/mentor/enrolment/<enrolment_id>/summaries/pdf")
+def session_summaries_download(request):
+    """The five session summaries on one sheet, for writing the support plan."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.id, p.forename, p.surname, p.establishment_id,
+                      c.title AS course_title, u.name AS mentor_name
+               FROM enrolments e
+               JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id
+               LEFT JOIN users u ON u.id = e.mentor_id
+               WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        rows = conn.execute(
+            """SELECT r.date, r.mentor_notes, r.reflection_goal, r.mood_rating,
+                      r.engagement_rating, r.safeguarding_flag,
+                      w.week_number, w.title AS week_title
+               FROM session_records r JOIN weeks w ON w.id = r.week_id
+               WHERE r.enrolment_id=? AND w.week_number <= ?
+               ORDER BY w.week_number""",
+            (request.params["enrolment_id"], PUPIL_SESSIONS)).fetchall()
+    finally:
+        conn.close()
+    path = pdfgen.session_summaries_pdf(
+        enrolment["id"], f"{enrolment['forename']} {enrolment['surname']}",
+        enrolment["course_title"], enrolment["mentor_name"] or "Mentor", rows)
+    return pdf_response(path, "session-summaries.pdf")
+
+
 @router.get("/session/<record_id>/pdf")
 def session_pdf_download(request):
     user = current_user(request)
