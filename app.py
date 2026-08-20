@@ -2061,7 +2061,6 @@ def new_mentor_form(request):
     return render("mentor_new.html", user=user, flash=flash_from_query(request))
 
 
-@router.post("/admin/mentors/new")
 def looks_like_email(value):
     """Enough of a check to stop an account nobody can sign in to.
 
@@ -2075,6 +2074,7 @@ def looks_like_email(value):
         and not domain.endswith(".") and " " not in value
 
 
+@router.post("/admin/mentors/new")
 def new_mentor_submit(request):
     user, err = require(request, roles=["admin"])
     if err:
