@@ -4,7 +4,7 @@
 {# An explicit destination, not history.back(). After recording a session the
    previous page is the session form, so a browser-history Back drops the mentor
    back into work they have just finished. #}
-<p class="back-link"><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Back to pupils' if user.role == 'admin' else 'Back to my caseload' }}</a></p>
+<p class="back-link"><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Back to pupils' if user.role == 'admin' else 'Back to my mentoring list' }}</a></p>
 <div class="card">
   <div class="flex-between">
     <div style="display:flex; align-items:center; gap:14px;">

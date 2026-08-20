@@ -1174,7 +1174,7 @@ def admin_reassign_submit(request):
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Case load reassigned",
+    return render_done(user, "Mentoring list reassigned",
                         f"{enrolment['forename']} {enrolment['surname']} is now with {new_mentor['name']}.",
                         f"/mentor/pupils/{enrolment['pupil_id']}", back_label="View pupil")
 
@@ -1276,7 +1276,7 @@ def admin_mentor_remove_submit(request):
         if active_count > 0:
             if not reassign_to:
                 return with_flash(f"/admin/mentors/{mentor['id']}/remove",
-                                   "Choose who should take over their active case load.", "error")
+                                   "Choose who should take over their active mentoring list.", "error")
             new_mentor = conn.execute(
                 "SELECT * FROM users WHERE id=? AND establishment_id=? AND status='active'",
                 (reassign_to, user["establishment_id"]),
@@ -1294,7 +1294,7 @@ def admin_mentor_remove_submit(request):
         conn.execute("UPDATE users SET status='removed' WHERE id=?", (mentor["id"],))
         conn.execute("DELETE FROM sessions WHERE user_id=?", (mentor["id"],))
         db.log_action(conn, user["id"], "mentor_removed", "user", mentor["id"],
-                      f"{mentor['name']} removed" + (f", case load moved to {new_mentor['name']}" if active_count > 0 else ""))
+                      f"{mentor['name']} removed" + (f", mentoring list moved to {new_mentor['name']}" if active_count > 0 else ""))
         conn.commit()
     finally:
         conn.close()
@@ -2391,13 +2391,13 @@ def mentor_reports_chooser(request):
     if blocked:
         return blocked
     cards = [
-        {"title": "Your mentoring list", "desc": "Every mentee, one file \u00b7 progress only, no notes.",
+        {"title": "Your mentoring list", "desc": "Every pupil you mentor, one file \u00b7 progress only, no notes.",
          "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
-        {"title": "Pupil report", "desc": "One mentee's full report, courses, progress and session notes. Open your mentoring list below, then pick a mentee to view.",
+        {"title": "Pupil report", "desc": "One pupil's full report, courses, progress and session notes. Open your mentoring list below, then pick a pupil to view.",
          "href": "/mentor/reports/caseload", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards,
-                  intro="Download your mentoring list, or a full report for one of your mentees.",
+                  intro="Download your mentoring list, or a full report for one of your pupils.",
                   note="Limited to pupils you mentor. For anyone else, ask an admin.",
                   flash=flash_from_query(request))
 
@@ -2491,7 +2491,7 @@ def mentee_report_pdf_download(request):
         enrolment["mentor_name"], enrolment["start_date"], enrolment["current_week"], enrolment["status"],
         weeks_list, reflection_dict, support_plan=plan,
     )
-    return pdf_response(path, "mentee-report.pdf")
+    return pdf_response(path, "course-report.pdf")
 
 
 def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False):
@@ -2553,7 +2553,7 @@ def mentor_caseload(request):
     finally:
         conn.close()
     return render("report_caseload.html", user=user, rows=rows, show_mentor=False,
-                  title="My case load", pdf_url="/mentor/reports/caseload/pdf",
+                  title="My mentoring list", pdf_url="/mentor/reports/caseload/pdf",
                   xlsx_url="/mentor/reports/caseload/xlsx",
                   filter_form=None, flash=flash_from_query(request))
 
@@ -2571,8 +2571,8 @@ def mentor_caseload_pdf(request):
         rows = _caseload_rows(conn, mentor_id=user["id"])
     finally:
         conn.close()
-    path = pdfgen.caseload_report_pdf("Case load report", rows, False, f"caseload_{user['id']}")
-    return pdf_response(path, "caseload-report.pdf")
+    path = pdfgen.caseload_report_pdf("Mentoring list", rows, False, f"caseload_{user['id']}")
+    return pdf_response(path, "mentoring-list.pdf")
 
 
 @router.get("/admin/reports/caseload")
@@ -2595,7 +2595,7 @@ def admin_caseload(request):
     pdf_url = f"/admin/reports/caseload/pdf?mentor_id={mentor_filter}"
     xlsx_url = f"/admin/reports/caseload/xlsx?mentor_id={mentor_filter}"
     return render("report_caseload.html", user=user, rows=rows, show_mentor=(mentor_filter == "all"),
-                  title="Establishment case load", pdf_url=pdf_url, xlsx_url=xlsx_url, mentors=mentors,
+                  title="Establishment mentoring list", pdf_url=pdf_url, xlsx_url=xlsx_url, mentors=mentors,
                   selected_mentor=mentor_filter, flash=flash_from_query(request))
 
 
@@ -2615,9 +2615,9 @@ def admin_caseload_pdf(request):
                                show_mentor=(mentor_filter == "all"))
     finally:
         conn.close()
-    path = pdfgen.caseload_report_pdf("Establishment case load", rows, mentor_filter == "all",
+    path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, mentor_filter == "all",
                                        f"caseload_admin_{user['establishment_id']}")
-    return pdf_response(path, "caseload-report.pdf")
+    return pdf_response(path, "mentoring-list.pdf")
 
 
 @router.get("/mentor/reports/caseload/xlsx")
@@ -2639,7 +2639,7 @@ def mentor_caseload_xlsx(request):
     return Response(
         data,
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        headers=[("Content-Disposition", 'attachment; filename="caseload-report.xlsx"')],
+        headers=[("Content-Disposition", 'attachment; filename="mentoring-list.xlsx"')],
     )
 
 
@@ -2662,7 +2662,7 @@ def admin_caseload_xlsx(request):
     return Response(
         data,
         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        headers=[("Content-Disposition", 'attachment; filename="caseload-report.xlsx"')],
+        headers=[("Content-Disposition", 'attachment; filename="mentoring-list.xlsx"')],
     )
 
 

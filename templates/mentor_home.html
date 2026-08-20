@@ -3,7 +3,7 @@
 {% block title %}Mentor home - Phil{% endblock %}
 {% block content %}
 <h1>Hi, {{ user.name }}</h1>
-<p class="muted">Your mentees and where each course is up to.</p>
+<p class="muted">Everyone you mentor, and where each course is up to.</p>
 
 {% set has_pupil = enrolments|length > 0 %}
 <div class="card gs-checklist" id="gsChecklist">
@@ -55,7 +55,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 </a>
 
 {# A review that only shows on the pupil's record is a review nobody sees. This
-   sits above the caseload because it's the work that has no other prompt —
+   sits above the mentoring list because it's the work that has no other prompt —
    an active course reminds you by being active. #}
 {% if reviews_due %}
 {% set overdue_count = reviews_due | selectattr('overdue') | list | length %}

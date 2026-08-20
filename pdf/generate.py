@@ -591,7 +591,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
     y = h - margin
     max_width = w - 2 * margin
 
-    y = _doc_header(c, w, h, margin, "Mentee report", meta=[
+    y = _doc_header(c, w, h, margin, "Course report", meta=[
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Mentor", mentor_name),
@@ -608,7 +608,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             _doc_footer(c, w, margin, page_no)
             c.showPage()
             page_no += 1
-            y = _doc_header(c, w, h, margin, "Mentee report",
+            y = _doc_header(c, w, h, margin, "Course report",
                             meta=[("Pupil", pupil_name), ("Course", course_title)])
             y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
         c.setFillColor(INK)
@@ -629,7 +629,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             _doc_footer(c, w, margin, page_no)
             c.showPage()
             page_no += 1
-            y = _doc_header(c, w, h, margin, "Mentee report",
+            y = _doc_header(c, w, h, margin, "Course report",
                             meta=[("Pupil", pupil_name), ("Course", course_title)])
         y -= 3 * mm
         y = _doc_section(c, x, y, "Completion reflection", max_width)
@@ -649,7 +649,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             _doc_footer(c, w, margin, page_no)
             c.showPage()
             page_no += 1
-            y = _doc_header(c, w, h, margin, "Mentee report",
+            y = _doc_header(c, w, h, margin, "Course report",
                             meta=[("Pupil", pupil_name), ("Course", course_title)])
         y -= 3 * mm
         y = _doc_section(c, x, y, "Support plan", max_width)
@@ -667,7 +667,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
     entries: list of dicts, each with pupil_name, course_title, mentor_name, start_date,
              current_week, status, weeks (list), reflection (dict or None)
     One section per entry, all in a single PDF, for a whole-establishment bulk export
-    or a single named pupil. Same restricted fields as the individual mentee report
+    or a single named pupil. Same restricted fields as the individual course report
     (Enrolment, Course, Week, SessionRecord.date only), plus CompletionReflection
     where the enrolment is completed, per spec section 7.7a.
     """
@@ -763,7 +763,7 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name):
     path = os.path.join(PDF_DIR, f"{out_name}.xlsx")
     wb = Workbook()
     ws = wb.active
-    ws.title = "Case load"
+    ws.title = "Mentoring list"
 
     headers = ["Pupil", "Course"]
     if show_mentor_col:
@@ -808,7 +808,7 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
     x = margin
     y = h - margin
 
-    y = _doc_header(c, w, h, margin, "Caseload report", meta=[
+    y = _doc_header(c, w, h, margin, "Mentoring list", meta=[
         ("Report", title),
         ("Issued", datetime.date.today().isoformat()),
         ("Pupils", len(rows)),
