@@ -418,8 +418,11 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 /* The names are labels; the button is the only thing here that does something.
    Solid fill, a download icon and "opens in a new tab" make that unambiguous,
    and the names lose their pill shape so they stop looking pressable. */
-.res-row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin:0;}
-.res-names{display:flex; align-items:center; gap:7px; flex-wrap:wrap; flex:1; min-width:0;}
+/* The button sits with the names rather than at the far edge: space-between
+   pushed it to the right margin, which on a wide screen left a gap wide enough
+   to read as two separate things. */
+.res-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0;}
+.res-names{display:flex; align-items:center; gap:7px; flex-wrap:wrap; min-width:0;}
 .res-name{display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
   background:var(--teal-light); color:#04342C; border-radius:8px;
   font-size:12.5px; font-weight:500; cursor:default;}
