@@ -1635,6 +1635,14 @@ def session_form(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1725,6 +1733,14 @@ def session_autosave(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     enrolment_id = request.params["enrolment_id"]
     field_name = request.field("field", "")
     value = request.field("value", "")
@@ -1762,6 +1778,14 @@ def session_submit(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     enrolment_id = request.params["enrolment_id"]
     safeguarding_flag = 1 if request.field("safeguarding_flag") == "yes" else 0
     safeguarding_note = request.field("safeguarding_note", "").strip()
@@ -1890,6 +1914,14 @@ def schedule_form(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1921,6 +1953,14 @@ def schedule_submit(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     enrolment_id = request.params["enrolment_id"]
     conn = db.get_conn()
     try:
@@ -1947,6 +1987,14 @@ def reflection_form(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
@@ -1971,6 +2019,14 @@ def reflection_submit(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    conn_chk = db.get_conn()
+    try:
+        # A mentor at another school could otherwise open, autosave into and
+        # submit sessions for this pupil just by changing the id in the URL.
+        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+    finally:
+        conn_chk.close()
     enrolment_id = request.params["enrolment_id"]
     pupil_engagement = request.field("pupil_engagement", "")
     course_effectiveness = request.field("course_effectiveness", "")
@@ -3345,9 +3401,13 @@ def mark_notification_read_own(request):
         return err
     conn = db.get_conn()
     try:
+        # Scoped by establishment as well as role: recipient alone would let an
+        # admin clear another school's notification.
         conn.execute(
-            "UPDATE notifications SET status='read' WHERE id=? AND recipient=?",
-            (request.params["notification_id"], user["role"]),
+            """UPDATE notifications SET status='read'
+               WHERE id=? AND recipient=? AND (establishment_id IS ? OR establishment_id=?)""",
+            (request.params["notification_id"], user["role"],
+             user["establishment_id"], user["establishment_id"]),
         )
         conn.commit()
     finally:
