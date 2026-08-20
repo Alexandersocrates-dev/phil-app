@@ -144,7 +144,12 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
       <td>{{ e.course_title }}</td>
       <td style="width:150px;">
         <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/sessions_total*100)|round|int }}%"></div></div>
-        <span class="muted" style="font-size:12px;">Session {{ e.current_week }} of {{ sessions_total }}</span>
+        {# "Session 5 of 6" beside a Record button doesn't say whether 5 is done or
+   about to happen. Say both: what is finished, and what to do next. #}
+        <span class="muted" style="font-size:12px;">{%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
+{%- elif e.current_week == 0 %}Not started &middot; begin session 1
+{%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the support plan
+{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%}</span>
       </td>
       <td style="width:110px;">
         {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>

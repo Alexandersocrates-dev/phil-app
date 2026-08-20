@@ -98,7 +98,10 @@
   </div>
   {% endif %}
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/sessions_total*100)|round|int }}%"></div></div>
-  <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; Session {{ e.current_week }} of {{ sessions_total }} &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
+  <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; {%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
+{%- elif e.current_week == 0 %}Not started &middot; begin session 1
+{%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the support plan
+{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
 
   {% if e.status == 'active' %}
     <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record week {{ e.current_week + 1 }} session</a>
