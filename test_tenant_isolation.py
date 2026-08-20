@@ -120,7 +120,8 @@ def request(method, path, cookie=None, body=""):
         captured["status"] = status
         captured["headers"] = headers
 
-    chunks = phil.application(environ, start_response)
+    # The WSGI callable is app.wsgi_app, built by make_wsgi_app at import time.
+    chunks = phil.wsgi_app(environ, start_response)
     payload = b"".join(chunks)
     return captured["status"], captured.get("headers", []), payload
 
