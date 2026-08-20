@@ -962,10 +962,10 @@ def pupil_profile(request):
         return blocked
     conn = db.get_conn()
     try:
-        pupil = conn.execute("SELECT * FROM pupils WHERE id=? AND establishment_id=?",
-                              (request.params["pupil_id"], user["establishment_id"])).fetchone()
-        if not pupil:
+        if not may_access_pupil(conn, request.params["pupil_id"], user):
             return Response("Pupil not found", status="404 Not Found")
+        pupil = conn.execute("SELECT * FROM pupils WHERE id=?",
+                              (request.params["pupil_id"],)).fetchone()
         enrolments = conn.execute(
             """SELECT enrolments.*, courses.id as course_id, courses.title as course_title, courses.id as course_id,
                       users.name as mentor_name
@@ -2413,12 +2413,117 @@ def parent_home(request):
 
 # ---------------------------------------------------------------- reports --
 
+_ICON_CHART = ('<svg viewBox="0 0 24 24" fill="none" width="20" height="20" '
+               'style="stroke:currentColor" stroke-width="2" stroke-linecap="round" '
+               'stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>')
 _ICON_LIST = '<svg viewBox="0 0 24 24" fill="none" width="20" height="20" style="stroke:currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>'
 _ICON_DOC = '<svg viewBox="0 0 24 24" fill="none" width="20" height="20" style="stroke:currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/></svg>'
 _ICON_USERS = '<svg viewBox="0 0 24 24" fill="none" width="20" height="20" style="stroke:currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
 
 
 @router.get("/admin/reports")
+def impact_figures(conn, establishment_id):
+    """The numbers a school weighs at renewal.
+
+    Deliberately conservative: change is measured only where the same pupil was
+    rated at the start and again later, so a course with one rating contributes
+    nothing rather than a flattering guess. A number a head of pastoral can't
+    trust is worse than no number."""
+    today = datetime.date.today().isoformat()
+    figures = {}
+
+    row = conn.execute(
+        """SELECT COUNT(*) AS enrolments,
+                  SUM(CASE WHEN e.status='completed' THEN 1 ELSE 0 END) AS completed,
+                  SUM(CASE WHEN e.status='active' THEN 1 ELSE 0 END) AS active,
+                  SUM(CASE WHEN e.status='withdrawn' THEN 1 ELSE 0 END) AS withdrawn,
+                  COUNT(DISTINCT e.pupil_id) AS pupils
+           FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ?""", (establishment_id,)).fetchone()
+    figures.update(dict(row))
+    figures["sessions"] = conn.execute(
+        """SELECT COUNT(*) FROM session_records r
+           JOIN enrolments e ON e.id = r.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id WHERE p.establishment_id = ?""",
+        (establishment_id,)).fetchone()[0]
+    figures["safeguarding"] = conn.execute(
+        """SELECT COUNT(*) FROM session_records r
+           JOIN enrolments e ON e.id = r.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND r.safeguarding_flag = 1""",
+        (establishment_id,)).fetchone()[0]
+
+    # First and last rating per enrolment, counted only where both exist.
+    changes = {"mood": [], "engagement": []}
+    rows = conn.execute(
+        """SELECT r.enrolment_id, w.week_number, r.mood_rating, r.engagement_rating
+           FROM session_records r
+           JOIN weeks w ON w.id = r.week_id
+           JOIN enrolments e ON e.id = r.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND w.staff_only = 0
+           ORDER BY r.enrolment_id, w.week_number""", (establishment_id,)).fetchall()
+    per = {}
+    for r in rows:
+        per.setdefault(r["enrolment_id"], []).append(r)
+    for records in per.values():
+        for key, field in (("mood", "mood_rating"), ("engagement", "engagement_rating")):
+            rated = [x[field] for x in records if x[field]]
+            if len(rated) >= 2:
+                changes[key].append(rated[-1] - rated[0])
+    for key in ("mood", "engagement"):
+        vals = changes[key]
+        figures[f"{key}_n"] = len(vals)
+        figures[f"{key}_change"] = (sum(vals) / len(vals)) if vals else None
+        figures[f"{key}_improved"] = sum(1 for v in vals if v > 0)
+
+    figures["courses"] = conn.execute(
+        """SELECT c.title, COUNT(*) AS n,
+                  SUM(CASE WHEN e.status='completed' THEN 1 ELSE 0 END) AS completed
+           FROM enrolments e
+           JOIN courses c ON c.id = e.course_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ?
+           GROUP BY c.id ORDER BY n DESC, c.title""", (establishment_id,)).fetchall()
+
+    figures["reviews_overdue"] = conn.execute(
+        """SELECT COUNT(*) FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND e.review_date IS NOT NULL
+             AND e.review_done = 0 AND e.review_date < ?""",
+        (establishment_id, today)).fetchone()[0]
+
+    figures["plans_written"] = conn.execute(
+        """SELECT COUNT(DISTINCT r.enrolment_id) FROM session_records r
+           JOIN weeks w ON w.id = r.week_id
+           JOIN enrolments e ON e.id = r.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND w.staff_only = 1
+             AND r.what_happened IS NOT NULL AND r.what_happened != ''""",
+        (establishment_id,)).fetchone()[0]
+    return figures
+
+
+@router.get("/admin/reports/impact/pdf")
+def impact_report_download(request):
+    """The report a school shows its governors, and weighs at renewal."""
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+    conn = db.get_conn()
+    try:
+        estab = conn.execute("SELECT name FROM establishments WHERE id=?",
+                             (user["establishment_id"],)).fetchone()
+        figures = impact_figures(conn, user["establishment_id"])
+    finally:
+        conn.close()
+    path = pdfgen.impact_report_pdf(user["establishment_id"],
+                                    estab["name"] if estab else "Establishment", figures)
+    return pdf_response(path, "impact-report.pdf")
+
+
 def admin_reports_chooser(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
@@ -2427,6 +2532,9 @@ def admin_reports_chooser(request):
     if blocked:
         return blocked
     cards = [
+        {"title": "Impact report", "desc": "How mentoring is going across the school: pupils supported, completion, change in engagement, and follow-ups outstanding. For governors and SLT.",
+         "href": "/admin/reports/impact/pdf", "icon": _ICON_CHART,
+         "bg": "var(--amber-light)"},
         {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
          "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},
         {"title": "Pupil report", "desc": "Search for a pupil, their details, courses and progress in one file.",
@@ -4125,6 +4233,38 @@ def complete_review_point(request):
     return with_flash(f"/mentor/pupils/{pupil_id}", "Review marked as done.", "ok")
 
 
+def may_access_pupil(conn, pupil_id, user):
+    """Whether this user may see a pupil's record.
+
+    Access follows involvement, not job title. A mentor sees the pupils they
+    mentor; an admin sees the whole school. Mentoring notes are welfare records
+    about a child, and a colleague who has nothing to do with that child has no
+    reason to read them. Where cover is needed, an admin reassigns the pupil,
+    which is one click and leaves a trail."""
+    row = conn.execute("SELECT establishment_id FROM pupils WHERE id=?", (pupil_id,)).fetchone()
+    if not row:
+        return False
+    if user["role"] == "phil_staff":
+        return True
+    # Parents are checked first: they belong to no establishment, so an
+    # establishment comparison would reject them before their link is considered.
+    if user["role"] == "parent_carer":
+        link = conn.execute(
+            "SELECT 1 FROM pupil_parent_links WHERE parent_user_id=? AND pupil_id=?",
+            (user["id"], pupil_id)).fetchone()
+        return bool(link)
+    if row["establishment_id"] != user["establishment_id"]:
+        return False
+    if user["role"] == "admin":
+        return True
+    if user["role"] == "mentor":
+        own = conn.execute(
+            "SELECT 1 FROM enrolments WHERE pupil_id=? AND mentor_id=? LIMIT 1",
+            (pupil_id, user["id"])).fetchone()
+        return bool(own)
+    return False
+
+
 def may_access_enrolment(conn, enrolment_id, user):
     """Whether this user may see anything belonging to this enrolment.
 
@@ -4185,7 +4325,7 @@ def pupil_report_download(request):
             """SELECT p.*, e.name AS establishment_name
                FROM pupils p LEFT JOIN establishments e ON e.id = p.establishment_id
                WHERE p.id=?""", (request.params["pupil_id"],)).fetchone()
-        if not pupil or pupil["establishment_id"] != user["establishment_id"]:
+        if not pupil or not may_access_pupil(conn, request.params["pupil_id"], user):
             return Response("Not authorised for this area.", status="403 Forbidden")
         rows = conn.execute(
             """SELECT en.id, en.start_date, en.status, en.current_week,
@@ -4228,7 +4368,8 @@ def session_summaries_download(request):
                LEFT JOIN users u ON u.id = e.mentor_id
                WHERE e.id=?""",
             (request.params["enrolment_id"],)).fetchone()
-        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+        if not enrolment or not may_access_enrolment(
+                conn, request.params["enrolment_id"], user):
             return Response("Not authorised for this area.", status="403 Forbidden")
         rows = conn.execute(
             """SELECT r.date, r.mentor_notes, r.reflection_goal, r.mood_rating,
