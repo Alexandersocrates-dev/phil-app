@@ -41,9 +41,9 @@ def build():
             (name, now))
         ids[name] = conn.execute("SELECT id FROM establishments WHERE name=?", (name,)).fetchone()["id"]
         conn.execute(
-            """INSERT INTO subscriptions (establishment_id, plan, seats, status, created_at)
-               VALUES (?,?,?,?,?)""",
-            (ids[name], "school", 15, "active", now))
+            """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
+               status, payment_method, created_at) VALUES (?,?,?,?,?,?)""",
+            (ids[name], "school", 15, "active", "invoice", now))
 
     people = {}
     for label, estab, role, email in [
