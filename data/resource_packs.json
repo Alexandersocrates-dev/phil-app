@@ -3713,7 +3713,7 @@
       },
       {
         "name": "Choices game scenario cards",
-        "body": "For each one: what could happen if I refuse? What could happen if I comply?",
+        "body": "Take one scenario at a time. For each, fill in what could happen if you refuse, and what could happen if you go along with it.",
         "cards": [
           {
             "cat": "Scenario",
@@ -3758,7 +3758,113 @@
             "note": "Two outcomes"
           }
         ],
-        "tone": "coral"
+        "tone": "coral",
+        "table": {
+          "headers": [
+            "Scenario",
+            "If I refuse…",
+            "If I go along with it…"
+          ],
+          "rows": [
+            [
+              "Told to move seats",
+              "",
+              ""
+            ],
+            [
+              "Asked for your phone",
+              "",
+              ""
+            ],
+            [
+              "Told to stop talking",
+              "",
+              ""
+            ],
+            [
+              "Asked to redo work",
+              "",
+              ""
+            ],
+            [
+              "Told to wait",
+              "",
+              ""
+            ],
+            [
+              "Asked to tidy up",
+              "",
+              ""
+            ]
+          ]
+        }
+      },
+      {
+        "name": "Possible outcome cards",
+        "body": "Prompts if the pupil gets stuck. Not the right answers — just things that sometimes happen.",
+        "tone": "amber",
+        "aliases": [
+          "Outcome cards",
+          "Outcomes card set"
+        ],
+        "cards": [
+          {
+            "cat": "Short term",
+            "title": "Nothing much happens",
+            "art": "art-level",
+            "text": "Sometimes the moment just passes.",
+            "note": "Worth saying out loud"
+          },
+          {
+            "cat": "Short term",
+            "title": "It escalates",
+            "art": "art-rise",
+            "text": "Another adult gets involved, or it becomes a bigger deal.",
+            "note": ""
+          },
+          {
+            "cat": "Short term",
+            "title": "You feel better for a minute",
+            "art": "art-thumb",
+            "text": "Standing your ground can feel good right then.",
+            "note": "Then what?"
+          },
+          {
+            "cat": "Short term",
+            "title": "You feel worse afterwards",
+            "art": "art-fall",
+            "text": "Embarrassment or regret once it's over.",
+            "note": "Common, rarely mentioned"
+          },
+          {
+            "cat": "Longer term",
+            "title": "A sanction",
+            "art": "art-jagged",
+            "text": "Detention, a call home, being moved.",
+            "note": "Predictable, not personal"
+          },
+          {
+            "cat": "Longer term",
+            "title": "The adult trusts you more",
+            "art": "art-nod",
+            "text": "Complying once makes the next ask easier for both of you.",
+            "note": ""
+          },
+          {
+            "cat": "Longer term",
+            "title": "You get a say next time",
+            "art": "art-talk",
+            "text": "Adults negotiate more with pupils who don't refuse everything.",
+            "note": "Real, if slow"
+          },
+          {
+            "cat": "Worth noticing",
+            "title": "You can disagree and comply",
+            "art": "art-fork",
+            "text": "Doing it now doesn't mean you agreed with it.",
+            "note": "The most useful card here"
+          }
+        ]
       },
       {
         "name": "First/then visual cue cards",

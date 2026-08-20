@@ -191,7 +191,8 @@ module.exports = [
         "reflect": "Was there a moment this week where a different choice might have led somewhere better? No blame, just noticing.",
         "lookfor": "Keep the tone curious, not punitive, pupils who feel judged will disengage from this exercise fast.",
         "resources": [
-          "Choices game scenario cards"
+          "Choices game scenario cards",
+          "Possible outcome cards"
         ],
         "home": "Notice one choice-and-consequence moment together this week ('if we leave now, we won't be late') and keep it factual, not a lecture.",
         "timing": {

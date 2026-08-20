@@ -2140,8 +2140,14 @@ def _week_field(request, i, name):
 
 
 def _save_weeks(conn, course_id, request):
-    conn.execute("DELETE FROM weeks WHERE course_id=?", (course_id,))
-    for i in range(1, 6):
+    """Saves the five pupil sessions the builder edits.
+
+    Only those five are deleted and rewritten. The staff-only session 6 is not
+    on this form, and a blanket DELETE would have wiped it every time a course
+    was saved — silently, since nothing on the page mentions it."""
+    conn.execute("DELETE FROM weeks WHERE course_id=? AND week_number <= ?",
+                 (course_id, PUPIL_SESSIONS))
+    for i in range(1, PUPIL_SESSIONS + 1):
         resources_raw = _week_field(request, i, "resources")
         resources = [r.strip() for r in resources_raw.split(",") if r.strip()]
         conn.execute(
@@ -2198,8 +2204,10 @@ def edit_course_form(request):
     conn = db.get_conn()
     try:
         course = conn.execute("SELECT * FROM courses WHERE id=?", (request.params["course_id"],)).fetchone()
-        weeks = conn.execute("SELECT * FROM weeks WHERE course_id=? ORDER BY week_number",
-                              (request.params["course_id"],)).fetchall()
+        # Only the pupil sessions are editable here; session 6 is fixed content.
+        weeks = conn.execute(
+            "SELECT * FROM weeks WHERE course_id=? AND week_number <= ? ORDER BY week_number",
+            (request.params["course_id"], PUPIL_SESSIONS)).fetchall()
     finally:
         conn.close()
     if not course:
