@@ -30,6 +30,8 @@ import app as phil      # noqa: E402
 
 # ---------------------------------------------------------------- fixtures
 def build():
+    # The scratch database starts empty, so create the schema before using it.
+    db.init_db()
     conn = db.get_conn()
     now = db.now()
     ids = {}
