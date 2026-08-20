@@ -130,13 +130,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "My hot and cold plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -268,13 +266,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Behaviour agreement template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -406,13 +402,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Personal toolkit template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -542,13 +536,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Social goals plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -679,13 +671,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Teacher briefing note"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -815,13 +805,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Step-planning worksheet"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -951,13 +939,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Engagement plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1087,13 +1073,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Working relationship plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1223,13 +1207,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Connection plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1360,13 +1342,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Prevention and response plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1500,13 +1480,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "My anger-management plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1638,13 +1616,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "Barrier-specific action plan template"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1782,13 +1758,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page vaping support plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -1925,13 +1899,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page young carer support plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2068,13 +2040,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page digital wellbeing plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2211,13 +2181,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page exam wellbeing plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2354,13 +2322,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page sensory support plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2498,13 +2464,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page bereavement support plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2640,13 +2604,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. This plan is about who the pupil goes to, not about managing behaviour.\n2. Write down the named adults, in and out of school, and how each is reached.\n3. Record the pupil's own words about what feels safe and what doesn't.\n4. Note anything already reported and to whom, so other staff aren't starting cold.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“Who does this pupil go to, and what should that person know?”\n\nIt helps to cover:\n• The named adults, in and out of school, and how each is reached\n• What the pupil says feels safe, and what doesn't\n• Anything already reported, and to whom\n• What should happen if they disclose something new",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "My strengths and values worksheet"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]
@@ -2783,13 +2745,11 @@ module.exports = [
         "objective": "The mentor has a one-page plan that other staff can pick up and use.",
         "checkin": "1. This session has no pupil in it. It's twenty minutes on your own, after the course.\n2. Review the session summaries in order, before writing anything.\n3. Note what actually changed, and what didn't.",
         "input": "1. A support plan is for other staff and professionals, not for the file.\n2. Assume they have five minutes and have never met this pupil.\n3. Write what works, not what happened — a history is not a plan.\n4. Be specific. Not “he needs support in lessons”, but “in maths, when he goes quiet, let him use the blue card to take five minutes outside”.",
-        "activity": "1. Fill in the plan: the trigger, the early sign, the strategy that worked, and what to do if it escalates.\n2. Add the pupil's own words wherever you have them, from their reflections and their sheets.\n3. Name the adults involved and what each one is doing.\n4. Read it back as if you were a teacher who has never met this pupil. Cut anything you couldn't act on tomorrow.",
+        "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
-        "resources": [
-          "One-page transition plan"
-        ],
+        "resources": [],
         "staff_only": true
       }
     ]

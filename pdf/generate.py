@@ -497,8 +497,87 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
     return path
 
 
+def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
+    """Everything a pupil has done, across every course.
+
+    The per-course report answers "how did that course go". This answers "what
+    do I need to know about this child" — the question a new form tutor, a
+    SENCO, or the next school actually asks. Each course contributes its support
+    plan, so the plans sit together rather than one per file."""
+    path = os.path.join(PDF_DIR, f"pupil_report_{pupil_id}.pdf")
+    w, h = A4
+    c = canvas.Canvas(path, pagesize=A4)
+    margin = 18 * mm
+    x = margin
+    max_width = w - 2 * margin
+
+    meta = [("Pupil", pupil_name)]
+    if establishment_name:
+        meta.append(("School", establishment_name))
+    meta += [("Courses", len(courses)), ("Issued", datetime.date.today().isoformat())]
+    y = _doc_header(c, w, h, margin, "Pupil report", meta=meta)
+    page_no = 1
+
+    if not courses:
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica-Oblique", 10)
+        c.drawString(x, y, "No courses recorded for this pupil yet.")
+        _doc_footer(c, w, margin, page_no)
+        c.showPage()
+        c.save()
+        return path
+
+    for course in courses:
+        if y < margin + 60 * mm:
+            _doc_footer(c, w, margin, page_no)
+            c.showPage()
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Pupil report",
+                            meta=[("Pupil", pupil_name), ("Continued", "")])
+
+        y = _doc_section(c, x, y, course["title"], max_width)
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 8.5)
+        bits = [f"Mentor: {course['mentor_name']}", f"Started {course['start_date']}"]
+        bits.append("Completed" if course["status"] == "completed"
+                    else f"In progress, session {course['current_week']}")
+        if course.get("sessions_recorded") is not None:
+            bits.append(f"{course['sessions_recorded']} sessions recorded")
+        c.drawString(x, y, "    ".join(bits))
+        y -= 6 * mm
+
+        plan = (course.get("support_plan") or "").strip()
+        if plan:
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(x, y, "Support plan")
+            y -= 5 * mm
+            c.setFillColor(INK)
+            y = _wrap(c, plan, x, y, max_width, size=9.5)
+        else:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 9.5)
+            c.drawString(x, y, "No support plan written for this course yet.")
+            y -= 5 * mm
+
+        if course.get("safeguarding_count"):
+            y -= 1 * mm
+            c.setFillColor(RED)
+            c.setFont("Helvetica-Bold", 8.5)
+            n = course["safeguarding_count"]
+            c.drawString(x, y, f"{n} session{'' if n == 1 else 's'} carried a safeguarding note. "
+                               "See the session records.")
+            y -= 5 * mm
+        y -= 6 * mm
+
+    _doc_footer(c, w, margin, page_no)
+    c.showPage()
+    c.save()
+    return path
+
+
 def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start_date,
-                       current_week, status, weeks, reflection=None):
+                       current_week, status, weeks, reflection=None, support_plan=None):
     """
     weeks: list of dicts with keys week_number, title, objective, date (session date recorded)
     reflection: optional dict with pupil_engagement, course_effectiveness, recommended_next_steps
@@ -564,6 +643,18 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             c.setFillColor(INK)
             y = _wrap(c, reflection.get(key, "") or "-", x + 4 * mm, y, max_width - 4 * mm, size=9.5)
             y -= 5 * mm
+
+    if support_plan:
+        if y < margin + 45 * mm:
+            _doc_footer(c, w, margin, page_no)
+            c.showPage()
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Mentee report",
+                            meta=[("Pupil", pupil_name), ("Course", course_title)])
+        y -= 3 * mm
+        y = _doc_section(c, x, y, "Support plan", max_width)
+        c.setFillColor(INK)
+        y = _wrap(c, support_plan, x, y, max_width, size=9.5)
 
     _doc_footer(c, w, margin, page_no)
     c.showPage()

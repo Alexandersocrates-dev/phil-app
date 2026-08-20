@@ -2443,10 +2443,15 @@ def mentee_report_pdf_download(request):
         return Response("Not found or not authorised", status="404 Not Found")
     weeks_list = [dict(w) for w in weeks]
     reflection_dict = dict(reflection) if reflection else None
+    conn2 = db.get_conn()
+    try:
+        plan = support_plan_for(conn2, enrolment["id"])
+    finally:
+        conn2.close()
     path = pdfgen.mentee_report_pdf(
         enrolment["id"], f"{enrolment['forename']} {enrolment['surname']}", enrolment["course_title"],
         enrolment["mentor_name"], enrolment["start_date"], enrolment["current_week"], enrolment["status"],
-        weeks_list, reflection_dict,
+        weeks_list, reflection_dict, support_plan=plan,
     )
     return pdf_response(path, "mentee-report.pdf")
 
@@ -4037,6 +4042,68 @@ def complete_review_point(request):
     finally:
         conn.close()
     return with_flash(f"/mentor/pupils/{pupil_id}", "Review marked as done.", "ok")
+
+
+def support_plan_for(conn, enrolment_id):
+    """The mentor's support plan: what they wrote in the staff-only session.
+
+    Stored as an ordinary session record, so it needs no separate table — but it
+    is the one piece of a course that other staff actually read, so it is pulled
+    out by name wherever it is needed."""
+    row = conn.execute(
+        """SELECT r.what_happened FROM session_records r
+           JOIN weeks w ON w.id = r.week_id
+           WHERE r.enrolment_id = ? AND w.staff_only = 1
+           ORDER BY w.week_number DESC LIMIT 1""",
+        (enrolment_id,)).fetchone()
+    if not row or not row["what_happened"]:
+        return None
+    # Strip the step labels the session form adds; a plan reads as prose.
+    text = row["what_happened"]
+    for label in ("Check-in:", "Input:", "Activity:"):
+        text = text.replace(label, "")
+    return "\n".join(line.strip() for line in text.splitlines() if line.strip())
+
+
+@router.get("/report/pupil/<pupil_id>/pdf")
+def pupil_report_download(request):
+    """Every course a pupil has done, with each support plan.
+
+    The per-course report answers "how did that course go". This answers "what
+    do I need to know about this child", which is what a new form tutor asks."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        pupil = conn.execute(
+            """SELECT p.*, e.name AS establishment_name
+               FROM pupils p LEFT JOIN establishments e ON e.id = p.establishment_id
+               WHERE p.id=?""", (request.params["pupil_id"],)).fetchone()
+        if not pupil or pupil["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        rows = conn.execute(
+            """SELECT en.id, en.start_date, en.status, en.current_week,
+                      c.title, u.name AS mentor_name,
+                      (SELECT COUNT(*) FROM session_records WHERE enrolment_id = en.id)
+                        AS sessions_recorded,
+                      (SELECT COUNT(*) FROM session_records
+                        WHERE enrolment_id = en.id AND safeguarding_flag = 1)
+                        AS safeguarding_count
+               FROM enrolments en
+               JOIN courses c ON c.id = en.course_id
+               LEFT JOIN users u ON u.id = en.mentor_id
+               WHERE en.pupil_id = ?
+               ORDER BY en.start_date, en.id""",
+            (request.params["pupil_id"],)).fetchall()
+        courses = [dict(r, mentor_name=r["mentor_name"] or "Mentor",
+                        support_plan=support_plan_for(conn, r["id"])) for r in rows]
+    finally:
+        conn.close()
+    path = pdfgen.pupil_report_pdf(
+        pupil["id"], f"{pupil['forename']} {pupil['surname']}",
+        pupil["establishment_name"], courses)
+    return pdf_response(path, "pupil-report.pdf")
 
 
 @router.get("/mentor/enrolment/<enrolment_id>/summaries/pdf")

@@ -19,6 +19,10 @@
         <div class="pupil-actions-group">
           <a class="btn btn-secondary btn-sm" href="/mentor/enrol/{{ pupil.id }}">Enrol on another course +</a>
           <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">{{ 'Link a parent/carer +' if user.role == 'admin' else 'Request parent access +' }}</a>
+          {# Every course this pupil has done, with each support plan — the
+             question a new form tutor asks, which the per-course report can't
+             answer. #}
+          <a class="btn btn-secondary btn-sm" href="/report/pupil/{{ pupil.id }}/pdf" target="_blank" rel="noopener">Full pupil report</a>
         </div>
         {# Reversible and irreversible actions are kept apart: Archive can be
            undone, Delete cannot, and they should not sit shoulder to shoulder. #}
