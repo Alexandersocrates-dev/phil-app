@@ -3649,6 +3649,10 @@ def certificate_download(request):
         return redirect("/login")
     conn = db.get_conn()
     try:
+        # Signed in is not the same as entitled: without this, an enrolment id in
+        # the URL is all it takes to read another school's certificate.
+        if not may_access_enrolment(conn, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
         cert = conn.execute("SELECT * FROM certificates WHERE enrolment_id=?",
                              (request.params["enrolment_id"],)).fetchone()
     finally:
@@ -4082,6 +4086,32 @@ def complete_review_point(request):
     return with_flash(f"/mentor/pupils/{pupil_id}", "Review marked as done.", "ok")
 
 
+def may_access_enrolment(conn, enrolment_id, user):
+    """Whether this user may see anything belonging to this enrolment.
+
+    Being signed in is not enough. Without this an enrolment id in a URL is the
+    only thing standing between any account and another school's pupil records,
+    and ids are sequential."""
+    row = conn.execute(
+        """SELECT e.mentor_id, e.pupil_id, p.establishment_id
+           FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+           WHERE e.id = ?""", (enrolment_id,)).fetchone()
+    if not row:
+        return False
+    role = user["role"]
+    if role == "phil_staff":
+        return True
+    if role in ("admin", "mentor") and row["establishment_id"] == user["establishment_id"]:
+        # A mentor sees their own pupils; an admin sees the whole establishment.
+        return role == "admin" or row["mentor_id"] == user["id"]
+    if role == "parent_carer":
+        link = conn.execute(
+            "SELECT 1 FROM pupil_parent_links WHERE parent_user_id = ? AND pupil_id = ?",
+            (user["id"], row["pupil_id"])).fetchone()
+        return bool(link)
+    return False
+
+
 def support_plan_for(conn, enrolment_id):
     """The mentor's support plan: what they wrote in the staff-only session.
 
@@ -4186,6 +4216,10 @@ def session_pdf_download(request):
     try:
         record = conn.execute("SELECT * FROM session_records WHERE id=?",
                                (request.params["record_id"],)).fetchone()
+        # This document carries safeguarding notes, so entitlement matters more
+        # here than anywhere else in the app.
+        if record and not may_access_enrolment(conn, record["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
     finally:
         conn.close()
     if not record:
