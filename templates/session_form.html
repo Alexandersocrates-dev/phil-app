@@ -109,7 +109,11 @@
 <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 12px 10px;margin-bottom:14px;">
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
 <span style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Your progress</span>
-<span style="font-size:11px;color:var(--muted);">Session {{ next_week_number }} of {{ sessions_total }}</span>
+<span style="font-size:11px;color:var(--muted);">
+  {%- if editing_record %}Editing session {{ week.week_number }}
+  {%- elif next_week_number == sessions_total %}{{ sessions_total - 1 }} sessions done &middot; writing the plan now
+  {%- else %}{{ next_week_number - 1 }} of {{ sessions_total }} done &middot; starting session {{ next_week_number }}{% endif -%}
+</span>
 </div>
 <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 2px;">
 <div style="position:absolute;left:14px;right:14px;top:12px;height:2px;background:var(--border);border-radius:2px;"></div>
@@ -123,7 +127,14 @@
 {% else %}
 <div style="width:25px;height:25px;border-radius:50%;background:#EFEDE3;color:#ADAB9F;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;">&#128274;</div>
 {% endif %}
-<span style="font-size:9.5px;color:var(--muted);font-weight:700;">S{{ p.number }}</span>
+<span style="font-size:9.5px;font-weight:700;line-height:1.25;text-align:center;{% if p.status == 'current' %}color:var(--amber-dark);{% else %}color:var(--muted);{% endif %}">
+  {{ p.label }}<br>
+  <span style="font-weight:500;font-size:8.5px;">
+    {%- if p.status == 'done' %}done
+    {%- elif p.status == 'current' %}now
+    {%- else %}to come{% endif -%}
+  </span>
+</span>
 </div>
 {% endfor %}
 </div>

@@ -1686,7 +1686,18 @@ def session_form(request):
     if prev_week is not None:
         prev_week_items = resource_items_for(
             enrolment["course_module_number"], json.loads(prev_week["resources"] or "[]"))
-    progress = [{"number": n, "status": "done" if n < next_week_number else ("current" if n == next_week_number else "locked")} for n in range(1, 6)]
+    # range(1, 6) stopped at session 5, so the staff-only session never appeared
+    # on the rail. Labels come from here too, rather than being derived in the
+    # template, so a done session reads "S3 done" instead of a bare number.
+    progress = [
+        {
+            "number": n,
+            "label": f"S{n}" if n < SESSIONS_PER_COURSE else "Plan",
+            "status": ("done" if n < next_week_number
+                       else "current" if n == next_week_number else "locked"),
+        }
+        for n in range(1, SESSIONS_PER_COURSE + 1)
+    ]
     upcoming_weeks = [w for w in all_weeks if w["week_number"] > next_week_number]
     # No-store, so the browser's own Back button re-fetches instead of showing a
     # cached copy of a form that has already been submitted. Combined with the
