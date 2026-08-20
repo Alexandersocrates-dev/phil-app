@@ -310,10 +310,13 @@
 <input type="hidden" name="resources_used" value="{{ week.resources|join(', ') }}">
 <input type="hidden" name="for_week" value="{{ next_week_number }}">
 
-{# Both had "1" preselected, so a mentor who never touched them recorded the
-   pupil's mood as 1 out of 5 — the worst possible score, by accident, on the
-   only structured data the reports use. A blank first option means an
-   unanswered rating stays unanswered. #}
+{# Hidden on the staff session: there is no pupil to rate, and a stray value
+   would distort the only structured data the reports have.
+
+   Both once had "1" preselected, so a mentor who never touched them recorded the
+   pupil's mood as 1 out of 5 — the worst possible score, by accident. A blank
+   first option means an unanswered rating stays unanswered. #}
+{% if not week.staff_only %}
 <div class="field">
 <label for="mood_rating">Mood rating (1&ndash;5)</label>
 <select id="mood_rating" name="mood_rating">
@@ -328,6 +331,7 @@
 {% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.engagement_rating|string == i|string %}selected{% endif %}>{{ i }}</option>{% endfor %}
 </select>
 </div>
+{% endif %}
 
 <div class="safeguard-box safeguard-clear" id="sgBox">
 <h3>Safeguarding, every session</h3>

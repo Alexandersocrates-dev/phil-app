@@ -15,7 +15,7 @@
     <div class="icon-badge icon-badge--teal cc-badge">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
     <h1>All five sessions recorded</h1>
     <p class="cc-lead">{{ pupil_name }} has finished {{ course_title }}.</p>
-    <p class="muted">Two things left, then the course is closed and the certificate issues.</p>
+    <p class="muted">One thing left, then the course is closed and the certificate issues.</p>
   </div>
 
   {# The reflection and the follow-up are the two things that never get done when
@@ -23,26 +23,7 @@
      asked for here, in one form, while the mentor is still in the moment. #}
   <form method="post" action="/mentor/enrolment/{{ enrolment_id }}/wrap-up">
     <div class="card cc-review">
-      <h2>1. How did the course go?</h2>
-      <div class="field">
-        <label for="pupil_engagement">How did {{ pupil_name }} engage? <span class="req">Required</span></label>
-        <textarea id="pupil_engagement" name="pupil_engagement" rows="3" required
-                  placeholder="What changed, what didn&rsquo;t, how they took to it&hellip;">{{ reflection.pupil_engagement if reflection else '' }}</textarea>
-      </div>
-      <div class="field">
-        <label for="course_effectiveness">Did the course suit them?</label>
-        <textarea id="course_effectiveness" name="course_effectiveness" rows="2"
-                  placeholder="Which sessions landed, which didn&rsquo;t&hellip;">{{ reflection.course_effectiveness if reflection else '' }}</textarea>
-      </div>
-      <div class="field">
-        <label for="recommended_next_steps">What should happen next?</label>
-        <textarea id="recommended_next_steps" name="recommended_next_steps" rows="2"
-                  placeholder="Another course, a referral, or nothing further&hellip;">{{ reflection.recommended_next_steps if reflection else '' }}</textarea>
-      </div>
-    </div>
-
-    <div class="card cc-review">
-      <h2>2. When will you check back in?</h2>
+      <h2>Organise the check-up review</h2>
       <p class="muted">Sustained change needs a follow-up, not a single course. This shows on {{ pupil_name }}&rsquo;s record and on your home page when it comes round.</p>
       <div class="field">
         <label for="review_date">Review date <span class="req">Required</span></label>

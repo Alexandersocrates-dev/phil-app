@@ -3936,31 +3936,26 @@ def review_overdue_from(date_string):
 
 @router.post("/mentor/enrolment/<enrolment_id>/wrap-up")
 def course_wrap_up(request):
-    """Closes a course: the reflection, the review date, then the certificate.
+    """Closes a course: the review date, then the certificate.
 
-    Gating the certificate on this is deliberate. Left optional, the reflection
-    and the follow-up are the two things that never get done — and they are the
-    two things a school is actually buying. Both are asked for while the mentor
-    is still on the completion screen, so nothing is delayed for the pupil."""
+    Gating the certificate on this is deliberate. Left optional, the follow-up is
+    the thing that never gets done — and it is part of what a school is buying.
+    It is asked for while the mentor is still on the completion screen, so
+    nothing is delayed for the pupil."""
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err
     enrolment_id = request.params["enrolment_id"]
 
-    pupil_engagement = request.field("pupil_engagement", "").strip()
-    course_effectiveness = request.field("course_effectiveness", "").strip()
-    recommended_next_steps = request.field("recommended_next_steps", "").strip()
+    # How the course went is captured in session 6's support plan now, so the
+    # wrap-up asks only for the follow-up. Asking twice got the same answer twice,
+    # or an empty one.
     review_date = request.field("review_date", "").strip()
     review_note = request.field("review_note", "").strip()
 
-    missing = []
-    if not pupil_engagement:
-        missing.append("how the pupil engaged")
     if not review_date:
-        missing.append("a review date")
-    if missing:
         return with_flash(f"/mentor/enrolment/{enrolment_id}/wrap-up",
-                          "Still needed: " + " and ".join(missing) + ".", "error")
+                          "A review date is needed before the course can be closed.", "error")
 
     conn = db.get_conn()
     try:
@@ -3973,26 +3968,10 @@ def course_wrap_up(request):
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
 
-        now = db.now()
-        existing = conn.execute("SELECT id FROM completion_reflections WHERE enrolment_id=?",
-                                (enrolment_id,)).fetchone()
-        if existing:
-            conn.execute(
-                """UPDATE completion_reflections SET pupil_engagement=?, course_effectiveness=?,
-                   recommended_next_steps=?, updated_at=? WHERE enrolment_id=?""",
-                (pupil_engagement, course_effectiveness, recommended_next_steps, now, enrolment_id))
-        else:
-            conn.execute(
-                """INSERT INTO completion_reflections (enrolment_id, pupil_engagement,
-                   course_effectiveness, recommended_next_steps, completed_by, completed_at, updated_at)
-                   VALUES (?,?,?,?,?,?,?)""",
-                (enrolment_id, pupil_engagement, course_effectiveness, recommended_next_steps,
-                 user["id"], now, now))
-
         conn.execute("UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
                      (review_date, review_note or None, enrolment_id))
 
-        # Issue the certificate now that both are in place.
+        # Issue the certificate now the review point is set.
         pupil_name = f"{enrolment['forename']} {enrolment['surname']}"
         already = conn.execute("SELECT id FROM certificates WHERE enrolment_id=?",
                                (enrolment_id,)).fetchone()

@@ -133,7 +133,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -269,7 +269,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -405,7 +405,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -539,7 +539,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -674,7 +674,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -808,7 +808,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -942,7 +942,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1076,7 +1076,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1210,7 +1210,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1345,7 +1345,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1483,7 +1483,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1619,7 +1619,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1761,7 +1761,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1902,7 +1902,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2043,7 +2043,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2184,7 +2184,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2325,7 +2325,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2467,7 +2467,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2607,7 +2607,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“Who does this pupil go to, and what should that person know?”\n\nIt helps to cover:\n• The named adults, in and out of school, and how each is reached\n• What the pupil says feels safe, and what doesn't\n• Anything already reported, and to whom\n• What should happen if they disclose something new",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2748,7 +2748,7 @@ module.exports = [
         "activity": "Write the support plan now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Share the plan with the pupil's class teachers and your pastoral lead.\n2. Give the pupil their own copy, in their words, if they want one.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
         "resources": [],
         "staff_only": true
       }
