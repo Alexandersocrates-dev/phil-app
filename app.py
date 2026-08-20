@@ -2062,16 +2062,41 @@ def new_mentor_form(request):
 
 
 @router.post("/admin/mentors/new")
+def looks_like_email(value):
+    """Enough of a check to stop an account nobody can sign in to.
+
+    Deliberately loose — real addresses are stranger than most patterns allow —
+    but it does require an @ with something either side and a dot in the domain."""
+    value = (value or "").strip()
+    if value.count("@") != 1:
+        return False
+    local, _, domain = value.partition("@")
+    return bool(local) and "." in domain and not domain.startswith(".") \
+        and not domain.endswith(".") and " " not in value
+
+
 def new_mentor_submit(request):
     user, err = require(request, roles=["admin"])
     if err:
         return err
-    name = request.field("name", "").strip()
+    # Collected as two fields, to match how pupils are added — a single "Name"
+    # box invites someone to put a surname in the next field along. Stored joined,
+    # because user.name is the display name in 79 places and splitting the column
+    # would be a migration for no gain.
+    forename = request.field("forename", "").strip()
+    surname = request.field("surname", "").strip()
+    name = " ".join(part for part in (forename, surname) if part) or request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
     password = request.field("password", "")
 
     if not name or not email or len(password) < 8:
-        return with_flash("/admin/mentors/new", "Fill in every field. Password needs at least 8 characters.", "error")
+        return with_flash("/admin/mentors/new",
+                          "Fill in every field. The password needs at least 8 characters.", "error")
+
+    if not looks_like_email(email):
+        return with_flash("/admin/mentors/new",
+                          f"\u201c{email}\u201d isn't an email address. The mentor signs in with their "
+                          "email, so it has to be one they can receive at.", "error")
 
     conn = db.get_conn()
     try:

@@ -3,16 +3,43 @@
 {% block title %}Add a mentor - Phil{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+<p class="back-link"><a href="/admin/mentors">&larr; Back to mentors</a></p>
+
 <div class="card card-center">
-<div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
-<h1>Add a mentor</h1>
-<p class="muted">Creates their account directly for this local build. In production this sends an email invite instead.</p>
-<form method="post" action="/admin/mentors/new" class="form-left">
-<div class="field"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
-<div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required autocomplete="email"></div>
-<div class="field"><label for="password">Temporary password</label><input type="password" id="password" name="password" required minlength="8" autocomplete="new-password"></div>
-<button class="btn btn-primary btn-block" type="submit">Add mentor</button>
-</form>
+  <div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+  <h1>Add a mentor</h1>
+  <p class="muted">They'll sign in with the email address you enter here, using the temporary password. Ask them to change it once they're in.</p>
 </div>
+
+<form method="post" action="/admin/mentors/new">
+  <div class="card">
+    {# Two name fields, as on the pupil form. A single "Name" box led to a
+       surname being typed into the email field. #}
+    <div class="field">
+      <label for="forename">Forename</label>
+      <input type="text" id="forename" name="forename" autocomplete="given-name" required>
+    </div>
+    <div class="field">
+      <label for="surname">Surname</label>
+      <input type="text" id="surname" name="surname" autocomplete="family-name" required>
+    </div>
+    <div class="field">
+      <label for="email">Email address</label>
+      <p class="mn-hint">This is what they sign in with, so it must be one they can receive at &mdash; usually their school address.</p>
+      <input type="email" id="email" name="email" autocomplete="email"
+             placeholder="name@school.sch.uk" required>
+    </div>
+    <div class="field">
+      <label for="password">Temporary password</label>
+      <p class="mn-hint">At least 8 characters. Give it to them directly, and ask them to change it after signing in.</p>
+      <input type="password" id="password" name="password" autocomplete="new-password"
+             minlength="8" required>
+    </div>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit">Add mentor</button>
+</form>
+
+<style>
+.mn-hint{font-size:12px; color:var(--muted); line-height:1.45; margin:2px 0 6px;}
+</style>
 {% endblock %}
