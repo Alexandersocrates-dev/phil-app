@@ -91,17 +91,26 @@
 </div>
 
 {% if week.staff_only %}
+{# The check-in step tells the mentor to review the summaries, so the sheet sits
+   with that instruction rather than in the banner above it. #}
+<div class="summaries-panel">
+  <div>
+    <strong>Everything from the {{ pupil_sessions }} sessions, on one sheet</strong>
+    <span>Read these before you start writing. This replaces opening each session record.</span>
+  </div>
+  <a class="btn btn-primary btn-sm summaries-download" href="/mentor/enrolment/{{ enrolment.id }}/summaries/pdf" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
+    Download the {{ pupil_sessions }} session summaries
+  </a>
+</div>
+{% endif %}
+
+{% if week.staff_only %}
 <div class="staff-only-banner">
   <div class="staff-only-badge">Staff only</div>
   <div style="flex:1;min-width:0;">
     <strong>No pupil in this session.</strong>
     <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
-    {# The session asks the mentor to review the course first. Without this they'd
-       be opening five records in five tabs, so most wouldn't bother. #}
-    <a class="btn btn-secondary btn-sm staff-only-download" href="/mentor/enrolment/{{ enrolment.id }}/summaries/pdf" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
-      Download the five session summaries
-    </a>
   </div>
 </div>
 {% endif %}
@@ -165,7 +174,7 @@
 <p style="font-size:14px;color:var(--ink);line-height:1.55;margin:0 0 12px;">{{ week.objective }}</p>
 {% endif %}
 
-{% if prev_record and prev_record.mentor_notes %}
+{% if prev_record and prev_record.mentor_notes and not week.staff_only %}
 {# Was coral throughout, which reads as a warning. This is a helpful reminder
    the mentor left themselves, so it should look like information. #}
 <div style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:12px;padding:10px 12px;margin:0 0 12px;">
@@ -184,7 +193,7 @@
 
 {% if week.resources %}
 <div style="margin:0 0 14px 32px;">
-<p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
+<p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">{% if week.staff_only %}The plan you&rsquo;re filling in <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; the same sheet the pupil has been working towards</span>{% else %}Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span>{% endif %}</p>
 <div class="res-row">
   <div class="res-names">
   {# Show the pack's own name, so the pill and the downloaded sheet agree. The
@@ -430,8 +439,13 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   border-radius:14px; padding:13px 15px; margin:0 0 14px; font-size:13.5px; line-height:1.5;}
 .staff-only-banner strong{display:block; margin-bottom:2px;}
 .staff-only-banner span{color:#C9D3E4;}
-.staff-only-download{display:inline-flex; align-items:center; gap:7px; margin-top:10px;}
-.staff-only-download svg{width:15px; height:15px;}
+.summaries-panel{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+  background:var(--teal-light); border:1px solid #9FE1CB; border-radius:12px; padding:12px 14px; margin:0 0 14px;
+  font-size:13px; color:#04342C; line-height:1.5;}
+.summaries-panel strong{display:block; margin-bottom:2px;}
+.summaries-panel span{color:var(--muted); font-size:12.5px;}
+.summaries-download{display:inline-flex; align-items:center; gap:7px; flex-shrink:0;}
+.summaries-download svg{width:15px; height:15px;}
 .staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:10.5px; font-weight:800;
   text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:6px; margin-top:2px;}
 /* The names are labels; the button is the only thing here that does something.
