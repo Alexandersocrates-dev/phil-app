@@ -90,6 +90,19 @@ def main():
                 if new and new != old:
                     changes.append((course["num"], index, column, old, new, current["id"]))
 
+            # Resources and the staff-only flag were only written when a week was
+            # created, so adding a resource to an existing week could never
+            # reach the database. Compare them here too.
+            new_res = json.dumps(week.get("resources") or [])
+            old_res = current["resources"] or "[]"
+            if json.loads(new_res) != json.loads(old_res):
+                changes.append((course["num"], index, "resources", old_res, new_res, current["id"]))
+
+            new_flag = 1 if week.get("staff_only") else 0
+            old_flag = current["staff_only"] if "staff_only" in current.keys() else 0
+            if new_flag != (old_flag or 0):
+                changes.append((course["num"], index, "staff_only", str(old_flag), str(new_flag), current["id"]))
+
     print(("DRY RUN — nothing written\n" if dry else "")
           + f"{len(changes)} field(s) differ, {len(created)} week(s) to create\n")
     for num, index, _, week in created:
