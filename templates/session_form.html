@@ -168,11 +168,17 @@
 {% if week.resources %}
 <div style="margin:0 0 14px 32px;">
 <p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span></p>
-<div class="pill-row" style="margin:0;">
-{# Show the pack's own name, so the pill and the downloaded sheet agree. The
-   week's wording can differ ("1-5 mood scale card" vs "Mood scale card"). #}
-{% if week.resource_items %}{% for item in week.resource_items %}<span class="pill">{{ item.name }}</span>{% endfor %}{% else %}{% for r in week.resources %}<span class="pill">{{ r }}</span>{% endfor %}{% endif %}
-<p style="margin:8px 0 0;"><a class="btn btn-secondary btn-sm" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">Download this session&rsquo;s resources (PDF)</a></p>
+<div class="res-row">
+  <div class="res-names">
+  {# Show the pack's own name, so the pill and the downloaded sheet agree. The
+     week's wording can differ ("1-5 mood scale card" vs "Mood scale card"). #}
+  {% if week.resource_items %}{% for item in week.resource_items %}<span class="res-name">{{ item.name }}</span>{% endfor %}
+  {% else %}{% for r in week.resources %}<span class="res-name">{{ r }}</span>{% endfor %}{% endif %}
+  </div>
+  <a class="btn btn-primary btn-sm res-download" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
+    Download PDF
+  </a>
 </div>
 </div>
 {% endif %}
@@ -409,6 +415,16 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .staff-only-banner span{color:#C9D3E4;}
 .staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:10.5px; font-weight:800;
   text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:6px; margin-top:2px;}
+/* The names are labels; the button is the only thing here that does something.
+   Solid fill, a download icon and "opens in a new tab" make that unambiguous,
+   and the names lose their pill shape so they stop looking pressable. */
+.res-row{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin:0;}
+.res-names{display:flex; align-items:center; gap:7px; flex-wrap:wrap; flex:1; min-width:0;}
+.res-name{display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
+  background:var(--teal-light); color:#04342C; border-radius:8px;
+  font-size:12.5px; font-weight:500; cursor:default;}
+.res-download{display:inline-flex; align-items:center; gap:7px; min-height:40px; flex-shrink:0;}
+.res-download svg{width:15px; height:15px;}
 .step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px; padding-left:20px; text-indent:-20px;}
 .step-line:last-child{margin-bottom:6px;}
 .step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
