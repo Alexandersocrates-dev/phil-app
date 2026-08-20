@@ -4,29 +4,88 @@
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card">
   <h1>{{ 'Edit course' if course else 'New course' }}</h1>
-  <p class="muted">New courses start as draft and won't appear to mentors until published.</p>
+  <p class="muted">New courses start as draft and won&rsquo;t appear to mentors until published.</p>
+  <div class="cb-note">
+    <strong>This form edits the five pupil sessions.</strong>
+    Session 6 is the staff-only support plan, written after the course ends. It isn&rsquo;t editable here and saving this form leaves it untouched.
+  </div>
   <form method="post" action="{{ '/admin/courses/%d/edit'|format(course.id) if course else '/admin/courses/new' }}">
-    <div class="field"><label>Title</label><input type="text" name="title" value="{{ course.title if course else '' }}" required aria-label="Title"></div>
-    <div class="field"><label>Focus area</label><input type="text" name="focus_area" value="{{ course.focus_area if course else '' }}" aria-label="Focus area"></div>
-    <div class="field"><label>Description</label><textarea name="description" aria-label="Description">{{ course.description if course else '' }}</textarea></div>
+    <div class="field">
+      <label for="title">Course title</label>
+      <p class="cb-hint">What mentors see in the course library, e.g. &ldquo;Verbal disruption&rdquo;.</p>
+      <input type="text" id="title" name="title" value="{{ course.title if course else '' }}" required>
+    </div>
+    <div class="field">
+      <label for="focus_area">Focus area</label>
+      <p class="cb-hint">The behaviour or need this course addresses, in a few words.</p>
+      <input type="text" id="focus_area" name="focus_area" value="{{ course.focus_area if course else '' }}">
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <p class="cb-hint">One or two sentences to help a mentor decide whether to enrol a pupil.</p>
+      <textarea id="description" name="description">{{ course.description if course else '' }}</textarea>
+    </div>
 
     {% for i in range(1,6) %}
     {% set w = weeks[i-1] if weeks else None %}
     <div class="card" style="background:var(--cream); border-style:dashed;">
-      <h3>Week {{ i }}</h3>
-      <div class="field"><label>Title</label><input type="text" name="week{{ i }}_title" value="{{ w.title if w else '' }}" aria-label="Week{{ i }} title"></div>
-      <div class="field"><label>Objective</label><textarea name="week{{ i }}_objective" aria-label="Week{{ i }} objective">{{ w.objective if w else '' }}</textarea></div>
-      <div class="field"><label>Check-in</label><textarea name="week{{ i }}_checkin" aria-label="Week{{ i }} checkin">{{ w.checkin if w else '' }}</textarea></div>
-      <div class="field"><label>Input</label><textarea name="week{{ i }}_input" aria-label="Week{{ i }} input">{{ w.input_content if w else '' }}</textarea></div>
-      <div class="field"><label>Activity</label><textarea name="week{{ i }}_activity" aria-label="Week{{ i }} activity">{{ w.activity if w else '' }}</textarea></div>
-      <div class="field"><label>Reflect</label><textarea name="week{{ i }}_reflect" aria-label="Week{{ i }} reflect">{{ w.reflect if w else '' }}</textarea></div>
-      <div class="field"><label>Watch for</label><textarea name="week{{ i }}_lookfor" aria-label="Week{{ i }} lookfor">{{ w.lookfor if w else '' }}</textarea></div>
-      <div class="field"><label>Resources (comma separated)</label><input type="text" name="week{{ i }}_resources" value="{{ w.resources|join(', ') if w else '' }}" aria-label="Week{{ i }} resources"></div>
-      <div class="field"><label>Parent/carer take-home</label><textarea name="week{{ i }}_home" aria-label="Week{{ i }} home">{{ w.home_activity if w else '' }}</textarea></div>
+      <h3>Session {{ i }}</h3>
+      <div class="field">
+        <label for="w{{ i }}_title">Session title</label>
+        <p class="cb-hint">Seen by the mentor and printed on the report, e.g. &ldquo;Spotting my triggers&rdquo;.</p>
+        <input type="text" id="w{{ i }}_title" name="week{{ i }}_title" value="{{ w.title if w else '' }}">
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_objective">Objective</label>
+        <p class="cb-hint">What the pupil should be able to do by the end. One sentence.</p>
+        <textarea id="w{{ i }}_objective" name="week{{ i }}_objective">{{ w.objective if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_checkin">Step 1 &middot; Check-in</label>
+        <p class="cb-hint">How to open: reviewing last session&rsquo;s task and settling the pupil. Number each instruction on its own line.</p>
+        <textarea id="w{{ i }}_checkin" name="week{{ i }}_checkin">{{ w.checkin if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_input">Step 2 &middot; Input</label>
+        <p class="cb-hint">What the mentor teaches or explains, and which resource to show.</p>
+        <textarea id="w{{ i }}_input" name="week{{ i }}_input">{{ w.input_content if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_activity">Step 3 &middot; Activity</label>
+        <p class="cb-hint">What the pupil actually does in the room.</p>
+        <textarea id="w{{ i }}_activity" name="week{{ i }}_activity">{{ w.activity if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_reflect">Step 4 &middot; Reflect</label>
+        <p class="cb-hint">The question that draws out a goal for the coming week.</p>
+        <textarea id="w{{ i }}_reflect" name="week{{ i }}_reflect">{{ w.reflect if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_lookfor">Watch for</label>
+        <p class="cb-hint">Guidance for the mentor, shown in the amber panel. Not seen by the pupil.</p>
+        <textarea id="w{{ i }}_lookfor" name="week{{ i }}_lookfor">{{ w.lookfor if w else '' }}</textarea>
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_resources">Resources</label>
+        <p class="cb-hint">Comma separated, and each must match a name in this course&rsquo;s resource pack, or it won&rsquo;t appear in the session.</p>
+        <input type="text" id="w{{ i }}_resources" name="week{{ i }}_resources" value="{{ w.resources|join(', ') if w else '' }}">
+      </div>
+      <div class="field">
+        <label for="w{{ i }}_home">Step 5 &middot; Home task</label>
+        <p class="cb-hint">What the pupil tries before the next session. Shown to the pupil and to a linked parent or carer.</p>
+        <textarea id="w{{ i }}_home" name="week{{ i }}_home">{{ w.home_activity if w else '' }}</textarea>
+      </div>
     </div>
     {% endfor %}
 
     <button class="btn btn-primary" type="submit">{{ 'Save changes' if course else 'Create course (draft)' }}</button>
   </form>
 </div>
+
+<style>
+.cb-hint{font-size:12px; color:var(--muted); line-height:1.45; margin:2px 0 6px;}
+.cb-note{background:var(--teal-light); border:1px solid #9FE1CB; border-radius:10px;
+  padding:10px 12px; margin:0 0 16px; font-size:13px; color:#04342C; line-height:1.5;}
+.cb-note strong{display:block; margin-bottom:2px;}
+</style>
 {% endblock %}
