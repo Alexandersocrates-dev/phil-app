@@ -90,30 +90,7 @@
 <span class="autosave-dot"></span><span class="autosave-label">Notes save automatically</span>
 </div>
 
-{% if week.staff_only %}
-{# The check-in step tells the mentor to review the summaries, so the sheet sits
-   with that instruction rather than in the banner above it. #}
-<div class="summaries-panel">
-  <div>
-    <strong>Everything from the {{ pupil_sessions }} sessions, on one sheet</strong>
-    <span>Read these before you start writing. This replaces opening each session record.</span>
-  </div>
-  <a class="btn btn-primary btn-sm summaries-download" href="/mentor/enrolment/{{ enrolment.id }}/summaries/pdf" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
-    Download the {{ pupil_sessions }} session summaries
-  </a>
-</div>
-{% endif %}
 
-{% if week.staff_only %}
-<div class="staff-only-banner">
-  <div class="staff-only-badge">Staff only</div>
-  <div style="flex:1;min-width:0;">
-    <strong>No pupil in this session.</strong>
-    <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
-  </div>
-</div>
-{% endif %}
 
 <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 12px 10px;margin-bottom:14px;">
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
@@ -217,6 +194,30 @@
 <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 10px;">Session flow{% if week.timing %} <span style="text-transform:none;letter-spacing:0;font-weight:400;">&middot; about {{ (week.timing.checkin|default(0)) + (week.timing.input|default(0)) + (week.timing.activity|default(0)) + (week.timing.reflect|default(0)) + (week.timing.home|default(0)) }} min total</span>{% endif %}</p>
 
 <form method="post" action="{{ ("/mentor/session/record/" ~ editing_record.id ~ "/edit") if editing_record else ("/mentor/session/" ~ enrolment.id) }}" id="sessionForm">
+
+{% if week.staff_only %}
+{# Both sit inside the flow rather than above the page: the warning comes first
+   because it changes how the whole session is run, then the sheet the mentor
+   reads before writing anything. #}
+<div class="staff-only-banner">
+  <div class="staff-only-badge">Staff only</div>
+  <div style="flex:1;min-width:0;">
+    <strong>No pupil in this session.</strong>
+    <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
+  </div>
+</div>
+
+<div class="summaries-panel">
+  <div>
+    <strong>Everything from the {{ pupil_sessions }} sessions, on one sheet</strong>
+    <span>Read these before you start writing. This replaces opening each session record.</span>
+  </div>
+  <a class="btn btn-primary btn-sm summaries-download" href="/mentor/enrolment/{{ enrolment.id }}/summaries/pdf" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
+    Download the {{ pupil_sessions }} session summaries
+  </a>
+</div>
+{% endif %}
 
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
