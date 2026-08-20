@@ -1775,14 +1775,6 @@ def session_submit(request):
     activity_note = request.field("activity_note", "").strip()
     reflect_note = request.field("reflect_note", "").strip()
     next_session_note = request.field("next_session_note", "").strip()
-    what_happened_parts = []
-    if checkin_note:
-        what_happened_parts.append(f"Check-in: {checkin_note}")
-    if input_note:
-        what_happened_parts.append(f"Input: {input_note}")
-    if activity_note:
-        what_happened_parts.append(f"Activity: {activity_note}")
-    what_happened = "\n\n".join(what_happened_parts)
 
     conn = db.get_conn()
     try:
@@ -1810,6 +1802,27 @@ def session_submit(request):
             # crashing on week["id"].
             return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
                               "All five sessions are already recorded for this course.", "ok")
+
+        # On the staff session the boxes aren't notes about a session — they are
+        # the sections of the support plan. Labelling them as such means the plan
+        # reaches the reports already structured, instead of as one long block
+        # the next teacher has to unpick.
+        staff_session = bool(week["staff_only"]) if "staff_only" in week.keys() else False
+        if staff_session:
+            sections = [
+                ("Where they started", checkin_note),
+                ("Triggers and early signs", input_note),
+                ("What works", activity_note),
+                ("If it escalates", reflect_note),
+                ("Plan moving forward", next_session_note),
+            ]
+        else:
+            sections = [
+                ("Check-in", checkin_note),
+                ("Input", input_note),
+                ("Activity", activity_note),
+            ]
+        what_happened = "\n\n".join(f"{label}: {text}" for label, text in sections if text)
 
         cur = conn.execute(
             """INSERT INTO session_records (enrolment_id, week_id, date, mood_rating,
@@ -4083,11 +4096,9 @@ def support_plan_for(conn, enrolment_id):
         (enrolment_id,)).fetchone()
     if not row or not row["what_happened"]:
         return None
-    # Strip the step labels the session form adds; a plan reads as prose.
-    text = row["what_happened"]
-    for label in ("Check-in:", "Input:", "Activity:"):
-        text = text.replace(label, "")
-    return "\n".join(line.strip() for line in text.splitlines() if line.strip())
+    # The section labels are kept: on a staff session they are the plan's
+    # structure, not form scaffolding.
+    return "\n".join(line.strip() for line in row["what_happened"].splitlines() if line.strip())
 
 
 @router.get("/report/pupil/<pupil_id>/pdf")

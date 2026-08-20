@@ -222,10 +222,14 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Check-in <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Where they started{% else %}Check-in{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
+{% if week.staff_only %}
+<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Each box below is a section of the plan.</strong> Fill them in order and the plan writes itself.</p>
+{% else %}
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>, then review last session&rsquo;s task.</p>
+{% endif %}
 {% if week.checkin %}{% for line in week.checkin.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
-{% if prev_week_items or prev_record %}
+{% if (prev_week_items or prev_record) and not week.staff_only %}
 <details class="res-prev">
   <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
   <div class="res-prev-body">
@@ -239,7 +243,7 @@
 </details>
 {% endif %}
 {% for item in week.resource_steps['checkin'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on how the pupil seemed today&hellip;">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
+<textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The behaviour that led to the referral, and what&rsquo;s different now&hellip;{% else %}Notes on how the pupil seemed today&hellip;{% endif %}">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -247,10 +251,10 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Input <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
 {% if week.input_content %}{% for line in week.input_content.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['input'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on the pupil's thoughts&hellip;">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
+<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -258,10 +262,10 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Activity <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}What works{% else %}Activity{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
 {% if week.activity %}{% for line in week.activity.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['activity'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="activity_note" data-field="activity_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on how the activity went&hellip;">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
+<textarea class="note-field" name="activity_note" data-field="activity_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The strategy that worked, specific enough for someone else to copy&hellip;{% else %}Notes on how the activity went&hellip;{% endif %}">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -269,10 +273,10 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Reflect <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
 {% if week.reflect %}{% for line in week.reflect.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
 {% for item in week.resource_steps['reflect'] %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="Notes on the pupil's answer&hellip;">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
+<textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What to do if it happens anyway, and what not to do&hellip;{% else %}Notes on the pupil&rsquo;s answer&hellip;{% endif %}">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -280,7 +284,7 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Home task <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Who does what{% else %}Home task{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
 {% if week.home_activity %}
 <div style="background:var(--teal-light);border-radius:10px;padding:9px 11px;margin-bottom:8px;">
 {% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line" style="color:var(--teal-darker);font-size:13.5px;">{{ line }}</p>{% endif %}{% endfor %}
@@ -296,8 +300,8 @@
 <div class="step-block" style="display:flex;gap:10px;">
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">6</div>
 <div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">Summary for this session</h5>
-<textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="What happened, what changed, and what to pick up next time&hellip;">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
+<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
+<textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What happens next, who is doing it, and when you&rsquo;ll review&hellip;{% else %}What happened, what changed, and what to pick up next time&hellip;{% endif %}">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 <p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download in Session {{ sessions_total }}.</p>
 </div>
