@@ -2657,7 +2657,12 @@ def mentee_report_pdf_download(request):
     reflection_dict = dict(reflection) if reflection else None
     conn2 = db.get_conn()
     try:
-        plan = support_plan_for(conn2, enrolment["id"])
+        # The support plan is written by the mentor for other staff. It names
+        # triggers and strategies in professional terms and is not written to be
+        # read by a family, so it stays out of a parent's copy of this report.
+        plan = None
+        if user["role"] != "parent_carer":
+            plan = support_plan_for(conn2, enrolment["id"])
     finally:
         conn2.close()
     path = pdfgen.mentee_report_pdf(

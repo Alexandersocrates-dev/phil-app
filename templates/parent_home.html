@@ -9,13 +9,12 @@
 {% set e = item.enrolment %}
 <div class="card">
 <h2 style="display:flex; align-items:center; gap:10px; margin-bottom:8px;"><span class="avatar avatar-sm">{{ e.forename[:1] }}{{ e.surname[:1] }}</span>{{ e.forename }} {{ e.surname }} &middot; {{ e.course_title }}</h2>
-<div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/5*100)|round|int }}%"></div></div>
-<p class="muted">Session {{ e.current_week }} of 5{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
+<div class="progress-track"><div class="progress-fill" style="width:{{ ([e.current_week, pupil_sessions]|min / pupil_sessions * 100)|round|int }}%"></div></div>
+<p class="muted">{% if e.current_week >= pupil_sessions %}All {{ pupil_sessions }} sessions completed{% else %}Session {{ e.current_week }} of {{ pupil_sessions }}{% endif %}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
 {% if item.week %}
-<h3>This week's home activity</h3>
+<h3>To try at home before the next session</h3>
 <p>{{ item.week.home_activity }}</p>
 {% endif %}
-<a class="btn btn-secondary btn-sm" href="/report/mentee/{{ e.id }}" target="_blank" rel="noopener">View full progress report</a>
 {% if item.certificate %}
 <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
 {% endif %}
