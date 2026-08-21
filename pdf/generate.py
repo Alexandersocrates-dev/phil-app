@@ -170,6 +170,58 @@ def _doc_section(c, x, y, label, max_width):
     return y - 5 * mm
 
 
+GOLD = HexColor("#B8912F")
+GOLD_LIGHT = HexColor("#E4C86B")
+GOLD_PALE = HexColor("#F5EAC6")
+
+
+def _award_rosette(c, cx, cy, r):
+    """A gold rosette with two ribbon tails, drawn in reportlab primitives.
+
+    Certificates carry one because people expect one; a child who has finished
+    five weeks of this should get something that looks like an award rather than
+    a receipt."""
+    # Ribbon tails first, so the medallion sits over them.
+    c.setFillColor(GOLD)
+    for direction in (-1, 1):
+        p = c.beginPath()
+        p.moveTo(cx + direction * r * 0.42, cy - r * 0.25)
+        p.lineTo(cx + direction * r * 0.80, cy - r * 1.75)
+        p.lineTo(cx + direction * r * 0.38, cy - r * 1.45)
+        p.lineTo(cx + direction * r * 0.05, cy - r * 1.85)
+        p.lineTo(cx + direction * r * 0.02, cy - r * 0.25)
+        p.close()
+        c.setFillColor(GOLD if direction < 0 else GOLD_LIGHT)
+        c.drawPath(p, fill=1, stroke=0)
+
+    # Fluted edge: a ring of small circles reads as a rosette at any size.
+    c.setFillColor(GOLD_LIGHT)
+    points = 12
+    for i in range(points):
+        a = 2 * math.pi * i / points
+        c.circle(cx + math.cos(a) * r * 0.82, cy + math.sin(a) * r * 0.82,
+                 r * 0.30, fill=1, stroke=0)
+
+    c.setFillColor(GOLD)
+    c.circle(cx, cy, r * 0.86, fill=1, stroke=0)
+    c.setFillColor(GOLD_PALE)
+    c.circle(cx, cy, r * 0.66, fill=1, stroke=0)
+    c.setStrokeColor(GOLD)
+    c.setLineWidth(0.8)
+    c.circle(cx, cy, r * 0.52, fill=0, stroke=1)
+
+    # A star at the centre, rather than text that would fight the wordmark.
+    c.setFillColor(GOLD)
+    star = c.beginPath()
+    for i in range(10):
+        a = math.pi / 2 + i * math.pi / 5
+        rad = r * 0.42 if i % 2 == 0 else r * 0.17
+        x, y = cx + math.cos(a) * rad, cy + math.sin(a) * rad
+        star.moveTo(x, y) if i == 0 else star.lineTo(x, y)
+    star.close()
+    c.drawPath(star, fill=1, stroke=0)
+
+
 def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
                     establishment_name=None, mentor_name=None, module_number=None):
     """A certificate a pupil would be happy to take home and a school happy to file.
@@ -183,24 +235,35 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     w, h = A4  # portrait, as awarding bodies use
     c = canvas.Canvas(path, pagesize=(w, h))
 
-    c.setFillColor(HexColor("#FFFFFF"))
+    # Cream ground rather than white: warmer in the hand, and the colour the
+    # rest of Phil uses.
+    c.setFillColor(HexColor("#FDFBF4"))
     c.rect(0, 0, w, h, fill=1, stroke=0)
 
-    # A double rule: heavy outer, hairline inner. Restraint reads as official;
-    # ornament reads as a template.
+    # A green band at the head, so the page is recognisably Phil's before a word
+    # is read. Then a double rule: heavy green outer, gold hairline inner —
+    # restraint reads as official, ornament reads as a template.
     margin = 16 * mm
-    c.setStrokeColor(NAVY)
+    c.setFillColor(TEAL_DARKER)
+    c.rect(0, h - 12 * mm, w, 12 * mm, fill=1, stroke=0)
+    c.setFillColor(GOLD)
+    c.rect(0, h - 13.2 * mm, w, 1.2 * mm, fill=1, stroke=0)
+
+    c.setStrokeColor(TEAL_DARKER)
     c.setLineWidth(2.2)
-    c.rect(margin, margin, w - 2 * margin, h - 2 * margin, fill=0, stroke=1)
-    c.setStrokeColor(TEAL)
-    c.setLineWidth(0.6)
+    c.rect(margin, margin, w - 2 * margin, h - 2 * margin - 10 * mm, fill=0, stroke=1)
+    c.setStrokeColor(GOLD_LIGHT)
+    c.setLineWidth(0.8)
     c.rect(margin + 3 * mm, margin + 3 * mm, w - 2 * margin - 6 * mm,
-           h - 2 * margin - 6 * mm, fill=0, stroke=1)
+           h - 2 * margin - 10 * mm - 6 * mm, fill=0, stroke=1)
 
-    y = h - 46 * mm
+    y = h - 42 * mm
 
-    # Issuing body, at the top, as on any awarding-body certificate.
-    c.setFillColor(NAVY)
+    # The Phil mark, then the issuing body — the same book used everywhere else.
+    _phil_mark(c, w / 2 - 7 * mm, y - 2 * mm, size=14 * mm)
+    y -= 10 * mm
+
+    c.setFillColor(TEAL_DARKER)
     c.setFont("Times-Bold", 22)
     c.drawCentredString(w / 2, y, "PHIL")
     y -= 6 * mm
@@ -209,7 +272,7 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     c.drawCentredString(w / 2, y, "STRUCTURED MENTORING FOR SCHOOLS")
 
     y -= 6 * mm
-    c.setStrokeColor(TEAL)
+    c.setStrokeColor(GOLD)
     c.setLineWidth(0.8)
     c.line(w / 2 - 32 * mm, y, w / 2 + 32 * mm, y)
 
@@ -256,6 +319,10 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
         c.setFillColor(MUTED)
         c.setFont("Times-Roman", 10)
         c.drawCentredString(w / 2, y, f"Module {str(module_number).zfill(2)} of the Phil course library")
+
+    # The rosette sits between the course title and the signatures, in the empty
+    # middle of the page — the place the eye lands.
+    _award_rosette(c, w / 2, margin + 92 * mm, 12 * mm)
 
     # Signature lines. An unsigned line still says a person stands behind this.
     sig_y = margin + 62 * mm
