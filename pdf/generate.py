@@ -497,6 +497,107 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
     return path
 
 
+def impact_report_pdf(establishment_id, establishment_name, f):
+    """What mentoring achieved across a school, on one page.
+
+    Written to be read by someone who wasn't involved: a governor, an SLT link,
+    an inspector. Every figure says what it is based on, and where the evidence
+    is thin the report says so rather than filling the space."""
+    path = os.path.join(PDF_DIR, f"impact_report_{establishment_id}.pdf")
+    w, h = A4
+    c = canvas.Canvas(path, pagesize=A4)
+    margin = 18 * mm
+    x = margin
+    max_width = w - 2 * margin
+
+    y = _doc_header(c, w, h, margin, "Impact report", meta=[
+        ("School", establishment_name),
+        ("Issued", datetime.date.today().isoformat()),
+    ])
+
+    def stat(label, value, note=""):
+        """One figure, its label, and what it rests on."""
+        nonlocal y
+        c.setFillColor(TEAL_DARKER)
+        c.setFont("Helvetica-Bold", 17)
+        c.drawString(x, y, str(value))
+        vw = c.stringWidth(str(value), "Helvetica-Bold", 17)
+        c.setFillColor(INK)
+        c.setFont("Helvetica", 10)
+        c.drawString(x + vw + 4 * mm, y + 1, label)
+        if note:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica", 8.5)
+            c.drawString(x + vw + 4 * mm, y - 4.5 * mm, note)
+            y -= 4.5 * mm
+        y -= 9 * mm
+
+    y = _doc_section(c, x, y, "Reach", max_width)
+    stat("pupils supported", f.get("pupils") or 0,
+         f"{f.get('enrolments') or 0} course enrolments in total")
+    stat("sessions delivered", f.get("sessions") or 0)
+    completed = f.get("completed") or 0
+    enrolments = f.get("enrolments") or 0
+    rate = f"{round(completed / enrolments * 100)}%" if enrolments else "\u2014"
+    stat("courses completed", completed,
+         f"{rate} of enrolments, with {f.get('active') or 0} still running")
+    y -= 2 * mm
+
+    y = _doc_section(c, x, y, "Change", max_width)
+    for key, label in (("engagement", "engagement"), ("mood", "mood")):
+        n = f.get(f"{key}_n") or 0
+        change = f.get(f"{key}_change")
+        if n == 0:
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 9.5)
+            c.drawString(x, y, f"Not enough {label} ratings yet to show change.")
+            y -= 7 * mm
+            continue
+        arrow = "+" if change and change > 0 else ""
+        stat(f"average change in {label}", f"{arrow}{change:.1f}",
+             f"across {n} course{'' if n == 1 else 's'} rated at the start and again later; "
+             f"{f.get(f'{key}_improved') or 0} improved")
+    c.setFillColor(MUTED)
+    c.setFont("Helvetica-Oblique", 8.5)
+    y = _wrap(c, "Ratings are the mentor's judgement at the time, on a 1\u20135 scale. "
+                 "Only courses rated more than once are counted.", x, y, max_width, size=8.5)
+    y -= 6 * mm
+
+    y = _doc_section(c, x, y, "Follow-through", max_width)
+    stat("support plans written", f.get("plans_written") or 0,
+         "one-page plans other staff can pick up and use")
+    overdue = f.get("reviews_overdue") or 0
+    stat("review points overdue", overdue,
+         "agreed follow-ups now past their date" if overdue else "nothing outstanding")
+    stat("sessions with a safeguarding note", f.get("safeguarding") or 0,
+         "recorded by mentors; Phil takes no action on these")
+    y -= 2 * mm
+
+    courses = f.get("courses") or []
+    if courses:
+        if y < margin + 45 * mm:
+            _doc_footer(c, w, margin, 1)
+            c.showPage()
+            y = _doc_header(c, w, h, margin, "Impact report",
+                            meta=[("School", establishment_name)])
+        y = _doc_section(c, x, y, "Courses used", max_width)
+        c.setFont("Helvetica", 9.5)
+        for row in courses[:14]:
+            if y < margin + 20 * mm:
+                break
+            c.setFillColor(INK)
+            c.drawString(x, y, row["title"][:58])
+            c.setFillColor(MUTED)
+            c.drawRightString(w - margin, y,
+                              f"{row['n']} enrolled \u00b7 {row['completed']} completed")
+            y -= 5.5 * mm
+
+    _doc_footer(c, w, margin, 1)
+    c.showPage()
+    c.save()
+    return path
+
+
 def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
     """Everything a pupil has done, across every course.
 
@@ -1125,58 +1226,50 @@ def _art_symbol(art_id):
     if not m:
         _art_cache[art_id] = None
         return None
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 74" '
-           'width="100" height="74" fill="none" stroke="#0F6E56">%s</svg>' % m.group(1))
-    _art_cache[art_id] = svg
-    return svg
+    _art_cache[art_id] = m.group(1)
+    return m.group(1)
 
 
-# Off until the scaling is fixed and verified. svglib renders the symbol at its
-# native size rather than inside the box it is given, so the artwork landed on
-# top of the card text in the printed pack. The screen version is unaffected —
-# it uses the sprite directly and is correct. A text-only card that prints
-# properly beats an illustrated one that doesn't.
-ART_IN_PDF = False
+# On again. The motifs are now drawn directly with reportlab rather than through
+# svglib, which rendered each symbol at its native size instead of inside the box
+# it was given — that is what put artwork on top of the card text. The new
+# renderer scales explicitly into the box it is handed, and all 100 symbols were
+# checked by eye before this was switched back on.
+ART_IN_PDF = True
 
 
 def _draw_art(c, art_id, x, y, width, height):
-    """Draws a motif, or quietly does nothing if it can't."""
-    if not ART_IN_PDF:
+    """Draws a motif, or quietly does nothing if it can't.
+
+    A missing illustration is a lesser fault than a pack that won't generate, so
+    any failure here is swallowed and the card prints as text."""
+    if not ART_IN_PDF or not art_id:
         return False
-    svg2rlg = _get_svg2rlg()
-    if not svg2rlg or not art_id:
-        return False
-    svg = _art_symbol(art_id)
-    if not svg:
+    body = _art_symbol(art_id)
+    if not body:
         return False
     try:
-        import io
-        from reportlab.graphics import renderPDF
-        drawing = svg2rlg(io.StringIO(svg))
-        if drawing is None:
-            return False
-        scale = min(width / drawing.width, height / drawing.height)
-        drawing.width *= scale
-        drawing.height *= scale
-        drawing.scale(scale, scale)
-        renderPDF.draw(drawing, c, x + (width - drawing.width) / 2, y)
-        return True
+        import svgdraw
+        return svgdraw.draw_symbol(c, body, x, y, width, height, TEAL_DARK)
     except Exception:
         return False
 
 
 def _card_height(card):
-    """A printed card is a fixed box: title, optional body, optional note."""
-    return 30 * mm
+    """A printed card is a fixed box: title, optional body, artwork, note.
+
+    42mm rather than 30mm: the box was shrunk while the artwork was switched
+    off, and the illustration needs its space back."""
+    return 42 * mm
 
 
 def _draw_cut_cards(c, x, y, max_width, cards):
     """Draws a card set as a grid of dashed boxes, two per row, so the sheet can
-    be cut up. Text only: reportlab cannot render the SVG motifs the screen uses,
-    so the printed card carries the words and the mentor supplies the rest."""
+    be cut up. Each card carries its illustration, drawn from the same sprite the
+    screen uses."""
     gap = 4 * mm
     col_w = (max_width - gap) / 2
-    card_h = 30 * mm
+    card_h = 42 * mm
     for i, card in enumerate(cards):
         col = i % 2
         if col == 0 and i > 0:
