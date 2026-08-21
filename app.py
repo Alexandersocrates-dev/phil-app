@@ -2395,10 +2395,20 @@ def parent_home(request):
                 (pid,),
             ).fetchall()
             for e in rows:
+                # A parent sees their child, the course, and what to do at home.
+                # Nothing else. The week row carries mentor-facing guidance
+                # ("Watch for") and the full session plan, so only the two
+                # fields a family needs are selected — a template can't leak
+                # what was never fetched. staff_only is excluded explicitly
+                # rather than relying on a week-number cut-off.
                 week = None
-                if 1 <= e["current_week"] + 1 <= 5:
-                    week = conn.execute("SELECT * FROM weeks WHERE course_id=? AND week_number=?",
-                                         (e["course_id"], min(e["current_week"] + 1, 5))).fetchone()
+                next_number = e["current_week"] + 1
+                if 1 <= next_number <= PUPIL_SESSIONS:
+                    week = conn.execute(
+                        """SELECT week_number, title, home_activity
+                           FROM weeks
+                           WHERE course_id=? AND week_number=? AND staff_only=0""",
+                        (e["course_id"], next_number)).fetchone()
                 cert = conn.execute("SELECT * FROM certificates WHERE enrolment_id=?", (e["id"],)).fetchone()
                 next_planned = conn.execute(
                     "SELECT planned_date FROM session_schedule WHERE enrolment_id=? AND week_number=?",
