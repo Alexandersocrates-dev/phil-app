@@ -4411,9 +4411,16 @@ def session_pdf_download(request):
     try:
         record = conn.execute("SELECT * FROM session_records WHERE id=?",
                                (request.params["record_id"],)).fetchone()
-        # This document carries safeguarding notes, so entitlement matters more
-        # here than anywhere else in the app.
-        if record and not may_access_enrolment(conn, record["enrolment_id"], user):
+        # This document carries the mentor's notes and the safeguarding note, so
+        # entitlement matters more here than anywhere else in the app.
+        #
+        # A linked parent passes may_access_enrolment — correct for a certificate,
+        # wrong for this. A parent is entitled to know their child is being
+        # mentored and what to do at home; the mentor's professional record of
+        # each session is not written for them, and a school decides what to
+        # share from it and when.
+        if record and (user["role"] == "parent_carer"
+                       or not may_access_enrolment(conn, record["enrolment_id"], user)):
             return Response("Not authorised for this area.", status="403 Forbidden")
     finally:
         conn.close()

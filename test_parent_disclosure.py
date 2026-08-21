@@ -129,6 +129,29 @@ def request(method, path, cookie=None, body=""):
     return cap["status"], payload
 
 
+def extract_text(payload):
+    """Readable text from a response, including PDFs.
+
+    PDF text is compressed, so searching the raw bytes finds nothing even when
+    the text is plainly there — the first version of this test reported every
+    PDF as clean for exactly that reason, and missed a real disclosure. Hand
+    decompression is not reliable either; use a real PDF parser, and if none is
+    available say so rather than reporting a false clean."""
+    if not payload[:5].startswith(b"%PDF"):
+        return payload.decode("utf-8", "ignore")
+    try:
+        import io as _io
+        from pypdf import PdfReader
+        reader = PdfReader(_io.BytesIO(payload))
+        return "\n".join(page.extract_text() or "" for page in reader.pages)
+    except ImportError:
+        raise SystemExit(
+            "This test needs a PDF reader to see inside PDF responses.\n"
+            "Install one first:  /opt/venv/bin/pip install pypdf\n"
+            "Without it every PDF would be reported as clean whether it is or not."
+        )
+
+
 def main():
     email = build()
     _, _ = None, None
@@ -173,7 +196,7 @@ def main():
     for method, path, name in routes:
         status, payload = request(method, path, cookie=cookie)
         code = int(status.split()[0])
-        text = payload.decode("utf-8", "ignore")
+        text = extract_text(payload)
         found = [MARKERS[m] for m in MARKERS if m in text]
         allowed_seen = [ALLOWED[a] for a in ALLOWED if a in text]
         if found:
