@@ -16,7 +16,7 @@ module.exports = [
       "Reduce the frequency and intensity of physical incidents",
       "Repair relationships affected by past incidents through restorative conversation"
     ],
-    "approachNote": "Sessions combine cognitive behavioural techniques (recognising the anger cycle and the link between thoughts, feelings and actions) with restorative practice for repairing harm, strategies widely used in UK pupil referral units and SEMH provision. The approach reflects the DfE's Behaviour in Schools advice, which favours consistent, relationship-based responses over reactive sanctions alone, and supports the behaviour and attitudes judgement in Ofsted's Education Inspection Framework, which expects schools to maintain a calm, safe environment with a clear approach to managing physical incidents.",
+    "approachNote": "Sessions combine cognitive behavioural techniques (recognising the anger cycle and the link between thoughts, feelings and actions) with restorative practice for repairing harm, strategies widely used in UK pupil referral units and SEMH provision. The approach reflects the DfE's Behaviour in Schools advice, which favours consistent, relationship-based responses over reactive sanctions alone, and supports the attendance and behaviour evaluation area in Ofsted's inspection framework, which expects schools to maintain a calm, safe environment with a clear approach to managing physical incidents.",
     "relatedModule": "Emotional regulation (Module 3)",
     "weeks": [
       {
@@ -156,7 +156,7 @@ module.exports = [
       "Practise following instructions with less friction",
       "Find acceptable ways to disagree or negotiate"
     ],
-    "approachNote": "Sessions draw on relational and restorative approaches recommended in the Education Endowment Foundation's Improving Behaviour in Schools guidance, which finds that strong pupil-staff relationships and consistent, personalised responses do more to shift defiant behaviour than blanket sanctions. This is consistent with the DfE's Behaviour in Schools advice, which asks schools to build a culture of high expectations through relationships and clear routines rather than rules imposed without explanation, and supports the standard expected under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "Sessions draw on relational and restorative approaches recommended in the Education Endowment Foundation's Improving Behaviour in Schools guidance, which finds that strong pupil-staff relationships and consistent, personalised responses do more to shift defiant behaviour than blanket sanctions. This is consistent with the DfE's Behaviour in Schools advice, which asks schools to build a culture of high expectations through relationships and clear routines rather than rules imposed without explanation, and supports the standard expected under Ofsted's attendance and behaviour evaluation area.",
     "relatedModule": "Disrespect to authority (Module 8)",
     "weeks": [
       {
@@ -292,7 +292,7 @@ module.exports = [
       "Learn and practise a personal toolkit of regulation strategies",
       "Generalise strategies from the mentoring room into the classroom"
     ],
-    "approachNote": "This module uses a zones-based model, adapted from the widely used Zones of Regulation framework, alongside simple mindfulness and grounding techniques, giving pupils a shared, non-judgemental language for talking about how they feel. It follows the DfE's Mental health and behaviour in schools advice, which asks staff to consider whether behaviour may be an expression of an underlying difficulty with regulating emotion, rather than treating it purely as wilful misconduct. This also contributes to the personal development judgement in Ofsted's Education Inspection Framework, which considers how well pupils learn to understand and manage their own emotions.",
+    "approachNote": "This module uses a zones-based model, adapted from the widely used Zones of Regulation framework, alongside simple mindfulness and grounding techniques, giving pupils a shared, non-judgemental language for talking about how they feel. It follows the DfE's Mental health and behaviour in schools advice, which asks staff to consider whether behaviour may be an expression of an underlying difficulty with regulating emotion, rather than treating it purely as wilful misconduct. This also contributes to the personal development and well-being evaluation area in Ofsted's inspection framework, which considers how well pupils learn to understand and manage their own emotions.",
     "relatedModule": "Physical aggression (Module 1) or Anxiety and avoidance (Module 6)",
     "weeks": [
       {
@@ -428,7 +428,7 @@ module.exports = [
       "Recognise the different roles in bullying situations, including bystander",
       "Practise practical conflict-resolution and repair skills"
     ],
-    "approachNote": "Sessions are built around restorative practice, using the same 'affective questions' approach used in restorative conferencing in UK schools, combined with structured perspective-taking and friendship-skills activities. The module follows the DfE's Preventing and tackling bullying advice for schools, and supports the respectful-relationships expectations assessed under Ofsted's behaviour and attitudes and personal development judgements.",
+    "approachNote": "Sessions are built around restorative practice, using the same 'affective questions' approach used in restorative conferencing in UK schools, combined with structured perspective-taking and friendship-skills activities. The module follows the DfE's Preventing and tackling bullying advice for schools, and supports the respectful-relationships expectations assessed under Ofsted's attendance and behaviour, and personal development and well-being, evaluation areas.",
     "relatedModule": "Social withdrawal (Module 9)",
     "weeks": [
       {
@@ -562,7 +562,7 @@ module.exports = [
       "Learn and use an alternative way to get attention",
       "Self-monitor progress with support from the class teacher"
     ],
-    "approachNote": "This module uses self-monitoring and impulse-control techniques consistent with EEF guidance on personalised, low-key behaviour supports such as daily report cards, which have good evidence for reducing disruptive behaviour. It also responds directly to Ofsted's Below the radar findings on the cumulative cost of low-level disruption to learning time, and to the DfE's Behaviour in Schools expectation that low-level disruption is addressed early and consistently rather than allowed to become routine.",
+    "approachNote": "This module uses self-monitoring and impulse-control techniques consistent with EEF guidance on personalised, low-key behaviour supports such as daily report cards, which have good evidence for reducing disruptive behaviour. It also responds directly to the findings of Ofsted's 2014 report Below the radar on the cumulative cost of low-level disruption to learning time, and to the DfE's Behaviour in Schools expectation that low-level disruption is addressed early and consistently rather than allowed to become routine.",
     "relatedModule": "Low-level disengagement (Module 7)",
     "weeks": [
       {
@@ -697,7 +697,7 @@ module.exports = [
       "Build confidence gradually through small, achievable steps",
       "Agree a realistic plan for maintaining or rebuilding attendance"
     ],
-    "approachNote": "This module follows a graded-exposure approach (building tolerance through small, manageable steps rather than avoiding the trigger) informed by cognitive behavioural therapy and the DfE's statutory guidance Working together to improve school attendance, which addresses emotionally based school avoidance directly and emphasises small, achievable steps over forcing full attendance immediately. It also reflects the DfE's Mental health and behaviour in schools advice on recognising anxiety-driven behaviour, and is designed to run alongside close work with pastoral and SENCO staff. Supporting a pupil back into regular attendance also contributes to the attendance evidence considered under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "This module follows a graded-exposure approach (building tolerance through small, manageable steps rather than avoiding the trigger) informed by cognitive behavioural therapy and the DfE's statutory guidance Working together to improve school attendance, which addresses emotionally based school avoidance directly and emphasises small, achievable steps over forcing full attendance immediately. It also reflects the DfE's Mental health and behaviour in schools advice on recognising anxiety-driven behaviour, and is designed to run alongside close work with pastoral and SENCO staff. Supporting a pupil back into regular attendance also contributes to the attendance evidence considered under Ofsted's attendance and behaviour evaluation area.",
     "relatedModule": "Social withdrawal (Module 9)",
     "weeks": [
       {
@@ -831,7 +831,7 @@ module.exports = [
       "Learn practical strategies to stay on task",
       "Connect classwork to personal motivation and goals"
     ],
-    "approachNote": "Sessions use self-monitoring and metacognitive strategies, helping pupils notice and manage their own attention, which the EEF highlights as effective when paired with clear, achievable goals rather than generic instructions to 'concentrate'. The module also responds to Ofsted's Below the radar findings on how much learning time low-level disengagement can cost across a school year, and to the DfE's Behaviour in Schools expectation that disengagement is addressed early rather than left unchallenged.",
+    "approachNote": "Sessions use self-monitoring and metacognitive strategies, helping pupils notice and manage their own attention, which the EEF highlights as effective when paired with clear, achievable goals rather than generic instructions to 'concentrate'. The module also responds to the findings of Ofsted's 2014 report Below the radar on how much learning time low-level disengagement can cost across a school year, and to the DfE's Behaviour in Schools expectation that disengagement is addressed early rather than left unchallenged.",
     "relatedModule": "Verbal disruption (Module 5)",
     "weeks": [
       {
@@ -965,7 +965,7 @@ module.exports = [
       "Practise respectful ways to disagree or push back",
       "Repair specific staff relationships through restorative conversation"
     ],
-    "approachNote": "This module leans on relational and restorative approaches, evidence reviewed by the EEF found that strong, trusting relationships between staff and pupils are one of the most consistent predictors of improved behaviour, more so than sanctions alone. This mirrors the DfE's Behaviour in Schools advice, which sets out that consistent routines and modelled respect from staff, not sanctions in isolation, are what sustain improved conduct, and supports the standard expected under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "This module leans on relational and restorative approaches, evidence reviewed by the EEF found that strong, trusting relationships between staff and pupils are one of the most consistent predictors of improved behaviour, more so than sanctions alone. This mirrors the DfE's Behaviour in Schools advice, which sets out that consistent routines and modelled respect from staff, not sanctions in isolation, are what sustain improved conduct, and supports the standard expected under Ofsted's attendance and behaviour evaluation area.",
     "relatedModule": "Defiance and non-compliance (Module 2)",
     "weeks": [
       {
@@ -1099,7 +1099,7 @@ module.exports = [
       "Practise low-stakes social skills",
       "Take small, real steps towards reconnecting with peers"
     ],
-    "approachNote": "Sessions use a gradual, low-pressure social skills approach, prioritising the pupil's own pace. Pushing withdrawn pupils into group situations too quickly is well known to backfire, so each step here is small and pupil-led. This follows the DfE's Mental health and behaviour in schools advice to treat withdrawal as a possible sign of an underlying difficulty worth understanding rather than a discipline issue, and supports the wellbeing and confidence outcomes assessed under Ofsted's personal development judgement.",
+    "approachNote": "Sessions use a gradual, low-pressure social skills approach, prioritising the pupil's own pace. Pushing withdrawn pupils into group situations too quickly is well known to backfire, so each step here is small and pupil-led. This follows the DfE's Mental health and behaviour in schools advice to treat withdrawal as a possible sign of an underlying difficulty worth understanding rather than a discipline issue, and supports the wellbeing and confidence outcomes assessed under Ofsted's personal development and well-being evaluation area.",
     "relatedModule": "Peer conflict and bullying (Module 4)",
     "weeks": [
       {
@@ -1233,7 +1233,7 @@ module.exports = [
       "Build safe, alternative physical outlets for that energy",
       "Understand and take part in repairing the impact of past incidents"
     ],
-    "approachNote": "This module shares its underlying model with Module 1 (physical aggression) and Module 3 (emotional regulation): dysregulation-linked behaviour responds to the same trigger-awareness and de-escalation approach, adapted here to focus specifically on the urge to damage rather than harm a person, plus a restorative repair element consistent with the DfE's Behaviour in Schools advice on proportionate, restorative responses alongside any necessary sanction. This also supports the calm, orderly environment expected under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "This module shares its underlying model with Module 1 (physical aggression) and Module 3 (emotional regulation): dysregulation-linked behaviour responds to the same trigger-awareness and de-escalation approach, adapted here to focus specifically on the urge to damage rather than harm a person, plus a restorative repair element consistent with the DfE's Behaviour in Schools advice on proportionate, restorative responses alongside any necessary sanction. This also supports the calm, orderly environment expected under Ofsted's attendance and behaviour evaluation area.",
     "relatedModule": "Physical aggression (Module 1) and Emotional regulation (Module 3)",
     "weeks": [
       {
@@ -1368,7 +1368,7 @@ module.exports = [
       "Practise expressing frustration assertively, in words, rather than through outbursts or shutdown",
       "Transfer strategies to real settings across the school day, not just to a single crisis moment"
     ],
-    "approachNote": "This module builds on core CBT-informed anger-management techniques used across UK SEMH and pastoral provision, and follows the relational, consistent, low-arousal approach set out in the DfE's Behaviour in Schools advice for headteachers and school staff, which recommends helping pupils understand and regulate their own behaviour rather than relying on sanctions alone. It's focused on frustration tolerance and verbal or relational anger rather than physical incidents specifically, and works well as a standalone course, or as a broader follow-on to Physical aggression (Module 1) for pupils whose anger shows up more in words, relationships and academic frustration than in physical outbursts. It also supports the calm, respectful conduct expected under Ofsted's behaviour and attitudes judgement.",
+    "approachNote": "This module builds on core CBT-informed anger-management techniques used across UK SEMH and pastoral provision, and follows the relational, consistent, low-arousal approach set out in the DfE's Behaviour in Schools advice for headteachers and school staff, which recommends helping pupils understand and regulate their own behaviour rather than relying on sanctions alone. It's focused on frustration tolerance and verbal or relational anger rather than physical incidents specifically, and works well as a standalone course, or as a broader follow-on to Physical aggression (Module 1) for pupils whose anger shows up more in words, relationships and academic frustration than in physical outbursts. It also supports the calm, respectful conduct expected under Ofsted's attendance and behaviour evaluation area.",
     "relatedModule": "Physical aggression (Module 1)",
     "weeks": [
       {
@@ -1506,7 +1506,7 @@ module.exports = [
       "Identify realistic practical barriers and problem-solve around them with the pupil, not for them",
       "Agree and begin a graded, realistic plan to improve attendance, with clear roles for pupil, mentor and family"
     ],
-    "approachNote": "This module draws on the DfE's statutory guidance Working together to improve school attendance, which distinguishes disengagement- and circumstance-driven absence from emotionally based school avoidance (covered separately in Anxiety and avoidance, Module 6) and calls for schools to understand the specific reason behind each pupil's absence rather than applying a single standard response. It also reflects Ofsted's Education Inspection Framework, under which attendance and punctuality are assessed as part of the behaviour and attitudes judgement, reinforcing that improving attendance is inseparable from a pupil's wider sense of belonging and engagement, not just a compliance matter. Where Module 6 addresses fear- and anxiety-driven non-attendance, this module is for pupils who are absent through disengagement, competing priorities or drift, and is designed to run alongside the school's attendance team and, where relevant, the Education Welfare Officer.",
+    "approachNote": "This module draws on the DfE's statutory guidance Working together to improve school attendance, which distinguishes disengagement- and circumstance-driven absence from emotionally based school avoidance (covered separately in Anxiety and avoidance, Module 6) and calls for schools to understand the specific reason behind each pupil's absence rather than applying a single standard response. It also reflects Ofsted's inspection framework, under which attendance sits alongside behaviour in a single evaluation area, reinforcing that improving attendance is inseparable from a pupil's wider sense of belonging and engagement, not just a compliance matter. Where Module 6 addresses fear- and anxiety-driven non-attendance, this module is for pupils who are absent through disengagement, competing priorities or drift, and is designed to run alongside the school's attendance team and, where relevant, the Education Welfare Officer.",
     "relatedModule": "Anxiety and avoidance (Module 6)",
     "weeks": [
       {
@@ -1644,7 +1644,7 @@ module.exports = [
       "Reduce frequency of use, or stay vape-free, using an agreed personal plan",
       "Know who to go to for ongoing support, without fear of blanket punishment"
     ],
-    "approachNote": "Sessions use a non-judgemental, harm-reduction and motivational-interviewing style (guiding the pupil to find their own reasons for change, rather than being told what to do) rather than a lecture on rules, research shows shame-based approaches push vaping further underground rather than reducing it. The course reflects DfE's wider tobacco and vaping strategy and NHS Smokefree guidance, and supports the Personal Development judgement in Ofsted's Education Inspection Framework, which expects schools to help pupils understand risks to their physical health. Where a pupil discloses supply to other pupils, follow your school's usual safeguarding and behaviour procedures alongside this course.",
+    "approachNote": "Sessions use a non-judgemental, harm-reduction and motivational-interviewing style (guiding the pupil to find their own reasons for change, rather than being told what to do) rather than a lecture on rules, on the view that shame drives the behaviour out of sight rather than out of use. The course reflects DfE's wider tobacco and vaping strategy and NHS Smokefree guidance, and supports the personal development and well-being evaluation area in Ofsted's inspection framework, which expects schools to help pupils understand risks to their physical health. Where a pupil discloses supply to other pupils, follow your school's usual safeguarding and behaviour procedures alongside this course.",
     "relatedModule": "Anxiety and avoidance (Module 6)",
     "weeks": [
       {
@@ -1998,7 +1998,7 @@ module.exports = [
         "objective": "Pupil can rehearse telling a trusted adult about an online concern, using the pupil's own words.",
         "checkin": "1. Ask which privacy setting they checked.\n2. Ask whether anything surprised them about what was public.",
         "input": "1. Explain that telling an adult early gives more options, not fewer.\n2. Be honest that pupils often wait because they fear losing their phone — name that directly.\n3. Say what would and wouldn't happen at your school if they reported something.\n4. Use the opening line cards and role-play the first sentence, which is the hard part.",
-        "activity": "Role-play telling a trusted adult (mentor, form tutor, parent) about an online concern, using a simple opening line the pupil chooses (e.g. 'something's been bothering me online, can I show you?').",
+        "activity": "Role-play telling a trusted adult (mentor, class teacher or form tutor, parent) about an online concern, using a simple opening line the pupil chooses (e.g. 'something's been bothering me online, can I show you?').",
         "reflect": "Which opening line felt most natural to you? Agree to keep it in mind, even if nothing's happened recently.",
         "lookfor": "The goal is a rehearsed, low-stakes opening line the pupil can reach for under pressure, not a perfect script, since real disclosures rarely follow a script exactly.",
         "resources": [
@@ -2068,7 +2068,7 @@ module.exports = [
       "Develop practical coping strategies for use on the day of an assessment",
       "Create a personal plan balancing academic effort with rest and wellbeing"
     ],
-    "approachNote": "Sessions combine cognitive behavioural techniques for reframing catastrophic thinking with practical study-skills coaching, since exam stress is rarely resolved by revision tips alone. The course responds to national data showing 85% of UK secondary pupils experience exam anxiety and that exams are the single biggest reported factor affecting this age group's mental health. It supports Ofsted's Personal Development and wellbeing focus, and reflects DfE's mental health and wellbeing guidance, which names assessment periods as a recognised pressure point needing proactive support.",
+    "approachNote": "Sessions combine cognitive behavioural techniques for reframing catastrophic thinking with practical study-skills coaching, since exam stress is rarely resolved by revision tips alone. Assessment periods concentrate pressure into a short, predictable window, which is what makes them worth preparing for rather than reacting to. It supports Ofsted's Personal Development and wellbeing focus, and reflects DfE's mental health and wellbeing guidance, which names assessment periods as a recognised pressure point needing proactive support.",
     "relatedModule": "Anxiety and avoidance (Module 6)",
     "weeks": [
       {
@@ -2209,7 +2209,7 @@ module.exports = [
       "Practise communicating sensory needs to staff and peers",
       "Reduce the frequency and intensity of meltdown or shutdown episodes through planning, not correction"
     ],
-    "approachNote": "This course treats sensory differences as a difference to plan around, not a behaviour to correct, a distinction that matters both for pupil wellbeing and for staff response. It reflects DfE's rapid evidence review on identifying and supporting pupils with sensory and physical needs, which notes up to 9 in 10 autistic pupils show sensory differences affecting regulation, and supports Ofsted's Inclusion focus, which expects mainstream settings to make reasonable, evidenced adjustments. This course complements, but does not replace, any existing EHC plan or SENCO-led support.",
+    "approachNote": "This course treats sensory differences as a difference to plan around, not a behaviour to correct, a distinction that matters both for pupil wellbeing and for staff response. It reflects DfE's rapid evidence reviews on identifying and supporting pupils with sensory, physical and autism-related needs, and supports Ofsted's Inclusion focus, which expects mainstream settings to make reasonable, evidenced adjustments. This course complements, but does not replace, any existing EHC plan or SENCO-led support.",
     "relatedModule": "Emotional regulation (Module 3)",
     "weeks": [
       {
@@ -2350,7 +2350,7 @@ module.exports = [
       "Create space to remember and honour the person who died, in the pupil's own way",
       "Know how and when to ask for extra support, at school or beyond"
     ],
-    "approachNote": "Grief in children and young people rarely looks like the sadness adults expect, it can show up as anger, distraction, silence, or seemingly unaffected behaviour, and this course is built around that reality rather than a single 'stages of grief' model. It responds to Childhood Bereavement Network data showing an estimated 1 in 29 UK children will experience the death of a parent or sibling, and Cambridge University research finding most schools lack a planned bereavement response. This course is not a substitute for specialist bereavement counselling where a pupil needs it, the final session includes signposting to appropriate services.",
+    "approachNote": "Grief in children and young people rarely looks like the sadness adults expect, it can show up as anger, distraction, silence, or seemingly unaffected behaviour, and this course is built around that reality rather than a single 'stages of grief' model. It responds to Childhood Bereavement Network figures, drawn from the last national survey in 2004, estimating that around 1 in 29 school-age children in the UK have been bereaved of a parent or sibling — roughly one in every class — and to University of Cambridge research finding most schools lack a planned bereavement response. This course is not a substitute for specialist bereavement counselling where a pupil needs it, the final session includes signposting to appropriate services.",
     "relatedModule": "Social withdrawal (Module 9)",
     "weeks": [
       {
@@ -2492,7 +2492,7 @@ module.exports = [
       "Practise assertive refusal and safe decision-making in pressured situations",
       "Know trusted adults and reporting routes, both at school and beyond"
     ],
-    "approachNote": "This course is preventative and protective in focus, building pupils' understanding of healthy relationships and resistance to manipulation, rather than a response to a disclosed incident, which should always follow your school's safeguarding procedures immediately and separately from this course. It is grounded in Keeping Children Safe in Education 2025, which is statutory for all school staff, and draws on practice principles from the DfE-commissioned Tackling Child Exploitation Support Programme. If anything raised during a session gives cause for concern about a specific pupil's safety, pause the course content and follow your designated safeguarding lead's procedures without delay.",
+    "approachNote": "This course is preventative and protective in focus, building pupils' understanding of healthy relationships and resistance to manipulation, rather than a response to a disclosed incident, which should always follow your school's safeguarding procedures immediately and separately from this course. It is grounded in Keeping Children Safe in Education (2026), which is statutory for all school staff, and draws on practice principles from the DfE-commissioned Tackling Child Exploitation Support Programme. If anything raised during a session gives cause for concern about a specific pupil's safety, pause the course content and follow your designated safeguarding lead's procedures without delay.",
     "relatedModule": "Peer conflict and bullying (Module 4)",
     "weeks": [
       {
@@ -2632,7 +2632,7 @@ module.exports = [
       "Support practical organisation, routes, timetables, and equipment, to reduce day-one stress",
       "Create a personalised transition plan the pupil feels confident about"
     ],
-    "approachNote": "This course is written primarily for the Year 6 to Year 7 move from primary to secondary school, the single most common and best-evidenced transition pupils face, and the one the research below is grounded in. The same five-week structure also works for a mid-year move to a different school, or for moving up to the next key stage within the same school; in either case, agree with the pupil in Week 1 which specific move this course is supporting, then treat every mention of 'the new setting' as shorthand for that move. It responds to research showing around 45% of parents report visible stress in their child during the primary-to-secondary transition specifically, with the effect often more pronounced for neurodivergent and otherwise vulnerable pupils. It supports Ofsted's expectation that schools actively prepare pupils for key transition points as part of Personal Development, an area DfE and the Department of Health and Social Care have noted remains underdeveloped in policy and practice.",
+    "approachNote": "This course is written primarily for the Year 6 to Year 7 move from primary to secondary school, the single most common and best-evidenced transition pupils face, and the one the research below is grounded in. The same five-week structure also works for a mid-year move to a different school, or for moving up to the next key stage within the same school; in either case, agree with the pupil in Week 1 which specific move this course is supporting, then treat every mention of 'the new setting' as shorthand for that move. Transition is one of the few pressure points a school can see coming, which makes it one of the few worth preparing for in advance; the effect is often more pronounced for neurodivergent and otherwise vulnerable pupils. It supports Ofsted's expectation that schools actively prepare pupils for key transition points as part of Personal Development, an area DfE and the Department of Health and Social Care have noted remains underdeveloped in policy and practice.",
     "relatedModule": "Anxiety and avoidance (Module 6)",
     "weeks": [
       {
