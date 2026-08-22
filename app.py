@@ -759,8 +759,10 @@ def course_detail(request):
 @router.get("/courses/<course_id>/resources/pdf")
 def course_resources_pdf(request):
     # The resource packs are the deliverable a school actually pays for, so
-    # they are never public. Any signed-in role is fine, including a pilot.
-    user, err = require(request)
+    # they are never public. A pilot is fine — evaluating properly is the point
+    # of a pilot — but a parent has no reason to hold twenty packs of mentoring
+    # material, so this is limited to the roles that deliver sessions.
+    user, err = require(request, roles=["mentor", "admin", "phil_staff"])
     if err:
         return err
     conn = db.get_conn()
@@ -1657,6 +1659,15 @@ def session_form(request):
         if not enrolment:
             return Response("Enrolment not found", status="404 Not Found")
         next_week_number = enrolment["current_week"] + 1
+        # A pilot sees three sessions in the course library, so it should see
+        # three here too. Without this a pilot mentor could enrol a pupil and
+        # read every session plan by working through the course — the paid
+        # content, reached by a different door.
+        if next_week_number > weeks_allowed(user):
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              f"Session {next_week_number} is included on a paid plan. "
+                              "Your pilot covers the first "
+                              f"{weeks_allowed(user)} sessions.", "error")
         all_weeks = conn.execute(
             "SELECT * FROM weeks WHERE course_id=? ORDER BY week_number",
             (enrolment["course_id"],),
