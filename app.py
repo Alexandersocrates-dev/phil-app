@@ -2524,6 +2524,35 @@ def impact_figures(conn, establishment_id):
     return figures
 
 
+@router.post("/internal/cron/retention")
+def cron_retention_check(request):
+    """Runs the retention check on a schedule, called by the cron service.
+
+    Railway volumes cannot be shared between services, so a separate cron
+    service has no way to reach the database directly. It calls this instead and
+    the app, which does hold the volume, does the work.
+
+    Guarded by a shared secret rather than a login, because no person is
+    involved. The secret is compared in constant time, and the response says
+    only how many notices were raised — never anything about a school."""
+    import hmac
+    secret = os.environ.get("CRON_SECRET", "")
+    supplied = request.header("X-Cron-Secret") or request.field("secret", "")
+    if not secret:
+        return Response("Cron secret not configured on this deployment.",
+                        status="503 Service Unavailable")
+    if not hmac.compare_digest(secret, supplied):
+        return Response("Not authorised.", status="403 Forbidden")
+
+    conn = db.get_conn()
+    try:
+        raised = check_retention_due(conn)
+    finally:
+        conn.close()
+    return Response(f"retention check ok, {raised} notice(s) raised\n",
+                    content_type="text/plain")
+
+
 @router.get("/admin/reports/impact/pdf")
 def impact_report_download(request):
     """The report a school shows its governors, and weighs at renewal."""
