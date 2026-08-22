@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Triggers Phil's retention check on a schedule.
+Triggers Phil's daily checks on a schedule.
 
 This runs as a separate Railway service with a cron schedule set in its
 settings. It does one thing and exits.
@@ -47,11 +47,11 @@ def main():
             print(f"{resp.status} {body}")
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "replace").strip()[:200]
-        print(f"retention check refused: {e.code} {detail}")
+        print(f"daily checks refused: {e.code} {detail}")
     except urllib.error.URLError as e:
         print(f"could not reach {url}: {e.reason}")
     except Exception as e:  # noqa: BLE001 - a cron job must always exit cleanly
-        print(f"retention check failed: {type(e).__name__}: {e}")
+        print(f"daily checks failed: {type(e).__name__}: {e}")
     return 0
 
 

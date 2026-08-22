@@ -2526,7 +2526,7 @@ def impact_figures(conn, establishment_id):
 
 @router.post("/internal/cron/retention")
 def cron_retention_check(request):
-    """Runs the retention check on a schedule, called by the cron service.
+    """Runs the daily checks on a schedule, called by the cron service.
 
     Railway volumes cannot be shared between services, so a separate cron
     service has no way to reach the database directly. It calls this instead and
@@ -2546,11 +2546,11 @@ def cron_retention_check(request):
 
     conn = db.get_conn()
     try:
-        raised = check_retention_due(conn)
+        results = run_daily_checks(conn)
     finally:
         conn.close()
-    return Response(f"retention check ok, {raised} notice(s) raised\n",
-                    content_type="text/plain")
+    summary = ", ".join(f"{k}: {v}" for k, v in results.items())
+    return Response(f"daily checks ok \u2014 {summary}\n", content_type="text/plain")
 
 
 @router.get("/admin/reports/impact/pdf")
@@ -3120,6 +3120,171 @@ def establishments_due_deletion(conn):
         due.append(dict(r, ended=ended, days_since=days,
                         overdue_by=days - RETENTION_DAYS))
     return due
+
+
+def _raise_once(conn, kind, estab_id, key, body):
+    """Raises a notice unless an identical unread one already exists.
+
+    Keyed on the notice type plus the thing it is about, so a daily check does
+    not produce a daily copy of the same warning. Phil staff reading the same
+    sentence seven mornings running stop reading it."""
+    already = conn.execute(
+        """SELECT 1 FROM notifications
+           WHERE type=? AND status='unread' AND payload LIKE ?""",
+        (kind, f"%[{key}]%")).fetchone()
+    if already:
+        return 0
+    conn.execute(
+        """INSERT INTO notifications (type, recipient, establishment_id, payload, status, sent_at)
+           VALUES (?,?,?,?,?,?)""",
+        (kind, "phil_staff", estab_id, f"[{key}] {body}", "unread", db.now()))
+    return 1
+
+
+def check_pilots_ending(conn, days=3):
+    """Pilots about to expire.
+
+    A pilot quietly running out is the moment a school either buys or drifts
+    away, and it is the one date in the system nobody is watching."""
+    today = datetime.date.today()
+    horizon = (today + datetime.timedelta(days=days)).isoformat()
+    rows = conn.execute(
+        """SELECT e.id, e.name, s.pilot_ends_at,
+                  (SELECT COUNT(*) FROM pupils WHERE establishment_id=e.id) AS pupils,
+                  (SELECT COUNT(*) FROM users WHERE establishment_id=e.id AND role='mentor') AS mentors
+           FROM establishments e
+           JOIN subscriptions s ON s.id =
+                (SELECT id FROM subscriptions WHERE establishment_id=e.id ORDER BY id DESC LIMIT 1)
+           WHERE s.plan_type='pilot' AND s.status='active'
+             AND s.pilot_ends_at IS NOT NULL
+             AND s.pilot_ends_at <= ? AND s.pilot_ends_at >= ?""",
+        (horizon, today.isoformat())).fetchall()
+    raised = 0
+    for r in rows:
+        left = (datetime.date.fromisoformat(r["pilot_ends_at"][:10]) - today).days
+        when = "today" if left == 0 else f"in {left} day{'' if left == 1 else 's'}"
+        raised += _raise_once(
+            conn, "pilot_ending", r["id"], f"pilot-{r['id']}-{r['pilot_ends_at'][:10]}",
+            f"{r['name']}'s pilot ends {when} ({r['pilot_ends_at'][:10]}). "
+            f"{r['mentors']} mentor(s), {r['pupils']} pupil(s) enrolled. "
+            "Worth a conversation before it lapses.")
+    return raised
+
+
+def check_overdue_invoices(conn):
+    """Invoices past their due date and not paid."""
+    today = datetime.date.today().isoformat()
+    rows = conn.execute(
+        """SELECT i.id, i.amount, i.due_date, i.purchase_order_ref, e.id AS estab_id, e.name
+           FROM invoices i
+           JOIN subscriptions s ON s.id = i.subscription_id
+           JOIN establishments e ON e.id = s.establishment_id
+           WHERE i.status IN ('sent','overdue') AND i.due_date IS NOT NULL
+             AND i.due_date < ?""", (today,)).fetchall()
+    raised = 0
+    for r in rows:
+        days = (datetime.date.today() - datetime.date.fromisoformat(r["due_date"][:10])).days
+        po = f" PO {r['purchase_order_ref']}." if r["purchase_order_ref"] else ""
+        raised += _raise_once(
+            conn, "invoice_overdue", r["estab_id"], f"invoice-{r['id']}",
+            f"{r['name']}: invoice for \u00a3{r['amount']:.2f} was due {r['due_date'][:10]}, "
+            f"{days} day(s) ago.{po}")
+    return raised
+
+
+def check_stale_support(conn, days=2):
+    """Support requests nobody has answered.
+
+    A school waiting on a reply is forming a view of whether Phil is worth
+    renewing, and the clock starts the moment they write."""
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    rows = conn.execute(
+        """SELECT r.id, r.subject, r.created_at, e.id AS estab_id, e.name
+           FROM support_requests r
+           LEFT JOIN establishments e ON e.id = r.establishment_id
+           WHERE r.status='open' AND r.created_at < ?""", (cutoff,)).fetchall()
+    raised = 0
+    for r in rows:
+        waited = (datetime.date.today()
+                  - datetime.date.fromisoformat(r["created_at"][:10])).days
+        raised += _raise_once(
+            conn, "support_stale", r["estab_id"], f"support-{r['id']}",
+            f"Support request from {r['name'] or 'an individual account'} has been open "
+            f"{waited} day(s): \u201c{(r['subject'] or '')[:60]}\u201d")
+    return raised
+
+
+def check_pending_parent_access(conn, days=3):
+    """Parent access requests left unresolved.
+
+    The school approves these, not Phil, so this is a nudge to nudge them: a
+    parent is waiting and has no way to chase it themselves."""
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    rows = conn.execute(
+        """SELECT r.id, r.created_at, e.id AS estab_id, e.name
+           FROM parent_access_requests r
+           JOIN establishments e ON e.id = r.establishment_id
+           WHERE r.status='pending' AND r.created_at < ?""", (cutoff,)).fetchall()
+    raised = 0
+    for r in rows:
+        waited = (datetime.date.today()
+                  - datetime.date.fromisoformat(r["created_at"][:10])).days
+        raised += _raise_once(
+            conn, "parent_access_pending", r["estab_id"], f"paccess-{r['id']}",
+            f"{r['name']}: a parent access request has been pending {waited} day(s). "
+            "The school approves these, so they may need reminding.")
+    return raised
+
+
+def check_stalled_courses(conn, days=30):
+    """Courses that started and then stopped.
+
+    This one is not really about churn. A pupil who began a bereavement or
+    exploitation course and stopped halfway is worth someone asking about, and
+    nobody currently would."""
+    cutoff = (datetime.date.today() - datetime.timedelta(days=days)).isoformat()
+    rows = conn.execute(
+        """SELECT en.id, en.current_week, p.forename, p.surname, c.title,
+                  e.id AS estab_id, e.name AS estab, u.name AS mentor,
+                  COALESCE(MAX(r.date), en.start_date) AS last_activity
+           FROM enrolments en
+           JOIN pupils p ON p.id = en.pupil_id
+           JOIN establishments e ON e.id = p.establishment_id
+           JOIN courses c ON c.id = en.course_id
+           JOIN users u ON u.id = en.mentor_id
+           LEFT JOIN session_records r ON r.enrolment_id = en.id
+           WHERE en.status='active'
+           GROUP BY en.id
+           HAVING last_activity < ?""", (cutoff,)).fetchall()
+    raised = 0
+    for r in rows:
+        since = (datetime.date.today()
+                 - datetime.date.fromisoformat(r["last_activity"][:10])).days
+        raised += _raise_once(
+            conn, "course_stalled", r["estab_id"], f"stalled-{r['id']}-{r['last_activity'][:10]}",
+            f"{r['estab']}: {r['forename']} {r['surname']} is {r['current_week']} session(s) into "
+            f"{r['title']} with {r['mentor']}, and nothing has been recorded for {since} days.")
+    return raised
+
+
+def run_daily_checks(conn):
+    """Every scheduled check, run in one pass.
+
+    Each is wrapped so that one failing query cannot stop the others: a broken
+    invoice check should not silence a stalled safeguarding course."""
+    results = {}
+    for name, fn in (("retention", check_retention_due),
+                     ("pilots ending", check_pilots_ending),
+                     ("overdue invoices", check_overdue_invoices),
+                     ("stale support", check_stale_support),
+                     ("parent access", check_pending_parent_access),
+                     ("stalled courses", check_stalled_courses)):
+        try:
+            results[name] = fn(conn)
+        except Exception as e:  # noqa: BLE001
+            results[name] = f"failed: {type(e).__name__}"
+    conn.commit()
+    return results
 
 
 def check_retention_due(conn):
