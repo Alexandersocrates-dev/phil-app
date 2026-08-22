@@ -11,6 +11,18 @@ import os
 import sys
 from wsgiref.simple_server import make_server
 
+if __name__ == "__main__" and os.environ.get("PHIL_ROLE") == "cron":
+    # The scheduled-checks service shares this repo, and railway.json's
+    # startCommand overrides anything set in the dashboard, so the entry point
+    # has to branch here rather than there.
+    #
+    # This runs before any import of db or seed, and before init_db(): a cron
+    # container has no volume, so letting the normal boot run would create an
+    # empty database and seed a Phil staff account into a throwaway filesystem,
+    # printing its password into the deployment log. It did exactly that once.
+    import cron_retention
+    sys.exit(cron_retention.main())
+
 import db
 import seed
 import app as phil_app
