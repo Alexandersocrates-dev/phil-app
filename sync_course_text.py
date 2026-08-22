@@ -64,6 +64,7 @@ def main():
     courses = load_courses()
     conn = db.get_conn()
     changes = []
+    course_changes = []
     created = []
 
     for course in courses:
@@ -74,6 +75,15 @@ def main():
         if not row:
             print(f"  ! module {course['num']:02d} is not in the database, skipped")
             continue
+        # The course's own description (the file's approachNote) was never part
+        # of the sync, so corrections to it — framework citations, evidence
+        # references — could never reach the database from the file.
+        new_desc = (course.get("approachNote") or "").strip()
+        old_desc = (conn.execute("SELECT description FROM courses WHERE id=?",
+                                 (row["id"],)).fetchone()["description"] or "").strip()
+        if new_desc and new_desc != old_desc:
+            course_changes.append((course["num"], old_desc, new_desc, row["id"]))
+
         for index, week in enumerate(course["weeks"], start=1):
             current = conn.execute(
                 "SELECT * FROM weeks WHERE course_id=? AND week_number=?",
@@ -104,7 +114,13 @@ def main():
                 changes.append((course["num"], index, "staff_only", str(old_flag), str(new_flag), current["id"]))
 
     print(("DRY RUN — nothing written\n" if dry else "")
-          + f"{len(changes)} field(s) differ, {len(created)} week(s) to create\n")
+          + f"{len(changes)} week field(s) differ, {len(course_changes)} course "
+            f"description(s) differ, {len(created)} week(s) to create\n")
+    for num, old, new, _ in course_changes:
+        print(f"M{num:02d} description")
+        print(f"   was: {old[:100]}{'…' if len(old) > 100 else ''}")
+        print(f"   now: {new[:100]}{'…' if len(new) > 100 else ''}")
+        print()
     for num, index, _, week in created:
         flag = " [staff only]" if week.get("staff_only") else ""
         print(f"CREATE M{num:02d} week {index}: {week.get('title', '')}{flag}")
@@ -118,7 +134,7 @@ def main():
 
     if dry:
         print("Re-run with --confirm to apply.")
-    elif changes or created:
+    elif changes or created or course_changes:
         try:
             for _, index, course_id, week in created:
                 cols = ["course_id", "week_number"] + list(FIELDS.values()) + list(EXTRA)
@@ -129,8 +145,13 @@ def main():
                     vals)
             for _, _, column, _, new, week_id in changes:
                 conn.execute(f"UPDATE weeks SET {column}=? WHERE id=?", (new, week_id))
+            for _, _, new_desc, course_id in course_changes:
+                conn.execute("UPDATE courses SET description=? WHERE id=?",
+                             (new_desc, course_id))
             conn.commit()
-            print(f"Applied {len(changes)} change(s), created {len(created)} week(s).")
+            print(f"Applied {len(changes)} week change(s), "
+                  f"{len(course_changes)} description(s), "
+                  f"created {len(created)} week(s).")
         except Exception:
             conn.rollback()
             print("Failed — nothing was written.")
