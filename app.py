@@ -2955,10 +2955,17 @@ def staff_establishments(request):
         return err
     conn = db.get_conn()
     try:
+        # There is no scheduler on this host, so the retention check runs when
+        # staff open the console. A cron job would be better; this at least means
+        # nobody has to remember to look.
+        check_retention_due(conn)
         rows = conn.execute("SELECT * FROM establishments WHERE type='school' ORDER BY name").fetchall()
+        due = {e["id"]: e for e in establishments_due_deletion(conn)}
     finally:
         conn.close()
-    return render("staff_establishments.html", user=user, establishments=rows, flash=flash_from_query(request))
+    return render("staff_establishments.html", user=user, establishments=rows,
+                  due_deletion=due, retention_days=RETENTION_DAYS,
+                  flash=flash_from_query(request))
 
 
 @router.get("/staff/establishments/new")
@@ -3031,8 +3038,143 @@ def staff_establishment_detail(request):
         conn.close()
     if not estab:
         return Response("Not found", status="404 Not Found")
+    conn2 = db.get_conn()
+    try:
+        due = {e["id"]: e for e in establishments_due_deletion(conn2)}
+    finally:
+        conn2.close()
     return render("staff_establishment_detail.html", user=user, estab=estab, sub=sub, admin=admin, used=used,
-                  limit=seat_limit(sub) if sub else 0, pupil_count=pupil_count, flash=flash_from_query(request))
+                  limit=seat_limit(sub) if sub else 0, pupil_count=pupil_count,
+                  due_deletion=due.get(estab["id"]), retention_days=RETENTION_DAYS,
+                  flash=flash_from_query(request))
+
+
+RETENTION_DAYS = 90
+
+
+def establishments_due_deletion(conn):
+    """Schools whose data is past the retention period promised in the DPA.
+
+    Counted from the day the subscription ended or was cancelled. Returns the
+    rows plus how many days overdue, so the notice can say how late it is rather
+    than just that it is due."""
+    cutoff = (datetime.date.today() - datetime.timedelta(days=RETENTION_DAYS)).isoformat()
+    rows = conn.execute(
+        """SELECT e.id, e.name, e.status, s.status AS sub_status,
+                  s.renewal_date, s.pilot_ends_at,
+                  (SELECT COUNT(*) FROM pupils WHERE establishment_id = e.id) AS pupils
+           FROM establishments e
+           LEFT JOIN subscriptions s ON s.id =
+                (SELECT id FROM subscriptions WHERE establishment_id = e.id
+                 ORDER BY id DESC LIMIT 1)
+           WHERE e.status != 'deleted'""").fetchall()
+    due = []
+    for r in rows:
+        # A live subscription is never due. Only expired or cancelled ones.
+        if r["sub_status"] not in ("expired", "cancelled") and r["status"] != "closed":
+            continue
+        ended = r["renewal_date"] or r["pilot_ends_at"]
+        if not ended or ended > cutoff:
+            continue
+        days = (datetime.date.today() - datetime.date.fromisoformat(ended)).days
+        due.append(dict(r, ended=ended, days_since=days,
+                        overdue_by=days - RETENTION_DAYS))
+    return due
+
+
+def check_retention_due(conn):
+    """Raises one notice per school whose data is due for deletion.
+
+    Deliberately a notice and not an automatic deletion: a subscription can lapse
+    over a summer holiday because an invoice sat unpaid, and pupil records should
+    not be destroyed by a billing hiccup with nobody looking. The notice removes
+    the excuse of forgetting; a person still decides."""
+    raised = 0
+    for e in establishments_due_deletion(conn):
+        already = conn.execute(
+            """SELECT 1 FROM notifications
+               WHERE type='retention_due' AND establishment_id=? AND status='unread'""",
+            (e["id"],)).fetchone()
+        if already:
+            continue
+        conn.execute(
+            """INSERT INTO notifications (type, recipient, establishment_id, payload, status, sent_at)
+               VALUES (?,?,?,?,?,?)""",
+            ("retention_due", "phil_staff", e["id"],
+             f"{e['name']} ended {e['ended']} — {e['days_since']} days ago. "
+             f"Its data is {e['overdue_by']} day(s) past the {RETENTION_DAYS}-day "
+             f"retention period and should be deleted. {e['pupils']} pupil record(s) held.",
+             "unread", db.now()))
+        raised += 1
+    if raised:
+        conn.commit()
+    return raised
+
+
+@router.post("/staff/establishments/<establishment_id>/delete")
+def staff_delete_establishment(request):
+    """Deletes every record belonging to one establishment.
+
+    Phil staff only, and the school's name must be typed to confirm — this
+    removes pupil records permanently and there is no undo. Invoices are kept:
+    HMRC requires six years and they hold billing details, not pupil data."""
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    eid = request.params["establishment_id"]
+    conn = db.get_conn()
+    try:
+        estab = conn.execute("SELECT * FROM establishments WHERE id=?", (eid,)).fetchone()
+        if not estab:
+            return Response("Not found", status="404 Not Found")
+        typed = request.field("confirm_name", "").strip()
+        if typed != estab["name"]:
+            return with_flash(f"/staff/establishments/{eid}",
+                              "The name didn't match, so nothing was deleted.", "error")
+
+        counts = delete_establishment_data(conn, eid)
+        db.log_action(conn, user["id"], "establishment_deleted", "establishment", eid,
+                      f"{estab['name']}: {counts} records")
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash("/staff/establishments",
+                      f"{estab['name']} deleted. {counts} record(s) removed. "
+                      "Confirm to the school in writing.", "ok")
+
+
+def delete_establishment_data(conn, eid):
+    """Removes an establishment and everything belonging to it.
+
+    Children before parents. Mirrors delete_establishment.py in the repo root,
+    which does the same job from the command line."""
+    ENROL = """SELECT e.id FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               WHERE p.establishment_id = ?"""
+    total = 0
+
+    def run(sql, params=(eid,)):
+        nonlocal total
+        cur = conn.execute(sql, params)
+        total += cur.rowcount if cur.rowcount and cur.rowcount > 0 else 0
+
+    for table in ("session_records", "resource_entries", "completion_reflections",
+                  "certificates", "session_schedule", "session_drafts"):
+        run(f"DELETE FROM {table} WHERE enrolment_id IN ({ENROL})")
+    run(f"DELETE FROM enrolments WHERE id IN ({ENROL})")
+    run("""DELETE FROM pupil_parent_links WHERE pupil_id IN
+           (SELECT id FROM pupils WHERE establishment_id = ?)""")
+    run("DELETE FROM parent_access_requests WHERE establishment_id = ?")
+    run("DELETE FROM pupils WHERE establishment_id = ?")
+    run("DELETE FROM support_requests WHERE establishment_id = ?")
+    run("DELETE FROM course_requests WHERE establishment_id = ?")
+    run("DELETE FROM notifications WHERE establishment_id = ?")
+    run("DELETE FROM seat_alerts WHERE establishment_id = ?")
+    run("""DELETE FROM sessions WHERE user_id IN
+           (SELECT id FROM users WHERE establishment_id = ?)""")
+    run("DELETE FROM users WHERE establishment_id = ?")
+    run("DELETE FROM subscriptions WHERE establishment_id = ?")
+    run("DELETE FROM establishments WHERE id = ?")
+    return total
 
 
 @router.post("/staff/establishments/<establishment_id>/suspend")

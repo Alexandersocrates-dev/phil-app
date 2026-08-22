@@ -1,21 +1,50 @@
 {% extends "base.html" %}
 {% block title %}Establishments - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="page-header">
   <h1>Establishments</h1>
   <a class="btn btn-primary" href="/staff/establishments/new">+ Add establishment</a>
 </div>
+
+{# The retention promise in the DPA depends on someone acting. This is the
+   prompt: it names the schools whose data is past the period, so the only way
+   to miss it is to ignore it. #}
+{% if due_deletion %}
+<div class="retention-banner">
+  <div class="retention-badge">Action needed</div>
+  <div style="flex:1;min-width:0;">
+    <strong>{{ due_deletion|length }} school{{ '' if due_deletion|length == 1 else 's' }} past the {{ retention_days }}-day retention period.</strong>
+    <span>Phil's data processing agreement commits to deleting a school's data {{ retention_days }} days after its subscription ends. Open each one below to delete it, then confirm to the school in writing.</span>
+  </div>
+</div>
+{% endif %}
 <div class="card">
   <table>
-    <tr><th>Name</th><th>Status</th><th></th></tr>
+    <tr><th>Name</th><th>Status</th><th>Retention</th><th></th></tr>
     {% for e in establishments %}
-    <tr>
+    {% set due = due_deletion.get(e.id) if due_deletion else None %}
+    <tr{% if due %} class="row-due"{% endif %}>
       <td>{{ e.name }}</td>
       <td>{% if e.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</td>
+      <td>
+        {%- if due %}<span class="badge badge-red">Delete &mdash; {{ due.overdue_by }} day{{ '' if due.overdue_by == 1 else 's' }} overdue</span>
+        {%- else %}<span class="muted" style="font-size:12.5px;">&mdash;</span>{% endif -%}
+      </td>
       <td><a href="/staff/establishments/{{ e.id }}">View</a></td>
     </tr>
     {% endfor %}
   </table>
 </div>
+
+<style>
+.retention-banner{display:flex; align-items:flex-start; gap:12px; background:#FCEBEB;
+  border:1px solid #E8A9A9; border-radius:12px; padding:13px 15px; margin:0 0 16px;
+  font-size:13.5px; line-height:1.5; color:#5A1E1E;}
+.retention-banner strong{display:block; margin-bottom:2px;}
+.retention-banner span{color:#7A3A3A;}
+.retention-badge{flex-shrink:0; background:var(--red, #C0392B); color:#fff; font-size:10.5px;
+  font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:4px 9px;
+  border-radius:6px; margin-top:2px;}
+.row-due{background:#FDF4F4;}
+</style>
 {% endblock %}

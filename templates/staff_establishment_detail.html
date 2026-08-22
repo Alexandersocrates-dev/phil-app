@@ -2,7 +2,7 @@
 {% from "_icons.html" import icon_building %}
 {% block title %}{{ estab.name }} - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+<p class="back-link"><a href="/staff/establishments">&larr; Back to establishments</a></p>
 <div class="card">
   <div class="page-header">
     <div class="page-header-title">
@@ -45,4 +45,50 @@
   <p class="muted">No admin on record.</p>
   {% endif %}
 </div>
+
+{# Deleting a school's data is irreversible and removes pupil records. It sits
+   at the bottom, behind a typed confirmation, and is only offered once the
+   retention period has actually passed — an accidental click here cannot be
+   undone from the interface. #}
+<div class="card danger-card">
+  <h2>Delete all data</h2>
+
+  {% if due_deletion %}
+  <div class="danger-note">
+    <strong>This school's data is due for deletion.</strong>
+    Its subscription ended {{ due_deletion.ended }} &mdash; {{ due_deletion.days_since }} days ago,
+    which is {{ due_deletion.overdue_by }} day{{ '' if due_deletion.overdue_by == 1 else 's' }}
+    past the {{ retention_days }}-day period Phil commits to in its data processing agreement.
+  </div>
+  {% else %}
+  <p class="muted">Phil deletes a school's data {{ retention_days }} days after its subscription
+  ends. This school is not yet due, so deletion here would be earlier than the policy requires
+  &mdash; do it only if the school has asked in writing.</p>
+  {% endif %}
+
+  <p>This permanently removes every pupil, session record, support plan, certificate and staff
+  account belonging to <strong>{{ estab.name }}</strong>. It cannot be undone.</p>
+  <p class="muted" style="font-size:12.5px;">Invoices are kept: HMRC requires six years of billing
+  records, and they contain billing details rather than pupil data. The audit log entry recording
+  this deletion is also kept.</p>
+
+  <form method="post" action="/staff/establishments/{{ estab.id }}/delete">
+    <div class="field" style="max-width:340px;">
+      <label for="confirm_name">Type <strong>{{ estab.name }}</strong> to confirm</label>
+      <input type="text" id="confirm_name" name="confirm_name" autocomplete="off" required>
+    </div>
+    <button class="btn btn-red" type="submit"
+            onclick="return confirm('Delete all data for {{ estab.name }}? This cannot be undone.')">
+      Delete this school and all its data
+    </button>
+  </form>
+</div>
+
+<style>
+.danger-card{border:1.5px solid #E8A9A9; background:#FFFCFC;}
+.danger-card h2{color:#8C2F2F;}
+.danger-note{background:#FCEBEB; border:1px solid #E8A9A9; border-radius:10px;
+  padding:10px 12px; margin:0 0 12px; font-size:13px; line-height:1.5; color:#5A1E1E;}
+.danger-note strong{display:block; margin-bottom:2px;}
+</style>
 {% endblock %}
