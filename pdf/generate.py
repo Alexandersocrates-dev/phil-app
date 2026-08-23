@@ -1364,10 +1364,13 @@ def _draw_cut_cards(c, x, y, max_width, cards):
         ty = y - 6 * mm
         cat = _clean_pdf_text(card.get("cat", ""))
         if cat:
+            # The category was drawn 1.5mm ABOVE the cursor and the cursor then
+            # moved down only 1mm, so the title landed on top of it: a card
+            # numbered 1 printed its "1" through "Never tried it".
             c.setFillColor(MUTED)
             c.setFont("Helvetica-Bold", 6.5)
-            c.drawString(cx + 3 * mm, ty + 1.5 * mm, cat.upper())
-            ty -= 1 * mm
+            c.drawString(cx + 3 * mm, ty, cat.upper())
+            ty -= 4.5 * mm
         c.setFillColor(TEAL_DARK)
         c.setFont("Helvetica-Bold", 9)
         title = _clean_pdf_text(card.get("title") or card.get("text", ""))

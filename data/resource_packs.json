@@ -100,7 +100,7 @@
           {
             "cat": "Tear",
             "title": "Scrap paper",
-            "art": "art-jagged",
+            "art": "art-pencil",
             "text": "Set aside for tearing up, in an agreed spot.",
             "note": "Cheap and effective"
           },
@@ -128,7 +128,7 @@
           {
             "cat": "Question 1",
             "title": "What happened?",
-            "art": "art-thoughts",
+            "art": "art-question",
             "text": "Work backwards if it's easier.",
             "note": ""
           },
@@ -529,7 +529,7 @@
           {
             "cat": "Context",
             "title": "Course completed",
-            "art": "art-document",
+            "art": "art-award",
             "text": "Five weeks on naming feelings early and widening the gap before reacting.",
             "note": ""
           },
@@ -1144,7 +1144,7 @@
           {
             "cat": "Shared",
             "title": "The review date",
-            "art": "art-clock",
+            "art": "art-calendar",
             "text": "So the follow-up doesn't depend on one adult.",
             "note": ""
           },
@@ -1375,7 +1375,7 @@
           {
             "cat": "Reset",
             "title": "Drawing or writing",
-            "art": "art-thoughts",
+            "art": "art-pencil",
             "text": "Nothing anyone else reads.",
             "note": ""
           }
@@ -1460,7 +1460,7 @@
           {
             "cat": "Shared",
             "title": "The review date",
-            "art": "art-clock",
+            "art": "art-calendar",
             "text": "Set before this is filed.",
             "note": ""
           },
@@ -1617,7 +1617,7 @@
           },
           {
             "title": "Block",
-            "art": "art-hide",
+            "art": "art-stop",
             "text": "Stop it reaching you while you decide what to do."
           },
           {
@@ -1743,7 +1743,7 @@
           {
             "cat": "Shared",
             "title": "The review date",
-            "art": "art-clock",
+            "art": "art-calendar",
             "text": "So the follow-up doesn't rest on one adult.",
             "note": ""
           },
@@ -2534,7 +2534,7 @@
           {
             "cat": "Expected",
             "title": "Anniversaries",
-            "art": "art-clock",
+            "art": "art-calendar",
             "text": "The date itself, and the run-up.",
             "note": "The week before is often worse"
           },
@@ -2661,7 +2661,7 @@
           {
             "cat": "Shared",
             "title": "The review date",
-            "art": "art-clock",
+            "art": "art-calendar",
             "text": "Set before this is filed.",
             "note": ""
           },
@@ -3488,7 +3488,7 @@
           {
             "cat": "Question 1",
             "title": "What happened?",
-            "art": "art-thoughts",
+            "art": "art-question",
             "text": "Their version. Don't correct it.",
             "note": ""
           },
@@ -3509,7 +3509,7 @@
           {
             "cat": "Question 4",
             "title": "What needs to happen now to put things right?",
-            "art": "art-hand-heart",
+            "art": "art-repair",
             "text": "Their idea beats yours.",
             "note": ""
           }
@@ -3590,7 +3590,7 @@
           {
             "cat": "Context",
             "title": "Course completed",
-            "art": "art-document",
+            "art": "art-award",
             "text": "Five weeks on recognising early body signals of anger.",
             "note": ""
           },
@@ -3732,7 +3732,7 @@
           {
             "cat": "Scenario",
             "title": "Told to stop talking",
-            "art": "art-quiet",
+            "art": "art-stop",
             "text": "You're told to stop talking.",
             "note": "Two outcomes"
           },
@@ -3929,7 +3929,7 @@
           {
             "cat": "Example",
             "title": "Being told to stop",
-            "art": "art-hourglass",
+            "art": "art-stop",
             "text": "“I don't want to stop now because I'm nearly finished. Can I have two more minutes?”",
             "note": "Asks for something specific"
           },
@@ -4225,7 +4225,7 @@
           {
             "cat": "Question 1",
             "title": "What happened?",
-            "art": "art-thoughts",
+            "art": "art-question",
             "text": "Collect it, don't test it.",
             "note": ""
           },
@@ -4951,7 +4951,7 @@
           {
             "cat": "Question 1",
             "title": "What happened?",
-            "art": "art-thoughts",
+            "art": "art-question",
             "text": "Both sides get asked this.",
             "note": ""
           },
@@ -5007,7 +5007,7 @@
           {
             "cat": "Option",
             "title": "Drawing or colouring",
-            "art": "art-texture",
+            "art": "art-pencil",
             "text": "No pressure to talk at all.",
             "note": "Silence is fine"
           },
