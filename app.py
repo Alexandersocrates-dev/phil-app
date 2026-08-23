@@ -2442,15 +2442,101 @@ _ICON_DOC = '<svg viewBox="0 0 24 24" fill="none" width="20" height="20" style="
 _ICON_USERS = '<svg viewBox="0 0 24 24" fill="none" width="20" height="20" style="stroke:currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'
 
 
-def impact_figures(conn, establishment_id):
-    """The numbers a school weighs at renewal.
+def academic_year_bounds(today=None):
+    """The English academic year containing a date, as (start, end).
+
+    Runs 1 September to 31 August, which is what a school means by "this year"
+    and what a pupil premium statement covers."""
+    today = today or datetime.date.today()
+    start_year = today.year if today.month >= 9 else today.year - 1
+    return (datetime.date(start_year, 9, 1).isoformat(),
+            datetime.date(start_year + 1, 8, 31).isoformat())
+
+
+def recorded_academic_years(conn, establishment_id):
+    """Academic years in which this school actually recorded a session.
+
+    Derived from the data rather than counted back from today, so the list never
+    offers a year with nothing in it, and never runs out for a school that has
+    been going a decade. Newest first, because that is what gets asked for."""
+    rows = conn.execute(
+        """SELECT MIN(r.date) AS first, MAX(r.date) AS last
+           FROM session_records r
+           JOIN enrolments e ON e.id = r.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND r.date IS NOT NULL AND r.date != ''""",
+        (establishment_id,)).fetchone()
+    if not row_has_dates(rows):
+        return []
+    first = datetime.date.fromisoformat(rows["first"][:10])
+    last = datetime.date.fromisoformat(rows["last"][:10])
+    start = first.year if first.month >= 9 else first.year - 1
+    end = last.year if last.month >= 9 else last.year - 1
+    years = []
+    for y in range(end, start - 1, -1):
+        years.append((f"{y}/{str(y + 1)[-2:]}",
+                      datetime.date(y, 9, 1).isoformat(),
+                      datetime.date(y + 1, 8, 31).isoformat()))
+    return years
+
+
+def row_has_dates(row):
+    return bool(row and row["first"] and row["last"])
+
+
+def current_term_bounds(today=None):
+    """Rough bounds for the English school term containing a date.
+
+    Term dates vary by school and are set locally, so these are deliberately
+    generous: better to include a session at the edge of a term than to cut a
+    term short and under-report. A school wanting exact dates can pass explicit
+    from and to values."""
+    today = today or datetime.date.today()
+    y = today.year
+    if today.month >= 9:                      # autumn
+        return (datetime.date(y, 9, 1).isoformat(),
+                datetime.date(y, 12, 31).isoformat())
+    if today.month <= 3 or (today.month == 4 and today.day < 7):   # spring
+        return (datetime.date(y, 1, 1).isoformat(),
+                datetime.date(y, 4, 6).isoformat())
+    return (datetime.date(y, 4, 7).isoformat(),   # summer
+            datetime.date(y, 8, 31).isoformat())
+
+
+def impact_figures(conn, establishment_id, date_from=None, date_to=None):
+    """The numbers a school weighs at renewal, over a chosen period.
 
     Deliberately conservative: change is measured only where the same pupil was
     rated at the start and again later, so a course with one rating contributes
     nothing rather than a flattering guess. A number a head of pastoral can't
-    trust is worse than no number."""
-    today = datetime.date.today().isoformat()
-    figures = {}
+    trust is worse than no number.
+
+    The period matters as much as the numbers. Schools report by term and by
+    academic year, so an all-time total that only ever grows answers none of the
+    questions actually asked in a governors' meeting. Counting is by session
+    date, not enrolment date: a course that started in July and ran through
+    September belongs to the term its sessions happened in."""
+    figures = {"date_from": date_from, "date_to": date_to}
+
+    # Applied to session_records.date. Kept as fragments so each query can drop
+    # them in without repeating the logic.
+    period_sql = ""
+    period_args = []
+    if date_from:
+        period_sql += " AND r.date >= ?"
+        period_args.append(date_from)
+    if date_to:
+        period_sql += " AND r.date <= ?"
+        period_args.append(date_to)
+
+    # Enrolments counted as those with at least one session in the period, so
+    # the figures describe activity rather than paperwork.
+    enrol_filter = ""
+    enrol_args = []
+    if date_from or date_to:
+        enrol_filter = (" AND e.id IN (SELECT r.enrolment_id FROM session_records r"
+                        " WHERE 1=1" + period_sql + ")")
+        enrol_args = list(period_args)
 
     row = conn.execute(
         """SELECT COUNT(*) AS enrolments,
@@ -2459,19 +2545,20 @@ def impact_figures(conn, establishment_id):
                   SUM(CASE WHEN e.status='withdrawn' THEN 1 ELSE 0 END) AS withdrawn,
                   COUNT(DISTINCT e.pupil_id) AS pupils
            FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
-           WHERE p.establishment_id = ?""", (establishment_id,)).fetchone()
+           WHERE p.establishment_id = ?""" + enrol_filter,
+        tuple([establishment_id] + enrol_args)).fetchone()
     figures.update(dict(row))
     figures["sessions"] = conn.execute(
         """SELECT COUNT(*) FROM session_records r
            JOIN enrolments e ON e.id = r.enrolment_id
-           JOIN pupils p ON p.id = e.pupil_id WHERE p.establishment_id = ?""",
-        (establishment_id,)).fetchone()[0]
+           JOIN pupils p ON p.id = e.pupil_id WHERE p.establishment_id = ?"""
+        + period_sql, tuple([establishment_id] + period_args)).fetchone()[0]
     figures["safeguarding"] = conn.execute(
         """SELECT COUNT(*) FROM session_records r
            JOIN enrolments e ON e.id = r.enrolment_id
            JOIN pupils p ON p.id = e.pupil_id
-           WHERE p.establishment_id = ? AND r.safeguarding_flag = 1""",
-        (establishment_id,)).fetchone()[0]
+           WHERE p.establishment_id = ? AND r.safeguarding_flag = 1"""
+        + period_sql, tuple([establishment_id] + period_args)).fetchone()[0]
 
     # First and last rating per enrolment, counted only where both exist.
     changes = {"mood": [], "engagement": []}
@@ -2481,8 +2568,9 @@ def impact_figures(conn, establishment_id):
            JOIN weeks w ON w.id = r.week_id
            JOIN enrolments e ON e.id = r.enrolment_id
            JOIN pupils p ON p.id = e.pupil_id
-           WHERE p.establishment_id = ? AND w.staff_only = 0
-           ORDER BY r.enrolment_id, w.week_number""", (establishment_id,)).fetchall()
+           WHERE p.establishment_id = ? AND w.staff_only = 0""" + period_sql + """
+           ORDER BY r.enrolment_id, w.week_number""",
+        tuple([establishment_id] + period_args)).fetchall()
     per = {}
     for r in rows:
         per.setdefault(r["enrolment_id"], []).append(r)
@@ -2503,14 +2591,18 @@ def impact_figures(conn, establishment_id):
            FROM enrolments e
            JOIN courses c ON c.id = e.course_id
            JOIN pupils p ON p.id = e.pupil_id
-           WHERE p.establishment_id = ?
-           GROUP BY c.id ORDER BY n DESC, c.title""", (establishment_id,)).fetchall()
+           WHERE p.establishment_id = ?""" + enrol_filter + """
+           GROUP BY c.id ORDER BY n DESC, c.title""",
+        tuple([establishment_id] + enrol_args)).fetchall()
 
+    # Deliberately not filtered by period: this is a "right now" figure. A
+    # review that was overdue last term and has since been done is not an
+    # outstanding problem today.
     figures["reviews_overdue"] = conn.execute(
         """SELECT COUNT(*) FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
            WHERE p.establishment_id = ? AND e.review_date IS NOT NULL
              AND e.review_done = 0 AND e.review_date < ?""",
-        (establishment_id, today)).fetchone()[0]
+        (establishment_id, datetime.date.today().isoformat())).fetchone()[0]
 
     figures["plans_written"] = conn.execute(
         """SELECT COUNT(DISTINCT r.enrolment_id) FROM session_records r
@@ -2518,8 +2610,8 @@ def impact_figures(conn, establishment_id):
            JOIN enrolments e ON e.id = r.enrolment_id
            JOIN pupils p ON p.id = e.pupil_id
            WHERE p.establishment_id = ? AND w.staff_only = 1
-             AND r.what_happened IS NOT NULL AND r.what_happened != ''""",
-        (establishment_id,)).fetchone()[0]
+             AND r.what_happened IS NOT NULL AND r.what_happened != ''""" + period_sql,
+        tuple([establishment_id] + period_args)).fetchone()[0]
     return figures
 
 
@@ -2552,6 +2644,41 @@ def cron_retention_check(request):
     return Response(f"daily checks ok \u2014 {summary}\n", content_type="text/plain")
 
 
+@router.get("/admin/reports/impact")
+def impact_report_form(request):
+    """Lets a school choose the period before downloading.
+
+    The quick options cover most asks, but a school's terms are set locally and
+    vary, so the date fields are the point: a head writing an annual report or a
+    pupil premium statement needs the dates their governors recognise, not an
+    approximation of them."""
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+
+    today = datetime.date.today()
+    year_from, year_to = academic_year_bounds(today)
+    term_from, term_to = current_term_bounds(today)
+
+    conn = db.get_conn()
+    try:
+        years = recorded_academic_years(conn, user["establishment_id"])
+    finally:
+        conn.close()
+
+    presets = [
+        ("This academic year", year_from, year_to),
+        ("This term", term_from, term_to),
+    ]
+    return render("impact_form.html", user=user, presets=presets, years=years,
+                  current_year_from=year_from,
+                  default_from=year_from, default_to=year_to,
+                  flash=flash_from_query(request))
+
+
 @router.get("/admin/reports/impact/pdf")
 def impact_report_download(request):
     """The report a school shows its governors, and weighs at renewal."""
@@ -2561,11 +2688,46 @@ def impact_report_download(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
+    # ?period=year (default) covers the current academic year, ?period=all the
+    # whole history, and explicit from/to dates cover a term. Defaulting to the
+    # academic year rather than all-time is deliberate: it matches how a school
+    # reports, and an all-time total that only grows answers no real question.
+    period = request.query.get("period", ["year"])[0]
+    date_from = request.query.get("from", [None])[0]
+    date_to = request.query.get("to", [None])[0]
+
+    # The year dropdown sends one value so a select can carry both dates.
+    chosen = request.query.get("range", [None])[0]
+    if chosen and "|" in chosen:
+        date_from, date_to = chosen.split("|", 1)
+
+    # Dates arrive from a form and a URL, so validate rather than trust. A bad
+    # date is a mistake, not an attack, so say so and let them try again.
+    for value in (date_from, date_to):
+        if value:
+            try:
+                datetime.date.fromisoformat(value)
+            except ValueError:
+                return with_flash("/admin/reports/impact",
+                                  "Those dates weren't recognised. Please pick them again.",
+                                  "error")
+    if date_from and date_to and date_from > date_to:
+        return with_flash("/admin/reports/impact",
+                          "The start date is after the end date.", "error")
+
+    if not (date_from or date_to):
+        if period == "year":
+            date_from, date_to = academic_year_bounds()
+        elif period == "term":
+            date_from, date_to = current_term_bounds()
+        elif period == "all":
+            date_from = date_to = None
+
     conn = db.get_conn()
     try:
         estab = conn.execute("SELECT name FROM establishments WHERE id=?",
                              (user["establishment_id"],)).fetchone()
-        figures = impact_figures(conn, user["establishment_id"])
+        figures = impact_figures(conn, user["establishment_id"], date_from, date_to)
     finally:
         conn.close()
     path = pdfgen.impact_report_pdf(user["establishment_id"],
@@ -2582,8 +2744,8 @@ def admin_reports_chooser(request):
     if blocked:
         return blocked
     cards = [
-        {"title": "Impact report", "desc": "How mentoring is going across the school: pupils supported, completion, change in engagement, and follow-ups outstanding. For governors and SLT.",
-         "href": "/admin/reports/impact/pdf", "icon": _ICON_CHART,
+        {"title": "Impact report", "desc": "How mentoring is going across the school: pupils supported, completion, change in engagement, and follow-ups outstanding. For governors and SLT. Choose any period.",
+         "href": "/admin/reports/impact", "icon": _ICON_CHART,
          "bg": "var(--amber-light)"},
         {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
          "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},

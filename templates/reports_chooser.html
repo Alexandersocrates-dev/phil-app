@@ -13,6 +13,19 @@
   </div>
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke-width="2.4" stroke-linecap="round" style="width:18px;height:18px;stroke:#5F5E5A;flex-shrink:0;margin-top:10px;" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
 </a>
+{# Period options sit below the card, not inside it: a link inside a link is
+   invalid and browsers handle it unpredictably. #}
+{% if card.extra_links %}
+<p class="report-periods">Or cover:
+  {% for label, href in card.extra_links %}<a href="{{ href }}">{{ label }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}
+</p>
+{% endif %}
 {% endfor %}
 {% if note %}<p class="muted" style="font-size:12px; margin-top:4px;">{{ note }}</p>{% endif %}
+
+<style>
+.report-periods{margin:-8px 0 16px; padding-left:62px; font-size:12.5px; color:var(--muted);}
+.report-periods a{color:var(--teal-dark, #0F6E56); text-decoration:none; font-weight:600;}
+.report-periods a:hover{text-decoration:underline;}
+</style>
 {% endblock %}

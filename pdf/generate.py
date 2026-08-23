@@ -577,8 +577,19 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     x = margin
     max_width = w - 2 * margin
 
+    # The period belongs in the header, not a footnote. A report that does not
+    # say what it covers gets quoted as though it covers everything.
+    if f.get("date_from") and f.get("date_to"):
+        period = f"{f['date_from']} to {f['date_to']}"
+    elif f.get("date_from"):
+        period = f"from {f['date_from']}"
+    elif f.get("date_to"):
+        period = f"up to {f['date_to']}"
+    else:
+        period = "All activity to date"
     y = _doc_header(c, w, h, margin, "Impact report", meta=[
         ("School", establishment_name),
+        ("Period", period),
         ("Issued", datetime.date.today().isoformat()),
     ])
 
@@ -627,7 +638,9 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     c.setFillColor(MUTED)
     c.setFont("Helvetica-Oblique", 8.5)
     y = _wrap(c, "Ratings are the mentor's judgement at the time, on a 1\u20135 scale. "
-                 "Only courses rated more than once are counted.", x, y, max_width, size=8.5)
+                 "Only courses rated more than once are counted. Figures cover "
+                 "sessions delivered in the period above, so a course spanning "
+                 "two terms appears in both.", x, y, max_width, size=8.5)
     y -= 6 * mm
 
     y = _doc_section(c, x, y, "Follow-through", max_width)
