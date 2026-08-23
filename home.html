@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Phil: structured mentoring courses for schools</title>
-<meta name="description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK secondary schools. Structured sessions, a safeguarding step every time, and governance-ready reporting.">
+<meta name="description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK schools. Structured sessions, a safeguarding step every time, and governance-ready reporting.">
 <meta property="og:title" content="Phil: structured mentoring courses for schools">
-<meta property="og:description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK secondary schools.">
+<meta property="og:description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK schools.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1B2A4A">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +53,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-nav-actions .btn-mkt-primary{padding:10px 16px;font-size:12.5px;min-height:44px;}
 .mkt-hero{background:linear-gradient(180deg,#F3F0E6 0%,#FBF8F2 100%);border-bottom:1px solid var(--border);}
 .mkt-hero-grid{max-width:1120px;margin:0 auto;padding:48px 20px 40px;display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
-.mkt-hero-copy h1{font-family:var(--font-head);font-weight:800;font-size:30px;line-height:1.15;color:var(--navy);margin:0 0 18px;letter-spacing:-0.015em;}
+.mkt-hero-copy h1{font-family:var(--font-head);font-weight:800;font-size:30px;line-height:1.15;color:var(--navy);margin:0 0 18px;letter-spacing:-0.015em;max-width:15ch;}
 .mkt-hero-copy h1 em{font-style:normal;color:var(--teal-dark);}
 .mkt-section-head h2 em{font-style:normal;color:var(--teal-dark);}
 .mkt-hero-copy p{font-size:16.5px;line-height:1.65;color:var(--muted);margin:0 0 28px;max-width:520px;}
@@ -70,7 +70,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-device-mock{z-index:1;}
 .mkt-stats{background:var(--navy);}
 .mkt-stats-intro{max-width:640px;margin:0 0 40px;}
-.mkt-stats-intro .mkt-eyebrow{background:rgba(29,158,117,0.22);color:#9FD6C2;}
+.mkt-stats-intro .mkt-eyebrow{background:rgba(255,255,255,0.92);color:#085041;}
 .mkt-stats-intro h2{font-family:var(--font-head);font-weight:800;font-size:26px;color:#fff;margin:0 0 10px;letter-spacing:-0.01em;}
 .mkt-stats-intro p{font-size:14.5px;color:#B9C3D6;line-height:1.6;margin:0;}
 .mkt-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
@@ -106,6 +106,13 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-course-pill .mkt-course-num{font-family:var(--font-head);font-weight:800;font-size:11.5px;color:var(--teal-darker);flex-shrink:0;}
 .mkt-course-pill.is-new .mkt-course-num{color:var(--amber-dark);}
 .mkt-course-pill span.mkt-course-title{font-size:12.5px;color:var(--ink);line-height:1.4;}
+.mkt-course-pill{position:relative;text-decoration:none;color:inherit;cursor:pointer;padding-right:26px;transition:transform .14s ease,box-shadow .14s ease,border-color .14s ease,background-color .14s ease;}
+.mkt-course-pill::after{content:"\2192";position:absolute;right:11px;top:50%;transform:translateY(-50%) translateX(-3px);font-size:13px;font-weight:700;color:var(--teal-darker);opacity:0;transition:opacity .14s ease,transform .14s ease;}
+.mkt-course-pill:hover,.mkt-course-pill:focus-visible{transform:translateY(-2px);border-color:var(--teal-darker);box-shadow:inset 0 0 0 1px var(--teal-darker),0 6px 18px rgba(15,110,86,.18);background:var(--teal-light);}
+.mkt-course-pill:hover::after,.mkt-course-pill:focus-visible::after{opacity:1;transform:translateY(-50%) translateX(0);}
+.mkt-course-pill:focus-visible{outline:2px solid var(--teal-darker);outline-offset:2px;}
+.mkt-course-pill:active{transform:translateY(0);box-shadow:0 2px 8px rgba(15,110,86,.14);}
+@media (prefers-reduced-motion:reduce){.mkt-course-pill,.mkt-course-pill::after{transition:none;}.mkt-course-pill:hover{transform:none;}}
 .mkt-courses-note{margin-top:26px;text-align:center;font-size:13px;color:var(--muted);}
 .mkt-courses-note a{color:var(--teal-darker);font-weight:700;text-decoration:none;}
 .mkt-courses-note a:hover{text-decoration:underline;}
@@ -137,7 +144,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-safeguard{background:var(--navy);}
 .mkt-safeguard .mkt-section-head h2{color:#fff;}
 .mkt-safeguard .mkt-section-head p{color:#B9C3D6;}
-.mkt-safeguard .mkt-eyebrow{background:rgba(239,159,39,0.18);color:#F6CE8E;}
+.mkt-safeguard .mkt-eyebrow{background:rgba(255,255,255,0.92);color:#633806;}
 .mkt-safeguard-grid{display:grid;grid-template-columns:1fr;gap:16px;}
 .mkt-safeguard-point{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 22px;}
 .mkt-safeguard-point .sgi{width:36px;height:36px;border-radius:10px;background:rgba(239,159,39,0.16);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
@@ -170,6 +177,9 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:#6B7A94;}
 
 /* ===== Tablet (>=700px) ===== */
+@media (min-width: 1000px) {
+.mkt-hero-grid{grid-template-columns:1.05fr 0.95fr;align-items:center;}
+}
 @media (min-width: 700px) {
 .mkt-container{padding:0 32px;}
 .mkt-section{padding:60px 0;}
@@ -200,7 +210,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-logo svg{width:36px;height:36px;}
 .mkt-logo span{font-size:20px;}
 .mkt-nav-links{display:flex;gap:30px;}
-.mkt-hero-grid{padding:76px 40px 64px;grid-template-columns:1.05fr 0.95fr;gap:56px;}
+.mkt-hero-grid{padding:76px 40px 64px;gap:56px;}
 .mkt-hero-copy h1{font-size:42px;line-height:1.12;}
 .mkt-stat-grid{grid-template-columns:repeat(4,1fr);gap:28px;}
 .mkt-feature-grid{grid-template-columns:repeat(3,1fr);gap:20px;}
@@ -274,7 +284,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 
           <div style="display:flex;align-items:center;gap:10px;border:1.4px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:16px;">
             <div style="width:30px;height:30px;border-radius:9px;background:var(--coral-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:11.5px;color:var(--navy);">Course library</div><div style="font-size:9.5px;color:var(--muted);">Browse all 12 courses to decide what to enrol a pupil on</div></div>
+            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:11.5px;color:var(--navy);">Course library</div><div style="font-size:9.5px;color:var(--muted);">Browse all 20 courses to decide what to enrol a pupil on</div></div>
             <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" style="width:13px;height:13px;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
           </div>
 
@@ -336,15 +346,15 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
         <div class="mkt-container">
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">What Phil gives you</span>
-            <h2>Everything a structured mentoring offer needs, <em>in one place</em></h2>
-            <p>Not a generic behaviour app, a library of courses, a safeguarding-conscious record, and reporting built specifically for how English schools work.</p>
+            <h2>Everything a structured mentoring offer needs</h2>
+            <p>Not a generic behaviour app. A library of courses, a safeguarding-conscious record, and reporting built for how English schools actually work.</p>
           </div>
           <div class="mkt-feature-grid">
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>20 evidence-grounded courses</h3><p>Five structured weekly sessions per course, each mapped to published DfE, Ofsted and EEF guidance, not a generic behaviour template.</p></div>
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>A safeguarding step on every session</h3><p>A mandatory flag and note on every session record, consistent with the vigilance culture KCSIE asks every member of staff to hold.</p></div>
-            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></div><h3>Continuity that survives a staff change</h3><p>A CompletionReflection travels with the pupil, so a new mentor picks up from what&rsquo;s already known, not from nothing.</p></div>
-            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg></div><h3>Governance-ready reporting</h3><p>Caseload, whole-establishment and individual pupil reports schools can hand straight to governors, a parents&rsquo; evening, or an Ofsted conversation.</p></div>
-            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 6 22l6-3 6 3-2.5-8.5"/></svg></div><h3>Visible, tangible progress</h3><p>A live progress bar and an automatically issued certificate give every pupil a concrete sense of what they&rsquo;ve achieved.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg></div><h3>Continuity that survives a staff change</h3><p>The closing summary stays with the pupil, so a new mentor picks up from what is already known rather than starting cold.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg></div><h3>Governance-ready reporting</h3><p>Mentoring list, whole-establishment and individual pupil reports, ready to take into a governors&rsquo; meeting, a parents&rsquo; evening or an Ofsted conversation.</p></div>
+            <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 6 22l6-3 6 3-2.5-8.5"/></svg></div><h3>Progress a pupil can see</h3><p>A live progress bar and a certificate at the end, so a pupil finishes the course with something to show for it.</p></div>
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div><h3>Scales from one mentor to a trust</h3><p>The same structured content and reporting work for an independent mentor, a single school, or a multi-academy trust.</p></div>
           </div>
         </div>
@@ -384,8 +394,8 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-how-grid">
             <div class="mkt-how-step"><div class="mkt-how-num">1</div><h3>Enrol a pupil</h3><p>An admin or mentor enrols a pupil onto one of the twenty courses in minutes.</p></div>
             <div class="mkt-how-step"><div class="mkt-how-num">2</div><h3>Run five structured sessions</h3><p>Each session follows the course&rsquo;s defined objective and activities, with a mandatory safeguarding step every time.</p></div>
-            <div class="mkt-how-step"><div class="mkt-how-num">3</div><h3>Reflect and certify</h3><p>A CompletionReflection and an automatically issued certificate close out the course.</p></div>
-            <div class="mkt-how-step"><div class="mkt-how-num">4</div><h3>Report with confidence</h3><p>Pull caseload, establishment or individual reports whenever governors, Ofsted or a parent need to see the evidence.</p></div>
+            <div class="mkt-how-step"><div class="mkt-how-num">3</div><h3>Reflect and certify</h3><p>A closing summary and an automatically issued certificate complete the course.</p></div>
+            <div class="mkt-how-step"><div class="mkt-how-num">4</div><h3>Report with confidence</h3><p>Pull mentoring list, establishment or individual reports whenever governors, Ofsted or a parent need to see the evidence.</p></div>
           </div>
         </div>
       </section>
@@ -394,17 +404,25 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">The course library</span>
             <h2>Twenty courses, <em>ready to assign</em></h2>
-            <p>Every course is a five-week structured plan grounded in DfE, Ofsted and clinical guidance. Titles are below, sign up to see full session plans, activities and resources for each one.</p>
+            <p>Every course is a five-week structured plan grounded in DfE, Ofsted and clinical guidance. The titles are below. Sign up to see the full session plans, activities and resources for each one.</p>
           </div>
           <div class="mkt-course-group">
-            <p class="mkt-course-group-label">Classroom and behaviour</p>
-            <div class="mkt-course-grid"><div class="mkt-course-pill"><span class="mkt-course-num">01</span><span class="mkt-course-title">Physical aggression</span></div><div class="mkt-course-pill"><span class="mkt-course-num">02</span><span class="mkt-course-title">Defiance and non-compliance</span></div><div class="mkt-course-pill"><span class="mkt-course-num">03</span><span class="mkt-course-title">Emotional regulation</span></div><div class="mkt-course-pill"><span class="mkt-course-num">04</span><span class="mkt-course-title">Peer conflict and bullying</span></div><div class="mkt-course-pill"><span class="mkt-course-num">05</span><span class="mkt-course-title">Verbal disruption</span></div><div class="mkt-course-pill"><span class="mkt-course-num">06</span><span class="mkt-course-title">Anxiety and avoidance</span></div><div class="mkt-course-pill"><span class="mkt-course-num">07</span><span class="mkt-course-title">Low-level disengagement</span></div><div class="mkt-course-pill"><span class="mkt-course-num">08</span><span class="mkt-course-title">Disrespect to authority</span></div><div class="mkt-course-pill"><span class="mkt-course-num">09</span><span class="mkt-course-title">Social withdrawal</span></div><div class="mkt-course-pill"><span class="mkt-course-num">10</span><span class="mkt-course-title">Property damage and destructive behaviour</span></div><div class="mkt-course-pill"><span class="mkt-course-num">11</span><span class="mkt-course-title">Anger management</span></div><div class="mkt-course-pill"><span class="mkt-course-num">12</span><span class="mkt-course-title">Truancy and school avoidance</span></div></div>
+            <p class="mkt-course-group-label">Behaviour in the classroom</p>
+            <div class="mkt-course-grid"><a class="mkt-course-pill" href="/courses/module/01"><span class="mkt-course-num">01</span><span class="mkt-course-title">Physical aggression</span></a><a class="mkt-course-pill" href="/courses/module/02"><span class="mkt-course-num">02</span><span class="mkt-course-title">Defiance and non-compliance</span></a><a class="mkt-course-pill" href="/courses/module/05"><span class="mkt-course-num">05</span><span class="mkt-course-title">Verbal disruption</span></a><a class="mkt-course-pill" href="/courses/module/08"><span class="mkt-course-num">08</span><span class="mkt-course-title">Disrespect to authority</span></a><a class="mkt-course-pill" href="/courses/module/10"><span class="mkt-course-num">10</span><span class="mkt-course-title">Property damage and destructive behaviour</span></a></div>
           </div>
           <div class="mkt-course-group">
-            <p class="mkt-course-group-label">Wellbeing and safeguarding</p>
-            <div class="mkt-course-grid"><div class="mkt-course-pill is-new"><span class="mkt-course-num">13</span><span class="mkt-course-title">Vaping and nicotine use</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">14</span><span class="mkt-course-title">Young carers: balancing care and school</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">15</span><span class="mkt-course-title">Online safety, cyberbullying and digital wellbeing</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">16</span><span class="mkt-course-title">Exam and academic pressure</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">17</span><span class="mkt-course-title">Sensory regulation for neurodivergent pupils</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">18</span><span class="mkt-course-title">Bereavement and loss</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">19</span><span class="mkt-course-title">Safeguarding: exploitation and county lines awareness</span></div><div class="mkt-course-pill is-new"><span class="mkt-course-num">20</span><span class="mkt-course-title">Moving up: primary-to-secondary and other school transitions</span></div></div>
+            <p class="mkt-course-group-label">Emotions and self-regulation</p>
+            <div class="mkt-course-grid"><a class="mkt-course-pill" href="/courses/module/03"><span class="mkt-course-num">03</span><span class="mkt-course-title">Emotional regulation</span></a><a class="mkt-course-pill" href="/courses/module/11"><span class="mkt-course-num">11</span><span class="mkt-course-title">Anger management</span></a><a class="mkt-course-pill" href="/courses/module/06"><span class="mkt-course-num">06</span><span class="mkt-course-title">Anxiety and avoidance</span></a><a class="mkt-course-pill" href="/courses/module/17"><span class="mkt-course-num">17</span><span class="mkt-course-title">Sensory regulation for neurodivergent pupils</span></a><a class="mkt-course-pill" href="/courses/module/16"><span class="mkt-course-num">16</span><span class="mkt-course-title">Exam and academic pressure</span></a></div>
           </div>
-          <p class="mkt-courses-note">Full session plans, activities and mentor guidance unlock once your school signs up. <a href="#mkt-pricing">See plans and pricing &rarr;</a></p>
+          <div class="mkt-course-group">
+            <p class="mkt-course-group-label">Relationships and belonging</p>
+            <div class="mkt-course-grid"><a class="mkt-course-pill" href="/courses/module/04"><span class="mkt-course-num">04</span><span class="mkt-course-title">Peer conflict and bullying</span></a><a class="mkt-course-pill" href="/courses/module/09"><span class="mkt-course-num">09</span><span class="mkt-course-title">Social withdrawal</span></a><a class="mkt-course-pill" href="/courses/module/15"><span class="mkt-course-num">15</span><span class="mkt-course-title">Online safety, cyberbullying and digital wellbeing</span></a><a class="mkt-course-pill" href="/courses/module/14"><span class="mkt-course-num">14</span><span class="mkt-course-title">Young carers: balancing care and school</span></a><a class="mkt-course-pill" href="/courses/module/18"><span class="mkt-course-num">18</span><span class="mkt-course-title">Bereavement and loss</span></a></div>
+          </div>
+          <div class="mkt-course-group">
+            <p class="mkt-course-group-label">Attendance, engagement and risk</p>
+            <div class="mkt-course-grid"><a class="mkt-course-pill" href="/courses/module/07"><span class="mkt-course-num">07</span><span class="mkt-course-title">Low-level disengagement</span></a><a class="mkt-course-pill" href="/courses/module/12"><span class="mkt-course-num">12</span><span class="mkt-course-title">Truancy and school avoidance</span></a><a class="mkt-course-pill" href="/courses/module/13"><span class="mkt-course-num">13</span><span class="mkt-course-title">Vaping and nicotine use</span></a><a class="mkt-course-pill" href="/courses/module/19"><span class="mkt-course-num">19</span><span class="mkt-course-title">Safeguarding: exploitation and county lines awareness</span></a><a class="mkt-course-pill" href="/courses/module/20"><span class="mkt-course-num">20</span><span class="mkt-course-title">Moving up: primary-to-secondary and other school transitions</span></a></div>
+          </div>
+          <p class="mkt-courses-note">Full session plans, activities and mentor guidance are included once your school signs up. <a href="#mkt-pricing">See plans and pricing &rarr;</a></p>
         </div>
       </section>
       <section class="mkt-section" id="mkt-pricing">
@@ -412,13 +430,13 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">Pricing</span>
             <h2>Priced against <em>real comparables</em>, not generic software</h2>
-            <p>Benchmarked against UK solo-practitioner tools and school safeguarding/SEND software, not invented from scratch.</p>
+            <p>Benchmarked against UK solo-practitioner tools and school safeguarding and SEND software.</p>
           </div>
           <div class="mkt-pricing-promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg><span>Free 3-week pilot for every new establishment, up to 3 seats, 10 pupils, no card required</span></div>
           <div class="mkt-price-grid">
             <div class="mkt-price-card">
               <h3>Individual</h3>
-              <p class="mkt-price-desc">For a mentor not attached to a school subscription, private practice, alternative provision, or independent work with families.</p>
+              <p class="mkt-price-desc">For a mentor working outside a school subscription: private practice, alternative provision, or independent work with families.</p>
               <div class="mkt-price-amount"><span class="num">&pound;22</span><span class="mkt-price-period">/month</span></div>
               <div class="mkt-price-alt">or &pound;220/year, roughly 2 months free</div>
               <ul class="mkt-price-list">
@@ -454,6 +472,17 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             </table>
             <p class="mkt-multiyear-note">Multi-year terms and any seats beyond the included 15 are arranged directly: email <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a> and we&rsquo;ll raise an invoice against your purchase order.</p>
           </div>
+          <div class="mkt-multiyear">
+            <h4>Multi-academy trusts</h4>
+            <table>
+              <tr><th>Schools in the trust</th><th>Discount</th><th>Price per school, per year</th></tr>
+              <tr><td>2&ndash;4</td><td>10%</td><td class="hl">&pound;675</td></tr>
+              <tr><td>5&ndash;9</td><td>20%</td><td class="hl">&pound;600</td></tr>
+              <tr><td>10&ndash;19</td><td>30%</td><td class="hl">&pound;525</td></tr>
+              <tr><td>20 or more</td><td>40%</td><td class="hl">&pound;450</td></tr>
+            </table>
+            <p class="mkt-multiyear-note">One invoice to the trust, one purchase order, one renewal date, and 15 mentor seats per school. Multi-year discounts apply on top. Each school gets its own reporting; trust-wide reporting across schools is on the roadmap and we&rsquo;d want your input on what it should show. Email <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a>.</p>
+          </div>
         </div>
       </section>
       <section class="mkt-safeguard" id="mkt-safeguard">
@@ -461,25 +490,12 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">Safeguarding &amp; trust</span>
             <h2>Built to sit alongside your safeguarding procedures, not replace them</h2>
-            <p>Phil is a session-recording and course-delivery tool, not a safeguarding reporting system. Adopting it clarifies exactly where the platform&rsquo;s role ends and your school&rsquo;s normal procedure begins.</p>
+            <p>Phil is a session-recording and course-delivery tool, not a safeguarding reporting system. Where its role ends and your own procedure begins is set out plainly, so nobody has to guess.</p>
           </div>
           <div class="mkt-safeguard-grid">
-            <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>A mandatory step, every session</h3><p>Every mentor ticks a safeguarding flag and factual note on every session, keeping vigilance active regardless of experience.</p></div>
+            <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>A mandatory step, every session</h3><p>Every mentor completes a safeguarding flag and a factual note on every session, whether they have been mentoring for a term or a decade.</p></div>
             <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Never a substitute for your DSL</h3><p>Phil doesn&rsquo;t send alerts, notify a DSL, or monitor content. Mentors report concerns through the school&rsquo;s normal route, the same day, exactly as KCSIE requires.</p></div>
             <div class="mkt-safeguard-point"><div class="sgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Clear, reviewable access</h3><p>Admin accounts can look up any pupil&rsquo;s records, including safeguarding notes. A ready-made policy template sets out exactly who sees what.</p></div>
-          </div>
-        </div>
-      </section>
-      <section class="mkt-section tight">
-        <div class="mkt-container">
-          <div class="mkt-section-head center">
-            <span class="mkt-eyebrow">What a Phil rollout could look like</span>
-            <h2>Illustrative, real school and mentor feedback to follow</h2>
-          </div>
-          <div class="mkt-testimonial-grid">
-            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;Every mentor now works from the same structured course, no more two pupils getting two completely different experiences depending who they see.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">PL</div><div>Pastoral Lead<span>UK secondary school</span></div></div></div>
-            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;The safeguarding step means nothing gets missed, without turning Phil into another system we have to monitor.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">DSL</div><div>Designated Safeguarding Lead<span>UK secondary school</span></div></div></div>
-            <div class="mkt-testimonial-card"><p class="mkt-testimonial-quote">&ldquo;I finally have a caseload view instead of a mental list in my head.&rdquo;</p><div class="mkt-testimonial-role"><div class="mkt-testimonial-avatar">M</div><div>Mentor<span>Independent practice</span></div></div></div>
           </div>
         </div>
       </section>
@@ -499,7 +515,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-footer-grid">
             <div class="mkt-footer-brand">
               <div class="mkt-logo"><svg viewBox="0 0 120 120" role="img" aria-label="Phil"><rect x="30" y="16" width="66" height="90" rx="4" fill="#EAE2CC" stroke="#D9CFB4" stroke-width="1"/><rect x="62" y="2" width="7" height="14" fill="#D85A30"/><rect x="30" y="16" width="56" height="84" rx="6" fill="#0F6E56"/><path fill-rule="evenodd" fill="#F3EFE4" d="M 35.5,28 L 35.5,88 L 50.5,88 L 50.5,63 L 60.5,63 C 73.5,63 80.5,56 80.5,45 C 80.5,34 73.5,28 60.5,28 Z M 50.5,40 L 60.5,40 C 65.5,40 67.5,42 67.5,45 C 67.5,48 65.5,50 60.5,50 L 50.5,50 Z"/></svg><span>Phil</span></div>
-              <p>Structured support, real growth. A library of five-week, evidence-grounded mentoring courses for UK secondary schools.</p>
+              <p>Structured support, real growth. A library of five-week, evidence-grounded mentoring courses for UK schools.</p>
             </div>
             <div class="mkt-footer-col">
               <h4>Product</h4>
