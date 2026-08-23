@@ -45,10 +45,12 @@
   {% if item.steps %}
   <div class="res-steps">
     {% for st in item.steps %}
-    <div class="res-step tone-{{ item.tone|default('teal') }}">
-      <div class="res-step-head"><span class="res-step-n">{{ loop.index }}</span><span>{{ st.title }}</span></div>
-      {% if st.art %}<svg class="res-art" viewBox="0 0 100 74" aria-hidden="true"><use href="#{{ st.art }}"></use></svg>{% endif %}
-      <p class="res-step-text">{{ st.text }}</p>
+    <div class="res-card tone-{{ item.tone|default('teal') }}">
+      <p class="res-card-cat">Step {{ loop.index }}</p>
+      <p class="res-card-title">{{ st.title }}</p>
+      <div class="res-card-art">{% if st.art %}<svg class="res-art" viewBox="0 0 100 74" aria-hidden="true"><use href="#{{ st.art }}"></use></svg>{% endif %}</div>
+      <p class="res-card-text">{{ st.text }}</p>
+      <p class="res-card-note{% if not st.note %} res-card-note--empty{% endif %}">{{ st.note|default('', true) }}</p>
     </div>
     {% endfor %}
   </div>
@@ -426,19 +428,15 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-prev summary{cursor:pointer;padding:8px 11px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
 .tone-pink{background:#FBEAF0;border-color:#993556;color:#993556;}
 .tone-pink .res-card-title,.tone-pink .res-card-text{color:#4B1528;}
-.tone-pink .res-step-n{background:#993556;}
 .tone-pink .res-card-note{border-top-color:#F4C0D1;}
 .tone-blue{background:#E6F1FB;border-color:#185FA5;color:#185FA5;}
 .tone-blue .res-card-title,.tone-blue .res-card-text{color:#042C53;}
-.tone-blue .res-step-n{background:#185FA5;}
 .tone-blue .res-card-note{border-top-color:#B5D4F4;}
 .tone-green{background:#EAF3DE;border-color:#3B6D11;color:#3B6D11;}
 .tone-green .res-card-title,.tone-green .res-card-text{color:#173404;}
-.tone-green .res-step-n{background:#3B6D11;}
 .tone-green .res-card-note{border-top-color:#C0DD97;}
 .tone-red{background:#FCEBEB;border-color:#A32D2D;color:#A32D2D;}
 .tone-red .res-card-title,.tone-red .res-card-text{color:#501313;}
-.tone-red .res-step-n{background:#A32D2D;}
 .tone-red .res-card-note{border-top-color:#F7C1C1;}
 .res-prev-body{padding:0 11px 10px;}
 /* The five steps ran into one another as a single column of text. A rule and
@@ -480,11 +478,11 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-writable input[type=text]:focus{outline:none; box-shadow:inset 0 0 0 2px var(--teal-dark); background:#fff;}
 .res-check-label{display:flex; align-items:flex-start; gap:9px; cursor:pointer; padding:3px 0;}
 .res-check-label input{margin-top:2px; width:18px; height:18px; accent-color:var(--teal-dark); flex-shrink:0;}
-.res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:8px;margin:6px 0 0;}
-.res-step{background:#fff;border-radius:10px;padding:10px;}
-.res-step-head{display:flex;align-items:center;gap:7px;margin:0 0 7px;font-size:12px;font-weight:600;}
-.res-step-n{flex:0 0 20px;height:20px;border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
-.res-step-text{font-size:11.5px;line-height:1.4;margin:6px 0 0;}
+/* A step sequence is read in order and is usually short, so it wraps in a grid
+   rather than scrolling sideways like a card set. The cards themselves are the
+   same component, so the two always look alike. */
+.res-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:6px 0 0;}
+.res-steps .res-card{flex:none;width:auto;}
 .res-art{width:100%;height:52px;display:block;}
 .res-cards{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
 /* A grid with fixed rows, so the category, artwork and note land at the same
@@ -503,15 +501,12 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-foot{font-size:11px;color:var(--muted);margin:8px 0 0;}
 .tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}
 .tone-teal .res-card-title,.tone-teal .res-card-text{color:#04342C;}
-.tone-teal .res-step-n{background:var(--teal-darker);}
 .tone-teal .res-card-note{border-top-color:#9FE1CB;}
 .tone-coral{background:var(--coral-light);border-color:var(--coral-dark);color:var(--coral-dark);}
 .tone-coral .res-card-title,.tone-coral .res-card-text{color:#4A1B0C;}
-.tone-coral .res-step-n{background:var(--coral-dark);}
 .tone-coral .res-card-note{border-top-color:#F5C4B3;}
 .tone-amber{background:var(--amber-light);border-color:var(--amber-dark);color:var(--amber-dark);}
 .tone-amber .res-card-title,.tone-amber .res-card-text{color:#412402;}
-.tone-amber .res-step-n{background:var(--amber-dark);}
 .tone-amber .res-card-note{border-top-color:#FAC775;}
 /* The older list-style step rules used to sit here. Coming later in the sheet
    than the grid rules above, they overrode them: .res-steps went back to a
