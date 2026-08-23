@@ -513,12 +513,16 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .tone-amber .res-card-title,.tone-amber .res-card-text{color:#412402;}
 .tone-amber .res-step-n{background:var(--amber-dark);}
 .tone-amber .res-card-note{border-top-color:#FAC775;}
-.res-prev-body{padding:0 11px 10px;}
-.res-steps{list-style:none;counter-reset:none;margin:6px 0 0;padding:0;}
-.res-steps li{display:flex;gap:9px;align-items:flex-start;background:var(--teal-light);border-radius:8px;padding:8px 10px;margin:0 0 6px;font-size:13px;line-height:1.45;color:var(--teal-darker);}
-.res-step-n{flex:0 0 20px;height:20px;border-radius:50%;background:var(--teal-darker);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
-.res-cards{display:flex;gap:8px;overflow-x:auto;padding:8px 2px 10px;margin:4px 0 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
-.res-card{scroll-snap-align:start;flex:0 0 148px;min-height:78px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 10px;border:1.5px dashed var(--teal-darker);border-radius:10px;background:#fff;font-size:13px;font-weight:600;line-height:1.35;color:var(--navy);}
+/* The older list-style step rules used to sit here. Coming later in the sheet
+   than the grid rules above, they overrode them: .res-steps went back to a
+   stacked list and .res-step-n lost its per-tone colour, so a step sequence
+   ignored its card layout. Same fault as the duplicate .res-card rule. The
+   rules above are the live ones. */
+/* The earlier flat-card styling used to live here. It came later in the sheet
+   than the illustrated-card rules and so overrode them, turning each card's
+   grid into a centred flex row: title, text and note ended up side by side in a
+   152px column, which is what made them unreadable. The illustrated rules above
+   are the live ones. */
 .res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
 
 </style>

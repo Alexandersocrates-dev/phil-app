@@ -1393,23 +1393,45 @@ def _cards_height(cards):
     return rows * 32 * mm + (rows - 1) * 4 * mm
 
 
+# A step's illustration sits to the left of its text, so a sequence reads as a
+# row of pictures down the page. Text is inset past the art either way, so a
+# step without artwork still lines up with the ones that have it.
+_STEP_ART_W = 16 * mm
+_STEP_ART_H = 12 * mm
+
+
 def _draw_steps(c, x, y, max_width, steps):
-    """Numbered steps, one per line, kept together as a sequence."""
+    """Numbered steps with their illustrations, kept together as a sequence.
+
+    The artwork was missing from printed packs entirely: the screen drew each
+    step's motif and this did not, so a diagram like the nicotine cycle printed
+    as a list of sentences with the picture that explains it left out."""
+    text_x = x + _STEP_ART_W + 3 * mm
     for i, st in enumerate(steps, start=1):
+        top = y
         c.setFillColor(TEAL_DARK)
         c.setFont("Helvetica-Bold", 9)
         title = _clean_pdf_text(st.get("title", ""))
-        c.drawString(x, y, f"{i}. {title}")
+        c.drawString(text_x, y, f"{i}. {title}")
         y -= 4.5 * mm
         text = _clean_pdf_text(st.get("text", ""))
         if text:
-            y = _wrap(c, text, x + 5 * mm, y, max_width - 5 * mm, size=8.5, leading=10.5, color=INK)
-        y -= 2.5 * mm
+            y = _wrap(c, text, text_x, y, max_width - (text_x - x), size=8.5,
+                      leading=10.5, color=INK)
+
+        # Centre the motif against the block of text it belongs to.
+        used = top - y
+        art_y = top - max(used, _STEP_ART_H) + (max(used, _STEP_ART_H) - _STEP_ART_H) / 2
+        _draw_art(c, st.get("art"), x, art_y, _STEP_ART_W, _STEP_ART_H)
+        if used < _STEP_ART_H:
+            y = top - _STEP_ART_H
+        y -= 3.5 * mm
     return y
 
 
 def _steps_height(steps):
-    return len(steps) * 14 * mm
+    # Each step is at least as tall as its artwork.
+    return len(steps) * 18 * mm
 
 
 def resource_pack_pdf(course_num, course_title, items):
