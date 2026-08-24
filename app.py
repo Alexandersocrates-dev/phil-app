@@ -316,6 +316,17 @@ def require(request, roles=None):
     if not user:
         return None, redirect("/login")
     if roles and user["role"] not in roles:
+        # A signed-in person who lands somewhere their role can't go is almost
+        # always looking at a stale page, or has switched accounts in another
+        # tab. Sending them to their own home explains itself; a bare 403 with
+        # no navigation looks like the app has broken.
+        home = {"admin": "/admin", "mentor": "/mentor",
+                "parent_carer": "/parent", "phil_staff": "/staff"}.get(user["role"])
+        if home:
+            return None, with_flash(
+                home, "That area isn't available to your account. "
+                      "If you've just switched accounts, this is the right place for "
+                      f"{user['name']}.", "error")
         return None, Response("Not authorised for this area.", status="403 Forbidden")
     user = dict(user)
     conn = db.get_conn()
@@ -1138,10 +1149,17 @@ def admin_reassign_form(request):
                AND status='active' AND id != ? ORDER BY name""",
             (user["establishment_id"], enrolment["mentor_id"]),
         ).fetchall()
+        # How many other active courses this pupil has with the same mentor, so
+        # the form can offer to move them together rather than leaving an admin
+        # to repeat the job once per course.
+        other_active = conn.execute(
+            """SELECT COUNT(*) AS n FROM enrolments
+               WHERE pupil_id=? AND mentor_id=? AND status='active' AND id != ?""",
+            (enrolment["pupil_id"], enrolment["mentor_id"], enrolment["id"])).fetchone()["n"]
     finally:
         conn.close()
     return render("enrolment_reassign.html", user=user, enrolment=enrolment, mentors=mentors,
-                  flash=flash_from_query(request))
+                  other_active=other_active, flash=flash_from_query(request))
 
 
 @router.post("/admin/enrolments/<enrolment_id>/reassign")
@@ -1156,8 +1174,11 @@ def admin_reassign_submit(request):
     conn = db.get_conn()
     try:
         enrolment = conn.execute(
-            """SELECT enrolments.*, pupils.forename, pupils.surname, pupils.establishment_id
-               FROM enrolments JOIN pupils ON pupils.id = enrolments.pupil_id
+            """SELECT enrolments.*, pupils.forename, pupils.surname, pupils.establishment_id,
+                      courses.title AS course_title
+               FROM enrolments
+               JOIN pupils ON pupils.id = enrolments.pupil_id
+               JOIN courses ON courses.id = enrolments.course_id
                WHERE enrolments.id=?""",
             (request.params["enrolment_id"],),
         ).fetchone()
@@ -1170,14 +1191,38 @@ def admin_reassign_submit(request):
         if not new_mentor:
             return with_flash(f"/admin/enrolments/{enrolment['id']}/reassign",
                                "That mentor could not be found.", "error")
-        conn.execute("UPDATE enrolments SET mentor_id=? WHERE id=?", (new_mentor_id, enrolment["id"]))
+
+        # Moving every active course is the usual intent: a pupil whose mentor
+        # has left needs all of their mentoring to follow, not one course.
+        # Completed and withdrawn courses stay put, because they are a record of
+        # who actually did the work.
+        move_all = request.field("scope") == "all"
+        if move_all:
+            moved = conn.execute(
+                """SELECT id FROM enrolments
+                   WHERE pupil_id=? AND mentor_id=? AND status='active'""",
+                (enrolment["pupil_id"], enrolment["mentor_id"])).fetchall()
+            ids = [r["id"] for r in moved] or [enrolment["id"]]
+        else:
+            ids = [enrolment["id"]]
+        conn.executemany("UPDATE enrolments SET mentor_id=? WHERE id=?",
+                         [(new_mentor_id, i) for i in ids])
         db.log_action(conn, user["id"], "enrolment_reassigned", "enrolment", enrolment["id"],
-                      f"{enrolment['forename']} {enrolment['surname']}'s enrolment moved to {new_mentor['name']}")
+                      f"{enrolment['forename']} {enrolment['surname']}: {len(ids)} active course(s) "
+                      f"moved to {new_mentor['name']}")
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Mentoring list reassigned",
-                        f"{enrolment['forename']} {enrolment['surname']} is now with {new_mentor['name']}.",
+    if len(ids) == 1:
+        heading = "Course reassigned"
+        detail = (f"{enrolment['forename']} {enrolment['surname']}'s "
+                  f"{enrolment['course_title']} "
+                  f"is now with {new_mentor['name']}. Their other courses have not moved.")
+    else:
+        heading = "Pupil reassigned"
+        detail = (f"All {len(ids)} of {enrolment['forename']} {enrolment['surname']}'s active courses "
+                  f"are now with {new_mentor['name']}.")
+    return render_done(user, heading, detail,
                         f"/mentor/pupils/{enrolment['pupil_id']}", back_label="View pupil")
 
 
