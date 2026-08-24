@@ -37,7 +37,7 @@
     <span class="light light-{{ 'green' if p.seen else 'amber' }}" title="{{ 'Seen this week' if p.seen else 'Not seen yet' }}" aria-hidden="true"></span>
     <a class="sched-pupil" href="/mentor/pupils/{{ p.pupil_id }}">{{ p.name }}</a>
     <span class="pupil-courses">{{ p.courses }} course{{ '' if p.courses == 1 else 's' }}</span>
-    <span class="chip {{ 'chip-done' if p.seen else 'chip-open' }}">{{ p.status }}</span>
+    <span class="chip {{ 'chip-green' if p.seen else 'chip-amber' }}">{{ p.status }}</span>
   </div>
   {% endfor %}
 </div>
@@ -73,7 +73,8 @@
       <span class="sched-title">{{ i.course_title }}</span>
       <span class="sched-meta">
         {% if i.kind == 'session' %}<span class="sched-step">{{ i.title }}</span>{% endif %}
-        {% if i.chip %}<span class="chip chip-{{ i.chip_kind }}">{{ i.chip }}</span>{% endif %}
+        {% if i.kind == 'summary' %}<span class="row-tag">Staff only</span>{% endif %}
+        {% if i.chip %}<span class="chip chip-{{ i.light }}">{{ i.chip }}</span>{% endif %}
         {% if i.ahead %}<span class="chip chip-ahead">{{ i.ahead }}</span>{% endif %}
         {% if i.last_label %}<span class="sched-last">{{ i.last_label }}</span>{% endif %}
       </span>
@@ -122,17 +123,17 @@
 .light-amber{background:#C98A0E;}
 .light-red{background:#B4341C;}
 .light-grey{background:#C9C6BA;}
-.sched-key{display:flex;gap:14px;margin-top:9px;font-size:11.5px;opacity:.8;}
+.sched-key{display:flex;gap:14px;margin-top:9px;font-size:11.5px;opacity:.85;}
 .sched-key span{display:flex;align-items:center;gap:5px;}
 .pupil-courses{font-size:12px;color:var(--muted);}
 .pupil-line .chip{margin-left:auto;}
 
 .sched-card{padding-top:0;}
 .sched-card.sched-attention{border-left:4px solid #B4341C;}
-.sched-card.sched-this_week{border-left:4px solid var(--teal-darker);}
+.sched-card.sched-this_week{border-left:4px solid #C98A0E;}
 .sched-card.sched-coming_sessions{border-left:4px solid #97A6C4;}
-.sched-card.sched-coming_reviews{border-left:4px solid #6FA894;}
-.sched-card.sched-seen{border-left:4px solid var(--border);}
+.sched-card.sched-coming_reviews{border-left:4px solid #97A6C4;}
+.sched-card.sched-seen{border-left:4px solid #1B7A4B;}
 
 .sched-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   cursor:pointer;list-style:none;padding:var(--sp-4) 0 10px;}
@@ -143,35 +144,37 @@
 .sched-num{font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;
   background:#F3F2EC;color:var(--muted);}
 .sched-num-attention{background:#FBE3DE;color:#8A2614;}
-.sched-num-this_week{background:var(--teal-light);color:#04342C;}
+.sched-num-this_week{background:#FBEFD6;color:#7A5206;}
+.sched-num-seen{background:#DCF0E4;color:#14603C;}
 .sched-blurb{font-size:12.5px;color:var(--muted);margin-left:auto;}
 .sched-num-none{background:#F3F2EC;color:#B3B0A4;}
 .sched-empty{font-size:13px;color:var(--muted);margin:2px 0 6px;
   border-top:1px solid var(--border);padding-top:12px;}
 
-/* A tinted band, not a hairline: at 11px grey the section headings were being
-   scanned straight past, which defeats the point of splitting by kind. Each
-   kind carries its own tint so the three jobs are told apart at a glance. */
-.sec-head{display:flex;align-items:center;gap:8px;margin:18px 0 0;
-  padding:7px 12px;border-radius:8px;background:#EFEDE3;}
+/* Section headings are one neutral tone whatever the kind. Colour on this page
+   means state — red late, amber to do, green done — and tinting the headings by
+   category set up a second, competing colour language. It also put a coral
+   heading directly above a coral row, and the two merged into one block. The
+   kind is carried by the words, which is what words are for. */
+.sec-head{display:flex;align-items:center;gap:8px;margin:20px 0 0;
+  padding:7px 12px;border-radius:8px;background:#E7E4D8;}
 .sec-head:first-of-type{margin-top:6px;}
 .sec-label{font-size:12.5px;font-weight:800;letter-spacing:.02em;color:var(--navy);}
 .sec-count{font-size:11.5px;font-weight:700;color:var(--navy);background:#fff;
-  border-radius:20px;padding:1px 8px;opacity:.75;}
-.sec-summary{background:var(--coral-light);}
-.sec-summary .sec-label{color:var(--coral-dark);}
-.sec-summary .sec-count{color:var(--coral-dark);}
-.sec-review{background:var(--teal-light);}
-.sec-review .sec-label{color:#04342C;}
-.sec-review .sec-count{color:#04342C;}
+  border-radius:20px;padding:1px 8px;}
 
 .sched-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   border-top:1px solid var(--border);padding:12px 0;}
 .sec-head + .sched-row{border-top:none;}
 .sched-row .light{margin-top:2px;align-self:flex-start;}
-.row-summary{background:var(--coral-light);border-radius:10px;
-  padding:12px 14px;margin:8px 0;border-top:none;}
+/* Set apart by an accent and a tag rather than a fill, so it reads as a
+   different kind of job without borrowing a state colour. */
+.row-summary{background:#FBF8F2;border-left:3px solid var(--coral-dark);
+  border-radius:0 10px 10px 0;padding:12px 14px;margin:6px 0;border-top:none;}
 .row-summary + .sched-row{border-top:none;}
+.row-tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--coral-dark);background:var(--coral-light);
+  border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:2px;}
 .sched-sub{display:block;font-size:12px;color:var(--muted);margin-top:5px;}
 .sched-step-strong{font-weight:700;color:var(--coral-dark);}
 .sched-pupil{font-family:var(--font-head);font-weight:700;font-size:14.5px;}
@@ -181,12 +184,12 @@
 .sched-step{font-size:12px;color:var(--muted);}
 .sched-last{font-size:12px;color:var(--muted);}
 
+/* One chip colour per state, matching the traffic light on the same row. */
 .chip{font-size:11.5px;font-weight:700;border-radius:20px;padding:2px 9px;white-space:nowrap;}
-.chip-late{background:#FBE3DE;color:#8A2614;}
-.chip-due{background:var(--teal-light);color:#04342C;}
-.chip-done{background:var(--teal-light);color:#04342C;}
-.chip-open{background:#F3F2EC;color:var(--muted);}
-.chip-note{background:var(--coral-light);color:var(--coral-dark);}
+.chip-red{background:#FBE3DE;color:#8A2614;}
+.chip-amber{background:#FBEFD6;color:#7A5206;}
+.chip-green{background:#DCF0E4;color:#14603C;}
+.chip-grey{background:#EDEBE2;color:#6B675B;}
 /* How far off, beside the date. A date on its own doesn't say whether it needs
    thinking about. */
 .chip-ahead{background:#EDF0F7;color:#3D4E72;}
