@@ -2367,9 +2367,9 @@ def session_submit(request):
         completed_now = new_status == "completed"
         if completed_now:
             # The certificate is issued by the wrap-up, not by the fifth session:
-            # the reflection and the review date are part of finishing a course,
-            # not optional extras. Both are done in the next two minutes, so the
-            # pupil isn't waiting on anything.
+            # booking the follow-up chat is part of finishing a course, not an
+            # optional extra. It takes a moment, so the pupil isn't waiting on
+            # anything.
             message = "Course complete."
 
         conn.commit()
@@ -2465,6 +2465,8 @@ def schedule_submit(request):
 
 @router.get("/mentor/reflection/<enrolment_id>")
 def reflection_form(request):
+    """Retired. Session 6's course summary covers the same ground, so this is
+    kept only so reflections written before it stay readable and editable."""
     user, err = require(request, roles=["mentor", "admin"])
     if err:
         return err

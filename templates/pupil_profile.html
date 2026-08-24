@@ -134,9 +134,13 @@
   {% if item.certificate %}
     <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
   {% endif %}
-  {% if e.status == 'completed' %}
-    <a class="btn btn-secondary btn-sm" href="/mentor/reflection/{{ e.id }}">{{ 'Edit' if item.reflection else 'Write' }} completion reflection</a>
-    {% if not item.reflection %}<span class="badge badge-amber">Reflection needed</span>{% endif %}
+  {# The completion reflection is retired: session 6's course summary asks the
+     same questions of the same person at the same moment, and the wrap-up
+     stopped collecting it because asking twice got the same answer twice or an
+     empty one. Old ones stay reachable so nothing written is lost; no new ones
+     are offered. #}
+  {% if item.reflection %}
+    <a class="btn btn-secondary btn-sm" href="/mentor/reflection/{{ e.id }}">Completion reflection</a>
   {% endif %}
 
   {% if item.records %}
