@@ -906,10 +906,17 @@ def mentor_home(request):
                FROM enrolments e
                JOIN pupils p ON p.id = e.pupil_id
                JOIN courses c ON c.id = e.course_id
-               WHERE e.mentor_id = ? AND e.review_date IS NOT NULL
+               WHERE e.review_date IS NOT NULL
                  AND e.review_done = 0 AND p.status = 'active'
+                 AND (EXISTS (SELECT 1 FROM enrolments a
+                              WHERE a.pupil_id = e.pupil_id AND a.status = 'active'
+                                AND a.mentor_id = ?)
+                      OR (e.mentor_id = ?
+                          AND NOT EXISTS (SELECT 1 FROM enrolments a
+                                          WHERE a.pupil_id = e.pupil_id
+                                            AND a.status = 'active')))
                ORDER BY e.review_date""",
-            (user["id"],)).fetchall()
+            (user["id"], user["id"])).fetchall()
     finally:
         conn.close()
     reviews_due = []
@@ -4775,6 +4782,8 @@ def set_review_point(request):
             (request.params["enrolment_id"],)).fetchone()
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
+        if not may_handle_review(conn, enrolment, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
         conn.execute(
             "UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
             (review_date or None, review_note or None, request.params["enrolment_id"]))
@@ -4811,6 +4820,8 @@ def push_review_point(request):
             (request.params["enrolment_id"],)).fetchone()
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
+        if not may_handle_review(conn, enrolment, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
         # Push from today when the date has already passed, so a long-overdue
         # review doesn't land in the past again.
         try:
@@ -4843,6 +4854,8 @@ def complete_review_point(request):
                JOIN pupils p ON p.id = e.pupil_id WHERE e.id=?""",
             (request.params["enrolment_id"],)).fetchone()
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        if not may_handle_review(conn, enrolment, user):
             return Response("Not authorised for this area.", status="403 Forbidden")
         conn.execute("UPDATE enrolments SET review_done=1 WHERE id=?",
                      (request.params["enrolment_id"],))
@@ -4910,6 +4923,37 @@ def may_access_enrolment(conn, enrolment_id, user):
             (user["id"], row["pupil_id"])).fetchone()
         return bool(link)
     return False
+
+
+def may_handle_review(conn, enrolment, user):
+    """Whether this user may set, push or clear this enrolment's review point.
+
+    A review point outlives the course it belongs to: the enrolment is already
+    completed by the time a date is agreed. Ownership therefore follows the
+    pupil rather than the enrolment. When a pupil is reassigned their active
+    courses move but the completed one does not, so a review left keyed to the
+    enrolment would sit with a mentor who no longer works with that child, and
+    a mentor who has left the school cannot clear it at all.
+
+    Where a pupil has no active mentoring left, the review stays with whoever
+    ran the course. The caller checks the establishment first.
+    """
+    role = user["role"]
+    if role in ("phil_staff", "admin"):
+        return True
+    if role != "mentor":
+        return False
+    mine = conn.execute(
+        "SELECT 1 FROM enrolments WHERE pupil_id=? AND mentor_id=? AND status='active' LIMIT 1",
+        (enrolment["pupil_id"], user["id"])).fetchone()
+    if mine:
+        return True
+    held_by_someone = conn.execute(
+        "SELECT 1 FROM enrolments WHERE pupil_id=? AND status='active' LIMIT 1",
+        (enrolment["pupil_id"],)).fetchone()
+    if held_by_someone:
+        return False
+    return enrolment["mentor_id"] == user["id"]
 
 
 def support_plan_for(conn, enrolment_id):
