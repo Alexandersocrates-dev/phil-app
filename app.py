@@ -852,7 +852,7 @@ def mentor_home(request):
                       (SELECT count(*) FROM enrolments WHERE enrolments.pupil_id = pupils.id AND enrolments.mentor_id = ? AND enrolments.status='active') as active_enrolments
                FROM pupils
                WHERE establishment_id=? AND status='active'
-               AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)
+               AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=? AND status='active')
                ORDER BY surname""",
             (user["id"], user["establishment_id"], user["id"]),
         ).fetchall()
@@ -887,6 +887,12 @@ def mentor_home(request):
     for entry in mentoring_list:
         entry["active"] = sum(1 for c in entry["courses"] if c["status"] == "active")
         entry["completed"] = sum(1 for c in entry["courses"] if c["status"] == "completed")
+    # A pupil whose courses with this mentor have all finished is no longer
+    # someone they are mentoring, so they drop off this list. The completed
+    # courses stay attributed to whoever ran them and stay visible on the
+    # pupil's own record. A pupil who still has active work keeps their
+    # finished courses shown alongside it.
+    mentoring_list = [entry for entry in mentoring_list if entry["active"] > 0]
 
     # Reviews the mentor agreed at the end of a course. Only ones that have come
     # round: a review three weeks away isn't work yet, and listing it would
@@ -1072,12 +1078,27 @@ def _pupils_list(request, roles, own_only):
     conn = db.get_conn()
     try:
         if own_only:
-            pupils = conn.execute(
-                """SELECT * FROM pupils WHERE establishment_id=? AND status=?
-                     AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)
-                   ORDER BY surname, forename""",
-                (user["establishment_id"], status_filter, user["id"]),
-            ).fetchall()
+            # A mentor's own list of active pupils means the ones they are
+            # currently mentoring, so a pupil whose courses with them have all
+            # finished drops off, matching the mentoring list on their home
+            # page. The archived view keeps the looser rule: an archived pupil
+            # rarely has an active enrolment, and a mentor looking back through
+            # archived pupils still needs to find the ones they worked with.
+            if status_filter == "active":
+                pupils = conn.execute(
+                    """SELECT * FROM pupils WHERE establishment_id=? AND status=?
+                         AND id IN (SELECT pupil_id FROM enrolments
+                                    WHERE mentor_id=? AND status='active')
+                       ORDER BY surname, forename""",
+                    (user["establishment_id"], status_filter, user["id"]),
+                ).fetchall()
+            else:
+                pupils = conn.execute(
+                    """SELECT * FROM pupils WHERE establishment_id=? AND status=?
+                         AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)
+                       ORDER BY surname, forename""",
+                    (user["establishment_id"], status_filter, user["id"]),
+                ).fetchall()
         else:
             pupils = conn.execute(
                 "SELECT * FROM pupils WHERE establishment_id=? AND status=? ORDER BY surname, forename",
