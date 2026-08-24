@@ -7,7 +7,7 @@
   <p class="muted">New courses start as draft and won&rsquo;t appear to mentors until published.</p>
   <div class="cb-note">
     <strong>This form edits the five pupil sessions.</strong>
-    Session 6 is the staff-only support plan, written after the course ends. It isn&rsquo;t editable here and saving this form leaves it untouched.
+    Session 6 is the staff-only write-up &mdash; the course summary and next steps &mdash; completed after the course ends. It isn&rsquo;t editable here and saving this form leaves it untouched.
   </div>
   <form method="post" action="{{ '/admin/courses/%d/edit'|format(course.id) if course else '/admin/courses/new' }}">
     <div class="field">

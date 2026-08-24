@@ -487,7 +487,7 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
 
 
 def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, rows):
-    """The five session summaries on one sheet, for writing the support plan.
+    """The five session summaries on one sheet, for writing the course summary.
 
     Session 6 asks the mentor to review the course before writing anything. Left
     to themselves that means opening five records in five tabs, so most wouldn't.
@@ -509,7 +509,7 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
 
     c.setFillColor(MUTED)
     c.setFont("Helvetica-Oblique", 9)
-    y = _wrap(c, "For writing the support plan in session 6. Read these in order before you start.",
+    y = _wrap(c, "For writing the course summary and next steps in session 6. Read these in order before you start.",
               x, y, max_width, size=9)
     y -= 6 * mm
 
@@ -644,8 +644,8 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     y -= 6 * mm
 
     y = _doc_section(c, x, y, "Follow-through", max_width)
-    stat("support plans written", f.get("plans_written") or 0,
-         "one-page plans other staff can pick up and use")
+    stat("course summaries written", f.get("plans_written") or 0,
+         "the session 6 write-up other staff can pick up and use")
     overdue = f.get("reviews_overdue") or 0
     stat("review points overdue", overdue,
          "agreed follow-ups now past their date" if overdue else "nothing outstanding")
@@ -731,14 +731,14 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
         if plan:
             c.setFillColor(TEAL_DARK)
             c.setFont("Helvetica-Bold", 9)
-            c.drawString(x, y, "Support plan")
+            c.drawString(x, y, "Course summary and next steps")
             y -= 5 * mm
             c.setFillColor(INK)
             y = _wrap(c, plan, x, y, max_width, size=9.5)
         else:
             c.setFillColor(MUTED)
             c.setFont("Helvetica-Oblique", 9.5)
-            c.drawString(x, y, "No support plan written for this course yet.")
+            c.drawString(x, y, "No course summary written for this course yet.")
             y -= 5 * mm
 
         if course.get("safeguarding_count"):
@@ -833,7 +833,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             y = _doc_header(c, w, h, margin, "Course report",
                             meta=[("Pupil", pupil_name), ("Course", course_title)])
         y -= 3 * mm
-        y = _doc_section(c, x, y, "Support plan", max_width)
+        y = _doc_section(c, x, y, "Course summary and next steps", max_width)
         c.setFillColor(INK)
         y = _wrap(c, support_plan, x, y, max_width, size=9.5)
 
