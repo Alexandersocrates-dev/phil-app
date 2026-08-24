@@ -1082,11 +1082,35 @@ def schedule_for(conn, user, today=None):
          "blurb": "Do these first."},
         {"key": "this_week", "title": "This week", "rows": this_week,
          "blurb": "Not seen yet this week."},
-        {"key": "coming", "title": "Later", "rows": coming,
-         "blurb": "Planned for another week."},
+        {"key": "coming", "title": "Booked for later", "rows": coming,
+         "blurb": "Already has a date. Nothing to do yet."},
         {"key": "seen", "title": "Done this week", "rows": seen,
          "blurb": ""},
     ]
+
+    # Within a group, split by kind. Three different jobs were sitting in one
+    # run of rows — a session with a pupil, a write-up for staff, and a chat
+    # weeks after the course — and they read as interchangeable.
+    kind_labels = [
+        ("session", "Mentoring session", "Mentoring sessions"),
+        ("summary", "Course summary", "Course summaries"),
+        ("review", "Follow-up chat", "Follow-up chats"),
+    ]
+    for bucket in buckets:
+        sections = []
+        for kind, one, many in kind_labels:
+            rows = [r for r in bucket["rows"] if r["kind"] == kind]
+            if rows:
+                sections.append({
+                    "kind": kind,
+                    "label": one if len(rows) == 1 else many,
+                    "count": len(rows),
+                    "rows": rows,
+                })
+        # A label above a single kind is just the group heading again, so it
+        # only earns its place when there is more than one kind to tell apart.
+        bucket["sections"] = sections
+        bucket["show_labels"] = len(sections) > 1
     return summary, buckets, pupil_rows
 
 
