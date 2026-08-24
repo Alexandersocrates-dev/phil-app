@@ -1142,6 +1142,10 @@ def admin_reassign_mentor_list(request):
             "course_title": row["course_title"],
             "mentor_name": row["mentor_name"],
         })
+        # Reassigning moves every active course a pupil holds with that mentor,
+        # so the pupil-level button only needs one enrolment to act on.
+        if not group.get("reassign_enrolment_id"):
+            group["reassign_enrolment_id"] = row["enrolment_id"]
         if row["mentor_name"] not in group["mentors"]:
             group["mentors"].append(row["mentor_name"])
 
