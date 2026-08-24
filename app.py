@@ -916,14 +916,16 @@ def schedule_for(conn, user, today=None):
         if row["current_week"] >= SESSIONS_PER_COURSE - 1:
             item.update({
                 "kind": "summary",
-                "title": "Write-up",
-                "action_label": "Write it",
+                "title": "Course summary and next steps",
+                "subtitle": "The staff write-up that closes the course.",
+                "action_label": "Write summary",
                 "chip": "",
-                "chip_kind": "note",
+                "light": "amber",
             })
             if gap is not None and gap >= 7:
                 item["chip"] = "waiting %s" % ago(last).replace(" ago", "")
                 item["chip_kind"] = "late"
+                item["light"] = "red"
                 attention.append(item)
             else:
                 this_week.append(item)
@@ -938,6 +940,7 @@ def schedule_for(conn, user, today=None):
         if last and last >= monday_iso:
             item["chip"] = "done " + ago(last)
             item["chip_kind"] = "done"
+            item["light"] = "green"
             item["action_label"] = "Open record"
             item["action_url"] = "/mentor/pupils/%s" % row["pupil_id"]
             seen.append(item)
@@ -946,20 +949,25 @@ def schedule_for(conn, user, today=None):
         if planned and planned < today_iso:
             item["chip"] = "missed " + pretty_date(planned)
             item["chip_kind"] = "late"
+            item["light"] = "red"
             attention.append(item)
         elif gap is not None and gap >= 14:
             item["chip"] = "not seen for %s" % ago(last).replace(" ago", "")
             item["chip_kind"] = "late"
+            item["light"] = "red"
             attention.append(item)
         elif planned and planned <= end_of_week:
             item["chip"] = pretty_date(planned)
             item["chip_kind"] = "due"
+            item["light"] = "amber"
             this_week.append(item)
         elif planned:
             item["chip"] = pretty_date(planned)
             item["chip_kind"] = "due"
+            item["light"] = "grey"
             coming.append(item)
         else:
+            item["light"] = "amber"
             this_week.append(item)
 
     # Reviews follow the pupil, not the enrolment — the same rule as
@@ -990,7 +998,8 @@ def schedule_for(conn, user, today=None):
             "pupil_id": row["pupil_id"],
             "pupil_name": name_of(row),
             "course_title": row["course_title"],
-            "title": "Review point",
+            "title": "Follow-up chat",
+            "subtitle": "Sit down with them: has the course helped, and is the behaviour still showing?",
             "last_label": row["review_note"] or "",
             "action_label": "Open record",
             "action_url": "/mentor/pupils/%s" % row["pupil_id"],
@@ -1001,14 +1010,17 @@ def schedule_for(conn, user, today=None):
         if overdue_after and today_iso > overdue_after:
             item["chip"] = "missed " + pretty_week(week_of)
             item["chip_kind"] = "late"
+            item["light"] = "red"
             attention.append(item)
         elif row["review_date"] <= end_of_week:
             item["chip"] = pretty_week(week_of)
             item["chip_kind"] = "due"
+            item["light"] = "amber"
             this_week.append(item)
         else:
             item["chip"] = pretty_week(week_of)
             item["chip_kind"] = "due"
+            item["light"] = "grey"
             coming.append(item)
 
     for group in (attention, this_week, coming, seen):
@@ -1068,7 +1080,7 @@ def schedule_for(conn, user, today=None):
     buckets = [
         {"key": "attention", "title": "Behind", "rows": attention,
          "blurb": "Do these first."},
-        {"key": "this_week", "title": "To do", "rows": this_week,
+        {"key": "this_week", "title": "This week", "rows": this_week,
          "blurb": "Not seen yet this week."},
         {"key": "coming", "title": "Later", "rows": coming,
          "blurb": "Planned for another week."},

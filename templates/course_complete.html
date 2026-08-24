@@ -13,7 +13,7 @@
 
   <div class="card card-center cc-card">
     <div class="icon-badge icon-badge--teal cc-badge">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
-    <h1>All five sessions recorded</h1>
+    <h1>Course finished</h1>
     <p class="cc-lead">{{ pupil_name }} has finished {{ course_title }}.</p>
     <p class="muted">One thing left, then the course is closed and the certificate issues.</p>
   </div>
@@ -23,16 +23,17 @@
      asked for here, in one form, while the mentor is still in the moment. #}
   <form method="post" action="/mentor/enrolment/{{ enrolment_id }}/wrap-up">
     <div class="card cc-review">
-      <h2>Organise the check-up review</h2>
-      <p class="muted">Sustained change needs a follow-up, not a single course. This shows on {{ pupil_name }}&rsquo;s record and on your home page when it comes round.</p>
+      <h2>Book the follow-up chat</h2>
+      <p class="cc-explain">A short sit-down with {{ pupil_name }}, a few weeks after the course ends: has it helped, is the behaviour still showing, and does anything need picking back up? Sustained change needs a follow-up, not a single course.</p>
+      <p class="muted">It appears on your to-do list when it comes round, and on {{ pupil_name }}&rsquo;s record.</p>
       <div class="field">
-        <label for="review_date">Review date <span class="req">Required</span></label>
+        <label for="review_date">Date for the chat <span class="req">Required</span></label>
         <input type="date" id="review_date" name="review_date" value="{{ suggested_review_date }}" required>
         <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap. You get two weeks&rsquo; grace, and can push it back if a holiday lands on it.</p>
       </div>
       <div class="field">
-        <label for="review_note">What to check at the review</label>
-        <textarea id="review_note" name="review_note" rows="2" placeholder="e.g. is the signal card still being used in maths?"></textarea>
+        <label for="review_note">What to ask about</label>
+        <textarea id="review_note" name="review_note" rows="2" placeholder="e.g. is the signal card still being used in maths? any incidents since?"></textarea>
       </div>
     </div>
 
@@ -50,6 +51,8 @@
 .cc-review{margin-top:14px;text-align:left;}
 .req{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--coral-dark);margin-left:6px;}
 .cc-review h2{margin-top:0;}
+.cc-explain{font-size:13.5px;line-height:1.55;background:var(--teal-light);
+  border:1px solid #9FE1CB;border-radius:10px;padding:10px 12px;margin:0 0 10px;color:#04342C;}
 .cc-actions{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:18px 0 10px;}
 .cc-back{font-size:13px; color:var(--muted);}
 .cc-badge{animation:cc-pop 420ms var(--ease-spring, cubic-bezier(0.34,1.56,0.64,1)) both;}

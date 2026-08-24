@@ -99,8 +99,9 @@
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
 <span style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Your progress</span>
 <span style="font-size:11px;color:var(--muted);">
-  {%- if editing_record %}Editing session {{ week.week_number }}
-  {%- elif next_week_number == sessions_total %}{{ sessions_total - 1 }} sessions done &middot; writing the plan now
+  {%- if editing_record and week.staff_only %}Editing the course summary
+  {%- elif editing_record %}Editing session {{ week.week_number }}
+  {%- elif week.staff_only %}All sessions done &middot; writing the course summary now
   {%- else %}{{ next_week_number - 1 }} of {{ sessions_total }} done &middot; starting session {{ next_week_number }}{% endif -%}
 </span>
 </div>
@@ -136,7 +137,7 @@
 {% for r in completed_records %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
 <div style="width:24px;height:24px;border-radius:50%;background:var(--teal-light);color:var(--teal-darker);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{{ r.wn }}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">Session {{ r.wn }} &middot; {{ r.week_title }}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date }}</p></div>
+<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">{% if r.wn == sessions_total %}{{ r.week_title }}{% else %}Session {{ r.wn }} &middot; {{ r.week_title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date }}</p></div>
 <a class="btn btn-secondary btn-sm" href="/mentor/session/record/{{ r.id }}/edit">Edit</a>
 </div>
 {% endfor %}
@@ -146,8 +147,8 @@
 
 <div style="background:#fff;border:1.5px solid var(--teal);border-radius:14px;box-shadow:0 4px 14px rgba(29,158,117,0.14);padding:16px 18px;margin-bottom:8px;">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-<div style="width:24px;height:24px;border-radius:50%;background:var(--amber-light);color:var(--amber-dark);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{{ next_week_number }}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">Session {{ next_week_number }} &middot; {{ week.title }}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">This session's focus</p></div>
+<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
+<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">{% if week.staff_only %}No pupil in this one &mdash; it&rsquo;s written for other staff{% else %}This session&rsquo;s focus{% endif %}</p></div>
 </div>
 
 {% if week.objective %}
@@ -191,7 +192,7 @@
 
 {% if editing_record %}
 <div class="card" style="border-color:var(--amber-dark);background:var(--amber-light);">
-  <p style="margin:0;font-size:13px;color:#412402;"><strong>Editing session {{ week.week_number }}</strong> &middot; recorded {{ editing_record.date }}. Saving updates this record only; the course stays where it is.</p>
+  <p style="margin:0;font-size:13px;color:#412402;"><strong>{% if week.staff_only %}Editing the course summary{% else %}Editing session {{ week.week_number }}{% endif %}</strong> &middot; recorded {{ editing_record.date }}. Saving updates this record only; the course stays where it is.</p>
 </div>
 {% endif %}
 <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 10px;">Session flow{% if week.timing %} <span style="text-transform:none;letter-spacing:0;font-weight:400;">&middot; about {{ (week.timing.checkin|default(0)) + (week.timing.input|default(0)) + (week.timing.activity|default(0)) + (week.timing.reflect|default(0)) + (week.timing.home|default(0)) }} min total</span>{% endif %}</p>
@@ -306,7 +307,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What happens next, who is doing it, and when you&rsquo;ll review&hellip;{% else %}What happened, what changed, and what to pick up next time&hellip;{% endif %}">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
-<p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download in Session {{ sessions_total }}.</p>
+<p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course.{% else %}Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download at the end of the course.{% endif %}</p>
 </div>
 </div>
 
