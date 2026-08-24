@@ -292,23 +292,23 @@ module.exports = [
       "Learn and practise a personal toolkit of regulation strategies",
       "Generalise strategies from the mentoring room into the classroom"
     ],
-    "approachNote": "This module uses a zones-based model, adapted from the widely used Zones of Regulation framework, alongside simple mindfulness and grounding techniques, giving pupils a shared, non-judgemental language for talking about how they feel. It follows the DfE's Mental health and behaviour in schools advice, which asks staff to consider whether behaviour may be an expression of an underlying difficulty with regulating emotion, rather than treating it purely as wilful misconduct. This also contributes to the personal development and well-being evaluation area in Ofsted's inspection framework, which considers how well pupils learn to understand and manage their own emotions.",
+    "approachNote": "This module uses a simple four-state model, describing how a pupil is in plain words rather than borrowed labels, alongside simple mindfulness and grounding techniques, giving pupils a shared, non-judgemental language for talking about how they feel. It follows the DfE's Mental health and behaviour in schools advice, which asks staff to consider whether behaviour may be an expression of an underlying difficulty with regulating emotion, rather than treating it purely as wilful misconduct. This also contributes to the personal development and well-being evaluation area in Ofsted's inspection framework, which considers how well pupils learn to understand and manage their own emotions.",
     "relatedModule": "Physical aggression (Module 1) or Anxiety and avoidance (Module 6)",
     "weeks": [
       {
         "title": "Naming my feelings",
         "objective": "Pupil can name at least five emotions beyond 'happy', 'sad' and 'angry'.",
-        "checkin": "1. Ask which zone they're in today: calm, wobbly, overwhelmed, or shut down.\n2. Ask what put them in that zone.\n3. Record the answer — this is the baseline you'll compare against in week five.",
-        "input": "1. Show the emotions wheel or zones chart.\n2. Ask them to find a word they'd never normally use.\n3. Explain why the vocabulary matters: 'angry' covers ten different feelings, and they need different responses.",
-        "activity": "Sort emotion word cards into zones and discuss one recent moment for two or three of them.",
-        "reflect": "Which emotion is hardest to talk about? Agree to use the zones check-in language once this week, even just to self.",
+        "checkin": "1. Ask how they are today: calm, unsettled, overwhelmed, or shut down.\n2. Ask what put them there.\n3. Record the answer — this is the baseline you'll compare against in week five.",
+        "input": "1. Show the emotions wheel or the 'How am I right now?' chart.\n2. Ask them to find a word they'd never normally use.\n3. Explain why the vocabulary matters: 'angry' covers ten different feelings, and they need different responses.",
+        "activity": "Sort emotion word cards by how they feel and discuss one recent moment for two or three of them.",
+        "reflect": "Which emotion is hardest to talk about? Agree to use the same four words once this week, even just to self.",
         "lookfor": "Emotional vocabulary is often genuinely underdeveloped, not resisted, treat this as teaching, not therapy.",
         "resources": [
           "Emotions wheel",
-          "Zones chart",
+          "How am I right now? chart",
           "Emotion word cards"
         ],
-        "home": "Try asking 'what zone are you in?' instead of 'what's wrong?' this week, it can feel easier to answer.",
+        "home": "Try asking 'how are you right now?' instead of 'what's wrong?' this week, it can feel easier to answer.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -320,7 +320,7 @@ module.exports = [
       {
         "title": "My body and my feelings",
         "objective": "Pupil can identify physical sensations linked to at least two emotions.",
-        "checkin": "1. Zones check-in, same four options as last week.\n2. Ask whether the zone changed at any point since you last met.",
+        "checkin": "1. Check in with the same four words as last week.\n2. Ask whether it changed at any point since you last met.",
         "input": "1. Explain that the body reacts before the mind catches up.\n2. Give a physical example everyone recognises — the jolt before you realise you nearly fell.\n3. Say why this matters: the body is the early warning, and it's noticeable if you know what to look for.",
         "activity": "Body map exercise linking sensations (tight chest, fidgety legs, heavy head) to specific emotions.",
         "reflect": "What's your earliest physical sign of stress or worry? Notice it once this week.",
@@ -340,7 +340,7 @@ module.exports = [
       {
         "title": "Calming strategies",
         "objective": "Pupil can try two grounding or calming techniques.",
-        "checkin": "1. Zones check-in.\n2. Ask whether they noticed any of the body signals from last week.\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
+        "checkin": "1. Check in with the same four words.\n2. Ask whether they noticed any of the body signals from last week.\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Do 5-4-3-2-1 together now: five things you can see, four you can hear, three you can feel.\n3. Then box breathing: in for four, hold four, out four, hold four.\n4. Say plainly that one will suit them and one won't, and that's the point of trying both.",
         "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.",
         "reflect": "Which strategy would you actually use? Agree to try it once this week in a low-stakes moment.",
@@ -360,7 +360,7 @@ module.exports = [
       {
         "title": "Riding the wave",
         "objective": "Pupil understands emotions rise and fall, and can describe a personal 'wave'.",
-        "checkin": "1. Zones check-in.\n2. Ask which grounding technique they tried and how it went.\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
+        "checkin": "1. Check in with the same four words.\n2. Ask which grounding technique they tried and how it went.\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
         "input": "1. Explain that a strong feeling peaks and falls on its own if nothing feeds it.\n2. Use a wave, not a switch: it builds, breaks and settles.\n3. Explain what feeds it — replaying it, arguing back, staying in the same place.\n4. The skill is riding it out, not switching it off.",
         "activity": "Draw a personal 'anger or worry wave' for a recent strong emotion, marking where a strategy could have been used to ride it out rather than escalate it.",
         "reflect": "What's one moment this week where you could try 'riding the wave' instead of reacting straight away?",
@@ -380,9 +380,9 @@ module.exports = [
       {
         "title": "My emotional toolkit",
         "objective": "Pupil has a personalised regulation plan shared with key staff.",
-        "checkin": "1. Zones check-in, and compare it with the week one baseline.\n2. Ask what they'd have said in week one about the same situation.",
+        "checkin": "1. Check in with the same four words, and compare with the week one baseline.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Recap the four parts: naming the feeling, the body signal, the strategy, the wave.\n2. Ask which one they'd keep if they could only keep one.\n3. That answer goes at the top of their toolkit page.",
-        "activity": "Build a one-page personal toolkit: my zones, my early signs, my go-to strategies. Share with the class teacher.",
+        "activity": "Build a one-page personal toolkit: how I am at my best and worst, my early signs, my go-to strategies. Share with the class teacher.",
         "reflect": "What's changed most since Week 1?",
         "lookfor": "Agree a review point and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [

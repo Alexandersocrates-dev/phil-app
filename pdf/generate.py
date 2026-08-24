@@ -1609,6 +1609,18 @@ def resource_pack_pdf(course_num, course_title, items):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 7 * mm
 
+        # Where a resource teaches an established technique, say where it comes
+        # from. Printed once under the resource, above the cut line, so it stays
+        # on the mentor's sheet rather than on every card a pupil handles.
+        if item.get("source"):
+            if state["y"] < margin + 12 * mm:
+                new_page()
+            state["y"] = _wrap(c, "Source: " + _clean_pdf_text(item["source"]),
+                               margin, state["y"], max_width,
+                               font="Helvetica-Oblique", size=7.5, leading=9.5,
+                               color=MUTED)
+            state["y"] -= 4 * mm
+
     c.showPage()
     c.save()
     return path

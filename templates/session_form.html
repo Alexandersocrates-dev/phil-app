@@ -70,6 +70,7 @@
   </div>
   <p class="res-cards-hint">{{ item.cards|length }} cards &middot; scroll for more, or print the pack to cut them out</p>
   {% endif %}
+  {% if item.source %}<p class="res-source">{{ item.source }}</p>{% endif %}
 </div>
 {% endmacro %}
 
@@ -497,6 +498,7 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-card-text{font-size:11.5px;line-height:1.4;margin:6px 0 0;}
 .res-card-note{font-size:10.5px;margin:8px 0 0;padding-top:7px;border-top:1px solid;min-height:14px;}
 .res-card-note--empty{border-top-color:transparent;}
+.res-source{margin:8px 0 0; font-size:11px; line-height:1.45; color:var(--muted); font-style:italic;}
 .res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
 .res-foot{font-size:11px;color:var(--muted);margin:8px 0 0;}
 .tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}
@@ -518,6 +520,7 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    grid into a centred flex row: title, text and note ended up side by side in a
    152px column, which is what made them unreadable. The illustrated rules above
    are the live ones. */
+.res-source{margin:8px 0 0; font-size:11px; line-height:1.45; color:var(--muted); font-style:italic;}
 .res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
 
 </style>

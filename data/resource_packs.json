@@ -366,7 +366,8 @@
             "art": "art-fork",
             "text": "Choose what to do next, rather than react."
           }
-        ]
+        ],
+        "source": "A pause-and-notice sequence from cognitive behavioural practice, commonly taught as STOP or STOPP."
       },
       {
         "name": "Passive / aggressive / assertive cards",
@@ -858,7 +859,8 @@
             "art": "art-craving",
             "text": "The dip is what drives the next one. That's chemistry, not weakness."
           }
-        ]
+        ],
+        "source": "The nicotine dependence cycle described in NHS smoking-cessation guidance. Simplified for a school audience."
       },
       {
         "name": "Where am I now scale",
@@ -1837,7 +1839,8 @@
               ""
             ]
           ]
-        }
+        },
+        "source": "Cognitive restructuring, a core technique in cognitive behavioural therapy."
       },
       {
         "name": "Catastrophic thinking examples card",
@@ -1997,7 +2000,8 @@
             "art": "art-level",
             "text": "Any more and you'll feel light-headed."
           }
-        ]
+        ],
+        "source": "Paced breathing with a longer out-breath, in common clinical and pastoral use."
       },
       {
         "name": "One-page exam wellbeing plan",
@@ -3257,7 +3261,8 @@
           }
         ],
         "tone": "coral",
-        "note": "Stage 4 often becomes the next stage 1"
+        "note": "Stage 4 often becomes the next stage 1",
+        "source": "The escalation-and-recovery cycle used in cognitive behavioural anger work. A long-established model with no single author."
       },
       {
         "name": "Mood scale card",
@@ -4007,120 +4012,126 @@
         }
       },
       {
-        "name": "Zones chart",
-        "body": "Which zone am I in right now?",
+        "name": "How am I right now? chart",
+        "body": "Four ways of feeling, and something to try for each. There's no right one to be in.",
         "table": {
           "headers": [
-            "Zone",
-            "What it looks like - try"
+            "How I am",
+            "What it can look like",
+            "Something to try"
           ],
           "rows": [
             [
-              "Blue zone",
-              "Low energy - sad, tired, bored. Try: a short walk, a chat, a drink of water."
+              "Calm",
+              "Settled, able to think, ready to get on with things.",
+              "Nothing needs fixing. Notice what helped you get here."
             ],
             [
-              "Green zone",
-              "Calm and ready to learn. Try: keep doing what's working."
+              "Unsettled",
+              "Fidgety, silly, nervous, excited, hard to settle.",
+              "Move: a walk, a errand, a drink of water. Then come back to it."
             ],
             [
-              "Yellow zone",
-              "Wobbly - silly, nervous, excited. Try: a movement break, deep breaths."
+              "Overwhelmed",
+              "Too much at once. Angry, tearful, want to get out.",
+              "Somewhere quieter, slower breathing, and tell an adult where you are."
             ],
             [
-              "Red zone",
-              "Overwhelmed - angry, out of control. Try: safe space, calm-down strategy."
+              "Shut down",
+              "Flat, tired, switched off, nothing feels worth it.",
+              "Something small and doable. A short chat, fresh air, one easy task."
             ]
           ]
-        }
+        },
+        "source": "Plain-language states used in UK pastoral practice. Not based on any branded self-regulation framework."
       },
       {
         "name": "Emotion word cards",
-        "body": "Sort these into zones: calm, wobbly, or overwhelmed.",
+        "body": "Sort these by how they feel: calm, unsettled, or overwhelmed.",
         "cards": [
           {
             "cat": "Emotion",
             "title": "Frustrated",
             "art": "art-tangle",
             "text": "Things aren't working and it's building up.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Anxious",
             "art": "art-jagged",
             "text": "Something ahead feels unsafe or uncertain.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Embarrassed",
             "art": "art-hide",
             "text": "You want to disappear for a moment.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Proud",
             "art": "art-rise",
             "text": "You did something that mattered to you.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Disappointed",
             "art": "art-fall",
             "text": "You hoped for something and it didn't come.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Overwhelmed",
             "art": "art-overload",
             "text": "Too much at once, and no room to think.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Content",
             "art": "art-level",
             "text": "Nothing's wrong, and that's enough.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Jealous",
             "art": "art-compare",
             "text": "Someone has what you wanted.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Hopeful",
             "art": "art-sprout",
             "text": "Something might get better from here.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Lonely",
             "art": "art-apart",
             "text": "People are around, but not with you.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Confident",
             "art": "art-stand",
             "text": "You know you can handle this one.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           },
           {
             "cat": "Emotion",
             "title": "Irritated",
             "art": "art-friction",
             "text": "Small things are scraping at you.",
-            "note": "Sort into a zone"
+            "note": "Which one is this?"
           }
         ],
         "tone": "pink"
@@ -4172,7 +4183,8 @@
             "note": "Keep one in your bag"
           }
         ],
-        "tone": "teal"
+        "tone": "teal",
+        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use."
       },
       {
         "name": "Wave diagram template",
@@ -4203,7 +4215,7 @@
         "body": "My emotional toolkit, to share with my class teacher.",
         "form": {
           "fields": [
-            "My zones - what each one looks like for me",
+            "How I am at my calmest, most unsettled and most overwhelmed",
             "My earliest warning signs",
             "My top 3 go-to strategies",
             "Who can help me",
@@ -4419,7 +4431,8 @@
             "art": "art-raise-card",
             "text": "Use the agreed signal instead of calling out."
           }
-        ]
+        ],
+        "source": "A self-instruction sequence from cognitive behavioural practice, widely used in UK SEMH settings."
       },
       {
         "name": "Signal card options",
@@ -4604,7 +4617,8 @@
               ""
             ]
           ]
-        }
+        },
+        "source": "Graded exposure, as described in DfE statutory guidance Working together to improve school attendance and in cognitive behavioural practice."
       },
       {
         "name": "Step-planning worksheet",
@@ -4667,7 +4681,8 @@
             "note": "Anchors you to now"
           }
         ],
-        "tone": "teal"
+        "tone": "teal",
+        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use."
       },
       {
         "name": "My return-to-school plan",
