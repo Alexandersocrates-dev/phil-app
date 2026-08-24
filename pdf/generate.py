@@ -741,13 +741,47 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
             c.drawString(x, y, "No course summary written for this course yet.")
             y -= 5 * mm
 
-        if course.get("safeguarding_count"):
+        # The follow-up is the part that shows whether the course held. A report
+        # that stops at the certificate says what was delivered, not what
+        # changed, and the second is the question being asked.
+        fu = course.get("follow_up")
+        if fu:
+            y -= 1 * mm
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(x, y, f"Follow-up chat, {fu.get('date', '')}")
+            y -= 5 * mm
+            c.setFillColor(INK)
+            c.setFont("Helvetica", 9)
+            c.drawString(x, y, "    ".join([
+                f"Helped: {fu.get('helped_label', '')}",
+                f"Behaviour: {fu.get('behaviour_label', '')}",
+                f"Next: {fu.get('next_step_label', '')}",
+            ]))
+            y -= 5 * mm
+            voice = (fu.get("pupil_voice") or "").strip()
+            if voice:
+                c.setFillColor(INK)
+                y = _wrap(c, f"In their words: \u201c{voice}\u201d", x, y, max_width, size=9.5)
+            note = (fu.get("next_step_note") or "").strip()
+            if note:
+                c.setFillColor(MUTED)
+                y = _wrap(c, note, x, y, max_width, size=9)
+        elif course["status"] == "completed":
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 9.5)
+            c.drawString(x, y, "No follow-up chat recorded yet.")
+            y -= 5 * mm
+
+        flagged = course.get("safeguarding_count") or 0
+        if fu and fu.get("safeguarding_flag"):
+            flagged += 1
+        if flagged:
             y -= 1 * mm
             c.setFillColor(RED)
             c.setFont("Helvetica-Bold", 8.5)
-            n = course["safeguarding_count"]
-            c.drawString(x, y, f"{n} session{'' if n == 1 else 's'} carried a safeguarding note. "
-                               "See the session records.")
+            c.drawString(x, y, f"{flagged} record{'' if flagged == 1 else 's'} carried a "
+                               "safeguarding note. See the session records.")
             y -= 5 * mm
         y -= 6 * mm
 

@@ -75,9 +75,9 @@
   <div class="review-strip {% if e.review_done %}review-done{% elif overdue %}review-overdue{% endif %}">
     <div>
       <strong>
-        {%- if e.review_done %}Review completed
-        {%- elif overdue %}Review overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
-        {%- else %}Review due the week of {{ review_week_of(e.review_date) }}{% endif -%}
+        {%- if e.review_done %}Follow-up chat done
+        {%- elif overdue %}Follow-up chat overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
+        {%- else %}Follow-up chat due the week of {{ review_week_of(e.review_date) }}{% endif -%}
       </strong>
       {% if e.review_note %}<span class="review-note">{{ e.review_note }}</span>{% endif %}
     </div>
@@ -85,19 +85,35 @@
     <div class="review-actions">
       <form method="post" action="/mentor/enrolment/{{ e.id }}/review/push" class="form-inline">
         <input type="hidden" name="weeks" value="2">
-        <button class="btn btn-secondary btn-sm" type="submit" title="Move the review two weeks later">Push back 2 weeks</button>
+        <button class="btn btn-secondary btn-sm" type="submit" title="Move the follow-up two weeks later">Push back 2 weeks</button>
       </form>
-      <form method="post" action="/mentor/enrolment/{{ e.id }}/review/done" class="form-inline">
-        <button class="btn btn-secondary btn-sm" type="submit">Mark done</button>
-      </form>
+      {# The chat is recorded, not just ticked: marking it done without writing
+         anything down left no trace of what the pupil actually said. #}
+      <a class="btn btn-primary btn-sm" href="/mentor/enrolment/{{ e.id }}/follow-up">Record the chat</a>
     </div>
     {% endif %}
   </div>
+  {% if item.follow_up %}
+  {% set f = item.follow_up %}
+  <div class="fu-record">
+    <div class="fu-record-head">
+      <strong>Follow-up chat &middot; {{ f.date }}</strong>
+      {% if f.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% endif %}
+    </div>
+    <p class="fu-record-line">
+      <span class="fu-k">Helped:</span> {{ helped_labels.get(f.helped, f.helped) }}
+      &middot; <span class="fu-k">Behaviour:</span> {{ behaviour_labels.get(f.behaviour, f.behaviour) }}
+      &middot; <span class="fu-k">Next:</span> {{ next_step_labels.get(f.next_step, f.next_step) }}
+    </p>
+    {% if f.pupil_voice %}<p class="fu-record-voice">&ldquo;{{ f.pupil_voice }}&rdquo;</p>{% endif %}
+    {% if f.next_step_note %}<p class="fu-record-note">{{ f.next_step_note }}</p>{% endif %}
+  </div>
+  {% endif %}
   {% elif e.status == 'completed' %}
   {# Finished the sessions but never closed the course. The certificate is
      waiting on this, so it needs a route back rather than just a warning. #}
   <div class="review-strip review-none">
-    <div><strong>Course not closed yet</strong><span class="review-note">The reflection and a review date are needed before {{ pupil.forename }}&rsquo;s certificate is issued.</span></div>
+    <div><strong>Course not closed yet</strong><span class="review-note">A date for the follow-up chat is needed before {{ pupil.forename }}&rsquo;s certificate is issued.</span></div>
     <a class="btn btn-primary btn-sm" href="/mentor/enrolment/{{ e.id }}/wrap-up">Finish and issue certificate</a>
   </div>
   {% endif %}
@@ -170,5 +186,14 @@
 .review-done{background:#F3F2EC;border-color:var(--border);color:var(--muted);}
 .review-none{background:#fff;border-style:dashed;color:var(--muted);}
 .record-goal{display:block; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4;}
+/* A recorded follow-up sits under the course it followed, not in the session
+   table: it isn't a session, and it happened after the course ended. */
+.fu-record{border:1px solid var(--border);border-left:3px solid var(--teal-darker);
+  border-radius:0 10px 10px 0;padding:11px 14px;margin:0 0 14px;background:#FBFAF6;}
+.fu-record-head{display:flex;align-items:center;gap:10px;margin-bottom:5px;font-size:13.5px;}
+.fu-record-line{font-size:13px;margin:0;color:var(--ink);}
+.fu-k{color:var(--muted);}
+.fu-record-voice{font-size:13px;margin:7px 0 0;font-style:italic;color:var(--ink);}
+.fu-record-note{font-size:12.5px;margin:5px 0 0;color:var(--muted);}
 </style>
 {% endblock %}

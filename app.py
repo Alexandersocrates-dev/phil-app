@@ -1018,8 +1018,8 @@ def schedule_for(conn, user, today=None):
             "title": "Follow-up chat",
             "subtitle": "Sit down with them: has the course helped, and is the behaviour still showing?",
             "last_label": row["review_note"] or "",
-            "action_label": "Open record",
-            "action_url": "/mentor/pupils/%s" % row["pupil_id"],
+            "action_label": "Record chat",
+            "action_url": "/mentor/enrolment/%s/follow-up" % row["id"],
         }
         # A review is a target, not a deadline: it only counts as missed once the
         # grace period has passed, so a half-term break doesn't make a mentor
@@ -1379,14 +1379,19 @@ def pupil_profile(request):
                 "SELECT planned_date FROM session_schedule WHERE enrolment_id=? AND week_number=?",
                 (e["id"], e["current_week"] + 1),
             ).fetchone()
+            follow_up = follow_up_for(conn, e["id"])
             enrolment_data.append({"enrolment": e, "records": records, "certificate": cert,
                                     "reflection": reflection,
+                                    "follow_up": follow_up,
+                                    "follow_up_earliest": follow_up_earliest(conn, e["id"]),
                                     "next_planned": next_planned["planned_date"] if next_planned else None})
     finally:
         conn.close()
     # today is used to mark a review overdue; the default is the same three-week
     # gap the completion screen suggests, so both routes agree.
     return render("pupil_profile.html", user=user, pupil=pupil, enrolment_data=enrolment_data,
+                  helped_labels=HELPED_LABELS, behaviour_labels=BEHAVIOUR_LABELS,
+                  next_step_labels=NEXT_STEP_LABELS,
                   today=datetime.date.today().isoformat(),
                   review_week_of=review_week_of,
                   review_overdue_from=review_overdue_from,
@@ -5073,7 +5078,8 @@ def course_wrap_up(request):
 
     if not review_date:
         return with_flash(f"/mentor/enrolment/{enrolment_id}/wrap-up",
-                          "A review date is needed before the course can be closed.", "error")
+                          "A date for the follow-up chat is needed before the course "
+                          "can be closed.", "error")
 
     conn = db.get_conn()
     try:
@@ -5086,6 +5092,12 @@ def course_wrap_up(request):
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
 
+        earliest = follow_up_earliest(conn, enrolment_id)
+        if earliest and review_date < earliest:
+            return with_flash(f"/mentor/enrolment/{enrolment_id}/wrap-up",
+                f"A follow-up needs at least {FOLLOW_UP_MIN_DAYS} days after the last "
+                f"session to show whether anything held, so pick {earliest} or later.",
+                "error")
         conn.execute("UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
                      (review_date, review_note or None, enrolment_id))
 
@@ -5136,7 +5148,17 @@ def course_wrap_up_form(request):
         conn.close()
     suggested = enrolment["review_date"] or (
         datetime.date.today() + datetime.timedelta(days=21)).isoformat()
-    return render("course_complete.html", user=user,
+    # The follow-up can't be recorded until a fortnight after the last session,
+    # so the wrap-up mustn't let a mentor book one before then — otherwise the
+    # date arrives and the form refuses it.
+    conn2 = db.get_conn()
+    try:
+        earliest = follow_up_earliest(conn2, enrolment["id"])
+    finally:
+        conn2.close()
+    if earliest and suggested < earliest:
+        suggested = earliest
+    return render("course_complete.html", user=user, earliest_review=earliest,
                   pupil_name=f"{enrolment['forename']} {enrolment['surname']}",
                   course_title=enrolment["course_title"],
                   enrolment_id=enrolment["id"], pupil_id=enrolment["pupil_id"],
@@ -5222,6 +5244,167 @@ def push_review_point(request):
         conn.close()
     return with_flash(f"/mentor/pupils/{pupil_id}",
                       f"Review moved to the week of {review_week_of(new_date)}.", "ok")
+
+
+FOLLOW_UP_MIN_DAYS = 14
+
+HELPED_LABELS = {
+    "better": "Clearly better",
+    "some": "Some change",
+    "none": "No change",
+    "worse": "Worse",
+}
+BEHAVIOUR_LABELS = {
+    "no": "Not showing",
+    "sometimes": "Sometimes",
+    "yes": "Still showing",
+}
+NEXT_STEP_LABELS = {
+    "none": "Nothing further needed",
+    "monitor": "Keep an eye on it",
+    "another_course": "Recommend another course",
+    "refer": "Refer on to someone else",
+}
+
+
+def follow_up_for(conn, enrolment_id):
+    """The follow-up chat recorded against a course, if one has been."""
+    return conn.execute("SELECT * FROM follow_ups WHERE enrolment_id=?",
+                        (enrolment_id,)).fetchone()
+
+
+def follow_up_earliest(conn, enrolment_id):
+    """The first date a follow-up can honestly be recorded.
+
+    A fortnight after the last session. A chat three days after a course ends
+    can't tell anyone whether change held, so recording one that early would
+    put a number in the impact report that doesn't mean what it says.
+    """
+    last = conn.execute(
+        "SELECT max(date) FROM session_records WHERE enrolment_id=?",
+        (enrolment_id,)).fetchone()[0]
+    if not last:
+        return None
+    try:
+        return (datetime.date.fromisoformat(last)
+                + datetime.timedelta(days=FOLLOW_UP_MIN_DAYS)).isoformat()
+    except (TypeError, ValueError):
+        return None
+
+
+@router.get("/mentor/enrolment/<enrolment_id>/follow-up")
+def follow_up_form(request):
+    """The follow-up chat: what the pupil said a few weeks on."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.establishment_id, p.id AS pupil_id,
+                      c.title AS course_title
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        if not may_handle_review(conn, enrolment, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        existing = follow_up_for(conn, enrolment["id"])
+        earliest = follow_up_earliest(conn, enrolment["id"])
+    finally:
+        conn.close()
+
+    if existing:
+        return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                          "That follow-up is already recorded.", "error")
+
+    today = datetime.date.today().isoformat()
+    return render("follow_up.html", user=user, enrolment=enrolment,
+                  pupil_name=f"{enrolment['forename']} {enrolment['surname']}",
+                  forename=enrolment["forename"],
+                  course_title=enrolment["course_title"],
+                  earliest=earliest, today=today,
+                  too_early=bool(earliest and today < earliest),
+                  flash=flash_from_query(request))
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/follow-up")
+def follow_up_save(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    enrolment_id = request.params["enrolment_id"]
+    back = f"/mentor/enrolment/{enrolment_id}/follow-up"
+
+    date = request.field("date", "").strip()
+    helped = request.field("helped", "").strip()
+    behaviour = request.field("behaviour", "").strip()
+    pupil_voice = request.field("pupil_voice", "").strip()
+    next_step = request.field("next_step", "").strip()
+    next_step_note = request.field("next_step_note", "").strip()
+    safeguarding_flag = 1 if request.field("safeguarding_flag") == "yes" else 0
+    safeguarding_note = request.field("safeguarding_note", "").strip()
+
+    if helped not in HELPED_LABELS or behaviour not in BEHAVIOUR_LABELS \
+            or next_step not in NEXT_STEP_LABELS:
+        return with_flash(back, "Answer all three questions before saving.", "error")
+    # Mandatory even to record "no concerns", exactly as on a session record: a
+    # blank box can mean "nothing to report" or "never asked", and the two are
+    # not the same thing to a designated safeguarding lead.
+    if not safeguarding_note:
+        return with_flash(back,
+            "The safeguarding note is mandatory, even to record 'no concerns'.", "error")
+
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.establishment_id, p.id AS pupil_id,
+                      c.title AS course_title
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id WHERE e.id=?""",
+            (enrolment_id,)).fetchone()
+        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        if not may_handle_review(conn, enrolment, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        if follow_up_for(conn, enrolment_id):
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              "That follow-up is already recorded.", "error")
+
+        earliest = follow_up_earliest(conn, enrolment_id)
+        if not date:
+            date = datetime.date.today().isoformat()
+        if earliest and date < earliest:
+            return with_flash(back,
+                f"A follow-up needs at least {FOLLOW_UP_MIN_DAYS} days after the last "
+                f"session, so it can't be dated before {earliest}.", "error")
+        if date > datetime.date.today().isoformat():
+            return with_flash(back, "A follow-up can't be dated in the future.", "error")
+
+        conn.execute(
+            """INSERT INTO follow_ups (enrolment_id, date, helped, behaviour, pupil_voice,
+                                       next_step, next_step_note, safeguarding_flag,
+                                       safeguarding_note, recorded_by, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+            (enrolment_id, date, helped, behaviour, pupil_voice or None,
+             next_step, next_step_note or None, safeguarding_flag,
+             safeguarding_note, user["id"], db.now()))
+        # The follow-up being recorded is what closes it, so the mentor never
+        # has to mark it done separately and the two can't disagree.
+        conn.execute("UPDATE enrolments SET review_done=1 WHERE id=?", (enrolment_id,))
+        db.log_action(conn, user["id"], "follow_up_recorded", "enrolment", enrolment_id,
+                      "%s / %s" % (helped, behaviour))
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+        forename = enrolment["forename"]
+    finally:
+        conn.close()
+
+    message = f"Follow-up recorded for {forename}."
+    if next_step == "another_course":
+        message += " You noted another course would help — enrol from here."
+    return with_flash(f"/mentor/pupils/{pupil_id}", message, "success")
 
 
 @router.post("/mentor/enrolment/<enrolment_id>/review/done")
@@ -5388,8 +5571,18 @@ def pupil_report_download(request):
                WHERE en.pupil_id = ?
                ORDER BY en.start_date, en.id""",
             (request.params["pupil_id"],)).fetchall()
-        courses = [dict(r, mentor_name=r["mentor_name"] or "Mentor",
-                        support_plan=support_plan_for(conn, r["id"])) for r in rows]
+        courses = []
+        for r in rows:
+            fu = follow_up_for(conn, r["id"])
+            fu_dict = None
+            if fu:
+                fu_dict = dict(fu)
+                fu_dict["helped_label"] = HELPED_LABELS.get(fu["helped"], fu["helped"])
+                fu_dict["behaviour_label"] = BEHAVIOUR_LABELS.get(fu["behaviour"], fu["behaviour"])
+                fu_dict["next_step_label"] = NEXT_STEP_LABELS.get(fu["next_step"], fu["next_step"])
+            courses.append(dict(r, mentor_name=r["mentor_name"] or "Mentor",
+                                support_plan=support_plan_for(conn, r["id"]),
+                                follow_up=fu_dict))
     finally:
         conn.close()
     path = pdfgen.pupil_report_pdf(

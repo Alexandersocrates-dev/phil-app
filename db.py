@@ -242,6 +242,26 @@ CREATE TABLE IF NOT EXISTS completion_reflections (
     updated_at TEXT
 );
 
+-- The follow-up chat: a short sit-down with the pupil a few weeks after a
+-- course ends, asking whether it helped and whether the behaviour is still
+-- showing. One per enrolment, so it attaches to the course it followed rather
+-- than floating loose on the pupil. Held apart from session_records because no
+-- course session is being delivered — the course is over.
+CREATE TABLE IF NOT EXISTS follow_ups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    enrolment_id INTEGER NOT NULL UNIQUE REFERENCES enrolments(id),
+    date TEXT NOT NULL,
+    helped TEXT NOT NULL CHECK(helped IN ('better','some','none','worse')),
+    behaviour TEXT NOT NULL CHECK(behaviour IN ('no','sometimes','yes')),
+    pupil_voice TEXT,
+    next_step TEXT NOT NULL CHECK(next_step IN ('none','monitor','another_course','refer')),
+    next_step_note TEXT,
+    safeguarding_flag INTEGER NOT NULL DEFAULT 0,
+    safeguarding_note TEXT NOT NULL DEFAULT '',
+    recorded_by INTEGER NOT NULL REFERENCES users(id),
+    created_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS notifications (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL,

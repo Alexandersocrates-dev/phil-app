@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Follow-up chat - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><a href="/mentor/pupils/{{ enrolment.pupil_id }}">&larr; Back to {{ forename }}&rsquo;s record</a></p>
+
+<div class="card">
+  <h1>Follow-up chat</h1>
+  <p class="cc-lead">{{ pupil_name }} &middot; {{ course_title }}</p>
+  <p class="muted" style="margin:0;">Recorded after the course, not during it. Fill this in with
+  {{ forename }} in front of you, or straight afterwards while it&rsquo;s fresh.</p>
+</div>
+
+{% if too_early %}
+{# A chat days after the last session can't show whether change held, so the
+   form is closed until enough time has passed rather than collecting an answer
+   that would mean nothing in the impact report. #}
+<div class="card fu-blocked">
+  <h2>Not yet</h2>
+  <p>A follow-up needs at least a fortnight after the last session, so there&rsquo;s a real
+  stretch of time to look back on. This one can be recorded from <strong>{{ earliest }}</strong>.</p>
+  <p class="muted" style="margin:0;">It stays on your to-do list until then.</p>
+</div>
+{% else %}
+
+<form method="post" action="/mentor/enrolment/{{ enrolment.id }}/follow-up">
+  <div class="card">
+    <div class="field">
+      <label for="date">Date of the chat</label>
+      <input type="date" id="date" name="date" value="{{ today }}"
+             {% if earliest %}min="{{ earliest }}"{% endif %} max="{{ today }}" required>
+      {% if earliest %}<p class="fu-hint">Can&rsquo;t be earlier than {{ earliest }}, a fortnight after the last session.</p>{% endif %}
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Has the course helped?</h2>
+    <p class="fu-hint">Your judgement, taking what {{ forename }} says alongside what you see.</p>
+    <div class="fu-choices">
+      <label class="fu-choice"><input type="radio" name="helped" value="better" required><span>Clearly better</span></label>
+      <label class="fu-choice"><input type="radio" name="helped" value="some"><span>Some change</span></label>
+      <label class="fu-choice"><input type="radio" name="helped" value="none"><span>No change</span></label>
+      <label class="fu-choice"><input type="radio" name="helped" value="worse"><span>Worse</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Is the behaviour still showing?</h2>
+    <div class="fu-choices">
+      <label class="fu-choice"><input type="radio" name="behaviour" value="no" required><span>Not showing</span></label>
+      <label class="fu-choice"><input type="radio" name="behaviour" value="sometimes"><span>Sometimes</span></label>
+      <label class="fu-choice"><input type="radio" name="behaviour" value="yes"><span>Still showing</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>What {{ forename }} said</h2>
+    <p class="fu-hint">Their words where you have them, not a summary of yours. This is the part
+    a new form tutor reads and believes.</p>
+    <textarea name="pupil_voice" rows="4" placeholder="e.g. &ldquo;I still get wound up but I walk off now instead of shouting&rdquo;"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>What happens next</h2>
+    <div class="fu-choices fu-choices-stack">
+      <label class="fu-choice"><input type="radio" name="next_step" value="none" required><span>Nothing further needed</span></label>
+      <label class="fu-choice"><input type="radio" name="next_step" value="monitor"><span>Keep an eye on it</span></label>
+      <label class="fu-choice"><input type="radio" name="next_step" value="another_course"><span>Recommend another course</span></label>
+      <label class="fu-choice"><input type="radio" name="next_step" value="refer"><span>Refer on to someone else</span></label>
+    </div>
+    <div class="field" style="margin-top:12px;">
+      <label for="next_step_note">Anything to add</label>
+      <textarea id="next_step_note" name="next_step_note" rows="2" placeholder="Who you&rsquo;ve told, or what you&rsquo;ve arranged&hellip;"></textarea>
+    </div>
+  </div>
+
+  {# Asking a child how they're getting on is exactly where something comes out.
+     Same flag and the same mandatory note as a session record, so a follow-up
+     can't become the one conversation in Phil with nowhere to put a concern. #}
+  <div class="card fu-safeguarding">
+    <h2>Safeguarding</h2>
+    <div class="fu-choices">
+      <label class="fu-choice"><input type="radio" name="safeguarding_flag" value="no" checked><span>No concerns</span></label>
+      <label class="fu-choice fu-choice-flag"><input type="radio" name="safeguarding_flag" value="yes"><span>Concern to flag</span></label>
+    </div>
+    <div class="field" style="margin-top:12px;">
+      <label for="safeguarding_note">Safeguarding note <span class="req">Required</span></label>
+      <textarea id="safeguarding_note" name="safeguarding_note" rows="2" required
+        placeholder="&ldquo;No concerns raised in this conversation&rdquo; is a valid answer."></textarea>
+      <p class="fu-hint">Required either way. A blank box can mean nothing came up, or that
+      nobody asked, and those aren&rsquo;t the same thing.</p>
+    </div>
+  </div>
+
+  <p class="fu-actions">
+    <button class="btn btn-primary" type="submit">Save follow-up</button>
+    <a class="btn btn-secondary" href="/mentor/pupils/{{ enrolment.pupil_id }}">Cancel</a>
+  </p>
+</form>
+{% endif %}
+
+<style>
+.cc-lead{font-size:15px;color:var(--ink);margin:0 0 6px;}
+.fu-hint{font-size:12.5px;color:var(--muted);line-height:1.45;margin:2px 0 10px;}
+.fu-blocked{border-left:4px solid var(--amber-dark);}
+.fu-blocked h2{margin-top:0;}
+.fu-choices{display:flex;flex-wrap:wrap;gap:8px;}
+.fu-choices-stack{flex-direction:column;align-items:flex-start;}
+.fu-choice{display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  border:1.4px solid var(--border);border-radius:10px;padding:9px 13px;font-size:13.5px;
+  background:#fff;}
+.fu-choice:hover{border-color:var(--teal-darker);}
+.fu-choice input{margin:0;}
+.fu-choice:has(input:checked){border-color:var(--teal-darker);background:var(--teal-light);}
+.fu-choice-flag:has(input:checked){border-color:#B4341C;background:#FBE3DE;}
+.fu-safeguarding{border-left:4px solid #B4341C;}
+.fu-safeguarding h2{margin-top:0;}
+.req{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--coral-dark);margin-left:6px;}
+.fu-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 10px;}
+</style>
+{% endblock %}
