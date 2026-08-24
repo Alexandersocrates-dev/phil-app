@@ -1023,25 +1023,59 @@ def schedule_for(conn, user, today=None):
 
     coming.sort(key=lambda i: i.get("planned") or "9999")
 
+    # A mentor counts in pupils, not enrolments: one child on five courses is
+    # one person to find time for, so "0 of 5" read as five children.
+    pupils = {}
+    for row in courses:
+        p = pupils.setdefault(row["pupil_id"], {
+            "pupil_id": row["pupil_id"],
+            "name": name_of(row),
+            "courses": 0,
+            "seen_courses": 0,
+            "last_session": None,
+        })
+        p["courses"] += 1
+        last = row["last_session"]
+        if last and (p["last_session"] is None or last > p["last_session"]):
+            p["last_session"] = last
+        if last and last >= monday_iso:
+            p["seen_courses"] += 1
+    pupil_rows = sorted(pupils.values(), key=lambda p: (p["seen_courses"] > 0, p["name"]))
+    for p in pupil_rows:
+        p["seen"] = p["seen_courses"] > 0
+        if p["seen"]:
+            p["status"] = "seen " + ago(p["last_session"])
+        elif p["last_session"]:
+            p["status"] = "last seen " + ago(p["last_session"])
+        else:
+            p["status"] = "not started"
+
     summary = {
         "total_courses": total_courses,
+        "pupils": len(pupil_rows),
+        "pupils_seen": sum(1 for p in pupil_rows if p["seen"]),
         "seen": len(seen),
         "attention": len(attention),
         "this_week": len(this_week),
+        # This week only. Anything behind is already counted in "attention", and
+        # listing it twice made the breakdown add up to more than the work.
+        "sessions_due": sum(1 for i in this_week if i["kind"] == "session"),
+        "writeups_due": sum(1 for i in this_week if i["kind"] == "summary"),
+        "reviews_due": sum(1 for i in this_week if i["kind"] == "review"),
     }
     # "rows", not "items": in a template dict.items is the built-in method, so a
     # bucket keyed that way is always truthy and every group renders as full.
     buckets = [
         {"key": "attention", "title": "Behind", "rows": attention,
          "blurb": "Do these first."},
-        {"key": "this_week", "title": "This week", "rows": this_week,
+        {"key": "this_week", "title": "To do", "rows": this_week,
          "blurb": "Not seen yet this week."},
         {"key": "coming", "title": "Later", "rows": coming,
          "blurb": "Planned for another week."},
         {"key": "seen", "title": "Done this week", "rows": seen,
          "blurb": ""},
     ]
-    return summary, buckets
+    return summary, buckets, pupil_rows
 
 
 @router.get("/mentor/schedule")
@@ -1054,11 +1088,11 @@ def mentor_schedule(request):
         return blocked
     conn = db.get_conn()
     try:
-        summary, buckets = schedule_for(conn, user)
+        summary, buckets, pupil_rows = schedule_for(conn, user)
     finally:
         conn.close()
     return render("schedule.html", user=user, summary=summary, buckets=buckets,
-                  flash=flash_from_query(request))
+                  pupils=pupil_rows, flash=flash_from_query(request))
 
 
 @router.get("/mentor")
@@ -1093,7 +1127,7 @@ def mentor_home(request):
         # with no session recorded in seven days, which is a different thing
         # entirely: a course planned for next Tuesday looked identical to one
         # nobody had touched since September.
-        sched_summary, _ = schedule_for(conn, user)
+        sched_summary, _, _ = schedule_for(conn, user)
         due_this_week = sched_summary["this_week"] + sched_summary["attention"]
     finally:
         conn.close()

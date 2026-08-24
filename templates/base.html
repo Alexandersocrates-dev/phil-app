@@ -26,7 +26,7 @@
       <a class="app-sidebar-item" href="/admin/reports">{{ icon_chart() }}<span>Reports</span></a>
       <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
       {% elif user.role == 'mentor' %}
-      <a class="app-sidebar-item" href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg><span>Schedule</span></a>
+      <a class="app-sidebar-item" href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg><span>This week</span></a>
       <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
       <a class="app-sidebar-item" href="/mentor/reports">{{ icon_chart() }}<span>Reports</span></a>
       <a class="app-sidebar-item" href="/support/new">{{ icon_message_circle() }}<span>Get support</span></a>
@@ -108,7 +108,7 @@
   <a href="/admin/reports">{{ icon_chart() }}Reports</a>
   <a href="/support/new">{{ icon_message_circle() }}Support</a>
   {% elif user.role == 'mentor' %}
-  <a href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>Schedule</a>
+  <a href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>This week</a>
   <a href="/courses">{{ icon_book() }}Courses</a>
   <a href="/mentor/reports">{{ icon_chart() }}Reports</a>
   <a href="/support/new">{{ icon_message_circle() }}Support</a>
