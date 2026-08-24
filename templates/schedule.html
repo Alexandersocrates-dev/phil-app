@@ -79,7 +79,7 @@
     {# Fixed-width column with the button always first, so buttons line up down
        the page whether or not a row has the dates link. #}
     <div class="sched-actions">
-      <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming'] else 'btn-primary' }} btn-sm sched-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
+      <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming_sessions', 'coming_reviews'] else 'btn-primary' }} btn-sm sched-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
       {% if i.kind == 'session' and not i.planned %}<a class="sched-plan" href="{{ i.plan_url }}">Set session dates</a>{% endif %}
     </div>
   </div>
@@ -127,7 +127,8 @@
 .sched-card{padding-top:0;}
 .sched-card.sched-attention{border-left:4px solid #B4341C;}
 .sched-card.sched-this_week{border-left:4px solid var(--teal-darker);}
-.sched-card.sched-coming{border-left:4px solid #97A6C4;}
+.sched-card.sched-coming_sessions{border-left:4px solid #97A6C4;}
+.sched-card.sched-coming_reviews{border-left:4px solid #6FA894;}
 .sched-card.sched-seen{border-left:4px solid var(--border);}
 
 .sched-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;

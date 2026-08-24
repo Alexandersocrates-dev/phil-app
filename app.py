@@ -951,6 +951,9 @@ def schedule_for(conn, user, today=None):
         # can't see from the row itself. "No date set" on every row is noise, so
         # no date means no chip.
         if last and last >= monday_iso:
+            # The row's title is normally the session coming next. On a done row
+            # that's the wrong one: name the session that was actually run.
+            item["title"] = "Session %d of %d" % (row["current_week"], SESSIONS_PER_COURSE)
             item["chip"] = "done " + ago(last)
             item["chip_kind"] = "done"
             item["light"] = "green"
@@ -1050,6 +1053,40 @@ def schedule_for(conn, user, today=None):
 
     coming.sort(key=lambda i: i.get("planned") or "9999")
 
+    # Every session date set for a future week, whatever state the course is in.
+    # Dates inside this week are deliberately left out: they are already sitting
+    # in "This week" or "Behind", and listing them twice makes the page lie about
+    # how much there is to do.
+    booked_sessions = []
+    for row in conn.execute(
+        """SELECT s.planned_date, s.week_number, e.id AS enrolment_id, e.pupil_id,
+                  p.forename, p.surname, c.title AS course_title
+           FROM session_schedule s
+           JOIN enrolments e ON e.id = s.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           JOIN courses c ON c.id = e.course_id
+           WHERE e.mentor_id = ? AND e.status = 'active' AND p.status = 'active'
+             AND s.planned_date IS NOT NULL AND s.planned_date > ?
+             AND s.week_number > e.current_week
+           ORDER BY s.planned_date, p.surname""",
+        (user["id"], end_of_week)).fetchall():
+        booked_sessions.append({
+            "kind": "session",
+            "light": "grey",
+            "pupil_id": row["pupil_id"],
+            "pupil_name": name_of(row),
+            "course_title": row["course_title"],
+            "title": "Session %d of %d" % (row["week_number"], SESSIONS_PER_COURSE),
+            "chip": pretty_date(row["planned_date"]),
+            "chip_kind": "due",
+            "ahead": ahead(row["planned_date"]),
+            "last_label": "",
+            "planned": row["planned_date"],
+            "action_label": "Open record",
+            "action_url": "/mentor/pupils/%s" % row["pupil_id"],
+            "plan_url": "/mentor/schedule/%s" % row["enrolment_id"],
+        })
+
     # A mentor counts in pupils, not enrolments: one child on five courses is
     # one person to find time for, so "0 of 5" read as five children.
     pupils = {}
@@ -1097,8 +1134,16 @@ def schedule_for(conn, user, today=None):
          "blurb": "Do these first."},
         {"key": "this_week", "title": "This week", "rows": this_week,
          "blurb": "Not seen yet this week."},
-        {"key": "coming", "title": "Booked for later", "rows": coming,
-         "blurb": "Dates already set. Nothing to do this week."},
+        # Booked work, a group each. These answer "what's in the diary", not
+        # "what's outstanding", so they are built from the dates themselves
+        # rather than from what's left over above — a course seen this week
+        # still has next week's session booked, and a mentor wants to see it.
+        {"key": "coming_sessions", "title": "Scheduled mentoring sessions",
+         "rows": booked_sessions,
+         "blurb": "Sessions you've set a date for, beyond this week."},
+        {"key": "coming_reviews", "title": "Review sessions",
+         "rows": [r for r in coming if r["kind"] == "review"],
+         "blurb": "Follow-up chats booked when a course finished."},
         {"key": "seen", "title": "Done this week", "rows": seen,
          "blurb": ""},
     ]
