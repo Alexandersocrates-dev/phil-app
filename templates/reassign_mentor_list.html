@@ -3,7 +3,21 @@
 {% block content %}
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <h1>Reassign a mentor</h1>
-<p class="muted">Every active pupil in your establishment. Search, or pick one to choose their new mentor.</p>
+<p class="muted">Every active pupil in your establishment. Search, or open a pupil to choose a new mentor for one of their courses.</p>
+
+<style>
+  .reassign-pupil { border-bottom: 1px solid var(--border); }
+  .reassign-pupil:last-of-type { border-bottom: none; }
+  .reassign-pupil > summary { display: flex; align-items: center; gap: 10px; padding: 13px 4px; cursor: pointer; list-style: none; }
+  .reassign-pupil > summary::-webkit-details-marker { display: none; }
+  .reassign-pupil > summary:hover .reassign-name { text-decoration: underline; }
+  .reassign-chev { width: 14px; height: 14px; flex-shrink: 0; transition: transform .15s ease; }
+  .reassign-pupil[open] > summary .reassign-chev { transform: rotate(90deg); }
+  .reassign-name { flex: 1; font-weight: 600; }
+  .reassign-meta { font-size: 13px; }
+  .reassign-body { padding: 0 0 14px 24px; }
+  .reassign-body table { margin: 0 0 10px; }
+</style>
 
 <div class="card">
   <div style="display:flex;align-items:center;gap:8px;border:1.4px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:14px;">
@@ -12,36 +26,52 @@
     <button type="button" class="btn btn-secondary btn-sm" onclick="filterReassignRows()">Search</button>
   </div>
 
-  {% if not rows %}
+  {% if not pupils %}
     <p class="muted">No active pupil enrolments to reassign.</p>
   {% else %}
-  <table id="reassignTable">
-    <tr><th>Pupil</th><th>Course</th><th>Current mentor</th><th></th></tr>
-    {% for row in rows %}
-    <tr data-name="{{ (row.forename ~ ' ' ~ row.surname)|lower }}">
-      <td><a href="/mentor/pupils/{{ row.pupil_id }}">{{ row.forename }} {{ row.surname }}</a></td>
-      <td>{{ row.course_title }}</td>
-      <td>{{ row.mentor_name }}</td>
-      <td><a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ row.enrolment_id }}/reassign">Reassign</a></td>
-    </tr>
+  <div id="reassignList">
+    {% for p in pupils %}
+    <details class="reassign-pupil" data-name="{{ p.name|lower }}">
+      <summary>
+        <svg class="reassign-chev" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        <span class="reassign-name">{{ p.name }}</span>
+        <span class="muted reassign-meta">{{ p.course_label }} &middot; {{ p.mentor_label }}</span>
+      </summary>
+      <div class="reassign-body">
+        <table>
+          <tr><th>Course</th><th>Current mentor</th><th></th></tr>
+          {% for c in p.courses %}
+          <tr>
+            <td>{{ c.course_title }}</td>
+            <td>{{ c.mentor_name }}</td>
+            <td><a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ c.enrolment_id }}/reassign">Reassign</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+        <p class="muted" style="margin:0;font-size:13px;"><a href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.name }}'s record</a></p>
+      </div>
+    </details>
     {% endfor %}
-  </table>
-  <p class="muted" id="reassignNoMatch" style="display:none;">No pupils match that search.</p>
+  </div>
+  <p class="muted" id="reassignNoMatch" style="display:none;margin-top:12px;">No pupils match that search.</p>
   {% endif %}
 </div>
 
 <script>
 function filterReassignRows() {
   var q = document.getElementById('pupilSearch').value.trim().toLowerCase();
-  var rows = document.querySelectorAll('#reassignTable tr[data-name]');
+  var groups = document.querySelectorAll('#reassignList details[data-name]');
   var visible = 0;
-  rows.forEach(function(tr) {
-    var match = tr.getAttribute('data-name').indexOf(q) !== -1;
-    tr.style.display = match ? '' : 'none';
-    if (match) visible++;
+  groups.forEach(function(d) {
+    var match = d.getAttribute('data-name').indexOf(q) !== -1;
+    d.style.display = match ? '' : 'none';
+    if (match) {
+      visible++;
+      if (q) { d.open = true; }
+    }
   });
   var noMatch = document.getElementById('reassignNoMatch');
-  if (noMatch) { noMatch.style.display = (visible === 0 && rows.length > 0) ? '' : 'none'; }
+  if (noMatch) { noMatch.style.display = (visible === 0 && groups.length > 0) ? '' : 'none'; }
 }
 </script>
 {% endblock %}

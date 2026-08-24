@@ -1117,12 +1117,43 @@ def admin_reassign_mentor_list(request):
                JOIN courses ON courses.id = enrolments.course_id
                JOIN users ON users.id = enrolments.mentor_id
                WHERE pupils.establishment_id=? AND pupils.status='active' AND enrolments.status='active'
-               ORDER BY pupils.surname, pupils.forename""",
+               ORDER BY pupils.surname, pupils.forename, pupils.id, courses.title""",
             (user["establishment_id"],),
         ).fetchall()
     finally:
         conn.close()
-    return render("reassign_mentor_list.html", user=user, rows=rows, flash=flash_from_query(request))
+
+    pupils = []
+    by_pupil = {}
+    for row in rows:
+        group = by_pupil.get(row["pupil_id"])
+        if group is None:
+            name = ((row["forename"] or "") + " " + (row["surname"] or "")).strip()
+            group = {
+                "pupil_id": row["pupil_id"],
+                "name": name,
+                "courses": [],
+                "mentors": [],
+            }
+            by_pupil[row["pupil_id"]] = group
+            pupils.append(group)
+        group["courses"].append({
+            "enrolment_id": row["enrolment_id"],
+            "course_title": row["course_title"],
+            "mentor_name": row["mentor_name"],
+        })
+        if row["mentor_name"] not in group["mentors"]:
+            group["mentors"].append(row["mentor_name"])
+
+    for group in pupils:
+        count = len(group["courses"])
+        group["course_label"] = "1 course" if count == 1 else "%d courses" % count
+        if len(group["mentors"]) == 1:
+            group["mentor_label"] = group["mentors"][0]
+        else:
+            group["mentor_label"] = "%d mentors" % len(group["mentors"])
+
+    return render("reassign_mentor_list.html", user=user, pupils=pupils, flash=flash_from_query(request))
 
 
 @router.get("/admin/enrolments/<enrolment_id>/reassign")
