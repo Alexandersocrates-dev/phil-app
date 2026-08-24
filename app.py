@@ -837,6 +837,174 @@ def course_resources_pdf(request):
 
 # ------------------------------------------------------------------- mentor --
 
+def schedule_for(conn, user, today=None):
+    """Everything this mentor has coming: planned sessions and review points.
+
+    Planned dates were already being written by the schedule form but nothing
+    read them except "next session" on a pupil's record, so a mentor had no one
+    place to see the week ahead. Reviews belong here too — they are the work
+    with no other prompt, since an active course reminds you by being active.
+
+    Returns (buckets, undated). Buckets are ordered Overdue / This week /
+    Coming up; undated is work that is outstanding but has no date on it.
+    """
+    today = today or datetime.date.today()
+    today_iso = today.isoformat()
+    end_of_week = (today + datetime.timedelta(days=6 - today.weekday())).isoformat()
+
+    items = []
+
+    sessions = conn.execute(
+        """SELECT s.planned_date, s.week_number, e.id AS enrolment_id, e.pupil_id,
+                  p.forename, p.surname, c.title AS course_title
+           FROM session_schedule s
+           JOIN enrolments e ON e.id = s.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           JOIN courses c ON c.id = e.course_id
+           WHERE e.mentor_id = ? AND e.status = 'active' AND p.status = 'active'
+             AND s.week_number > e.current_week
+             AND s.planned_date IS NOT NULL
+           ORDER BY s.planned_date, p.surname""",
+        (user["id"],)).fetchall()
+    for row in sessions:
+        items.append({
+            "kind": "session",
+            "date": row["planned_date"],
+            "sort_date": row["planned_date"],
+            "pupil_id": row["pupil_id"],
+            "pupil_name": ((row["forename"] or "") + " " + (row["surname"] or "")).strip(),
+            "course_title": row["course_title"],
+            "label": "Session %d" % row["week_number"],
+            "action_label": "Record session",
+            "action_url": "/mentor/session/%s" % row["enrolment_id"],
+        })
+
+    # Reviews follow the pupil, not the enrolment — same rule as may_handle_review,
+    # so a reassigned pupil's review appears for whoever mentors them now.
+    reviews = conn.execute(
+        """SELECT e.id, e.review_date, e.review_note, e.pupil_id,
+                  p.forename, p.surname, c.title AS course_title
+           FROM enrolments e
+           JOIN pupils p ON p.id = e.pupil_id
+           JOIN courses c ON c.id = e.course_id
+           WHERE e.review_date IS NOT NULL
+             AND e.review_done = 0 AND p.status = 'active'
+             AND (EXISTS (SELECT 1 FROM enrolments a
+                          WHERE a.pupil_id = e.pupil_id AND a.status = 'active'
+                            AND a.mentor_id = ?)
+                  OR (e.mentor_id = ?
+                      AND NOT EXISTS (SELECT 1 FROM enrolments a
+                                      WHERE a.pupil_id = e.pupil_id
+                                        AND a.status = 'active')))
+           ORDER BY e.review_date""",
+        (user["id"], user["id"])).fetchall()
+    for row in reviews:
+        overdue_after = review_overdue_from(row["review_date"])
+        items.append({
+            "kind": "review",
+            "date": review_week_of(row["review_date"]),
+            "sort_date": row["review_date"],
+            "pupil_id": row["pupil_id"],
+            "pupil_name": ((row["forename"] or "") + " " + (row["surname"] or "")).strip(),
+            "course_title": row["course_title"],
+            "label": "Review point",
+            "note": row["review_note"],
+            "enrolment_id": row["id"],
+            "action_label": "Open record",
+            "action_url": "/mentor/pupils/%s" % row["pupil_id"],
+            "past_grace": bool(overdue_after and today_iso > overdue_after),
+        })
+
+    overdue, this_week, coming = [], [], []
+    for item in items:
+        if item["kind"] == "review":
+            # A review is a target, not a deadline, so it only counts as missed
+            # once the grace period has passed. Before that it sits in this week
+            # rather than shouting.
+            if item["past_grace"]:
+                overdue.append(item)
+            elif item["sort_date"] <= end_of_week:
+                this_week.append(item)
+            else:
+                coming.append(item)
+        else:
+            if item["sort_date"] < today_iso:
+                overdue.append(item)
+            elif item["sort_date"] <= end_of_week:
+                this_week.append(item)
+            else:
+                coming.append(item)
+
+    for group in (overdue, this_week, coming):
+        group.sort(key=lambda i: (i["sort_date"], i["pupil_name"]))
+
+    # Work that is outstanding but carries no date: the staff-only write-up,
+    # which the schedule form never plans, and courses nobody has planned dates
+    # for at all. Without these the page would look empty for a mentor who has
+    # simply never used the planner.
+    undated = conn.execute(
+        """SELECT e.id AS enrolment_id, e.current_week, e.pupil_id,
+                  p.forename, p.surname, c.title AS course_title,
+                  (SELECT count(*) FROM session_schedule s
+                    WHERE s.enrolment_id = e.id AND s.week_number > e.current_week
+                      AND s.planned_date IS NOT NULL) AS planned_ahead
+           FROM enrolments e
+           JOIN pupils p ON p.id = e.pupil_id
+           JOIN courses c ON c.id = e.course_id
+           WHERE e.mentor_id = ? AND e.status = 'active' AND p.status = 'active'
+           ORDER BY p.surname, p.forename""",
+        (user["id"],)).fetchall()
+    undated_items = []
+    for row in undated:
+        name = ((row["forename"] or "") + " " + (row["surname"] or "")).strip()
+        if row["current_week"] >= SESSIONS_PER_COURSE - 1:
+            undated_items.append({
+                "kind": "session",
+                "pupil_id": row["pupil_id"],
+                "pupil_name": name,
+                "course_title": row["course_title"],
+                "label": "Course summary and next steps",
+                "action_label": "Write it now",
+                "action_url": "/mentor/session/%s" % row["enrolment_id"],
+            })
+        elif not row["planned_ahead"]:
+            undated_items.append({
+                "kind": "unplanned",
+                "pupil_id": row["pupil_id"],
+                "pupil_name": name,
+                "course_title": row["course_title"],
+                "label": "No dates planned",
+                "action_label": "Plan session dates",
+                "action_url": "/mentor/schedule/%s" % row["enrolment_id"],
+            })
+
+    # "rows", not "items": in a template dict.items is the built-in method, so a
+    # bucket keyed that way is always truthy and every group renders as full.
+    buckets = [
+        {"key": "overdue", "title": "Overdue", "rows": overdue},
+        {"key": "this_week", "title": "This week", "rows": this_week},
+        {"key": "coming", "title": "Coming up", "rows": coming},
+    ]
+    return buckets, undated_items
+
+
+@router.get("/mentor/schedule")
+def mentor_schedule(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+    conn = db.get_conn()
+    try:
+        buckets, undated = schedule_for(conn, user)
+    finally:
+        conn.close()
+    return render("schedule.html", user=user, buckets=buckets, undated=undated,
+                  flash=flash_from_query(request))
+
+
 @router.get("/mentor")
 def mentor_home(request):
     user, err = require(request, roles=["mentor", "admin"])
@@ -864,12 +1032,14 @@ def mentor_home(request):
                WHERE enrolments.mentor_id=? ORDER BY enrolments.status, pupils.surname""",
             (user["id"],),
         ).fetchall()
-        due_this_week = conn.execute(
-            """SELECT count(*) FROM enrolments
-               WHERE mentor_id=? AND status='active'
-               AND id NOT IN (SELECT enrolment_id FROM session_records WHERE created_at >= date('now','-7 days'))""",
-            (user["id"],),
-        ).fetchone()[0]
+        # Counts the same items the Schedule page puts under "This week", so the
+        # number and the page can never disagree. It used to count active courses
+        # with no session recorded in seven days, which is a different thing
+        # entirely: a course planned for next Tuesday looked identical to one
+        # nobody had touched since September.
+        schedule_buckets, _ = schedule_for(conn, user)
+        due_this_week = len(
+            [b for b in schedule_buckets if b["key"] == "this_week"][0]["rows"])
     finally:
         conn.close()
     # The list is about pupils, not enrolments. A pupil on three courses was

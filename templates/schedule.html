@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Schedule - Phil{% endblock %}
+{% block content %}
+<h1>Schedule</h1>
+<p class="muted">Sessions you've planned and reviews you agreed, in date order.</p>
+
+{% set ns = namespace(total=0) %}
+{% for b in buckets %}{% set ns.total = ns.total + b.rows|length %}{% endfor %}
+
+{% if not ns.total and not undated %}
+<div class="card card-center">
+  <p class="muted" style="margin:0;">Nothing scheduled yet. Plan session dates from a pupil's record and they'll appear here.</p>
+</div>
+{% endif %}
+
+{% for b in buckets %}
+{% if b.rows %}
+<div class="card sched-card sched-{{ b.key }}">
+  <div class="sched-head">
+    <h2 style="margin:0;">{{ b.title }}</h2>
+    <span class="badge {{ 'badge-amber' if b.key == 'overdue' else ('badge-teal' if b.key == 'this_week' else 'badge-muted') }}">{{ b.rows|length }}</span>
+  </div>
+  {% for i in b.rows %}
+  <div class="sched-row {{ 'sched-row-late' if b.key == 'overdue' else '' }}">
+    <div class="sched-when">
+      {%- if i.kind == 'review' %}week of {{ i.date }}{% else %}{{ i.date }}{% endif -%}
+    </div>
+    <div class="sched-what">
+      <a href="/mentor/pupils/{{ i.pupil_id }}"><strong>{{ i.pupil_name }}</strong></a>
+      <span class="sched-meta">{{ i.label }} &middot; {{ i.course_title }}</span>
+      {% if i.note %}<span class="sched-meta">{{ i.note }}</span>{% endif %}
+    </div>
+    <a class="btn {{ 'btn-primary' if i.kind == 'session' else 'btn-secondary' }} btn-sm" href="{{ i.action_url }}">{{ i.action_label }}</a>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endfor %}
+
+{# Outstanding work with no date on it. The staff-only write-up is never planned
+   by the schedule form, and a mentor who hasn't used the planner would otherwise
+   see an empty page while having plenty to do. #}
+{% if undated %}
+<div class="card">
+  <div class="sched-head">
+    <h2 style="margin:0;">No date set</h2>
+    <span class="badge badge-muted">{{ undated|length }}</span>
+  </div>
+  <p class="muted" style="font-size:12.5px;margin:0 0 12px;">Outstanding, but not in the diary.</p>
+  {% for i in undated %}
+  <div class="sched-row">
+    <div class="sched-when sched-when-none">&mdash;</div>
+    <div class="sched-what">
+      <a href="/mentor/pupils/{{ i.pupil_id }}"><strong>{{ i.pupil_name }}</strong></a>
+      <span class="sched-meta">{{ i.label }} &middot; {{ i.course_title }}</span>
+    </div>
+    <a class="btn {{ 'btn-primary' if i.kind == 'session' else 'btn-secondary' }} btn-sm" href="{{ i.action_url }}">{{ i.action_label }}</a>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<style>
+/* Overdue gets the amber edge the review card uses, so the same state reads the
+   same way wherever a mentor meets it. */
+.sched-card.sched-overdue{border-left:4px solid var(--amber-dark);}
+.sched-card.sched-this_week{border-left:4px solid var(--teal-darker);}
+.sched-head{display:flex;align-items:center;gap:10px;margin:0 0 10px;}
+.sched-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  border-top:1px solid var(--border);padding:10px 0;font-size:13px;}
+.sched-row:first-of-type{border-top:none;}
+.sched-when{width:104px;flex-shrink:0;font-weight:600;color:var(--navy);white-space:nowrap;}
+.sched-when-none{color:var(--muted);font-weight:400;}
+.sched-row-late .sched-when{color:#412402;}
+.sched-what{flex:1;min-width:0;}
+.sched-meta{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
+@media (max-width:600px){
+  .sched-when{width:100%;}
+}
+</style>
+{% endblock %}
