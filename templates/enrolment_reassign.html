@@ -23,26 +23,10 @@
         {% endfor %}
       </select>
     </div>
-    {# A pupil usually has more than one course with the same mentor, and moving
-       one at a time is both laborious and easy to leave half done. Defaults to
-       moving everything, which is almost always what a reassignment means. #}
     {% if other_active %}
-    <div class="field">
-      <label>What should move?</label>
-      <label class="reassign-opt">
-        <input type="radio" name="scope" value="all" checked>
-        <span><strong>All {{ other_active + 1 }} of {{ enrolment.forename }}'s active courses</strong><br>
-        <span class="muted">Everything they are currently working on moves across.</span></span>
-      </label>
-      <label class="reassign-opt">
-        <input type="radio" name="scope" value="one">
-        <span><strong>Only "{{ enrolment.course_title }}"</strong><br>
-        <span class="muted">Their other {{ other_active }} active course{{ '' if other_active == 1 else 's' }}
-        stay{{ 's' if other_active == 1 else '' }} with {{ enrolment.mentor_name }}.</span></span>
-      </label>
-    </div>
-    {% else %}
-    <input type="hidden" name="scope" value="one">
+    <p class="reassign-note">All <strong>{{ other_active + 1 }}</strong> of {{ enrolment.forename }}'s
+      active courses will move to the new mentor. Completed courses stay with
+      {{ enrolment.mentor_name }} as a record of who ran them.</p>
     {% endif %}
     <button class="btn btn-primary btn-block" type="submit">Reassign</button>
   </form>
@@ -50,10 +34,7 @@
 </div>
 
 <style>
-.reassign-opt{display:flex; gap:10px; align-items:flex-start; padding:10px 12px; margin:0 0 8px;
-  border:1.5px solid var(--border,#DDD8C8); border-radius:10px; cursor:pointer; font-weight:400;}
-.reassign-opt:has(input:checked){border-color:var(--teal-dark,#0F6E56); background:var(--teal-light,#F0F7F4);}
-.reassign-opt input{margin-top:3px; flex-shrink:0;}
-.reassign-opt .muted{font-size:12.5px;}
+.reassign-note{margin:0 0 16px; padding:10px 12px; border-radius:10px;
+  background:var(--teal-light,#F0F7F4); font-size:13px; line-height:1.5; color:var(--teal-darker,#0A4A3A);}
 </style>
 {% endblock %}

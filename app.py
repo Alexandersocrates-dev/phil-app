@@ -1192,19 +1192,18 @@ def admin_reassign_submit(request):
             return with_flash(f"/admin/enrolments/{enrolment['id']}/reassign",
                                "That mentor could not be found.", "error")
 
-        # Moving every active course is the usual intent: a pupil whose mentor
-        # has left needs all of their mentoring to follow, not one course.
-        # Completed and withdrawn courses stay put, because they are a record of
-        # who actually did the work.
-        move_all = request.field("scope") == "all"
-        if move_all:
-            moved = conn.execute(
-                """SELECT id FROM enrolments
-                   WHERE pupil_id=? AND mentor_id=? AND status='active'""",
-                (enrolment["pupil_id"], enrolment["mentor_id"])).fetchall()
-            ids = [r["id"] for r in moved] or [enrolment["id"]]
-        else:
-            ids = [enrolment["id"]]
+        # Reassigning a pupil moves all of their active mentoring. Splitting a
+        # pupil between two mentors is not something a school asks for, and a
+        # part-moved pupil is worse than either: the new mentor sees an
+        # incomplete picture and nobody notices the gap.
+        #
+        # Completed and withdrawn courses stay with the original mentor, because
+        # they are a record of who actually did that work.
+        moved = conn.execute(
+            """SELECT id FROM enrolments
+               WHERE pupil_id=? AND mentor_id=? AND status='active'""",
+            (enrolment["pupil_id"], enrolment["mentor_id"])).fetchall()
+        ids = [r["id"] for r in moved] or [enrolment["id"]]
         conn.executemany("UPDATE enrolments SET mentor_id=? WHERE id=?",
                          [(new_mentor_id, i) for i in ids])
         db.log_action(conn, user["id"], "enrolment_reassigned", "enrolment", enrolment["id"],
@@ -1213,16 +1212,13 @@ def admin_reassign_submit(request):
         conn.commit()
     finally:
         conn.close()
+    name = f"{enrolment['forename']} {enrolment['surname']}"
     if len(ids) == 1:
-        heading = "Course reassigned"
-        detail = (f"{enrolment['forename']} {enrolment['surname']}'s "
-                  f"{enrolment['course_title']} "
-                  f"is now with {new_mentor['name']}. Their other courses have not moved.")
+        detail = f"{name}'s course is now with {new_mentor['name']}."
     else:
-        heading = "Pupil reassigned"
-        detail = (f"All {len(ids)} of {enrolment['forename']} {enrolment['surname']}'s active courses "
-                  f"are now with {new_mentor['name']}.")
-    return render_done(user, heading, detail,
+        detail = (f"All {len(ids)} of {name}'s active courses are now with "
+                  f"{new_mentor['name']}.")
+    return render_done(user, "Pupil reassigned", detail,
                         f"/mentor/pupils/{enrolment['pupil_id']}", back_label="View pupil")
 
 
