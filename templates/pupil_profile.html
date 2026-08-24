@@ -73,13 +73,14 @@
      break doesn't make a mentor look like they've missed something. #}
   {% set overdue = review_overdue_from(e.review_date) and today > review_overdue_from(e.review_date) %}
   <div class="review-strip {% if e.review_done %}review-done{% elif overdue %}review-overdue{% endif %}">
-    <div>
+    <div class="review-body">
+      <span class="review-kicker">Follow-up chat</span>
       <strong>
-        {%- if e.review_done %}Follow-up chat done
-        {%- elif overdue %}Follow-up chat overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
-        {%- else %}Follow-up chat due the week of {{ review_week_of(e.review_date) }}{% endif -%}
+        {%- if e.review_done %}Done
+        {%- elif overdue %}Overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
+        {%- else %}Due the week of {{ review_week_of(e.review_date) }}{% endif -%}
       </strong>
-      {% if e.review_note %}<span class="review-note">{{ e.review_note }}</span>{% endif %}
+      <span class="review-note">{% if e.review_note %}{{ e.review_note }} &middot; {% endif %}A sit-down with {{ pupil.forename }} weeks after the course: has it helped, is the behaviour still showing?</span>
     </div>
     {% if not e.review_done %}
     <div class="review-actions">
@@ -144,7 +145,8 @@
     {% for r in item.records %}
     <tr>
       <td>
-        {{ r.week_number }}: {{ r.week_title }}
+        {% if r.week_number == sessions_total %}{{ r.week_title }} <span class="row-tag">Staff only</span>
+        {%- else %}{{ r.week_number }}: {{ r.week_title }}{% endif %}
         {# The goal was only ever visible in the session PDF. It belongs here,
            where a mentor looks before the next session. #}
         {% if r.reflection_goal %}<span class="record-goal">Goal: {{ r.reflection_goal }}</span>{% endif %}
@@ -178,12 +180,24 @@
 .enrol-summary h2{display:inline-flex; align-items:center; gap:8px;}
 .enrol-summary h2::before{content:"\25B8"; color:var(--teal-darker); font-size:12px; transition:transform .12s ease;}
 .enrol-card[open] .enrol-summary h2::before{transform:rotate(90deg);}
+/* The follow-up is a different kind of thing from everything else on this
+   card — it happens after the course, with the pupil, weeks later — so it gets
+   a heavier left bar and a kicker rather than looking like another teal panel. */
 .review-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  background:var(--teal-light);border:1px solid #9FE1CB;border-radius:10px;padding:9px 12px;margin:0 0 12px;font-size:13px;color:#04342C;}
+  background:var(--teal-light);border:1px solid #9FE1CB;border-left:4px solid var(--teal-darker);
+  border-radius:0 10px 10px 0;padding:11px 14px;margin:0 0 14px;font-size:13px;color:#04342C;}
+.review-body{flex:1;min-width:220px;}
+.review-kicker{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:2px;}
+.review-overdue .review-kicker{color:#8A2614;}
+.review-done .review-kicker{color:var(--muted);}
+.row-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--coral-dark);background:var(--coral-light);
+  border-radius:4px;padding:1px 6px;}
 .review-actions{display:flex;gap:6px;flex-wrap:wrap;}
 .review-strip .review-note{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
-.review-overdue{background:var(--amber-light);border-color:#FAC775;color:#412402;}
-.review-done{background:#F3F2EC;border-color:var(--border);color:var(--muted);}
+.review-overdue{background:#FBE3DE;border-color:#F0B9AC;border-left-color:#B4341C;color:#5E1B0E;}
+.review-done{background:#F3F2EC;border-color:var(--border);border-left-color:#B3B0A4;color:var(--muted);}
 .review-none{background:#fff;border-style:dashed;color:var(--muted);}
 .record-goal{display:block; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4;}
 /* A recorded follow-up sits under the course it followed, not in the session
