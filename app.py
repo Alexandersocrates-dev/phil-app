@@ -904,7 +904,7 @@ def schedule_for(conn, user, today=None):
             "pupil_name": name_of(row),
             "course_title": row["course_title"],
             "last_session": last,
-            "last_label": ("Last session %s" % ago(last)) if last else "Not started yet",
+            "last_label": ("last seen %s" % ago(last)) if last else "not started",
             "action_url": "/mentor/session/%s" % row["enrolment_id"],
             "plan_url": "/mentor/schedule/%s" % row["enrolment_id"],
             "planned": planned,
@@ -916,39 +916,50 @@ def schedule_for(conn, user, today=None):
         if row["current_week"] >= SESSIONS_PER_COURSE - 1:
             item.update({
                 "kind": "summary",
-                "title": "Course summary and next steps",
-                "action_label": "Write it now",
-                "when": "outstanding",
+                "title": "Write-up",
+                "action_label": "Write it",
+                "chip": "",
+                "chip_kind": "note",
             })
             if gap is not None and gap >= 7:
-                item["when"] = "outstanding for %s" % ago(last).replace(" ago", "")
+                item["chip"] = "waiting %s" % ago(last).replace(" ago", "")
+                item["chip_kind"] = "late"
                 attention.append(item)
             else:
                 this_week.append(item)
             continue
 
-        item["title"] = "Session %d" % (row["current_week"] + 1)
-        item["action_label"] = "Record session" if row["current_week"] else "Start session 1"
+        item["title"] = "Session %d of %d" % (row["current_week"] + 1, SESSIONS_PER_COURSE)
+        item["action_label"] = "Record session"
 
+        # A chip is only worth showing when it tells the mentor something they
+        # can't see from the row itself. "No date set" on every row is noise, so
+        # no date means no chip.
         if last and last >= monday_iso:
-            item["when"] = "seen " + ago(last)
+            item["chip"] = "done " + ago(last)
+            item["chip_kind"] = "done"
+            item["action_label"] = "Open record"
+            item["action_url"] = "/mentor/pupils/%s" % row["pupil_id"]
             seen.append(item)
             continue
 
         if planned and planned < today_iso:
-            item["when"] = "was planned for " + planned
+            item["chip"] = "missed " + pretty_date(planned)
+            item["chip_kind"] = "late"
             attention.append(item)
         elif gap is not None and gap >= 14:
-            item["when"] = "no session for %s" % ago(last).replace(" ago", "")
+            item["chip"] = "not seen for %s" % ago(last).replace(" ago", "")
+            item["chip_kind"] = "late"
             attention.append(item)
         elif planned and planned <= end_of_week:
-            item["when"] = "planned " + planned
+            item["chip"] = pretty_date(planned)
+            item["chip_kind"] = "due"
             this_week.append(item)
         elif planned:
-            item["when"] = "planned " + planned
+            item["chip"] = pretty_date(planned)
+            item["chip_kind"] = "due"
             coming.append(item)
         else:
-            item["when"] = "no date set"
             this_week.append(item)
 
     # Reviews follow the pupil, not the enrolment — the same rule as
@@ -988,14 +999,27 @@ def schedule_for(conn, user, today=None):
         # grace period has passed, so a half-term break doesn't make a mentor
         # look like they have dropped something.
         if overdue_after and today_iso > overdue_after:
-            item["when"] = "was due week of " + week_of
+            item["chip"] = "missed " + pretty_week(week_of)
+            item["chip_kind"] = "late"
             attention.append(item)
         elif row["review_date"] <= end_of_week:
-            item["when"] = "due week of " + week_of
+            item["chip"] = pretty_week(week_of)
+            item["chip_kind"] = "due"
             this_week.append(item)
         else:
-            item["when"] = "due week of " + week_of
+            item["chip"] = pretty_week(week_of)
+            item["chip_kind"] = "due"
             coming.append(item)
+
+    for group in (attention, this_week, coming, seen):
+        for item in group:
+            # The chip and the last-seen line often say the same thing ("not seen
+            # for 2 weeks" beside "last seen 2 weeks ago"). Keep the chip.
+            chip = (item.get("chip") or "").replace("not seen for ", "").replace("done ", "")
+            last = (item.get("last_label") or "").replace("last seen ", "").replace(" ago", "")
+            chip = chip.replace(" ago", "")
+            if chip and last and chip.strip() == last.strip():
+                item["last_label"] = ""
 
     coming.sort(key=lambda i: i.get("planned") or "9999")
 
@@ -1008,14 +1032,14 @@ def schedule_for(conn, user, today=None):
     # "rows", not "items": in a template dict.items is the built-in method, so a
     # bucket keyed that way is always truthy and every group renders as full.
     buckets = [
-        {"key": "attention", "title": "Needs attention", "rows": attention,
-         "blurb": "Behind, or past the date you agreed."},
-        {"key": "this_week", "title": "Due this week", "rows": this_week,
-         "blurb": "Courses run weekly, so anything not yet seen this week is here."},
-        {"key": "coming", "title": "Coming up", "rows": coming,
-         "blurb": "Planned for later."},
-        {"key": "seen", "title": "Seen this week", "rows": seen,
-         "blurb": "Already done."},
+        {"key": "attention", "title": "Behind", "rows": attention,
+         "blurb": "Do these first."},
+        {"key": "this_week", "title": "This week", "rows": this_week,
+         "blurb": "Not seen yet this week."},
+        {"key": "coming", "title": "Later", "rows": coming,
+         "blurb": "Planned for another week."},
+        {"key": "seen", "title": "Done this week", "rows": seen,
+         "blurb": ""},
     ]
     return summary, buckets
 
@@ -4851,6 +4875,24 @@ def session_record_edit_submit(request):
 # wrong and trains mentors to ignore it. Two weeks of grace covers a half-term
 # break; anything longer than that genuinely has been forgotten.
 REVIEW_GRACE_DAYS = 14
+
+
+def pretty_date(iso):
+    """A date a mentor can read at a glance: "Tue 8 Sep", not "2026-09-08"."""
+    try:
+        d = datetime.date.fromisoformat(iso)
+    except (TypeError, ValueError):
+        return iso or ""
+    return "%s %d %s" % (d.strftime("%a"), d.day, d.strftime("%b"))
+
+
+def pretty_week(iso):
+    """A week as "w/c 27 Jul". No day name: a week commencing is always a Monday."""
+    try:
+        d = datetime.date.fromisoformat(iso)
+    except (TypeError, ValueError):
+        return iso or ""
+    return "w/c %d %s" % (d.day, d.strftime("%b"))
 
 
 def review_week_of(date_string):
