@@ -838,49 +838,122 @@ def course_resources_pdf(request):
 # ------------------------------------------------------------------- mentor --
 
 def schedule_for(conn, user, today=None):
-    """Everything this mentor has coming: planned sessions and review points.
+    """The mentor's week: who has been seen, who is waiting, what is overdue.
 
-    Planned dates were already being written by the schedule form but nothing
-    read them except "next session" on a pupil's record, so a mentor had no one
-    place to see the week ahead. Reviews belong here too — they are the work
-    with no other prompt, since an active course reminds you by being active.
+    Mentoring runs to a weekly rhythm, so the question this page answers is not
+    "what did I put in the diary" — most courses never get planned dates — but
+    "who have I seen this week, and who have I not". Every active course is
+    therefore treated as due a session each week unless the mentor has
+    deliberately planned it for later.
 
-    Returns (buckets, undated). Buckets are ordered Overdue / This week /
-    Coming up; undated is work that is outstanding but has no date on it.
+    Returns (summary, buckets). Buckets are attention / this_week / seen /
+    coming, and each holds display-ready rows.
     """
     today = today or datetime.date.today()
     today_iso = today.isoformat()
-    end_of_week = (today + datetime.timedelta(days=6 - today.weekday())).isoformat()
+    monday = today - datetime.timedelta(days=today.weekday())
+    monday_iso = monday.isoformat()
+    end_of_week = (monday + datetime.timedelta(days=6)).isoformat()
 
-    items = []
+    def name_of(row):
+        return ((row["forename"] or "") + " " + (row["surname"] or "")).strip()
 
-    sessions = conn.execute(
-        """SELECT s.planned_date, s.week_number, e.id AS enrolment_id, e.pupil_id,
-                  p.forename, p.surname, c.title AS course_title
-           FROM session_schedule s
-           JOIN enrolments e ON e.id = s.enrolment_id
+    def days_between(iso):
+        try:
+            return (today - datetime.date.fromisoformat(iso)).days
+        except (TypeError, ValueError):
+            return None
+
+    def ago(iso):
+        d = days_between(iso)
+        if d is None:
+            return ""
+        if d == 0:
+            return "today"
+        if d == 1:
+            return "yesterday"
+        if d < 14:
+            return "%d days ago" % d
+        return "%d weeks ago" % (d // 7)
+
+    attention, this_week, seen, coming = [], [], [], []
+
+    courses = conn.execute(
+        """SELECT e.id AS enrolment_id, e.pupil_id, e.current_week,
+                  p.forename, p.surname, c.title AS course_title,
+                  (SELECT max(r.date) FROM session_records r
+                    WHERE r.enrolment_id = e.id) AS last_session,
+                  (SELECT min(s.planned_date) FROM session_schedule s
+                    WHERE s.enrolment_id = e.id AND s.week_number > e.current_week
+                      AND s.planned_date IS NOT NULL) AS next_planned
+           FROM enrolments e
            JOIN pupils p ON p.id = e.pupil_id
            JOIN courses c ON c.id = e.course_id
            WHERE e.mentor_id = ? AND e.status = 'active' AND p.status = 'active'
-             AND s.week_number > e.current_week
-             AND s.planned_date IS NOT NULL
-           ORDER BY s.planned_date, p.surname""",
+           ORDER BY p.surname, p.forename, c.title""",
         (user["id"],)).fetchall()
-    for row in sessions:
-        items.append({
-            "kind": "session",
-            "date": row["planned_date"],
-            "sort_date": row["planned_date"],
-            "pupil_id": row["pupil_id"],
-            "pupil_name": ((row["forename"] or "") + " " + (row["surname"] or "")).strip(),
-            "course_title": row["course_title"],
-            "label": "Session %d" % row["week_number"],
-            "action_label": "Record session",
-            "action_url": "/mentor/session/%s" % row["enrolment_id"],
-        })
 
-    # Reviews follow the pupil, not the enrolment — same rule as may_handle_review,
-    # so a reassigned pupil's review appears for whoever mentors them now.
+    total_courses = len(courses)
+    for row in courses:
+        last = row["last_session"]
+        planned = row["next_planned"]
+        gap = days_between(last) if last else None
+        item = {
+            "kind": "session",
+            "pupil_id": row["pupil_id"],
+            "pupil_name": name_of(row),
+            "course_title": row["course_title"],
+            "last_session": last,
+            "last_label": ("Last session %s" % ago(last)) if last else "Not started yet",
+            "action_url": "/mentor/session/%s" % row["enrolment_id"],
+            "plan_url": "/mentor/schedule/%s" % row["enrolment_id"],
+            "planned": planned,
+        }
+
+        # The staff-only write-up is the one piece of work with no pupil in it,
+        # so nothing in the week prompts it. It is named rather than counted as
+        # just another session.
+        if row["current_week"] >= SESSIONS_PER_COURSE - 1:
+            item.update({
+                "kind": "summary",
+                "title": "Course summary and next steps",
+                "action_label": "Write it now",
+                "when": "outstanding",
+            })
+            if gap is not None and gap >= 7:
+                item["when"] = "outstanding for %s" % ago(last).replace(" ago", "")
+                attention.append(item)
+            else:
+                this_week.append(item)
+            continue
+
+        item["title"] = "Session %d" % (row["current_week"] + 1)
+        item["action_label"] = "Record session" if row["current_week"] else "Start session 1"
+
+        if last and last >= monday_iso:
+            item["when"] = "seen " + ago(last)
+            seen.append(item)
+            continue
+
+        if planned and planned < today_iso:
+            item["when"] = "was planned for " + planned
+            attention.append(item)
+        elif gap is not None and gap >= 14:
+            item["when"] = "no session for %s" % ago(last).replace(" ago", "")
+            attention.append(item)
+        elif planned and planned <= end_of_week:
+            item["when"] = "planned " + planned
+            this_week.append(item)
+        elif planned:
+            item["when"] = "planned " + planned
+            coming.append(item)
+        else:
+            item["when"] = "no date set"
+            this_week.append(item)
+
+    # Reviews follow the pupil, not the enrolment — the same rule as
+    # may_handle_review — so a reassigned pupil's review appears for whoever
+    # mentors them now.
     reviews = conn.execute(
         """SELECT e.id, e.review_date, e.review_note, e.pupil_id,
                   p.forename, p.surname, c.title AS course_title
@@ -900,92 +973,51 @@ def schedule_for(conn, user, today=None):
         (user["id"], user["id"])).fetchall()
     for row in reviews:
         overdue_after = review_overdue_from(row["review_date"])
-        items.append({
+        week_of = review_week_of(row["review_date"])
+        item = {
             "kind": "review",
-            "date": review_week_of(row["review_date"]),
-            "sort_date": row["review_date"],
             "pupil_id": row["pupil_id"],
-            "pupil_name": ((row["forename"] or "") + " " + (row["surname"] or "")).strip(),
+            "pupil_name": name_of(row),
             "course_title": row["course_title"],
-            "label": "Review point",
-            "note": row["review_note"],
-            "enrolment_id": row["id"],
+            "title": "Review point",
+            "last_label": row["review_note"] or "",
             "action_label": "Open record",
             "action_url": "/mentor/pupils/%s" % row["pupil_id"],
-            "past_grace": bool(overdue_after and today_iso > overdue_after),
-        })
-
-    overdue, this_week, coming = [], [], []
-    for item in items:
-        if item["kind"] == "review":
-            # A review is a target, not a deadline, so it only counts as missed
-            # once the grace period has passed. Before that it sits in this week
-            # rather than shouting.
-            if item["past_grace"]:
-                overdue.append(item)
-            elif item["sort_date"] <= end_of_week:
-                this_week.append(item)
-            else:
-                coming.append(item)
+        }
+        # A review is a target, not a deadline: it only counts as missed once the
+        # grace period has passed, so a half-term break doesn't make a mentor
+        # look like they have dropped something.
+        if overdue_after and today_iso > overdue_after:
+            item["when"] = "was due week of " + week_of
+            attention.append(item)
+        elif row["review_date"] <= end_of_week:
+            item["when"] = "due week of " + week_of
+            this_week.append(item)
         else:
-            if item["sort_date"] < today_iso:
-                overdue.append(item)
-            elif item["sort_date"] <= end_of_week:
-                this_week.append(item)
-            else:
-                coming.append(item)
+            item["when"] = "due week of " + week_of
+            coming.append(item)
 
-    for group in (overdue, this_week, coming):
-        group.sort(key=lambda i: (i["sort_date"], i["pupil_name"]))
+    coming.sort(key=lambda i: i.get("planned") or "9999")
 
-    # Work that is outstanding but carries no date: the staff-only write-up,
-    # which the schedule form never plans, and courses nobody has planned dates
-    # for at all. Without these the page would look empty for a mentor who has
-    # simply never used the planner.
-    undated = conn.execute(
-        """SELECT e.id AS enrolment_id, e.current_week, e.pupil_id,
-                  p.forename, p.surname, c.title AS course_title,
-                  (SELECT count(*) FROM session_schedule s
-                    WHERE s.enrolment_id = e.id AND s.week_number > e.current_week
-                      AND s.planned_date IS NOT NULL) AS planned_ahead
-           FROM enrolments e
-           JOIN pupils p ON p.id = e.pupil_id
-           JOIN courses c ON c.id = e.course_id
-           WHERE e.mentor_id = ? AND e.status = 'active' AND p.status = 'active'
-           ORDER BY p.surname, p.forename""",
-        (user["id"],)).fetchall()
-    undated_items = []
-    for row in undated:
-        name = ((row["forename"] or "") + " " + (row["surname"] or "")).strip()
-        if row["current_week"] >= SESSIONS_PER_COURSE - 1:
-            undated_items.append({
-                "kind": "session",
-                "pupil_id": row["pupil_id"],
-                "pupil_name": name,
-                "course_title": row["course_title"],
-                "label": "Course summary and next steps",
-                "action_label": "Write it now",
-                "action_url": "/mentor/session/%s" % row["enrolment_id"],
-            })
-        elif not row["planned_ahead"]:
-            undated_items.append({
-                "kind": "unplanned",
-                "pupil_id": row["pupil_id"],
-                "pupil_name": name,
-                "course_title": row["course_title"],
-                "label": "No dates planned",
-                "action_label": "Plan session dates",
-                "action_url": "/mentor/schedule/%s" % row["enrolment_id"],
-            })
-
+    summary = {
+        "total_courses": total_courses,
+        "seen": len(seen),
+        "attention": len(attention),
+        "this_week": len(this_week),
+    }
     # "rows", not "items": in a template dict.items is the built-in method, so a
     # bucket keyed that way is always truthy and every group renders as full.
     buckets = [
-        {"key": "overdue", "title": "Overdue", "rows": overdue},
-        {"key": "this_week", "title": "This week", "rows": this_week},
-        {"key": "coming", "title": "Coming up", "rows": coming},
+        {"key": "attention", "title": "Needs attention", "rows": attention,
+         "blurb": "Behind, or past the date you agreed."},
+        {"key": "this_week", "title": "Due this week", "rows": this_week,
+         "blurb": "Courses run weekly, so anything not yet seen this week is here."},
+        {"key": "coming", "title": "Coming up", "rows": coming,
+         "blurb": "Planned for later."},
+        {"key": "seen", "title": "Seen this week", "rows": seen,
+         "blurb": "Already done."},
     ]
-    return buckets, undated_items
+    return summary, buckets
 
 
 @router.get("/mentor/schedule")
@@ -998,10 +1030,10 @@ def mentor_schedule(request):
         return blocked
     conn = db.get_conn()
     try:
-        buckets, undated = schedule_for(conn, user)
+        summary, buckets = schedule_for(conn, user)
     finally:
         conn.close()
-    return render("schedule.html", user=user, buckets=buckets, undated=undated,
+    return render("schedule.html", user=user, summary=summary, buckets=buckets,
                   flash=flash_from_query(request))
 
 
@@ -1037,9 +1069,8 @@ def mentor_home(request):
         # with no session recorded in seven days, which is a different thing
         # entirely: a course planned for next Tuesday looked identical to one
         # nobody had touched since September.
-        schedule_buckets, _ = schedule_for(conn, user)
-        due_this_week = len(
-            [b for b in schedule_buckets if b["key"] == "this_week"][0]["rows"])
+        sched_summary, _ = schedule_for(conn, user)
+        due_this_week = sched_summary["this_week"] + sched_summary["attention"]
     finally:
         conn.close()
     # The list is about pupils, not enrolments. A pupil on three courses was
