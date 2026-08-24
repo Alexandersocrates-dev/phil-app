@@ -55,10 +55,9 @@
 
   {% for s in b.sections %}
   {% if b.show_labels %}
-  <div class="sec-head">
+  <div class="sec-head sec-{{ s.kind }}">
     <span class="sec-label">{{ s.label }}</span>
     <span class="sec-count">{{ s.count }}</span>
-    <span class="sec-rule"></span>
   </div>
   {% endif %}
   {% for i in s.rows %}
@@ -72,6 +71,7 @@
       <span class="sched-meta">
         {% if i.kind == 'session' %}<span class="sched-step">{{ i.title }}</span>{% endif %}
         {% if i.chip %}<span class="chip chip-{{ i.chip_kind }}">{{ i.chip }}</span>{% endif %}
+        {% if i.ahead %}<span class="chip chip-ahead">{{ i.ahead }}</span>{% endif %}
         {% if i.last_label %}<span class="sched-last">{{ i.last_label }}</span>{% endif %}
       </span>
       {% if i.subtitle %}<span class="sched-sub">{{ i.subtitle }}</span>{% endif %}
@@ -142,15 +142,21 @@
 .sched-num-this_week{background:var(--teal-light);color:#04342C;}
 .sched-blurb{font-size:12.5px;color:var(--muted);margin-left:auto;}
 
-/* A quiet rule with the type of work on it: enough to separate three kinds of
-   job without turning each group into three cards. */
-.sec-head{display:flex;align-items:center;gap:8px;margin:14px 0 2px;}
-.sec-head:first-of-type{margin-top:4px;}
-.sec-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
-  color:var(--muted);white-space:nowrap;}
-.sec-count{font-size:11px;font-weight:700;color:var(--muted);background:#F3F2EC;
-  border-radius:20px;padding:1px 7px;}
-.sec-rule{flex:1;height:1px;background:var(--border);}
+/* A tinted band, not a hairline: at 11px grey the section headings were being
+   scanned straight past, which defeats the point of splitting by kind. Each
+   kind carries its own tint so the three jobs are told apart at a glance. */
+.sec-head{display:flex;align-items:center;gap:8px;margin:18px 0 0;
+  padding:7px 12px;border-radius:8px;background:#EFEDE3;}
+.sec-head:first-of-type{margin-top:6px;}
+.sec-label{font-size:12.5px;font-weight:800;letter-spacing:.02em;color:var(--navy);}
+.sec-count{font-size:11.5px;font-weight:700;color:var(--navy);background:#fff;
+  border-radius:20px;padding:1px 8px;opacity:.75;}
+.sec-summary{background:var(--coral-light);}
+.sec-summary .sec-label{color:var(--coral-dark);}
+.sec-summary .sec-count{color:var(--coral-dark);}
+.sec-review{background:var(--teal-light);}
+.sec-review .sec-label{color:#04342C;}
+.sec-review .sec-count{color:#04342C;}
 
 .sched-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   border-top:1px solid var(--border);padding:12px 0;}
@@ -174,6 +180,9 @@
 .chip-done{background:var(--teal-light);color:#04342C;}
 .chip-open{background:#F3F2EC;color:var(--muted);}
 .chip-note{background:var(--coral-light);color:var(--coral-dark);}
+/* How far off, beside the date. A date on its own doesn't say whether it needs
+   thinking about. */
+.chip-ahead{background:#EDF0F7;color:#3D4E72;}
 
 /* The action column is a fixed width and the button always sits at its top, so
    the buttons form a straight edge whether or not a row has the dates link. */

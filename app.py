@@ -864,6 +864,19 @@ def schedule_for(conn, user, today=None):
         except (TypeError, ValueError):
             return None
 
+    def ahead(iso):
+        d = days_between(iso)
+        if d is None:
+            return ""
+        d = -d
+        if d <= 0:
+            return "today"
+        if d == 1:
+            return "tomorrow"
+        if d < 14:
+            return "in %d days" % d
+        return "in %d weeks" % (d // 7)
+
     def ago(iso):
         d = days_between(iso)
         if d is None:
@@ -964,6 +977,7 @@ def schedule_for(conn, user, today=None):
         elif planned:
             item["chip"] = pretty_date(planned)
             item["chip_kind"] = "due"
+            item["ahead"] = ahead(planned)
             item["light"] = "grey"
             coming.append(item)
         else:
@@ -1020,6 +1034,7 @@ def schedule_for(conn, user, today=None):
         else:
             item["chip"] = pretty_week(week_of)
             item["chip_kind"] = "due"
+            item["ahead"] = ahead(row["review_date"])
             item["light"] = "grey"
             coming.append(item)
 
@@ -1083,7 +1098,7 @@ def schedule_for(conn, user, today=None):
         {"key": "this_week", "title": "This week", "rows": this_week,
          "blurb": "Not seen yet this week."},
         {"key": "coming", "title": "Booked for later", "rows": coming,
-         "blurb": "Already has a date. Nothing to do yet."},
+         "blurb": "Dates already set. Nothing to do this week."},
         {"key": "seen", "title": "Done this week", "rows": seen,
          "blurb": ""},
     ]
