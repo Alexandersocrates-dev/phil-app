@@ -44,15 +44,18 @@
 {% endif %}
 
 {% for b in buckets %}
-{% if b.rows %}
+{% if b.rows or b.always %}
 {# Done this week is collapsed: reassurance, not work. #}
 <details class="card sched-card sched-{{ b.key }}" {% if b.key != 'seen' %}open{% endif %}>
   <summary class="sched-head">
     <h2>{{ b.title }}</h2>
-    <span class="sched-num sched-num-{{ b.key }}">{{ b.rows|length }}</span>
+    <span class="sched-num sched-num-{{ b.key }} {% if not b.rows %}sched-num-none{% endif %}">{{ b.rows|length }}</span>
     {% if b.blurb %}<span class="sched-blurb">{{ b.blurb }}</span>{% endif %}
   </summary>
 
+  {% if not b.rows %}
+  <p class="sched-empty">{{ b.empty }}</p>
+  {% endif %}
   {% for s in b.sections %}
   {% if b.show_labels %}
   <div class="sec-head sec-{{ s.kind }}">
@@ -142,6 +145,9 @@
 .sched-num-attention{background:#FBE3DE;color:#8A2614;}
 .sched-num-this_week{background:var(--teal-light);color:#04342C;}
 .sched-blurb{font-size:12.5px;color:var(--muted);margin-left:auto;}
+.sched-num-none{background:#F3F2EC;color:#B3B0A4;}
+.sched-empty{font-size:13px;color:var(--muted);margin:2px 0 6px;
+  border-top:1px solid var(--border);padding-top:12px;}
 
 /* A tinted band, not a hairline: at 11px grey the section headings were being
    scanned straight past, which defeats the point of splitting by kind. Each

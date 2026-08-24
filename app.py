@@ -1140,10 +1140,19 @@ def schedule_for(conn, user, today=None):
         # still has next week's session booked, and a mentor wants to see it.
         {"key": "coming_sessions", "title": "Scheduled mentoring sessions",
          "rows": booked_sessions,
-         "blurb": "Sessions you've set a date for, beyond this week."},
+         "blurb": "Sessions you've set a date for, beyond this week.",
+         # Shown even when empty: a mentor who has never opened the planner has
+         # no other way to learn it exists, and an empty diary is itself worth
+         # seeing.
+         "always": True,
+         "empty": "No sessions booked yet. Open a pupil's course and use "
+                  "\u201cSet session dates\u201d to plan ahead."},
         {"key": "coming_reviews", "title": "Review sessions",
          "rows": [r for r in coming if r["kind"] == "review"],
-         "blurb": "Follow-up chats booked when a course finished."},
+         "blurb": "Follow-up chats booked when a course finished.",
+         "always": True,
+         "empty": "No follow-ups booked. One is agreed each time a course is "
+                  "closed."},
         {"key": "seen", "title": "Done this week", "rows": seen,
          "blurb": ""},
     ]
