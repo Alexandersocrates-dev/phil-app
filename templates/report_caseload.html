@@ -2,145 +2,202 @@
 {% block title %}{{ title }} - Phil{% endblock %}
 {% block content %}
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
-<h1>{{ title }}</h1>
 
-{# The buttons used to sit unlabelled beside the heading, so it wasn't clear
-   whether they downloaded the whole list or whatever row you'd last looked at.
-   Say what's in them. #}
-<div class="card dl-card">
-  <div class="dl-text">
-    <strong>Download the whole list</strong>
-    <span class="yr-badge">{{ 'All time' if selected_year == 'all' else selected_year }}</span>
-    <p class="muted">Every pupil{{ ' and mentor' if show_mentor else '' }} on this page, one line per course:
-    start date, expected end, progress, whether a certificate has been issued and where the
-    follow-up chat stands. No session notes and nothing a pupil wrote &mdash; for that, use Pupil reports.</p>
-  </div>
-  <div class="dl-actions">
-    <a class="btn btn-primary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">PDF</a>
-    {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Excel</a>{% endif %}
-  </div>
-</div>
+<header class="ml-head">
+  <span class="ml-eyebrow">Reports</span>
+  <h1>{{ title }}</h1>
+  <p class="ml-lede">Where every course is up to, one row per pupil. Progress and dates only &mdash;
+  no session notes and nothing a pupil wrote.</p>
+</header>
 
-{# Years come from the data, so the list never offers one with nothing in it.
-   "All time" is always there and is the default. #}
-{% if years %}
-<div class="card yr-card">
-  <form method="get" action="{{ year_action }}" class="yr-form">
-    {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
-    <div class="field" style="margin:0;">
-      <label for="year">Academic year</label>
-      <select id="year" name="year" onchange="this.form.submit()">
-        <option value="all" {% if selected_year == 'all' %}selected{% endif %}>All time</option>
-        {% for label, y_from, y_to in years %}
-        <option value="{{ label }}" {% if selected_year == label %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
+<div class="ml-layout">
+  <main class="ml-main">
+
+    <div class="card ml-toolbar">
+      {% if years %}
+      <form method="get" action="{{ year_action }}" class="ml-filter">
+        <label for="year">Academic year</label>
+        <select id="year" name="year" onchange="this.form.submit()">
+          <option value="all" {% if selected_year == 'all' %}selected{% endif %}>All time</option>
+          {% for label, y_from, y_to in years %}
+          <option value="{{ label }}" {% if selected_year == label %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
+      </form>
+      {% endif %}
+
+      {% if mentors is defined %}
+      <form method="get" action="/admin/reports/caseload" class="ml-filter">
+        <label for="mentor_id">Mentor</label>
+        <select id="mentor_id" name="mentor_id" onchange="this.form.submit()">
+          <option value="all" {% if selected_mentor == 'all' %}selected{% endif %}>All mentors</option>
+          {% for m in mentors %}
+          <option value="{{ m.id }}" {% if selected_mentor == m.id|string %}selected{% endif %}>{{ m.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="hidden" name="year" value="{{ selected_year }}">
+      </form>
+      {% endif %}
+      <p class="ml-filter-note">A course belongs to the academic year its sessions ran in.
+      Only years with recorded sessions are listed.</p>
     </div>
-    <p class="muted yr-hint">A course belongs to the year its sessions ran in. Only years with
-    recorded sessions are listed.</p>
-  </form>
-</div>
-{% endif %}
 
-{% if mentors is defined %}
-<div class="card">
-  <form method="get" action="/admin/reports/caseload">
-    <input type="hidden" name="year" value="{{ selected_year }}">
-    <div class="field" style="max-width:280px;margin:0;">
-      <label>Filter by mentor</label>
-      <select name="mentor_id" onchange="this.form.submit()" aria-label="Choose a mentor">
-        <option value="all" {% if selected_mentor == 'all' %}selected{% endif %}>All mentors</option>
-        {% for m in mentors %}
-        <option value="{{ m.id }}" {% if selected_mentor == m.id|string %}selected{% endif %}>{{ m.name }}</option>
-        {% endfor %}
-      </select>
+    {% if not pupils %}
+    <div class="card ml-empty">
+      <h2>Nothing to show</h2>
+      <p>{% if selected_year == 'all' %}No courses have been enrolled yet.{% else %}No courses ran in {{ selected_year }}.{% endif %}</p>
     </div>
-  </form>
-</div>
-{% endif %}
+    {% else %}
 
-<div class="card">
-  {% if not pupils %}
-    <p class="muted">No enrolments yet.</p>
-  {% else %}
-  {# One row per pupil, courses inside. A pupil on five courses filled five lines
-     with the same name, which reads as five children. #}
-  {% for p in pupils %}
-  <details class="cl-pupil" {% if pupils|length == 1 %}open{% endif %}>
-    <summary class="cl-summary">
-      <span class="cl-name">{{ p.pupil }}</span>
-      <span class="cl-counts">
-        {%- if p.active %}<span class="badge badge-teal">{{ p.active }} active</span>{% endif -%}
-        {%- if p.completed %} <span class="badge badge-muted">{{ p.completed }} done</span>{% endif -%}
-        {%- if p.needs_attention %} <span class="badge badge-red">{{ p.needs_attention }} follow-up{{ '' if p.needs_attention == 1 else 's' }} outstanding</span>{% endif -%}
-      </span>
-      <span class="cl-toggle">Show courses</span>
-    </summary>
+    <div class="ml-list">
+      {% for p in pupils %}
+      <details class="card ml-pupil" {% if pupils|length == 1 %}open{% endif %}>
+        <summary class="ml-summary">
+          <span class="ml-chev" aria-hidden="true"></span>
+          <span class="ml-name">{{ p.pupil }}</span>
+          <span class="ml-badges">
+            {%- if p.active %}<span class="badge badge-teal">{{ p.active }} active</span>{% endif -%}
+            {%- if p.completed %} <span class="badge badge-muted">{{ p.completed }} done</span>{% endif -%}
+            {%- if p.needs_attention %} <span class="badge badge-red">{{ p.needs_attention }} follow-up{{ '' if p.needs_attention == 1 else 's' }} to do</span>{% endif -%}
+          </span>
+          <span class="ml-toggle" aria-hidden="true"></span>
+        </summary>
 
-    <div class="cl-body">
-      <table class="cl-table">
-        <tr>
-          <th>Course</th>{% if show_mentor %}<th>Mentor</th>{% endif %}
-          <th>Started</th><th>Expected end</th><th>Progress</th><th>Certificate</th><th>Follow-up</th><th></th>
-        </tr>
-        {% for r in p.courses %}
-        <tr>
-          <td>{{ r.course }}</td>
-          {% if show_mentor %}<td>{{ r.mentor }}</td>{% endif %}
-          <td class="cl-date">{{ r.started }}</td>
-          <td class="cl-date">{{ r.scheduled_end }}</td>
-          <td>{{ r.progress }}</td>
-          <td>{{ r.certificate }}</td>
-          <td>{% if r.follow_up == 'Done' %}<span class="badge badge-teal">Done</span>
-            {%- elif r.follow_up == 'Overdue' %}<span class="badge badge-red">Overdue</span>
-            {%- elif r.follow_up == 'Not booked' %}<span class="badge badge-amber">Not booked</span>
-            {%- elif r.follow_up and r.follow_up != '-' %}{{ r.follow_up }}
-            {%- else %}-{% endif %}</td>
-          <td><a href="/report/mentee/{{ r.enrolment_id }}">This course</a></td>
-        </tr>
-        {% endfor %}
-      </table>
+        <div class="ml-body">
+          <div class="ml-scroll">
+            <table class="ml-table">
+              <thead>
+                <tr>
+                  <th class="c-course">Course</th>
+                  {% if show_mentor %}<th class="c-tight">Mentor</th>{% endif %}
+                  <th class="c-tight">Started</th>
+                  <th class="c-tight">Expected end</th>
+                  <th class="c-tight">Progress</th>
+                  <th class="c-tight">Certificate</th>
+                  <th class="c-tight">Follow-up</th>
+                  <th class="c-tight"><span class="sr-only">Report</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for r in p.courses %}
+                <tr>
+                  <td class="c-course">{{ r.course }}</td>
+                  {% if show_mentor %}<td class="c-tight">{{ r.mentor }}</td>{% endif %}
+                  <td class="c-tight">{{ r.started }}</td>
+                  <td class="c-tight">{{ r.scheduled_end }}</td>
+                  <td class="c-tight">{{ r.progress }}</td>
+                  <td class="c-tight">{{ r.certificate }}</td>
+                  <td class="c-tight">{% if r.follow_up == 'Done' %}<span class="badge badge-teal">Done</span>
+                    {%- elif r.follow_up == 'Overdue' %}<span class="badge badge-red">Overdue</span>
+                    {%- elif r.follow_up == 'Not booked' %}<span class="badge badge-amber">Not booked</span>
+                    {%- elif r.follow_up and r.follow_up != '-' %}{{ r.follow_up }}
+                    {%- else %}&mdash;{% endif %}</td>
+                  <td class="c-tight"><a href="/report/mentee/{{ r.enrolment_id }}">View</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+      {% endfor %}
     </div>
-  </details>
-  {% endfor %}
-  {% endif %}
+    {% endif %}
+  </main>
+
+  <aside class="ml-aside">
+    <div class="card ml-panel">
+      <span class="ml-eyebrow">Download</span>
+      <h2>The whole list</h2>
+      <p class="ml-panel-period">{{ 'All time' if selected_year == 'all' else selected_year }}</p>
+      <p class="ml-panel-body">One line per course: start date, expected end, progress, whether a
+      certificate was issued, and where the follow-up chat stands.</p>
+      <div class="ml-dl">
+        <a class="btn btn-primary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">PDF</a>
+        {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Excel</a>{% endif %}
+      </div>
+      <p class="ml-panel-note">Session notes and pupils&rsquo; own writing aren&rsquo;t included.
+      For those, use <a href="{{ '/admin/reports/pupils' if mentors is defined else '/mentor/reports/pupils' }}">Pupil reports</a>.</p>
+    </div>
+  </aside>
 </div>
 
 <style>
-.yr-card{padding-top:14px;padding-bottom:14px;}
-.yr-form{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;}
-.yr-form .field{max-width:220px;}
-.yr-form select{width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:8px;
-  font-size:14px;font-family:inherit;background:#fff;}
-.yr-hint{font-size:12.5px;margin:0;flex:1;min-width:220px;}
-.yr-badge{display:inline-block;font-size:11.5px;font-weight:700;background:var(--teal-light);
-  color:#04342C;border-radius:20px;padding:2px 9px;margin-left:8px;vertical-align:2px;}
-.dl-card{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.dl-text{flex:1;min-width:260px;}
-.dl-text .muted{font-size:12.5px;margin:3px 0 0;line-height:1.5;}
-.dl-actions{display:flex;gap:8px;flex-shrink:0;}
+.ml-head{margin:0 0 22px;}
+.ml-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.ml-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.ml-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
-.cl-pupil{border-top:1px solid var(--border);}
-.cl-pupil:first-of-type{border-top:none;}
-.cl-summary{display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;padding:11px 0;}
-.cl-summary::-webkit-details-marker{display:none;}
-.cl-summary::before{content:"\25B8";color:var(--teal-darker);font-size:13px;
-  transition:transform .12s ease;flex-shrink:0;}
-.cl-pupil[open] .cl-summary::before{transform:rotate(90deg);}
-.cl-name{font-family:var(--font-head);font-weight:700;color:var(--navy);flex:1;min-width:0;}
-.cl-counts{display:flex;gap:5px;flex-wrap:wrap;}
-.cl-toggle{font-size:12px;font-weight:600;color:var(--teal-darker);white-space:nowrap;
-  min-width:88px;text-align:right;}
-.cl-pupil[open] .cl-toggle{font-size:0;}
-.cl-pupil[open] .cl-toggle::after{content:"Hide courses";font-size:12px;}
-.cl-body{padding:0 0 12px 22px;}
-.cl-table{width:calc(100% - 22px);}
-.cl-table td, .cl-table th{padding:7px 10px 7px 0;vertical-align:middle;}
-/* Dates on one line: 2026-08-19 was wrapping mid-date into two rows. */
-.cl-date{white-space:nowrap;}
-@media (max-width:700px){
-  .cl-body{padding-left:0;}
-  .cl-table{width:100%;}
+.ml-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
+.ml-main{min-width:0;}
+.ml-aside{min-width:0;position:sticky;top:18px;}
+
+.ml-toolbar{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;padding:16px 18px;}
+.ml-filter{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.ml-filter label{font-size:11.5px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);}
+.ml-filter select{padding:9px 11px;border:1.4px solid var(--border);border-radius:9px;
+  font-size:14px;font-family:inherit;background:#fff;min-width:170px;}
+.ml-filter-note{flex-basis:100%;margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+.ml-list{display:flex;flex-direction:column;gap:12px;}
+.ml-pupil{margin:0;padding:0 20px;}
+.ml-summary{display:flex;align-items:center;gap:11px;cursor:pointer;list-style:none;padding:14px 0;}
+.ml-summary::-webkit-details-marker{display:none;}
+.ml-chev{width:0;height:0;flex-shrink:0;border-left:6px solid var(--teal-darker);
+  border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
+  transition:transform .13s ease;}
+.ml-pupil[open] .ml-chev{transform:rotate(90deg);}
+.ml-name{font-family:var(--font-head);font-weight:700;font-size:15.5px;color:var(--navy);
+  letter-spacing:-.01em;flex:1;min-width:0;}
+/* Badges hold together: flex-shrink:0 stops "2 follow-ups to do" being squeezed
+   until it breaks across lines. */
+.ml-badges{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0;}
+.ml-badges .badge{white-space:nowrap;}
+.ml-toggle{flex-shrink:0;font-size:12px;font-weight:600;color:var(--teal-darker);
+  white-space:nowrap;min-width:86px;text-align:right;}
+.ml-toggle::after{content:"Show courses";}
+.ml-pupil[open] .ml-toggle::after{content:"Hide courses";}
+
+.ml-body{padding:0 0 16px;}
+/* The table scrolls rather than crushing its columns. Squeezing was what turned
+   "Week 0 of 6" into two lines. */
+.ml-scroll{overflow-x:auto;border-top:1px solid var(--border);padding-top:4px;}
+.ml-table{width:100%;border-collapse:collapse;font-size:13px;}
+.ml-table th{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-align:left;padding:9px 16px 9px 0;white-space:nowrap;}
+.ml-table td{padding:11px 16px 11px 0;border-top:1px solid var(--border);vertical-align:middle;}
+.ml-table tr:first-child td{border-top:none;}
+/* Short values never wrap; the course title is the only column allowed to. */
+.c-tight{white-space:nowrap;}
+.c-course{white-space:normal;min-width:190px;line-height:1.4;padding-right:24px;}
+.ml-table td:last-child, .ml-table th:last-child{padding-right:0;text-align:right;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+.ml-panel{margin:0;padding:18px 20px;border-left:3px solid var(--teal-darker);}
+.ml-panel h2{font-size:15.5px;margin:2px 0 4px;letter-spacing:-.01em;}
+.ml-panel-period{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--teal-darker);margin:0 0 10px;}
+.ml-panel-body{font-size:13px;line-height:1.6;color:var(--ink);margin:0 0 14px;}
+.ml-dl{display:flex;gap:8px;margin-bottom:12px;}
+.ml-dl .btn{flex:1;text-align:center;white-space:nowrap;}
+.ml-panel-note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:0;}
+
+.ml-empty{text-align:center;padding:34px 20px;}
+.ml-empty h2{margin:0 0 6px;font-size:16px;}
+.ml-empty p{margin:0;color:var(--muted);font-size:13.5px;}
+
+@media (max-width:900px){
+  .ml-layout{grid-template-columns:minmax(0,1fr);}
+  .ml-aside{position:static;order:-1;}
+}
+@media (max-width:560px){
+  .ml-summary{flex-wrap:wrap;}
+  .ml-badges{justify-content:flex-start;width:100%;}
+  .ml-toggle{display:none;}
 }
 </style>
 {% endblock %}
