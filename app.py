@@ -1051,9 +1051,7 @@ def schedule_for(conn, user, today=None):
             "action_label": "Record chat",
             "action_url": "/mentor/enrolment/%s/follow-up" % row["id"],
         }
-        # A review is a target, not a deadline: it only counts as missed once the
-        # grace period has passed, so a half-term break doesn't make a mentor
-        # look like they have dropped something.
+        # Missed once the week it was due in has passed.
         if overdue_after and today_iso > overdue_after:
             item["chip"] = "missed " + pretty_week(week_of)
             item["chip_kind"] = "late"
@@ -1177,9 +1175,9 @@ def schedule_for(conn, user, today=None):
          "always": True,
          "empty": "No sessions booked yet. Open a pupil's course and use "
                   "\u201cSet session dates\u201d to plan ahead."},
-        {"key": "coming_reviews", "title": "Review sessions",
+        {"key": "coming_reviews", "title": "Follow-up chats",
          "rows": [r for r in coming if r["kind"] == "review"],
-         "blurb": "Follow-up chats booked when a course finished.",
+         "blurb": "Booked when a course finished.",
          "always": True,
          "empty": "No follow-ups booked. One is agreed each time a course is "
                   "closed."},
@@ -4997,11 +4995,10 @@ def session_record_edit_submit(request):
     return with_flash(f"/mentor/pupils/{pupil_id}", "Session record updated.", "ok")
 
 
-# A review point is a target, not a deadline. Schools lose whole weeks to
-# holidays, trips and exams, so a date that turns red the morning after is
-# wrong and trains mentors to ignore it. Two weeks of grace covers a half-term
-# break; anything longer than that genuinely has been forgotten.
-REVIEW_GRACE_DAYS = 14
+# A follow-up is agreed as a week, not a day, so it isn't late until that week
+# is out. It then turns red rather than waiting: with the push-back button gone
+# there is nothing to defer to, and a soft amber on work already a fortnight old
+# reads as "no rush" on the one thing that shows whether a course held.
 
 
 def pretty_date(iso):
@@ -5037,12 +5034,21 @@ def review_week_of(date_string):
 
 
 def review_overdue_from(date_string):
-    """The date after which a review counts as genuinely missed."""
+    """The date after which a follow-up counts as missed.
+
+    The end of the week it was due in. A follow-up is agreed as a week rather
+    than a day, so it isn't late until that week is out — but once it is, it is
+    late, and the page says so. There used to be a fortnight's grace on top of
+    this, from when a mentor could push the date back; with that gone the grace
+    only delayed the prompt on work nobody was going to do sooner.
+    """
     try:
         d = datetime.date.fromisoformat(date_string)
     except (TypeError, ValueError):
         return None
-    return (d + datetime.timedelta(days=REVIEW_GRACE_DAYS)).isoformat()
+    # From the Monday of that week to the Sunday at its end.
+    monday = d - datetime.timedelta(days=d.weekday())
+    return (monday + datetime.timedelta(days=6)).isoformat()
 
 
 @router.post("/mentor/enrolment/<enrolment_id>/wrap-up")
@@ -5179,100 +5185,14 @@ def set_review_point(request):
         pupil_id = enrolment["pupil_id"]
     finally:
         conn.close()
-    message = (f"Review point set for {review_date}." if review_date
-               else "Review point cleared.")
+    message = (f"Follow-up chat booked for {uk_date(review_date)}." if review_date
+               else "Follow-up chat date cleared.")
     return with_flash(f"/mentor/pupils/{pupil_id}", message, "ok")
 
 
-@router.post("/mentor/enrolment/<enrolment_id>/review/push")
-def push_review_point(request):
-    """Moves a review later by a set number of weeks.
-
-    The common case is a holiday landing on top of the review, and the mentor
-    knowing that in advance. Retyping a date is enough friction that they
-    wouldn't bother."""
-    user, err = require(request, roles=["mentor", "admin"])
-    if err:
-        return err
-    try:
-        weeks = max(1, min(8, int(request.field("weeks", "2"))))
-    except ValueError:
-        weeks = 2
-    conn = db.get_conn()
-    try:
-        enrolment = conn.execute(
-            """SELECT e.*, p.establishment_id FROM enrolments e
-               JOIN pupils p ON p.id = e.pupil_id WHERE e.id=?""",
-            (request.params["enrolment_id"],)).fetchone()
-        if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
-            return Response("Not authorised for this area.", status="403 Forbidden")
-        if not may_handle_review(conn, enrolment, user):
-            return Response("Not authorised for this area.", status="403 Forbidden")
-        # Push from today when the date has already passed, so a long-overdue
-        # review doesn't land in the past again.
-        try:
-            base = datetime.date.fromisoformat(enrolment["review_date"])
-        except (TypeError, ValueError):
-            base = datetime.date.today()
-        base = max(base, datetime.date.today())
-        new_date = (base + datetime.timedelta(weeks=weeks)).isoformat()
-        conn.execute("UPDATE enrolments SET review_date=?, review_done=0 WHERE id=?",
-                     (new_date, request.params["enrolment_id"]))
-        db.log_action(conn, user["id"], "review_point_pushed", "enrolment",
-                      enrolment["id"], f"+{weeks}w to {new_date}")
-        conn.commit()
-        pupil_id = enrolment["pupil_id"]
-    finally:
-        conn.close()
-    return with_flash(f"/mentor/pupils/{pupil_id}",
-                      f"Review moved to the week of {review_week_of(new_date)}.", "ok")
-
-
-FOLLOW_UP_MIN_DAYS = 14
-
-HELPED_LABELS = {
-    "better": "Clearly better",
-    "some": "Some change",
-    "none": "No change",
-    "worse": "Worse",
-}
-BEHAVIOUR_LABELS = {
-    "no": "Not showing",
-    "sometimes": "Sometimes",
-    "yes": "Still showing",
-}
-NEXT_STEP_LABELS = {
-    "none": "Nothing further needed",
-    "monitor": "Keep an eye on it",
-    "another_course": "Recommend another course",
-    "refer": "Refer on to someone else",
-}
-
-
-def follow_up_for(conn, enrolment_id):
-    """The follow-up chat recorded against a course, if one has been."""
-    return conn.execute("SELECT * FROM follow_ups WHERE enrolment_id=?",
-                        (enrolment_id,)).fetchone()
-
-
-def follow_up_earliest(conn, enrolment_id):
-    """The date from which a follow-up starts to mean something.
-
-    A fortnight after the last session. A chat three days after a course ends
-    can't tell anyone whether change held. This is shown as advice rather than
-    enforced: a pupil moving school on Friday is exactly the case where an early
-    chat beats no chat, and the mentor is the one who can see that.
-    """
-    last = conn.execute(
-        "SELECT max(date) FROM session_records WHERE enrolment_id=?",
-        (enrolment_id,)).fetchone()[0]
-    if not last:
-        return None
-    try:
-        return (datetime.date.fromisoformat(last)
-                + datetime.timedelta(days=FOLLOW_UP_MIN_DAYS)).isoformat()
-    except (TypeError, ValueError):
-        return None
+# The push-back route is gone with the button. Moving the date only deferred
+# the problem, and an overdue chat can still be recorded whenever it actually
+# happens, so nothing is lost by letting it run late and show as late.
 
 
 @router.get("/mentor/enrolment/<enrolment_id>/follow-up")
@@ -5480,9 +5400,9 @@ def may_access_enrolment(conn, enrolment_id, user):
 
 
 def may_handle_review(conn, enrolment, user):
-    """Whether this user may set, push or clear this enrolment's review point.
+    """Whether this user may set or clear this enrolment's follow-up chat.
 
-    A review point outlives the course it belongs to: the enrolment is already
+    A follow-up outlives the course it belongs to: the enrolment is already
     completed by the time a date is agreed. Ownership therefore follows the
     pupil rather than the enrolment. When a pupil is reassigned their active
     courses move but the completed one does not, so a review left keyed to the

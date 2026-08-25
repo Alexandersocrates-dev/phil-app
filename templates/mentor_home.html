@@ -77,12 +77,6 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
       {% if r.review_note %}<span class="review-due-meta">{{ r.review_note }}</span>{% endif %}
     </div>
     <div class="review-due-actions">
-      <form method="post" action="/mentor/enrolment/{{ r.id }}/review/push" class="form-inline">
-        <input type="hidden" name="weeks" value="2">
-        <button class="btn btn-secondary btn-sm" type="submit">Push back 2 weeks</button>
-      </form>
-      {# Recorded, not ticked: marking it done left no trace of what the pupil
-         actually said. #}
       <a class="btn btn-primary btn-sm" href="/mentor/enrolment/{{ r.id }}/follow-up">Record the chat</a>
     </div>
   </div>

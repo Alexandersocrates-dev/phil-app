@@ -29,7 +29,7 @@
       <div class="field">
         <label for="review_date">Date for the chat <span class="req">Required</span></label>
         <input type="date" id="review_date" name="review_date" value="{{ suggested_review_date }}" required>
-        <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap. You get two weeks&rsquo; grace, and can push it back if a holiday lands on it.{% if earliest_review %} We&rsquo;d suggest {{ earliest_review|uk_date }} at the earliest, a fortnight after the last session, so there&rsquo;s something to look back on.{% endif %}</p>
+        <p class="muted" style="font-size:12px;margin:4px 0 0;">Three weeks is the usual gap.{% if earliest_review %} We&rsquo;d suggest {{ earliest_review|uk_date }} at the earliest, a fortnight after the last session, so there&rsquo;s something to look back on.{% endif %} Pick a week you&rsquo;ll actually be in school &mdash; it shows as overdue once that week has passed.</p>
       </div>
       <div class="field">
         <label for="review_note">What to ask about</label>

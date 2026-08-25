@@ -64,13 +64,11 @@
     {% else %}<span class="badge badge-teal">Active</span>{% endif %}
   </div>
   </summary>
-  {# A review point set at completion has to be visible here, or it's a date
-     nobody ever sees again. Overdue is called out; a done review stays as a
-     record that the follow-up happened. #}
+  {# A follow-up booked at completion has to be visible here, or it's a date
+     nobody ever sees again. Overdue is called out; a done one stays as a record
+     that the conversation happened. #}
   {% if e.review_date %}
-  {# A review is a target, not a deadline: it shows as a week rather than a day,
-     and only turns amber once the grace period has passed, so a half-term
-     break doesn't make a mentor look like they've missed something. #}
+  {# Shown as a week rather than a day, and red once that week has passed. #}
   {% set overdue = review_overdue_from(e.review_date) and today > review_overdue_from(e.review_date) %}
   <div class="review-strip {% if e.review_done %}review-done{% elif overdue %}review-overdue{% endif %}">
     <div class="review-body">
@@ -80,16 +78,12 @@
         {%- elif overdue %}Overdue &middot; was due the week of {{ review_week_of(e.review_date)|uk_date }}
         {%- else %}Due the week of {{ review_week_of(e.review_date)|uk_date }}{% endif -%}
       </strong>
-      <span class="review-note">{% if e.review_note %}{{ e.review_note }} &middot; {% endif %}A sit-down with {{ pupil.forename }} weeks after the course: has it helped, is the behaviour still showing?</span>
+      {% if e.review_note %}<span class="review-note">{{ e.review_note }}</span>{% endif %}
     </div>
+    {# One action. Pushing the date back only moved the problem, and an overdue
+       chat can still be recorded whenever it happens, so nothing is lost. #}
     {% if not e.review_done %}
     <div class="review-actions">
-      <form method="post" action="/mentor/enrolment/{{ e.id }}/review/push" class="form-inline">
-        <input type="hidden" name="weeks" value="2">
-        <button class="btn btn-secondary btn-sm" type="submit" title="Move the follow-up two weeks later">Push back 2 weeks</button>
-      </form>
-      {# The chat is recorded, not just ticked: marking it done without writing
-         anything down left no trace of what the pupil actually said. #}
       <a class="btn btn-primary btn-sm" href="/mentor/enrolment/{{ e.id }}/follow-up">Record the chat</a>
     </div>
     {% endif %}
