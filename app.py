@@ -5194,6 +5194,52 @@ def set_review_point(request):
 # the problem, and an overdue chat can still be recorded whenever it actually
 # happens, so nothing is lost by letting it run late and show as late.
 
+FOLLOW_UP_MIN_DAYS = 14
+
+HELPED_LABELS = {
+    "better": "Clearly better",
+    "some": "Some change",
+    "none": "No change",
+    "worse": "Worse",
+}
+BEHAVIOUR_LABELS = {
+    "no": "Not showing",
+    "sometimes": "Sometimes",
+    "yes": "Still showing",
+}
+NEXT_STEP_LABELS = {
+    "none": "Nothing further needed",
+    "monitor": "Keep an eye on it",
+    "another_course": "Recommend another course",
+    "refer": "Refer on to someone else",
+}
+
+
+def follow_up_for(conn, enrolment_id):
+    """The follow-up chat recorded against a course, if one has been."""
+    return conn.execute("SELECT * FROM follow_ups WHERE enrolment_id=?",
+                        (enrolment_id,)).fetchone()
+
+
+def follow_up_earliest(conn, enrolment_id):
+    """The date from which a follow-up starts to mean something.
+
+    A fortnight after the last session. A chat three days after a course ends
+    can't tell anyone whether change held. This is shown as advice rather than
+    enforced: a pupil moving school on Friday is exactly the case where an early
+    chat beats no chat, and the mentor is the one who can see that.
+    """
+    last = conn.execute(
+        "SELECT max(date) FROM session_records WHERE enrolment_id=?",
+        (enrolment_id,)).fetchone()[0]
+    if not last:
+        return None
+    try:
+        return (datetime.date.fromisoformat(last)
+                + datetime.timedelta(days=FOLLOW_UP_MIN_DAYS)).isoformat()
+    except (TypeError, ValueError):
+        return None
+
 
 @router.get("/mentor/enrolment/<enrolment_id>/follow-up")
 def follow_up_form(request):
