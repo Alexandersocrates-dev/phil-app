@@ -116,7 +116,6 @@
     <div class="card td-panel">
       <span class="td-eyebrow">Roll-call</span>
       <h2>Your pupils</h2>
-      <p class="td-panel-note">By person rather than by course. Longest since seen, first.</p>
       <ul class="td-roll">
         {% for p in pupils %}
         <li>
@@ -218,8 +217,7 @@
 
 /* ------------------------------------------------------------------ panel -- */
 .td-panel{margin:0;padding:17px 19px;}
-.td-panel h2{font-size:15px;margin:2px 0 3px;letter-spacing:-.01em;}
-.td-panel-note{font-size:12.5px;color:var(--muted);margin:0 0 11px;line-height:1.5;}
+.td-panel h2{font-size:15px;margin:2px 0 10px;letter-spacing:-.01em;}
 /* Two figures, ruled apart. Big enough to read at a glance, which is the only
    job this panel has. */
 .td-figures{display:flex;align-items:stretch;gap:0;margin:6px 0 2px;flex-wrap:wrap;}
