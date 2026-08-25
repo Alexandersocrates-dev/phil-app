@@ -80,8 +80,19 @@
     {# The week's shape, kept beside the work rather than stacked on top of it. #}
     <div class="card td-panel {% if summary.attention %}td-panel-late{% endif %}">
       <span class="td-eyebrow">Your week</span>
-      <p class="td-score"><strong>{{ summary.pupils_seen }}</strong> of {{ summary.pupils }}
-      pupil{{ '' if summary.pupils == 1 else 's' }} seen</p>
+
+      {# Both numbers, plainly. A mentor with one pupil on four courses has one
+         person to find time for and four sessions to run, and showing only one
+         of those made the page read as either busier or emptier than it is. #}
+      <p class="td-caseload">
+        <strong>{{ summary.pupils }}</strong> pupil{{ '' if summary.pupils == 1 else 's' }}
+        <span class="td-caseload-sep" aria-hidden="true"></span>
+        <strong>{{ summary.total_courses }}</strong> course{{ '' if summary.total_courses == 1 else 's' }}
+      </p>
+
+      <p class="td-score">{{ summary.pupils_seen }} of {{ summary.pupils }}
+      seen this week{% if summary.pupils_not_seen %}, {{ summary.pupils_not_seen }} still to
+      catch{% endif %}</p>
       <div class="td-bar" aria-hidden="true">
         <div class="td-bar-fill" style="width:{{ (summary.pupils_seen / summary.pupils * 100)|round|int }}%"></div>
       </div>
@@ -203,9 +214,14 @@
 .td-panel{margin:0;padding:17px 19px;}
 .td-panel h2{font-size:15px;margin:2px 0 3px;letter-spacing:-.01em;}
 .td-panel-note{font-size:12.5px;color:var(--muted);margin:0 0 11px;line-height:1.5;}
-.td-score{font-size:13.5px;color:var(--ink);margin:2px 0 9px;}
-.td-score strong{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--navy);
-  letter-spacing:-.02em;margin-right:3px;}
+/* The caseload in one line: two figures, ruled apart so neither is mistaken
+   for the other. */
+.td-caseload{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;
+  font-size:13px;color:var(--muted);margin:4px 0 11px;}
+.td-caseload strong{font-family:var(--font-head);font-size:24px;font-weight:700;
+  color:var(--navy);letter-spacing:-.02em;margin-right:2px;}
+.td-caseload-sep{width:1px;align-self:stretch;background:var(--border);margin:3px 3px 5px;}
+.td-score{font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.5;}
 .td-bar{height:6px;border-radius:20px;background:#EDEBE2;overflow:hidden;margin-bottom:13px;}
 .td-bar-fill{height:100%;background:var(--teal-darker);border-radius:20px;}
 .td-panel-late .td-bar-fill{background:#C98A0E;}

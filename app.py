@@ -1171,6 +1171,11 @@ def schedule_for(conn, user, today=None):
         "total_courses": total_courses,
         "pupils": len(pupil_rows),
         "pupils_seen": sum(1 for p in pupil_rows if p["seen"]),
+        # Both counts, side by side. One pupil on four courses is one person to
+        # find time for and four sessions to run, and the page was only ever
+        # showing one of those two numbers at a time.
+        "pupils_not_seen": sum(1 for p in pupil_rows if not p["seen"]),
+        "courses_seen": sum(1 for i in seen if i["kind"] == "session"),
         "seen": len(seen),
         "attention": len(attention),
         "this_week": len(this_week),
