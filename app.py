@@ -3203,8 +3203,9 @@ def admin_reports_chooser(request):
          "bg": "var(--amber-light)"},
         {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
          "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},
-        {"title": "Pupil report", "desc": "Search for a pupil, their details, courses and progress in one file.",
-         "href": "/admin/reports/full", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
+        {"title": "Pupil report", "desc": "Everything on one pupil: every course, session by session, "
+                                          "with their goals and the course summaries.",
+         "href": "/admin/reports/pupils", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
         {"title": "Mentor reports", "desc": "Choose a mentor, then download their mentoring list as a PDF or spreadsheet.",
          "href": "/admin/reports/caseload", "icon": _ICON_USERS, "bg": "var(--amber-light)"},
     ]
@@ -3222,12 +3223,114 @@ def mentor_reports_chooser(request):
         return blocked
     cards = [
         {"title": "Your mentoring list", "desc": "Every pupil you mentor and where each course is up to. "
-                                                "Download the whole list, or a full report for one pupil.",
+                                                "Progress only, no session notes.",
          "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
+        {"title": "Pupil report", "desc": "Everything on one pupil: every course, session by session, "
+                                          "with their goals and the course summaries.",
+         "href": "/mentor/reports/pupils", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards,
                   intro="Download your mentoring list, or a full report for one of your pupils.",
                   note="Limited to pupils you mentor. For anyone else, ask an admin.",
+                  flash=flash_from_query(request))
+
+
+def _pupil_report_list(conn, mentor_id=None, establishment_id=None):
+    """Pupils, with enough about each to choose whose report you want.
+
+    Its own page rather than a button on the mentoring list: that page answers
+    "where is everyone up to", this one answers "give me everything on one
+    child". Two questions, two pages.
+    """
+    query = """
+        SELECT pupils.id, pupils.forename, pupils.surname, pupils.year_group,
+               pupils.form_class, pupils.status
+        FROM pupils WHERE 1=1
+    """
+    params = []
+    if establishment_id:
+        query += " AND pupils.establishment_id=?"
+        params.append(establishment_id)
+    if mentor_id:
+        query += " AND pupils.id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)"
+        params.append(mentor_id)
+    query += " ORDER BY pupils.status, pupils.surname, pupils.forename"
+
+    out = []
+    for p in conn.execute(query, params).fetchall():
+        courses = conn.execute(
+            """SELECT e.status, c.title,
+                      (SELECT max(r.date) FROM session_records r WHERE r.enrolment_id = e.id) AS last_session
+               FROM enrolments e JOIN courses c ON c.id = e.course_id
+               WHERE e.pupil_id=?""" + (" AND e.mentor_id=?" if mentor_id else ""),
+            (p["id"], mentor_id) if mentor_id else (p["id"],)).fetchall()
+        if not courses:
+            continue
+        sessions = conn.execute(
+            """SELECT count(*) FROM session_records r JOIN enrolments e ON e.id = r.enrolment_id
+               WHERE e.pupil_id=?""", (p["id"],)).fetchone()[0]
+        dates = [c["last_session"] for c in courses if c["last_session"]]
+        out.append({
+            "id": p["id"],
+            "name": f"{p['forename']} {p['surname']}",
+            "year_group": p["year_group"],
+            "form_class": p["form_class"],
+            "archived": p["status"] != "active",
+            "total": len(courses),
+            "active": sum(1 for c in courses if c["status"] == "active"),
+            "completed": sum(1 for c in courses if c["status"] == "completed"),
+            "sessions": sessions,
+            "last_session": uk_date(max(dates)) if dates else None,
+            "titles": [c["title"] for c in courses],
+        })
+    return out
+
+
+@router.get("/mentor/reports/pupils")
+def mentor_pupil_reports(request):
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+    conn = db.get_conn()
+    try:
+        year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
+        pupils = _pupil_report_list(conn, mentor_id=user["id"])
+    finally:
+        conn.close()
+    return render("pupil_reports.html", user=user, pupils=pupils,
+                  years=years, selected_year=year, year_action="/mentor/reports/pupils",
+                  title="Pupil reports",
+                  intro="Everything on one pupil in a single file: every course they have "
+                        "done with you, session by session, with the goals they set and the "
+                        "course summaries written for staff.",
+                  scope="Pupils you mentor.",
+                  flash=flash_from_query(request))
+
+
+@router.get("/admin/reports/pupils")
+def admin_pupil_reports(request):
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+    conn = db.get_conn()
+    try:
+        year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
+        pupils = _pupil_report_list(conn, establishment_id=user["establishment_id"])
+    finally:
+        conn.close()
+    return render("pupil_reports.html", user=user, pupils=pupils,
+                  years=years, selected_year=year, year_action="/admin/reports/pupils",
+                  title="Pupil reports",
+                  intro="Everything on one pupil in a single file: every course they have "
+                        "done, session by session, with the goals they set and the course "
+                        "summaries written for staff.",
+                  scope="Every pupil at your establishment, whoever mentors them.",
                   flash=flash_from_query(request))
 
 
@@ -3328,7 +3431,30 @@ def mentee_report_pdf_download(request):
     return pdf_response(path, "course-report.pdf")
 
 
-def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False):
+def period_label(year):
+    """What a report says it covers. Printed in the header, so a PDF found in a
+    drawer in three years still says which year it is about."""
+    return "All time" if year == "all" else f"Academic year {year}"
+
+
+def _year_filter(year_from, year_to):
+    """SQL restricting to courses whose sessions ran inside an academic year.
+
+    A course belongs to the year it was delivered in, not the year it was
+    created or the year the pupil happens to be in now. That's what a school
+    means by "we ran twelve courses last year", and it's the only definition
+    that reads the same on all three reports.
+    """
+    if not (year_from and year_to):
+        return "", []
+    return (""" AND EXISTS (SELECT 1 FROM session_records sr
+                            WHERE sr.enrolment_id = enrolments.id
+                              AND sr.date BETWEEN ? AND ?)""",
+            [year_from, year_to])
+
+
+def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False,
+                   year_from=None, year_to=None):
     query = """
         SELECT enrolments.id, enrolments.start_date, enrolments.current_week, enrolments.status,
                enrolments.review_date, enrolments.review_done,
@@ -3348,6 +3474,9 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
     if establishment_id:
         query += " AND pupils.establishment_id=?"
         params.append(establishment_id)
+    year_sql, year_args = _year_filter(year_from, year_to)
+    query += year_sql
+    params += year_args
     query += " ORDER BY enrolments.status, pupils.surname"
     rows = conn.execute(query, params).fetchall()
 
@@ -3390,6 +3519,20 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
     return result
 
 
+def chosen_year(request, conn, establishment_id):
+    """(label, from, to, years) for a report's academic-year picker.
+
+    Years come from the data, so the list never offers one with nothing in it
+    and never runs out. "All time" is the default and is always offered.
+    """
+    years = recorded_academic_years(conn, establishment_id)
+    choice = request.query.get("year", ["all"])[0]
+    for label, y_from, y_to in years:
+        if choice == label:
+            return label, y_from, y_to, years
+    return "all", None, None, years
+
+
 def _caseload_grouped(rows):
     """The same rows, one entry per pupil.
 
@@ -3426,13 +3569,16 @@ def mentor_caseload(request):
         return blocked
     conn = db.get_conn()
     try:
-        rows = _caseload_rows(conn, mentor_id=user["id"])
+        year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
+        rows = _caseload_rows(conn, mentor_id=user["id"], year_from=y_from, year_to=y_to)
     finally:
         conn.close()
+    suffix = f"?year={year}"
     return render("report_caseload.html", user=user, rows=rows,
                   pupils=_caseload_grouped(rows), show_mentor=False,
-                  title="My mentoring list", pdf_url="/mentor/reports/caseload/pdf",
-                  xlsx_url="/mentor/reports/caseload/xlsx",
+                  title="My mentoring list", pdf_url="/mentor/reports/caseload/pdf" + suffix,
+                  xlsx_url="/mentor/reports/caseload/xlsx" + suffix,
+                  years=years, selected_year=year, year_action="/mentor/reports/caseload",
                   filter_form=None, flash=flash_from_query(request))
 
 
@@ -3446,10 +3592,12 @@ def mentor_caseload_pdf(request):
         return blocked
     conn = db.get_conn()
     try:
-        rows = _caseload_rows(conn, mentor_id=user["id"])
+        year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
+        rows = _caseload_rows(conn, mentor_id=user["id"], year_from=y_from, year_to=y_to)
     finally:
         conn.close()
-    path = pdfgen.caseload_report_pdf("Mentoring list", rows, False, f"caseload_{user['id']}")
+    path = pdfgen.caseload_report_pdf("Mentoring list", rows, False, f"caseload_{user['id']}",
+                                      period=period_label(year))
     return pdf_response(path, "mentoring-list.pdf")
 
 
@@ -3466,15 +3614,18 @@ def admin_caseload(request):
             (user["establishment_id"],),
         ).fetchall()
         mid = int(mentor_filter) if mentor_filter != "all" else None
+        year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"))
+                               show_mentor=(mentor_filter == "all"),
+                               year_from=y_from, year_to=y_to)
     finally:
         conn.close()
-    pdf_url = f"/admin/reports/caseload/pdf?mentor_id={mentor_filter}"
-    xlsx_url = f"/admin/reports/caseload/xlsx?mentor_id={mentor_filter}"
+    pdf_url = f"/admin/reports/caseload/pdf?mentor_id={mentor_filter}&year={year}"
+    xlsx_url = f"/admin/reports/caseload/xlsx?mentor_id={mentor_filter}&year={year}"
     return render("report_caseload.html", user=user, rows=rows,
                   pupils=_caseload_grouped(rows), show_mentor=(mentor_filter == "all"),
                   title="Establishment mentoring list", pdf_url=pdf_url, xlsx_url=xlsx_url, mentors=mentors,
+                  years=years, selected_year=year, year_action="/admin/reports/caseload",
                   selected_mentor=mentor_filter, flash=flash_from_query(request))
 
 
@@ -3490,12 +3641,15 @@ def admin_caseload_pdf(request):
     conn = db.get_conn()
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
+        year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"))
+                               show_mentor=(mentor_filter == "all"),
+                               year_from=y_from, year_to=y_to)
     finally:
         conn.close()
     path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, mentor_filter == "all",
-                                       f"caseload_admin_{user['establishment_id']}")
+                                       f"caseload_admin_{user['establishment_id']}",
+                                       period=period_label(year))
     return pdf_response(path, "mentoring-list.pdf")
 
 
@@ -3509,10 +3663,12 @@ def mentor_caseload_xlsx(request):
         return blocked
     conn = db.get_conn()
     try:
-        rows = _caseload_rows(conn, mentor_id=user["id"])
+        year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
+        rows = _caseload_rows(conn, mentor_id=user["id"], year_from=y_from, year_to=y_to)
     finally:
         conn.close()
-    path = pdfgen.caseload_report_xlsx(rows, False, f"caseload_{user['id']}")
+    path = pdfgen.caseload_report_xlsx(rows, False, f"caseload_{user['id']}",
+                                       period=period_label(year))
     with open(path, "rb") as f:
         data = f.read()
     return Response(
@@ -3531,11 +3687,15 @@ def admin_caseload_xlsx(request):
     conn = db.get_conn()
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
+        year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"))
+                               show_mentor=(mentor_filter == "all"),
+                               year_from=y_from, year_to=y_to)
     finally:
         conn.close()
-    path = pdfgen.caseload_report_xlsx(rows, mentor_filter == "all", f"caseload_admin_{user['establishment_id']}")
+    path = pdfgen.caseload_report_xlsx(rows, mentor_filter == "all",
+                                       f"caseload_admin_{user['establishment_id']}",
+                                       period=period_label(year))
     with open(path, "rb") as f:
         data = f.read()
     return Response(
@@ -5549,7 +5709,7 @@ def support_plan_for(conn, enrolment_id):
 
 @router.get("/report/pupil/<pupil_id>/pdf")
 def pupil_report_download(request):
-    """Every course a pupil has done, with each support plan.
+    """Every course a pupil has done, with each course summary.
 
     The per-course report answers "how did that course go". This answers "what
     do I need to know about this child", which is what a new form tutor asks."""
@@ -5564,6 +5724,10 @@ def pupil_report_download(request):
                WHERE p.id=?""", (request.params["pupil_id"],)).fetchone()
         if not pupil or not may_access_pupil(conn, request.params["pupil_id"], user):
             return Response("Not authorised for this area.", status="403 Forbidden")
+        # Whole history by default — a child's record is cumulative and that is
+        # usually what's wanted. A year can be asked for when the question is
+        # "what did we do with her in Year 8".
+        year, y_from, y_to, _ = chosen_year(request, conn, pupil["establishment_id"])
         rows = conn.execute(
             """SELECT en.id, en.start_date, en.status, en.current_week,
                       c.title, u.name AS mentor_name,
@@ -5575,9 +5739,12 @@ def pupil_report_download(request):
                FROM enrolments en
                JOIN courses c ON c.id = en.course_id
                LEFT JOIN users u ON u.id = en.mentor_id
-               WHERE en.pupil_id = ?
-               ORDER BY en.start_date, en.id""",
-            (request.params["pupil_id"],)).fetchall()
+               WHERE en.pupil_id = ?"""
+            + ("""  AND EXISTS (SELECT 1 FROM session_records sr
+                                WHERE sr.enrolment_id = en.id
+                                  AND sr.date BETWEEN ? AND ?)""" if y_from else "")
+            + " ORDER BY en.start_date, en.id",
+            ([request.params["pupil_id"]] + ([y_from, y_to] if y_from else []))).fetchall()
         courses = []
         for r in rows:
             fu = follow_up_for(conn, r["id"])
@@ -5594,7 +5761,7 @@ def pupil_report_download(request):
         conn.close()
     path = pdfgen.pupil_report_pdf(
         pupil["id"], f"{pupil['forename']} {pupil['surname']}",
-        pupil["establishment_name"], courses)
+        pupil["establishment_name"], courses, period=period_label(year))
     return pdf_response(path, "pupil-report.pdf")
 
 

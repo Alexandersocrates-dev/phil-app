@@ -719,14 +719,34 @@ def impact_report_pdf(establishment_id, establishment_name, f):
                             meta=[("School", establishment_name)])
         y = _doc_section(c, x, y, "Courses used", max_width)
         c.setFont("Helvetica", 9.5)
-        for row in courses[:14]:
-            if y < margin + 20 * mm:
+        shown = 0
+        for row in courses:
+            if shown >= 14 or y < margin + 25 * mm:
                 break
+            count_text = f"{row['n']} enrolled \u00b7 {row['completed']} completed"
+            # Measured, not counted: leave room for the figures on the right so a
+            # long course title can't run into them.
+            room = max_width - c.stringWidth(count_text, "Helvetica", 9.5) - 8 * mm
+            title = row["title"]
+            if c.stringWidth(title, "Helvetica", 9.5) > room:
+                while title and c.stringWidth(title + "\u2026", "Helvetica", 9.5) > room:
+                    title = title[:-1]
+                title += "\u2026"
             c.setFillColor(INK)
-            c.drawString(x, y, row["title"][:58])
+            c.drawString(x, y, title)
             c.setFillColor(MUTED)
-            c.drawRightString(w - margin, y,
-                              f"{row['n']} enrolled \u00b7 {row['completed']} completed")
+            c.drawRightString(w - margin, y, count_text)
+            y -= 5.5 * mm
+            shown += 1
+        # Say so rather than stopping silently: a school using every course
+        # would otherwise lose six of them with no sign they existed.
+        if shown < len(courses):
+            remaining = len(courses) - shown
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Oblique", 9)
+            c.drawString(x, y, f"and {remaining} more course"
+                               f"{'' if remaining == 1 else 's'} \u2014 the full list is "
+                               "in the mentoring list report")
             y -= 5.5 * mm
 
     _doc_footer(c, w, margin, 1)
@@ -735,7 +755,7 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     return path
 
 
-def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
+def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="All time"):
     """Everything a pupil has done, across every course.
 
     The per-course report answers "how did that course go". This answers "what
@@ -752,14 +772,16 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
     meta = [("Pupil", pupil_name)]
     if establishment_name:
         meta.append(("School", establishment_name))
-    meta += [("Courses", len(courses)), ("Issued", today_uk())]
+    meta += [("Covering", period), ("Courses", len(courses)), ("Issued", today_uk())]
     y = _doc_header(c, w, h, margin, "Pupil report", meta=meta)
     page_no = 1
 
     if not courses:
         c.setFillColor(MUTED)
         c.setFont("Helvetica-Oblique", 10)
-        c.drawString(x, y, "No courses recorded for this pupil yet.")
+        c.drawString(x, y, "No courses recorded for this pupil yet."
+                     if period == "All time" else
+                     f"No courses ran for this pupil in {period.lower()}.")
         _doc_footer(c, w, margin, page_no)
         c.showPage()
         c.save()
@@ -989,7 +1011,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
     return path
 
 
-def caseload_report_xlsx(rows, show_mentor_col, out_name):
+def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill
 
@@ -1001,12 +1023,15 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name):
     headers = ["Pupil", "Course"]
     if show_mentor_col:
         headers.append("Mentor")
-    headers += ["Started", "Scheduled end", "Progress", "Certificate", "Reflection"]
+    headers += ["Started", "Expected end", "Progress", "Certificate", "Follow-up"]
 
+    ws.append([f"Mentoring list \u2014 covering {period}"])
+    ws.append([])
     ws.append(headers)
     header_font = Font(bold=True, name="Arial")
     header_fill = PatternFill(start_color="F2EFE6", end_color="F2EFE6", fill_type="solid")
-    for cell in ws[1]:
+    ws["A1"].font = Font(bold=True, name="Arial", size=12)
+    for cell in ws[3]:
         cell.font = header_font
         cell.fill = header_fill
 
@@ -1014,14 +1039,15 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name):
         row = [r["pupil"], r["course"]]
         if show_mentor_col:
             row.append(r.get("mentor", ""))
-        row += [r["started"], r["scheduled_end"], r["progress"], r["certificate"], r["reflection"]]
+        row += [r["started"], r["scheduled_end"], r["progress"], r["certificate"],
+                r.get("follow_up", "-")]
         ws.append(row)
 
     for col_cells in ws.columns:
         length = max((len(str(c.value)) for c in col_cells if c.value is not None), default=10)
         ws.column_dimensions[col_cells[0].column_letter].width = min(max(length + 2, 12), 40)
 
-    for row in ws.iter_rows(min_row=2):
+    for row in ws.iter_rows(min_row=4):
         for cell in row:
             cell.font = Font(name="Arial")
 
@@ -1029,10 +1055,10 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name):
     return path
 
 
-def caseload_report_pdf(title, rows, show_mentor_col, out_name):
+def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time"):
     """
     rows: list of dicts with pupil, course, mentor (optional), started, scheduled_end,
-          progress, certificate, reflection
+          progress, certificate, follow_up
     """
     path = os.path.join(PDF_DIR, f"{out_name}.pdf")
     w, h = landscape(A4)
@@ -1041,30 +1067,52 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
     x = margin
     y = h - margin
 
+    # The period goes in the header of every report. A PDF found in a drawer in
+    # three years is unreadable without it, and "All time" is worth saying too.
     y = _doc_header(c, w, h, margin, "Mentoring list", meta=[
         ("Report", title),
+        ("Covering", period),
         ("Issued", today_uk()),
         ("Pupils", len(rows)),
     ])
 
-    cols = ["Pupil", "Course"]
+    # Columns are weighted, not equal: a course title needs three times the room
+    # of a date. Equal widths plus a fixed 28-character cut meant long titles
+    # ("Safeguarding: exploitation and county lines awareness") ran straight
+    # through the next column.
+    cols = [("Pupil", 2.0), ("Course", 3.4)]
     if show_mentor_col:
-        cols.append("Mentor")
-    cols += ["Started", "Scheduled end", "Progress", "Certificate", "Reflection"]
-    col_w = (w - 2 * margin) / len(cols)
+        cols.append(("Mentor", 2.0))
+    cols += [("Started", 1.3), ("Expected end", 1.5), ("Progress", 1.6),
+             ("Certificate", 1.3), ("Follow-up", 1.9)]
+    total_weight = sum(weight for _, weight in cols)
+    avail = w - 2 * margin
+    widths = [avail * weight / total_weight for _, weight in cols]
+
+    def fit(text, width, font, size):
+        """Trim to what actually fits, measured, with an ellipsis if trimmed."""
+        text = str(text)
+        if c.stringWidth(text, font, size) <= width:
+            return text
+        while text and c.stringWidth(text + "\u2026", font, size) > width:
+            text = text[:-1]
+        return text + "\u2026"
 
     def draw_row(values, bold=False, fill=None):
         nonlocal y
         if fill:
             c.setFillColor(fill)
-            c.rect(x, y - 6 * mm, w - 2 * margin, 7 * mm, fill=1, stroke=0)
-        c.setFont("Helvetica-Bold" if bold else "Helvetica", 8.5)
+            c.rect(x, y - 6 * mm, avail, 7 * mm, fill=1, stroke=0)
+        font = "Helvetica-Bold" if bold else "Helvetica"
+        c.setFont(font, 8.5)
         c.setFillColor(NAVY if bold else INK)
-        for i, val in enumerate(values):
-            c.drawString(x + i * col_w + 2, y - 4.5 * mm, str(val)[:28])
+        cx = x
+        for val, cw in zip(values, widths):
+            c.drawString(cx + 2, y - 4.5 * mm, fit(val, cw - 6, font, 8.5))
+            cx += cw
         y -= 7 * mm
 
-    draw_row(cols, bold=True, fill=HexColor("#F2EFE6"))
+    draw_row([label for label, _ in cols], bold=True, fill=HexColor("#F2EFE6"))
     c.setStrokeColor(BORDER)
     c.line(x, y + 2, w - margin, y + 2)
 
@@ -1072,11 +1120,12 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
         if y < margin + 10 * mm:
             c.showPage()
             y = h - margin
-            draw_row(cols, bold=True, fill=HexColor("#F2EFE6"))
+            draw_row([label for label, _ in cols], bold=True, fill=HexColor("#F2EFE6"))
         values = [r["pupil"], r["course"]]
         if show_mentor_col:
             values.append(r.get("mentor", ""))
-        values += [r["started"], r["scheduled_end"], r["progress"], r["certificate"], r["reflection"]]
+        values += [r["started"], r["scheduled_end"], r["progress"], r["certificate"],
+                   r.get("follow_up", "-")]
         draw_row(values)
 
     c.showPage()

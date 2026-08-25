@@ -10,9 +10,10 @@
 <div class="card dl-card">
   <div class="dl-text">
     <strong>Download the whole list</strong>
+    <span class="yr-badge">{{ 'All time' if selected_year == 'all' else selected_year }}</span>
     <p class="muted">Every pupil{{ ' and mentor' if show_mentor else '' }} on this page, one line per course:
     start date, expected end, progress, whether a certificate has been issued and where the
-    follow-up chat stands. No session notes and nothing a pupil wrote.</p>
+    follow-up chat stands. No session notes and nothing a pupil wrote &mdash; for that, use Pupil reports.</p>
   </div>
   <div class="dl-actions">
     <a class="btn btn-primary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">PDF</a>
@@ -20,9 +21,31 @@
   </div>
 </div>
 
+{# Years come from the data, so the list never offers one with nothing in it.
+   "All time" is always there and is the default. #}
+{% if years %}
+<div class="card yr-card">
+  <form method="get" action="{{ year_action }}" class="yr-form">
+    {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
+    <div class="field" style="margin:0;">
+      <label for="year">Academic year</label>
+      <select id="year" name="year" onchange="this.form.submit()">
+        <option value="all" {% if selected_year == 'all' %}selected{% endif %}>All time</option>
+        {% for label, y_from, y_to in years %}
+        <option value="{{ label }}" {% if selected_year == label %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <p class="muted yr-hint">A course belongs to the year its sessions ran in. Only years with
+    recorded sessions are listed.</p>
+  </form>
+</div>
+{% endif %}
+
 {% if mentors is defined %}
 <div class="card">
   <form method="get" action="/admin/reports/caseload">
+    <input type="hidden" name="year" value="{{ selected_year }}">
     <div class="field" style="max-width:280px;margin:0;">
       <label>Filter by mentor</label>
       <select name="mentor_id" onchange="this.form.submit()" aria-label="Choose a mentor">
@@ -77,13 +100,6 @@
         </tr>
         {% endfor %}
       </table>
-      {# The pupil report proper: every course this pupil has done, with session
-         notes. It used to be a card on the reports page that sent you here and
-         told you to find it yourself. #}
-      <p class="cl-full">
-        <a class="btn btn-secondary btn-sm" href="/report/pupil/{{ p.pupil_id }}/pdf" target="_blank" rel="noopener">Full report for {{ p.pupil }}</a>
-        <span class="muted">All {{ p.total }} course{{ '' if p.total == 1 else 's' }}, with session notes and the course summaries.</span>
-      </p>
     </div>
   </details>
   {% endfor %}
@@ -91,6 +107,14 @@
 </div>
 
 <style>
+.yr-card{padding-top:14px;padding-bottom:14px;}
+.yr-form{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;}
+.yr-form .field{max-width:220px;}
+.yr-form select{width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:8px;
+  font-size:14px;font-family:inherit;background:#fff;}
+.yr-hint{font-size:12.5px;margin:0;flex:1;min-width:220px;}
+.yr-badge{display:inline-block;font-size:11.5px;font-weight:700;background:var(--teal-light);
+  color:#04342C;border-radius:20px;padding:2px 9px;margin-left:8px;vertical-align:2px;}
 .dl-card{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .dl-text{flex:1;min-width:260px;}
 .dl-text .muted{font-size:12.5px;margin:3px 0 0;line-height:1.5;}
@@ -114,8 +138,6 @@
 .cl-table td, .cl-table th{padding:7px 10px 7px 0;vertical-align:middle;}
 /* Dates on one line: 2026-08-19 was wrapping mid-date into two rows. */
 .cl-date{white-space:nowrap;}
-.cl-full{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 0;}
-.cl-full .muted{font-size:12.5px;}
 @media (max-width:700px){
   .cl-body{padding-left:0;}
   .cl-table{width:100%;}
