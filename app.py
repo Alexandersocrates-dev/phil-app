@@ -2493,87 +2493,12 @@ def schedule_submit(request):
     return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}", "Planned dates saved.", "ok")
 
 
-@router.get("/mentor/reflection/<enrolment_id>")
-def reflection_form(request):
-    """Retired. Session 6's course summary covers the same ground, so this is
-    kept only so reflections written before it stay readable and editable."""
-    user, err = require(request, roles=["mentor", "admin"])
-    if err:
-        return err
-    blocked = require_active_subscription(user)
-    if blocked:
-        return blocked
-    conn_chk = db.get_conn()
-    try:
-        # A mentor at another school could otherwise open, autosave into and
-        # submit sessions for this pupil just by changing the id in the URL.
-        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
-            return Response("Not authorised for this area.", status="403 Forbidden")
-    finally:
-        conn_chk.close()
-    conn = db.get_conn()
-    try:
-        enrolment = conn.execute(
-            """SELECT enrolments.*, pupils.forename, pupils.surname, courses.title as course_title
-               FROM enrolments JOIN pupils ON pupils.id=enrolments.pupil_id
-               JOIN courses ON courses.id=enrolments.course_id WHERE enrolments.id=?""",
-            (request.params["enrolment_id"],),
-        ).fetchone()
-        reflection = conn.execute("SELECT * FROM completion_reflections WHERE enrolment_id=?",
-                                   (request.params["enrolment_id"],)).fetchone()
-    finally:
-        conn.close()
-    return render("reflection_form.html", user=user, enrolment=enrolment, reflection=reflection,
-                  flash=flash_from_query(request))
+# The completion reflection is gone. Session 6's course summary and next steps
+# asks the same questions of the same person at the same moment, so the two
+# forms collected the same answer twice or left one of them blank. The
+# completion_reflections table is left in place: what mentors wrote before the
+# change is still there, it is simply no longer written to or displayed.
 
-
-@router.post("/mentor/reflection/<enrolment_id>")
-def reflection_submit(request):
-    user, err = require(request, roles=["mentor", "admin"])
-    if err:
-        return err
-    blocked = require_active_subscription(user)
-    if blocked:
-        return blocked
-    conn_chk = db.get_conn()
-    try:
-        # A mentor at another school could otherwise open, autosave into and
-        # submit sessions for this pupil just by changing the id in the URL.
-        if not may_access_enrolment(conn_chk, request.params["enrolment_id"], user):
-            return Response("Not authorised for this area.", status="403 Forbidden")
-    finally:
-        conn_chk.close()
-    enrolment_id = request.params["enrolment_id"]
-    pupil_engagement = request.field("pupil_engagement", "")
-    course_effectiveness = request.field("course_effectiveness", "")
-    recommended_next_steps = request.field("recommended_next_steps", "")
-
-    conn = db.get_conn()
-    try:
-        existing = conn.execute("SELECT id FROM completion_reflections WHERE enrolment_id=?", (enrolment_id,)).fetchone()
-        now = db.now()
-        if existing:
-            conn.execute(
-                """UPDATE completion_reflections SET pupil_engagement=?, course_effectiveness=?,
-                   recommended_next_steps=?, updated_at=? WHERE enrolment_id=?""",
-                (pupil_engagement, course_effectiveness, recommended_next_steps, now, enrolment_id),
-            )
-        else:
-            conn.execute(
-                """INSERT INTO completion_reflections (enrolment_id, pupil_engagement,
-                   course_effectiveness, recommended_next_steps, completed_by, completed_at, updated_at)
-                   VALUES (?,?,?,?,?,?,?)""",
-                (enrolment_id, pupil_engagement, course_effectiveness, recommended_next_steps,
-                 user["id"], now, now),
-            )
-        pupil_id = conn.execute("SELECT pupil_id FROM enrolments WHERE id=?", (enrolment_id,)).fetchone()[0]
-        conn.commit()
-    finally:
-        conn.close()
-    return with_flash(f"/mentor/pupils/{pupil_id}", "Reflection saved.", "ok")
-
-
-# -------------------------------------------------------------------- admin --
 
 @router.get("/admin")
 def admin_home(request):

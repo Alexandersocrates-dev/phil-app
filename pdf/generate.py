@@ -852,7 +852,6 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
                        current_week, status, weeks, reflection=None, support_plan=None):
     """
     weeks: list of dicts with keys week_number, title, objective, date (session date recorded)
-    reflection: optional dict with pupil_engagement, course_effectiveness, recommended_next_steps
                 (only pass this when the viewer is entitled to see it, per spec 7.5a/7.6)
     """
     path = os.path.join(PDF_DIR, f"mentee_report_{enrolment_id}.pdf")
@@ -896,26 +895,6 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         c.drawString(x, y, "No sessions recorded yet.")
         y -= 6 * mm
 
-    if reflection:
-        if y < margin + 55 * mm:
-            _doc_footer(c, w, margin, page_no)
-            c.showPage()
-            page_no += 1
-            y = _doc_header(c, w, h, margin, "Course report",
-                            meta=[("Pupil", pupil_name), ("Course", course_title)])
-        y -= 3 * mm
-        y = _doc_section(c, x, y, "Completion reflection", max_width)
-        for label, key in (("How the pupil engaged", "pupil_engagement"),
-                            ("Whether the course suited them", "course_effectiveness"),
-                            ("Recommended next steps", "recommended_next_steps")):
-            c.setFillColor(TEAL_DARK)
-            c.setFont("Helvetica-Bold", 9.5)
-            c.drawString(x, y, label)
-            y -= 5 * mm
-            c.setFillColor(INK)
-            y = _wrap(c, reflection.get(key, "") or "-", x + 4 * mm, y, max_width - 4 * mm, size=9.5)
-            y -= 5 * mm
-
     if support_plan:
         if y < margin + 45 * mm:
             _doc_footer(c, w, margin, page_no)
@@ -937,7 +916,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
 def full_mentoring_report_pdf(title, entries, out_name):
     """
     entries: list of dicts, each with pupil_name, course_title, mentor_name, start_date,
-             current_week, status, weeks (list), reflection (dict or None)
+             current_week, status, weeks (list)
     One section per entry, all in a single PDF, for a whole-establishment bulk export
     or a single named pupil. Same restricted fields as the individual course report
     (Enrolment, Course, Week, SessionRecord.date only), plus CompletionReflection
@@ -1002,24 +981,6 @@ def full_mentoring_report_pdf(title, entries, out_name):
             c.setFont("Helvetica-Oblique", 9.5)
             c.drawString(x, y, "No sessions recorded yet.")
             y -= 6 * mm
-
-        if entry.get("reflection"):
-            if y < margin + 30 * mm:
-                c.showPage()
-                y = h - margin
-            r = entry["reflection"]
-            c.setFillColor(AMBER)
-            c.setFont("Helvetica-Bold", 10.5)
-            c.drawString(x, y, "Completion reflection")
-            y -= 5 * mm
-            for label, key in (("Engagement", "pupil_engagement"), ("Effectiveness", "course_effectiveness"),
-                                ("Next steps", "recommended_next_steps")):
-                c.setFillColor(TEAL_DARK)
-                c.setFont("Helvetica-Bold", 9)
-                c.drawString(x + 2, y, label + ":")
-                y -= 4.5 * mm
-                y = _wrap(c, r.get(key, "") or "-", x + 6 * mm, y, max_width - 6 * mm, size=9)
-                y -= 3 * mm
 
         y -= 6 * mm
 
