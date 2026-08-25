@@ -5694,39 +5694,41 @@ def session_pdf_download(request):
         conn.close()
     if not record:
         return Response("Session record not found", status="404 Not Found")
-    # Same self-heal as the certificate: the record survives, the file may not.
-    if not record["pdf_path"] or not os.path.exists(record["pdf_path"]):
-        conn = db.get_conn()
-        try:
-            ctx = conn.execute(
-                """SELECT e.id AS enrolment_id, p.forename, p.surname,
-                          c.title AS course_title, w.title AS week_title,
-                          u.name AS mentor_name
-                   FROM session_records r
-                   JOIN enrolments e ON e.id=r.enrolment_id
-                   JOIN pupils p ON p.id=e.pupil_id
-                   JOIN courses c ON c.id=e.course_id
-                   JOIN weeks w ON w.id=r.week_id
-                   LEFT JOIN users u ON u.id=r.recorded_by
-                   WHERE r.id=?""",
-                (request.params["record_id"],),
-            ).fetchone()
-            if not ctx:
-                return Response("Session record not found", status="404 Not Found")
-            enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
-                                      (ctx["enrolment_id"],)).fetchone()
-            resource_work = resource_work_for(conn, ctx["enrolment_id"], record["week_id"])
-            path = pdfgen.session_record_pdf(
-                record, enrolment, f"{ctx['forename']} {ctx['surname']}",
-                ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor",
-                resource_work=resource_work)
-            conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?",
-                         (path, request.params["record_id"]))
-            conn.commit()
-        finally:
-            conn.close()
-        return pdf_response(path, "session-record.pdf")
-    return pdf_response(record["pdf_path"], "session-record.pdf")
+    # Rebuilt on every download, like the certificate. A stored file freezes
+    # the week title, the mentor's name and the pupil's own work as they were
+    # the day it was written — a session PDF made before the session 6 rename
+    # still calls it a support plan. Editing a record already clears the path;
+    # this covers everything that changes around the record instead.
+    conn = db.get_conn()
+    try:
+        ctx = conn.execute(
+            """SELECT e.id AS enrolment_id, p.forename, p.surname,
+                      c.title AS course_title, w.title AS week_title,
+                      u.name AS mentor_name
+               FROM session_records r
+               JOIN enrolments e ON e.id=r.enrolment_id
+               JOIN pupils p ON p.id=e.pupil_id
+               JOIN courses c ON c.id=e.course_id
+               JOIN weeks w ON w.id=r.week_id
+               LEFT JOIN users u ON u.id=r.recorded_by
+               WHERE r.id=?""",
+            (request.params["record_id"],),
+        ).fetchone()
+        if not ctx:
+            return Response("Session record not found", status="404 Not Found")
+        enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
+                                  (ctx["enrolment_id"],)).fetchone()
+        resource_work = resource_work_for(conn, ctx["enrolment_id"], record["week_id"])
+        path = pdfgen.session_record_pdf(
+            record, enrolment, f"{ctx['forename']} {ctx['surname']}",
+            ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor",
+            resource_work=resource_work)
+        conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?",
+                     (path, request.params["record_id"]))
+        conn.commit()
+    finally:
+        conn.close()
+    return pdf_response(path, "session-record.pdf")
 
 
 _LEGAL_DOC_ROUTES = {
