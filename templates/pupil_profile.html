@@ -11,7 +11,7 @@
       <span class="avatar avatar-lg">{{ pupil.forename[:1] }}{{ pupil.surname[:1] }}</span>
       <div>
         <h1 style="margin:0;">{{ pupil.forename }} {{ pupil.surname }}</h1>
-        <p class="muted" style="margin:4px 0 0;">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth|uk_date }}</p>
+        <p class="muted" style="margin:4px 0 0;">{{ pupil.year_group|year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth|uk_date }}</p>
       </div>
     </div>
     <div class="pupil-actions">

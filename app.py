@@ -74,6 +74,20 @@ def uk_date_long(value):
     return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
 
 
+def year_group(value):
+    """"9" as "Year 9", but "Reception" left alone.
+
+    Schools type all sorts into this field — 9, Year 9, Reception, Nursery,
+    Sixth form — so the word is added only when the value is a bare number.
+    Anything a human has already written stays exactly as they wrote it.
+    """
+    if value is None:
+        return ""
+    text = str(value).strip()
+    return f"Year {text}" if text.isdigit() else text
+
+
+framework_jinja.filters["year_group"] = year_group
 framework_jinja.filters["uk_date"] = uk_date
 framework_jinja.filters["uk_date_long"] = uk_date_long
 framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
@@ -3258,12 +3272,18 @@ def _pupil_report_list(conn, mentor_id=None, establishment_id=None):
 
     out = []
     for p in conn.execute(query, params).fetchall():
+        # Every course, whoever mentored it. mentor_id decides which pupils a
+        # mentor sees, not which of that pupil's courses are counted: the report
+        # itself has always covered the lot, so counting only your own here made
+        # the page say "2 courses" and the PDF hand over five.
         courses = conn.execute(
-            """SELECT e.status, c.title,
+            """SELECT e.status, c.title, u.name AS mentor_name,
                       (SELECT max(r.date) FROM session_records r WHERE r.enrolment_id = e.id) AS last_session
-               FROM enrolments e JOIN courses c ON c.id = e.course_id
-               WHERE e.pupil_id=?""" + (" AND e.mentor_id=?" if mentor_id else ""),
-            (p["id"], mentor_id) if mentor_id else (p["id"],)).fetchall()
+               FROM enrolments e
+               JOIN courses c ON c.id = e.course_id
+               LEFT JOIN users u ON u.id = e.mentor_id
+               WHERE e.pupil_id=?""",
+            (p["id"],)).fetchall()
         if not courses:
             continue
         sessions = conn.execute(
@@ -3282,6 +3302,9 @@ def _pupil_report_list(conn, mentor_id=None, establishment_id=None):
             "sessions": sessions,
             "last_session": uk_date(max(dates)) if dates else None,
             "titles": [c["title"] for c in courses],
+            # Named when more than one person has worked with this child, so it
+            # is clear the report reaches beyond whoever is looking at it.
+            "mentors": sorted({c["mentor_name"] for c in courses if c["mentor_name"]}),
         })
     return out
 
@@ -3304,9 +3327,9 @@ def mentor_pupil_reports(request):
                   years=years, selected_year=year, year_action="/mentor/reports/pupils",
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
-                        "done with you, session by session, with the goals they set and the "
-                        "course summaries written for staff.",
-                  scope="Pupils you mentor.",
+                        "done at this school, whoever mentored it, session by session, with "
+                        "the goals they set and the course summaries written for staff.",
+                  scope="Pupils you mentor, including courses run by other mentors.",
                   flash=flash_from_query(request))
 
 
@@ -3328,8 +3351,8 @@ def admin_pupil_reports(request):
                   years=years, selected_year=year, year_action="/admin/reports/pupils",
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
-                        "done, session by session, with the goals they set and the course "
-                        "summaries written for staff.",
+                        "done at this school, whoever mentored it, session by session, with "
+                        "the goals they set and the course summaries written for staff.",
                   scope="Every pupil at your establishment, whoever mentors them.",
                   flash=flash_from_query(request))
 

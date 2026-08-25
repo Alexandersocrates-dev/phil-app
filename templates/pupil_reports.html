@@ -32,7 +32,7 @@
 <div class="card pr-note">
   <strong>What&rsquo;s in a pupil report</strong>
   <ul>
-    <li>Every course, with dates, progress and whether a certificate was issued</li>
+    <li>Every course at this school, whoever mentored it, with dates, progress and whether a certificate was issued</li>
     <li>Each session: what happened, the goal the pupil set, and the safeguarding note</li>
     <li>The course summary and next steps written for staff at the end of each course</li>
     <li>The follow-up chat, where one has been recorded</li>
@@ -58,7 +58,7 @@
   <div class="pr-row" data-name="{{ p.name|lower }}">
     <div class="pr-who">
       <span class="pr-name">{{ p.name }}{% if p.archived %} <span class="badge badge-muted">Archived</span>{% endif %}</span>
-      <span class="pr-meta">{{ p.year_group }}{% if p.form_class %} &middot; {{ p.form_class }}{% endif %}</span>
+      <span class="pr-meta">{{ p.year_group|year_group }}{% if p.form_class %} &middot; {{ p.form_class }}{% endif %}</span>
       <span class="pr-meta">
         {{ p.total }} course{{ '' if p.total == 1 else 's' }}
         {%- if p.active %} &middot; {{ p.active }} active{% endif -%}
@@ -67,6 +67,9 @@
         {%- if p.last_session %} &middot; last seen {{ p.last_session }}{% endif %}
       </span>
       <span class="pr-courses">{{ p.titles|join(' &middot; ')|safe }}</span>
+      {# Always named, one mentor or several: who has worked with this child is
+         part of the picture, not just an exception worth flagging. #}
+      {% if p.mentors %}<span class="pr-meta">Mentored by {{ p.mentors|join(', ') }}</span>{% endif %}
     </div>
     <div class="pr-actions">
       <a class="btn btn-primary btn-sm" href="/report/pupil/{{ p.id }}/pdf?year={{ selected_year }}" target="_blank" rel="noopener">Download report</a>
