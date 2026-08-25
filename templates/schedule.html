@@ -99,16 +99,23 @@
     <div class="card td-panel">
       <span class="td-eyebrow">Roll-call</span>
       <h2>Your pupils</h2>
-      <p class="td-panel-note">Who you&rsquo;ve sat down with this week.</p>
+      <p class="td-panel-note">By person rather than by course. Longest since seen, first.</p>
       <ul class="td-roll">
         {% for p in pupils %}
-        <li class="{{ 'is-seen' if p.seen else '' }}">
-          <span class="light light-{{ 'green' if p.seen else 'amber' }}" aria-hidden="true"></span>
+        <li>
+          <span class="light light-{{ p.light }}" aria-hidden="true"></span>
           <a href="/mentor/pupils/{{ p.pupil_id }}">{{ p.name }}</a>
-          <span class="td-roll-meta">{{ p.status }}</span>
+          <span class="td-roll-meta td-roll-{{ p.light }}">{{ p.status }}</span>
         </li>
         {% endfor %}
       </ul>
+      {# The colours are only useful if you know what they mean, and a mentor
+         shouldn't have to work it out from the pattern. #}
+      <dl class="td-legend">
+        <div><span class="light light-green"></span><dt>Green</dt><dd>seen this week</dd></div>
+        <div><span class="light light-amber"></span><dt>Amber</dt><dd>not yet this week</dd></div>
+        <div><span class="light light-red"></span><dt>Red</dt><dd>not for a fortnight</dd></div>
+      </dl>
     </div>
   </aside>
   {% endif %}
@@ -212,6 +219,13 @@
 .td-roll li:first-child{border-top:none;}
 .td-roll a{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .td-roll-meta{font-size:11.5px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+.td-roll-red{color:#8A2614;font-weight:600;}
+
+.td-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:13px 0 0;padding:11px 0 0;
+  border-top:1px solid var(--border);}
+.td-legend > div{display:flex;align-items:center;gap:6px;min-width:0;}
+.td-legend dt{font-size:11px;font-weight:700;color:var(--navy);}
+.td-legend dd{font-size:11px;color:var(--muted);margin:0;white-space:nowrap;}
 
 .light{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0;}
 .light-green{background:#1B7A4B;}

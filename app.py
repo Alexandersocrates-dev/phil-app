@@ -1149,12 +1149,23 @@ def schedule_for(conn, user, today=None):
     pupil_rows = sorted(pupils.values(), key=lambda p: (p["seen_courses"] > 0, p["name"]))
     for p in pupil_rows:
         p["seen"] = p["seen_courses"] > 0
+        gap = days_between(p["last_session"]) if p["last_session"] else None
+        # Three states, not two. "Not this week" and "not since June" are very
+        # different problems, and a single amber made them look identical. The
+        # 14-day threshold is the one the course groups already use, so the whole
+        # page means the same thing by "slipping".
         if p["seen"]:
+            p["light"] = "green"
             p["status"] = "seen " + ago(p["last_session"])
+        elif gap is not None and gap >= 14:
+            p["light"] = "red"
+            p["status"] = "last seen " + ago(p["last_session"])
         elif p["last_session"]:
+            p["light"] = "amber"
             p["status"] = "last seen " + ago(p["last_session"])
         else:
-            p["status"] = "not started"
+            p["light"] = "red"
+            p["status"] = "no sessions yet"
 
     summary = {
         "total_courses": total_courses,
