@@ -1026,10 +1026,15 @@ def schedule_for(conn, user, today=None):
              AND (EXISTS (SELECT 1 FROM enrolments a
                           WHERE a.pupil_id = e.pupil_id AND a.status = 'active'
                             AND a.mentor_id = ?)
-                  OR (e.mentor_id = ?
-                      AND NOT EXISTS (SELECT 1 FROM enrolments a
-                                      WHERE a.pupil_id = e.pupil_id
-                                        AND a.status = 'active')))
+                  OR (NOT EXISTS (SELECT 1 FROM enrolments a
+                                  WHERE a.pupil_id = e.pupil_id
+                                    AND a.status = 'active')
+                      AND (e.mentor_id = ?
+                           -- Or the mentor who ran it has left: the chat falls
+                           -- to whoever is still here rather than to nobody.
+                           OR EXISTS (SELECT 1 FROM users u
+                                      WHERE u.id = e.mentor_id
+                                        AND u.status != 'active'))))
            ORDER BY e.review_date""",
         (user["id"], user["id"])).fetchall()
     for row in reviews:
@@ -3103,6 +3108,32 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
            WHERE p.establishment_id = ? AND e.review_date IS NOT NULL
              AND e.review_done = 0 AND e.review_date < ?""",
         (establishment_id, datetime.date.today().isoformat())).fetchone()[0]
+
+    # What the follow-up chats found. Counted over completed courses in the
+    # period, so the denominator is visible and the reader can see how much the
+    # proportion rests on.
+    figures["followups_due"] = conn.execute(
+        """SELECT COUNT(*) FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND e.review_date IS NOT NULL""" + enrol_filter,
+        tuple([establishment_id] + enrol_args)).fetchone()[0]
+    figures["followups_done"] = conn.execute(
+        """SELECT COUNT(*) FROM follow_ups fu
+           JOIN enrolments e ON e.id = fu.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ?""" + enrol_filter,
+        tuple([establishment_id] + enrol_args)).fetchone()[0]
+    figures["followups_helped"] = conn.execute(
+        """SELECT COUNT(*) FROM follow_ups fu
+           JOIN enrolments e ON e.id = fu.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND fu.helped IN ('better','some')""" + enrol_filter,
+        tuple([establishment_id] + enrol_args)).fetchone()[0]
+    figures["followups_sustained"] = conn.execute(
+        """SELECT COUNT(*) FROM follow_ups fu
+           JOIN enrolments e ON e.id = fu.enrolment_id
+           JOIN pupils p ON p.id = e.pupil_id
+           WHERE p.establishment_id = ? AND fu.behaviour = 'no'""" + enrol_filter,
+        tuple([establishment_id] + enrol_args)).fetchone()[0]
 
     figures["plans_written"] = conn.execute(
         """SELECT COUNT(DISTINCT r.enrolment_id) FROM session_records r
@@ -5561,7 +5592,15 @@ def may_handle_review(conn, enrolment, user):
         (enrolment["pupil_id"],)).fetchone()
     if held_by_someone:
         return False
-    return enrolment["mentor_id"] == user["id"]
+    if enrolment["mentor_id"] == user["id"]:
+        return True
+    # Nobody currently mentors this pupil and the mentor who ran the course has
+    # left, so the follow-up would sit with an account that cannot sign in. It
+    # falls to an active mentor at the school rather than to nobody; admins are
+    # already covered above.
+    owner = conn.execute("SELECT status FROM users WHERE id=?",
+                         (enrolment["mentor_id"],)).fetchone()
+    return bool(owner and owner["status"] != "active")
 
 
 def support_plan_for(conn, enrolment_id):

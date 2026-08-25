@@ -12,6 +12,12 @@ import os
 import datetime
 
 
+# Below this many completed follow-ups the impact report gives counts but no
+# percentage. A proportion from two or three courses reads as a finding when it
+# is really a coincidence, and a head presenting it would be caught out.
+FOLLOWUP_MIN_FOR_SHARE = 5
+
+
 def uk(value):
     """2026-09-07 as 07/09/2026. Anything unparseable comes back untouched, so a
     half-filled record still prints rather than raising mid-document."""
@@ -673,9 +679,33 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     y = _doc_section(c, x, y, "Follow-through", max_width)
     stat("course summaries written", f.get("plans_written") or 0,
          "the session 6 write-up other staff can pick up and use")
+
+    # What the follow-up chats found. Below FOLLOWUP_MIN_FOR_SHARE the counts are
+    # shown without a proportion: "100%" off two courses is a figure that falls
+    # apart the moment a governor asks how many that was, and the honest answer
+    # is that it is too early to say.
+    done = f.get("followups_done") or 0
+    due = f.get("followups_due") or 0
+    if due:
+        stat("follow-up chats completed", f"{done} of {due}",
+             "a sit-down with the pupil a few weeks after the course ended")
+    if done:
+        sustained = f.get("followups_sustained") or 0
+        helped = f.get("followups_helped") or 0
+        if done >= FOLLOWUP_MIN_FOR_SHARE:
+            stat("behaviour no longer showing", f"{sustained} of {done}",
+                 f"{round(sustained * 100 / done)}% of courses followed up")
+            stat("mentor judged the course helped", f"{helped} of {done}",
+                 f"{round(helped * 100 / done)}% rated better or some change")
+        else:
+            stat("behaviour no longer showing", f"{sustained} of {done}",
+                 "too few follow-ups yet to give a meaningful percentage")
+            stat("mentor judged the course helped", f"{helped} of {done}",
+                 "rated better or some change")
+
     overdue = f.get("reviews_overdue") or 0
-    stat("review points overdue", overdue,
-         "agreed follow-ups now past their date" if overdue else "nothing outstanding")
+    stat("follow-up chats overdue", overdue,
+         "past the date agreed with the pupil" if overdue else "nothing outstanding")
     stat("sessions with a safeguarding note", f.get("safeguarding") or 0,
          "recorded by mentors; Phil takes no action on these")
     y -= 2 * mm
