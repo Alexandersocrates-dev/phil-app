@@ -2,18 +2,28 @@
 {% block title %}{{ title }} - Phil{% endblock %}
 {% block content %}
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
-<div class="flex-between">
-  <h1>{{ title }}</h1>
-  <div class="flex-row gap-2">
-    <a class="btn btn-secondary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">Download PDF</a>
-    {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Download Excel</a>{% endif %}
+<h1>{{ title }}</h1>
+
+{# The buttons used to sit unlabelled beside the heading, so it wasn't clear
+   whether they downloaded the whole list or whatever row you'd last looked at.
+   Say what's in them. #}
+<div class="card dl-card">
+  <div class="dl-text">
+    <strong>Download the whole list</strong>
+    <p class="muted">Every pupil{{ ' and mentor' if show_mentor else '' }} on this page, one line per course:
+    start date, expected end, progress, whether a certificate has been issued and where the
+    follow-up chat stands. No session notes and nothing a pupil wrote.</p>
+  </div>
+  <div class="dl-actions">
+    <a class="btn btn-primary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">PDF</a>
+    {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Excel</a>{% endif %}
   </div>
 </div>
 
 {% if mentors is defined %}
 <div class="card">
   <form method="get" action="/admin/reports/caseload">
-    <div class="field" style="max-width:280px;">
+    <div class="field" style="max-width:280px;margin:0;">
       <label>Filter by mentor</label>
       <select name="mentor_id" onchange="this.form.submit()" aria-label="Choose a mentor">
         <option value="all" {% if selected_mentor == 'all' %}selected{% endif %}>All mentors</option>
@@ -27,33 +37,88 @@
 {% endif %}
 
 <div class="card">
-  {% if not rows %}
+  {% if not pupils %}
     <p class="muted">No enrolments yet.</p>
   {% else %}
-  <table>
-    <tr>
-      <th>Pupil</th><th>Course</th>{% if show_mentor %}<th>Mentor</th>{% endif %}
-      <th>Started</th><th>Expected end</th><th>Progress</th><th>Certificate</th><th>Follow-up</th><th></th>
-    </tr>
-    {% for r in rows %}
-    <tr>
-      <td>{{ r.pupil }}</td>
-      <td>{{ r.course }}</td>
-      {% if show_mentor %}<td>{{ r.mentor }}</td>{% endif %}
-      <td>{{ r.started }}</td>
-      <td>{{ r.scheduled_end }}</td>
-      <td>{{ r.progress }}</td>
-      <td>{{ r.certificate }}</td>
-      {# Same states as the to-do list: done green, overdue red, booked neutral. #}
-      <td>{% if r.follow_up == 'Done' %}<span class="badge badge-teal">Done</span>
-        {%- elif r.follow_up == 'Overdue' %}<span class="badge badge-red">Overdue</span>
-        {%- elif r.follow_up == 'Not booked' %}<span class="badge badge-amber">Not booked</span>
-        {%- elif r.follow_up and r.follow_up != '-' %}{{ r.follow_up }}
-        {%- else %}-{% endif %}</td>
-      <td><a href="/report/mentee/{{ r.enrolment_id }}">View</a></td>
-    </tr>
-    {% endfor %}
-  </table>
+  {# One row per pupil, courses inside. A pupil on five courses filled five lines
+     with the same name, which reads as five children. #}
+  {% for p in pupils %}
+  <details class="cl-pupil" {% if pupils|length == 1 %}open{% endif %}>
+    <summary class="cl-summary">
+      <span class="cl-name">{{ p.pupil }}</span>
+      <span class="cl-counts">
+        {%- if p.active %}<span class="badge badge-teal">{{ p.active }} active</span>{% endif -%}
+        {%- if p.completed %} <span class="badge badge-muted">{{ p.completed }} done</span>{% endif -%}
+        {%- if p.needs_attention %} <span class="badge badge-red">{{ p.needs_attention }} follow-up{{ '' if p.needs_attention == 1 else 's' }} outstanding</span>{% endif -%}
+      </span>
+      <span class="cl-toggle">Show courses</span>
+    </summary>
+
+    <div class="cl-body">
+      <table class="cl-table">
+        <tr>
+          <th>Course</th>{% if show_mentor %}<th>Mentor</th>{% endif %}
+          <th>Started</th><th>Expected end</th><th>Progress</th><th>Certificate</th><th>Follow-up</th><th></th>
+        </tr>
+        {% for r in p.courses %}
+        <tr>
+          <td>{{ r.course }}</td>
+          {% if show_mentor %}<td>{{ r.mentor }}</td>{% endif %}
+          <td class="cl-date">{{ r.started }}</td>
+          <td class="cl-date">{{ r.scheduled_end }}</td>
+          <td>{{ r.progress }}</td>
+          <td>{{ r.certificate }}</td>
+          <td>{% if r.follow_up == 'Done' %}<span class="badge badge-teal">Done</span>
+            {%- elif r.follow_up == 'Overdue' %}<span class="badge badge-red">Overdue</span>
+            {%- elif r.follow_up == 'Not booked' %}<span class="badge badge-amber">Not booked</span>
+            {%- elif r.follow_up and r.follow_up != '-' %}{{ r.follow_up }}
+            {%- else %}-{% endif %}</td>
+          <td><a href="/report/mentee/{{ r.enrolment_id }}">This course</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      {# The pupil report proper: every course this pupil has done, with session
+         notes. It used to be a card on the reports page that sent you here and
+         told you to find it yourself. #}
+      <p class="cl-full">
+        <a class="btn btn-secondary btn-sm" href="/report/pupil/{{ p.pupil_id }}/pdf" target="_blank" rel="noopener">Full report for {{ p.pupil }}</a>
+        <span class="muted">All {{ p.total }} course{{ '' if p.total == 1 else 's' }}, with session notes and the course summaries.</span>
+      </p>
+    </div>
+  </details>
+  {% endfor %}
   {% endif %}
 </div>
+
+<style>
+.dl-card{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.dl-text{flex:1;min-width:260px;}
+.dl-text .muted{font-size:12.5px;margin:3px 0 0;line-height:1.5;}
+.dl-actions{display:flex;gap:8px;flex-shrink:0;}
+
+.cl-pupil{border-top:1px solid var(--border);}
+.cl-pupil:first-of-type{border-top:none;}
+.cl-summary{display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;padding:11px 0;}
+.cl-summary::-webkit-details-marker{display:none;}
+.cl-summary::before{content:"\25B8";color:var(--teal-darker);font-size:13px;
+  transition:transform .12s ease;flex-shrink:0;}
+.cl-pupil[open] .cl-summary::before{transform:rotate(90deg);}
+.cl-name{font-family:var(--font-head);font-weight:700;color:var(--navy);flex:1;min-width:0;}
+.cl-counts{display:flex;gap:5px;flex-wrap:wrap;}
+.cl-toggle{font-size:12px;font-weight:600;color:var(--teal-darker);white-space:nowrap;
+  min-width:88px;text-align:right;}
+.cl-pupil[open] .cl-toggle{font-size:0;}
+.cl-pupil[open] .cl-toggle::after{content:"Hide courses";font-size:12px;}
+.cl-body{padding:0 0 12px 22px;}
+.cl-table{width:calc(100% - 22px);}
+.cl-table td, .cl-table th{padding:7px 10px 7px 0;vertical-align:middle;}
+/* Dates on one line: 2026-08-19 was wrapping mid-date into two rows. */
+.cl-date{white-space:nowrap;}
+.cl-full{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0 0;}
+.cl-full .muted{font-size:12.5px;}
+@media (max-width:700px){
+  .cl-body{padding-left:0;}
+  .cl-table{width:100%;}
+}
+</style>
 {% endblock %}

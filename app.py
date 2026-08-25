@@ -3221,10 +3221,9 @@ def mentor_reports_chooser(request):
     if blocked:
         return blocked
     cards = [
-        {"title": "Your mentoring list", "desc": "Every pupil you mentor, one file \u00b7 progress only, no notes.",
+        {"title": "Your mentoring list", "desc": "Every pupil you mentor and where each course is up to. "
+                                                "Download the whole list, or a full report for one pupil.",
          "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
-        {"title": "Pupil report", "desc": "One pupil's full report, courses, progress and session notes. Open your mentoring list below, then pick a pupil to view.",
-         "href": "/mentor/reports/caseload", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards,
                   intro="Download your mentoring list, or a full report for one of your pupils.",
@@ -3332,7 +3331,9 @@ def mentee_report_pdf_download(request):
 def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False):
     query = """
         SELECT enrolments.id, enrolments.start_date, enrolments.current_week, enrolments.status,
-               pupils.forename, pupils.surname, courses.title as course_title, users.name as mentor_name,
+               enrolments.review_date, enrolments.review_done,
+               pupils.id as pupil_id, pupils.forename, pupils.surname,
+               courses.title as course_title, users.name as mentor_name,
                enrolments.id as enrolment_id
         FROM enrolments
         JOIN pupils ON pupils.id = enrolments.pupil_id
@@ -3355,23 +3356,64 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
         start = datetime.date.fromisoformat(r["start_date"])
         scheduled_end = (start + datetime.timedelta(days=35)).isoformat()
         cert = conn.execute("SELECT id FROM certificates WHERE enrolment_id=?", (r["id"],)).fetchone()
-        reflection = conn.execute("SELECT id FROM completion_reflections WHERE enrolment_id=?", (r["id"],)).fetchone()
         progress = ("Completed" if r["status"] == "completed"
                     else f"Week {r['current_week']} of {SESSIONS_PER_COURSE}")
+        # The reflection column asked for something retired, so it read "Needed"
+        # for ever on every finished course. Replaced with the follow-up, which
+        # is the thing that actually is outstanding after a course ends.
+        if r["status"] != "completed":
+            follow_up = "-"
+        elif r["review_done"]:
+            follow_up = "Done"
+        elif not r["review_date"]:
+            follow_up = "Not booked"
+        else:
+            overdue_after = review_overdue_from(r["review_date"])
+            today_iso = datetime.date.today().isoformat()
+            follow_up = ("Overdue" if overdue_after and today_iso > overdue_after
+                         else "Due " + uk_date(r["review_date"]))
         row = {
             "pupil": f"{r['forename']} {r['surname']}",
             "course": r["course_title"],
-            "started": r["start_date"],
-            "scheduled_end": scheduled_end,
+            "started": uk_date(r["start_date"]),
+            "scheduled_end": uk_date(scheduled_end),
             "progress": progress,
             "certificate": "Issued" if cert else "Not yet",
-            "reflection": ("Done" if reflection else "Needed") if r["status"] == "completed" else "-",
+            "follow_up": follow_up,
             "enrolment_id": r["enrolment_id"],
+            "pupil_id": r["pupil_id"],
+            "status": r["status"],
         }
         if show_mentor:
             row["mentor"] = r["mentor_name"]
         result.append(row)
     return result
+
+
+def _caseload_grouped(rows):
+    """The same rows, one entry per pupil.
+
+    A pupil on five courses filled five lines with the same name, which reads as
+    five children — the same thing that was wrong with the reassign page and the
+    mentoring list. The flat rows still go to the PDF and the spreadsheet, where
+    a row per course is what you want for sorting and filtering.
+    """
+    pupils, by_id = [], {}
+    for row in rows:
+        group = by_id.get(row["pupil_id"])
+        if group is None:
+            group = {"pupil": row["pupil"], "pupil_id": row["pupil_id"], "courses": []}
+            by_id[row["pupil_id"]] = group
+            pupils.append(group)
+        group["courses"].append(row)
+    for group in pupils:
+        group["total"] = len(group["courses"])
+        group["active"] = sum(1 for c in group["courses"] if c["status"] == "active")
+        group["completed"] = sum(1 for c in group["courses"] if c["status"] == "completed")
+        group["needs_attention"] = sum(
+            1 for c in group["courses"]
+            if c["follow_up"] in ("Overdue", "Not booked"))
+    return pupils
 
 
 @router.get("/mentor/reports/caseload")
@@ -3387,7 +3429,8 @@ def mentor_caseload(request):
         rows = _caseload_rows(conn, mentor_id=user["id"])
     finally:
         conn.close()
-    return render("report_caseload.html", user=user, rows=rows, show_mentor=False,
+    return render("report_caseload.html", user=user, rows=rows,
+                  pupils=_caseload_grouped(rows), show_mentor=False,
                   title="My mentoring list", pdf_url="/mentor/reports/caseload/pdf",
                   xlsx_url="/mentor/reports/caseload/xlsx",
                   filter_form=None, flash=flash_from_query(request))
@@ -3429,7 +3472,8 @@ def admin_caseload(request):
         conn.close()
     pdf_url = f"/admin/reports/caseload/pdf?mentor_id={mentor_filter}"
     xlsx_url = f"/admin/reports/caseload/xlsx?mentor_id={mentor_filter}"
-    return render("report_caseload.html", user=user, rows=rows, show_mentor=(mentor_filter == "all"),
+    return render("report_caseload.html", user=user, rows=rows,
+                  pupils=_caseload_grouped(rows), show_mentor=(mentor_filter == "all"),
                   title="Establishment mentoring list", pdf_url=pdf_url, xlsx_url=xlsx_url, mentors=mentors,
                   selected_mentor=mentor_filter, flash=flash_from_query(request))
 
