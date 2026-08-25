@@ -51,6 +51,31 @@ PUPIL_SESSIONS = 5
 
 framework_jinja.globals["static_v"] = _static_version()
 framework_jinja.globals["sessions_total"] = SESSIONS_PER_COURSE
+
+
+def uk_date(value):
+    """2026-09-07 as 07/09/2026. Anything unparseable is returned untouched."""
+    if not value:
+        return ""
+    try:
+        return datetime.date.fromisoformat(str(value)[:10]).strftime("%d/%m/%Y")
+    except (TypeError, ValueError):
+        return value
+
+
+def uk_date_long(value):
+    """2026-09-07 as 7 September 2026, for headings and certificates."""
+    if not value:
+        return ""
+    try:
+        d = datetime.date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return value
+    return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
+
+
+framework_jinja.filters["uk_date"] = uk_date
+framework_jinja.filters["uk_date_long"] = uk_date_long
 framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
 RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
 _resource_packs_cache = None
@@ -5041,6 +5066,11 @@ def pretty_week(iso):
     return "w/c %d %s" % (d.day, d.strftime("%b"))
 
 
+def uk_date_short(iso):
+    """Kept for anywhere a bare numeric date is wanted: 07/09/2026."""
+    return uk_date(iso)
+
+
 def review_week_of(date_string):
     """The Monday of the week a review falls in. Schools plan in weeks, not days."""
     try:
@@ -5483,7 +5513,18 @@ def may_access_enrolment(conn, enrolment_id, user):
         return True
     if role in ("admin", "mentor") and row["establishment_id"] == user["establishment_id"]:
         # A mentor sees their own pupils; an admin sees the whole establishment.
-        return role == "admin" or row["mentor_id"] == user["id"]
+        if role == "admin" or row["mentor_id"] == user["id"]:
+            return True
+        # Also the pupil's current mentor, even on a course someone else ran.
+        # Reassignment moves the active courses and leaves the finished ones
+        # attributed to whoever delivered them, so without this the new mentor
+        # sees a certificate button on the pupil's record and is refused when
+        # they press it — may_access_pupil grants on any involvement while this
+        # demanded ownership of the enrolment itself.
+        return bool(conn.execute(
+            """SELECT 1 FROM enrolments WHERE pupil_id=? AND mentor_id=?
+                 AND status='active' LIMIT 1""",
+            (row["pupil_id"], user["id"])).fetchone())
     if role == "parent_carer":
         link = conn.execute(
             "SELECT 1 FROM pupil_parent_links WHERE parent_user_id = ? AND pupil_id = ?",

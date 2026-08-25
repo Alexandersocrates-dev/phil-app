@@ -11,7 +11,7 @@
       <span class="avatar avatar-lg">{{ pupil.forename[:1] }}{{ pupil.surname[:1] }}</span>
       <div>
         <h1 style="margin:0;">{{ pupil.forename }} {{ pupil.surname }}</h1>
-        <p class="muted" style="margin:4px 0 0;">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth }}</p>
+        <p class="muted" style="margin:4px 0 0;">{{ pupil.year_group }}{% if pupil.form_class %} &middot; {{ pupil.form_class }}{% endif %} &middot; DOB {{ pupil.date_of_birth|uk_date }}</p>
       </div>
     </div>
     <div class="pupil-actions">
@@ -77,8 +77,8 @@
       <span class="review-kicker">Follow-up chat</span>
       <strong>
         {%- if e.review_done %}Done
-        {%- elif overdue %}Overdue &middot; was due the week of {{ review_week_of(e.review_date) }}
-        {%- else %}Due the week of {{ review_week_of(e.review_date) }}{% endif -%}
+        {%- elif overdue %}Overdue &middot; was due the week of {{ review_week_of(e.review_date)|uk_date }}
+        {%- else %}Due the week of {{ review_week_of(e.review_date)|uk_date }}{% endif -%}
       </strong>
       <span class="review-note">{% if e.review_note %}{{ e.review_note }} &middot; {% endif %}A sit-down with {{ pupil.forename }} weeks after the course: has it helped, is the behaviour still showing?</span>
     </div>
@@ -98,7 +98,7 @@
   {% set f = item.follow_up %}
   <div class="fu-record">
     <div class="fu-record-head">
-      <strong>Follow-up chat &middot; {{ f.date }}</strong>
+      <strong>Follow-up chat &middot; {{ f.date|uk_date }}</strong>
       {% if f.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% endif %}
     </div>
     <p class="fu-record-line">
@@ -122,7 +122,7 @@
   <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; {%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
 {%- elif e.current_week == 0 %}Not started &middot; begin session 1
 {%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the summary and next steps
-{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned }}{% endif %}</p>
+{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date|uk_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned|uk_date }}{% endif %}</p>
 
   {% if e.status == 'active' %}
     <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record week {{ e.current_week + 1 }} session</a>
@@ -155,7 +155,7 @@
            where a mentor looks before the next session. #}
         {% if r.reflection_goal %}<span class="record-goal">Goal: {{ r.reflection_goal }}</span>{% endif %}
       </td>
-      <td>{{ r.date }}</td>
+      <td>{{ r.date|uk_date }}</td>
       <td>{% if r.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
       <td class="record-actions">
         <a href="/mentor/session/record/{{ r.id }}/edit">Edit</a>

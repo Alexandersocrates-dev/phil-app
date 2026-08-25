@@ -137,7 +137,7 @@
 {% for r in completed_records %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
 <div style="width:24px;height:24px;border-radius:50%;background:var(--teal-light);color:var(--teal-darker);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{{ r.wn }}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">{% if r.wn == sessions_total %}{{ r.week_title }}{% else %}Session {{ r.wn }} &middot; {{ r.week_title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date }}</p></div>
+<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">{% if r.wn == sessions_total %}{{ r.week_title }}{% else %}Session {{ r.wn }} &middot; {{ r.week_title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date|uk_date }}</p></div>
 <a class="btn btn-secondary btn-sm" href="/mentor/session/record/{{ r.id }}/edit">Edit</a>
 </div>
 {% endfor %}
@@ -192,7 +192,7 @@
 
 {% if editing_record %}
 <div class="card" style="border-color:var(--amber-dark);background:var(--amber-light);">
-  <p style="margin:0;font-size:13px;color:#412402;"><strong>{% if week.staff_only %}Editing the course summary{% else %}Editing session {{ week.week_number }}{% endif %}</strong> &middot; recorded {{ editing_record.date }}. Saving updates this record only; the course stays where it is.</p>
+  <p style="margin:0;font-size:13px;color:#412402;"><strong>{% if week.staff_only %}Editing the course summary{% else %}Editing session {{ week.week_number }}{% endif %}</strong> &middot; recorded {{ editing_record.date|uk_date }}. Saving updates this record only; the course stays where it is.</p>
 </div>
 {% endif %}
 <p style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 10px;">Session flow{% if week.timing %} <span style="text-transform:none;letter-spacing:0;font-weight:400;">&middot; about {{ (week.timing.checkin|default(0)) + (week.timing.input|default(0)) + (week.timing.activity|default(0)) + (week.timing.reflect|default(0)) + (week.timing.home|default(0)) }} min total</span>{% endif %}</p>

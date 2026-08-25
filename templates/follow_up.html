@@ -18,7 +18,7 @@
 <div class="card fu-blocked">
   <h2>Not yet</h2>
   <p>A follow-up needs at least a fortnight after the last session, so there&rsquo;s a real
-  stretch of time to look back on. This one can be recorded from <strong>{{ earliest }}</strong>.</p>
+  stretch of time to look back on. This one can be recorded from <strong>{{ earliest|uk_date }}</strong>.</p>
   <p class="muted" style="margin:0;">It stays on your to-do list until then.</p>
 </div>
 {% else %}
@@ -29,7 +29,7 @@
       <label for="date">Date of the chat</label>
       <input type="date" id="date" name="date" value="{{ today }}"
              {% if earliest %}min="{{ earliest }}"{% endif %} max="{{ today }}" required>
-      {% if earliest %}<p class="fu-hint">Can&rsquo;t be earlier than {{ earliest }}, a fortnight after the last session.</p>{% endif %}
+      {% if earliest %}<p class="fu-hint">Can&rsquo;t be earlier than {{ earliest|uk_date }}, a fortnight after the last session.</p>{% endif %}
     </div>
   </div>
 
