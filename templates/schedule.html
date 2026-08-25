@@ -1,207 +1,237 @@
 {% extends "base.html" %}
 {% block title %}To-do list - Phil{% endblock %}
 {% block content %}
-<h1>To-do list</h1>
 
-{% if summary.pupils %}
-{# Counted in pupils, not courses: one child on five courses is one person to
-   find time for, and "0 of 5" read as five children. #}
-<div class="sched-strip {% if summary.attention %}sched-strip-late{% endif %}">
-  <div class="sched-strip-top">
-    <strong>{{ summary.pupils_seen }} of {{ summary.pupils }}</strong>
-    <span>pupil{{ '' if summary.pupils == 1 else 's' }} seen this week</span>
-    <div class="sched-bar" aria-hidden="true">
-      <div class="sched-bar-fill" style="width:{{ (summary.pupils_seen / summary.pupils * 100)|round|int }}%"></div>
+<header class="td-head">
+  <span class="td-eyebrow">This week</span>
+  <h1>To-do list</h1>
+  <p class="td-lede">Everything waiting on you: sessions to run, course summaries to write and
+  follow-up chats booked in. Courses run weekly, so anything not yet seen this week is here.</p>
+</header>
+
+<div class="td-layout">
+  <main class="td-main">
+    {% for b in buckets %}
+    {% if b.rows or b.always %}
+    {# Done this week is collapsed: reassurance, not work. #}
+    <details class="card td-group td-{{ b.key }}" {% if b.key != 'seen' %}open{% endif %}>
+      <summary class="td-group-head">
+        <span class="td-chev" aria-hidden="true"></span>
+        <h2>{{ b.title }}</h2>
+        <span class="td-count td-count-{{ b.key }} {% if not b.rows %}td-count-none{% endif %}">{{ b.rows|length }}</span>
+        {% if b.blurb %}<span class="td-blurb">{{ b.blurb }}</span>{% endif %}
+      </summary>
+
+      <div class="td-body">
+        {% if not b.rows %}
+        <p class="td-empty">{{ b.empty }}</p>
+        {% endif %}
+
+        {% for s in b.sections %}
+        {% if b.show_labels %}
+        <div class="td-sec">
+          <span class="td-sec-label">{{ s.label }}</span>
+          <span class="td-sec-count">{{ s.count }}</span>
+          <span class="td-sec-rule"></span>
+        </div>
+        {% endif %}
+
+        {% for i in s.rows %}
+        {# The staff write-up is not a mentoring session — no pupil is in the
+           room — so it is set apart rather than sitting in the run of sessions. #}
+        <div class="td-row {% if i.kind == 'summary' %}td-row-summary{% endif %}">
+          <span class="light light-{{ i.light }}" title="{{ 'Done' if i.light == 'green' else ('Overdue' if i.light == 'red' else 'To do') }}" aria-hidden="true"></span>
+          <div class="td-what">
+            <a class="td-pupil" href="/mentor/pupils/{{ i.pupil_id }}">{{ i.pupil_name }}</a>
+            <span class="td-course">{{ i.course_title }}</span>
+            <span class="td-meta">
+              {% if i.kind == 'session' %}<span class="td-step">{{ i.title }}</span>{% endif %}
+              {% if i.kind == 'summary' %}<span class="td-tag">Staff only</span>{% endif %}
+              {% if i.chip %}<span class="chip chip-{{ i.light }}">{{ i.chip }}</span>{% endif %}
+              {% if i.ahead %}<span class="chip chip-ahead">{{ i.ahead }}</span>{% endif %}
+              {% if i.last_label %}<span class="td-last">{{ i.last_label }}</span>{% endif %}
+            </span>
+            {% if i.subtitle %}<span class="td-sub">{{ i.subtitle }}</span>{% endif %}
+          </div>
+          {# Fixed-width column with the button always first, so buttons line up
+             down the page whether or not a row has the dates link. #}
+          <div class="td-actions">
+            <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming_sessions', 'coming_reviews'] else 'btn-primary' }} btn-sm td-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
+            {% if i.kind == 'session' and not i.planned %}<a class="td-plan" href="{{ i.plan_url }}">Set session dates</a>{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+      </div>
+    </details>
+    {% endif %}
+    {% endfor %}
+
+    {% if not summary.pupils %}
+    <div class="card td-none">
+      <h2>Nobody enrolled yet</h2>
+      <p>Add a pupil and enrol them on a course, and this week&rsquo;s work appears here.</p>
     </div>
-  </div>
-  <div class="sched-strip-detail">
-    {%- set parts = [] -%}
-    {%- if summary.attention %}{% set _ = parts.append(summary.attention ~ ' behind') %}{% endif -%}
-    {%- if summary.sessions_due %}{% set _ = parts.append(summary.sessions_due ~ ' session' ~ ('' if summary.sessions_due == 1 else 's') ~ ' to run') %}{% endif -%}
-    {%- if summary.writeups_due %}{% set _ = parts.append(summary.writeups_due ~ (' course summary to write' if summary.writeups_due == 1 else ' course summaries to write')) %}{% endif -%}
-    {%- if summary.reviews_due %}{% set _ = parts.append(summary.reviews_due ~ (' review' if summary.reviews_due == 1 else ' reviews')) %}{% endif -%}
-    {%- if parts %}{{ parts|join(' &middot; ')|safe }}{% else %}Nothing outstanding.{% endif -%}
-  </div>
-  <div class="sched-key">
-    <span><span class="light light-green"></span>done</span>
-    <span><span class="light light-amber"></span>to do</span>
-    <span><span class="light light-red"></span>overdue</span>
-  </div>
-</div>
+    {% endif %}
+  </main>
 
-<div class="card sched-pupils">
-  <h2>Your pupils</h2>
-  <p class="muted sched-blurb-block">Who you've sat down with this week.</p>
-  {% for p in pupils %}
-  <div class="pupil-line {{ 'pupil-seen' if p.seen else '' }}">
-    <span class="light light-{{ 'green' if p.seen else 'amber' }}" title="{{ 'Seen this week' if p.seen else 'Not seen yet' }}" aria-hidden="true"></span>
-    <a class="sched-pupil" href="/mentor/pupils/{{ p.pupil_id }}">{{ p.name }}</a>
-    <span class="pupil-courses">{{ p.courses }} course{{ '' if p.courses == 1 else 's' }}</span>
-    <span class="chip {{ 'chip-green' if p.seen else 'chip-amber' }}">{{ p.status }}</span>
-  </div>
-  {% endfor %}
-</div>
-{% endif %}
+  {% if summary.pupils %}
+  <aside class="td-aside">
+    {# The week's shape, kept beside the work rather than stacked on top of it. #}
+    <div class="card td-panel {% if summary.attention %}td-panel-late{% endif %}">
+      <span class="td-eyebrow">Your week</span>
+      <p class="td-score"><strong>{{ summary.pupils_seen }}</strong> of {{ summary.pupils }}
+      pupil{{ '' if summary.pupils == 1 else 's' }} seen</p>
+      <div class="td-bar" aria-hidden="true">
+        <div class="td-bar-fill" style="width:{{ (summary.pupils_seen / summary.pupils * 100)|round|int }}%"></div>
+      </div>
+      <ul class="td-breakdown">
+        {% if summary.attention %}<li><span class="light light-red"></span>{{ summary.attention }} behind</li>{% endif %}
+        {% if summary.sessions_due %}<li><span class="light light-amber"></span>{{ summary.sessions_due }} session{{ '' if summary.sessions_due == 1 else 's' }} to run</li>{% endif %}
+        {% if summary.writeups_due %}<li><span class="light light-amber"></span>{{ summary.writeups_due }} course summar{{ 'y' if summary.writeups_due == 1 else 'ies' }} to write</li>{% endif %}
+        {% if summary.reviews_due %}<li><span class="light light-amber"></span>{{ summary.reviews_due }} follow-up chat{{ '' if summary.reviews_due == 1 else 's' }}</li>{% endif %}
+        {% if not (summary.attention or summary.sessions_due or summary.writeups_due or summary.reviews_due) %}
+        <li><span class="light light-green"></span>Nothing outstanding</li>
+        {% endif %}
+      </ul>
+    </div>
 
-{% for b in buckets %}
-{% if b.rows or b.always %}
-{# Done this week is collapsed: reassurance, not work. #}
-<details class="card sched-card sched-{{ b.key }}" {% if b.key != 'seen' %}open{% endif %}>
-  <summary class="sched-head">
-    <h2>{{ b.title }}</h2>
-    <span class="sched-num sched-num-{{ b.key }} {% if not b.rows %}sched-num-none{% endif %}">{{ b.rows|length }}</span>
-    {% if b.blurb %}<span class="sched-blurb">{{ b.blurb }}</span>{% endif %}
-  </summary>
-
-  {% if not b.rows %}
-  <p class="sched-empty">{{ b.empty }}</p>
+    <div class="card td-panel">
+      <span class="td-eyebrow">Roll-call</span>
+      <h2>Your pupils</h2>
+      <p class="td-panel-note">Who you&rsquo;ve sat down with this week.</p>
+      <ul class="td-roll">
+        {% for p in pupils %}
+        <li class="{{ 'is-seen' if p.seen else '' }}">
+          <span class="light light-{{ 'green' if p.seen else 'amber' }}" aria-hidden="true"></span>
+          <a href="/mentor/pupils/{{ p.pupil_id }}">{{ p.name }}</a>
+          <span class="td-roll-meta">{{ p.status }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </aside>
   {% endif %}
-  {% for s in b.sections %}
-  {% if b.show_labels %}
-  <div class="sec-head sec-{{ s.kind }}">
-    <span class="sec-label">{{ s.label }}</span>
-    <span class="sec-count">{{ s.count }}</span>
-  </div>
-  {% endif %}
-  {% for i in s.rows %}
-  {# The staff write-up is not a mentoring session — no pupil is in the room —
-     so it is set apart rather than sitting in the run of sessions. #}
-  <div class="sched-row {% if i.kind == 'summary' %}row-summary{% endif %}">
-    <span class="light light-{{ i.light }}" title="{{ 'Done' if i.light == 'green' else ('Overdue' if i.light == 'red' else 'To do') }}" aria-hidden="true"></span>
-    <div class="sched-what">
-      <a class="sched-pupil" href="/mentor/pupils/{{ i.pupil_id }}">{{ i.pupil_name }}</a>
-      <span class="sched-title">{{ i.course_title }}</span>
-      <span class="sched-meta">
-        {% if i.kind == 'session' %}<span class="sched-step">{{ i.title }}</span>{% endif %}
-        {% if i.kind == 'summary' %}<span class="row-tag">Staff only</span>{% endif %}
-        {% if i.chip %}<span class="chip chip-{{ i.light }}">{{ i.chip }}</span>{% endif %}
-        {% if i.ahead %}<span class="chip chip-ahead">{{ i.ahead }}</span>{% endif %}
-        {% if i.last_label %}<span class="sched-last">{{ i.last_label }}</span>{% endif %}
-      </span>
-      {% if i.subtitle %}<span class="sched-sub">{{ i.subtitle }}</span>{% endif %}
-    </div>
-    {# Fixed-width column with the button always first, so buttons line up down
-       the page whether or not a row has the dates link. #}
-    <div class="sched-actions">
-      <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming_sessions', 'coming_reviews'] else 'btn-primary' }} btn-sm sched-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
-      {% if i.kind == 'session' and not i.planned %}<a class="sched-plan" href="{{ i.plan_url }}">Set session dates</a>{% endif %}
-    </div>
-  </div>
-  {% endfor %}
-  {% endfor %}
-</details>
-{% endif %}
-{% endfor %}
-
-{% if not summary.pupils %}
-<div class="card card-center">
-  <p class="muted" style="margin:0;">No active courses yet. Enrol a pupil and their sessions appear here.</p>
 </div>
-{% endif %}
 
 <style>
-.sched-strip{background:var(--teal-light);border:1px solid #9FE1CB;border-radius:12px;
-  padding:12px 16px;margin:0 0 16px;color:#04342C;}
-.sched-strip-late{background:var(--amber-light);border-color:#FAC775;color:#412402;}
-.sched-strip-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px;}
-.sched-strip strong{font-family:var(--font-head);font-size:17px;}
-.sched-strip-detail{font-size:12.5px;margin-top:6px;opacity:.85;}
-.sched-bar{flex:1;min-width:100px;height:6px;border-radius:20px;background:#fff;overflow:hidden;}
-.sched-bar-fill{height:100%;background:var(--teal-darker);border-radius:20px;}
-.sched-strip-late .sched-bar-fill{background:var(--amber-dark);}
+.td-head{margin:0 0 22px;}
+.td-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.td-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.td-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
-.sched-pupils h2{margin:0 0 2px;}
-.sched-blurb-block{font-size:12.5px;margin:0 0 10px;}
-.pupil-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  border-top:1px solid var(--border);padding:9px 0;font-size:13px;}
-.pupil-line:first-of-type{border-top:none;}
-/* Traffic lights: green done, amber to do, red overdue. Each also carries a
-   word in the chip beside it, so the colour is never the only signal — that
-   matters for anyone who can't tell red from green. */
-.light{width:11px;height:11px;border-radius:50%;flex-shrink:0;display:inline-block;}
-.light-green{background:#1B7A4B;}
-.light-amber{background:#C98A0E;}
-.light-red{background:#B4341C;}
-.light-grey{background:#C9C6BA;}
-.sched-key{display:flex;gap:14px;margin-top:9px;font-size:11.5px;opacity:.85;}
-.sched-key span{display:flex;align-items:center;gap:5px;}
-.pupil-courses{font-size:12px;color:var(--muted);}
-.pupil-line .chip{margin-left:auto;}
+/* minmax(0,1fr): a grid column's default min-width is auto, so a long course
+   title would force the column wider and squeeze the panel beside it. */
+.td-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
+.td-main{min-width:0;display:flex;flex-direction:column;gap:14px;}
+.td-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;}
 
-.sched-card{padding-top:0;}
-.sched-card.sched-attention{border-left:4px solid #B4341C;}
-.sched-card.sched-this_week{border-left:4px solid #C98A0E;}
-.sched-card.sched-coming_sessions{border-left:4px solid #97A6C4;}
-.sched-card.sched-coming_reviews{border-left:4px solid #97A6C4;}
-.sched-card.sched-seen{border-left:4px solid #1B7A4B;}
-
-.sched-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-  cursor:pointer;list-style:none;padding:var(--sp-4) 0 10px;}
-.sched-head::-webkit-details-marker{display:none;}
-.sched-head h2{margin:0;display:inline-flex;align-items:center;gap:8px;}
-.sched-head h2::before{content:"\25B8";color:var(--muted);font-size:12px;transition:transform .12s ease;}
-.sched-card[open] .sched-head h2::before{transform:rotate(90deg);}
-.sched-num{font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;
+/* ------------------------------------------------------------------ group -- */
+.td-group{margin:0;padding:0 20px;}
+.td-attention{border-left:4px solid #B4341C;}
+.td-this_week{border-left:4px solid #C98A0E;}
+.td-coming_sessions,.td-coming_reviews{border-left:4px solid #97A6C4;}
+.td-seen{border-left:4px solid #1B7A4B;}
+.td-group-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  cursor:pointer;list-style:none;padding:15px 0 13px;}
+.td-group-head::-webkit-details-marker{display:none;}
+.td-group-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
+.td-chev{width:0;height:0;flex-shrink:0;border-left:6px solid var(--muted);
+  border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
+  transition:transform .13s ease;}
+.td-group[open] .td-chev{transform:rotate(90deg);}
+.td-count{flex-shrink:0;font-size:12px;font-weight:700;border-radius:20px;padding:2px 10px;
   background:#F3F2EC;color:var(--muted);}
-.sched-num-attention{background:#FBE3DE;color:#8A2614;}
-.sched-num-this_week{background:#FBEFD6;color:#7A5206;}
-.sched-num-seen{background:#DCF0E4;color:#14603C;}
-.sched-blurb{font-size:12.5px;color:var(--muted);margin-left:auto;}
-.sched-num-none{background:#F3F2EC;color:#B3B0A4;}
-.sched-empty{font-size:13px;color:var(--muted);margin:2px 0 6px;
-  border-top:1px solid var(--border);padding-top:12px;}
+.td-count-attention{background:#FBE3DE;color:#8A2614;}
+.td-count-this_week{background:#FBEFD6;color:#7A5206;}
+.td-count-seen{background:#DCF0E4;color:#14603C;}
+.td-count-none{background:#F3F2EC;color:#B3B0A4;}
+.td-blurb{font-size:12.5px;color:var(--muted);margin-left:auto;text-align:right;min-width:0;}
+.td-body{padding-bottom:14px;}
+.td-empty{font-size:13px;color:var(--muted);line-height:1.55;margin:2px 0 6px;
+  border-top:1px solid var(--border);padding-top:13px;}
 
-/* Section headings are one neutral tone whatever the kind. Colour on this page
-   means state — red late, amber to do, green done — and tinting the headings by
-   category set up a second, competing colour language. It also put a coral
-   heading directly above a coral row, and the two merged into one block. The
-   kind is carried by the words, which is what words are for. */
-.sec-head{display:flex;align-items:center;gap:8px;margin:20px 0 0;
-  padding:7px 12px;border-radius:8px;background:#E7E4D8;}
-.sec-head:first-of-type{margin-top:6px;}
-.sec-label{font-size:12.5px;font-weight:800;letter-spacing:.02em;color:var(--navy);}
-.sec-count{font-size:11.5px;font-weight:700;color:var(--navy);background:#fff;
-  border-radius:20px;padding:1px 8px;}
+/* Section rule: quiet, but enough to separate three kinds of job. */
+.td-sec{display:flex;align-items:center;gap:9px;margin:16px 0 2px;}
+.td-sec:first-child{margin-top:2px;}
+.td-sec-label{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--navy);white-space:nowrap;}
+.td-sec-count{font-size:10.5px;font-weight:700;color:var(--muted);background:#F3F2EC;
+  border-radius:20px;padding:1px 7px;flex-shrink:0;}
+.td-sec-rule{flex:1;height:1px;background:var(--border);min-width:12px;}
 
-.sched-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  border-top:1px solid var(--border);padding:12px 0;}
-.sec-head + .sched-row{border-top:none;}
-.sched-row .light{margin-top:2px;align-self:flex-start;}
-/* Set apart by an accent and a tag rather than a fill, so it reads as a
-   different kind of job without borrowing a state colour. */
-.row-summary{background:#FBF8F2;border-left:3px solid var(--coral-dark);
-  border-radius:0 10px 10px 0;padding:12px 14px;margin:6px 0;border-top:none;}
-.row-summary + .sched-row{border-top:none;}
-.row-tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--coral-dark);background:var(--coral-light);
-  border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:2px;}
-.sched-sub{display:block;font-size:12px;color:var(--muted);margin-top:5px;}
-.sched-step-strong{font-weight:700;color:var(--coral-dark);}
-.sched-pupil{font-family:var(--font-head);font-weight:700;font-size:14.5px;}
-.sched-what{flex:1;min-width:210px;}
-.sched-title{display:block;font-size:13px;color:var(--navy);margin-top:1px;}
-.sched-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;}
-.sched-step{font-size:12px;color:var(--muted);}
-.sched-last{font-size:12px;color:var(--muted);}
+/* -------------------------------------------------------------------- row -- */
+.td-row{display:flex;align-items:flex-start;gap:11px;padding:13px 0;
+  border-top:1px solid var(--border);}
+.td-sec + .td-row{border-top:none;}
+.td-row .light{margin-top:5px;flex-shrink:0;}
+.td-what{flex:1;min-width:0;}
+.td-pupil{font-family:var(--font-head);font-weight:700;font-size:14.5px;letter-spacing:-.01em;}
+.td-course{display:block;font-size:13.5px;color:var(--navy);margin-top:1px;line-height:1.4;}
+.td-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px;}
+.td-step,.td-last{font-size:12px;color:var(--muted);white-space:nowrap;}
+.td-sub{display:block;font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.5;}
+.td-tag{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--coral-dark);background:var(--coral-light);border-radius:4px;padding:2px 7px;
+  white-space:nowrap;}
+.td-row-summary{background:#FBF8F2;border-left:3px solid var(--coral-dark);border-top:none;
+  border-radius:0 10px 10px 0;padding:13px 15px;margin:7px 0;}
+.td-row-summary + .td-row{border-top:none;}
 
-/* One chip colour per state, matching the traffic light on the same row. */
-.chip{font-size:11.5px;font-weight:700;border-radius:20px;padding:2px 9px;white-space:nowrap;}
+/* Chips and buttons hold together rather than being squeezed until they break. */
+.chip{font-size:11.5px;font-weight:700;border-radius:20px;padding:2px 9px;white-space:nowrap;
+  flex-shrink:0;}
 .chip-red{background:#FBE3DE;color:#8A2614;}
 .chip-amber{background:#FBEFD6;color:#7A5206;}
 .chip-green{background:#DCF0E4;color:#14603C;}
 .chip-grey{background:#EDEBE2;color:#6B675B;}
-/* How far off, beside the date. A date on its own doesn't say whether it needs
-   thinking about. */
 .chip-ahead{background:#EDF0F7;color:#3D4E72;}
 
-/* The action column is a fixed width and the button always sits at its top, so
-   the buttons form a straight edge whether or not a row has the dates link. */
-.sched-actions{width:146px;flex-shrink:0;display:flex;flex-direction:column;
-  align-items:stretch;gap:5px;}
-.sched-btn{width:100%;text-align:center;}
-.sched-plan{font-size:12.5px;text-align:center;}
-@media (max-width:600px){
-  .sched-actions{width:100%;}
+.td-actions{width:148px;flex-shrink:0;display:flex;flex-direction:column;gap:5px;}
+.td-btn{width:100%;text-align:center;white-space:nowrap;}
+.td-plan{font-size:12.5px;text-align:center;white-space:nowrap;}
+
+/* ------------------------------------------------------------------ panel -- */
+.td-panel{margin:0;padding:17px 19px;}
+.td-panel h2{font-size:15px;margin:2px 0 3px;letter-spacing:-.01em;}
+.td-panel-note{font-size:12.5px;color:var(--muted);margin:0 0 11px;line-height:1.5;}
+.td-score{font-size:13.5px;color:var(--ink);margin:2px 0 9px;}
+.td-score strong{font-family:var(--font-head);font-size:22px;font-weight:700;color:var(--navy);
+  letter-spacing:-.02em;margin-right:3px;}
+.td-bar{height:6px;border-radius:20px;background:#EDEBE2;overflow:hidden;margin-bottom:13px;}
+.td-bar-fill{height:100%;background:var(--teal-darker);border-radius:20px;}
+.td-panel-late .td-bar-fill{background:#C98A0E;}
+.td-breakdown{list-style:none;margin:0;padding:0;font-size:13px;line-height:1.5;}
+.td-breakdown li{display:flex;align-items:center;gap:8px;padding:4px 0;color:var(--ink);}
+.td-breakdown .light{flex-shrink:0;}
+
+.td-roll{list-style:none;margin:0;padding:0;}
+.td-roll li{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;
+  border-top:1px solid var(--border);}
+.td-roll li:first-child{border-top:none;}
+.td-roll a{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.td-roll-meta{font-size:11.5px;color:var(--muted);white-space:nowrap;flex-shrink:0;}
+
+.light{width:11px;height:11px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.light-green{background:#1B7A4B;}
+.light-amber{background:#C98A0E;}
+.light-red{background:#B4341C;}
+.light-grey{background:#C9C6BA;}
+
+.td-none{text-align:center;padding:34px 20px;}
+.td-none h2{margin:0 0 6px;font-size:16px;}
+.td-none p{margin:0;color:var(--muted);font-size:13.5px;}
+
+@media (max-width:900px){
+  .td-layout{grid-template-columns:minmax(0,1fr);}
+  .td-aside{position:static;order:-1;}
+}
+@media (max-width:560px){
+  .td-row{flex-wrap:wrap;}
+  .td-actions{width:100%;flex-direction:row;justify-content:space-between;align-items:center;}
+  .td-btn{flex:1;}
+  .td-blurb{margin-left:0;flex-basis:100%;text-align:left;}
 }
 </style>
 {% endblock %}
