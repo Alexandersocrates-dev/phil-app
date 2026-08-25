@@ -6,7 +6,7 @@
 {% if sub %}
 <p class="muted">
   Plan: {{ sub.plan_type }} &middot; Seats used: {{ used }} of {{ limit }}
-  {% if sub.plan_type == 'pilot' %}&middot; Pilot ends {{ sub.pilot_ends_at[:10] }}{% endif %}
+  {% if sub.plan_type == 'pilot' %}&middot; Pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}
 </p>
 {% endif %}
 
@@ -153,7 +153,7 @@
       <td><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
       <td>{{ s.course_title }}</td>
       <td>{{ s.week_number }}</td>
-      <td>{{ s.date }}</td>
+      <td>{{ s.date|uk_date }}</td>
       <td>{{ s.mentor_name }}</td>
       <td>{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
     </tr>

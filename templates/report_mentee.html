@@ -20,7 +20,7 @@
     {% else %}
     <span class="badge badge-amber">Session {{ enrolment.current_week }} of 5</span>
     {% endif %}
-    <span class="muted" style="font-size:13px;">Enrolled since {{ enrolment.start_date }}</span>
+    <span class="muted" style="font-size:13px;">Enrolled since {{ enrolment.start_date|uk_date }}</span>
   </div>
   <div class="progress-track" style="margin-top:10px;">
     <div class="progress-fill" style="width:{% if enrolment.status == 'completed' %}100{% else %}{{ (enrolment.current_week / 5 * 100)|round|int }}{% endif %}%;"></div>
@@ -38,7 +38,7 @@
     <svg class="chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
   </summary>
   <div class="acc-body">
-    <p class="muted" style="margin:0 0 6px;">{{ w.date }}</p>
+    <p class="muted" style="margin:0 0 6px;">{{ w.date|uk_date }}</p>
     <p style="margin:0;">{{ w.objective }}</p>
   </div>
 </details>

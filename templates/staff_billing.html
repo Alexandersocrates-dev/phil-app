@@ -39,7 +39,7 @@
       <td>&#163;{{ i.amount }}</td>
       <td>{{ i.purchase_order_ref or '-' }}</td>
       <td>{{ i.status }}</td>
-      <td>{{ i.due_date or '-' }}</td>
+      <td>{{ i.due_date|uk_date or '-' }}</td>
     </tr>
     {% endfor %}
   </table>

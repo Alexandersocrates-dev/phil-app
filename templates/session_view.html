@@ -4,7 +4,7 @@
 <p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
 <div class="card">
   <h1>{{ record.forename }} {{ record.surname }} &middot; {{ record.course_title }}</h1>
-  <p class="muted">Week {{ record.week_number }}: {{ record.week_title }} &middot; {{ record.date }} &middot; recorded by {{ record.mentor_name }}</p>
+  <p class="muted">Week {{ record.week_number }}: {{ record.week_title }} &middot; {{ record.date|uk_date }} &middot; recorded by {{ record.mentor_name }}</p>
   <p>Mood {{ record.mood_rating }}/5 &middot; Engagement {{ record.engagement_rating }}/5</p>
   <h3>What happened</h3><p>{{ record.what_happened }}</p>
   <h3>Reflection / goal</h3><p>{{ record.reflection_goal }}</p>

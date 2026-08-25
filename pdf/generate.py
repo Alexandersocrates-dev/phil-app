@@ -10,6 +10,33 @@ reusing this logic rather than rewriting it.
 
 import os
 import datetime
+
+
+def uk(value):
+    """2026-09-07 as 07/09/2026. Anything unparseable comes back untouched, so a
+    half-filled record still prints rather than raising mid-document."""
+    if not value:
+        return ""
+    try:
+        return datetime.date.fromisoformat(str(value)[:10]).strftime("%d/%m/%Y")
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def uk_long(value):
+    """7 September 2026. For the certificate, which a child keeps: slashes read
+    as paperwork where a written month reads as an occasion."""
+    if not value:
+        return ""
+    try:
+        d = datetime.date.fromisoformat(str(value)[:10])
+    except (TypeError, ValueError):
+        return str(value)
+    return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
+
+
+def today_uk():
+    return datetime.date.today().strftime("%d/%m/%Y")
 import re
 import math
 from reportlab.lib.pagesizes import A4, landscape
@@ -355,7 +382,7 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     foot_y = margin + 38 * mm
     c.setFillColor(MUTED)
     c.setFont("Times-Roman", 10)
-    c.drawString(left_x, foot_y, f"Date of issue: {issued_date}")
+    c.drawString(left_x, foot_y, f"Date of issue: {uk_long(issued_date)}")
     c.drawRightString(right_x + 50 * mm, foot_y,
                       f"Certificate no. PHL-{str(enrolment_id).zfill(6)}")
 
@@ -397,7 +424,7 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Session", week_title),
-        ("Date", record["date"]),
+        ("Date", uk(record["date"])),
         ("Mentor", mentor_name),
     ])
 
@@ -504,7 +531,7 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Mentor", mentor_name),
-        ("Printed", datetime.date.today().isoformat()),
+        ("Printed", today_uk()),
     ])
 
     c.setFillColor(MUTED)
@@ -533,7 +560,7 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         c.setFont("Helvetica", 8.5)
         mood = f"{row['mood_rating']}/5" if row["mood_rating"] else "not rated"
         engagement = f"{row['engagement_rating']}/5" if row["engagement_rating"] else "not rated"
-        c.drawString(x, y, f"{row['date']}    Mood {mood}    Engagement {engagement}"
+        c.drawString(x, y, f"{uk(row['date'])}    Mood {mood}    Engagement {engagement}"
                            + ("    Safeguarding flagged" if row["safeguarding_flag"] else ""))
         y -= 6 * mm
 
@@ -580,17 +607,17 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     # The period belongs in the header, not a footnote. A report that does not
     # say what it covers gets quoted as though it covers everything.
     if f.get("date_from") and f.get("date_to"):
-        period = f"{f['date_from']} to {f['date_to']}"
+        period = f"{uk(f['date_from'])} to {uk(f['date_to'])}"
     elif f.get("date_from"):
-        period = f"from {f['date_from']}"
+        period = f"from {uk(f['date_from'])}"
     elif f.get("date_to"):
-        period = f"up to {f['date_to']}"
+        period = f"up to {uk(f['date_to'])}"
     else:
         period = "All activity to date"
     y = _doc_header(c, w, h, margin, "Impact report", meta=[
         ("School", establishment_name),
         ("Period", period),
-        ("Issued", datetime.date.today().isoformat()),
+        ("Issued", today_uk()),
     ])
 
     def stat(label, value, note=""):
@@ -695,7 +722,7 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
     meta = [("Pupil", pupil_name)]
     if establishment_name:
         meta.append(("School", establishment_name))
-    meta += [("Courses", len(courses)), ("Issued", datetime.date.today().isoformat())]
+    meta += [("Courses", len(courses)), ("Issued", today_uk())]
     y = _doc_header(c, w, h, margin, "Pupil report", meta=meta)
     page_no = 1
 
@@ -719,7 +746,7 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
         y = _doc_section(c, x, y, course["title"], max_width)
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 8.5)
-        bits = [f"Mentor: {course['mentor_name']}", f"Started {course['start_date']}"]
+        bits = [f"Mentor: {course['mentor_name']}", f"Started {uk(course['start_date'])}"]
         bits.append("Completed" if course["status"] == "completed"
                     else f"In progress, session {course['current_week']}")
         if course.get("sessions_recorded") is not None:
@@ -749,7 +776,7 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
             y -= 1 * mm
             c.setFillColor(TEAL_DARK)
             c.setFont("Helvetica-Bold", 9)
-            c.drawString(x, y, f"Follow-up chat, {fu.get('date', '')}")
+            c.drawString(x, y, f"Follow-up chat, {uk(fu.get('date', ''))}")
             y -= 5 * mm
             c.setFillColor(INK)
             c.setFont("Helvetica", 9)
@@ -810,9 +837,9 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Mentor", mentor_name),
-        ("Started", start_date),
+        ("Started", uk(start_date)),
         ("Status", "Completed" if status == "completed" else f"Week {current_week} of 5"),
-        ("Issued", datetime.date.today().isoformat()),
+        ("Issued", today_uk()),
     ])
 
     page_no = 1
@@ -828,7 +855,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
         c.setFillColor(INK)
         c.setFont("Helvetica-Bold", 10.5)
-        c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({wk.get('date','')})")
+        c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
         y -= 5 * mm
         y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9.5)
         y -= 4 * mm
@@ -896,7 +923,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
 
     y = _doc_header(c, w, h, margin, "Mentoring report", meta=[
         ("Report", title),
-        ("Issued", datetime.date.today().isoformat()),
+        ("Issued", today_uk()),
         ("Enrolments", len(entries)),
     ])
 
@@ -926,7 +953,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 9.5)
         status_label = "Completed" if entry["status"] == "completed" else f"Week {entry['current_week']} of 5"
-        c.drawString(x, y, f"Mentor: {entry['mentor_name']}    Started: {entry['start_date']}    Status: {status_label}")
+        c.drawString(x, y, f"Mentor: {entry['mentor_name']}    Started: {uk(entry['start_date'])}    Status: {status_label}")
         y -= 8 * mm
 
         for wk in entry["weeks"]:
@@ -935,7 +962,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
                 y = h - margin
             c.setFillColor(INK)
             c.setFont("Helvetica-Bold", 10)
-            c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({wk.get('date','')})")
+            c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
             y -= 5 * mm
             y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9)
             y -= 3 * mm
@@ -1025,7 +1052,7 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name):
 
     y = _doc_header(c, w, h, margin, "Mentoring list", meta=[
         ("Report", title),
-        ("Issued", datetime.date.today().isoformat()),
+        ("Issued", today_uk()),
         ("Pupils", len(rows)),
     ])
 
