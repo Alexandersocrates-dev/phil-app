@@ -125,13 +125,18 @@
 {%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date|uk_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned|uk_date }}{% endif %}</p>
 
   {% if e.status == 'active' %}
-    <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record week {{ e.current_week + 1 }} session</a>
+    {# The staff write-up isn't "week 6", it's the course summary. Keyed off the
+       session count rather than a hardcoded 6. #}
+    <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">{% if e.current_week >= sessions_total - 1 %}Record the course summary and next steps{% else %}Record week {{ e.current_week + 1 }} session{% endif %}</a>
     <a class="btn btn-secondary btn-sm" href="/mentor/schedule/{{ e.id }}">Plan session dates</a>
     {% if user.role == 'admin' %}
     <a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ e.id }}/reassign">Reassign mentor</a>
     {% endif %}
   {% endif %}
-  {% if item.certificate %}
+  {# Only on a finished course. A certificate row can exist on an active one —
+     courses completed at session five under the old rules were reopened for the
+     write-up — and offering it there says the course is done when it isn't. #}
+  {% if item.certificate and e.status == 'completed' %}
     <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
   {% endif %}
   {# No completion reflection button. It's retired: session 6's course summary

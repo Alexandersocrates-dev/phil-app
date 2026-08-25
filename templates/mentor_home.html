@@ -157,7 +157,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
         {% else %}<span class="badge badge-teal">Active</span>{% endif %}
       </td>
       <td class="record-actions">
-        {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">Record session</a>{% endif %}
+        {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">{% if e.current_week >= sessions_total - 1 %}Record summary{% else %}Record session{% endif %}</a>{% endif %}
         {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
       </td>
     </tr>
