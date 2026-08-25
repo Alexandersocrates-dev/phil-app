@@ -90,12 +90,22 @@
         <strong>{{ summary.total_courses }}</strong> course{{ '' if summary.total_courses == 1 else 's' }}
       </p>
 
-      <p class="td-score">{{ summary.pupils_seen }} of {{ summary.pupils }}
-      seen this week{% if summary.pupils_not_seen %}, {{ summary.pupils_not_seen }} still to
-      catch{% endif %}</p>
       <div class="td-bar" aria-hidden="true">
         <div class="td-bar-fill" style="width:{{ (summary.pupils_seen / summary.pupils * 100)|round|int }}%"></div>
       </div>
+      {# A whole sentence, not a fraction. "0 of 1 seen this week, 1 still to
+         catch" is arithmetic where a mentor wants a state. #}
+      <p class="td-score">
+        {%- if summary.pupils == 1 -%}
+          {{ 'Seen this week' if summary.pupils_seen else 'Not seen yet this week' }}
+        {%- elif summary.pupils_seen == 0 -%}
+          Nobody seen yet this week
+        {%- elif summary.pupils_not_seen == 0 -%}
+          Everyone seen this week
+        {%- else -%}
+          {{ summary.pupils_seen }} of {{ summary.pupils }} seen this week
+        {%- endif -%}
+      </p>
       <ul class="td-breakdown">
         {% if summary.attention %}<li><span class="light light-red"></span>{{ summary.attention }} behind</li>{% endif %}
         {% if summary.sessions_due %}<li><span class="light light-amber"></span>{{ summary.sessions_due }} session{{ '' if summary.sessions_due == 1 else 's' }} to run</li>{% endif %}
@@ -221,8 +231,8 @@
 .td-caseload strong{font-family:var(--font-head);font-size:24px;font-weight:700;
   color:var(--navy);letter-spacing:-.02em;margin-right:2px;}
 .td-caseload-sep{width:1px;align-self:stretch;background:var(--border);margin:3px 3px 5px;}
-.td-score{font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.5;}
-.td-bar{height:6px;border-radius:20px;background:#EDEBE2;overflow:hidden;margin-bottom:13px;}
+.td-score{font-size:12.5px;color:var(--muted);margin:0 0 12px;line-height:1.5;}
+.td-bar{height:6px;border-radius:20px;background:#EDEBE2;overflow:hidden;margin-bottom:7px;}
 .td-bar-fill{height:100%;background:var(--teal-darker);border-radius:20px;}
 .td-panel-late .td-bar-fill{background:#C98A0E;}
 .td-breakdown{list-style:none;margin:0;padding:0;font-size:13px;line-height:1.5;}
