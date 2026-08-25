@@ -5155,12 +5155,6 @@ def course_wrap_up(request):
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
 
-        earliest = follow_up_earliest(conn, enrolment_id)
-        if earliest and review_date < earliest:
-            return with_flash(f"/mentor/enrolment/{enrolment_id}/wrap-up",
-                f"A follow-up needs at least {FOLLOW_UP_MIN_DAYS} days after the last "
-                f"session to show whether anything held, so pick {earliest} or later.",
-                "error")
         conn.execute("UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
                      (review_date, review_note or None, enrolment_id))
 
@@ -5337,11 +5331,12 @@ def follow_up_for(conn, enrolment_id):
 
 
 def follow_up_earliest(conn, enrolment_id):
-    """The first date a follow-up can honestly be recorded.
+    """The date from which a follow-up starts to mean something.
 
     A fortnight after the last session. A chat three days after a course ends
-    can't tell anyone whether change held, so recording one that early would
-    put a number in the impact report that doesn't mean what it says.
+    can't tell anyone whether change held. This is shown as advice rather than
+    enforced: a pupil moving school on Friday is exactly the case where an early
+    chat beats no chat, and the mentor is the one who can see that.
     """
     last = conn.execute(
         "SELECT max(date) FROM session_records WHERE enrolment_id=?",
@@ -5388,7 +5383,7 @@ def follow_up_form(request):
                   forename=enrolment["forename"],
                   course_title=enrolment["course_title"],
                   earliest=earliest, today=today,
-                  too_early=bool(earliest and today < earliest),
+                  min_days=FOLLOW_UP_MIN_DAYS,
                   flash=flash_from_query(request))
 
 
@@ -5435,13 +5430,8 @@ def follow_up_save(request):
             return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
                               "That follow-up is already recorded.", "error")
 
-        earliest = follow_up_earliest(conn, enrolment_id)
         if not date:
             date = datetime.date.today().isoformat()
-        if earliest and date < earliest:
-            return with_flash(back,
-                f"A follow-up needs at least {FOLLOW_UP_MIN_DAYS} days after the last "
-                f"session, so it can't be dated before {earliest}.", "error")
         if date > datetime.date.today().isoformat():
             return with_flash(back, "A follow-up can't be dated in the future.", "error")
 

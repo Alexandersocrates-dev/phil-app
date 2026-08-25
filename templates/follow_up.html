@@ -11,25 +11,18 @@
   {{ forename }} in front of you, or straight afterwards while it&rsquo;s fresh.</p>
 </div>
 
-{% if too_early %}
-{# A chat days after the last session can't show whether change held, so the
-   form is closed until enough time has passed rather than collecting an answer
-   that would mean nothing in the impact report. #}
-<div class="card fu-blocked">
-  <h2>Not yet</h2>
-  <p>A follow-up needs at least a fortnight after the last session, so there&rsquo;s a real
-  stretch of time to look back on. This one can be recorded from <strong>{{ earliest|uk_date }}</strong>.</p>
-  <p class="muted" style="margin:0;">It stays on your to-do list until then.</p>
-</div>
-{% else %}
-
 <form method="post" action="/mentor/enrolment/{{ enrolment.id }}/follow-up">
   <div class="card">
     <div class="field">
       <label for="date">Date of the chat</label>
-      <input type="date" id="date" name="date" value="{{ today }}"
-             {% if earliest %}min="{{ earliest }}"{% endif %} max="{{ today }}" required>
-      {% if earliest %}<p class="fu-hint">Can&rsquo;t be earlier than {{ earliest|uk_date }}, a fortnight after the last session.</p>{% endif %}
+      <input type="date" id="date" name="date" value="{{ today }}" max="{{ today }}" required>
+      {# Advice, not a rule. A pupil moving school on Friday is exactly the case
+         where an early chat beats no chat, and the mentor can see that. #}
+      {% if earliest %}
+      <p class="fu-hint">We&rsquo;d suggest waiting until <strong>{{ earliest|uk_date }}</strong> &mdash;
+      {{ min_days }} days after the last session &mdash; so there&rsquo;s a real stretch of time to look
+      back on. You can record it earlier if you need to.</p>
+      {% endif %}
     </div>
   </div>
 
@@ -97,7 +90,6 @@
     <a class="btn btn-secondary" href="/mentor/pupils/{{ enrolment.pupil_id }}">Cancel</a>
   </p>
 </form>
-{% endif %}
 
 <style>
 .cc-lead{font-size:15px;color:var(--ink);margin:0 0 6px;}
