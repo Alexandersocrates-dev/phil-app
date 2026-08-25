@@ -2,61 +2,15 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Mentor home - Phil{% endblock %}
 {% block content %}
+
 <header class="mh-head">
   <span class="mh-eyebrow">Mentor home</span>
   <h1>Hi, {{ user.name }}</h1>
   <p class="mh-lede">Everyone you mentor, and where each course is up to.</p>
 </header>
 
-{% set has_pupil = enrolments|length > 0 %}
-<div class="card gs-checklist" id="gsChecklist">
-<h3>Getting started</h3>
-<ul>
-<li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
-<li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
-<li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports" onclick="localStorage.setItem('gs_report','1')">View your reports</a></li>
-</ul>
-<button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
-</div>
-<script>
-(function(){
-try {
-if (localStorage.getItem('gs_dismissed')) {
-var el = document.getElementById('gsChecklist');
-if (el) el.style.display = 'none';
-}
-if (localStorage.getItem('gs_courses')) {
-var li = document.getElementById('gsCourses');
-if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
-}
-if (localStorage.getItem('gs_report')) {
-var li2 = document.getElementById('gsReport');
-if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = '&#10003;'; }
-}
-} catch (e) {}
-})();
-</script>
-
-<div class="stat-row">
-<div class="stat-tile stat-tile--teal">
-<div class="stat-tile-num">{{ pupils|length }}</div>
-<div class="stat-tile-label">Active pupils</div>
-</div>
-<div class="stat-tile stat-tile--amber">
-<div class="stat-tile-num">{{ due_this_week }}</div>
-<div class="stat-tile-label">Due this week</div>
-</div>
-</div>
-
-<a href="/courses" style="display:flex; align-items:center; gap:12px; border:1.4px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:20px; text-decoration:none;">
-<div style="width:36px; height:36px; border-radius:10px; background:var(--coral-light); display:flex; align-items:center; justify-content:center; flex-shrink:0;">{{ icon_book(color='var(--coral-dark)') }}</div>
-<div style="flex:1; min-width:0;">
-<div style="font-family:var(--font-head); font-weight:700; font-size:13px; color:var(--navy);">Course library</div>
-<div style="font-size:11px; color:var(--muted);">Browse all 20 courses to decide what to enrol a pupil on</div>
-</div>
-<svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" style="stroke:#5F5E5A; width:14px; height:14px; flex-shrink:0;" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-</a>
-
+<div class="mh-layout">
+  <main class="mh-main">
 {# A follow-up that only shows on the pupil's record is one nobody sees. This
    sits above the mentoring list because it's the work that has no other prompt —
    an active course reminds you by being active. #}
@@ -114,9 +68,11 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 </style>
 {% endif %}
 
-<div class="card">
-<h2 style="margin:0 0 4px;">My mentoring list</h2>
-<p class="muted" style="font-size:12.5px;margin:0 0 14px;">Everyone you're currently mentoring. Open a name to see their courses.</p>
+<section class="card mh-list-card">
+  <div class="mh-section-head">
+    <h2>My mentoring list</h2>
+    <p>Open a name to see their courses.</p>
+  </div>
 
 {% if not mentoring_list %}
 <p class="muted">Nobody on your list yet. Add a pupil from the Pupils page.</p>
@@ -166,9 +122,108 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 </details>
 {% endfor %}
 {% endif %}
+</section>
+  </main>
+
+  <aside class="mh-aside">
+    {# Two figures, ruled apart, in the same shape as the to-do list panel, so
+       a mentor meets one pattern across the app rather than three. #}
+    <div class="card mh-panel">
+      <span class="mh-eyebrow">At a glance</span>
+      <div class="mh-figures">
+        <div class="mh-figure">
+          <strong>{{ pupils|length }}</strong>
+          <span>active pupil{{ '' if pupils|length == 1 else 's' }}</span>
+        </div>
+        <div class="mh-figure">
+          <strong>{{ due_this_week }}</strong>
+          <span>due this week</span>
+        </div>
+      </div>
+      <a class="mh-panel-link" href="/mentor/schedule">Open your to-do list &rarr;</a>
+    </div>
+
+    <a class="card mh-library" href="/courses">
+      <span class="mh-library-icon">{{ icon_book(color='var(--coral-dark)') }}</span>
+      <span class="mh-library-text">
+        <strong>Course library</strong>
+        <span>All 20 courses, to decide what to enrol a pupil on</span>
+      </span>
+      <svg class="mh-library-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+
+<div class="card gs-checklist" id="gsChecklist">
+<h3>Getting started</h3>
+<ul>
+<li class="{{ 'done' if has_pupil else '' }}"><span class="gs-tick">{% if has_pupil %}&#10003;{% endif %}</span><a href="/mentor/pupils/new">Add a pupil</a></li>
+<li id="gsCourses"><span class="gs-tick"></span><a href="/courses" onclick="localStorage.setItem('gs_courses','1')">Browse the course library</a></li>
+<li id="gsReport"><span class="gs-tick"></span><a href="/mentor/reports" onclick="localStorage.setItem('gs_report','1')">View your reports</a></li>
+</ul>
+<button class="gs-dismiss" type="button" onclick="document.getElementById('gsChecklist').style.display='none'; try{localStorage.setItem('gs_dismissed','1')}catch(e){}">Dismiss</button>
+</div>
+<script>
+(function(){
+try {
+if (localStorage.getItem('gs_dismissed')) {
+var el = document.getElementById('gsChecklist');
+if (el) el.style.display = 'none';
+}
+if (localStorage.getItem('gs_courses')) {
+var li = document.getElementById('gsCourses');
+if (li) { li.classList.add('done'); li.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+}
+if (localStorage.getItem('gs_report')) {
+var li2 = document.getElementById('gsReport');
+if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = '&#10003;'; }
+}
+} catch (e) {}
+})();
+</script>
+  </aside>
 </div>
 
 <style>
+.mh-head{margin:0 0 22px;}
+.mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+
+/* minmax(0,1fr): a grid column defaults to min-width auto, so a long course
+   title would push the column wider and squeeze the panel beside it. */
+.mh-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
+.mh-main{min-width:0;display:flex;flex-direction:column;gap:16px;}
+.mh-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;}
+
+.mh-section-head{margin-bottom:8px;}
+.mh-section-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
+.mh-section-head p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.mh-list-card{margin:0;padding:18px 20px;}
+
+.mh-panel{margin:0;padding:17px 19px;}
+.mh-figures{display:flex;align-items:stretch;margin:6px 0 12px;flex-wrap:wrap;}
+.mh-figure{display:flex;flex-direction:column;padding-right:18px;margin-right:18px;
+  border-right:1px solid var(--border);min-width:0;}
+.mh-figure:last-child{border-right:none;padding-right:0;margin-right:0;}
+.mh-figure strong{font-family:var(--font-head);font-size:27px;font-weight:700;color:var(--navy);
+  letter-spacing:-.02em;line-height:1.1;}
+.mh-figure span{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;}
+.mh-panel-link{font-size:13px;font-weight:600;white-space:nowrap;}
+
+.mh-library{display:flex;align-items:center;gap:12px;margin:0;padding:14px 16px;text-decoration:none;}
+.mh-library-icon{width:36px;height:36px;border-radius:10px;background:var(--coral-light);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mh-library-text{flex:1;min-width:0;}
+.mh-library-text strong{display:block;font-family:var(--font-head);font-weight:700;
+  font-size:13.5px;color:var(--navy);}
+.mh-library-text span{display:block;font-size:12px;color:var(--muted);line-height:1.45;margin-top:2px;}
+.mh-library-chev{width:14px;height:14px;flex-shrink:0;stroke:#5F5E5A;}
+
+@media (max-width:900px){
+  .mh-layout{grid-template-columns:minmax(0,1fr);}
+  .mh-aside{position:static;order:-1;}
+}
+
 .mh-head{margin:0 0 20px;}
 .mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}

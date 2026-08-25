@@ -2,15 +2,11 @@
 {% from "_icons.html" import icon_users, icon_user, icon_user_plus, icon_book, icon_edit, icon_folder, icon_file_text, icon_message_circle, icon_shield %}
 {% block title %}Admin - Phil{% endblock %}
 {% block content %}
+
 <header class="ah-head">
   <span class="ah-eyebrow">Admin</span>
   <h1>{{ establishment.name }}</h1>
-  {% if sub %}
-  <p class="ah-lede">
-    {{ sub.plan_type|capitalize }} plan &middot; {{ used }} of {{ limit }} seats used
-    {%- if sub.plan_type == 'pilot' %} &middot; pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}
-  </p>
-  {% endif %}
+  <p class="ah-lede">Your establishment: pupils, mentors, reports and the plan.</p>
 </header>
 
 {% for n in admin_notes %}
@@ -19,6 +15,96 @@
   <form method="post" action="/staff/notifications/{{ n.id }}/read"><button class="btn btn-secondary btn-sm" type="submit">Dismiss</button></form>
 </div>
 {% endfor %}
+
+<div class="ah-layout">
+  <main class="ah-main">
+    <div class="ah-block">
+<div class="ah-sec"><h2>Day-to-day</h2><p>Pupils, mentors, the course library and reports.</p></div>
+<div class="tile-grid ah-tiles">
+  <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><div class="num">{{ pupils|length }}</div><span class="tlabel">Active pupils</span></a>
+  <a class="tile" href="/admin/mentors/new"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Add a mentor</span></a>
+  <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><div class="num">20</div><span class="tlabel">Course library</span></a>
+  <a class="tile" href="/admin/reports"><div class="ati" style="background:var(--coral-light);">{{ icon_folder(color='var(--coral-dark)') }}</div><span class="tlabel">Reports</span></a>
+</div>
+
+<div class="ah-sec"><h2>Account &amp; establishment</h2><p>Billing, plan and course requests.</p></div>
+<div class="tile-grid ah-tiles">
+  <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
+  <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
+</div>
+
+<div class="ah-sec"><h2>More admin actions</h2><p>Reassigning, permissions and role changes.</p></div>
+<div class="tile-grid ah-tiles">
+  <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
+  <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
+  <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
+  <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
+</div>
+    </div>
+
+<section class="card ah-card">
+  <div class="ah-card-head"><h2>Mentors and admins</h2><p>Everyone who can sign in at your establishment.</p></div>
+  <div class="ah-scroll">
+  <table class="ah-table">
+    <tr><th>Name</th><th class="ah-tight">Role</th><th class="ah-tight">Email</th><th class="ah-tight"></th></tr>
+    {% for m in mentors %}
+    <tr>
+      <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.name[:1] }}</span>{{ m.name }}</span></td>
+      <td class="ah-tight">{{ m.role }}</td>
+      <td class="ah-tight">{{ m.email }}</td>
+      <td class="ah-tight">{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</section>
+
+<details class="card collapse-card">
+  <summary class="collapse-summary">
+    <h2>Recent session records, establishment-wide</h2>
+    <span class="collapse-hint">{{ sessions|length }} record{{ '' if sessions|length == 1 else 's' }} &middot; show</span>
+  </summary>
+  <p class="muted" style="font-size:12.5px;">As admin you can open any session record at your establishment, including safeguarding notes. Phil never pushes a notification when one is flagged; this is a look-it-up capability only.</p>
+  {% if not sessions %}
+    <p class="muted">No sessions recorded yet.</p>
+  {% else %}
+  <div class="ah-scroll">
+  <table class="ah-table">
+    <tr><th class="ah-tight">Pupil</th><th>Course</th><th class="ah-tight">Week</th>
+        <th class="ah-tight">Date</th><th class="ah-tight">Mentor</th><th class="ah-tight">Safeguarding</th></tr>
+    {% for s in sessions %}
+    <tr>
+      <td class="ah-tight"><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
+      <td class="ah-c-course">{{ s.course_title }}</td>
+      <td class="ah-tight">{{ s.week_number }}</td>
+      <td class="ah-tight">{{ s.date|uk_date }}</td>
+      <td class="ah-tight">{{ s.mentor_name }}</td>
+      <td class="ah-tight">{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  {% endif %}
+</details>
+  </main>
+
+  <aside class="ah-aside">
+    <div class="card ah-panel">
+      <span class="ah-eyebrow">At a glance</span>
+      <div class="ah-figures">
+        <div class="ah-figure">
+          <strong>{{ pupils|length }}</strong>
+          <span>pupil{{ '' if pupils|length == 1 else 's' }} enrolled</span>
+        </div>
+        <div class="ah-figure">
+          <strong>{{ mentors|length }}</strong>
+          <span>mentor{{ '' if mentors|length == 1 else 's' }} and admins</span>
+        </div>
+      </div>
+      {% if sub %}
+      <p class="ah-seats">{{ sub.plan_type|capitalize }} plan &middot; {{ used }} of {{ limit }} seats used{% if sub.plan_type == 'pilot' %} &middot; pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}</p>
+      {% endif %}
+    </div>
 
 {% if sub and sub.plan_type == 'pilot' %}
 <div class="card" style="background:var(--amber-light); border-color:var(--amber);">
@@ -49,17 +135,6 @@
   <a class="btn btn-secondary btn-sm" href="/admin/billing/portal">Manage subscription</a>
 </div>
 {% endif %}
-
-<div class="stat-row">
-<div class="stat-tile stat-tile--teal">
-<div class="stat-tile-num">{{ pupils|length }}</div>
-<div class="stat-tile-label">Pupils enrolled</div>
-</div>
-<div class="stat-tile stat-tile--neutral">
-<div class="stat-tile-num">{{ mentors|length }}</div>
-<div class="stat-tile-label">Mentors and admins</div>
-</div>
-</div>
 
 {% set has_mentor = mentors|selectattr('role', 'equalto', 'mentor')|list|length > 0 %}
 <div class="card gs-checklist" id="gsChecklist">
@@ -101,78 +176,54 @@
   } catch (e) {}
 })();
 </script>
-
-<div class="section-label">Day-to-day</div>
-<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Pupils, mentors, the course library and reports.</p>
-<div class="tile-grid" style="margin-bottom:20px;">
-  <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><div class="num">{{ pupils|length }}</div><span class="tlabel">Active pupils</span></a>
-  <a class="tile" href="/admin/mentors/new"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Add a mentor</span></a>
-  <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><div class="num">20</div><span class="tlabel">Course library</span></a>
-  <a class="tile" href="/admin/reports"><div class="ati" style="background:var(--coral-light);">{{ icon_folder(color='var(--coral-dark)') }}</div><span class="tlabel">Reports</span></a>
+  </aside>
 </div>
-
-<div class="section-label">Account &amp; establishment</div>
-<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Billing, plan and course requests.</p>
-<div class="tile-grid" style="margin-bottom:20px;">
-  <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
-  <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
-</div>
-
-<div class="section-label">More admin actions</div>
-<p class="muted" style="font-size:12px;margin:-8px 0 10px;">Reassigning, permissions and role changes.</p>
-<div class="tile-grid" style="margin-bottom:20px;">
-  <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
-  <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
-  <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
-  <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
-</div>
-
-<div class="card">
-  <h2>Mentors and admins</h2>
-  <div class="ah-scroll">
-  <table class="ah-table">
-    <tr><th>Name</th><th class="ah-tight">Role</th><th class="ah-tight">Email</th><th class="ah-tight"></th></tr>
-    {% for m in mentors %}
-    <tr>
-      <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.name[:1] }}</span>{{ m.name }}</span></td>
-      <td class="ah-tight">{{ m.role }}</td>
-      <td class="ah-tight">{{ m.email }}</td>
-      <td class="ah-tight">{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  </div>
-</div>
-
-<details class="card collapse-card">
-  <summary class="collapse-summary">
-    <h2>Recent session records, establishment-wide</h2>
-    <span class="collapse-hint">{{ sessions|length }} record{{ '' if sessions|length == 1 else 's' }} &middot; show</span>
-  </summary>
-  <p class="muted" style="font-size:12.5px;">As admin you can open any session record at your establishment, including safeguarding notes. Phil never pushes a notification when one is flagged; this is a look-it-up capability only.</p>
-  {% if not sessions %}
-    <p class="muted">No sessions recorded yet.</p>
-  {% else %}
-  <div class="ah-scroll">
-  <table class="ah-table">
-    <tr><th class="ah-tight">Pupil</th><th>Course</th><th class="ah-tight">Week</th>
-        <th class="ah-tight">Date</th><th class="ah-tight">Mentor</th><th class="ah-tight">Safeguarding</th></tr>
-    {% for s in sessions %}
-    <tr>
-      <td class="ah-tight"><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
-      <td class="ah-c-course">{{ s.course_title }}</td>
-      <td class="ah-tight">{{ s.week_number }}</td>
-      <td class="ah-tight">{{ s.date|uk_date }}</td>
-      <td class="ah-tight">{{ s.mentor_name }}</td>
-      <td class="ah-tight">{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  </div>
-  {% endif %}
-</details>
 
 <style>
+.ah-head{margin:0 0 22px;}
+.ah-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.ah-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.ah-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+
+.ah-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
+.ah-main{min-width:0;display:flex;flex-direction:column;gap:18px;}
+.ah-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;}
+
+/* Each group of tiles gets a real heading and room around it, rather than a
+   label floated above a grid with negative margins. */
+.ah-sec{margin:0 0 10px;}
+.ah-sec h2{margin:0;font-size:15px;letter-spacing:-.01em;}
+.ah-sec p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.ah-tiles{margin:0;}
+.ah-block{margin:0;}
+
+.ah-card{margin:0;padding:18px 20px;}
+.ah-card-head{margin-bottom:8px;}
+.ah-card-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
+.ah-card-head p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+.ah-panel{margin:0;padding:17px 19px;}
+.ah-figures{display:flex;align-items:stretch;margin:6px 0 12px;flex-wrap:wrap;}
+.ah-figure{display:flex;flex-direction:column;padding-right:18px;margin-right:18px;
+  border-right:1px solid var(--border);min-width:0;}
+.ah-figure:last-child{border-right:none;padding-right:0;margin-right:0;}
+.ah-figure strong{font-family:var(--font-head);font-size:27px;font-weight:700;color:var(--navy);
+  letter-spacing:-.02em;line-height:1.1;}
+.ah-figure span{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;}
+.ah-seats{font-size:12.5px;color:var(--muted);margin:0;line-height:1.5;}
+
+/* Tiles keep their label on one line and the icon never shrinks away. */
+.ah-tiles .tile{min-width:0;}
+.ah-tiles .ati{flex-shrink:0;}
+.ah-tiles .tlabel{min-width:0;}
+.ah-card .btn{white-space:nowrap;}
+
+@media (max-width:900px){
+  .ah-layout{grid-template-columns:minmax(0,1fr);}
+  .ah-aside{position:static;order:-1;}
+}
+
 .ah-head{margin:0 0 20px;}
 .ah-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
