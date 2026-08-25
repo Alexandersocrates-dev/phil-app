@@ -134,14 +134,11 @@
   {% if item.certificate %}
     <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
   {% endif %}
-  {# The completion reflection is retired: session 6's course summary asks the
-     same questions of the same person at the same moment, and the wrap-up
-     stopped collecting it because asking twice got the same answer twice or an
-     empty one. Old ones stay reachable so nothing written is lost; no new ones
-     are offered. #}
-  {% if item.reflection %}
-    <a class="btn btn-secondary btn-sm" href="/mentor/reflection/{{ e.id }}">Completion reflection</a>
-  {% endif %}
+  {# No completion reflection button. It's retired: session 6's course summary
+     asks the same questions of the same person at the same moment. Anything
+     written before it was retired is still in the database and still prints in
+     the progress report, so nothing is lost — it just isn't a thing a mentor is
+     sent to any more. #}
 
   {% if item.records %}
   <table style="margin-top:14px;">
