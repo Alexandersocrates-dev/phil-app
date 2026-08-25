@@ -4862,40 +4862,40 @@ def certificate_download(request):
             return with_flash(f"/mentor/enrolment/{request.params['enrolment_id']}/wrap-up",
                               "The certificate is issued once the course is closed.", "error")
         return Response("Certificate not found", status="404 Not Found")
-    # The file may be missing even though the record exists: PDFs used to be
-    # written inside the container, so anything generated before a deploy was
-    # destroyed. Rebuild it from the database rather than showing a dead end —
-    # everything needed is still stored.
-    if not cert["pdf_path"] or not os.path.exists(cert["pdf_path"]):
-        conn = db.get_conn()
-        try:
-            row = conn.execute(
-                """SELECT p.forename, p.surname, c.title AS course_title,
-                          c.module_number AS module_number,
-                          est.name AS establishment_name,
-                          u.name AS mentor_name
-                   FROM enrolments e JOIN pupils p ON p.id=e.pupil_id
-                   JOIN courses c ON c.id=e.course_id
-                   LEFT JOIN establishments est ON est.id = p.establishment_id
-                   LEFT JOIN users u ON u.id = e.mentor_id
-                   WHERE e.id=?""",
-                (request.params["enrolment_id"],),
-            ).fetchone()
-            if not row:
-                return Response("Certificate not found", status="404 Not Found")
-            path = pdfgen.certificate_pdf(
-                f"{row['forename']} {row['surname']}", row["course_title"],
-                cert["issued_date"], request.params["enrolment_id"],
-                establishment_name=row["establishment_name"],
-                mentor_name=row["mentor_name"],
-                module_number=row["module_number"])
-            conn.execute("UPDATE certificates SET pdf_path=? WHERE enrolment_id=?",
-                         (path, request.params["enrolment_id"]))
-            conn.commit()
-        finally:
-            conn.close()
-        return pdf_response(path, "certificate.pdf")
-    return pdf_response(cert["pdf_path"], "certificate.pdf")
+    # Always rebuilt, never served from disk. A stored PDF freezes whatever was
+    # true the day it was made: the mentor's name, the school's name, the date
+    # format. Reassign a pupil or change the wording and the file quietly
+    # disagrees with the record it came from. Everything needed is in the
+    # database, and a certificate is one page, so regenerating each time is
+    # cheaper than a class of bug that only shows up on paper.
+    conn = db.get_conn()
+    try:
+        row = conn.execute(
+            """SELECT p.forename, p.surname, c.title AS course_title,
+                      c.module_number AS module_number,
+                      est.name AS establishment_name,
+                      u.name AS mentor_name
+               FROM enrolments e JOIN pupils p ON p.id=e.pupil_id
+               JOIN courses c ON c.id=e.course_id
+               LEFT JOIN establishments est ON est.id = p.establishment_id
+               LEFT JOIN users u ON u.id = e.mentor_id
+               WHERE e.id=?""",
+            (request.params["enrolment_id"],),
+        ).fetchone()
+        if not row:
+            return Response("Certificate not found", status="404 Not Found")
+        path = pdfgen.certificate_pdf(
+            f"{row['forename']} {row['surname']}", row["course_title"],
+            cert["issued_date"], request.params["enrolment_id"],
+            establishment_name=row["establishment_name"],
+            mentor_name=row["mentor_name"],
+            module_number=row["module_number"])
+        conn.execute("UPDATE certificates SET pdf_path=? WHERE enrolment_id=?",
+                     (path, request.params["enrolment_id"]))
+        conn.commit()
+    finally:
+        conn.close()
+    return pdf_response(path, "certificate.pdf")
 
 
 @router.get("/mentor/session/record/<record_id>/edit")
