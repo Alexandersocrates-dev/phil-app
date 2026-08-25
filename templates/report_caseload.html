@@ -33,7 +33,7 @@
   <table>
     <tr>
       <th>Pupil</th><th>Course</th>{% if show_mentor %}<th>Mentor</th>{% endif %}
-      <th>Started</th><th>Scheduled end</th><th>Progress</th><th>Certificate</th><th>Reflection</th><th></th>
+      <th>Started</th><th>Expected end</th><th>Progress</th><th>Certificate</th><th>Follow-up</th><th></th>
     </tr>
     {% for r in rows %}
     <tr>
@@ -44,7 +44,12 @@
       <td>{{ r.scheduled_end }}</td>
       <td>{{ r.progress }}</td>
       <td>{{ r.certificate }}</td>
-      <td>{% if r.reflection == 'Needed' %}<span class="badge badge-amber">Needed</span>{% elif r.reflection == 'Done' %}<span class="badge badge-teal">Done</span>{% else %}-{% endif %}</td>
+      {# Same states as the to-do list: done green, overdue red, booked neutral. #}
+      <td>{% if r.follow_up == 'Done' %}<span class="badge badge-teal">Done</span>
+        {%- elif r.follow_up == 'Overdue' %}<span class="badge badge-red">Overdue</span>
+        {%- elif r.follow_up == 'Not booked' %}<span class="badge badge-amber">Not booked</span>
+        {%- elif r.follow_up and r.follow_up != '-' %}{{ r.follow_up }}
+        {%- else %}-{% endif %}</td>
       <td><a href="/report/mentee/{{ r.enrolment_id }}">View</a></td>
     </tr>
     {% endfor %}
