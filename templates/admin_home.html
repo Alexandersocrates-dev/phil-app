@@ -2,13 +2,16 @@
 {% from "_icons.html" import icon_users, icon_user, icon_user_plus, icon_book, icon_edit, icon_folder, icon_file_text, icon_message_circle, icon_shield %}
 {% block title %}Admin - Phil{% endblock %}
 {% block content %}
-<h1>{{ establishment.name }}</h1>
-{% if sub %}
-<p class="muted">
-  Plan: {{ sub.plan_type }} &middot; Seats used: {{ used }} of {{ limit }}
-  {% if sub.plan_type == 'pilot' %}&middot; Pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}
-</p>
-{% endif %}
+<header class="ah-head">
+  <span class="ah-eyebrow">Admin</span>
+  <h1>{{ establishment.name }}</h1>
+  {% if sub %}
+  <p class="ah-lede">
+    {{ sub.plan_type|capitalize }} plan &middot; {{ used }} of {{ limit }} seats used
+    {%- if sub.plan_type == 'pilot' %} &middot; pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}
+  </p>
+  {% endif %}
+</header>
 
 {% for n in admin_notes %}
 <div class="flash flash-{{ 'error' if n.type == 'pilot_ending' else 'ok' }}" style="display:flex; justify-content:space-between; align-items:center;">
@@ -126,15 +129,19 @@
 
 <div class="card">
   <h2>Mentors and admins</h2>
-  <table>
-    <tr><th>Name</th><th>Role</th><th>Email</th><th></th></tr>
+  <div class="ah-scroll">
+  <table class="ah-table">
+    <tr><th>Name</th><th class="ah-tight">Role</th><th class="ah-tight">Email</th><th class="ah-tight"></th></tr>
     {% for m in mentors %}
     <tr>
-      <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.name[:1] }}</span>{{ m.name }}</span></td><td>{{ m.role }}</td><td>{{ m.email }}</td>
-      <td>{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
+      <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.name[:1] }}</span>{{ m.name }}</span></td>
+      <td class="ah-tight">{{ m.role }}</td>
+      <td class="ah-tight">{{ m.email }}</td>
+      <td class="ah-tight">{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
     </tr>
     {% endfor %}
   </table>
+  </div>
 </div>
 
 <details class="card collapse-card">
@@ -146,23 +153,45 @@
   {% if not sessions %}
     <p class="muted">No sessions recorded yet.</p>
   {% else %}
-  <table>
-    <tr><th>Pupil</th><th>Course</th><th>Week</th><th>Date</th><th>Mentor</th><th>Safeguarding</th></tr>
+  <div class="ah-scroll">
+  <table class="ah-table">
+    <tr><th class="ah-tight">Pupil</th><th>Course</th><th class="ah-tight">Week</th>
+        <th class="ah-tight">Date</th><th class="ah-tight">Mentor</th><th class="ah-tight">Safeguarding</th></tr>
     {% for s in sessions %}
     <tr>
-      <td><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
-      <td>{{ s.course_title }}</td>
-      <td>{{ s.week_number }}</td>
-      <td>{{ s.date|uk_date }}</td>
-      <td>{{ s.mentor_name }}</td>
-      <td>{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
+      <td class="ah-tight"><a href="/admin/session/{{ s.id }}">{{ s.forename }} {{ s.surname }}</a></td>
+      <td class="ah-c-course">{{ s.course_title }}</td>
+      <td class="ah-tight">{{ s.week_number }}</td>
+      <td class="ah-tight">{{ s.date|uk_date }}</td>
+      <td class="ah-tight">{{ s.mentor_name }}</td>
+      <td class="ah-tight">{% if s.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
     </tr>
     {% endfor %}
   </table>
+  </div>
   {% endif %}
 </details>
 
 <style>
+.ah-head{margin:0 0 20px;}
+.ah-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.ah-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.ah-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+
+/* Both tables scroll rather than crush. Without this an email address widens
+   the table and everything short — week numbers, dates, the Flagged badge —
+   wraps to fit. */
+.ah-scroll{overflow-x:auto;}
+.ah-table{width:100%;border-collapse:collapse;}
+.ah-table th{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-align:left;padding:9px 16px 9px 0;white-space:nowrap;}
+.ah-table td{padding:11px 16px 11px 0;border-top:1px solid var(--border);vertical-align:middle;
+  line-height:1.45;}
+.ah-table td:last-child, .ah-table th:last-child{padding-right:0;}
+.ah-tight{white-space:nowrap;}
+.ah-c-course{min-width:160px;}
+
 .collapse-card{padding-top:0;}
 .collapse-summary{display:flex; align-items:center; justify-content:space-between; gap:12px;
   cursor:pointer; list-style:none; padding:var(--sp-4) 0;}

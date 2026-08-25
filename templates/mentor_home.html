@@ -2,8 +2,11 @@
 {% from "_icons.html" import icon_book %}
 {% block title %}Mentor home - Phil{% endblock %}
 {% block content %}
-<h1>Hi, {{ user.name }}</h1>
-<p class="muted">Everyone you mentor, and where each course is up to.</p>
+<header class="mh-head">
+  <span class="mh-eyebrow">Mentor home</span>
+  <h1>Hi, {{ user.name }}</h1>
+  <p class="mh-lede">Everyone you mentor, and where each course is up to.</p>
+</header>
 
 {% set has_pupil = enrolments|length > 0 %}
 <div class="card gs-checklist" id="gsChecklist">
@@ -132,11 +135,12 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
     <span class="ml-toggle">Show courses</span>
   </summary>
 
+  <div class="ml-scroll">
   <table class="ml-courses">
   {% for e in p.courses %}
     <tr>
-      <td>{{ e.course_title }}</td>
-      <td style="width:150px;">
+      <td class="ml-c-course">{{ e.course_title }}</td>
+      <td class="ml-c-progress">
         <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/sessions_total*100)|round|int }}%"></div></div>
         {# "Session 5 of 6" beside a Record button doesn't say whether 5 is done or
    about to happen. Say both: what is finished, and what to do next. #}
@@ -145,7 +149,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 {%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the course summary
 {%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%}</span>
       </td>
-      <td style="width:110px;">
+      <td class="ml-c-status">
         {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
         {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
         {% else %}<span class="badge badge-teal">Active</span>{% endif %}
@@ -157,13 +161,21 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
     </tr>
   {% endfor %}
   </table>
-  <p style="margin:6px 0 0;"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a></p>
+  </div>
+  <p class="ml-link-row"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a></p>
 </details>
 {% endfor %}
 {% endif %}
 </div>
 
 <style>
+.mh-head{margin:0 0 20px;}
+.mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+.mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
+  text-wrap:pretty;}
+
 .ml-pupil{border-top:1px solid var(--border); padding:4px 0;}
 .ml-pupil:first-of-type{border-top:none;}
 .ml-summary{display:flex; align-items:center; gap:10px; cursor:pointer; list-style:none; padding:10px 0;}
@@ -177,8 +189,16 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .ml-pupil[open] .ml-toggle::after{content:"Hide courses";}
 .ml-pupil[open] .ml-toggle{font-size:0;}
 .ml-pupil[open] .ml-toggle::after{font-size:12px;}
-.ml-courses{margin:0 0 4px 30px; width:calc(100% - 30px);}
-.ml-courses td{padding:8px 8px 8px 0; vertical-align:middle;}
+/* The table scrolls rather than crushing its columns. Squeezing is what broke
+   "5 of 6 completed · write the course summary" across two lines. */
+.ml-scroll{overflow-x:auto;margin:0 0 4px 30px;}
+.ml-courses{width:100%;min-width:520px;border-collapse:collapse;}
+.ml-courses td{padding:9px 14px 9px 0;vertical-align:middle;}
+.ml-courses td:last-child{padding-right:0;}
+.ml-c-course{min-width:170px;line-height:1.4;}
+.ml-c-progress{width:190px;}
+.ml-c-status{width:110px;white-space:nowrap;}
+.ml-link-row{margin:6px 0 0;}
 .ml-link{font-size:12.5px; margin-left:30px;}
 </style>
 {% endblock %}
