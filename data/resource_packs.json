@@ -28,7 +28,7 @@
       },
       {
         "name": "Body map handout",
-        "body": "Where do I feel the urge to damage or destroy something? Tick the areas where you notice a change, and write what it feels like there.",
+        "body": "Where do I feel the urge to damage or destroy something? Tick the areas where you notice a change.",
         "checklist": {
           "items": [
             "Head and face",
@@ -3225,7 +3225,7 @@
     "items": [
       {
         "name": "Body map handout",
-        "body": "Where do I feel anger in my body? Tick the areas where you notice a change, and write what it feels like there.",
+        "body": "Where do I feel anger in my body? Tick the areas where you notice a change.",
         "checklist": {
           "items": [
             "Head and face",
@@ -4141,7 +4141,7 @@
       },
       {
         "name": "Body map handout",
-        "body": "Where do I feel this emotion in my body? Tick the areas where you notice a change, and write what it feels like there.",
+        "body": "Where do I feel this emotion in my body? Tick the areas where you notice a change.",
         "checklist": {
           "items": [
             "Head and face",
