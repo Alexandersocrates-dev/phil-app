@@ -162,7 +162,7 @@ module.exports = [
       {
         "title": "Why rules matter to me",
         "objective": "Pupil can describe a personal view of school rules and identify which feel fairest and least fair.",
-        "checkin": "1. Start with something outside school — what they did at the weekend, what they're into.\n2. Ask how the week has gone on a scale of one to five.\n3. Keep this short and light. Rapport now makes the rule conversation possible later.",
+        "checkin": "1. Start with something outside school — what they did at the weekend, what they're into.\n2. Ask: 'how has your week been, one to five?'\n3. Keep this short and light. Rapport now makes the rule conversation possible later.",
         "input": "1. Ask 'what are rules actually for?' before offering any answer.\n2. Take whatever they say seriously, including 'to control us'.\n3. Offer the alternative: most rules exist to keep people safe or to keep things fair.\n4. Ask questions rather than lecture — a pupil who feels argued at stops talking.",
         "activity": "Pupil sorts a set of school rule cards into 'makes sense to me' and 'feels unfair' piles, and explains the thinking behind two or three of each.",
         "reflect": "Which rule causes the most friction for you personally? Agree to notice one moment this week when following a rule was hard.",
@@ -183,7 +183,7 @@ module.exports = [
       {
         "title": "The choices game",
         "objective": "Pupil can link a choice to its likely consequence, for both positive and negative examples.",
-        "checkin": "1. Ask whether they noticed a moment this week where a rule felt hard to follow.\n2. Ask what the rule was and what they did.\n3. Don't judge the answer — you need honest examples for the game to work.",
+        "checkin": "1. Ask: 'was there a moment this week when a rule felt hard to follow?'\n2. Ask: 'what was the rule, and what did you do?'\n3. Don't judge the answer — you need honest examples for the game to work.",
         "input": "1. Explain choice and consequence as a plain chain: if I do X, Y tends to happen.\n2. Use a neutral example first, like missing the bus, so it isn't about their behaviour.\n3. Make clear this is about what follows, not about being good or bad.",
         "activity": "Play a short choices game using real school scenarios (e.g. refusing to move seats, walking away from a task) and map two to three possible outcomes for each choice.",
         "reflect": "Was there a moment this week where a different choice might have led somewhere better? No blame, just noticing.",
@@ -204,7 +204,7 @@ module.exports = [
       {
         "title": "Listening and following instructions",
         "objective": "Pupil can follow a first-time instruction using an agreed strategy during the session.",
-        "checkin": "1. Ask whether they spotted a choice-and-consequence moment this week.\n2. Ask what they chose and what followed.\n3. If they can't think of one, use something that happened in the last hour.",
+        "checkin": "1. Ask: 'did you spot a moment this week where you made a choice and something followed?'\n2. Ask: 'what did you choose, and what happened next?'\n3. If they can't think of one, use something that happened in the last hour.",
         "input": "1. Show the first/then cue cards and read the two worked examples aloud.\n2. Explain the pause: an instruction doesn't need an answer in the first second.\n3. Agree what a pause looks like for them — counting to three, or saying 'give me a second'.\n4. Fill in the two blank rows together using something from their real timetable.",
         "activity": "Practise a sequence of low-stakes instructions in the room (e.g. tidy this, hand me that) using the first/then structure, building up gradually.",
         "reflect": "What makes an instruction easier or harder to follow? Agree one classroom instruction to focus on this week.",
@@ -224,8 +224,8 @@ module.exports = [
       {
         "title": "When I disagree",
         "objective": "Pupil can practise disagreeing assertively rather than defiantly.",
-        "checkin": "1. Ask how the focus instruction went this week.\n2. Ask whether the pause got used at all.\n3. If it didn't, ask what happened instead — that's the material for today.",
-        "input": "1. Read out the defiant version: 'no, and I'm not explaining why'.\n2. Read the assertive version from the script card: what I want, the reason, an alternative.\n3. Ask which one is more likely to get them what they actually want.\n4. Write two of their own situations into the blank rows.",
+        "checkin": "1. Ask: 'how did the focus instruction go this week?'\n2. Ask: 'did you use the pause at all?'\n3. If it didn't, ask what happened instead — that's the material for today.",
+        "input": "1. Read out the defiant version: 'no, and I'm not explaining why'.\n2. Read the assertive version from the script card: what I want, the reason, an alternative.\n3. Ask: 'which of those two is more likely to get you what you actually want?'\n4. Write two of their own situations into the blank rows.",
         "activity": "Role-play two or three scenarios where the pupil disagrees with an instruction, practising a respectful script each time.",
         "reflect": "Which was easier, the old response or the new one? Agree to try the new script once this week.",
         "lookfor": "This is a genuinely hard skill under real stress, praise any attempt, even an imperfect one.",
@@ -298,7 +298,7 @@ module.exports = [
       {
         "title": "Naming my feelings",
         "objective": "Pupil can name at least five emotions beyond 'happy', 'sad' and 'angry'.",
-        "checkin": "1. Ask how they are today: calm, unsettled, overwhelmed, or shut down.\n2. Ask what put them there.\n3. Record the answer — this is the baseline you'll compare against in week five.",
+        "checkin": "1. Ask: 'which of these is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'what put you there?'\n3. Record the answer — this is the baseline you'll compare against in week five.",
         "input": "1. Show the emotions wheel or the 'How am I right now?' chart.\n2. Ask them to find a word they'd never normally use.\n3. Explain why the vocabulary matters: 'angry' covers ten different feelings, and they need different responses.",
         "activity": "Sort emotion word cards by how they feel and discuss one recent moment for two or three of them.",
         "reflect": "Which emotion is hardest to talk about? Agree to use the same four words once this week, even just to self.",
@@ -320,7 +320,7 @@ module.exports = [
       {
         "title": "My body and my feelings",
         "objective": "Pupil can identify physical sensations linked to at least two emotions.",
-        "checkin": "1. Check in with the same four words as last week.\n2. Ask whether it changed at any point since you last met.",
+        "checkin": "1. Check in with the same four words as last week.\n2. Ask: 'did that word change at any point since we last met?'",
         "input": "1. Explain that the body reacts before the mind catches up.\n2. Give a physical example everyone recognises — the jolt before you realise you nearly fell.\n3. Say why this matters: the body is the early warning, and it's noticeable if you know what to look for.",
         "activity": "Body map exercise linking sensations (tight chest, fidgety legs, heavy head) to specific emotions.",
         "reflect": "What's your earliest physical sign of stress or worry? Notice it once this week.",
@@ -340,7 +340,7 @@ module.exports = [
       {
         "title": "Calming strategies",
         "objective": "Pupil can try two grounding or calming techniques.",
-        "checkin": "1. Check in with the same four words.\n2. Ask whether they noticed any of the body signals from last week.\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
+        "checkin": "1. Check in with the same four words.\n2. Ask: 'did you notice any of the body signals we found last week?'\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Do 5-4-3-2-1 together now: five things you can see, four you can hear, three you can feel.\n3. Then box breathing: in for four, hold four, out four, hold four.\n4. Say plainly that one will suit them and one won't, and that's the point of trying both.",
         "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.",
         "reflect": "Which strategy would you actually use? Agree to try it once this week in a low-stakes moment.",
@@ -360,7 +360,7 @@ module.exports = [
       {
         "title": "Riding the wave",
         "objective": "Pupil understands emotions rise and fall, and can describe a personal 'wave'.",
-        "checkin": "1. Check in with the same four words.\n2. Ask which grounding technique they tried and how it went.\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
+        "checkin": "1. Check in with the same four words.\n2. Ask: 'which grounding technique did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
         "input": "1. Explain that a strong feeling peaks and falls on its own if nothing feeds it.\n2. Use a wave, not a switch: it builds, breaks and settles.\n3. Explain what feeds it — replaying it, arguing back, staying in the same place.\n4. The skill is riding it out, not switching it off.",
         "activity": "Draw a personal 'anger or worry wave' for a recent strong emotion, marking where a strategy could have been used to ride it out rather than escalate it.",
         "reflect": "What's one moment this week where you could try 'riding the wave' instead of reacting straight away?",
@@ -474,7 +474,7 @@ module.exports = [
       {
         "title": "Bullying: bystander, target, or both",
         "objective": "Pupil can identify which role or roles were played in a bullying dynamic and what each role needs.",
-        "checkin": "1. Ask what surprised them about seeing it from the other side.\n2. If nothing did, ask what they still disagree with — that's just as useful.",
+        "checkin": "1. Ask: 'what surprised you about seeing the situation from the other side?'\n2. If nothing did, ask what they still disagree with — that's just as useful.",
         "input": "1. Show the roles handout: target, instigator, bystander, defender.\n2. Explain that most people move between these rather than being one of them.\n3. Ask which role they've been in this term — you may get more than one answer.\n4. Avoid labelling the pupil; the point is that roles change, which means they can be chosen.",
         "activity": "Discuss where the pupil sees themselves in a recent situation, and what someone in that role might need: safety, support, or a way to change course.",
         "reflect": "What's one thing that would help you if this situation happens again?",
@@ -494,7 +494,7 @@ module.exports = [
       {
         "title": "Sorting it out",
         "objective": "Pupil can use an 'I statement' and take part in a structured repair conversation.",
-        "checkin": "1. Ask what they concluded about their own role last week.\n2. Ask what would help if the same situation came round again.\n3. Write that answer down — it feeds into the plan in week five.",
+        "checkin": "1. Ask: 'what did you decide about your own part in it last week?'\n2. Ask: 'what would help if the same situation came round again?'\n3. Write that answer down — it feeds into the plan in week five.",
         "input": "1. Show the I statement card and read the structure: I felt X when Y happened, and I need Z.\n2. Contrast it with the blame version of the same sentence, so the difference is audible.\n3. Say why it works: it's harder to argue with how someone felt than with an accusation.\n4. Have them build one about a real situation, not a hypothetical.",
         "activity": "Practise 'I statements' for the ongoing conflict; if appropriate and both pupils consent, prepare for, or hold with a second mentor, a joint restorative conversation.",
         "reflect": "What would a fair outcome look like to you?",
@@ -514,7 +514,7 @@ module.exports = [
       {
         "title": "My social goals plan",
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
-        "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask whether the other person would say the same.\n3. Both answers go into the social goals plan.",
+        "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask: 'would the other person say the same thing?'\n3. Both answers go into the social goals plan.",
         "input": "1. Recap the three tools: the restorative questions, perspective-taking, the I statement.\n2. Ask which one they'd actually use if it happened tomorrow.\n3. That's the one that goes at the top of their plan.",
         "activity": "Identify one or two friendship or social goals (e.g. sit with a specific peer group, join a lunchtime club) and agree how staff can support this.",
         "reflect": "What's one thing you're proud of from this course?",
