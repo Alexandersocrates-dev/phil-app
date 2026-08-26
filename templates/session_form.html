@@ -12,10 +12,15 @@
 {% macro resource_card(item, context='') %}
 {% set fill_in = item.table or item.form or item.checklist %}
 <details class="res-inline"{% if fill_in %} open{% endif %}>
-  <summary class="res-inline-head">
-    <span class="res-inline-name">{{ item.name }}</span>
-    {% if fill_in %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
-    <span class="res-toggle" aria-hidden="true"></span>
+  {# The row lives in a div inside the summary, not on the summary itself:
+     display:flex on a <summary> is refused by some browsers, which stacks the
+     name, the tag and the toggle into three lines. #}
+  <summary class="res-inline-summary">
+    <span class="res-inline-head">
+      <span class="res-inline-name">{{ item.name }}</span>
+      {% if fill_in %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+      <span class="res-toggle" aria-hidden="true"></span>
+    </span>
   </summary>
   {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p class="res-inline-p">{{ para }}</p>{% endif %}{% endfor %}{% endif %}
   {% if item.table %}
@@ -472,14 +477,18 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 
 <style>
 .res-inline{border:1px solid var(--border);border-left:3px solid var(--teal-darker);border-radius:8px;background:#fff;padding:10px 12px;margin:0 0 8px;}
-.res-inline-head{display:flex;align-items:center;gap:8px;margin:0 0 6px;}
+.res-inline-head{display:flex;align-items:center;margin:0;}
+.res-inline-head > *{margin-right:8px;}
+.res-inline-head > *:last-child{margin-right:0;}
 .res-inline-name{font-size:12px;font-weight:700;color:var(--teal-darker);}
 /* The summary is the whole control, so the head row stays clickable and the
    marker is ours rather than the browser's inconsistent triangle. */
 /* Nothing on this page had a hover state or a transition. These are the two
    controls a mentor clicks during a session. */
-.res-inline > summary{transition:background-color 120ms ease;}
+.res-inline > summary{transition:background-color 120ms ease; display:block;}
 .res-inline > summary:hover{background:rgba(28,28,26,.035);}
+.res-inline-summary{cursor:pointer; list-style:none;}
+.res-inline-summary::-webkit-details-marker{display:none;}
 .res-toggle{text-decoration:underline; text-underline-offset:2px;}
 .res-prev > summary{transition:color 120ms ease;}
 .res-prev > summary:hover{color:var(--teal-darker);}
@@ -599,7 +608,7 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .note-panel--watch .note-panel-head{color:var(--amber-dark);}
 .note-panel--watch .note-panel-body{color:#412402;}
 
-.step-line{.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
+.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
   padding-left:20px; text-indent:-20px;}
 .step-line--plain{padding-left:0; text-indent:0;}
 .step-line:last-child{margin-bottom:6px;}
