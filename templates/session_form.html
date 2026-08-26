@@ -180,8 +180,10 @@
 
 <div style="background:#fff;border:1.5px solid var(--teal);border-radius:14px;box-shadow:0 4px 14px rgba(29,158,117,0.14);padding:16px 18px;margin-bottom:8px;">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
-<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">{% if week.staff_only %}No pupil in this one &mdash; it&rsquo;s written for other staff{% else %}This session&rsquo;s focus{% endif %}</p></div>
+<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;margin-right:12px;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
+<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p>{# The goal panel below already says what the session is for, so a generic
+        "This session's focus" label above it was one line of nothing. #}
+        {% if week.staff_only %}<p style="font-size:12px;color:var(--muted);margin:2px 0 0;">No pupil in this one &mdash; it&rsquo;s written for other staff</p>{% endif %}</div>
 </div>
 
 {# The objective was already written as a goal — "Pupil can describe what anger
@@ -198,6 +200,7 @@
 </div>
 {% endif %}
 
+<div class="sess-context">
 {% if prev_record and prev_record.mentor_notes and not week.staff_only %}
 {# Was coral throughout, which reads as a warning. This is a helpful reminder
    the mentor left themselves, so it should look like information — but a flat
@@ -225,6 +228,7 @@
   <p class="note-panel-body">{{ week.lookfor|sentence }}</p>
 </div>
 {% endif %}
+</div>
 
 {% if week.resources %}
 <div style="margin:0 0 14px 32px;">
@@ -236,7 +240,10 @@
   {% if week.resource_items %}{% for item in week.resource_items %}<span class="res-name">{{ item.name }}</span>{% endfor %}
   {% else %}{% for r in week.resources %}<span class="res-name">{{ r }}</span>{% endfor %}{% endif %}
   </div>
-  <a class="btn btn-primary btn-sm res-download" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">
+  {# Secondary, not primary: the sheets themselves are the content here, and a
+     solid button next to them pulled the eye to the least important thing
+     in the row. #}
+  <a class="btn btn-secondary btn-sm res-download" href="/courses/{{ enrolment.course_id }}/resources/pdf?week={{ next_week_number }}" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M7 12l5 5 5-5"/><path d="M4 20h16"/></svg>
     Download PDF
   </a>
@@ -577,7 +584,8 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-name{display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
   background:var(--teal-light); color:#04342C; border-radius:8px;
   font-size:12px; font-weight:500; cursor:default;}
-.res-download{display:inline-flex; align-items:center; gap:7px; min-height:40px; flex-shrink:0;}
+.res-download{display:inline-flex; align-items:center; min-height:40px; flex-shrink:0;}
+.res-download svg{margin-right:7px;}
 .res-download svg{width:15px; height:15px;}
 /* The hanging indent lines wrapped text up under the words, not under the
    number. It only applies to numbered steps: the take-home has no number,
@@ -586,6 +594,17 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    hairline border, which made them the quietest things on a busy page. A solid
    left bar, an icon and a stronger label give weight; the colour says which
    kind of information it is. */
+/* The two context panels sit side by side on a wide screen. Stacked, the
+   header was four full-width blocks in a row and the eye had nowhere to rest
+   after the goal. Below 700px they stack, where the width isn't there. */
+.sess-context{display:flex; flex-wrap:wrap; align-items:flex-start; margin:0 0 16px;}
+.sess-context > .note-panel{flex:1 1 300px; margin:0 16px 0 0;}
+.sess-context > .note-panel:last-child{margin-right:0;}
+@media (max-width:700px){
+  .sess-context > .note-panel{flex-basis:100%; margin:0 0 12px;}
+  .sess-context > .note-panel:last-child{margin-bottom:0;}
+}
+
 .note-panel{border-radius:0 12px 12px 0; padding:12px 16px; margin:0 0 16px;
   border-left:4px solid; box-shadow:0 1px 2px rgba(28,28,26,.04);}
 .note-panel-head{display:flex; align-items:center; margin-bottom:6px;}
