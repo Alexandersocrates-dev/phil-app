@@ -45,8 +45,8 @@ module.exports = [
         "title": "Spotting my triggers",
         "objective": "Pupil can identify two to three personal triggers and rate their intensity.",
         "checkin": "1. Ask: 'did you notice your first body signal at any point this week?'\n2. If yes, ask what was happening at the time. If no, ask when anger came closest.\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
-        "input": "1. Explain that triggers are personal: what irritates one person doesn't bother another.\n2. Give an example of your own, so they aren't the only one naming something.\n3. Introduce the trigger scale from mild annoyance to explosive.\n4. Explain the rating: ten is the one that takes least to set you off, not the loudest reaction.",
-        "activity": "1. Ask: 'what sets you off at school?' Pupil names as many triggers as they can.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these triggers happens most often at school?'",
+        "input": "1. Explain that triggers are personal: what irritates one person doesn't bother another.\n2. Give an example of your own, so they aren't the only one naming something.\n3. Explain that triggers come in different sizes, from mild annoyance up to explosive.\n4. Explain how they'll score them in a minute: ten means it takes the least to set you off, not that you shout the loudest.",
+        "activity": "1. Ask: 'what kinds of things at school make you angry?' Write each one they name into the trigger list.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these triggers happens most often at school?'",
         "reflect": "1. Ask: 'which trigger comes up most at school?'\n2. Pupil picks one trigger to track this week, and marks a tally on the card each time it happens.",
         "lookfor": "Some pupils find it easier to identify triggers through drawing or examples from TV or games rather than direct discussion, adapt the format if needed.",
         "resources": [
