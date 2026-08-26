@@ -86,7 +86,7 @@ module.exports = [
       {
         "title": "Practising in the moment",
         "objective": "Pupil can apply a calming strategy in a simulated stressful scenario and take part in a restorative conversation.",
-        "checkin": "1. Ask: 'did you use either of your two strategies this week?'\n2. If it did, ask what happened next. If it didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
+        "checkin": "1. Ask: 'did you use either of your two strategies this week?'\n2. If they did, ask what happened next. If they didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
         "input": "1. Explain that a strategy only works if it's practised before it's needed.\n2. Compare it to a fire drill: nobody reads the instructions during a fire.\n3. Agree to rehearse under mild pressure now, in the role-play, so it's more automatic later.",
         "activity": "1. Pupil picks one of the two strategies from week three and says which one they're using.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. At the moment of frustration, pause and ask: 'which strategy, and what does it look like right now?'\n4. Run it twice more with different cards, so it's rehearsed rather than discussed.",
         "reflect": "1. Ask: 'what made the strategy easier or harder than in week three?'\n2. Pupil names one real school situation to use it in before the next session.",
@@ -224,7 +224,7 @@ module.exports = [
       {
         "title": "When I disagree",
         "objective": "Pupil can practise disagreeing assertively rather than defiantly.",
-        "checkin": "1. Ask: 'how did the focus instruction go this week?'\n2. Ask: 'did you use the pause at all?'\n3. If it didn't, ask what happened instead — that's the material for today.",
+        "checkin": "1. Ask: 'how did the focus instruction go this week?'\n2. Ask: 'did you use the pause at all?'\n3. If they didn't, ask what happened instead — that's the material for today.",
         "input": "1. Read out the defiant version: 'no, and I'm not explaining why'.\n2. Read the assertive version from the script card: what I want, the reason, an alternative.\n3. Ask: 'which of those two is more likely to get you what you actually want?'\n4. Say that they'll build their own version in a moment, using situations that actually come up.",
         "activity": "1. Pupil writes two situations they'd want to push back on into the blank rows of the assertive disagreement script card.\n2. Role-play the first one: you give the instruction, they answer using the script.\n3. Do it twice more with different instructions, until it sounds like them and not a script.\n4. Ask: 'would you actually say that to a teacher?' If not, reword it together.",
         "reflect": "1. Ask: 'which felt easier, your usual answer or the new one?'\n2. Pupil agrees one lesson this week to try the new version, even once.",
@@ -2116,7 +2116,7 @@ module.exports = [
       {
         "title": "Building a workable routine",
         "objective": "Pupil can design a realistic weekly revision routine that includes rest.",
-        "checkin": "1. Ask: 'did you catch one of those unhelpful thoughts this week and turn it into a fairer one?'\n2. Ask: 'what did the balanced version sound like?'\n3. If it didn't happen, do one now with a real thought from this week.",
+        "checkin": "1. Ask: 'did you catch one of those unhelpful thoughts this week and turn it into a fairer one?'\n2. Ask: 'what did the balanced version sound like?'\n3. If they didn't, do one now with a real thought from this week.",
         "input": "1. Say that a sustainable routine beats a perfect one, every time.\n2. Use the session length guide: short, regular blocks with real breaks.\n3. Say plainly that rest is part of the plan, not a reward for finishing it.\n4. Say that the routine gets built around what already exists — clubs, jobs, caring, travel.",
         "activity": "1. Start from their real week — clubs, jobs, travel, caring — not an empty timetable.\n2. Pupil blocks in revision sessions on the weekly routine template, using the session length guide.\n3. Block in rest and time with friends too, and mark them as fixed.\n4. Ask: 'is there a single day here you'd actually manage all of?'",
         "reflect": "1. Ask: 'which part of that would you actually stick to?'\n2. Agree to try it for one week and change what doesn't fit, rather than starting again.",
