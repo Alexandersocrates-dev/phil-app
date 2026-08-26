@@ -132,12 +132,29 @@ def assign_resources_to_steps(week, items):
     by_step = {step: [] for step in SESSION_STEPS}
     for item in items:
         keywords = _resource_keywords(item.get("name"))
-        best, best_score = None, 0
-        for step in SESSION_STEPS:
-            score = len(keywords & _resource_keywords(texts[step]))
-            if score > best_score:
-                best, best_score = step, score
-        by_step[best or "activity"].append(item)
+        scores = {step: len(keywords & _resource_keywords(texts[step])) for step in SESSION_STEPS}
+        matched = [step for step in SESSION_STEPS if scores[step]]
+        if not matched:
+            by_step["activity"].append(item)
+            continue
+        # A sheet the pupil writes on goes to the LAST step that mentions it —
+        # the one where it gets filled in. Placing it at the best-scoring step
+        # put it above the instruction that used it, so a mentor reading the
+        # activity had to scroll back up to the input step to tick a box.
+        # Reference material a mentor only shows stays at its strongest match,
+        # which is where it's introduced.
+        if item.get("table") or item.get("form") or item.get("checklist"):
+            # Strongest match wins, and a tie goes to the later step — the one
+            # where it is filled in rather than introduced. Taking the last
+            # match outright was too crude: "what's the earliest sign your body
+            # gives you?" matched one word of "Body map handout" and dragged the
+            # sheet down into Reflect. The take-home step never owns a sheet,
+            # since that happens after the session.
+            in_session = [s for s in matched if s != "home"] or matched
+            best = max(in_session, key=lambda s: (scores[s], SESSION_STEPS.index(s)))
+            by_step[best].append(item)
+        else:
+            by_step[max(matched, key=lambda s: scores[s])].append(item)
     return by_step
 
 
