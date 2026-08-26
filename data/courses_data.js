@@ -23,8 +23,8 @@ module.exports = [
         "title": "Understanding my anger",
         "objective": "Pupil can describe what anger feels like in the body and name at least one recent trigger.",
         "checkin": "1. Ask 'how has your week been, one to five?' and show the mood scale card.\n2. Whatever the number, ask what made it that rather than one higher or lower.\n3. Don't discuss any incidents yet — this is about building rapport first.",
-        "input": "1. Show the anger cycle diagram and read the four stages aloud: trigger, body signals, thoughts, action.\n2. Ask 'which of these do you notice first?' — most pupils say action, which is the point.\n3. Explain that the earlier you catch it, the more choice you have.\n4. Use the body map handout to mark where they feel it.",
-        "activity": "1. Ask: 'where in your body do you notice anger first?' Pupil ticks those areas on the body map.\n2. Ask what each ticked area actually feels like, and write it in their words.\n3. Pupil talks through one recent incident, walking it round the four stages of the cycle.\n4. Ask: 'which stage did you notice at the time?' Stay with understanding, not blame.",
+        "input": "1. Show the anger cycle diagram and read the four stages aloud: trigger, body signals, thoughts, action.\n2. Ask: 'when you get angry, which of these four do you notice first?' Most pupils say action. That is the point — by then it has already happened.\n3. Explain that the earlier you catch it, the more choice you have.\n4. Use the body map handout to mark where they feel it.",
+        "activity": "1. Ask: 'where in your body do you notice anger first?' Pupil ticks those areas on the body map.\n2. Ask: 'what does it feel like there?' Write the pupil's own words next to each ticked area.\n3. Pupil talks through one recent incident, walking it round the four stages of the cycle.\n4. Ask: 'which stage did you notice at the time?' Stay with understanding, not blame.",
         "reflect": "1. Ask: 'what's the earliest sign your body gives you?'\n2. Pupil names one body signal to watch for this week.",
         "lookfor": "Watch for minimisation ('I wasn't even angry') or shutdown. If the pupil can't discuss a specific incident yet, use a hypothetical scenario instead.",
         "resources": [
@@ -44,9 +44,9 @@ module.exports = [
       {
         "title": "Spotting my triggers",
         "objective": "Pupil can identify two to three personal triggers and rate their intensity.",
-        "checkin": "1. Ask whether they noticed their first body signal at any point this week.\n2. If yes, ask what was happening at the time. If no, ask when anger came closest.\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
+        "checkin": "1. Ask: 'did you notice your first body signal at any point this week?'\n2. If yes, ask what was happening at the time. If no, ask when anger came closest.\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
         "input": "1. Explain that triggers are personal: what irritates one person doesn't bother another.\n2. Give an example of your own, so they aren't the only one naming something.\n3. Introduce the trigger scale from mild annoyance to explosive.\n4. Work through the trigger list together, rating each one one to ten.",
-        "activity": "1. Ask: 'what sets you off at school?' Pupil names as many triggers as they can.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these happens most often?'",
+        "activity": "1. Ask: 'what sets you off at school?' Pupil names as many triggers as they can.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these triggers happens most often at school?'",
         "reflect": "1. Ask: 'which trigger comes up most at school?'\n2. Pupil picks one trigger to track this week, and marks a tally on the card each time it happens.",
         "lookfor": "Some pupils find it easier to identify triggers through drawing or examples from TV or games rather than direct discussion, adapt the format if needed.",
         "resources": [
@@ -65,9 +65,9 @@ module.exports = [
       {
         "title": "My calm-down toolkit",
         "objective": "Pupil can name and try at least two calming strategies.",
-        "checkin": "1. Look at the trigger tally together and count the marks.\n2. Ask which trigger came up most, and whether that surprised them.\n3. If the tally is empty, fill it in from memory now rather than skipping it.",
+        "checkin": "1. Look at the trigger tally together and count the marks.\n2. Ask: 'which trigger came up most, and did that surprise you?'\n3. If the tally is empty, fill it in from memory now rather than skipping it.",
         "input": "1. Show the calm-down strategy cards and read through them together.\n2. Try slow breathing there and then: in through the nose for four, out through the mouth for six, five times.\n3. Ask them to pick two they would actually use — not the ones that sound best.\n4. Write the two chosen strategies somewhere they'll see them.",
-        "activity": "1. Do one round of slow breathing together in the room: in for four, out for six, five times.\n2. Ask: 'what changed in your body after that?'\n3. Pupil role-plays asking a teacher to use the safe space or show the signal card.\n4. Swap roles, so the pupil hears how the request sounds from the other side.",
+        "activity": "1. Do one round of slow breathing together in the room: in for four, out for six, five times.\n2. Ask: 'what changed in your body after the breathing?'\n3. Pupil role-plays asking a teacher to use the safe space or show the signal card.\n4. Swap roles, so the pupil hears how the request sounds from the other side.",
         "reflect": "1. Ask: 'which strategy felt most doable?'\n2. Pupil agrees to use it once this week in a low-stakes moment, so the habit exists before it's needed under pressure.",
         "lookfor": "Strategies only work if rehearsed when calm, resist the urge to introduce them for the first time during an actual incident.",
         "resources": [
@@ -86,7 +86,7 @@ module.exports = [
       {
         "title": "Practising in the moment",
         "objective": "Pupil can apply a calming strategy in a simulated stressful scenario and take part in a restorative conversation.",
-        "checkin": "1. Ask whether either chosen strategy got used this week.\n2. If it did, ask what happened next. If it didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
+        "checkin": "1. Ask: 'did you use either of your two strategies this week?'\n2. If it did, ask what happened next. If it didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
         "input": "1. Explain that a strategy only works if it's practised before it's needed.\n2. Compare it to a fire drill: nobody reads the instructions during a fire.\n3. Agree to rehearse under mild pressure now, in the role-play, so it's more automatic later.",
         "activity": "1. Pupil picks one of the two strategies from week three and says which one they're using.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. At the moment of frustration, pause and ask: 'which strategy, and what does it look like right now?'\n4. Run it twice more with different cards, so it's rehearsed rather than discussed.",
         "reflect": "1. Ask: 'what made the strategy easier or harder than in week three?'\n2. Pupil names one real school situation to use it in before the next session.",
@@ -108,8 +108,8 @@ module.exports = [
         "title": "My hot and cold plan",
         "objective": "Pupil has a personalised, written hot and cold plan and understands what happens next.",
         "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Put both numbers side by side and ask what's different.\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
-        "input": "1. Recap the four stages of the anger cycle and ask them to name their own first body signal.\n2. Recap their two chosen strategies from week three.\n3. Ask which one they'd use if something happened tomorrow — that answer goes in the support plan.",
-        "activity": "1. Ask: 'what are your triggers, and what's the first warning sign?' Pupil fills both into the hot and cold plan.\n2. Pupil writes in the two strategies they would actually use.\n3. Ask: 'who would you go to if it started building?' Add that name to the plan.\n4. Share the finished plan with the class teacher or pastoral lead.",
+        "input": "1. Recap the four stages of the anger cycle and ask them to name their own first body signal.\n2. Recap their two chosen strategies from week three.\n3. Ask: 'if something happened tomorrow, which of the two would you use?' That answer goes in the hot and cold plan.",
+        "activity": "1. Ask: 'what are your triggers, and what's the first warning sign?' Pupil fills both into the hot and cold plan.\n2. Pupil writes in the two strategies they would actually use.\n3. Ask: 'who would you go to if the anger started building?' Add that name to the plan.\n4. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer \u2014 it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
