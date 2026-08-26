@@ -3261,16 +3261,23 @@ def impact_report_form(request):
     conn = db.get_conn()
     try:
         years = recorded_academic_years(conn, user["establishment_id"])
-        # This academic year and anything ahead of it. A school sets next year's
-        # terms up over the summer holidays, so restricting to the current year
-        # hid exactly the terms they had just entered. Past years are left out
-        # so a school with four years of history doesn't get a wall of buttons.
+        # Terms that have actually started, within this academic year. A term
+        # still in the future would be a button returning an empty report, and
+        # earlier years would pile up as a wall of buttons.
+        today_iso = today.isoformat()
         terms = conn.execute(
-            """SELECT * FROM terms WHERE establishment_id=? AND date_to >= ?
-               ORDER BY date_from LIMIT 8""",
-            (user["establishment_id"], year_from)).fetchall()
+            """SELECT * FROM terms WHERE establishment_id=?
+                 AND date_from <= ? AND date_to >= ? AND date_from <= ?
+               ORDER BY date_from""",
+            (user["establishment_id"], today_iso, year_from, year_to)).fetchall()
+        # Entered but not yet begun. Counted so the page can say so, rather than
+        # leaving an admin who has just entered next year's terms wondering why
+        # nothing appeared.
+        upcoming = conn.execute(
+            """SELECT count(*) FROM terms WHERE establishment_id=? AND date_from > ?""",
+            (user["establishment_id"], today_iso)).fetchone()[0]
         # Whether they have entered any at all, which is what decides if the
-        # guess is still offered — a school with only past terms entered has
+        # guess is still offered — a school with only future terms entered has
         # still told us they don't want it.
         any_terms = conn.execute(
             "SELECT 1 FROM terms WHERE establishment_id=? LIMIT 1",
@@ -3287,7 +3294,7 @@ def impact_report_form(request):
     if not any_terms:
         presets.append(("This term (approximate)", term_from, term_to))
     return render("impact_form.html", user=user, presets=presets, years=years,
-                  current_year_from=year_from, has_terms=any_terms,
+                  current_year_from=year_from, has_terms=any_terms, upcoming_terms=upcoming,
                   default_from=year_from, default_to=year_to,
                   flash=flash_from_query(request))
 

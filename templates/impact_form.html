@@ -33,11 +33,17 @@
       <span class="preset-range">Everything recorded</span>
     </a>
   </div>
-  {# Only an admin can fix this, so only an admin is told about it. #}
+  {# Only an admin can fix either of these, so only an admin is told. #}
   {% if not has_terms and user.role in ['admin', 'phil_staff'] %}
   <p class="if-terms-note">&ldquo;This term&rdquo; is a rough guess &mdash; Phil doesn&rsquo;t know
   your term dates. <a href="/admin/terms">Enter them</a> and each term gets its own button,
   named the way your school names it.</p>
+  {% elif upcoming_terms and user.role in ['admin', 'phil_staff'] %}
+  {# Otherwise an admin who has just entered September's terms sees nothing and
+     assumes it didn't save. #}
+  <p class="if-terms-note">{{ upcoming_terms }} term{{ '' if upcoming_terms == 1 else 's' }}
+  entered but not yet started &mdash; {{ 'it appears' if upcoming_terms == 1 else 'they appear' }}
+  here once underway. <a href="/admin/terms">See your term dates</a>.</p>
   {% endif %}
 
   {# Built from years the school actually recorded sessions in, so it never
