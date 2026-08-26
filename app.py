@@ -2355,13 +2355,11 @@ def session_form(request):
                 item["_step"] = step
         week["resource_lines"] = assign_resources_to_lines(week, week["resource_items"])
     prev_record = completed_records[-1] if completed_records else None
-    # What the pupil took away last week. Several courses open by reviewing it,
-    # so the mentor should not have to go and find it.
+    # Last week's sheets were shown in full above this session's first step,
+    # which pushed the instructions off the screen and replayed work already
+    # done. The summary of what happened is enough; the filled-in sheets live on
+    # the pupil's record.
     prev_week_items = []
-    prev_week = next((w for w in all_weeks if w["week_number"] == next_week_number - 1), None)
-    if prev_week is not None:
-        prev_week_items = resource_items_for(
-            enrolment["course_module_number"], json.loads(prev_week["resources"] or "[]"))
     # range(1, 6) stopped at session 5, so the staff-only session never appeared
     # on the rail. Labels come from here too, rather than being derived in the
     # template, so a done session reads "S3 done" instead of a bare number.

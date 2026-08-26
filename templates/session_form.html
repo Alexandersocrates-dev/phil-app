@@ -299,16 +299,22 @@
      reading step 1 is looking at step 1's handout. #}
 {% for ln in week.resource_lines['checkin'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
-{% if (prev_week_items or prev_record) and not week.staff_only %}
+{% if prev_record and not week.staff_only %}
 <details class="res-prev">
   <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
   <div class="res-prev-body">
+    {# A summary, not a replay. The list of resource names says nothing a mentor
+       needs before starting, and last week's sheets — already filled in — pushed
+       this session's first instruction off the screen. The filled-in work is on
+       the pupil's record if it's wanted. #}
     {% if prev_record %}
       {% if prev_record.reflection_goal %}<p class="res-inline-p"><strong>Goal set:</strong> {{ prev_record.reflection_goal|sentence }}</p>{% endif %}
-      {% if prev_record.what_happened %}<p class="res-inline-p"><strong>What happened:</strong> {{ prev_record.what_happened }}</p>{% endif %}
-      {% if prev_record.resources_used %}<p class="res-inline-p"><strong>Resources used:</strong> {{ prev_record.resources_used }}</p>{% endif %}
+      {% if prev_record.what_happened %}
+        {# Stored as "Check-in: ... \n\n Input: ...". Printed as one paragraph the
+           breaks collapse and the three notes run into each other. #}
+        {% for part in prev_record.what_happened.split('\n\n') %}{% if part.strip() %}<p class="res-inline-p">{{ part.strip() }}</p>{% endif %}{% endfor %}
+      {% endif %}
     {% endif %}
-    {% for item in prev_week_items %}{{ resource_card(item) }}{% endfor %}
   </div>
 </details>
 {% endif %}
