@@ -88,12 +88,13 @@ module.exports = [
         "objective": "Pupil can apply a calming strategy in a simulated stressful scenario and take part in a restorative conversation.",
         "checkin": "1. Ask: 'did you use either of your two strategies this week?'\n2. If they did, ask what happened next. If they didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
         "input": "1. Explain that a strategy only works if it's practised before it's needed.\n2. Compare it to a fire drill: nobody reads the instructions during a fire.\n3. Agree to rehearse under mild pressure now, in the role-play, so it's more automatic later.",
-        "activity": "1. Pupil picks one of the two strategies from week three and says which one they're using.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. At the moment of frustration, pause and ask: 'which strategy, and what does it look like right now?'\n4. Run it twice more with different cards, so it's rehearsed rather than discussed.",
+        "activity": "1. Get out the calm-down strategy cards from week three. Pupil picks the one they're going to use and says it out loud.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. When they start to get wound up, stop the role-play and ask: 'which strategy did you choose, and what do you need to do right now?'\n4. Do the whole thing twice more with different cards. Doing it three times is what makes it stick — talking about it doesn't.",
         "reflect": "1. Ask: 'what made the strategy easier or harder than in week three?'\n2. Pupil names one real school situation to use it in before the next session.",
         "lookfor": "Restorative conversations should stay non-blaming and focused on repair, not punishment, the mentor's tone matters as much as the questions.",
         "resources": [
-          "Restorative conversation prompt card",
-          "Role-play scenario cards"
+          "Calm-down strategy cards",
+          "Role-play scenario cards",
+          "Restorative conversation prompt card"
         ],
         "home": "If a small frustration comes up at home this week, pause and ask 'what could we try?' before jumping in, give the pupil the chance to try the strategy first.",
         "timing": {
