@@ -3261,13 +3261,20 @@ def impact_report_form(request):
     conn = db.get_conn()
     try:
         years = recorded_academic_years(conn, user["establishment_id"])
-        # This academic year's terms only. A school with four years of history
-        # would otherwise get a wall of buttons.
+        # This academic year and anything ahead of it. A school sets next year's
+        # terms up over the summer holidays, so restricting to the current year
+        # hid exactly the terms they had just entered. Past years are left out
+        # so a school with four years of history doesn't get a wall of buttons.
         terms = conn.execute(
-            """SELECT * FROM terms WHERE establishment_id=?
-                 AND date_to >= ? AND date_from <= ?
-               ORDER BY date_from""",
-            (user["establishment_id"], year_from, year_to)).fetchall()
+            """SELECT * FROM terms WHERE establishment_id=? AND date_to >= ?
+               ORDER BY date_from LIMIT 8""",
+            (user["establishment_id"], year_from)).fetchall()
+        # Whether they have entered any at all, which is what decides if the
+        # guess is still offered — a school with only past terms entered has
+        # still told us they don't want it.
+        any_terms = conn.execute(
+            "SELECT 1 FROM terms WHERE establishment_id=? LIMIT 1",
+            (user["establishment_id"],)).fetchone() is not None
     finally:
         conn.close()
 
@@ -3275,13 +3282,12 @@ def impact_report_form(request):
     # "This term" sitting next to real ones would be indistinguishable from
     # them, and it's the guess a head would quote to governors.
     presets = [("This academic year", year_from, year_to)]
-    if terms:
-        for t in terms:
-            presets.append((t["name"], t["date_from"], t["date_to"]))
-    else:
+    for t in terms:
+        presets.append((t["name"], t["date_from"], t["date_to"]))
+    if not any_terms:
         presets.append(("This term (approximate)", term_from, term_to))
     return render("impact_form.html", user=user, presets=presets, years=years,
-                  current_year_from=year_from, has_terms=bool(terms),
+                  current_year_from=year_from, has_terms=any_terms,
                   default_from=year_from, default_to=year_to,
                   flash=flash_from_query(request))
 
