@@ -162,18 +162,20 @@ def assign_resources_to_steps(week, items):
         # activity had to scroll back up to the input step to tick a box.
         # Reference material a mentor only shows stays at its strongest match,
         # which is where it's introduced.
-        if item.get("table") or item.get("form") or item.get("checklist"):
-            # Strongest match wins, and a tie goes to the later step — the one
-            # where it is filled in rather than introduced. Taking the last
-            # match outright was too crude: "what's the earliest sign your body
-            # gives you?" matched one word of "Body map handout" and dragged the
-            # sheet down into Reflect. The take-home step never owns a sheet,
-            # since that happens after the session.
-            in_session = [s for s in matched if s != "home"] or matched
-            best = max(in_session, key=lambda s: (scores[s], SESSION_STEPS.index(s)))
-            by_step[best].append(item)
-        else:
-            by_step[max(matched, key=lambda s: scores[s])].append(item)
+        # Strongest match wins, and a tie goes to the later step — the one where
+        # it's actually handled rather than merely introduced. Taking the last
+        # match outright was too crude: "what's the earliest sign your body
+        # gives you?" matched one word of "Body map handout" and dragged the
+        # sheet into Reflect.
+        #
+        # The take-home step never owns a resource, whatever kind it is. That
+        # happens after the session, so a sheet landing there disappears from
+        # the part of the page the mentor works through.
+        # If the take-home line is the only mention, the resource still belongs
+        # in the session — at the end of the activity, where a mentor will see
+        # it — rather than below the whole page.
+        in_session = [s for s in matched if s != "home"] or ["activity"]
+        by_step[max(in_session, key=lambda s: (scores[s], SESSION_STEPS.index(s)))].append(item)
     return by_step
 
 

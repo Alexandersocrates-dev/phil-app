@@ -300,8 +300,8 @@ module.exports = [
         "objective": "Pupil can name at least five emotions beyond 'happy', 'sad' and 'angry'.",
         "checkin": "1. Ask: 'which of these is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'what put you there?'\n3. Record the answer — this is the baseline you'll compare against in week five.",
         "input": "1. Show the emotions wheel or the 'How am I right now?' chart.\n2. Ask them to find a word they'd never normally use.\n3. Explain why the vocabulary matters: 'angry' covers ten different feelings, and they need different responses.",
-        "activity": "Sort emotion word cards by how they feel and discuss one recent moment for two or three of them.",
-        "reflect": "Which emotion is hardest to talk about? Agree to use the same four words once this week, even just to self.",
+        "activity": "1. Lay out the emotion word cards and ask: 'which of these have you felt in the last week?'\n2. Pupil sorts the ones they pick into calm, unsettled or overwhelmed.\n3. Take two or three and ask: 'when was the last time you felt that one?'\n4. Note the words they use in the box below — these are the words to reuse in later sessions.",
+        "reflect": "1. Ask: 'which of those words is the hardest one to say out loud?'\n2. Pupil picks four words to use this week, even if only in their own head.",
         "lookfor": "Emotional vocabulary is often genuinely underdeveloped, not resisted, treat this as teaching, not therapy.",
         "resources": [
           "Emotions wheel",
@@ -322,8 +322,8 @@ module.exports = [
         "objective": "Pupil can identify physical sensations linked to at least two emotions.",
         "checkin": "1. Check in with the same four words as last week.\n2. Ask: 'did that word change at any point since we last met?'",
         "input": "1. Explain that the body reacts before the mind catches up.\n2. Give a physical example everyone recognises — the jolt before you realise you nearly fell.\n3. Say why this matters: the body is the early warning, and it's noticeable if you know what to look for.",
-        "activity": "Body map exercise linking sensations (tight chest, fidgety legs, heavy head) to specific emotions.",
-        "reflect": "What's your earliest physical sign of stress or worry? Notice it once this week.",
+        "activity": "1. Ask: 'when you feel worried or wound up, where do you feel it in your body?' Pupil ticks those areas on the body map.\n2. Ask: 'what does it feel like there — tight, fidgety, heavy?' Note their words in the box below.\n3. Ask: 'is it the same place for different feelings, or does it move?'",
+        "reflect": "1. Ask: 'do you know the first thing your body does when you start to feel worried?'\n2. If they know it, pupil watches for that one this week. If they don't, they look out for whatever comes first and tell you next session.",
         "lookfor": "Some pupils, particularly those with additional needs, may have reduced awareness of body sensations, allow more time and use concrete examples.",
         "resources": [
           "Body map handout"
@@ -343,7 +343,7 @@ module.exports = [
         "checkin": "1. Check in with the same four words.\n2. Ask: 'did you notice any of the body signals we found last week?'\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Do 5-4-3-2-1 together now: five things you can see, four you can hear, three you can feel.\n3. Then box breathing: in for four, hold four, out four, hold four.\n4. Say plainly that one will suit them and one won't, and that's the point of trying both.",
         "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.",
-        "reflect": "Which strategy would you actually use? Agree to try it once this week in a low-stakes moment.",
+        "reflect": "1. Ask: 'which of those three would you actually use if you were wound up?'\n2. Pupil agrees to try it once this week at a calm moment, so it's practised before it's needed.",
         "lookfor": "Strategies need to feel natural to the individual pupil, don't force a technique that clearly isn't landing.",
         "resources": [
           "Grounding technique cards"
@@ -362,8 +362,8 @@ module.exports = [
         "objective": "Pupil understands emotions rise and fall, and can describe a personal 'wave'.",
         "checkin": "1. Check in with the same four words.\n2. Ask: 'which grounding technique did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
         "input": "1. Explain that a strong feeling peaks and falls on its own if nothing feeds it.\n2. Use a wave, not a switch: it builds, breaks and settles.\n3. Explain what feeds it — replaying it, arguing back, staying in the same place.\n4. The skill is riding it out, not switching it off.",
-        "activity": "Draw a personal 'anger or worry wave' for a recent strong emotion, marking where a strategy could have been used to ride it out rather than escalate it.",
-        "reflect": "What's one moment this week where you could try 'riding the wave' instead of reacting straight away?",
+        "activity": "1. Ask: 'can you think of a time recently when a feeling got really strong?'\n2. Pupil rates how strong it was before, during and after, on the wave diagram.\n3. Ask: 'where on that wave could you have used one of your strategies?'\n4. Make the point that the feeling came down on its own either way — the strategy makes it quicker, not magic.",
+        "reflect": "1. Ask: 'when is a feeling most likely to get strong for you this week?'\n2. Pupil names that one moment as the place to try waiting it out instead of reacting.",
         "lookfor": "This concept lands well with pupils who feel emotions are permanent or unbearable, reassure that intensity does pass.",
         "resources": [
           "Wave diagram template"
@@ -382,8 +382,8 @@ module.exports = [
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
         "checkin": "1. Check in with the same four words, and compare with the week one baseline.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Recap the four parts: naming the feeling, the body signal, the strategy, the wave.\n2. Ask which one they'd keep if they could only keep one.\n3. That answer goes at the top of their toolkit page.",
-        "activity": "Build a one-page personal toolkit: how I am at my best and worst, my early signs, my go-to strategies. Share with the class teacher.",
-        "reflect": "What's changed most since Week 1?",
+        "activity": "1. Ask: 'what are you like at your best, and what are you like at your worst?' Pupil fills both into the toolkit.\n2. Ask: 'what's the first sign that you're heading the wrong way?' Add it to the toolkit.\n3. Pupil writes in the two strategies they would actually use.\n4. Share the finished toolkit with the class teacher.",
+        "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [
           "Personal toolkit template"
