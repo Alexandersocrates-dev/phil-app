@@ -808,6 +808,59 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         c.drawString(x, y, "    ".join(bits))
         y -= 6 * mm
 
+        # Session by session. Without this the report answered "which courses"
+        # but not "what happened in them", which is the question a new form
+        # tutor or a SENCO is actually asking.
+        def _page_break():
+            nonlocal page_no
+            _doc_footer(c, w, margin, page_no)
+            c.showPage()
+            page_no += 1
+            yy = _doc_header(c, w, h, margin, "Pupil report",
+                             meta=[("Pupil", pupil_name), ("Continued", "")])
+            return _doc_section(c, x, yy, course["title"] + " (continued)", max_width)
+
+        for s in (course.get("sessions") or []):
+            if s.get("staff_only"):
+                continue                      # the write-up prints as the summary below
+            if y < margin + 34 * mm:
+                y = _page_break()
+            c.setFillColor(INK)
+            c.setFont("Helvetica-Bold", 9.5)
+            c.drawString(x, y, f"Session {s['week_number']}: {s['title']}   {uk(s.get('date', ''))}")
+            y -= 4.6 * mm
+            if (s.get("what_happened") or "").strip():
+                y = _wrap(c, s["what_happened"].strip(), x + 4 * mm, y, max_width - 4 * mm,
+                          size=9, leading=12, color=INK)
+            if (s.get("reflection_goal") or "").strip():
+                y -= 0.5 * mm
+                y = _wrap(c, "Goal set: " + s["reflection_goal"].strip(), x + 4 * mm, y,
+                          max_width - 4 * mm, size=9, leading=12, color=MUTED)
+            for title, lines in (s.get("resource_work") or []):
+                if y < margin + 22 * mm:
+                    y = _page_break()
+                c.setFillColor(MUTED)
+                c.setFont("Helvetica-Bold", 8)
+                c.drawString(x + 4 * mm, y, title.upper())
+                y -= 4 * mm
+                for line in lines:
+                    y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=8.5,
+                              leading=11, color=INK)
+            # A flag is the thing a reader must not miss, so it is stated even
+            # when the note itself is empty.
+            if s.get("safeguarding_flag"):
+                if y < margin + 20 * mm:
+                    y = _page_break()
+                note = (s.get("safeguarding_note") or "").strip()
+                c.setFillColor(RED)
+                c.setFont("Helvetica-Bold", 8.5)
+                c.drawString(x + 4 * mm, y, "SAFEGUARDING CONCERN RECORDED")
+                y -= 4.2 * mm
+                if note:
+                    y = _wrap(c, note, x + 8 * mm, y, max_width - 8 * mm, size=9,
+                              leading=12, color=INK)
+            y -= 4 * mm
+
         plan = (course.get("support_plan") or "").strip()
         if plan:
             c.setFillColor(TEAL_DARK)
@@ -911,7 +964,29 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
         y -= 5 * mm
         y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9.5)
-        y -= 4 * mm
+        y -= 3 * mm
+
+        # What the pupil ticked and wrote on the sheets that session. A body map
+        # filled in during session 1 was only ever visible in that session's own
+        # download, so it never reached the report a SENCO or a new form tutor
+        # actually reads.
+        for title, lines in (wk.get("resource_work") or []):
+            if y < margin + 24 * mm:
+                _doc_footer(c, w, margin, page_no)
+                c.showPage()
+                page_no += 1
+                y = _doc_header(c, w, h, margin, "Course report",
+                                meta=[("Pupil", pupil_name), ("Course", course_title)])
+                y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica-Bold", 8.5)
+            c.drawString(x + 4 * mm, y, title.upper())
+            y -= 4.2 * mm
+            for line in lines:
+                y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=9,
+                          leading=12, color=INK)
+            y -= 2 * mm
+        y -= 3 * mm
 
     if not weeks:
         c.setFillColor(MUTED)

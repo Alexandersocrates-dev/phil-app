@@ -3634,7 +3634,8 @@ def _mentee_report_context(conn, enrolment_id, user):
         return None, None, None
 
     weeks = conn.execute(
-        """SELECT weeks.week_number, weeks.title, weeks.objective, session_records.date
+        """SELECT weeks.id AS week_id, weeks.week_number, weeks.title, weeks.objective,
+                  session_records.date
            FROM session_records JOIN weeks ON weeks.id = session_records.week_id
            WHERE session_records.enrolment_id=? ORDER BY weeks.week_number""",
         (enrolment_id,),
@@ -3677,6 +3678,18 @@ def mentee_report_pdf_download(request):
     if not enrolment:
         return Response("Not found or not authorised", status="404 Not Found")
     weeks_list = [dict(w) for w in weeks]
+    # What the pupil actually ticked and wrote on the sheets. It was only ever
+    # in the single-session download, so a body map filled in during session 1
+    # never reached the report anyone reads afterwards. Withheld from a parent's
+    # copy on the same basis as the course summary: it is the pupil's working,
+    # discussed in a mentoring session, not a family-facing document.
+    if user["role"] != "parent_carer":
+        conn3 = db.get_conn()
+        try:
+            for w in weeks_list:
+                w["resource_work"] = resource_work_for(conn3, enrolment["id"], w["week_id"])
+        finally:
+            conn3.close()
     reflection_dict = dict(reflection) if reflection else None
     conn2 = db.get_conn()
     try:
@@ -6024,8 +6037,20 @@ def pupil_report_download(request):
                 fu_dict["helped_label"] = HELPED_LABELS.get(fu["helped"], fu["helped"])
                 fu_dict["behaviour_label"] = BEHAVIOUR_LABELS.get(fu["behaviour"], fu["behaviour"])
                 fu_dict["next_step_label"] = NEXT_STEP_LABELS.get(fu["next_step"], fu["next_step"])
+            # The page promises "each session: what happened, the goal the pupil
+            # set, the safeguarding note", but the report only ever carried
+            # course-level detail. This is that promise.
+            sessions = [dict(s, resource_work=resource_work_for(conn, r["id"], s["week_id"]))
+                        for s in conn.execute(
+                """SELECT sr.week_id, sr.date, sr.what_happened, sr.reflection_goal,
+                          sr.safeguarding_flag, sr.safeguarding_note,
+                          w.week_number, w.title, w.staff_only
+                   FROM session_records sr JOIN weeks w ON w.id = sr.week_id
+                   WHERE sr.enrolment_id=? ORDER BY w.week_number""",
+                (r["id"],)).fetchall()]
             courses.append(dict(r, mentor_name=r["mentor_name"] or "Mentor",
                                 support_plan=support_plan_for(conn, r["id"]),
+                                sessions=sessions,
                                 follow_up=fu_dict))
     finally:
         conn.close()
