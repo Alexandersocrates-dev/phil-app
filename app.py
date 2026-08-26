@@ -183,8 +183,11 @@ def assign_resources_to_lines(week, items):
                 leftover.append(item)
             else:
                 placed.setdefault(best, []).append(item)
+        # Keyed "resources", never "items": in a template dict.items is the
+        # built-in method, so ln.items hands Jinja a method rather than a list
+        # and the page dies with "object is not iterable".
         out[step] = {
-            "lines": [{"text": ln, "items": placed.get(n, [])}
+            "lines": [{"text": ln, "resources": placed.get(n, [])}
                       for n, ln in enumerate(lines)],
             "leftover": leftover,
         }
