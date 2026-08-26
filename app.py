@@ -769,6 +769,31 @@ def course_by_module(request):
     return redirect(f"/courses/{row['id']}")
 
 
+def related_courses(conn, course):
+    """The other courses this one points at, as records rather than text.
+
+    The stored line is free text naming module numbers ("Anger management
+    (Module 11) or Emotional regulation (Module 3)"). Only the numbers are
+    read: the titles come from the database, so renaming a course can't leave
+    a stale copy of its old name sitting in another course's page. A number
+    with no published course behind it is dropped rather than shown as a dead
+    link.
+    """
+    text = (course["related_module"] if "related_module" in course.keys() else "") or ""
+    out, seen = [], set()
+    for num in re.findall(r"Module (\d+)", text):
+        num = int(num)
+        if num in seen or num == course["module_number"]:
+            continue
+        seen.add(num)
+        row = conn.execute(
+            """SELECT id, module_number, title FROM courses
+               WHERE module_number=? AND status='published'""", (num,)).fetchone()
+        if row:
+            out.append(row)
+    return out
+
+
 @router.get("/courses/<course_id>")
 def course_detail(request):
     user = current_user(request)
@@ -778,6 +803,7 @@ def course_detail(request):
         weeks = conn.execute(
             "SELECT * FROM weeks WHERE course_id=? ORDER BY week_number", (request.params["course_id"],)
         ).fetchall()
+        related = related_courses(conn, course) if course else []
     finally:
         conn.close()
     if not course:
@@ -798,12 +824,17 @@ def course_detail(request):
             # A pilot sees where the course goes, in title and objective only.
             # Hiding the ending entirely reads as an incomplete product rather
             # than a gated one, and a school is judging the whole arc.
+            # staff_only travels with the outline too, or the staff write-up
+            # gets counted as another session with the pupil.
             outline_weeks = [{"week_number": w["week_number"], "title": w["title"],
-                              "objective": w["objective"]} for w in rest]
+                              "objective": w["objective"],
+                              "staff_only": w["staff_only"] if "staff_only" in w.keys() else 0}
+                             for w in rest]
         else:
             locked_weeks = len(rest)
     return render("course_detail.html", user=user, course=course, weeks=weeks,
                   outline_weeks=outline_weeks, locked_weeks=locked_weeks,
+                  related=related,
                   weeks_limit=limit, flash=flash_from_query(request))
 
 @router.get("/courses/<course_id>/resources/pdf")

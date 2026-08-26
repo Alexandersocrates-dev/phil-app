@@ -17,7 +17,7 @@ module.exports = [
       "Repair relationships affected by past incidents through restorative conversation"
     ],
     "approachNote": "Sessions combine cognitive behavioural techniques (recognising the anger cycle and the link between thoughts, feelings and actions) with restorative practice for repairing harm, strategies widely used in UK pupil referral units and SEMH provision. The approach reflects the DfE's Behaviour in Schools advice, which favours consistent, relationship-based responses over reactive sanctions alone, and supports the attendance and behaviour evaluation area in Ofsted's inspection framework, which expects schools to maintain a calm, safe environment with a clear approach to managing physical incidents.",
-    "relatedModule": "Emotional regulation (Module 3)",
+    "relatedModule": "Anger management (Module 11) or Emotional regulation (Module 3)",
     "weeks": [
       {
         "title": "Understanding my anger",
@@ -106,7 +106,7 @@ module.exports = [
       },
       {
         "title": "My plan and review",
-        "objective": "Pupil has a personalised, written support plan and understands what happens next.",
+        "objective": "Pupil has a personalised, written hot and cold plan and understands what happens next.",
         "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Put both numbers side by side and ask what's different.\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
         "input": "1. Recap the four stages of the anger cycle and ask them to name their own first body signal.\n2. Recap their two chosen strategies from week three.\n3. Ask which one they'd use if something happened tomorrow — that answer goes in the support plan.",
         "activity": "Co-create a one-page 'hot and cold' plan: known triggers, early warning signs, agreed strategies, and who to go to for support. Share the plan with the pupil's class teacher or pastoral lead.",

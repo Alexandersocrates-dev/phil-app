@@ -6,6 +6,17 @@
   <span class="badge badge-teal">Module {{ '%02d'|format(course.module_number) }}</span>
   <h1>{{ course.title }}</h1>
   <p class="muted">{{ course.description }}</p>
+
+  {# Where a mentor is choosing between two similar courses, this is the moment
+     they need to know the other exists. Titles come from the database at render
+     time, so a renamed course can't leave a stale name here. #}
+  {% if related %}
+  <p class="cd-related">
+    <span>Also consider</span>
+    {% for r in related %}<a href="/courses/{{ r.id }}">{{ r.title }}</a>{% if not loop.last %} &middot; {% endif %}{% endfor %}
+  </p>
+  {% endif %}
+
   {# Offered only to signed-in users. On a pilot the pack contains the sheets
      for the sessions they can see, so the download is still worth having. #}
   {% if user %}
@@ -16,11 +27,20 @@
   {% endif %}
 </div>
 
-<h2>Five-week session flow</h2>
+<h2>Session flow</h2>
+{# Only stated when the whole course is on the page. On a pilot or signed out
+   this would describe what's visible, not what the course is, and understate
+   it — the cards below already explain what's held back. #}
+{% if not outline_weeks and not locked_weeks %}
+{% set pupil_weeks = weeks|rejectattr('staff_only')|list|length %}
+<p class="cd-flow-note">{{ pupil_weeks }} session{{ '' if pupil_weeks == 1 else 's' }} with the
+pupil, then the staff write-up.</p>
+{% endif %}
 <ul class="week-list" style="flex-direction:column; align-items:stretch;">
   {% for w in weeks %}
   <li style="display:block;">
-    <h3>Week {{ w.week_number }}: {{ w.title }}</h3>
+    <h3>{% if w.staff_only %}{{ w.title }} <span class="badge badge-muted">Staff only</span>
+        {%- else %}Session {{ w.week_number }}: {{ w.title }}{% endif %}</h3>
     <p><strong>Objective:</strong> {{ w.objective }}</p>
     <p><strong>Check-in:</strong> {{ w.checkin }}</p>
     <p><strong>Input:</strong> {{ w.input_content }}</p>
@@ -67,4 +87,11 @@
   </p>
 </div>
 {% endif %}
+<style>
+.cd-related{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:13px;
+  margin:16px 0 0;}
+.cd-related span{font-weight:700;color:var(--muted);font-size:11.5px;letter-spacing:.04em;
+  text-transform:uppercase;white-space:nowrap;}
+.cd-flow-note{font-size:13px;color:var(--muted);line-height:1.6;margin:0 0 16px;}
+</style>
 {% endblock %}

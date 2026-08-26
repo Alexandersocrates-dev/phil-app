@@ -127,6 +127,10 @@ CREATE TABLE IF NOT EXISTS courses (
     title TEXT NOT NULL,
     focus_area TEXT,
     description TEXT,
+    -- Which other course to consider instead, as free text naming module
+    -- numbers ("Anger management (Module 11)"). The numbers are what's read;
+    -- titles are looked up live so a rename can't leave a stale copy behind.
+    related_module TEXT,
     status TEXT NOT NULL DEFAULT 'published' CHECK(status IN ('draft','published')),
     created_by INTEGER,
     published_at TEXT
