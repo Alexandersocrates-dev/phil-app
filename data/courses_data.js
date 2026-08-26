@@ -568,7 +568,7 @@ module.exports = [
       {
         "title": "My voice in the room",
         "objective": "Pupil can estimate, then compare to a real tally, how often the pupil calls out or talks in a lesson.",
-        "checkin": "1. Rapport chat first — something unrelated to lessons.\n2. Ask how the week has gone in the lessons they find hardest.\n3. Don't open with the calling out; you need them talking freely first.",
+        "checkin": "1. Rapport chat first — something unrelated to lessons.\n2. Ask: 'how has the week gone in the lessons you find hardest?'\n3. Don't open with the calling out; you need them talking freely first.",
         "input": "1. Explain that most pupils underestimate how often they call out, and that's normal.\n2. Say clearly that the tally is for noticing, not for getting into trouble.\n3. Show the tally card and agree which lessons they'll mark.\n4. Agree who else knows about it — usually just the class teacher.",
         "activity": "Pupil predicts a personal tally for a recent lesson, then compares with a teacher-completed tally if available, or does a live tally during a short observed task.",
         "reflect": "Was the real number higher or lower than expected? Agree to self-tally in one lesson this week.",
@@ -588,7 +588,7 @@ module.exports = [
       {
         "title": "Impulse and attention",
         "objective": "Pupil can explain a simple stop-think-choose technique in the pupil's own words.",
-        "checkin": "1. Look at the tally together and add up the marks.\n2. Ask which lesson had the most, and whether that matches what they expected.\n3. If the tally wasn't filled in, do it now from memory rather than skipping it.",
+        "checkin": "1. Look at the tally together and add up the marks.\n2. Ask: 'which lesson had the most marks, and is that what you expected?'\n3. If the tally wasn't filled in, do it now from memory rather than skipping it.",
         "input": "1. Show the stop-think-choose card and read the three steps.\n2. Explain the gap: the urge to speak and the speaking are not the same moment.\n3. Practise it once here — you say something they'd want to answer, they pause instead.\n4. Name what the pause feels like, so it's recognisable in a lesson.",
         "activity": "Practise with quick-fire prompts where the pupil has to resist calling out an answer and instead use a hand signal.",
         "reflect": "What's the moment right before you call out, what does that feel like?",
@@ -608,7 +608,7 @@ module.exports = [
       {
         "title": "Getting attention the right way",
         "objective": "Pupil has an agreed alternative signal for getting the teacher's attention.",
-        "checkin": "1. Ask whether pause, notice, choose got used this week.\n2. Ask what happened in the moment they managed it.\n3. If it didn't get used, ask which lesson would have been the best place to try.",
+        "checkin": "1. Ask: 'did you use pause, notice, choose this week?'\n2. Ask: 'what happened in the moment you managed it?'\n3. If they didn't use it, ask: 'which lesson would have been the best place to try?'",
         "input": "1. Show the signal card options: hand up, name card, thumbs signal, agreed word.\n2. Explain that the point is getting attention without interrupting.\n3. Ask them to pick one — it has to be theirs, or they won't use it.\n4. Agree that you'll tell the class teacher which one it is before the next lesson.",
         "activity": "Role-play using the chosen signal in a simulated lesson scenario; agree the specific version with input from the pupil's class teacher if possible.",
         "reflect": "Which signal do you feel most comfortable using?",
@@ -628,7 +628,7 @@ module.exports = [
       {
         "title": "Practising self-control",
         "objective": "Pupil can use the agreed signal across at least one real lesson, tracked with a self-monitoring chart.",
-        "checkin": "1. Ask whether the signal got used, and how the teacher responded.\n2. If the teacher missed it, that's worth solving now rather than later.\n3. Ask whether the signal still feels like the right one.",
+        "checkin": "1. Ask: 'did you use the signal, and how did the teacher respond?'\n2. If the teacher missed it, that's worth solving now rather than later.\n3. Ask: 'does the signal still feel like the right one?'",
         "input": "1. Show the self-monitoring chart and explain the 1 to 5 rating.\n2. Make clear the pupil rates themselves — nobody else marks it.\n3. Agree when they'll fill it in: end of each lesson, not end of the day.\n4. Say what a 3 looks like for them, so the numbers mean something consistent.",
         "activity": "Practise completing the chart together using a recent example, then agree which lessons to track this week.",
         "reflect": "What would help you remember to use the chart?",
@@ -648,7 +648,7 @@ module.exports = [
       {
         "title": "My classroom plan",
         "objective": "Pupil has an agreed, ongoing self-monitoring system shared with the class teacher.",
-        "checkin": "1. Put the week one tally next to this week's and compare.\n2. Ask what they think made the difference.\n3. If the number hasn't dropped, ask which lesson is still hardest and why.",
+        "checkin": "1. Put the week one tally next to this week's and compare.\n2. Ask: 'what do you think made the difference?'\n3. If the number hasn't dropped, ask: 'which lesson is still hardest, and why?'",
         "input": "1. Recap the four parts: noticing, pause-notice-choose, the signal, the self-rating.\n2. Ask which one they'd keep using without being asked.\n3. That one goes on the teacher briefing note, so the next teacher knows what works.",
         "activity": "Finalise the self-monitoring chart as an ongoing classroom tool and agree a simple reward or feedback loop with the teacher.",
         "reflect": "What's the one strategy you're most likely to keep using?",
@@ -723,7 +723,7 @@ module.exports = [
       {
         "title": "Mapping my avoidance",
         "objective": "Pupil and mentor have identified specific situations that are avoided, ranked by difficulty.",
-        "checkin": "1. Worry thermometer check-in: where are they on it right now?\n2. Ask what the number was at its highest this week, and when.\n3. Don't challenge the number. You're building a picture, not negotiating.",
+        "checkin": "1. Worry thermometer check-in: where are they on it right now?\n2. Ask: 'what was the number at its highest this week, and when was that?'\n3. Don't challenge the number. You're building a picture, not negotiating.",
         "input": "1. Explain the trade avoidance makes: instant relief now, more fear next time.\n2. Use something ordinary — putting off a phone call, and how it grows.\n3. Say plainly that the goal is not to feel no worry. That would be a strange goal.\n4. The goal is doing the thing while the worry is there, starting small.",
         "activity": "Build an avoidance ladder together, list specific school situations from least to most anxiety-provoking, such as entering the building, a specific lesson, or the lunch hall.",
         "reflect": "Which is the smallest, most achievable step on the ladder?",
@@ -743,8 +743,8 @@ module.exports = [
       {
         "title": "Small steps",
         "objective": "Pupil has agreed and attempted the first, smallest step on the avoidance ladder.",
-        "checkin": "1. Look at the ladder together and read the steps out.\n2. Ask whether any step was attempted, even partly.\n3. A partial attempt counts. Say so before they tell you it doesn't.",
-        "input": "1. Define success out loud: attempting the step, whatever it felt like.\n2. Make clear they don't have to feel calm first — waiting to feel ready is the trap.\n3. Ask what the smallest possible version of the next step would be.\n4. If they can't imagine doing it, it's too big. Halve it.",
+        "checkin": "1. Look at the ladder together and read the steps out.\n2. Ask: 'did you try any step on the ladder, even partly?'\n3. A partial attempt counts. Say so before they tell you it doesn't.",
+        "input": "1. Define success out loud: attempting the step, whatever it felt like.\n2. Make clear they don't have to feel calm first — waiting to feel ready is the trap.\n3. Ask: 'what would the smallest possible version of the next step be?'\n4. If they can't imagine doing it, it's too big. Halve it.",
         "activity": "Plan the practical details of the first step, such as who will support it and what time, and rehearse it if useful, for example by walking the route to the room.",
         "reflect": "What support would make this step feel more possible?",
         "lookfor": "If even the smallest step feels impossible, break it down further, the ladder can always be made gentler.",
@@ -763,8 +763,8 @@ module.exports = [
       {
         "title": "Calming my body",
         "objective": "Pupil can use at least one grounding technique before or during an anxious moment at school.",
-        "checkin": "1. Ask what happened with the ladder step.\n2. If it didn't happen, ask what got in the way — usually it was too big a jump.\n3. Take a worry thermometer reading and compare it with last week.",
-        "input": "1. Show the grounding technique card and pick one to try now.\n2. Do slow breathing together: in through the nose for four, out through the mouth for six.\n3. Then 5-4-3-2-1 with the senses, so they have one for the body and one for the mind.\n4. Ask which felt more usable in a corridor or a classroom, not in this room.",
+        "checkin": "1. Ask: 'what happened with the ladder step?'\n2. If it didn't happen, ask: 'what got in the way?' Usually the step was too big a jump.\n3. Take a worry thermometer reading and compare it with last week.",
+        "input": "1. Show the grounding technique card and pick one to try now.\n2. Do slow breathing together: in through the nose for four, out through the mouth for six.\n3. Then 5-4-3-2-1 with the senses, so they have one for the body and one for the mind.\n4. Ask: 'which of those two could you actually use in a corridor or a classroom?' Not in this room — out there.",
         "activity": "Practise the technique together, then plan exactly when and where the pupil could use it during a real school day.",
         "reflect": "Where in the school day would this technique be most useful?",
         "lookfor": "Some pupils benefit from a discreet, non-stigmatising version, such as a fidget object, rather than an obvious technique.",
@@ -837,7 +837,7 @@ module.exports = [
       {
         "title": "Where's my focus",
         "objective": "Pupil can describe, using a recent example, what disengagement looks and feels like.",
-        "checkin": "1. Rapport chat first — something outside lessons.\n2. Ask which lesson the week went best in, and which worst.\n3. Don't frame this as being in trouble for drifting off.",
+        "checkin": "1. Rapport chat first — something outside lessons.\n2. Ask: 'which lesson did the week go best in, and which worst?'\n3. Don't frame this as being in trouble for drifting off.",
         "input": "1. Explain that focus naturally comes and goes for everyone, including adults.\n2. Say the aim isn't constant concentration — that isn't available to anyone.\n3. The skill is noticing the drift sooner, so less of the lesson is lost.\n4. Show the focus timeline and mark today's lessons together as a first attempt.",
         "activity": "Pupil reflects on a recent lesson using a simple focus timeline, marking roughly when the pupil was on task and when focus wandered.",
         "reflect": "What was happening right before your focus dropped?",
@@ -857,8 +857,8 @@ module.exports = [
       {
         "title": "What switches me off",
         "objective": "Pupil can name two or three personal disengagement triggers, such as boredom, task difficulty, distraction or tiredness.",
-        "checkin": "1. Look at the focus timeline together.\n2. Ask where the dips were, and what was happening at the time.\n3. If it wasn't filled in, fill it in now from memory for yesterday.",
-        "input": "1. Lay out the disengagement trigger cards face up.\n2. Say that everyone has some of these — the point is which are theirs.\n3. Ask them to pick their top three and put them in order.\n4. Ask what makes the top one worse, and what makes it easier.",
+        "checkin": "1. Look at the focus timeline together.\n2. Ask: 'where were the dips, and what was happening at the time?'\n3. If it wasn't filled in, fill it in now from memory for yesterday.",
+        "input": "1. Lay out the disengagement trigger cards face up.\n2. Say that everyone has some of these — the point is which are theirs.\n3. Ask them to pick their top three cards and put them in order.\n4. Ask: 'what makes your top trigger worse, and what makes it easier?'",
         "activity": "Sort trigger cards such as too hard, too easy, noisy room, tired and distracted by a friend into most-relevant-to-me order.",
         "reflect": "Which trigger is most common for you at school?",
         "lookfor": "If task difficulty is the main trigger, flag this to the class teacher, it may need an academic support response alongside this module.",
@@ -877,7 +877,7 @@ module.exports = [
       {
         "title": "Tools to stay on track",
         "objective": "Pupil can try at least one practical focus strategy.",
-        "checkin": "1. Ask which trigger came up most this week.\n2. Ask what they did when it happened.\n3. Whatever they did is the current strategy, even if it's leaving the room.",
+        "checkin": "1. Ask: 'which trigger came up most this week?'\n2. Ask: 'what did you do when it happened?'\n3. Whatever they did is the current strategy, even if it's leaving the room.",
         "input": "1. Show the chunking checklist and explain the idea: one task, broken into parts you can finish.\n2. Take a real piece of their work and chunk it together, now, in front of them.\n3. Add one other strategy that fits their top trigger — a movement break, or a focus object.\n4. Agree which lesson they'll try it in first.",
         "activity": "Apply one strategy to a real piece of classwork brought to the session; compare focus before and after.",
         "reflect": "Which strategy would be easiest to actually use in class?",
@@ -897,8 +897,8 @@ module.exports = [
       {
         "title": "Setting goals that matter",
         "objective": "Pupil can link a personal goal to effort in at least one subject.",
-        "checkin": "1. Ask whether the chunking got used and in which lesson.\n2. Ask what was different about that lesson, if anything.\n3. If it wasn't used, ask what would have needed to be true.",
-        "input": "1. Ask what they want to be doing in two years — work, college, anything.\n2. Take the answer seriously even if it's vague or unrealistic.\n3. Draw the line between that and one subject they're currently switching off in.\n4. The link has to be theirs, not yours, or it won't hold.",
+        "checkin": "1. Ask: 'did you use the chunking, and in which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't use it, ask: 'what would have needed to be true for you to?'",
+        "input": "1. Ask: 'what do you want to be doing in two years?' Work, college, anything.\n2. Take the answer seriously even if it's vague or unrealistic.\n3. Draw the line between that and one subject they're currently switching off in.\n4. The link has to be theirs, not yours, or it won't hold.",
         "activity": "Identify one personal goal, such as a course, job idea or hobby, and discuss how a specific subject connects to it, even loosely.",
         "reflect": "What's one small piece of work this week you could approach differently with this goal in mind?",
         "lookfor": "Keep this grounded and realistic, forced enthusiasm rarely works, a believable connection does.",
@@ -917,7 +917,7 @@ module.exports = [
       {
         "title": "My engagement plan",
         "objective": "Pupil has a simple, personalised engagement plan shared with the class teacher.",
-        "checkin": "1. Put this week's focus timeline beside week one's.\n2. Ask which lesson changed most.\n3. Ask what they did differently in it — that's the thing worth keeping.",
+        "checkin": "1. Put this week's focus timeline beside week one's.\n2. Ask: 'which lesson changed most?'\n3. Ask: 'what did you do differently in that lesson?' That's the thing worth keeping.",
         "input": "1. Recap the four parts: noticing drift, their triggers, chunking, and the goal link.\n2. Ask which one they'd keep if they could only keep one.\n3. That goes at the top of the engagement plan.",
         "activity": "Build a one-page engagement plan: my triggers, my go-to strategy, my goal. Share with the class teacher for reinforcement.",
         "reflect": "What's changed most since Week 1?",
@@ -972,7 +972,7 @@ module.exports = [
         "title": "Trust and respect",
         "objective": "Pupil can describe, in general terms, a personal experience of adults and authority.",
         "checkin": "1. This module only works if they trust you, so spend real time here.\n2. Ask about something outside school and follow it properly, don't just wait for your turn.\n3. Say what this course is and isn't: not a punishment, not a report to anyone.\n4. Don't mention any specific incident today.",
-        "input": "1. Ask what 'respect' means to them, and write down their words, not yours.\n2. Ask whether respect is something you give or something you earn — either answer is fine.\n3. Ask which adults they do listen to, and what those adults do differently.\n4. That last answer is the most useful thing in the session. Keep it.",
+        "input": "1. Ask: 'what does respect mean to you?' Write down their words, not yours.\n2. Ask: 'is respect something you give, or something you earn?' Either answer is fine.\n3. Ask: 'which adults do you listen to, and what do they do differently?'\n4. That last answer is the most useful thing in the session. Keep it.",
         "activity": "Discuss an adult, in or out of school, the pupil does trust and respect, and what makes that relationship different.",
         "reflect": "What's one thing an adult could do that would make you more likely to listen to them?",
         "lookfor": "Past negative experiences with authority figures, including outside school, often explain current patterns, listen for this without probing inappropriately, and escalate any safeguarding concerns per school policy.",
@@ -991,7 +991,7 @@ module.exports = [
       {
         "title": "Seeing the adult's side",
         "objective": "Pupil can describe one plausible pressure or motivation a staff member might have.",
-        "checkin": "1. Ask what makes them more likely to listen to an adult.\n2. Ask whether that happened at all this week.\n3. Take a critical answer seriously — dismissing it undoes week one.",
+        "checkin": "1. Ask: 'what makes you more likely to listen to an adult?'\n2. Ask: 'did that happen at all this week?'\n3. Take a critical answer seriously — dismissing it undoes week one.",
         "input": "1. Explain that staff are managing thirty people, a timetable and safety at once.\n2. Be explicit that this does not excuse an adult being unfair or rude.\n3. Say why it's worth knowing anyway: it makes an adult's reaction predictable rather than personal.\n4. Work through the staff perspective-taking worksheet with one real situation.",
         "activity": "Discuss a recent incident with a specific staff member and explore what might have been going on for the staff member at that moment.",
         "reflect": "Does this change how you see what happened, even slightly?",
@@ -1011,7 +1011,7 @@ module.exports = [
       {
         "title": "Communicating respectfully",
         "objective": "Pupil can practise a respectful way of disagreeing with an adult.",
-        "checkin": "1. Ask whether seeing the adult's side changed anything this week.\n2. Ask whether it changed what they did, or only what they thought.\n3. Both are progress. Say so.",
+        "checkin": "1. Ask: 'did seeing the adult's side change anything this week?'\n2. Ask: 'did it change what you did, or only what you thought?'\n3. Both are progress. Say so.",
         "input": "1. Show the respectful disagreement script card and read the structure aloud.\n2. Cover the three parts: tone, timing, and wording.\n3. On timing, be specific — not in front of the class, and not in the first ten seconds.\n4. Have them say one out loud. Reading it silently isn't practice.",
         "activity": "Role-play two or three scenarios where the pupil disagrees with an instruction from a teacher, practising the script each time.",
         "reflect": "What's different about how this felt compared to your usual response?",
@@ -1031,7 +1031,7 @@ module.exports = [
       {
         "title": "Repair and restore",
         "objective": "Pupil takes part in, or rehearses for, a restorative conversation with a specific staff member.",
-        "checkin": "1. Ask whether the script got used, and with whom.\n2. Ask how the adult responded.\n3. If it went badly, work out which part slipped — usually the timing.",
+        "checkin": "1. Ask: 'did you use the script, and who with?'\n2. Ask: 'how did the adult respond?'\n3. If it went badly, work out which part slipped — usually the timing.",
         "input": "1. Explain that a restorative conversation isn't an apology for its own sake.\n2. Its purpose is to repair one specific working relationship they still need.\n3. Show the restorative conversation prompt card and read the four questions.\n4. Agree which relationship is worth repairing, and whether they want you present.",
         "activity": "If appropriate, prepare for and hold a short restorative conversation with the relevant staff member, using the affective questions from Module 4, or otherwise rehearse it fully with the mentor.",
         "reflect": "What would help this relationship going forward?",
@@ -1051,8 +1051,8 @@ module.exports = [
       {
         "title": "My working relationship plan",
         "objective": "Pupil has an agreed, simple plan for working with key staff members going forward.",
-        "checkin": "1. Ask how things stand with the adult they named in week one.\n2. Compare with what they said then.\n3. Ask what they'd want that adult to know.",
-        "input": "1. Recap the four parts: what respect means to them, the adult's pressures, the script, repair.\n2. Ask which one made an actual difference.\n3. That goes into the working relationship plan, in their words.",
+        "checkin": "1. Ask: 'how are things now with the adult you named in week one?'\n2. Compare with what they said then.\n3. Ask: 'what would you want that adult to know?'",
+        "input": "1. Recap the four parts: what respect means to them, the adult's pressures, the script, repair.\n2. Ask: 'which of those four made an actual difference?'\n3. That goes into the working relationship plan, in their words.",
         "activity": "Agree specific, practical expectations with one or two key staff, such as a private word instead of a public correction, and write these into a short plan.",
         "reflect": "What's the one change you're most hopeful about?",
         "lookfor": "Share the plan with relevant staff directly, it only works if both sides know what's been agreed.",
