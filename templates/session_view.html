@@ -7,8 +7,8 @@
   <p class="muted">Week {{ record.week_number }}: {{ record.week_title }} &middot; {{ record.date|uk_date }} &middot; recorded by {{ record.mentor_name }}</p>
   <p>Mood {{ record.mood_rating }}/5 &middot; Engagement {{ record.engagement_rating }}/5</p>
   <h3>What happened</h3><p>{{ record.what_happened }}</p>
-  <h3>Reflection / goal</h3><p>{{ record.reflection_goal }}</p>
-  <h3>Mentor notes</h3><p>{{ record.mentor_notes }}</p>
+  <h3>Reflection / goal</h3><p>{{ record.reflection_goal|sentence }}</p>
+  <h3>Mentor notes</h3><p>{{ record.mentor_notes|sentence }}</p>
 
   {% if record.resources_used %}
   <h3>Resources used</h3>
@@ -19,7 +19,7 @@
 
   <div class="safeguard-box {{ 'safeguard-flagged' if record.safeguarding_flag else 'safeguard-clear' }}">
     <h3>{{ 'Safeguarding: flagged' if record.safeguarding_flag else 'Safeguarding: not flagged' }}</h3>
-    <p>{{ record.safeguarding_note }}</p>
+    <p>{{ record.safeguarding_note|sentence }}</p>
   </div>
   <a class="btn btn-secondary btn-sm" href="/courses/{{ record.course_id }}/resources/pdf" target="_blank" rel="noopener">Download resources (PDF)</a> <a class="btn btn-secondary btn-sm" href="/session/{{ record.id }}/pdf" target="_blank" rel="noopener">Download PDF</a>
 </div>

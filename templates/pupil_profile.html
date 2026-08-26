@@ -7,7 +7,7 @@
 <p class="back-link"><a href="{{ '/admin/pupils' if user.role == 'admin' else '/mentor' }}">&larr; {{ 'Back to pupils' if user.role == 'admin' else 'Back to my mentoring list' }}</a></p>
 <div class="card">
   <div class="flex-between">
-    <div style="display:flex; align-items:center; gap:14px;">
+    <div style="display:flex; align-items:center; gap:16px;">
       <span class="avatar avatar-lg">{{ pupil.forename[:1] }}{{ pupil.surname[:1] }}</span>
       <div>
         <h1 style="margin:0;">{{ pupil.forename }} {{ pupil.surname }}</h1>
@@ -113,7 +113,7 @@
   </div>
   {% endif %}
   <div class="progress-track"><div class="progress-fill" style="width:{{ (e.current_week/sessions_total*100)|round|int }}%"></div></div>
-  <p class="muted" style="margin:6px 0 14px;">Mentor: {{ e.mentor_name }} &middot; {%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
+  <p class="muted" style="margin:8px 0 16px;">Mentor: {{ e.mentor_name }} &middot; {%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
 {%- elif e.current_week == 0 %}Not started &middot; begin session 1
 {%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the summary and next steps
 {%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date|uk_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned|uk_date }}{% endif %}</p>
@@ -140,7 +140,7 @@
      sent to any more. #}
 
   {% if item.records %}
-  <table style="margin-top:14px;">
+  <table style="margin-top:16px;">
     <tr><th>Week</th><th>Date</th><th>Safeguarding</th><th></th></tr>
     {% for r in item.records %}
     <tr>
@@ -149,7 +149,7 @@
         {%- else %}{{ r.week_number }}: {{ r.week_title }}{% endif %}
         {# The goal was only ever visible in the session PDF. It belongs here,
            where a mentor looks before the next session. #}
-        {% if r.reflection_goal %}<span class="record-goal">Goal: {{ r.reflection_goal }}</span>{% endif %}
+        {% if r.reflection_goal %}<span class="record-goal">Goal: {{ r.reflection_goal|sentence }}</span>{% endif %}
       </td>
       <td>{{ r.date|uk_date }}</td>
       <td>{% if r.safeguarding_flag %}<span class="badge badge-red">Flagged</span>{% else %}<span class="badge badge-teal">Clear</span>{% endif %}</td>
@@ -165,15 +165,15 @@
 {% endfor %}
 
 <style>
-.pupil-actions{display:flex; flex-wrap:wrap; align-items:center; gap:20px;}
+.pupil-actions{display:flex; flex-wrap:wrap; align-items:center; gap:24px;}
 .pupil-actions-group{display:flex; flex-wrap:wrap; align-items:center; gap:8px;}
 /* A clear gap, and a divider on wide screens, so the delete is never adjacent
    to something harmless. */
-.pupil-actions-danger{padding-left:20px; border-left:1px solid var(--border);}
+.pupil-actions-danger{padding-left:24px; border-left:1px solid var(--border);}
 @media (max-width:700px){
   .pupil-actions-danger{padding-left:0; border-left:none; width:100%; margin-top:4px;}
 }
-.record-actions{display:flex; gap:6px; align-items:center; white-space:nowrap;}
+.record-actions{display:flex; gap:8px; align-items:center; white-space:nowrap;}
 .enrol-card{padding-top:0;}
 .enrol-summary{cursor:pointer; list-style:none; padding:var(--sp-4) 0 0;}
 .enrol-summary::-webkit-details-marker{display:none;}
@@ -185,7 +185,7 @@
    a heavier left bar and a kicker rather than looking like another teal panel. */
 .review-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
   background:var(--teal-light);border:1px solid #9FE1CB;border-left:4px solid var(--teal-darker);
-  border-radius:0 10px 10px 0;padding:11px 14px;margin:0 0 14px;font-size:13px;color:#04342C;}
+  border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 16px;font-size:13px;color:#04342C;}
 .review-body{flex:1;min-width:220px;}
 .review-kicker{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:2px;}
@@ -193,21 +193,21 @@
 .review-done .review-kicker{color:var(--muted);}
 .row-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;
   text-transform:uppercase;color:var(--coral-dark);background:var(--coral-light);
-  border-radius:4px;padding:1px 6px;}
-.review-actions{display:flex;gap:6px;flex-wrap:wrap;}
+  border-radius:4px;padding:2px 8px;}
+.review-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .review-strip .review-note{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
 .review-overdue{background:#FBE3DE;border-color:#F0B9AC;border-left-color:#B4341C;color:#5E1B0E;}
 .review-done{background:#F3F2EC;border-color:var(--border);border-left-color:#B3B0A4;color:var(--muted);}
 .review-none{background:#fff;border-style:dashed;color:var(--muted);}
-.record-goal{display:block; font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4;}
+.record-goal{display:block; font-size:12px; color:var(--muted); margin-top:4px; line-height:1.4;}
 /* A recorded follow-up sits under the course it followed, not in the session
    table: it isn't a session, and it happened after the course ended. */
 .fu-record{border:1px solid var(--border);border-left:3px solid var(--teal-darker);
-  border-radius:0 10px 10px 0;padding:11px 14px;margin:0 0 14px;background:#FBFAF6;}
-.fu-record-head{display:flex;align-items:center;gap:10px;margin-bottom:5px;font-size:13.5px;}
+  border-radius:0 10px 10px 0;padding:12px 16px;margin:0 0 16px;background:#FBFAF6;}
+.fu-record-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;font-size:13.5px;}
 .fu-record-line{font-size:13px;margin:0;color:var(--ink);}
 .fu-k{color:var(--muted);}
-.fu-record-voice{font-size:13px;margin:7px 0 0;font-style:italic;color:var(--ink);}
-.fu-record-note{font-size:12.5px;margin:5px 0 0;color:var(--muted);}
+.fu-record-voice{font-size:13px;margin:8px 0 0;font-style:italic;color:var(--ink);}
+.fu-record-note{font-size:12.5px;margin:4px 0 0;color:var(--muted);}
 </style>
 {% endblock %}

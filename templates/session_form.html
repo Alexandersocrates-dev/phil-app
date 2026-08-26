@@ -186,7 +186,7 @@
 {% if week.objective %}
 <div class="sess-goal">
   <span class="sess-goal-label">{% if week.staff_only %}What this write-up has to do{% else %}By the end of this session{% endif %}</span>
-  <p>{{ week.objective|replace('Pupil ', 'the pupil ', 1) }}</p>
+  <p>{{ week.objective|replace('Pupil ', 'The pupil ', 1)|sentence }}</p>
 </div>
 {% endif %}
 
@@ -195,7 +195,7 @@
    the mentor left themselves, so it should look like information. #}
 <div style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:12px;padding:10px 12px;margin:0 0 12px;">
 <p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--teal-darker);margin:0 0 4px;">Summary from last session</p>
-<p style="font-size:13.5px;color:#04342C;line-height:1.5;margin:0 0 3px;">{{ prev_record.mentor_notes }}</p>
+<p style="font-size:13.5px;color:#04342C;line-height:1.5;margin:0 0 3px;">{{ prev_record.mentor_notes|sentence }}</p>
 <p style="font-size:11px;color:var(--teal-darker);opacity:0.8;margin:0;">{{ prev_record.recorder_name }}, end of Session {{ prev_record.wn }}</p>
 </div>
 {% endif %}
@@ -278,7 +278,7 @@
   <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
   <div class="res-prev-body">
     {% if prev_record %}
-      {% if prev_record.reflection_goal %}<p class="res-inline-p"><strong>Goal set:</strong> {{ prev_record.reflection_goal }}</p>{% endif %}
+      {% if prev_record.reflection_goal %}<p class="res-inline-p"><strong>Goal set:</strong> {{ prev_record.reflection_goal|sentence }}</p>{% endif %}
       {% if prev_record.what_happened %}<p class="res-inline-p"><strong>What happened:</strong> {{ prev_record.what_happened }}</p>{% endif %}
       {% if prev_record.resources_used %}<p class="res-inline-p"><strong>Resources used:</strong> {{ prev_record.resources_used }}</p>{% endif %}
     {% endif %}

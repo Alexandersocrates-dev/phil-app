@@ -88,6 +88,25 @@ def year_group(value):
     return f"Year {text}" if text.isdigit() else text
 
 
+def sentence(value):
+    """Capitalise the first letter and leave the rest alone.
+
+    Jinja's own capitalize lowercases everything after the first character,
+    which would turn a mentor's note about "PE on Tuesday" into "Pe on
+    tuesday". This only touches the first letter, so names, acronyms and
+    subjects survive.
+    """
+    text = (value or "").strip()
+    if not text:
+        return text
+    # Leave a lower-then-upper opening alone: iPad, eSafety, iMessage. Rare in
+    # a mentor's note, but "IPad taken off him" would be worse than not trying.
+    if len(text) > 1 and text[0].islower() and text[1].isupper():
+        return text
+    return text[:1].upper() + text[1:]
+
+
+framework_jinja.filters["sentence"] = sentence
 framework_jinja.filters["year_group"] = year_group
 framework_jinja.filters["uk_date"] = uk_date
 framework_jinja.filters["uk_date_long"] = uk_date_long
