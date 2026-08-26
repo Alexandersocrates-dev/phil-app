@@ -228,9 +228,11 @@ tbody tr:hover{background:var(--teal-light);}
 /* A pill and a button sitting in the same row are different components with
    different padding, borders and font sizes, so matching their min-height is
    not enough — the taller line box wins. Fixing the height outright, with the
-   padding removed vertically, makes them identical whatever is inside them. */
+   padding removed vertically, makes them identical whatever is inside them.
+   The height comes from --ctl-h-sm, so this row can't drift away from the
+   buttons everywhere else. */
 .pill-row .pill, .pill-row .btn, .pill-row .btn-sm{
-  height:42px; min-height:42px; padding-top:0; padding-bottom:0;
+  height:var(--ctl-h-sm); min-height:var(--ctl-h-sm); padding-top:0; padding-bottom:0;
   display:inline-flex; align-items:center; box-sizing:border-box;
 }
 

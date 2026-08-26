@@ -581,12 +581,15 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    to read as two separate things. */
 .res-row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0;}
 .res-names{display:flex; align-items:center; gap:7px; flex-wrap:wrap; min-width:0;}
-.res-name{display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
-  background:var(--teal-light); color:#04342C; border-radius:8px;
+/* Same height as the button beside them, from the same token rather than a
+   second hardcoded number that can drift away from it. */
+.res-name{display:inline-flex; align-items:center; min-height:var(--ctl-h-sm);
+  box-sizing:border-box; padding:0 14px;
+  background:var(--teal-light); color:#04342C; border-radius:9px;
   font-size:12px; font-weight:500; cursor:default;}
-.res-download{display:inline-flex; align-items:center; min-height:40px; flex-shrink:0;}
-.res-download svg{margin-right:7px;}
-.res-download svg{width:15px; height:15px;}
+.res-download{display:inline-flex; align-items:center; min-height:var(--ctl-h-sm);
+  box-sizing:border-box; flex-shrink:0;}
+.res-download svg{width:15px; height:15px; margin-right:7px;}
 /* The hanging indent lines wrapped text up under the words, not under the
    number. It only applies to numbered steps: the take-home has no number,
    so the negative indent left its second line pushed in. */
