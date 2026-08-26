@@ -44,7 +44,7 @@ module.exports = [
       {
         "title": "Spotting my triggers",
         "objective": "Pupil can identify two to three personal triggers and rate their intensity.",
-        "checkin": "1. Ask: 'did you notice your first body signal at any point this week?'\n2. If yes, ask what was happening at the time. If no, ask when anger came closest.\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
+        "checkin": "1. Ask: 'last week you were going to watch out for the first thing your body does when you start getting angry — did you notice it?'\n2. If they did, ask: 'what was happening at the time?' If they didn't, ask: 'do you remember a time last week where you almost got angry?'\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
         "input": "1. Explain that triggers are personal: what irritates one person doesn't bother another.\n2. Give an example of your own, so they aren't the only one naming something.\n3. Explain that triggers come in different sizes, from mild annoyance up to explosive.\n4. Explain how they'll score them in a minute: ten means it takes the least to set you off, not that you shout the loudest.",
         "activity": "1. Ask: 'what kinds of things at school make you angry?' Write each one they name into the trigger list.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these triggers happens most often at school?'",
         "reflect": "1. Ask: 'which trigger comes up most at school?'\n2. Pupil picks one trigger to track this week, and marks a tally on the card each time it happens.",
@@ -183,7 +183,7 @@ module.exports = [
       {
         "title": "The choices game",
         "objective": "Pupil can link a choice to its likely consequence, for both positive and negative examples.",
-        "checkin": "1. Ask: 'was there a moment this week when a rule felt hard to follow?'\n2. Ask: 'what was the rule, and what did you do?'\n3. Don't judge the answer — you need honest examples for the game to work.",
+        "checkin": "1. Ask: 'last week you were going to notice one moment when following a rule felt hard — did that happen?'\n2. Ask: 'what was the rule, and what did you do?'\n3. Don't judge the answer — you need honest examples for the game to work.",
         "input": "1. Explain choice and consequence as a plain chain: if I do X, Y tends to happen.\n2. Use a neutral example first, like missing the bus, so it isn't about their behaviour.\n3. Make clear this is about what follows, not about being good or bad.",
         "activity": "Play a short choices game using real school scenarios (e.g. refusing to move seats, walking away from a task) and map two to three possible outcomes for each choice.",
         "reflect": "Was there a moment this week where a different choice might have led somewhere better? No blame, just noticing.",
@@ -204,7 +204,7 @@ module.exports = [
       {
         "title": "Listening and following instructions",
         "objective": "Pupil can follow a first-time instruction using an agreed strategy during the session.",
-        "checkin": "1. Ask: 'did you spot a moment this week where you made a choice and something followed?'\n2. Ask: 'what did you choose, and what happened next?'\n3. If they can't think of one, use something that happened in the last hour.",
+        "checkin": "1. Ask: 'did you spot a moment this week where you made a choice, and something happened because of it?'\n2. Ask: 'what did you choose, and what happened next?'\n3. If they can't think of one, use something that happened in the last hour.",
         "input": "1. Show the first/then cue cards and read the two worked examples aloud.\n2. Explain the pause: an instruction doesn't need an answer in the first second.\n3. Agree what a pause looks like for them — counting to three, or saying 'give me a second'.\n4. Fill in the two blank rows together using something from their real timetable.",
         "activity": "Practise a sequence of low-stakes instructions in the room (e.g. tidy this, hand me that) using the first/then structure, building up gradually.",
         "reflect": "What makes an instruction easier or harder to follow? Agree one classroom instruction to focus on this week.",
@@ -608,7 +608,7 @@ module.exports = [
       {
         "title": "Getting attention the right way",
         "objective": "Pupil has an agreed alternative signal for getting the teacher's attention.",
-        "checkin": "1. Ask: 'did you use pause, notice, choose this week?'\n2. Ask: 'what happened in the moment you managed it?'\n3. If they didn't use it, ask: 'which lesson would have been the best place to try?'",
+        "checkin": "1. Ask: 'last week we practised pause, notice, choose — did you get a chance to use it?'\n2. Ask: 'what happened in the moment you managed it?'\n3. If they didn't use it, ask: 'which lesson would have been the best place to try?'",
         "input": "1. Show the signal card options: hand up, name card, thumbs signal, agreed word.\n2. Explain that the point is getting attention without interrupting.\n3. Ask them to pick one — it has to be theirs, or they won't use it.\n4. Agree that you'll tell the class teacher which one it is before the next lesson.",
         "activity": "Role-play using the chosen signal in a simulated lesson scenario; agree the specific version with input from the pupil's class teacher if possible.",
         "reflect": "Which signal do you feel most comfortable using?",
@@ -877,7 +877,7 @@ module.exports = [
       {
         "title": "Tools to stay on track",
         "objective": "Pupil can try at least one practical focus strategy.",
-        "checkin": "1. Ask: 'which trigger came up most this week?'\n2. Ask: 'what did you do when it happened?'\n3. Whatever they did is the current strategy, even if it's leaving the room.",
+        "checkin": "1. Ask: 'of the triggers you picked out last week, which one came up most?'\n2. Ask: 'what did you do when it happened?'\n3. Whatever they did is the current strategy, even if it's leaving the room.",
         "input": "1. Show the chunking checklist and explain the idea: one task, broken into parts you can finish.\n2. Take a real piece of their work and chunk it together, now, in front of them.\n3. Add one other strategy that fits their top trigger — a movement break, or a focus object.\n4. Agree which lesson they'll try it in first.",
         "activity": "Apply one strategy to a real piece of classwork brought to the session; compare focus before and after.",
         "reflect": "Which strategy would be easiest to actually use in class?",
@@ -1145,7 +1145,7 @@ module.exports = [
       {
         "title": "Small steps to connect",
         "objective": "Pupil practises one low-stakes social skill, such as starting a conversation or joining a group.",
-        "checkin": "1. Ask: 'did an easier time or place come to mind this week?'\n2. Ask: 'what makes that place easier?' Quieter, fewer people, something to do.\n3. Those conditions matter more than the skill you're about to teach.",
+        "checkin": "1. Ask: 'last week I asked about a time or place at school that feels a bit easier — did one come to mind?'\n2. Ask: 'what makes that place easier?' Quieter, fewer people, something to do.\n3. Those conditions matter more than the skill you're about to teach.",
         "input": "1. Show the conversation starter cards and read a few aloud.\n2. Explain why they're short: a long opener needs a long answer, which is harder for everyone.\n3. Have them pick one they could imagine saying — not the best one, the sayable one.\n4. Practise it with you, twice. It will feel strange, and that's expected.",
         "activity": "Role-play the skill together in a safe, low-pressure way, repeating until it feels more natural.",
         "reflect": "Where could you try a tiny version of this step this week, even just once?",
@@ -1395,7 +1395,7 @@ module.exports = [
       {
         "title": "What sets me off",
         "objective": "Pupil identifies personal triggers across settings and separates 'big' from 'small' triggers.",
-        "checkin": "1. Ask: 'did you name a feeling more precisely at any point this week?'\n2. Ask: 'which word did you use, and where would you put it on the thermometer?'\n3. If they didn't, ask what the strongest moment of the week was and name it now.",
+        "checkin": "1. Ask: 'did you manage to put a more exact word on how you felt at any point this week, instead of just angry?'\n2. Ask: 'which word did you use, and where would you put it on the thermometer?'\n3. If they didn't, ask what the strongest moment of the week was and name it now.",
         "input": "1. Explain that triggers differ by setting — schoolwork, friends and home don't feel the same.\n2. Get out the triggers map and do one setting at a time.\n3. Ask: 'which setting has the most triggers, and does that surprise you?'\n4. Don't push on home triggers if they don't want to; note it and move on.",
         "activity": "Build a triggers map across three columns: school, social, home, rating each trigger's intensity.",
         "reflect": "Which column has the most triggers, and which single trigger comes up most? Agree to track that one this week.",
@@ -1436,7 +1436,7 @@ module.exports = [
       {
         "title": "Speaking up without blowing up",
         "objective": "Pupil can practise expressing frustration assertively rather than aggressively or by shutting down.",
-        "checkin": "1. Ask: 'did you use STOP this week?'\n2. If they did, ask: 'which letter did you actually get to?'\n3. If they didn't, ask: 'what happened too fast?' Usually the trigger wasn't spotted.",
+        "checkin": "1. Ask: 'last week you were going to try STOP once for real — did you get the chance?'\n2. If they did, ask: 'which letter did you actually get to?'\n3. If they didn't, ask: 'what happened too fast?' Usually the trigger wasn't spotted.",
         "input": "1. Read the passive, aggressive and assertive cards for the same situation, in that order.\n2. Ask: 'which of those three gets you what you actually want?'\n3. Use the assertive phrase bank to build one for a real situation of theirs.\n4. Have them say it out loud. It sounds different from how it reads.",
         "activity": "Role-play converting an aggressive response ('This is stupid, I'm not doing it') into an assertive one ('I'm finding this really frustrating, can I have a minute?').",
         "reflect": "Which assertive phrase felt most natural to say? Agree to try it once at school this week.",
@@ -1572,7 +1572,7 @@ module.exports = [
       {
         "title": "Solving my biggest barrier",
         "objective": "Pupil and mentor agree a practical plan that targets the single biggest barrier identified so far, whatever form it actually takes.",
-        "checkin": "1. Ask: 'how did leaning into that connection go this week?'\n2. Ask: 'did it make any morning easier?'\n3. If it didn't, that's information, not failure.",
+        "checkin": "1. Ask: 'how did it go with the person or the thing you said was worth coming in for?'\n2. Ask: 'did it make any morning easier?'\n3. If it didn't, that's information, not failure.",
         "input": "1. Go back to the barrier they named in weeks one and two.\n2. Follow what they actually described — don't assume it's mornings, or sleep, or anxiety.\n3. Use the barrier type card sort to check you've got the right one.\n4. Then take one practical barrier and solve it properly on the action plan, in detail.",
         "activity": "Build a simple, practical action plan together that targets the specific barrier this pupil identified, for example arranging alternative transport, agreeing a plan for a difficult lesson, coordinating around a caring responsibility, or resolving a peer issue, rather than a generic attendance routine.",
         "reflect": "What's most likely to get in the way of this specific plan, and what's the backup if it does?",
@@ -1672,7 +1672,7 @@ module.exports = [
       {
         "title": "My triggers and social pressure",
         "objective": "Pupil can name at least two personal triggers for vaping, including social pressure situations.",
-        "checkin": "1. Ask: 'did any of this come to mind at all this week?'\n2. Ask: 'what was happening at the time?'\n3. No pressure to have noticed anything — week one may just have been information.",
+        "checkin": "1. Ask: 'did anything we talked about last week come back to you during the week?'\n2. Ask: 'what was happening at the time?'\n3. No pressure to have noticed anything — week one may just have been information.",
         "input": "1. Explain that triggers are often social as much as physical: being offered one, fitting in.\n2. And emotional: boredom, stress, or simply habit at a particular time of day.\n3. Say why naming them matters — you can plan for a named trigger, not a vague urge.\n4. Introduce the trigger map, and explain the ranking: hardest means hardest to say no to, not most frequent.",
         "activity": "Pupil builds a personal trigger map: who, where, and when vaping is most likely to happen. Rank each trigger by how hard it would be to say no.",
         "reflect": "Which trigger felt hardest to admit to? Agree to simply notice (not necessarily resist) one trigger this week.",
@@ -2095,7 +2095,7 @@ module.exports = [
       {
         "title": "Unhelpful thoughts",
         "objective": "Pupil can identify one catastrophic thought pattern and practise a more balanced alternative.",
-        "checkin": "1. Ask: 'which physical signal did you notice this week?'\n2. Ask: 'when was it strongest?'\n3. If they noticed nothing, ask: 'when did revision last feel bad?'",
+        "checkin": "1. Ask: 'did you notice any of the physical signs of stress we talked about last week?'\n2. Ask: 'when was it strongest?'\n3. If they noticed nothing, ask: 'when did revision last feel bad?'",
         "input": "1. Read a catastrophic thought aloud: 'if I fail this, everything's ruined.'\n2. Ask whether that's ever crossed their mind. Most will say yes if you go first.\n3. Work the two questions on the thought-balance sheet: what's the evidence, and what's a fairer version?\n4. Aim for balanced, not positive. 'It'll be fine' is as unhelpful as the original.",
         "activity": "Pupil picks one recurring exam-related thought and works through it using the balance technique, writing a more realistic alternative in the pupil's own words.",
         "reflect": "Did the balanced version feel more true, even a little? Agree to try noticing this thought pattern once this week.",
@@ -2116,7 +2116,7 @@ module.exports = [
       {
         "title": "Building a workable routine",
         "objective": "Pupil can design a realistic weekly revision routine that includes rest.",
-        "checkin": "1. Ask: 'did you catch and reframe a thought this week?'\n2. Ask: 'what did the balanced version sound like?'\n3. If it didn't happen, do one now with a real thought from this week.",
+        "checkin": "1. Ask: 'did you catch one of those unhelpful thoughts this week and turn it into a fairer one?'\n2. Ask: 'what did the balanced version sound like?'\n3. If it didn't happen, do one now with a real thought from this week.",
         "input": "1. Say that a sustainable routine beats a perfect one, every time.\n2. Use the session length guide: short, regular blocks with real breaks.\n3. Say plainly that rest is part of the plan, not a reward for finishing it.\n4. Say that the routine gets built around what already exists — clubs, jobs, caring, travel.",
         "activity": "Pupil builds a simple weekly routine template, blocking in revision sessions alongside protected rest and social time, working from the pupil's actual timetable rather than an idealised one.",
         "reflect": "Which part of this routine feels most realistic to stick to? Agree to try it for one week and adjust rather than expecting perfection.",
@@ -2701,7 +2701,7 @@ module.exports = [
       {
         "title": "Coping with the unknown",
         "objective": "Pupil can name and try at least one coping strategy for moments of uncertainty during the move.",
-        "checkin": "1. Ask: 'how did practising that conversation feel?'\n2. Ask: 'which opener felt least strange?'",
+        "checkin": "1. Ask: 'how did it feel practising how you'd start a conversation with someone new?'\n2. Ask: 'which opener felt least strange?'",
         "input": "1. Explain that some uncertainty will remain, and the aim is coping rather than removing it.\n2. Do slow breathing together: in for four, out for six.\n3. Agree a comforting object or reminder they can carry without anyone noticing.\n4. Name a go-to person and a go-to place at the new setting, and write both down.",
         "activity": "Practise one calming technique together, and agree on a 'go-to' person or place at the new setting for the first few weeks.",
         "reflect": "Which strategy felt most useful? Agree to keep it in mind for the first day.",
