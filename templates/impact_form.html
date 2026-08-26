@@ -16,7 +16,7 @@
   {# The quick options cover most asks. The date fields matter because term
      dates are set locally and vary between schools, so a head needs the dates
      their own governors recognise. #}
-  <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin:0 0 8px;">Quick options</h3>
+  <h3 class="if-label">Quick options</h3>
   <div class="impact-presets">
     {% for label, pfrom, pto in presets %}
     <a class="btn btn-secondary btn-sm" href="/admin/reports/impact/pdf?from={{ pfrom }}&amp;to={{ pto }}">{{ label }}</a>
@@ -30,7 +30,7 @@
      buttons above already cover it. #}
   {% set past = years | rejectattr('1', 'equalto', current_year_from) | list if years else [] %}
   {% if past %}
-  <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin:22px 0 8px;">A previous year</h3>
+  <h3 class="if-label if-label-spaced">A previous year</h3>
   <form method="get" action="/admin/reports/impact/pdf" class="impact-range">
     <div class="field">
       <label for="year">Academic year</label>
@@ -44,7 +44,7 @@
   </form>
   {% endif %}
 
-  <h3 style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); margin:22px 0 8px;">Or choose your own dates</h3>
+  <h3 class="if-label if-label-spaced">Or choose your own dates</h3>
   <form method="get" action="/admin/reports/impact/pdf" class="impact-range">
     <div class="field">
       <label for="from">From</label>
@@ -58,18 +58,27 @@
   </form>
 
   <p class="muted" style="margin:16px 0 0; font-size:12.5px;">Sessions are counted by the date they
-  happened, so a course running across two terms appears in both. Overdue review points are always
+  happened, so a course running across two terms appears in both. Overdue follow-up chats are always
   counted as they stand today, whatever period you choose.</p>
 </div>
 
 <style>
-.impact-presets{display:flex; flex-wrap:wrap; gap:8px;}
-.impact-range{display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px;}
-.impact-range .field{margin:0; min-width:170px;}
-.impact-range .field label{display:block; font-size:12.5px; font-weight:600; margin-bottom:4px;}
-.impact-range select{width:100%; padding:9px 10px; border:1px solid var(--border,#DDD8C8);
-  border-radius:8px; font-size:14px; font-family:inherit; background:#fff;}
-.impact-range input[type="date"]{width:100%; padding:9px 10px; border:1px solid var(--border,#DDD8C8);
-  border-radius:8px; font-size:14px; font-family:inherit; background:#fff;}
+.if-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin:0 0 8px;}
+.if-label-spaced{margin-top:24px;}
+
+.impact-presets{display:flex;flex-wrap:wrap;gap:8px;}
+.impact-range{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;}
+.impact-range .field{margin:0;min-width:170px;}
+.impact-range .field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+
+/* Heights come from --ctl-h in the stylesheet, so the date inputs, the select
+   and the button sit level without any of them being nudged. */
+.impact-range select,
+.impact-range input[type="date"]{width:100%;height:var(--ctl-h);box-sizing:border-box;
+  padding:0 11px;border:1.4px solid var(--border);border-radius:9px;font-size:14px;
+  font-family:inherit;background:#fff;}
+.impact-range .btn{white-space:nowrap;flex-shrink:0;}
 </style>
 {% endblock %}

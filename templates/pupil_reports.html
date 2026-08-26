@@ -16,9 +16,9 @@
        I looking at — and two separate cards made the page feel unfurnished. #}
     <div class="card rp-toolbar">
       {% if years %}
-      <form method="get" action="{{ year_action }}" class="rp-filter">
-        <label for="year">Academic year</label>
-        <select id="year" name="year" onchange="this.form.submit()">
+      <form method="get" action="{{ year_action }}" class="ctl-field">
+        <label class="ctl-label" for="year">Academic year</label>
+        <select class="ctl" id="year" name="year" onchange="this.form.submit()">
           <option value="all" {% if selected_year == 'all' %}selected{% endif %}>All time</option>
           {% for label, y_from, y_to in years %}
           <option value="{{ label }}" {% if selected_year == label %}selected{% endif %}>{{ label }}</option>
@@ -26,9 +26,9 @@
         </select>
       </form>
       {% endif %}
-      <div class="rp-filter rp-filter-grow">
-        <label for="pupilFilter">Find a pupil</label>
-        <div class="rp-search">
+      <div class="ctl-field rp-filter-grow">
+        <label class="ctl-label" for="pupilFilter">Find a pupil</label>
+        <div class="ctl ctl-box">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
           <input type="text" id="pupilFilter" placeholder="Start typing a name" oninput="filterPupilReports()">
         </div>
@@ -137,17 +137,10 @@ function filterPupilReports() {
 
 /* ---------------------------------------------------------------- toolbar -- */
 .rp-toolbar{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;padding:16px 18px;}
-.rp-filter{display:flex;flex-direction:column;gap:6px;min-width:0;}
+/* Heights come from --ctl-h in the stylesheet, so this row can't drift out of
+   step with controls anywhere else. */
 .rp-filter-grow{flex:1 1 240px;}
-.rp-filter label{font-size:11.5px;font-weight:700;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--muted);}
-.rp-filter select{padding:9px 11px;border:1.4px solid var(--border);border-radius:9px;
-  font-size:14px;font-family:inherit;background:#fff;min-width:150px;}
-.rp-search{display:flex;align-items:center;gap:8px;border:1.4px solid var(--border);
-  border-radius:9px;padding:8px 11px;background:#fff;}
-.rp-search svg{width:16px;height:16px;flex-shrink:0;color:var(--muted);}
-.rp-search input{border:none;padding:0;font-size:14px;flex:1;min-width:0;
-  background:transparent;outline:none;font-family:inherit;}
+.rp-toolbar select.ctl{min-width:150px;}
 .rp-filter-note{flex-basis:100%;margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
 
 /* ------------------------------------------------------------- pupil card -- */

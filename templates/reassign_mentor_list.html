@@ -6,6 +6,7 @@
 <p class="muted">Every active pupil in your establishment. Reassigning moves all of a pupil's active courses to the new mentor.</p>
 
 <style>
+  .rm-search{margin-bottom:14px;}
   .reassign-pupil { border-bottom: 1px solid var(--border); }
   .reassign-pupil:last-of-type { border-bottom: none; }
   .reassign-pupil > summary { display: flex; align-items: center; gap: 12px; padding: 13px 4px; cursor: pointer; list-style: none; }
@@ -20,7 +21,7 @@
 </style>
 
 <div class="card">
-  <div style="display:flex;align-items:center;gap:8px;border:1.4px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:14px;">
+  <div class="ctl ctl-box rm-search">
     <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0;" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
     <input type="text" id="pupilSearch" placeholder="Search by pupil name" aria-label="Search by pupil name" oninput="filterReassignRows()" style="border:none;padding:0;font-size:14px;flex:1;background:transparent;outline:none;">
     <button type="button" class="btn btn-secondary btn-sm" onclick="filterReassignRows()">Search</button>
