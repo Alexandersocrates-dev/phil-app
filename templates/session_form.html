@@ -258,7 +258,9 @@
 {% if week.staff_only %}
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Each box below is a section of the plan.</strong> Fill them in order and the plan writes itself.</p>
 {% else %}
-<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>, then review last session&rsquo;s task.</p>
+{# Session 1 has nothing to look back on, so it was telling a mentor to review
+   a task that doesn't exist. #}
+<p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>{% if next_week_number > 1 %}, then review last session&rsquo;s task{% endif %}.</p>
 {% endif %}
 {# Each sheet sits under the instruction that calls for it, so a mentor
      reading step 1 is looking at step 1's handout. #}
