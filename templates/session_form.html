@@ -299,7 +299,7 @@
 {% for ln in week.resource_lines['input'].lines %}<p class="step-line">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
-<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
+<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% elif week.resource_lines and week.resource_lines['input'].lines|selectattr('resources')|list %}Anything the sheet doesn&rsquo;t capture &mdash; how they answered, what surprised you&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -495,7 +495,9 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
-.res-check{margin:6px 0 0;padding-left:18px;font-size:13px;}
+.res-check{margin:6px 0 0;padding-left:0;font-size:13px;list-style:none;}
+/* The bullet was a third mark on a row that already has a tick box and a
+   number. */
 .res-check li{margin:0 0 4px;}
 .res-prev{border:1px dashed var(--border);border-radius:8px;background:#FBF8F2;margin:0 0 8px;}
 .res-prev summary{cursor:pointer;padding:8px 11px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
