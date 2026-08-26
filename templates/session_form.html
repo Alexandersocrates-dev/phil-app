@@ -597,7 +597,10 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 /* The two context panels sit side by side on a wide screen. Stacked, the
    header was four full-width blocks in a row and the eye had nowhere to rest
    after the goal. Below 700px they stack, where the width isn't there. */
-.sess-context{display:flex; flex-wrap:wrap; align-items:flex-start; margin:0 0 16px;}
+/* Equal height: two panels on one line should end on one line. Letting them
+   size to their own content left a ragged edge, which reads as broken
+   rather than as deliberate. */
+.sess-context{display:flex; flex-wrap:wrap; align-items:stretch; margin:0 0 16px;}
 .sess-context > .note-panel{flex:1 1 300px; margin:0 16px 0 0;}
 .sess-context > .note-panel:last-child{margin-right:0;}
 @media (max-width:700px){
