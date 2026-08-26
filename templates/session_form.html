@@ -113,7 +113,7 @@
 <div class="icon-badge" style="width:44px;height:44px;border-radius:14px;margin:0;flex-shrink:0;background:linear-gradient(135deg,var(--coral-light),var(--amber-light));">{{ icon_book(color='var(--coral-dark)') }}</div>
 <div>
 <h1 style="margin:0 0 2px;font-size:19px;">{{ enrolment.course_title }}</h1>
-<p class="muted" style="margin:0;font-size:13.5px;">{{ enrolment.forename }} {{ enrolment.surname }}{% if enrolment.course_module_number %} &middot; Course {{ enrolment.course_module_number }} of 20{% endif %}</p>
+<p class="muted" style="margin:0;font-size:14px;">{{ enrolment.forename }} {{ enrolment.surname }}{% if enrolment.course_module_number %} &middot; Course {{ enrolment.course_module_number }} of 20{% endif %}</p>
 </div>
 </div>
 
@@ -126,7 +126,7 @@
 <div style="background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px 12px 10px;margin-bottom:14px;">
 <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
 <span style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Your progress</span>
-<span style="font-size:11px;color:var(--muted);">
+<span style="font-size:11.5px;color:var(--muted);">
   {%- if editing_record and week.staff_only %}Editing the course summary
   {%- elif editing_record %}Editing session {{ week.week_number }}
   {%- elif week.staff_only %}All sessions done &middot; writing the course summary now
@@ -139,15 +139,15 @@
 {% for p in progress %}
 <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;">
 {% if p.status == 'done' %}
-<div style="width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;">&#10003;</div>
+<div style="width:25px;height:25px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;">&#10003;</div>
 {% elif p.status == 'current' %}
-<div style="width:25px;height:25px;border-radius:50%;background:#fff;border:2.5px solid var(--amber);color:var(--amber-dark);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;box-shadow:0 0 0 4px var(--amber-light);">{{ p.number }}</div>
+<div style="width:25px;height:25px;border-radius:50%;background:#fff;border:2.5px solid var(--amber);color:var(--amber-dark);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;box-shadow:0 0 0 4px var(--amber-light);">{{ p.number }}</div>
 {% else %}
-<div style="width:25px;height:25px;border-radius:50%;background:#EFEDE3;color:#ADAB9F;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;">&#128274;</div>
+<div style="width:25px;height:25px;border-radius:50%;background:#EFEDE3;color:#ADAB9F;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11.5px;">&#128274;</div>
 {% endif %}
-<span style="font-size:9.5px;font-weight:700;line-height:1.25;text-align:center;{% if p.status == 'current' %}color:var(--amber-dark);{% else %}color:var(--muted);{% endif %}">
+<span style="font-size:11.5px;font-weight:700;line-height:1.25;text-align:center;{% if p.status == 'current' %}color:var(--amber-dark);{% else %}color:var(--muted);{% endif %}">
   {{ p.label }}<br>
-  <span style="font-weight:500;font-size:8.5px;">
+  <span style="font-weight:500;font-size:11.5px;">
     {%- if p.status == 'done' %}done
     {%- elif p.status == 'current' %}now
     {%- else %}to come{% endif -%}
@@ -164,8 +164,8 @@
 <div class="acc-body">
 {% for r in completed_records %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;display:flex;align-items:center;gap:10px;">
-<div style="width:24px;height:24px;border-radius:50%;background:var(--teal-light);color:var(--teal-darker);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{{ r.wn }}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">{% if r.wn == sessions_total %}{{ r.week_title }}{% else %}Session {{ r.wn }} &middot; {{ r.week_title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date|uk_date }}</p></div>
+<div style="width:24px;height:24px;border-radius:50%;background:var(--teal-light);color:var(--teal-darker);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;">{{ r.wn }}</div>
+<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">{% if r.wn == sessions_total %}{{ r.week_title }}{% else %}Session {{ r.wn }} &middot; {{ r.week_title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Completed {{ r.date|uk_date }}</p></div>
 <a class="btn btn-secondary btn-sm" href="/mentor/session/record/{{ r.id }}/edit">Edit</a>
 </div>
 {% endfor %}
@@ -175,8 +175,8 @@
 
 <div style="background:#fff;border:1.5px solid var(--teal);border-radius:14px;box-shadow:0 4px 14px rgba(29,158,117,0.14);padding:16px 18px;margin-bottom:8px;">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">{% if week.staff_only %}No pupil in this one &mdash; it&rsquo;s written for other staff{% else %}This session&rsquo;s focus{% endif %}</p></div>
+<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
+<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">{% if week.staff_only %}No pupil in this one &mdash; it&rsquo;s written for other staff{% else %}This session&rsquo;s focus{% endif %}</p></div>
 </div>
 
 {# The objective was already written as a goal — "Pupil can describe what anger
@@ -223,7 +223,7 @@
 
 {% if week.resources %}
 <div style="margin:0 0 14px 32px;">
-<p style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">{% if week.staff_only %}The plan you&rsquo;re filling in <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; the same sheet the pupil has been working towards</span>{% else %}Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span>{% endif %}</p>
+<p style="font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">{% if week.staff_only %}The plan you&rsquo;re filling in <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; the same sheet the pupil has been working towards</span>{% else %}Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span>{% endif %}</p>
 <div class="res-row">
   <div class="res-names">
   {# Show the pack's own name, so the pill and the downloaded sheet agree. The
@@ -254,7 +254,7 @@
    reads before writing anything. #}
 <div class="staff-only-banner">
   <div class="staff-only-badge">Staff only</div>
-  <div style="flex:1;min-width:0;">
+  <div class="step-body">
     <strong>No pupil in this session.</strong>
     <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
   </div>
@@ -272,10 +272,10 @@
 </div>
 {% endif %}
 
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Where they started{% else %}Check-in{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
+<div class="step-block">
+<div class="step-num">1</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}Where they started{% else %}Check-in{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
 {% if week.staff_only %}
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Each box below is a section of the plan.</strong> Fill them in order and the plan writes itself.</p>
 {% else %}
@@ -306,10 +306,10 @@
 </div>
 </div>
 
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
+<div class="step-block">
+<div class="step-num">2</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
 {% for ln in week.resource_lines['input'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
@@ -318,10 +318,10 @@
 </div>
 </div>
 
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}What works{% else %}Activity{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
+<div class="step-block">
+<div class="step-num">3</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}What works{% else %}Activity{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
 {% for ln in week.resource_lines['activity'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['activity'].leftover %}{{ resource_card(item) }}{% endfor %}
@@ -330,10 +330,10 @@
 </div>
 </div>
 
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
+<div class="step-block">
+<div class="step-num">4</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
 {% for ln in week.resource_lines['reflect'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['reflect'].leftover %}{{ resource_card(item) }}{% endfor %}
@@ -342,13 +342,13 @@
 </div>
 </div>
 
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Who does what{% else %}Home task{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
+<div class="step-block">
+<div class="step-num">5</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}Who does what{% else %}Home task{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
 {% if week.home_activity %}
 <div style="background:var(--teal-light);border-radius:10px;padding:9px 11px;margin-bottom:8px;">
-{% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line{% if not line.strip()[0].isdigit() %} step-line--plain{% endif %}" style="color:var(--teal-darker);font-size:13.5px;">{{ line }}</p>{% endif %}{% endfor %}
+{% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line{% if not line.strip()[0].isdigit() %} step-line--plain{% endif %}" style="color:var(--teal-darker);font-size:14px;">{{ line }}</p>{% endif %}{% endfor %}
 </div>
 {% endif %}
 {% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
@@ -358,13 +358,13 @@
 {# Notes for the next session were tucked inside the home task, so they read as
    part of it rather than as a step of their own. They're the last thing a
    mentor does, and the first thing they see next week. #}
-<div class="step-block" style="display:flex;gap:10px;">
-<div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">6</div>
-<div style="flex:1;min-width:0;">
-<h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
+<div class="step-block">
+<div class="step-num">6</div>
+<div class="step-body">
+<h5 class="step-head">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What happens next, who is doing it, and when you&rsquo;ll review&hellip;{% else %}What happened, what changed, and what to pick up next time&hellip;{% endif %}">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
-<p style="font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course.{% else %}Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download at the end of the course.{% endif %}</p>
+<p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course.{% else %}Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download at the end of the course.{% endif %}</p>
 </div>
 </div>
 
@@ -419,8 +419,8 @@
 <div class="acc-body">
 {% for w in upcoming_weeks %}
 <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 13px;margin-bottom:8px;opacity:0.6;display:flex;align-items:center;gap:10px;">
-<div style="width:24px;height:24px;border-radius:50%;background:#EFEDE3;color:#ADAB9F;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10px;flex-shrink:0;">{{ w.week_number }}</div>
-<div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">Session {{ w.week_number }} &middot; {{ w.title }}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Preview</p></div>
+<div style="width:24px;height:24px;border-radius:50%;background:#EFEDE3;color:#ADAB9F;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;">{{ w.week_number }}</div>
+<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--ink);margin:0;">Session {{ w.week_number }} &middot; {{ w.title }}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">Preview</p></div>
 </div>
 {% endfor %}
 </div>
@@ -473,9 +473,17 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 <style>
 .res-inline{border:1px solid var(--border);border-left:3px solid var(--teal-darker);border-radius:8px;background:#fff;padding:10px 12px;margin:0 0 8px;}
 .res-inline-head{display:flex;align-items:center;gap:8px;margin:0 0 6px;}
-.res-inline-name{font-size:12.5px;font-weight:700;color:var(--teal-darker);}
+.res-inline-name{font-size:12px;font-weight:700;color:var(--teal-darker);}
 /* The summary is the whole control, so the head row stays clickable and the
    marker is ours rather than the browser's inconsistent triangle. */
+/* Nothing on this page had a hover state or a transition. These are the two
+   controls a mentor clicks during a session. */
+.res-inline > summary{transition:background-color 120ms ease;}
+.res-inline > summary:hover{background:rgba(28,28,26,.035);}
+.res-toggle{text-decoration:underline; text-underline-offset:2px;}
+.res-prev > summary{transition:color 120ms ease;}
+.res-prev > summary:hover{color:var(--teal-darker);}
+
 .res-inline > summary{cursor:pointer;list-style:none;}
 .res-inline > summary::-webkit-details-marker{display:none;}
 .res-toggle{margin-left:auto;flex-shrink:0;font-size:11.5px;font-weight:700;
@@ -484,8 +492,8 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-inline[open] .res-toggle::after{content:"Hide";}
 .res-inline[open] > summary{margin-bottom:8px;}
 @media print{ .res-inline{display:block;} .res-toggle{display:none;} }
-.res-inline-p{font-size:13.5px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
-.res-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
+.res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
+.res-tag{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
 .res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
 .res-table{width:100%;border-collapse:collapse;margin:6px 0 0;font-size:12px;}
 .res-table th,.res-table td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top;}
@@ -508,9 +516,9 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-figure .res-figure-whole{fill:none;stroke:var(--teal-darker);stroke-width:1.5;
   stroke-dasharray:5 4;}
 .res-figure .res-figure-dot{fill:var(--teal-darker);stroke:none;}
-.res-figure .res-figure-num{fill:#fff;font-size:10px;font-weight:700;font-family:inherit;}
+.res-figure .res-figure-num{fill:#fff;font-size:11.5px;font-weight:700;font-family:inherit;}
 .res-check-n{display:inline-flex;align-items:center;justify-content:center;width:18px;
-  height:18px;border-radius:50%;background:var(--teal-darker);color:#fff;font-size:11px;
+  height:18px;border-radius:50%;background:var(--teal-darker);color:#fff;font-size:11.5px;
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
@@ -537,17 +545,17 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    real space above each makes the boundary obvious at a glance, which matters
    when a mentor is finding their place mid-session. */
 .staff-only-banner{display:flex; align-items:flex-start; gap:12px; background:var(--navy); color:#fff;
-  border-radius:14px; padding:13px 15px; margin:0 0 14px; font-size:13.5px; line-height:1.5;}
+  border-radius:14px; padding:13px 15px; margin:0 0 14px; font-size:14px; line-height:1.5;}
 .staff-only-banner strong{display:block; margin-bottom:2px;}
 .staff-only-banner span{color:#C9D3E4;}
 .summaries-panel{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
   background:var(--teal-light); border:1px solid #9FE1CB; border-radius:12px; padding:12px 14px; margin:0 0 14px;
   font-size:13px; color:#04342C; line-height:1.5;}
 .summaries-panel strong{display:block; margin-bottom:2px;}
-.summaries-panel span{color:var(--muted); font-size:12.5px;}
+.summaries-panel span{color:var(--muted); font-size:12px;}
 .summaries-download{display:inline-flex; align-items:center; gap:7px; flex-shrink:0;}
 .summaries-download svg{width:15px; height:15px;}
-.staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:10.5px; font-weight:800;
+.staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:11.5px; font-weight:800;
   text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:6px; margin-top:2px;}
 /* The names are labels; the button is the only thing here that does something.
    Solid fill, a download icon and "opens in a new tab" make that unambiguous,
@@ -559,7 +567,7 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-names{display:flex; align-items:center; gap:7px; flex-wrap:wrap; min-width:0;}
 .res-name{display:inline-flex; align-items:center; min-height:34px; padding:0 12px;
   background:var(--teal-light); color:#04342C; border-radius:8px;
-  font-size:12.5px; font-weight:500; cursor:default;}
+  font-size:12px; font-weight:500; cursor:default;}
 .res-download{display:inline-flex; align-items:center; gap:7px; min-height:40px; flex-shrink:0;}
 .res-download svg{width:15px; height:15px;}
 /* The hanging indent lines wrapped text up under the words, not under the
@@ -595,11 +603,29 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   padding-left:20px; text-indent:-20px;}
 .step-line--plain{padding-left:0; text-indent:0;}
 .step-line:last-child{margin-bottom:6px;}
-.step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
-.step-block:first-of-type{border-top:none; padding-top:4px;}
+/* Five steps separated by a hairline read as one long column: a mentor working
+   through a session, looking at a pupil rather than the screen, had no way of
+   seeing where step 3 ended. Each step is now its own card on the cream page,
+   which separates them without needing a divider at all. */
+.step-block{display:flex; background:#fff; border:1px solid var(--border);
+  border-radius:12px; padding:18px 20px; margin:0 0 16px;
+  box-shadow:0 1px 2px rgba(28,28,26,.04);}
+.step-block:last-of-type{margin-bottom:8px;}
+
+.step-num{width:26px; height:26px; border-radius:8px; background:var(--navy); color:#fff;
+  font-family:var(--font-head); font-weight:700; font-size:12px; display:flex;
+  align-items:center; justify-content:center; flex-shrink:0; margin:1px 14px 0 0;}
+.step-body{flex:1; min-width:0;}
+
+/* Was 11px uppercase — the same size as a metadata label, on the element that
+   navigates the page. Sentence case at 16px, so it reads as a heading. */
+.step-head{font-family:var(--font-head); font-size:16px; font-weight:700;
+  letter-spacing:-.01em; color:var(--navy); margin:0 0 8px; text-transform:none;}
+.step-time{font-family:inherit; font-weight:400; font-size:12px; color:var(--muted);
+  margin-left:8px; letter-spacing:0;}
 .res-writable{padding:0 !important;}
 .res-writable input[type=text]{width:100%; border:none; background:#FFFDF7; padding:9px 10px;
-  font-family:var(--font-body); font-size:13.5px; color:var(--ink); border-radius:0;}
+  font-family:var(--font-body); font-size:14px; color:var(--ink); border-radius:0;}
 .res-writable input[type=text]:focus{outline:none; box-shadow:inset 0 0 0 2px var(--teal-dark); background:#fff;}
 .res-check-label{display:flex; align-items:flex-start; gap:9px; cursor:pointer; padding:3px 0;}
 .res-check-label input{margin-top:2px; width:18px; height:18px; accent-color:var(--teal-dark); flex-shrink:0;}
@@ -615,7 +641,7 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    title or a missing note shift everything below it. */
 .res-card{scroll-snap-align:start;flex:0 0 152px;display:grid;
   grid-template-rows:16px 52px 60px 1fr auto;border-radius:12px;padding:12px;border:1.5px dashed;}
-.res-card-cat{font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
+.res-card-cat{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
 .res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;overflow:hidden;}
 .res-card-art{display:flex;align-items:center;justify-content:center;}
 .res-card .res-art{height:56px;margin:0;}
