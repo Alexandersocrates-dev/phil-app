@@ -10,19 +10,35 @@
 <div class="card">
   <p style="margin:0 0 4px;">How mentoring is going across the school: pupils supported, sessions
   delivered, completion, change in engagement, course summaries written and follow-ups outstanding.</p>
-  <p class="muted" style="margin:0 0 18px; font-size:13px;">Written to be read by someone who
+  <p class="muted" style="margin:0 0 16px; font-size:13px;">Written to be read by someone who
   wasn&rsquo;t involved, so it can go straight into a governors&rsquo; meeting.</p>
 
   {# The quick options cover most asks. The date fields matter because term
      dates are set locally and vary between schools, so a head needs the dates
      their own governors recognise. #}
   <h3 class="if-label">Quick options</h3>
+  {# The dates are printed on the button. "This term" is a generous
+     approximation — real term dates vary by school and are set locally — so a
+     head clicking it should be able to see the window it actually covers
+     rather than assume it matches their calendar. #}
   <div class="impact-presets">
     {% for label, pfrom, pto in presets %}
-    <a class="btn btn-secondary btn-sm" href="/admin/reports/impact/pdf?from={{ pfrom }}&amp;to={{ pto }}">{{ label }}</a>
+    <a class="preset" href="/admin/reports/impact/pdf?from={{ pfrom }}&amp;to={{ pto }}">
+      <span class="preset-label">{{ label }}</span>
+      <span class="preset-range">{{ pfrom|uk_date }} &ndash; {{ pto|uk_date }}</span>
+    </a>
     {% endfor %}
-    <a class="btn btn-secondary btn-sm" href="/admin/reports/impact/pdf?period=all">All time</a>
+    <a class="preset" href="/admin/reports/impact/pdf?period=all">
+      <span class="preset-label">All time</span>
+      <span class="preset-range">Everything recorded</span>
+    </a>
   </div>
+  {# Only an admin can fix this, so only an admin is told about it. #}
+  {% if not has_terms and user.role in ['admin', 'phil_staff'] %}
+  <p class="if-terms-note">&ldquo;This term&rdquo; is a rough guess &mdash; Phil doesn&rsquo;t know
+  your term dates. <a href="/admin/terms">Enter them</a> and each term gets its own button,
+  named the way your school names it.</p>
+  {% endif %}
 
   {# Built from years the school actually recorded sessions in, so it never
      offers an empty year and never runs out. Hidden entirely for a school with
@@ -67,17 +83,28 @@
   color:var(--muted);margin:0 0 8px;}
 .if-label-spaced{margin-top:24px;}
 
+/* Spacing here follows the 8-point scale used across the app: 8px between
+   buttons in a row, 24px between one block and the next. */
 .impact-presets{display:flex;flex-wrap:wrap;gap:8px;}
+.preset{display:flex;flex-direction:column;gap:2px;text-align:left;
+  padding:12px 16px;border:1.4px solid var(--border);border-radius:9px;
+  background:#fff;text-decoration:none;box-sizing:border-box;
+  transition:border-color 150ms ease, background-color 150ms ease;}
+.preset:hover{border-color:var(--teal-dark);background:var(--teal-light);}
+.preset-label{font-family:var(--font-head);font-weight:700;font-size:13.5px;
+  color:var(--teal-darker);white-space:nowrap;}
+.preset-range{font-size:11.5px;color:var(--muted);white-space:nowrap;}
+.if-terms-note{font-size:12.5px;line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:70ch;}
 .impact-range{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;}
 .impact-range .field{margin:0;min-width:170px;}
 .impact-range .field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
 
 /* Heights come from --ctl-h in the stylesheet, so the date inputs, the select
    and the button sit level without any of them being nudged. */
 .impact-range select,
 .impact-range input[type="date"]{width:100%;height:var(--ctl-h);box-sizing:border-box;
-  padding:0 11px;border:1.4px solid var(--border);border-radius:9px;font-size:14px;
+  padding:0 12px;border:1.4px solid var(--border);border-radius:9px;font-size:14px;
   font-family:inherit;background:#fff;}
 .impact-range .btn{white-space:nowrap;flex-shrink:0;}
 </style>

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_check_circle, icon_credit_card %}
+{% block title %}{% if outcome == 'success' %}Payment received{% else %}Payment cancelled{% endif %} - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card card-center">
+  {% if outcome == 'success' %}
+    <div class="icon-badge icon-badge--teal">{{ icon_check_circle(color='var(--teal-darker)') }}</div>
+    <h1>Payment received</h1>
+    <p class="muted">Thank you. Stripe has confirmed the payment and Phil will update the subscription automatically, usually within a few seconds. If your plan still shows the old one after a moment, refresh the page.</p>
+    {# Individuals are mentors and can't open /admin, so send each role to a page
+       it can actually reach. Sending everyone to /admin produced a dead end for
+       the people most likely to be paying by card. #}
+    {% if user and user.role == 'admin' %}
+      <a class="btn btn-primary btn-block" href="/admin">Back to admin home</a>
+    {% elif user and user.role == 'mentor' %}
+      <a class="btn btn-primary btn-block" href="/account/billing">Back to your subscription</a>
+    {% else %}
+      <a class="btn btn-primary btn-block" href="/">Back to Phil</a>
+    {% endif %}
+  {% else %}
+    <div class="icon-badge icon-badge--teal">{{ icon_credit_card(color='var(--teal-darker)') }}</div>
+    <h1>Payment cancelled</h1>
+    <p class="muted">No payment was taken and nothing has changed. You can start again whenever you're ready.</p>
+    {% if user and user.role == 'admin' %}
+      <a class="btn btn-primary btn-block" href="/admin">Back to admin home</a>
+    {% elif user and user.role == 'mentor' %}
+      <a class="btn btn-primary btn-block" href="/account/billing">Back to your subscription</a>
+    {% else %}
+      <a class="btn btn-primary btn-block" href="/">Back to Phil</a>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

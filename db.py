@@ -242,6 +242,21 @@ CREATE TABLE IF NOT EXISTS completion_reflections (
     updated_at TEXT
 );
 
+-- A school's own term dates. The app can only guess at these — real terms vary
+-- by school and move with Easter — so a guess was being labelled "This term"
+-- and read as fact. Once a school enters its own, its reports use them.
+CREATE TABLE IF NOT EXISTS terms (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    establishment_id INTEGER NOT NULL REFERENCES establishments(id),
+    name TEXT NOT NULL,
+    date_from TEXT NOT NULL,
+    date_to TEXT NOT NULL,
+    created_by INTEGER REFERENCES users(id),
+    created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_terms_establishment
+    ON terms (establishment_id, date_from);
+
 -- The follow-up chat: a short sit-down with the pupil a few weeks after a
 -- course ends, asking whether it helped and whether the behaviour is still
 -- showing. One per enrolment, so it attaches to the course it followed rather

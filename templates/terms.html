@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Term dates - Phil{% endblock %}
+{% block content %}
+<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+
+<header class="tm-head">
+  <span class="tm-eyebrow">Admin</span>
+  <h1>Term dates</h1>
+  <p class="tm-lede">Tell Phil when your terms run and reports can be pulled a term at a time,
+  named the way your school names them.</p>
+</header>
+
+<div class="tm-layout">
+  <main class="tm-main">
+
+    <section class="card tm-card">
+      <div class="tm-card-head">
+        <h2>Add a term</h2>
+        <p>Use the name your school uses &mdash; it appears on the report buttons and in the
+        report header.</p>
+      </div>
+      <form method="post" action="/admin/terms" class="tm-form">
+        <div class="ctl-field tm-name">
+          <label class="ctl-label" for="name">Term name</label>
+          <input class="ctl" type="text" id="name" name="name" required
+                 placeholder="Autumn 1 {{ suggested_year }}" maxlength="60">
+        </div>
+        <div class="ctl-field">
+          <label class="ctl-label" for="date_from">First day</label>
+          <input class="ctl" type="date" id="date_from" name="date_from" required>
+        </div>
+        <div class="ctl-field">
+          <label class="ctl-label" for="date_to">Last day</label>
+          <input class="ctl" type="date" id="date_to" name="date_to" required>
+        </div>
+        <button class="btn btn-primary tm-submit" type="submit">Add term</button>
+      </form>
+      <p class="tm-hint">Half-terms count as terms if that&rsquo;s how you report. Enter them
+      separately and each gets its own button.</p>
+    </section>
+
+    <section class="card tm-card">
+      <div class="tm-card-head">
+        <h2>Your terms</h2>
+        <p>{% if terms %}{{ terms|length }} entered, newest first.{% else %}None entered yet.{% endif %}</p>
+      </div>
+
+      {% if not terms %}
+      <p class="tm-empty">Until you add some, reports offer a rough guess at the current term
+      &mdash; 1 September to 31 December, 1 January to 6 April, 7 April to 31 August. It&rsquo;s
+      deliberately generous, so it will usually include a little either side of your real term.</p>
+      {% else %}
+      <ul class="tm-list">
+        {% for t in terms %}
+        <li class="tm-item">
+          <span class="tm-item-text">
+            <strong>{{ t.name }}</strong>
+            <span>{{ t.date_from|uk_date }} &ndash; {{ t.date_to|uk_date }}</span>
+          </span>
+          <form method="post" action="/admin/terms/{{ t.id }}/delete" class="tm-del">
+            <button class="btn btn-red btn-sm" type="submit">Remove</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+  </main>
+
+  <aside class="tm-aside">
+    <div class="card tm-panel">
+      <span class="tm-eyebrow">Why this matters</span>
+      <h2>Named terms, honest figures</h2>
+      <p>Phil can&rsquo;t know your term dates. Without them the impact report offers a rough
+      window and calls it &ldquo;this term&rdquo;, which is the figure a head would quote to
+      governors.</p>
+      <p>Once your terms are here, each one becomes its own button on the impact report, and
+      the report header states the exact dates it covers.</p>
+      <p class="tm-panel-note">Changing a term later doesn&rsquo;t alter anything already
+      recorded &mdash; reports read the dates when they run.</p>
+    </div>
+  </aside>
+</div>
+
+<style>
+.tm-head{margin:0 0 24px;}
+.tm-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
+.tm-head h1{margin:0 0 8px;letter-spacing:-.02em;}
+.tm-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+
+.tm-layout{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:24px;align-items:start;}
+.tm-main{min-width:0;display:flex;flex-direction:column;gap:24px;}
+.tm-aside{min-width:0;position:sticky;top:16px;}
+
+.tm-card{margin:0;padding:24px;}
+.tm-card-head{margin-bottom:16px;}
+.tm-card-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
+.tm-card-head p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+/* 16px between fields, controls sized by --ctl-h from the stylesheet. */
+.tm-form{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.tm-name{flex:1 1 200px;}
+.tm-form .ctl-field{min-width:0;}
+.tm-form input.ctl{padding:0 12px;width:100%;}
+.tm-submit{flex-shrink:0;white-space:nowrap;}
+.tm-hint{font-size:12.5px;color:var(--muted);line-height:1.5;margin:16px 0 0;}
+
+.tm-empty{font-size:13.5px;line-height:1.6;color:var(--muted);margin:0;}
+.tm-list{list-style:none;margin:0;padding:0;}
+.tm-item{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-top:1px solid var(--border);padding:12px 0;}
+.tm-item:first-child{border-top:none;padding-top:0;}
+.tm-item-text{min-width:0;}
+.tm-item-text strong{display:block;font-family:var(--font-head);font-weight:700;
+  font-size:14.5px;color:var(--navy);}
+.tm-item-text span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;
+  white-space:nowrap;}
+.tm-del{margin:0;flex-shrink:0;}
+
+.tm-panel{margin:0;padding:24px;border-left:3px solid var(--teal-darker);}
+.tm-panel h2{font-size:15.5px;margin:4px 0 8px;letter-spacing:-.01em;}
+.tm-panel p{font-size:13px;line-height:1.6;color:var(--ink);margin:0 0 12px;}
+.tm-panel-note{font-size:12.5px;color:var(--muted);margin:0;}
+
+@media (max-width:900px){
+  .tm-layout{grid-template-columns:minmax(0,1fr);}
+  .tm-aside{position:static;order:-1;}
+}
+@media (max-width:560px){
+  .tm-card{padding:16px;}
+  .tm-form .ctl-field{flex:1 1 100%;}
+  .tm-submit{width:100%;}
+}
+</style>
+{% endblock %}

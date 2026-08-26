@@ -31,6 +31,7 @@
 <div class="tile-grid ah-tiles">
   <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
   <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
+  <a class="tile" href="/admin/terms"><div class="ati" style="background:var(--coral-light);">{{ icon_edit(color='var(--coral-dark)') }}</div><span class="tlabel">Term dates</span></a>
 </div>
 
 <div class="ah-sec"><h2>More admin actions</h2><p>Reassigning, permissions and role changes.</p></div>
@@ -180,32 +181,32 @@
 </div>
 
 <style>
-.ah-head{margin:0 0 22px;}
+.ah-head{margin:0 0 24px;}
 .ah-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .ah-head h1{margin:0 0 8px;letter-spacing:-.02em;}
 .ah-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
-.ah-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
-.ah-main{min-width:0;display:flex;flex-direction:column;gap:18px;}
-.ah-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;}
+.ah-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start;}
+.ah-main{min-width:0;display:flex;flex-direction:column;gap:16px;}
+.ah-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;}
 
 /* Each group of tiles gets a real heading and room around it, rather than a
    label floated above a grid with negative margins. */
-.ah-sec{margin:0 0 10px;}
+.ah-sec{margin:0 0 12px;}
 .ah-sec h2{margin:0;font-size:15px;letter-spacing:-.01em;}
-.ah-sec p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.ah-sec p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
 .ah-tiles{margin:0;}
 .ah-block{margin:0;}
 
-.ah-card{margin:0;padding:18px 20px;}
+.ah-card{margin:0;padding:16px 24px;}
 .ah-card-head{margin-bottom:8px;}
 .ah-card-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
-.ah-card-head p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.ah-card-head p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
 
-.ah-panel{margin:0;padding:17px 19px;}
-.ah-figures{display:flex;align-items:stretch;margin:6px 0 12px;flex-wrap:wrap;}
-.ah-figure{display:flex;flex-direction:column;padding-right:18px;margin-right:18px;
+.ah-panel{margin:0;padding:16px;}
+.ah-figures{display:flex;align-items:stretch;margin:8px 0 12px;flex-wrap:wrap;}
+.ah-figure{display:flex;flex-direction:column;padding-right:16px;margin-right:16px;
   border-right:1px solid var(--border);min-width:0;}
 .ah-figure:last-child{border-right:none;padding-right:0;margin-right:0;}
 .ah-figure strong{font-family:var(--font-head);font-size:27px;font-weight:700;color:var(--navy);
@@ -224,9 +225,9 @@
   .ah-aside{position:static;order:-1;}
 }
 
-.ah-head{margin:0 0 20px;}
+.ah-head{margin:0 0 24px;}
 .ah-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .ah-head h1{margin:0 0 8px;letter-spacing:-.02em;}
 .ah-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
@@ -236,8 +237,8 @@
 .ah-scroll{overflow-x:auto;}
 .ah-table{width:100%;border-collapse:collapse;}
 .ah-table th{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-  color:var(--muted);text-align:left;padding:9px 16px 9px 0;white-space:nowrap;}
-.ah-table td{padding:11px 16px 11px 0;border-top:1px solid var(--border);vertical-align:middle;
+  color:var(--muted);text-align:left;padding:8px 16px 8px 0;white-space:nowrap;}
+.ah-table td{padding:12px 16px 12px 0;border-top:1px solid var(--border);vertical-align:middle;
   line-height:1.45;}
 .ah-table td:last-child, .ah-table th:last-child{padding-right:0;}
 .ah-tight{white-space:nowrap;}
@@ -247,7 +248,7 @@
 .collapse-summary{display:flex; align-items:center; justify-content:space-between; gap:12px;
   cursor:pointer; list-style:none; padding:var(--sp-4) 0;}
 .collapse-summary::-webkit-details-marker{display:none;}
-.collapse-summary h2{margin:0; display:inline-flex; align-items:center; gap:9px;}
+.collapse-summary h2{margin:0; display:inline-flex; align-items:center; gap:8px;}
 .collapse-summary h2::before{content:"\25B8"; color:var(--teal-darker); font-size:12px; transition:transform .12s ease;}
 .collapse-card[open] .collapse-summary h2::before{transform:rotate(90deg);}
 .collapse-hint{font-size:12px; color:var(--muted); white-space:nowrap;}

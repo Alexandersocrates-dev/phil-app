@@ -45,9 +45,9 @@
    due and red once any is overdue, matching the to-do list. */
 .review-due-card{border-left:4px solid var(--teal-darker);}
 .review-card-late{border-left-color:#B4341C;}
-.review-card-head{display:flex;align-items:center;gap:10px;margin:0 0 4px;}
+.review-card-head{display:flex;align-items:center;gap:12px;margin:0 0 4px;}
 .review-count{font-size:12px;font-weight:700;letter-spacing:.02em;color:#04342C;
-  background:var(--teal-light);border-radius:20px;padding:3px 10px;white-space:nowrap;}
+  background:var(--teal-light);border-radius:20px;padding:4px 12px;white-space:nowrap;}
 .review-count-late{color:#8A2614;background:#FBE3DE;
   animation:review-pulse 3.2s ease-in-out infinite;}
 @keyframes review-pulse{
@@ -61,10 +61,10 @@
   .review-count-late{animation:none;}
 }
 .review-due-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  background:var(--teal-light);border:1px solid #9FE1CB;border-radius:10px;padding:10px 12px;margin:0 0 8px;font-size:13px;}
+  background:var(--teal-light);border:1px solid #9FE1CB;border-radius:10px;padding:12px;margin:0 0 8px;font-size:13px;}
 .review-due-late{background:#FBE3DE;border-color:#F0B9AC;}
 .review-due-meta{display:block;font-size:12px;color:var(--muted);margin-top:2px;}
-.review-due-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.review-due-actions{display:flex;gap:8px;flex-wrap:wrap;}
 </style>
 {% endif %}
 
@@ -183,26 +183,26 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 </div>
 
 <style>
-.mh-head{margin:0 0 22px;}
+.mh-head{margin:0 0 24px;}
 .mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
 .mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
 /* minmax(0,1fr): a grid column defaults to min-width auto, so a long course
    title would push the column wider and squeeze the panel beside it. */
-.mh-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:22px;align-items:start;}
+.mh-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start;}
 .mh-main{min-width:0;display:flex;flex-direction:column;gap:16px;}
-.mh-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:14px;}
+.mh-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;}
 
 .mh-section-head{margin-bottom:8px;}
 .mh-section-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
-.mh-section-head p{margin:3px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
-.mh-list-card{margin:0;padding:18px 20px;}
+.mh-section-head p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.mh-list-card{margin:0;padding:16px 24px;}
 
-.mh-panel{margin:0;padding:17px 19px;}
-.mh-figures{display:flex;align-items:stretch;margin:6px 0 12px;flex-wrap:wrap;}
-.mh-figure{display:flex;flex-direction:column;padding-right:18px;margin-right:18px;
+.mh-panel{margin:0;padding:16px;}
+.mh-figures{display:flex;align-items:stretch;margin:8px 0 12px;flex-wrap:wrap;}
+.mh-figure{display:flex;flex-direction:column;padding-right:16px;margin-right:16px;
   border-right:1px solid var(--border);min-width:0;}
 .mh-figure:last-child{border-right:none;padding-right:0;margin-right:0;}
 .mh-figure strong{font-family:var(--font-head);font-size:27px;font-weight:700;color:var(--navy);
@@ -210,7 +210,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .mh-figure span{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;}
 .mh-panel-link{font-size:13px;font-weight:600;white-space:nowrap;}
 
-.mh-library{display:flex;align-items:center;gap:12px;margin:0;padding:14px 16px;text-decoration:none;}
+.mh-library{display:flex;align-items:center;gap:12px;margin:0;padding:16px;text-decoration:none;}
 .mh-library-icon{width:36px;height:36px;border-radius:10px;background:var(--coral-light);
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .mh-library-text{flex:1;min-width:0;}
@@ -224,36 +224,36 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
   .mh-aside{position:static;order:-1;}
 }
 
-.mh-head{margin:0 0 20px;}
+.mh-head{margin:0 0 24px;}
 .mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--teal-darker);margin-bottom:6px;}
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
 .mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
   text-wrap:pretty;}
 
 .ml-pupil{border-top:1px solid var(--border); padding:4px 0;}
 .ml-pupil:first-of-type{border-top:none;}
-.ml-summary{display:flex; align-items:center; gap:10px; cursor:pointer; list-style:none; padding:10px 0;}
+.ml-summary{display:flex; align-items:center; gap:12px; cursor:pointer; list-style:none; padding:12px 0;}
 .ml-summary::-webkit-details-marker{display:none;}
 .ml-summary::before{content:"\25B8"; color:var(--teal-darker); font-size:13px; transition:transform .12s ease; flex-shrink:0;}
 .ml-summary:hover{background:var(--teal-light); border-radius:8px;}
 .ml-pupil[open] .ml-summary::before{transform:rotate(90deg);}
 .ml-name{font-family:var(--font-head); font-weight:700; color:var(--navy); flex:1; min-width:0;}
-.ml-count{font-size:12px; color:var(--muted); white-space:nowrap; display:flex; gap:5px;}
+.ml-count{font-size:12px; color:var(--muted); white-space:nowrap; display:flex; gap:4px;}
 .ml-toggle{font-size:12px; font-weight:600; color:var(--teal-darker); white-space:nowrap; min-width:88px; text-align:right;}
 .ml-pupil[open] .ml-toggle::after{content:"Hide courses";}
 .ml-pupil[open] .ml-toggle{font-size:0;}
 .ml-pupil[open] .ml-toggle::after{font-size:12px;}
 /* The table scrolls rather than crushing its columns. Squeezing is what broke
    "5 of 6 completed · write the course summary" across two lines. */
-.ml-scroll{overflow-x:auto;margin:0 0 4px 30px;}
+.ml-scroll{overflow-x:auto;margin:0 0 4px 32px;}
 .ml-courses{width:100%;min-width:520px;border-collapse:collapse;}
-.ml-courses td{padding:9px 14px 9px 0;vertical-align:middle;}
+.ml-courses td{padding:8px 16px 8px 0;vertical-align:middle;}
 .ml-courses td:last-child{padding-right:0;}
 .ml-c-course{min-width:170px;line-height:1.4;}
 .ml-c-progress{width:190px;}
 .ml-c-status{width:110px;white-space:nowrap;}
-.ml-link-row{margin:6px 0 0;}
-.ml-link{font-size:12.5px; margin-left:30px;}
+.ml-link-row{margin:8px 0 0;}
+.ml-link{font-size:12.5px; margin-left:32px;}
 </style>
 {% endblock %}

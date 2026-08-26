@@ -2942,6 +2942,117 @@ def row_has_dates(row):
     return bool(row and row["first"] and row["last"])
 
 
+def school_terms(conn, establishment_id, limit=None):
+    """A school's own term dates, most recent first."""
+    sql = """SELECT * FROM terms WHERE establishment_id=?
+             ORDER BY date_from DESC"""
+    if limit:
+        sql += f" LIMIT {int(limit)}"
+    return conn.execute(sql, (establishment_id,)).fetchall()
+
+
+def term_containing(conn, establishment_id, today=None):
+    """The school's own term covering a date, if they have entered one."""
+    today = (today or datetime.date.today()).isoformat()
+    return conn.execute(
+        """SELECT * FROM terms WHERE establishment_id=?
+             AND date_from <= ? AND date_to >= ?
+           ORDER BY date_from DESC LIMIT 1""",
+        (establishment_id, today, today)).fetchone()
+
+
+@router.get("/admin/terms")
+def admin_terms(request):
+    """Where a school tells Phil when its terms actually run."""
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        terms = school_terms(conn, user["establishment_id"])
+        guess_from, guess_to = current_term_bounds()
+    finally:
+        conn.close()
+    today = datetime.date.today()
+    return render("terms.html", user=user, terms=terms,
+                  guess_from=guess_from, guess_to=guess_to,
+                  suggested_year=f"{today.year}/{str(today.year + 1)[2:]}"
+                                 if today.month >= 9 else
+                                 f"{today.year - 1}/{str(today.year)[2:]}",
+                  flash=flash_from_query(request))
+
+
+@router.post("/admin/terms")
+def admin_terms_add(request):
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    name = request.field("name", "").strip()
+    date_from = request.field("date_from", "").strip()
+    date_to = request.field("date_to", "").strip()
+    back = "/admin/terms"
+
+    if not (name and date_from and date_to):
+        return with_flash(back, "A term needs a name and both dates.", "error")
+    try:
+        d_from = datetime.date.fromisoformat(date_from)
+        d_to = datetime.date.fromisoformat(date_to)
+    except ValueError:
+        return with_flash(back, "Those dates couldn't be read.", "error")
+    # The two mistakes a school will actually make: dates the wrong way round,
+    # and a term that runs into one already entered.
+    if d_to < d_from:
+        return with_flash(back, "The end date is before the start date.", "error")
+    if (d_to - d_from).days > 200:
+        return with_flash(back, "That's longer than a school year — check the dates.", "error")
+
+    conn = db.get_conn()
+    try:
+        clash = conn.execute(
+            """SELECT name, date_from, date_to FROM terms
+               WHERE establishment_id=? AND date_from <= ? AND date_to >= ?
+               LIMIT 1""",
+            (user["establishment_id"], date_to, date_from)).fetchone()
+        if clash:
+            return with_flash(back,
+                f"Those dates overlap {clash['name']} "
+                f"({uk_date(clash['date_from'])} to {uk_date(clash['date_to'])}).", "error")
+        conn.execute(
+            """INSERT INTO terms (establishment_id, name, date_from, date_to,
+                                  created_by, created_at)
+               VALUES (?,?,?,?,?,?)""",
+            (user["establishment_id"], name, date_from, date_to, user["id"], db.now()))
+        db.log_action(conn, user["id"], "term_added", "establishment",
+                      user["establishment_id"], f"{name} {date_from} to {date_to}")
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash(back, f"{name} saved.", "success")
+
+
+@router.post("/admin/terms/<term_id>/delete")
+def admin_terms_delete(request):
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        term = conn.execute("SELECT * FROM terms WHERE id=?",
+                            (request.params["term_id"],)).fetchone()
+        if not term or term["establishment_id"] != user["establishment_id"]:
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        conn.execute("DELETE FROM terms WHERE id=?", (term["id"],))
+        db.log_action(conn, user["id"], "term_removed", "establishment",
+                      user["establishment_id"], term["name"])
+        conn.commit()
+        name = term["name"]
+    finally:
+        conn.close()
+    # Nothing else references a term: reports read the dates at the moment they
+    # run, so removing one only changes which buttons are offered from now on.
+    return with_flash("/admin/terms", f"{name} removed.", "success")
+
+
 def current_term_bounds(today=None):
     """Rough bounds for the English school term containing a date.
 
@@ -3150,15 +3261,27 @@ def impact_report_form(request):
     conn = db.get_conn()
     try:
         years = recorded_academic_years(conn, user["establishment_id"])
+        # This academic year's terms only. A school with four years of history
+        # would otherwise get a wall of buttons.
+        terms = conn.execute(
+            """SELECT * FROM terms WHERE establishment_id=?
+                 AND date_to >= ? AND date_from <= ?
+               ORDER BY date_from""",
+            (user["establishment_id"], year_from, year_to)).fetchall()
     finally:
         conn.close()
 
-    presets = [
-        ("This academic year", year_from, year_to),
-        ("This term", term_from, term_to),
-    ]
+    # A school's own terms if they've entered them, and only those: a guessed
+    # "This term" sitting next to real ones would be indistinguishable from
+    # them, and it's the guess a head would quote to governors.
+    presets = [("This academic year", year_from, year_to)]
+    if terms:
+        for t in terms:
+            presets.append((t["name"], t["date_from"], t["date_to"]))
+    else:
+        presets.append(("This term (approximate)", term_from, term_to))
     return render("impact_form.html", user=user, presets=presets, years=years,
-                  current_year_from=year_from,
+                  current_year_from=year_from, has_terms=bool(terms),
                   default_from=year_from, default_to=year_to,
                   flash=flash_from_query(request))
 
