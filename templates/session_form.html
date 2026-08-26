@@ -271,7 +271,7 @@
 {% endif %}
 {# Each sheet sits under the instruction that calls for it, so a mentor
      reading step 1 is looking at step 1's handout. #}
-{% for ln in week.resource_lines['checkin'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for ln in week.resource_lines['checkin'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% if (prev_week_items or prev_record) and not week.staff_only %}
 <details class="res-prev">
@@ -296,7 +296,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
-{% for ln in week.resource_lines['input'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for ln in week.resource_lines['input'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% elif week.resource_lines and week.resource_lines['input'].lines|selectattr('resources')|list %}Anything the sheet doesn&rsquo;t capture &mdash; how they answered, what surprised you&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
@@ -308,7 +308,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}What works{% else %}Activity{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
-{% for ln in week.resource_lines['activity'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for ln in week.resource_lines['activity'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['activity'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="activity_note" data-field="activity_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The strategy that worked, specific enough for someone else to copy&hellip;{% else %}Notes on how the activity went&hellip;{% endif %}">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
@@ -320,7 +320,7 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
-{% for ln in week.resource_lines['reflect'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for ln in week.resource_lines['reflect'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['reflect'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What to do if it happens anyway, and what not to do&hellip;{% else %}Notes on the pupil&rsquo;s answer&hellip;{% endif %}">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
@@ -334,7 +334,7 @@
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Who does what{% else %}Home task{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
 {% if week.home_activity %}
 <div style="background:var(--teal-light);border-radius:10px;padding:9px 11px;margin-bottom:8px;">
-{% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line" style="color:var(--teal-darker);font-size:13.5px;">{{ line }}</p>{% endif %}{% endfor %}
+{% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line{% if not line.strip()[0].isdigit() %} step-line--plain{% endif %}" style="color:var(--teal-darker);font-size:13.5px;">{{ line }}</p>{% endif %}{% endfor %}
 </div>
 {% endif %}
 {% for item in week.resource_steps['home'] %}{{ resource_card(item) }}{% endfor %}
@@ -543,7 +543,12 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
   font-size:12.5px; font-weight:500; cursor:default;}
 .res-download{display:inline-flex; align-items:center; gap:7px; min-height:40px; flex-shrink:0;}
 .res-download svg{width:15px; height:15px;}
-.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px; padding-left:20px; text-indent:-20px;}
+/* The hanging indent lines wrapped text up under the words, not under the
+   number. It only applies to numbered steps: the take-home has no number,
+   so the negative indent left its second line pushed in. */
+.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
+  padding-left:20px; text-indent:-20px;}
+.step-line--plain{padding-left:0; text-indent:0;}
 .step-line:last-child{margin-bottom:6px;}
 .step-block{padding:18px 0 4px; border-top:1px solid var(--border); margin-top:4px;}
 .step-block:first-of-type{border-top:none; padding-top:4px;}
