@@ -192,18 +192,29 @@
 
 {% if prev_record and prev_record.mentor_notes and not week.staff_only %}
 {# Was coral throughout, which reads as a warning. This is a helpful reminder
-   the mentor left themselves, so it should look like information. #}
-<div style="background:var(--teal-light);border:1px solid #9FE1CB;border-radius:12px;padding:10px 12px;margin:0 0 12px;">
-<p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--teal-darker);margin:0 0 4px;">Summary from last session</p>
-<p style="font-size:13.5px;color:#04342C;line-height:1.5;margin:0 0 3px;">{{ prev_record.mentor_notes|sentence }}</p>
-<p style="font-size:11px;color:var(--teal-darker);opacity:0.8;margin:0;">{{ prev_record.recorder_name }}, end of Session {{ prev_record.wn }}</p>
+   the mentor left themselves, so it should look like information — but a flat
+   tint with a hairline border was too quiet to notice at all. A solid left bar
+   and an icon give it weight without making it look like an alert. #}
+<div class="note-panel note-panel--last">
+  <div class="note-panel-head">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
+    <span>Summary from last session</span>
+  </div>
+  <p class="note-panel-body">{{ prev_record.mentor_notes|sentence }}</p>
+  <p class="note-panel-foot">{{ prev_record.recorder_name }}, end of Session {{ prev_record.wn }}</p>
 </div>
 {% endif %}
 
 {% if week.lookfor %}
-<div style="background:#EEF1F7;border:1px solid #D7DEEA;border-radius:12px;padding:10px 12px;margin:0 0 14px;">
-<p style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 4px;">Watch for</p>
-<p style="font-size:13.5px;color:var(--navy);line-height:1.5;margin:0;">{{ week.lookfor }}</p>
+{# Grey-blue read as inert, which is wrong for the one line telling a mentor
+   what tends to go wrong in this session. Amber, because it asks for attention
+   without being an alarm — coral and red already mean safeguarding here. #}
+<div class="note-panel note-panel--watch">
+  <div class="note-panel-head">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+    <span>Watch for</span>
+  </div>
+  <p class="note-panel-body">{{ week.lookfor|sentence }}</p>
 </div>
 {% endif %}
 
@@ -546,7 +557,33 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 /* The hanging indent lines wrapped text up under the words, not under the
    number. It only applies to numbered steps: the take-home has no number,
    so the negative indent left its second line pushed in. */
-.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
+/* Two panels that a mentor must not skim past. Both were flat tints with a
+   hairline border, which made them the quietest things on a busy page. A solid
+   left bar, an icon and a stronger label give weight; the colour says which
+   kind of information it is. */
+.note-panel{border-radius:0 12px 12px 0; padding:12px 16px; margin:0 0 16px;
+  border-left:4px solid; box-shadow:0 1px 2px rgba(28,28,26,.04);}
+.note-panel-head{display:flex; align-items:center; margin-bottom:6px;}
+/* margin rather than gap: flex gap is fine in a browser but not in every PDF
+   or print renderer, and the icon ends up welded to the label when it isn't. */
+.note-panel-head svg{width:15px; height:15px; flex-shrink:0; margin-right:8px;}
+.note-panel-head span{font-size:11.5px; font-weight:800; letter-spacing:.06em;
+  text-transform:uppercase; white-space:nowrap;}
+.note-panel-body{font-size:14px; line-height:1.55; margin:0;}
+.note-panel-foot{font-size:11.5px; margin:4px 0 0; opacity:.75;}
+
+/* What happened last week: information, so teal. */
+.note-panel--last{background:#EAF6F1; border-left-color:var(--teal-darker);}
+.note-panel--last .note-panel-head{color:var(--teal-darker);}
+.note-panel--last .note-panel-body, .note-panel--last .note-panel-foot{color:#04342C;}
+
+/* What tends to go wrong here: attention, so amber. Not coral or red — those
+   mean safeguarding on this page and must not be diluted. */
+.note-panel--watch{background:var(--amber-light); border-left-color:var(--amber-dark);}
+.note-panel--watch .note-panel-head{color:var(--amber-dark);}
+.note-panel--watch .note-panel-body{color:#412402;}
+
+.step-line{.step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
   padding-left:20px; text-indent:-20px;}
 .step-line--plain{padding-left:0; text-indent:0;}
 .step-line:last-child{margin-bottom:6px;}
