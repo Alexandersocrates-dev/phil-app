@@ -38,7 +38,8 @@
             "Legs and feet",
             "Whole body"
           ]
-        }
+        },
+        "figure": "body-map"
       },
       {
         "name": "Feelings scale",
@@ -1777,7 +1778,8 @@
             "Shoulders and jaw — clenched",
             "Whole body — restless or heavy"
           ]
-        }
+        },
+        "figure": "body-map"
       },
       {
         "name": "Exam stress thermometer",
@@ -3233,7 +3235,8 @@
             "Legs and feet",
             "Whole body"
           ]
-        }
+        },
+        "figure": "body-map"
       },
       {
         "name": "Anger cycle diagram",
@@ -4148,7 +4151,8 @@
             "Legs and feet",
             "Whole body"
           ]
-        }
+        },
+        "figure": "body-map"
       },
       {
         "name": "Grounding technique cards",

@@ -16,6 +16,7 @@ import os
 import re
 
 import db
+import body_map
 import auth as authlib
 import billing
 from framework import Router, Request, Response, render, redirect, pdf_response, make_wsgi_app
@@ -138,6 +139,56 @@ def assign_resources_to_steps(week, items):
                 best, best_score = step, score
         by_step[best or "activity"].append(item)
     return by_step
+
+
+def attach_figures(items):
+    """Give a body-map resource the geometry both renderers draw from."""
+    for item in items:
+        if body_map.is_body_map(item):
+            rows = (item.get("checklist") or {}).get("items") or []
+            item["figure_points"] = body_map.points_for(rows)
+            item["figure_parts"] = body_map.PARTS
+            item["figure_view"] = (body_map.VIEW_W, body_map.VIEW_H)
+    return items
+
+
+def assign_resources_to_lines(week, items):
+    """Which numbered instruction each resource belongs under.
+
+    assign_resources_to_steps gets a resource to the right step; this gets it to
+    the right line within it. A session that says "1. Show the anger cycle
+    diagram ... 4. Use the body map handout" should show each sheet under the
+    instruction that calls for it, in that order — otherwise both land in a heap
+    at the foot of the step and a mentor reads step 1 while looking at step 4's
+    handout.
+
+    Returns, per step: the numbered lines, each with the resources that belong
+    to it, and any leftovers that matched the step but no particular line.
+    """
+    out = {}
+    for step in SESSION_STEPS:
+        text = (week.get(_STEP_TEXT_FIELD[step]) or "")
+        lines = [ln for ln in text.split("\n") if ln.strip()]
+        step_items = [i for i in items if i.get("_step") == step]
+        placed = {}
+        leftover = []
+        for item in step_items:
+            keywords = _resource_keywords(item.get("name"))
+            best, best_score = None, 0
+            for n, line in enumerate(lines):
+                score = len(keywords & _resource_keywords(line))
+                if score > best_score:
+                    best, best_score = n, score
+            if best is None:
+                leftover.append(item)
+            else:
+                placed.setdefault(best, []).append(item)
+        out[step] = {
+            "lines": [{"text": ln, "items": placed.get(n, [])}
+                      for n, ln in enumerate(lines)],
+            "leftover": leftover,
+        }
+    return out
 
 
 def resource_slug(name):
@@ -2258,7 +2309,12 @@ def session_form(request):
         # writes on; this makes the mentor-facing material usable in the room.
         week["resource_items"] = resource_items_for(
             enrolment["course_module_number"], week["resources"])
+        attach_figures(week["resource_items"])
         week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
+        for step, group in week["resource_steps"].items():
+            for item in group:
+                item["_step"] = step
+        week["resource_lines"] = assign_resources_to_lines(week, week["resource_items"])
     prev_record = completed_records[-1] if completed_records else None
     # What the pupil took away last week. Several courses open by reviewing it,
     # so the mentor should not have to go and find it.
@@ -5299,7 +5355,12 @@ def session_record_edit(request):
     week = dict(week, resources=json.loads(week["resources"] or "[]"))
     week["resource_items"] = resource_items_for(
         enrolment["course_module_number"], week["resources"])
+    attach_figures(week["resource_items"])
     week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
+    for step, group in week["resource_steps"].items():
+        for item in group:
+            item["_step"] = step
+    week["resource_lines"] = assign_resources_to_lines(week, week["resource_items"])
 
     # what_happened was written as "Check-in: ... / Input: ... / Activity: ...",
     # a format this app controls, so it can be split back into the three fields

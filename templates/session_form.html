@@ -35,12 +35,33 @@
   </table>
   {% endif %}
   {% if item.checklist %}
+  {# A body map is a picture, not a list of words. The figure and the tick list
+     share numbering, so pointing at the diagram and ticking the row are the
+     same act. #}
+  <div class="{% if item.figure_points %}res-figure-wrap{% endif %}">
+  {% if item.figure_points %}
+  <svg class="res-figure" viewBox="0 0 {{ item.figure_view[0] }} {{ item.figure_view[1] }}"
+       role="img" aria-label="Outline of a body with numbered areas matching the list">
+    {%- for key, p in item.figure_parts.items() %}
+    {%- if p[0] == 'circle' %}<circle cx="{{ p[1] }}" cy="{{ p[2] }}" r="{{ p[3] }}"/>
+    {%- else %}<rect x="{{ p[1] }}" y="{{ p[2] }}" width="{{ p[3] }}" height="{{ p[4] }}" rx="{{ p[5] }}"/>
+    {%- endif %}{% endfor %}
+    {%- for pt in item.figure_points %}
+    {%- if pt.whole %}<rect class="res-figure-whole" x="8" y="4" width="84" height="172" rx="14"/>{% endif %}
+    <circle class="res-figure-dot" cx="{{ pt.x }}" cy="{{ pt.y }}" r="9"/>
+    <text class="res-figure-num" x="{{ pt.x }}" y="{{ pt.y }}" text-anchor="middle"
+          dominant-baseline="central">{{ pt.n }}</text>
+    {%- endfor %}
+  </svg>
+  {% endif %}
   <ul class="res-check">{% for ci in item.checklist['items'] %}{% set fk = 'c' ~ loop.index0 %}
     <li><label class="res-check-label">
       <input type="checkbox" name="res__{{ item.slug }}__{{ fk }}" value="yes"
              {% if entries and (entries.get(item.slug, {})).get(fk) %}checked{% endif %}>
+      {% if item.figure_points %}<span class="res-check-n">{{ loop.index }}</span>{% endif %}
       <span>{{ ci }}</span>
     </label></li>{% endfor %}</ul>
+  </div>
   {% endif %}
   {% if item.steps %}
   <div class="res-steps">
@@ -151,8 +172,15 @@
 <div style="flex:1;min-width:0;"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p><p style="font-size:12px;color:var(--muted);margin:2px 0 0;">{% if week.staff_only %}No pupil in this one &mdash; it&rsquo;s written for other staff{% else %}This session&rsquo;s focus{% endif %}</p></div>
 </div>
 
+{# The objective was already written as a goal — "Pupil can describe what anger
+   feels like in the body" — but sat as unlabelled body text and got skimmed.
+   Labelled and given its own panel, it's the thing a mentor checks against
+   when deciding whether the session landed. #}
 {% if week.objective %}
-<p style="font-size:14px;color:var(--ink);line-height:1.55;margin:0 0 12px;">{{ week.objective }}</p>
+<div class="sess-goal">
+  <span class="sess-goal-label">{% if week.staff_only %}What this write-up has to do{% else %}By the end of this session{% endif %}</span>
+  <p>{{ week.objective|replace('Pupil ', 'the pupil ', 1) }}</p>
+</div>
 {% endif %}
 
 {% if prev_record and prev_record.mentor_notes and not week.staff_only %}
@@ -232,7 +260,10 @@
 {% else %}
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Start with a general check-in</strong>, then review last session&rsquo;s task.</p>
 {% endif %}
-{% if week.checkin %}{% for line in week.checkin.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
+{# Each sheet sits under the instruction that calls for it, so a mentor
+     reading step 1 is looking at step 1's handout. #}
+{% for ln in week.resource_lines['checkin'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for item in ln.items %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% if (prev_week_items or prev_record) and not week.staff_only %}
 <details class="res-prev">
   <summary>From last session &middot; Session {{ next_week_number - 1 }}</summary>
@@ -246,7 +277,7 @@
   </div>
 </details>
 {% endif %}
-{% for item in week.resource_steps['checkin'] %}{{ resource_card(item) }}{% endfor %}
+{% for item in week.resource_lines['checkin'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The behaviour that led to the referral, and what&rsquo;s different now&hellip;{% else %}Notes on how the pupil seemed today&hellip;{% endif %}">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -256,8 +287,9 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
-{% if week.input_content %}{% for line in week.input_content.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
-{% for item in week.resource_steps['input'] %}{{ resource_card(item) }}{% endfor %}
+{% for ln in week.resource_lines['input'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for item in ln.items %}{{ resource_card(item) }}{% endfor %}{% endfor %}
+{% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -267,8 +299,9 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}What works{% else %}Activity{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.activity }} min{% endif %}</span></h5>
-{% if week.activity %}{% for line in week.activity.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
-{% for item in week.resource_steps['activity'] %}{{ resource_card(item) }}{% endfor %}
+{% for ln in week.resource_lines['activity'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for item in ln.items %}{{ resource_card(item) }}{% endfor %}{% endfor %}
+{% for item in week.resource_lines['activity'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="activity_note" data-field="activity_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The strategy that worked, specific enough for someone else to copy&hellip;{% else %}Notes on how the activity went&hellip;{% endif %}">{{ draft.activity_note if draft and draft.activity_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -278,8 +311,9 @@
 <div style="width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:10.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
 <div style="flex:1;min-width:0;">
 <h5 style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--navy);margin:0 0 3px;">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);margin-left:6px;font-size:10.5px;">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
-{% if week.reflect %}{% for line in week.reflect.split('\n') %}{% if line.strip() %}<p class="step-line">{{ line }}</p>{% endif %}{% endfor %}{% endif %}
-{% for item in week.resource_steps['reflect'] %}{{ resource_card(item) }}{% endfor %}
+{% for ln in week.resource_lines['reflect'].lines %}<p class="step-line">{{ ln.text }}</p>
+{% for item in ln.items %}{{ resource_card(item) }}{% endfor %}{% endfor %}
+{% for item in week.resource_lines['reflect'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="reflect_note" data-field="reflect_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What to do if it happens anyway, and what not to do&hellip;{% else %}Notes on the pupil&rsquo;s answer&hellip;{% endif %}">{{ draft.reflect_note if draft and draft.reflect_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -424,6 +458,24 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-table th,.res-table td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top;}
 .res-table th{background:#F6F3EA;font-weight:600;}
 .res-table td:empty{height:24px;}
+/* Figure and list side by side on a wide screen, stacked on a phone. */
+.sess-goal{border-left:3px solid var(--teal-darker);background:#F6FAF8;border-radius:0 8px 8px 0;
+  padding:8px 16px;margin:0 0 16px;}
+.sess-goal-label{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:4px;}
+.sess-goal p{font-size:14px;color:var(--ink);line-height:1.55;margin:0;}
+.res-figure-wrap{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.res-figure{width:132px;height:auto;flex-shrink:0;}
+.res-figure circle, .res-figure rect{fill:#F3F2EC;stroke:var(--border);stroke-width:1.5;}
+.res-figure .res-figure-whole{fill:none;stroke:var(--teal-darker);stroke-width:1.5;
+  stroke-dasharray:5 4;}
+.res-figure .res-figure-dot{fill:var(--teal-darker);stroke:none;}
+.res-figure .res-figure-num{fill:#fff;font-size:10px;font-weight:700;font-family:inherit;}
+.res-check-n{display:inline-flex;align-items:center;justify-content:center;width:18px;
+  height:18px;border-radius:50%;background:var(--teal-darker);color:#fff;font-size:11px;
+  font-weight:700;flex-shrink:0;}
+.res-figure-wrap .res-check{flex:1;min-width:180px;}
+@media (max-width:520px){ .res-figure{width:104px;} }
 .res-check{margin:6px 0 0;padding-left:18px;font-size:13px;}
 .res-check li{margin:0 0 4px;}
 .res-prev{border:1px dashed var(--border);border-radius:8px;background:#FBF8F2;margin:0 0 8px;}

@@ -45,6 +45,8 @@ def today_uk():
     return datetime.date.today().strftime("%d/%m/%Y")
 import re
 import math
+
+import body_map
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
@@ -1352,6 +1354,75 @@ def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
     return y - 2 * mm
 
 
+def _draw_body_map(c, x, top_y, max_width, items, figure_w=42 * mm):
+    """The body map as a figure with the tick list beside it.
+
+    A list of words asks a pupil to do the mapping in their head. The printed
+    sheet and the screen draw from the same geometry in body_map.py, so a pupil
+    filling in a photocopy and one filling it in on the mentor's laptop are
+    marking the same picture.
+    """
+    points = body_map.points_for(items)
+    scale = figure_w / body_map.VIEW_W
+    fig_h = body_map.VIEW_H * scale
+    base_y = top_y - fig_h
+
+    def px(vx):
+        return x + vx * scale
+
+    def py(vy):                       # the view grows downwards, the page up
+        return base_y + (body_map.VIEW_H - vy) * scale
+
+    c.setStrokeColor(BORDER)
+    c.setFillColor(HexColor("#F3F2EC"))
+    c.setLineWidth(1)
+    for part in body_map.PARTS.values():
+        if part[0] == "circle":
+            _, vx, vy, r = part
+            c.circle(px(vx), py(vy), r * scale, fill=1, stroke=1)
+        else:
+            _, vx, vy, w, h, r = part
+            c.roundRect(px(vx), py(vy + h), w * scale, h * scale, r * scale, fill=1, stroke=1)
+
+    for pt in points:
+        if pt["whole"]:
+            c.setStrokeColor(TEAL_DARK)
+            c.setDash(3, 3)
+            c.roundRect(px(8), py(176), 84 * scale, 172 * scale, 14 * scale, fill=0, stroke=1)
+            c.setDash()
+        c.setFillColor(TEAL_DARK)
+        c.setStrokeColor(TEAL_DARK)
+        c.circle(px(pt["x"]), py(pt["y"]), body_map.DOT_R * scale, fill=1, stroke=0)
+        c.setFillColor(HexColor("#FFFFFF"))
+        c.setFont("Helvetica-Bold", 7.5)
+        c.drawCentredString(px(pt["x"]), py(pt["y"]) - 2.6, str(pt["n"]))
+
+    # The list sits to the right of the figure, numbered to match.
+    list_x = x + figure_w + 8 * mm
+    y = top_y - 2 * mm
+    box = 3.6 * mm
+    for n, item_text in enumerate(items, start=1):
+        c.setStrokeColor(BORDER)
+        c.setFillColor(HexColor("#FFFFFF"))
+        c.setLineWidth(1)
+        c.rect(list_x, y - box, box, box, fill=1, stroke=1)
+        c.setFillColor(TEAL_DARK)
+        c.circle(list_x + box + 4 * mm, y - box + 1.3 * mm, 2.4 * mm, fill=1, stroke=0)
+        c.setFillColor(HexColor("#FFFFFF"))
+        c.setFont("Helvetica-Bold", 7)
+        c.drawCentredString(list_x + box + 4 * mm, y - box + 0.5 * mm, str(n))
+        c.setFont("Helvetica", 9.5)
+        c.setFillColor(INK)
+        c.drawString(list_x + box + 8 * mm, y - box + 0.6 * mm, item_text)
+        y -= 8 * mm
+    return min(base_y, y) - 4 * mm
+
+
+def _body_map_height(items, figure_w=42 * mm):
+    fig = body_map.VIEW_H * (figure_w / body_map.VIEW_W)
+    return max(fig, 8 * mm * len(items)) + 6 * mm
+
+
 def _table_height(headers, rows, row_h=9 * mm):
     return 8 * mm + row_h * len(rows)
 
@@ -1611,6 +1682,8 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
         elif form:
             needed = 24 * mm + _form_height(form["fields"])
+        elif checklist and item.get("figure") == "body-map":
+            needed = 24 * mm + _body_map_height(checklist["items"])
         elif checklist:
             needed = 24 * mm + _checklist_height(checklist["items"])
         elif is_cycle:
@@ -1669,7 +1742,10 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
-            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+            if item.get("figure") == "body-map":
+                state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
+            else:
+                state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
 
         elif is_cycle:
             steps = _parse_numbered_steps(body)
