@@ -4,12 +4,19 @@
 {% block content %}
 {% include "_card_art.svg" %}
 
+{# Anything the pupil writes on stays open, because the mentor has to use it in
+   the room. Anything that is only looked at — a diagram, a set of prompt cards
+   — folds away, so a four-step instruction list isn't broken in half by a
+   full-width illustration. A details element rather than a hover: a mentor may
+   be on a tablet, where hover doesn't exist, and it still prints open. #}
 {% macro resource_card(item, context='') %}
-<div class="res-inline">
-  <div class="res-inline-head">
+{% set fill_in = item.table or item.form or item.checklist %}
+<details class="res-inline"{% if fill_in %} open{% endif %}>
+  <summary class="res-inline-head">
     <span class="res-inline-name">{{ item.name }}</span>
-    {% if item.table or item.form or item.checklist %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
-  </div>
+    {% if fill_in %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+    <span class="res-toggle" aria-hidden="true"></span>
+  </summary>
   {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p class="res-inline-p">{{ para }}</p>{% endif %}{% endfor %}{% endif %}
   {% if item.table %}
   <table class="res-table">
@@ -92,7 +99,7 @@
   <p class="res-cards-hint">{{ item.cards|length }} cards &middot; scroll for more, or print the pack to cut them out</p>
   {% endif %}
   {% if item.source %}<p class="res-source">{{ item.source }}</p>{% endif %}
-</div>
+</details>
 {% endmacro %}
 
 
@@ -453,8 +460,18 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-inline{border:1px solid var(--border);border-left:3px solid var(--teal-darker);border-radius:8px;background:#fff;padding:10px 12px;margin:0 0 8px;}
 .res-inline-head{display:flex;align-items:center;gap:8px;margin:0 0 6px;}
 .res-inline-name{font-size:12.5px;font-weight:700;color:var(--teal-darker);}
-.res-inline-p{font-size:13px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
-.res-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
+/* The summary is the whole control, so the head row stays clickable and the
+   marker is ours rather than the browser's inconsistent triangle. */
+.res-inline > summary{cursor:pointer;list-style:none;}
+.res-inline > summary::-webkit-details-marker{display:none;}
+.res-toggle{margin-left:auto;flex-shrink:0;font-size:11.5px;font-weight:700;
+  color:var(--teal-darker);white-space:nowrap;}
+.res-toggle::after{content:"Show";}
+.res-inline[open] .res-toggle::after{content:"Hide";}
+.res-inline[open] > summary{margin-bottom:8px;}
+@media print{ .res-inline{display:block;} .res-toggle{display:none;} }
+.res-inline-p{font-size:13.5px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
+.res-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
 .res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
 .res-table{width:100%;border-collapse:collapse;margin:6px 0 0;font-size:12px;}
 .res-table th,.res-table td{border:1px solid var(--border);padding:5px 7px;text-align:left;vertical-align:top;}
@@ -545,17 +562,17 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    height on every card whatever the text does. A flex column let a one-line
    title or a missing note shift everything below it. */
 .res-card{scroll-snap-align:start;flex:0 0 152px;display:grid;
-  grid-template-rows:14px 48px 60px 1fr auto;border-radius:12px;padding:12px;border:1.5px dashed;}
-.res-card-cat{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
-.res-card-title{font-size:12.5px;font-weight:600;margin:0;line-height:1.3;align-self:start;overflow:hidden;}
+  grid-template-rows:16px 52px 60px 1fr auto;border-radius:12px;padding:12px;border:1.5px dashed;}
+.res-card-cat{font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
+.res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;overflow:hidden;}
 .res-card-art{display:flex;align-items:center;justify-content:center;}
 .res-card .res-art{height:56px;margin:0;}
-.res-card-text{font-size:11.5px;line-height:1.4;margin:6px 0 0;}
-.res-card-note{font-size:10.5px;margin:8px 0 0;padding-top:7px;border-top:1px solid;min-height:14px;}
+.res-card-text{font-size:13px;line-height:1.4;margin:6px 0 0;}
+.res-card-note{font-size:12px;margin:8px 0 0;padding-top:7px;border-top:1px solid;min-height:14px;}
 .res-card-note--empty{border-top-color:transparent;}
-.res-source{margin:8px 0 0; font-size:11px; line-height:1.45; color:var(--muted); font-style:italic;}
-.res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
-.res-foot{font-size:11px;color:var(--muted);margin:8px 0 0;}
+.res-source{margin:8px 0 0; font-size:12px; line-height:1.45; color:var(--muted); font-style:italic;}
+.res-cards-hint{font-size:12px;color:var(--muted);margin:0;}
+.res-foot{font-size:12px;color:var(--muted);margin:8px 0 0;}
 .tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}
 .tone-teal .res-card-title,.tone-teal .res-card-text{color:#04342C;}
 .tone-teal .res-card-note{border-top-color:#9FE1CB;}
@@ -575,8 +592,6 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
    grid into a centred flex row: title, text and note ended up side by side in a
    152px column, which is what made them unreadable. The illustrated rules above
    are the live ones. */
-.res-source{margin:8px 0 0; font-size:11px; line-height:1.45; color:var(--muted); font-style:italic;}
-.res-cards-hint{font-size:11px;color:var(--muted);margin:0;}
 
 </style>
 <script>
