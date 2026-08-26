@@ -617,3 +617,58 @@ table td a:not(.btn):focus-visible{ outline:none; box-shadow:var(--shadow-focus-
   }
   .autosave-status.saving .autosave-dot{animation:none !important;}
 }
+
+/* A details/summary is keyboard focusable and was showing nothing when tabbed
+   to, so a keyboard user could not tell where they were. Buttons and fields
+   already have this; the disclosures were the gap. */
+summary:focus-visible{outline:2px solid var(--teal-dark); outline-offset:2px;
+  border-radius:8px;}
+summary{cursor:pointer;}
+
+/* Pressed state. Hover told you a control was live; nothing acknowledged the
+   click itself. */
+.btn:active{transform:translateY(0); box-shadow:none;}
+
+/* ---------------------------------------------------------------- printing --
+   Mentors print session sheets to take into a room without a laptop. Without
+   this they get the screen: navigation bars, buttons that do nothing on paper,
+   folded-away resources and note boxes with no room to write. */
+@media print{
+  /* Chrome that means nothing on paper. */
+  .app-sidebar, .app-bottomnav-mobile, .topbar, .back-link,
+  .btn, .flash, .js-back,
+  /* Screen-only status: autosave says nothing on paper, and a progress bar
+     for a session you are about to run in the room is noise. */
+  .autosave-status, .sess-progress{display:none !important;}
+
+  html, body{background:#fff !important; color:#000;}
+  .app-shell{display:block;}
+  .app-main{padding:0 !important;}
+
+  /* Cards keep their structure but lose the screen's depth, which prints as
+     grey mush. */
+  .card, .step-block, .note-panel, .res-inline{
+    box-shadow:none !important; break-inside:avoid; page-break-inside:avoid;}
+  .card, .step-block{border:1px solid #999 !important;}
+
+  /* A step should not be split across two pages mid-instruction. */
+  .step-block{margin-bottom:10px !important;}
+
+  /* Everything folded away on screen is open on paper — a printed sheet has no
+     way to expand it. */
+  details{display:block !important;}
+  details > summary{list-style:none;}
+  details:not([open]) > *:not(summary){display:revert !important;}
+
+  /* A note box on paper is somewhere to write, so give it real height and a
+     visible rule. Placeholders don't print, so the field would otherwise be an
+     invisible gap. */
+  .note-field{min-height:22mm !important; border:1px solid #999 !important;
+    background:#fff !important;}
+
+  /* Filled panels cost a lot of ink and print worse than they look. */
+  .sess-goal{background:#fff !important; border:2px solid #000 !important;}
+  .sess-goal p, .sess-goal-head{color:#000 !important;}
+
+  a[href]{text-decoration:none; color:#000;}
+}
