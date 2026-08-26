@@ -53,7 +53,11 @@
     <div class="ml-list">
       {% for p in pupils %}
       <details class="card ml-pupil" {% if pupils|length == 1 %}open{% endif %}>
-        <summary class="ml-summary">
+                {# The flex row lives in a span inside the summary, not on the summary
+           itself: display:flex on a <summary> is refused by older engines and by
+           some print renderers, which stacks the row into separate lines. #}
+        <summary class="ml-summary-el">
+          <span class="ml-summary">
           <span class="ml-chev" aria-hidden="true"></span>
           <span class="ml-name">{{ p.pupil }}</span>
           <span class="ml-badges">
@@ -62,6 +66,7 @@
             {%- if p.needs_attention %} <span class="badge badge-red">{{ p.needs_attention }} follow-up{{ '' if p.needs_attention == 1 else 's' }} to do</span>{% endif -%}
           </span>
           <span class="ml-toggle" aria-hidden="true"></span>
+          </span>
         </summary>
 
         <div class="ml-body">
@@ -124,11 +129,13 @@
 </div>
 
 <style>
+.ml-summary-el{display:block; cursor:pointer; list-style:none;}
+.ml-summary-el::-webkit-details-marker{display:none;}
 .ml-head{margin:0 0 24px;}
-.ml-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+.ml-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .ml-head h1{margin:0 0 8px;letter-spacing:-.02em;}
-.ml-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+.ml-lede{font-size:14px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
 .ml-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px;align-items:start;}
 .ml-main{min-width:0;}
@@ -137,7 +144,7 @@
 .ml-toolbar{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:16px;}
 /* Heights come from --ctl-h in the stylesheet. */
 .ml-toolbar select.ctl{min-width:170px;}
-.ml-filter-note{flex-basis:100%;margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.ml-filter-note{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
 
 .ml-list{display:flex;flex-direction:column;gap:12px;}
 .ml-pupil{margin:0;padding:0 24px;}
@@ -147,7 +154,7 @@
   border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;
   transition:transform .13s ease;}
 .ml-pupil[open] .ml-chev{transform:rotate(90deg);}
-.ml-name{font-family:var(--font-head);font-weight:700;font-size:15.5px;color:var(--navy);
+.ml-name{font-family:var(--font-head);font-weight:700;font-size:16px;color:var(--navy);
   letter-spacing:-.01em;flex:1;min-width:0;}
 /* Badges hold together: flex-shrink:0 stops "2 follow-ups to do" being squeezed
    until it breaks across lines. */
@@ -163,7 +170,7 @@
    "Week 0 of 6" into two lines. */
 .ml-scroll{overflow-x:auto;border-top:1px solid var(--border);padding-top:4px;}
 .ml-table{width:100%;border-collapse:collapse;font-size:13px;}
-.ml-table th{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+.ml-table th{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
   color:var(--muted);text-align:left;padding:8px 16px 8px 0;white-space:nowrap;}
 .ml-table td{padding:12px 16px 12px 0;border-top:1px solid var(--border);vertical-align:middle;}
 .ml-table tr:first-child td{border-top:none;}
@@ -175,17 +182,17 @@
   clip:rect(0 0 0 0);white-space:nowrap;border:0;}
 
 .ml-panel{margin:0;padding:16px 24px;border-left:3px solid var(--teal-darker);}
-.ml-panel h2{font-size:15.5px;margin:2px 0 4px;letter-spacing:-.01em;}
+.ml-panel h2{font-size:16px;margin:2px 0 4px;letter-spacing:-.01em;}
 .ml-panel-period{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
   color:var(--teal-darker);margin:0 0 12px;}
 .ml-panel-body{font-size:13px;line-height:1.6;color:var(--ink);margin:0 0 16px;}
 .ml-dl{display:flex;gap:8px;margin-bottom:12px;}
 .ml-dl .btn{flex:1;text-align:center;white-space:nowrap;}
-.ml-panel-note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:0;}
+.ml-panel-note{font-size:12px;line-height:1.55;color:var(--muted);margin:0;}
 
 .ml-empty{text-align:center;padding:32px 24px;}
 .ml-empty h2{margin:0 0 8px;font-size:16px;}
-.ml-empty p{margin:0;color:var(--muted);font-size:13.5px;}
+.ml-empty p{margin:0;color:var(--muted);font-size:14px;}
 
 @media (max-width:900px){
   .ml-layout{grid-template-columns:minmax(0,1fr);}

@@ -623,7 +623,12 @@ table td a:not(.btn):focus-visible{ outline:none; box-shadow:var(--shadow-focus-
    already have this; the disclosures were the gap. */
 summary:focus-visible{outline:2px solid var(--teal-dark); outline-offset:2px;
   border-radius:8px;}
-summary{cursor:pointer;}
+/* Suppress the browser's own triangle everywhere, all three ways: engines
+   differ over which one they honour, and a page that sets only one ends up
+   with a stray marker on its own line. */
+summary{cursor:pointer; list-style:none;}
+summary::-webkit-details-marker{display:none;}
+summary::marker{content:"";}
 
 /* Pressed state. Hover told you a control was live; nothing acknowledged the
    click itself. */

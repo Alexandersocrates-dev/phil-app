@@ -119,13 +119,13 @@ function filterPupilReports() {
 <style>
 /* ---------------------------------------------------------------- heading -- */
 .rp-head{margin:0 0 24px;}
-.rp-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+.rp-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .rp-head h1{margin:0 0 8px;letter-spacing:-.02em;}
 /* No ch cap: a fixed 64ch wrapped the sentence well short of the container and
    read as an accident. Bounded by the layout instead, and balanced so the last
    line is never a single orphaned word. */
-.rp-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
+.rp-lede{font-size:14px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
   text-wrap:pretty;}
 
 /* ----------------------------------------------------------------- layout -- */
@@ -141,7 +141,7 @@ function filterPupilReports() {
    step with controls anywhere else. */
 .rp-filter-grow{flex:1 1 240px;}
 .rp-toolbar select.ctl{min-width:150px;}
-.rp-filter-note{flex-basis:100%;margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.rp-filter-note{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
 
 /* ------------------------------------------------------------- pupil card -- */
 .rp-list{display:flex;flex-direction:column;gap:16px;}
@@ -149,40 +149,40 @@ function filterPupilReports() {
 .rp-card-top{display:flex;align-items:flex-start;gap:12px;}
 .rp-avatar{flex-shrink:0;margin-top:2px;}
 .rp-id{flex:1;min-width:0;}
-.rp-name{font-size:16.5px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin:0;}
-.rp-sub{font-size:12.5px;color:var(--muted);margin:4px 0 0;}
+.rp-name{font-size:16px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin:0;}
+.rp-sub{font-size:12px;color:var(--muted);margin:4px 0 0;}
 .rp-actions{display:flex;align-items:center;gap:16px;flex-shrink:0;}
 .rp-download{white-space:nowrap;}
-.rp-open{font-size:12.5px;white-space:nowrap;}
+.rp-open{font-size:12px;white-space:nowrap;}
 
 /* The three numbers, ruled off from the prose so they read as data. */
 .rp-stats{display:flex;gap:0;margin:16px 0 0;padding:0;border-top:1px solid var(--border);}
 .rp-stats > div{padding:12px 24px 2px 0;margin-right:24px;border-right:1px solid var(--border);}
 .rp-stats > div:last-child{border-right:none;margin-right:0;padding-right:0;}
-.rp-stats dt{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+.rp-stats dt{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
   color:var(--muted);margin:0 0 4px;}
 .rp-stats dd{font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--navy);
   margin:0;white-space:nowrap;}
 .rp-stats dd span{font-family:inherit;font-size:12px;font-weight:600;color:var(--teal-darker);}
 
 .rp-courses{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:12px 0 0;padding:0;}
-.rp-courses li{font-size:12.5px;line-height:1.35;color:var(--ink);background:#F3F2EC;
+.rp-courses li{font-size:12px;line-height:1.35;color:var(--ink);background:#F3F2EC;
   border-radius:6px;padding:4px 8px;}
-.rp-mentors{font-size:12.5px;color:var(--muted);margin:12px 0 0;}
+.rp-mentors{font-size:12px;color:var(--muted);margin:12px 0 0;}
 .rp-mentors span{font-weight:700;}
-.rp-nomatch{font-size:13.5px;color:var(--muted);margin:16px 0 0;}
+.rp-nomatch{font-size:14px;color:var(--muted);margin:16px 0 0;}
 
 /* ------------------------------------------------------------- side panel -- */
 .rp-panel{margin:0;padding:16px 24px;border-left:3px solid var(--coral-dark);}
-.rp-panel h2{font-size:15.5px;margin:2px 0 12px;letter-spacing:-.01em;}
+.rp-panel h2{font-size:16px;margin:2px 0 12px;letter-spacing:-.01em;}
 .rp-includes{margin:0 0 12px;padding-left:16px;font-size:13px;line-height:1.6;color:var(--ink);}
 .rp-includes li{margin-bottom:4px;}
-.rp-scope{font-size:12.5px;color:var(--muted);line-height:1.55;margin:0 0 8px;}
-.rp-warn{font-size:12.5px;line-height:1.55;margin:0;color:var(--coral-dark);font-weight:600;}
+.rp-scope{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 8px;}
+.rp-warn{font-size:12px;line-height:1.55;margin:0;color:var(--coral-dark);font-weight:600;}
 
 .rp-empty{text-align:center;padding:32px 24px;}
 .rp-empty h2{margin:0 0 8px;font-size:16px;}
-.rp-empty p{margin:0;color:var(--muted);font-size:13.5px;}
+.rp-empty p{margin:0;color:var(--muted);font-size:14px;}
 
 @media (max-width:900px){
   .rp-layout{grid-template-columns:minmax(0,1fr);}

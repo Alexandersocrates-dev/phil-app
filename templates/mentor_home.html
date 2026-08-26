@@ -23,7 +23,7 @@
       {{ reviews_due|length }}{% if overdue_count %} &middot; {{ overdue_count }} overdue{% endif %}
     </span>
   </div>
-  <p class="muted" style="font-size:12.5px;margin:0 0 12px;">A sit-down with the pupil a few weeks on: has the course helped, is the behaviour still showing?</p>
+  <p class="muted" style="font-size:12px;margin:0 0 12px;">A sit-down with the pupil a few weeks on: has the course helped, is the behaviour still showing?</p>
   {% for r in reviews_due %}
   <div class="review-due-row {% if r.overdue %}review-due-late{% endif %}">
     <div style="flex:1;min-width:0;">
@@ -40,6 +40,8 @@
   {% endfor %}
 </div>
 <style>
+.ml-summary-el{display:block; cursor:pointer; list-style:none;}
+.ml-summary-el::-webkit-details-marker{display:none;}
 /* The card has to look different from every other card on the page, or a due
    follow-up reads as just more content. The accent is teal when they are simply
    due and red once any is overdue, matching the to-do list. */
@@ -81,7 +83,11 @@
    three times with the same name, which reads as three children. #}
 {% for p in mentoring_list %}
 <details class="ml-pupil">
-  <summary class="ml-summary">
+    {# The flex row lives in a span inside the summary, not on the summary
+     itself: display:flex on a <summary> is refused by older engines and by
+     some print renderers, which stacks the row into separate lines. #}
+  <summary class="ml-summary-el">
+    <span class="ml-summary">
     <span class="avatar avatar-sm">{{ p.forename[:1] }}{{ p.surname[:1] }}</span>
     <span class="ml-name">{{ p.forename }} {{ p.surname }}</span>
     <span class="ml-count">
@@ -89,6 +95,7 @@
       {%- if p.completed %} <span class="badge badge-muted">{{ p.completed }} done</span>{% endif -%}
     </span>
     <span class="ml-toggle">Show courses</span>
+    </span>
   </summary>
 
   <div class="ml-scroll">
@@ -184,10 +191,10 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 
 <style>
 .mh-head{margin:0 0 24px;}
-.mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+.mh-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
-.mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
+.mh-lede{font-size:14px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;text-wrap:pretty;}
 
 /* minmax(0,1fr): a grid column defaults to min-width auto, so a long course
    title would push the column wider and squeeze the panel beside it. */
@@ -197,7 +204,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 
 .mh-section-head{margin-bottom:8px;}
 .mh-section-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
-.mh-section-head p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+.mh-section-head p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.5;}
 .mh-list-card{margin:0;padding:16px 24px;}
 
 .mh-panel{margin:0;padding:16px;}
@@ -207,7 +214,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .mh-figure:last-child{border-right:none;padding-right:0;margin-right:0;}
 .mh-figure strong{font-family:var(--font-head);font-size:27px;font-weight:700;color:var(--navy);
   letter-spacing:-.02em;line-height:1.1;}
-.mh-figure span{font-size:12.5px;color:var(--muted);margin-top:2px;white-space:nowrap;}
+.mh-figure span{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap;}
 .mh-panel-link{font-size:13px;font-weight:600;white-space:nowrap;}
 
 .mh-library{display:flex;align-items:center;gap:12px;margin:0;padding:16px;text-decoration:none;}
@@ -215,7 +222,7 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
   display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .mh-library-text{flex:1;min-width:0;}
 .mh-library-text strong{display:block;font-family:var(--font-head);font-weight:700;
-  font-size:13.5px;color:var(--navy);}
+  font-size:14px;color:var(--navy);}
 .mh-library-text span{display:block;font-size:12px;color:var(--muted);line-height:1.45;margin-top:2px;}
 .mh-library-chev{width:14px;height:14px;flex-shrink:0;stroke:#5F5E5A;}
 
@@ -225,10 +232,10 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 }
 
 .mh-head{margin:0 0 24px;}
-.mh-eyebrow{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;
+.mh-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .mh-head h1{margin:0 0 8px;letter-spacing:-.02em;}
-.mh-lede{font-size:15px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
+.mh-lede{font-size:14px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
   text-wrap:pretty;}
 
 .ml-pupil{border-top:1px solid var(--border); padding:4px 0;}
@@ -254,6 +261,6 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .ml-c-progress{width:190px;}
 .ml-c-status{width:110px;white-space:nowrap;}
 .ml-link-row{margin:8px 0 0;}
-.ml-link{font-size:12.5px; margin-left:32px;}
+.ml-link{font-size:12px; margin-left:32px;}
 </style>
 {% endblock %}

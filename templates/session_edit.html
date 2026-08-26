@@ -8,7 +8,7 @@
   <span class="badge badge-teal">Session {{ record.wn }} of 5</span>
   <h1>{{ record.week_title }}</h1>
   <p class="muted">{{ record.forename }} {{ record.surname }} &middot; {{ record.course_title }} &middot; recorded {{ record.date|uk_date }}</p>
-  <p class="muted" style="font-size:12.5px;">Correcting this record does not change the course's progress. Session {{ record.wn }} stays recorded.</p>
+  <p class="muted" style="font-size:12px;">Correcting this record does not change the course's progress. Session {{ record.wn }} stays recorded.</p>
 </div>
 
 <form method="post" action="/mentor/session/record/{{ record.id }}/edit">
@@ -47,7 +47,7 @@
 
   <div class="card safeguard-box">
     <h3>Safeguarding</h3>
-    <p class="muted" style="font-size:12.5px;">Phil takes no action on this note. You remain responsible for following your establishment's own procedure.</p>
+    <p class="muted" style="font-size:12px;">Phil takes no action on this note. You remain responsible for following your establishment's own procedure.</p>
     <div class="field">
       <label>
         <input type="checkbox" name="safeguarding_flag" value="yes"
