@@ -88,8 +88,8 @@ module.exports = [
         "objective": "Pupil can apply a calming strategy in a simulated stressful scenario and take part in a restorative conversation.",
         "checkin": "1. Ask: 'did you use either of your two strategies this week?'\n2. If they did, ask what happened next. If they didn't, ask what got in the way.\n3. Barriers are usually practical — no time, no space, felt embarrassing. Name the real one.",
         "input": "1. Explain that a strategy only works if it's practised before it's needed.\n2. Compare it to a fire drill: nobody reads the instructions during a fire.\n3. Agree to rehearse under mild pressure now, in the role-play, so it's more automatic later.",
-        "activity": "1. Get out the calm-down strategy cards from week three. Pupil picks the one they're going to use and says it out loud.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. When they start to get wound up, stop the role-play and ask: 'which strategy did you choose, and what do you need to do right now?'\n4. Do the whole thing twice more with different cards. Doing it three times is what makes it stick — talking about it doesn't.",
-        "reflect": "1. Ask: 'what made the strategy easier or harder than in week three?'\n2. Pupil names one real school situation to use it in before the next session.",
+        "activity": "1. Get out the calm-down strategy cards from week three. Pupil picks the one they're going to use and says it out loud.\n2. Deal a role-play scenario card and act it out — you play the other person.\n3. As soon as they look frustrated, stop the role-play and ask: 'which strategy did you choose, and what do you need to do right now?'\n4. Do the whole thing twice more with different cards. Doing it three times is what makes it stick — talking about it doesn't.\n5. Then take a real fall-out from the last few weeks and work through the restorative conversation prompts together.",
+        "reflect": "1. Ask: 'was your strategy easier or harder to use today than it was last week?'\n2. Ask: 'where at school could you use it before I see you next?' Pupil names the lesson or the moment.",
         "lookfor": "Restorative conversations should stay non-blaming and focused on repair, not punishment, the mentor's tone matters as much as the questions.",
         "resources": [
           "Calm-down strategy cards",
@@ -247,7 +247,7 @@ module.exports = [
         "objective": "Pupil has a co-created behaviour agreement and knows how it will be reviewed.",
         "checkin": "1. Look back at the friction baseline from week one.\n2. Ask what's different, if anything.\n3. No change is still an answer — ask what would need to be true for it to shift.",
         "input": "1. Recap the four ideas: what rules are for, choice and consequence, the pause, disagreeing well.\n2. Ask which one they've actually used.\n3. That one goes into the agreement, because it's the one that works for them.",
-        "activity": "1. Ask: 'what three or four things could you realistically agree to?' Pupil writes them into the behaviour agreement.\n2. Ask: 'and what do you need from staff in return?' Add those too — it's an agreement, not a list of demands.\n3. Read it back. If any line sounds like something they'd break by Tuesday, change it now.\n4. Share the finished agreement with the class teacher.",
+        "activity": "1. Ask: 'what three or four things could you realistically agree to?' Pupil writes them into the behaviour agreement.\n2. Ask: 'and what do you need from staff in return?' Add those too — it's an agreement, not a list of demands.\n3. Read it back. If any line sounds like something they'd break by Tuesday, change it now.\n4. Ask: 'when should we look at this again?' Tell them the follow-up chat is when you'll check how it's held up.\n5. Share the finished agreement with the class teacher.",
         "reflect": "1. Ask: 'which part of that agreement are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agreements work best when the pupil has genuine input, not just staff-authored rules relabelled, protect the pupil's voice in the wording.",
         "resources": [
@@ -323,7 +323,7 @@ module.exports = [
         "objective": "Pupil can identify physical sensations linked to at least two emotions.",
         "checkin": "1. Check in with the same four words as last week.\n2. Ask: 'did that word change at any point since we last met?'",
         "input": "1. Explain that the body reacts before the mind catches up.\n2. Give a physical example everyone recognises — the jolt before you realise you nearly fell.\n3. Say why this matters: the body is the early warning, and it's noticeable if you know what to look for.",
-        "activity": "1. Ask: 'when you feel worried or wound up, where do you feel it in your body?' Pupil ticks those areas on the body map.\n2. Ask: 'what does it feel like there — tight, fidgety, heavy?' Note their words in the box below.\n3. Ask: 'is it the same place for different feelings, or does it move?'",
+        "activity": "1. Ask: 'when you feel worried or upset, where do you feel it in your body?' Pupil ticks those areas on the body map.\n2. Ask: 'what does it feel like there — tight, fidgety, heavy?' Note their words in the box below.\n3. Ask: 'is it the same place for different feelings, or does it move?'",
         "reflect": "1. Ask: 'do you know the first thing your body does when you start to feel worried?'\n2. If they know it, pupil watches for that one this week. If they don't, they look out for whatever comes first and tell you next session.",
         "lookfor": "Some pupils, particularly those with additional needs, may have reduced awareness of body sensations, allow more time and use concrete examples.",
         "resources": [
@@ -344,7 +344,7 @@ module.exports = [
         "checkin": "1. Check in with the same four words.\n2. Ask: 'did you notice any of the body signals we found last week?'\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Explain what grounding does: it gives the mind something ordinary to hold on to.\n3. Say you'll try three of them in a moment and score each one.\n4. Say plainly that one will suit them and one won't, and that's the point of trying both.",
         "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.",
-        "reflect": "1. Ask: 'which of those three would you actually use if you were wound up?'\n2. Pupil agrees to try it once this week at a calm moment, so it's practised before it's needed.",
+        "reflect": "1. Ask: 'which of those three would you actually use if you were upset?'\n2. Pupil agrees to try it once this week at a calm moment, so it's practised before it's needed.",
         "lookfor": "Strategies need to feel natural to the individual pupil, don't force a technique that clearly isn't landing.",
         "resources": [
           "Grounding technique cards"
@@ -2562,7 +2562,7 @@ module.exports = [
         "title": "Staying safe and saying no",
         "objective": "Pupil can rehearse at least one assertive refusal response and describe one safe decision-making step.",
         "checkin": "1. Ask: 'what was the strength you noticed last week?'\n2. Ask: 'where did it show up?'",
-        "input": "1. Introduce refusal that needs no explanation: 'no, I'm not doing that.'\n2. Say plainly that they don't owe anyone a reason, however much has been given to them.\n3. Say the test of a safe relationship: a no is accepted without pressure or punishment.\n4. Role-play with the general scenario cards, never with a real situation.",
+        "input": "1. Introduce refusal that needs no explanation: 'no, I'm not doing that.'\n2. Say plainly that they don't owe anyone a reason, however much has been given to them.\n3. Say the test of a safe relationship: a no is accepted without pressure or punishment.\n4. Say the practice will use made-up situations, never a real one from their life.",
         "activity": "1. Pupil picks a refusal line from the cards that they'd actually say.\n2. Role-play a general scenario — not one from their life — with you doing the pressuring.\n3. Push back once, so they've practised saying it twice.\n4. Ask: 'what would you do if that person wouldn't take no?'",
         "reflect": "1. Ask: 'how did it feel saying that out loud?'\n2. Say clearly: if something ever feels wrong, that feeling is worth trusting.",
         "lookfor": "Focus on building confidence in the skill itself, in a low-stakes rehearsal format, avoid asking the pupil to apply this to a real, current situation unless the pupil raises one.",
