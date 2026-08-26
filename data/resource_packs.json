@@ -43,7 +43,7 @@
       },
       {
         "name": "Feelings scale",
-        "body": "How strong is it right now?",
+        "body": "How do you feel right now? Point at one.",
         "tone": "red",
         "cards": [
           {
@@ -3269,7 +3269,7 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How intense does it feel right now? Point at one.",
+        "body": "How do you feel right now? Point at one.",
         "aliases": [
           "1-5 mood scale card"
         ],
