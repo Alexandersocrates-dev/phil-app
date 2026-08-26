@@ -105,13 +105,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My hot and cold plan",
         "objective": "Pupil has a personalised, written hot and cold plan and understands what happens next.",
         "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Put both numbers side by side and ask what's different.\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
         "input": "1. Recap the four stages of the anger cycle and ask them to name their own first body signal.\n2. Recap their two chosen strategies from week three.\n3. Ask which one they'd use if something happened tomorrow — that answer goes in the support plan.",
         "activity": "Co-create a one-page 'hot and cold' plan: known triggers, early warning signs, agreed strategies, and who to go to for support. Share the plan with the pupil's class teacher or pastoral lead.",
         "reflect": "What's one thing you're most confident about now? What still feels hard?",
-        "lookfor": "Agree a review point (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
+        "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
           "My hot and cold plan",
           "Copy for class teacher or pastoral file"
@@ -133,7 +133,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -242,7 +242,7 @@ module.exports = [
         }
       },
       {
-        "title": "My agreement",
+        "title": "My behaviour agreement",
         "objective": "Pupil has a co-created behaviour agreement and knows how it will be reviewed.",
         "checkin": "1. Look back at the friction baseline from week one.\n2. Ask what's different, if anything.\n3. No change is still an answer — ask what would need to be true for it to shift.",
         "input": "1. Recap the four ideas: what rules are for, choice and consequence, the pause, disagreeing well.\n2. Ask which one they've actually used.\n3. That one goes into the agreement, because it's the one that works for them.",
@@ -269,7 +269,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -379,12 +379,12 @@ module.exports = [
       },
       {
         "title": "My emotional toolkit",
-        "objective": "Pupil has a personalised regulation plan shared with key staff.",
+        "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
         "checkin": "1. Check in with the same four words, and compare with the week one baseline.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Recap the four parts: naming the feeling, the body signal, the strategy, the wave.\n2. Ask which one they'd keep if they could only keep one.\n3. That answer goes at the top of their toolkit page.",
         "activity": "Build a one-page personal toolkit: how I am at my best and worst, my early signs, my go-to strategies. Share with the class teacher.",
         "reflect": "What's changed most since Week 1?",
-        "lookfor": "Agree a review point and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
+        "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [
           "Personal toolkit template"
         ],
@@ -405,7 +405,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -512,7 +512,7 @@ module.exports = [
         }
       },
       {
-        "title": "Building better relationships",
+        "title": "My social goals plan",
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
         "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask whether the other person would say the same.\n3. Both answers go into the social goals plan.",
         "input": "1. Recap the three tools: the restorative questions, perspective-taking, the I statement.\n2. Ask which one they'd actually use if it happened tomorrow.\n3. That's the one that goes at the top of their plan.",
@@ -539,7 +539,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -652,7 +652,7 @@ module.exports = [
         "input": "1. Recap the four parts: noticing, pause-notice-choose, the signal, the self-rating.\n2. Ask which one they'd keep using without being asked.\n3. That one goes on the teacher briefing note, so the next teacher knows what works.",
         "activity": "Finalise the self-monitoring chart as an ongoing classroom tool and agree a simple reward or feedback loop with the teacher.",
         "reflect": "What's the one strategy you're most likely to keep using?",
-        "lookfor": "Agree a review date to check whether the classroom system is still being used and is still effective.",
+        "lookfor": "Agree the follow-up chat date, to check whether the classroom system is still being used and is still effective.",
         "resources": [
           "Self-monitoring chart",
           "Teacher briefing note"
@@ -674,7 +674,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -808,7 +808,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -921,7 +921,7 @@ module.exports = [
         "input": "1. Recap the four parts: noticing drift, their triggers, chunking, and the goal link.\n2. Ask which one they'd keep if they could only keep one.\n3. That goes at the top of the engagement plan.",
         "activity": "Build a one-page engagement plan: my triggers, my go-to strategy, my goal. Share with the class teacher for reinforcement.",
         "reflect": "What's changed most since Week 1?",
-        "lookfor": "Agree a light-touch review, such as teacher spot-checks at agreed points, rather than heavy monitoring, which can undermine trust.",
+        "lookfor": "Agree light-touch monitoring, such as teacher spot-checks at agreed points, rather than close supervision, which can undermine trust.",
         "resources": [
           "Engagement plan template"
         ],
@@ -942,7 +942,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1076,7 +1076,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1210,7 +1210,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1318,13 +1318,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan",
+        "title": "My prevention and response plan",
         "objective": "Pupil has a personalised prevention and response plan shared with relevant staff.",
         "checkin": "1. Compare with the week one baseline.\n2. Ask what's changed in how they notice the build-up.\n3. Ask whether anyone else has noticed a difference.",
         "input": "1. Recap the chain: trigger, feeling, body signal, urge, action.\n2. Ask where they can now interrupt it.\n3. That interruption point, and the outlet that works, go into the plan.",
         "activity": "Co-create a one-page plan: my triggers, my early signs, my safe outlet, and what happens if an incident still occurs, including the repair process. Share with the class teacher and pastoral lead.",
         "reflect": "What's the one part of this plan you feel most confident about?",
-        "lookfor": "Agree a review point and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
+        "lookfor": "Agree the follow-up chat and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
           "Prevention and response plan template"
         ],
@@ -1345,7 +1345,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1455,13 +1455,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My anger-management plan",
         "objective": "Pupil has a personalised, written anger-management plan and understands what happens next.",
         "checkin": "1. Ask for a mood number and put it beside the week one number.\n2. Ask what they'd have done in week one about a recent situation.\n3. The difference between those two answers is the progress, whatever the numbers say.",
         "input": "1. Recap the four parts: naming precisely, their triggers, the gap and STOP, assertive phrasing.\n2. Ask which one they'd use tomorrow without being reminded.\n3. That goes at the top of the plan and on the copy for the class teacher.",
         "activity": "Co-create a one-page plan: my triggers, my early signs, my go-to strategies, phrases I can use, and who to ask for help. Share the plan with the pupil's class teacher or pastoral lead.",
         "reflect": "What's one thing you're most confident about now? What still feels hard?",
-        "lookfor": "Agree a review point (two to three weeks later) rather than ending support abruptly.",
+        "lookfor": "Agree the follow-up chat (two to three weeks later) rather than ending support abruptly.",
         "resources": [
           "My anger-management plan",
           "Copy for class teacher or pastoral file"
@@ -1483,7 +1483,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1591,13 +1591,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My attendance plan",
         "objective": "Pupil has a graded, realistic attendance plan and understands what happens next.",
         "checkin": "1. Look at attendance across the five weeks together.\n2. Ask which week was best and what was different about it.\n3. If nothing has shifted yet, ask what would have to change first.",
         "input": "1. Recap the four parts: the real reasons, push and pull, what's worth coming for, the practical fix.\n2. Ask which one made the most difference.\n3. Build the graded plan around that, starting from what they're already managing.",
         "activity": "Co-create a graded attendance plan with the pupil and, where appropriate, the school's attendance lead, realistic short-term targets rather than an immediate jump to full attendance.",
         "reflect": "What's one thing you're feeling more confident about? What still feels hardest?",
-        "lookfor": "Agree a review point with the attendance team, and loop in the Education Welfare Officer if statutory thresholds are a concern.",
+        "lookfor": "Agree the follow-up chat with the attendance team, and loop in the Education Welfare Officer if statutory thresholds are a concern.",
         "resources": [
           "Graded attendance plan template",
           "Attendance file note"
@@ -1619,7 +1619,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1733,13 +1733,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and who to go to",
+        "title": "My vaping support plan",
         "objective": "Pupil has a personalised plan and knows who to speak to at school if the pupil wants support later.",
         "checkin": "1. Take a 'where am I now' reading and put it beside the week one one.\n2. Ask what's changed in how they think about it, not just what they've done.\n3. Both count.",
         "input": "1. Recap the three parts: how the nicotine cycle works, their triggers, the strategy they chose.\n2. Ask who they'd go to if they wanted help with this in six months.\n3. Put that name on the plan. A plan without a person behind it rarely survives.",
         "activity": "Co-create a one-page plan: known triggers, the refusal or reduction strategy that felt most natural, and a named member of staff the pupil feels comfortable going to if the pupil wants more support.",
         "reflect": "What's one thing you feel more confident about now? What would help most going forward?",
-        "lookfor": "Agree a review point rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
+        "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
           "One-page vaping support plan",
           "Copy for pastoral file"
@@ -1761,7 +1761,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1874,13 +1874,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and staying connected",
+        "title": "My young carer plan",
         "objective": "Pupil has a personalised plan and knows how to flag it if the pupil's caring responsibilities change.",
         "checkin": "1. Look at the week one timeline beside how this week looked.\n2. Ask what feels different, if anything.\n3. Ask what they'd want school to understand about their week.",
         "input": "1. Recap the four parts: what the role is, time balance, short resets, who can help.\n2. Ask what would make the biggest difference at school.\n3. That goes on the plan, and on the copy for the pastoral file if they agree to it.",
         "activity": "Co-create a one-page plan: a named point of contact at school, one coping strategy that works, and a simple way to flag it if home circumstances change (e.g. a caring role increasing suddenly).",
         "reflect": "What's one thing you feel more confident about now? What would help most going forward?",
-        "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch review point rather than closing support entirely.",
+        "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch follow-up chat rather than closing support entirely.",
         "resources": [
           "One-page young carer support plan",
           "Copy for pastoral file"
@@ -1902,7 +1902,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2043,7 +2043,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2156,13 +2156,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My exam wellbeing plan",
         "objective": "Pupil has a personalised plan balancing academic effort with rest, and knows how to adjust it going forward.",
         "checkin": "1. Take a stress thermometer reading and set it beside week one's.\n2. Ask what's changed about how they revise, not just how they feel.\n3. If the number is higher because exams are closer, say that's expected.",
         "input": "1. Recap the four parts: the stress response, thought balance, the routine, on-the-day coping.\n2. Ask which one they'd want in place the morning of their first exam.\n3. That goes at the top of the plan, and on the copy for the pastoral file.",
         "activity": "Co-create a one-page plan: the routine that worked best, the coping strategy to use before assessments, and a named person to talk to if pressure builds again.",
         "reflect": "What's one thing you feel more confident about now? What still feels hard?",
-        "lookfor": "Agree a review point ahead of the next assessment period rather than ending support after one round of exams, pressure often returns and the plan needs revisiting.",
+        "lookfor": "Agree the follow-up chat ahead of the next assessment period rather than ending support after one round of exams, pressure often returns and the plan needs revisiting.",
         "resources": [
           "One-page exam wellbeing plan",
           "Copy for pastoral file"
@@ -2184,7 +2184,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2297,13 +2297,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My sensory support plan",
         "objective": "Pupil has a personalised sensory support plan shared with relevant staff.",
         "checkin": "1. Fill in the sensory profile again and set it beside week one's.\n2. Ask which part of the day has changed most.\n3. Ask what still needs solving — there's usually one thing left.",
         "input": "1. Recap the four parts: their profile, the hardest environments, the tools, the signal.\n2. Ask what they'd want a new teacher to know in one sentence.\n3. That sentence goes at the top of the plan and on the copy for the SENCO.",
         "activity": "Co-create a one-page sensory support plan: known triggers, the toolkit that works, the agreed signal, and any environment adjustments to request (seating, timing of transitions, access to a quiet space). Share with the SENCO or relevant staff.",
         "reflect": "What's one thing you feel more confident about now? What still feels hard?",
-        "lookfor": "Agree a review point rather than treating this as a fixed plan, sensory needs can shift with age, environment changes, or overall stress levels.",
+        "lookfor": "Agree the follow-up chat rather than treating this as a fixed plan, sensory needs can shift with age, environment changes, or overall stress levels.",
         "resources": [
           "One-page sensory support plan",
           "Copy for SENCO or pastoral file"
@@ -2325,7 +2325,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2438,13 +2438,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and ongoing support",
+        "title": "My support plan",
         "objective": "Pupil has a personalised support plan and knows what further help is available if needed.",
         "checkin": "1. Look back over the five weeks gently.\n2. Ask what's felt most useful, rather than what's improved.\n3. Let them say 'none of it' if that's true.",
         "input": "1. Recap the four parts: what grief is, expressing it, hard days, keeping memories.\n2. Say clearly that grief support often needs far longer than five weeks, and that's normal.\n3. Go through the support services card and name a real person at school.\n4. Make sure they leave knowing this ending isn't the end of the support.",
         "activity": "Co-create a one-page plan: a coping strategy that works, upcoming hard dates to be aware of, and information on further bereavement support (school counsellor, Winston's Wish, or other local services) if the pupil or family wants it.",
         "reflect": "What's one thing that's felt helpful about this course? What would help most going forward?",
-        "lookfor": "Agree a review point, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
+        "lookfor": "Agree the follow-up chat, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
         "resources": [
           "One-page bereavement support plan",
           "Bereavement support services info card",
@@ -2467,7 +2467,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2607,7 +2607,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“Who does this pupil go to, and what should that person know?”\n\nIt helps to cover:\n• The named adults, in and out of school, and how each is reached\n• What the pupil says feels safe, and what doesn't\n• Anything already reported, and to whom\n• What should happen if they disclose something new",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2720,13 +2720,13 @@ module.exports = [
         }
       },
       {
-        "title": "My plan and review",
+        "title": "My transition plan",
         "objective": "Pupil has a personalised transition plan and knows who to go to in the new setting if things feel hard.",
         "checkin": "1. Get out the week one worries and hopes chart.\n2. Ask which worries have shrunk, and whether any are new.\n3. New worries at this point are normal — they mean it's become real.",
         "input": "1. Recap the four parts: the worries named, practical familiarity, how to start, coping tools.\n2. Ask what they'd want the new school to know about them on day one.\n3. That goes on the plan, and on the copy for the receiving school.",
         "activity": "Co-create a one-page transition plan: the biggest worry and how to manage it, the go-to coping strategy, and the name of a trusted adult in the new setting.",
         "reflect": "What's one thing you feel more confident about now? What still feels a bit uncertain?",
-        "lookfor": "Agree a review point a few weeks into the new setting, since transition difficulties often only fully surface once the move has actually happened, not before.",
+        "lookfor": "Agree the follow-up chat a few weeks into the new setting, since transition difficulties often only fully surface once the move has actually happened, not before.",
         "resources": [
           "One-page transition plan",
           "Copy for receiving school or pastoral file"
@@ -2748,7 +2748,7 @@ module.exports = [
         "activity": "Write the summary and next steps now, in the box below. Answer this one question:\n“What should another member of staff do to help this pupil, and when?”\n\nIt helps to cover:\n• What sets them off, and the first sign you'd notice\n• What worked during the course, in enough detail to copy\n• What to do if it escalates anyway\n• Who else is involved, and what each person is doing\n• The pupil's own words, wherever you have them",
         "reflect": "1. Would a supply teacher understand this plan without you in the room?\n2. Is there one thing on it that will definitely happen, rather than several that might?",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the review point you agreed.",
+        "home": "1. Agree the next steps with your line manager, and who is responsible for each.\n2. Share the plan with the pupil's class teachers and your pastoral lead.\n3. Bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
