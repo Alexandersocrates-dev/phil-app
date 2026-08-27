@@ -455,14 +455,18 @@ def _readable_entries(item, values):
     return out
 
 
-# The final session with the pupil is where the plan gets written from
-# everything that came before, so that is where their earlier sheets belong.
+# Two sessions are written from everything that came before: the last one with
+# the pupil, where the plan is filled in, and the staff write-up, where it is
+# turned into something another teacher can use. The write-up asks the mentor
+# for the pupil's triggers, what worked and their own words — all of which live
+# on sheets from earlier sessions.
+#
 # Keying this off wording was brittle: trimming the word "recap" out of the
 # session text silently switched the panel off.
 def _asks_for_a_recap(week, week_number, sessions_total):
-    """The last session with the pupil in the room."""
-    return bool(week_number) and week_number == (sessions_total or 6) - 1 \
-        and not week.get("staff_only")
+    """The last session with the pupil, and the staff write-up after it."""
+    total = sessions_total or 6
+    return bool(week_number) and week_number >= total - 1
 
 
 def work_so_far(conn, enrolment_id, module_number, before_week_number):
@@ -6355,12 +6359,21 @@ def session_summaries_download(request):
             return Response("Not authorised for this area.", status="403 Forbidden")
         rows = conn.execute(
             """SELECT r.date, r.mentor_notes, r.reflection_goal, r.mood_rating,
-                      r.engagement_rating, r.safeguarding_flag,
+                      r.engagement_rating, r.safeguarding_flag, r.safeguarding_note,
+                      r.what_happened, r.week_id,
                       w.week_number, w.title AS week_title
                FROM session_records r JOIN weeks w ON w.id = r.week_id
                WHERE r.enrolment_id=? AND w.week_number <= ?
                ORDER BY w.week_number""",
             (request.params["enrolment_id"], PUPIL_SESSIONS)).fetchall()
+        # The panel calls this sheet a replacement for opening each session
+        # record, so it has to carry what the record carries: what happened in
+        # the room, what the safeguarding flag was about, and what the pupil
+        # actually wrote on their sheets.
+        rows = [dict(r) for r in rows]
+        for r in rows:
+            r["resource_work"] = resource_work_for(
+                conn, request.params["enrolment_id"], r["week_id"])
     finally:
         conn.close()
     path = pdfgen.session_summaries_pdf(
