@@ -3243,33 +3243,42 @@
         "figure": "body-map"
       },
       {
-        "name": "Anger cycle diagram",
-        "body": "Anger runs in a loop. Catching it at stage 1 or 2 is what stops the loop repeating.",
+        "name": "Aggression cycle diagram",
+        "slug": "anger-cycle-diagram",
+        "aliases": [
+          "Anger cycle diagram"
+        ],
+        "body": "Five phases, not four. The old version stopped at the action — but what happens after is where most of the harm gets repaired or repeated.",
         "steps": [
           {
             "title": "Trigger",
             "art": "art-trigger",
-            "text": "Something happens."
+            "text": "Something happens. It can be instant, or slow-burning like tiredness or being nagged."
           },
           {
-            "title": "Body signals",
+            "title": "Escalation",
             "art": "art-body-signals",
-            "text": "Hot face, fists, fast heart."
+            "text": "Fists clench, breathing goes shallow, you start pacing. This is where it can still be stopped."
           },
           {
-            "title": "Thoughts",
-            "art": "art-thoughts",
-            "text": "“This isn't fair.”"
+            "title": "Crisis",
+            "art": "art-aggressive",
+            "text": "The moment it becomes physical. Thinking has gone offline."
           },
           {
-            "title": "Action",
-            "art": "art-fork",
-            "text": "React, or use a strategy."
+            "title": "Recovery",
+            "art": "art-fall",
+            "text": "Coming down. It takes far longer than it took to go up, and it's easy to set off again."
+          },
+          {
+            "title": "After",
+            "art": "art-repair",
+            "text": "Tired, flat, often ashamed. This is when putting it right is possible."
           }
         ],
         "tone": "coral",
-        "note": "Stage 4 often becomes the next stage 1",
-        "source": "The escalation-and-recovery cycle used in cognitive behavioural anger work. A long-established model with no single author."
+        "note": "Escalation is the phase where anything you do still works",
+        "source": "The aggression cycle (Reilly et al., 1994; Videbeck, 2014), the five-phase model widely used in UK school behaviour training."
       },
       {
         "name": "Mood scale card",
@@ -3585,9 +3594,10 @@
           "fields": [
             "My known triggers",
             "My early warning signs",
-            "My calm-down strategies",
+            "What I do to get out before it escalates",
+            "What staff should do when they see me escalating",
             "Who I go to for support",
-            "What staff will do to support me",
+            "What happens after an incident, and how it gets put right",
             "Review date"
           ]
         },
@@ -3621,6 +3631,29 @@
           "fields": [
             "Anything else that would help",
             "Who will make sure this happens"
+          ]
+        }
+      },
+      {
+        "name": "Getting out card",
+        "body": "Ways to leave before it gets to crisis. Pick the ones you would actually do.",
+        "tone": "teal",
+        "checklist": {
+          "items": [
+            "Ask for the toilet and take the long way back",
+            "Use my signal so I don't have to explain",
+            "Go to the agreed place without asking",
+            "Put my head down and say nothing until it passes",
+            "Move seats, away from the person",
+            "Tell the nearest adult I need to go now",
+            "Leave the room and go straight to my named adult"
+          ]
+        },
+        "form": {
+          "fields": [
+            "Where I go",
+            "Who I tell",
+            "What I do if that person isn't there"
           ]
         }
       }
