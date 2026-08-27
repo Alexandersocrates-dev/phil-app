@@ -60,8 +60,6 @@ def today_uk():
     return datetime.date.today().strftime("%d/%m/%Y")
 import re
 import math
-
-import body_map
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
@@ -823,59 +821,6 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         c.drawString(x, y, "    ".join(bits))
         y -= 6 * mm
 
-        # Session by session. Without this the report answered "which courses"
-        # but not "what happened in them", which is the question a new form
-        # tutor or a SENCO is actually asking.
-        def _page_break():
-            nonlocal page_no
-            _doc_footer(c, w, margin, page_no)
-            c.showPage()
-            page_no += 1
-            yy = _doc_header(c, w, h, margin, "Pupil report",
-                             meta=[("Pupil", pupil_name), ("Continued", "")])
-            return _doc_section(c, x, yy, course["title"] + " (continued)", max_width)
-
-        for s in (course.get("sessions") or []):
-            if s.get("staff_only"):
-                continue                      # the write-up prints as the summary below
-            if y < margin + 34 * mm:
-                y = _page_break()
-            c.setFillColor(INK)
-            c.setFont("Helvetica-Bold", 9.5)
-            c.drawString(x, y, f"Session {s['week_number']}: {s['title']}   {uk(s.get('date', ''))}")
-            y -= 4.6 * mm
-            if (s.get("what_happened") or "").strip():
-                y = _wrap(c, s["what_happened"].strip(), x + 4 * mm, y, max_width - 4 * mm,
-                          size=9, leading=12, color=INK)
-            if (s.get("reflection_goal") or "").strip():
-                y -= 0.5 * mm
-                y = _wrap(c, "Goal set: " + s["reflection_goal"].strip(), x + 4 * mm, y,
-                          max_width - 4 * mm, size=9, leading=12, color=MUTED)
-            for title, lines in (s.get("resource_work") or []):
-                if y < margin + 22 * mm:
-                    y = _page_break()
-                c.setFillColor(MUTED)
-                c.setFont("Helvetica-Bold", 8)
-                c.drawString(x + 4 * mm, y, title.upper())
-                y -= 4 * mm
-                for line in lines:
-                    y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=8.5,
-                              leading=11, color=INK)
-            # A flag is the thing a reader must not miss, so it is stated even
-            # when the note itself is empty.
-            if s.get("safeguarding_flag"):
-                if y < margin + 20 * mm:
-                    y = _page_break()
-                note = (s.get("safeguarding_note") or "").strip()
-                c.setFillColor(RED)
-                c.setFont("Helvetica-Bold", 8.5)
-                c.drawString(x + 4 * mm, y, "SAFEGUARDING CONCERN RECORDED")
-                y -= 4.2 * mm
-                if note:
-                    y = _wrap(c, note, x + 8 * mm, y, max_width - 8 * mm, size=9,
-                              leading=12, color=INK)
-            y -= 4 * mm
-
         plan = (course.get("support_plan") or "").strip()
         if plan:
             c.setFillColor(TEAL_DARK)
@@ -979,29 +924,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
         y -= 5 * mm
         y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9.5)
-        y -= 3 * mm
-
-        # What the pupil ticked and wrote on the sheets that session. A body map
-        # filled in during session 1 was only ever visible in that session's own
-        # download, so it never reached the report a SENCO or a new form tutor
-        # actually reads.
-        for title, lines in (wk.get("resource_work") or []):
-            if y < margin + 24 * mm:
-                _doc_footer(c, w, margin, page_no)
-                c.showPage()
-                page_no += 1
-                y = _doc_header(c, w, h, margin, "Course report",
-                                meta=[("Pupil", pupil_name), ("Course", course_title)])
-                y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
-            c.setFillColor(MUTED)
-            c.setFont("Helvetica-Bold", 8.5)
-            c.drawString(x + 4 * mm, y, title.upper())
-            y -= 4.2 * mm
-            for line in lines:
-                y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=9,
-                          leading=12, color=INK)
-            y -= 2 * mm
-        y -= 3 * mm
+        y -= 4 * mm
 
     if not weeks:
         c.setFillColor(MUTED)
@@ -1444,75 +1367,6 @@ def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
     return y - 2 * mm
 
 
-def _draw_body_map(c, x, top_y, max_width, items, figure_w=42 * mm):
-    """The body map as a figure with the tick list beside it.
-
-    A list of words asks a pupil to do the mapping in their head. The printed
-    sheet and the screen draw from the same geometry in body_map.py, so a pupil
-    filling in a photocopy and one filling it in on the mentor's laptop are
-    marking the same picture.
-    """
-    points = body_map.points_for(items)
-    scale = figure_w / body_map.VIEW_W
-    fig_h = body_map.VIEW_H * scale
-    base_y = top_y - fig_h
-
-    def px(vx):
-        return x + vx * scale
-
-    def py(vy):                       # the view grows downwards, the page up
-        return base_y + (body_map.VIEW_H - vy) * scale
-
-    c.setStrokeColor(BORDER)
-    c.setFillColor(HexColor("#F3F2EC"))
-    c.setLineWidth(1)
-    for part in body_map.PARTS.values():
-        if part[0] == "circle":
-            _, vx, vy, r = part
-            c.circle(px(vx), py(vy), r * scale, fill=1, stroke=1)
-        else:
-            _, vx, vy, w, h, r = part
-            c.roundRect(px(vx), py(vy + h), w * scale, h * scale, r * scale, fill=1, stroke=1)
-
-    for pt in points:
-        if pt["whole"]:
-            c.setStrokeColor(TEAL_DARK)
-            c.setDash(3, 3)
-            c.roundRect(px(8), py(176), 84 * scale, 172 * scale, 14 * scale, fill=0, stroke=1)
-            c.setDash()
-        c.setFillColor(TEAL_DARK)
-        c.setStrokeColor(TEAL_DARK)
-        c.circle(px(pt["x"]), py(pt["y"]), body_map.DOT_R * scale, fill=1, stroke=0)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setFont("Helvetica-Bold", 7.5)
-        c.drawCentredString(px(pt["x"]), py(pt["y"]) - 2.6, str(pt["n"]))
-
-    # The list sits to the right of the figure, numbered to match.
-    list_x = x + figure_w + 8 * mm
-    y = top_y - 2 * mm
-    box = 3.6 * mm
-    for n, item_text in enumerate(items, start=1):
-        c.setStrokeColor(BORDER)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setLineWidth(1)
-        c.rect(list_x, y - box, box, box, fill=1, stroke=1)
-        c.setFillColor(TEAL_DARK)
-        c.circle(list_x + box + 4 * mm, y - box + 1.3 * mm, 2.4 * mm, fill=1, stroke=0)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setFont("Helvetica-Bold", 7)
-        c.drawCentredString(list_x + box + 4 * mm, y - box + 0.5 * mm, str(n))
-        c.setFont("Helvetica", 9.5)
-        c.setFillColor(INK)
-        c.drawString(list_x + box + 8 * mm, y - box + 0.6 * mm, item_text)
-        y -= 8 * mm
-    return min(base_y, y) - 4 * mm
-
-
-def _body_map_height(items, figure_w=42 * mm):
-    fig = body_map.VIEW_H * (figure_w / body_map.VIEW_W)
-    return max(fig, 8 * mm * len(items)) + 6 * mm
-
-
 def _table_height(headers, rows, row_h=9 * mm):
     return 8 * mm + row_h * len(rows)
 
@@ -1772,8 +1626,6 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
         elif form:
             needed = 24 * mm + _form_height(form["fields"])
-        elif checklist and item.get("figure") == "body-map":
-            needed = 24 * mm + _body_map_height(checklist["items"])
         elif checklist:
             needed = 24 * mm + _checklist_height(checklist["items"])
         elif is_cycle:
@@ -1832,10 +1684,7 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
-            if item.get("figure") == "body-map":
-                state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
-            else:
-                state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
 
         elif is_cycle:
             steps = _parse_numbered_steps(body)

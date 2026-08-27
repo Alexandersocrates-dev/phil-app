@@ -51,6 +51,44 @@ SESSIONS_PER_COURSE = 6
 PUPIL_SESSIONS = 5
 
 framework_jinja.globals["static_v"] = _static_version()
+# A bare 1-5 meant whatever the mentor decided it meant that week, so the
+# figures were not comparable between mentors or across a course. The stored
+# value stays numeric — the impact report measures change as last minus first —
+# but nobody picks or reads a number now.
+MOOD_LABELS = {
+    1: "Very low",
+    2: "Low",
+    3: "Mixed",
+    4: "Settled",
+    5: "Bright",
+}
+ENGAGEMENT_LABELS = {
+    1: "Wouldn't take part",
+    2: "Took part reluctantly",
+    3: "Took part when prompted",
+    4: "Took part willingly",
+    5: "Led it themselves",
+}
+
+
+def mood_label(value):
+    try:
+        return MOOD_LABELS.get(int(value), "")
+    except (TypeError, ValueError):
+        return ""
+
+
+def engagement_label(value):
+    try:
+        return ENGAGEMENT_LABELS.get(int(value), "")
+    except (TypeError, ValueError):
+        return ""
+
+
+framework_jinja.globals["MOOD_LABELS"] = MOOD_LABELS
+framework_jinja.globals["ENGAGEMENT_LABELS"] = ENGAGEMENT_LABELS
+framework_jinja.filters["mood_label"] = mood_label
+framework_jinja.filters["engagement_label"] = engagement_label
 framework_jinja.globals["sessions_total"] = SESSIONS_PER_COURSE
 
 

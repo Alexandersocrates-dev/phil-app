@@ -10,58 +10,8 @@ reusing this logic rather than rewriting it.
 
 import os
 import datetime
-
-
-# Below this many completed follow-ups the impact report gives counts but no
-# percentage. A proportion from two or three courses reads as a finding when it
-# is really a coincidence, and a head presenting it would be caught out.
-FOLLOWUP_MIN_FOR_SHARE = 5
-
-
-# The same wording the mentor picked from, so a report never shows a bare
-# number whose meaning the reader has to guess.
-MOOD_LABELS = {1: "very low", 2: "low", 3: "mixed", 4: "settled", 5: "bright"}
-ENGAGEMENT_LABELS = {1: "wouldn't take part", 2: "took part reluctantly",
-                     3: "took part when prompted", 4: "took part willingly",
-                     5: "led it themselves"}
-
-
-def _rating_word(value, labels):
-    try:
-        return labels.get(int(value), "not rated")
-    except (TypeError, ValueError):
-        return "not rated"
-
-
-def uk(value):
-    """2026-09-07 as 07/09/2026. Anything unparseable comes back untouched, so a
-    half-filled record still prints rather than raising mid-document."""
-    if not value:
-        return ""
-    try:
-        return datetime.date.fromisoformat(str(value)[:10]).strftime("%d/%m/%Y")
-    except (TypeError, ValueError):
-        return str(value)
-
-
-def uk_long(value):
-    """7 September 2026. For the certificate, which a child keeps: slashes read
-    as paperwork where a written month reads as an occasion."""
-    if not value:
-        return ""
-    try:
-        d = datetime.date.fromisoformat(str(value)[:10])
-    except (TypeError, ValueError):
-        return str(value)
-    return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
-
-
-def today_uk():
-    return datetime.date.today().strftime("%d/%m/%Y")
 import re
 import math
-
-import body_map
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
@@ -87,6 +37,21 @@ BORDER = HexColor("#E4E1D6")
 # certificate and session record was destroyed on the next deploy while the
 # database kept a pdf_path pointing at the missing file — which is what produced
 # "Certificate not found". PHIL_PDF_DIR overrides; otherwise sit beside the DB.
+# The same wording the mentor picked from, so a report never shows a bare
+# number whose meaning the reader has to guess.
+MOOD_LABELS = {1: "very low", 2: "low", 3: "mixed", 4: "settled", 5: "bright"}
+ENGAGEMENT_LABELS = {1: "wouldn't take part", 2: "took part reluctantly",
+                     3: "took part when prompted", 4: "took part willingly",
+                     5: "led it themselves"}
+
+
+def _rating_word(value, labels):
+    try:
+        return labels.get(int(value), "not rated")
+    except (TypeError, ValueError):
+        return "not rated"
+
+
 def _pdf_dir():
     explicit = os.environ.get("PHIL_PDF_DIR")
     if explicit:
@@ -405,7 +370,7 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     foot_y = margin + 38 * mm
     c.setFillColor(MUTED)
     c.setFont("Times-Roman", 10)
-    c.drawString(left_x, foot_y, f"Date of issue: {uk_long(issued_date)}")
+    c.drawString(left_x, foot_y, f"Date of issue: {issued_date}")
     c.drawRightString(right_x + 50 * mm, foot_y,
                       f"Certificate no. PHL-{str(enrolment_id).zfill(6)}")
 
@@ -447,7 +412,7 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Session", week_title),
-        ("Date", uk(record["date"])),
+        ("Date", record["date"]),
         ("Mentor", mentor_name),
     ])
 
@@ -554,7 +519,7 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Mentor", mentor_name),
-        ("Printed", today_uk()),
+        ("Printed", datetime.date.today().isoformat()),
     ])
 
     c.setFillColor(MUTED)
@@ -583,7 +548,7 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         c.setFont("Helvetica", 8.5)
         mood = _rating_word(row["mood_rating"], MOOD_LABELS)
         engagement = _rating_word(row["engagement_rating"], ENGAGEMENT_LABELS)
-        c.drawString(x, y, f"{uk(row['date'])}    Mood: {mood}    Took part: {engagement}"
+        c.drawString(x, y, f"{row['date']}    Mood {mood}    Engagement {engagement}"
                            + ("    Safeguarding flagged" if row["safeguarding_flag"] else ""))
         y -= 6 * mm
 
@@ -630,17 +595,17 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     # The period belongs in the header, not a footnote. A report that does not
     # say what it covers gets quoted as though it covers everything.
     if f.get("date_from") and f.get("date_to"):
-        period = f"{uk(f['date_from'])} to {uk(f['date_to'])}"
+        period = f"{f['date_from']} to {f['date_to']}"
     elif f.get("date_from"):
-        period = f"from {uk(f['date_from'])}"
+        period = f"from {f['date_from']}"
     elif f.get("date_to"):
-        period = f"up to {uk(f['date_to'])}"
+        period = f"up to {f['date_to']}"
     else:
         period = "All activity to date"
     y = _doc_header(c, w, h, margin, "Impact report", meta=[
         ("School", establishment_name),
         ("Period", period),
-        ("Issued", today_uk()),
+        ("Issued", datetime.date.today().isoformat()),
     ])
 
     def stat(label, value, note=""):
@@ -696,33 +661,9 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     y = _doc_section(c, x, y, "Follow-through", max_width)
     stat("course summaries written", f.get("plans_written") or 0,
          "the session 6 write-up other staff can pick up and use")
-
-    # What the follow-up chats found. Below FOLLOWUP_MIN_FOR_SHARE the counts are
-    # shown without a proportion: "100%" off two courses is a figure that falls
-    # apart the moment a governor asks how many that was, and the honest answer
-    # is that it is too early to say.
-    done = f.get("followups_done") or 0
-    due = f.get("followups_due") or 0
-    if due:
-        stat("follow-up chats completed", f"{done} of {due}",
-             "a sit-down with the pupil a few weeks after the course ended")
-    if done:
-        sustained = f.get("followups_sustained") or 0
-        helped = f.get("followups_helped") or 0
-        if done >= FOLLOWUP_MIN_FOR_SHARE:
-            stat("behaviour no longer showing", f"{sustained} of {done}",
-                 f"{round(sustained * 100 / done)}% of courses followed up")
-            stat("mentor judged the course helped", f"{helped} of {done}",
-                 f"{round(helped * 100 / done)}% rated better or some change")
-        else:
-            stat("behaviour no longer showing", f"{sustained} of {done}",
-                 "too few follow-ups yet to give a meaningful percentage")
-            stat("mentor judged the course helped", f"{helped} of {done}",
-                 "rated better or some change")
-
     overdue = f.get("reviews_overdue") or 0
-    stat("follow-up chats overdue", overdue,
-         "past the date agreed with the pupil" if overdue else "nothing outstanding")
+    stat("review points overdue", overdue,
+         "agreed follow-ups now past their date" if overdue else "nothing outstanding")
     stat("sessions with a safeguarding note", f.get("safeguarding") or 0,
          "recorded by mentors; Phil takes no action on these")
     y -= 2 * mm
@@ -736,34 +677,14 @@ def impact_report_pdf(establishment_id, establishment_name, f):
                             meta=[("School", establishment_name)])
         y = _doc_section(c, x, y, "Courses used", max_width)
         c.setFont("Helvetica", 9.5)
-        shown = 0
-        for row in courses:
-            if shown >= 14 or y < margin + 25 * mm:
+        for row in courses[:14]:
+            if y < margin + 20 * mm:
                 break
-            count_text = f"{row['n']} enrolled \u00b7 {row['completed']} completed"
-            # Measured, not counted: leave room for the figures on the right so a
-            # long course title can't run into them.
-            room = max_width - c.stringWidth(count_text, "Helvetica", 9.5) - 8 * mm
-            title = row["title"]
-            if c.stringWidth(title, "Helvetica", 9.5) > room:
-                while title and c.stringWidth(title + "\u2026", "Helvetica", 9.5) > room:
-                    title = title[:-1]
-                title += "\u2026"
             c.setFillColor(INK)
-            c.drawString(x, y, title)
+            c.drawString(x, y, row["title"][:58])
             c.setFillColor(MUTED)
-            c.drawRightString(w - margin, y, count_text)
-            y -= 5.5 * mm
-            shown += 1
-        # Say so rather than stopping silently: a school using every course
-        # would otherwise lose six of them with no sign they existed.
-        if shown < len(courses):
-            remaining = len(courses) - shown
-            c.setFillColor(MUTED)
-            c.setFont("Helvetica-Oblique", 9)
-            c.drawString(x, y, f"and {remaining} more course"
-                               f"{'' if remaining == 1 else 's'} \u2014 the full list is "
-                               "in the mentoring list report")
+            c.drawRightString(w - margin, y,
+                              f"{row['n']} enrolled \u00b7 {row['completed']} completed")
             y -= 5.5 * mm
 
     _doc_footer(c, w, margin, 1)
@@ -772,7 +693,7 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     return path
 
 
-def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="All time"):
+def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses):
     """Everything a pupil has done, across every course.
 
     The per-course report answers "how did that course go". This answers "what
@@ -789,16 +710,14 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
     meta = [("Pupil", pupil_name)]
     if establishment_name:
         meta.append(("School", establishment_name))
-    meta += [("Covering", period), ("Courses", len(courses)), ("Issued", today_uk())]
+    meta += [("Courses", len(courses)), ("Issued", datetime.date.today().isoformat())]
     y = _doc_header(c, w, h, margin, "Pupil report", meta=meta)
     page_no = 1
 
     if not courses:
         c.setFillColor(MUTED)
         c.setFont("Helvetica-Oblique", 10)
-        c.drawString(x, y, "No courses recorded for this pupil yet."
-                     if period == "All time" else
-                     f"No courses ran for this pupil in {period.lower()}.")
+        c.drawString(x, y, "No courses recorded for this pupil yet.")
         _doc_footer(c, w, margin, page_no)
         c.showPage()
         c.save()
@@ -815,66 +734,13 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         y = _doc_section(c, x, y, course["title"], max_width)
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 8.5)
-        bits = [f"Mentor: {course['mentor_name']}", f"Started {uk(course['start_date'])}"]
+        bits = [f"Mentor: {course['mentor_name']}", f"Started {course['start_date']}"]
         bits.append("Completed" if course["status"] == "completed"
                     else f"In progress, session {course['current_week']}")
         if course.get("sessions_recorded") is not None:
             bits.append(f"{course['sessions_recorded']} sessions recorded")
         c.drawString(x, y, "    ".join(bits))
         y -= 6 * mm
-
-        # Session by session. Without this the report answered "which courses"
-        # but not "what happened in them", which is the question a new form
-        # tutor or a SENCO is actually asking.
-        def _page_break():
-            nonlocal page_no
-            _doc_footer(c, w, margin, page_no)
-            c.showPage()
-            page_no += 1
-            yy = _doc_header(c, w, h, margin, "Pupil report",
-                             meta=[("Pupil", pupil_name), ("Continued", "")])
-            return _doc_section(c, x, yy, course["title"] + " (continued)", max_width)
-
-        for s in (course.get("sessions") or []):
-            if s.get("staff_only"):
-                continue                      # the write-up prints as the summary below
-            if y < margin + 34 * mm:
-                y = _page_break()
-            c.setFillColor(INK)
-            c.setFont("Helvetica-Bold", 9.5)
-            c.drawString(x, y, f"Session {s['week_number']}: {s['title']}   {uk(s.get('date', ''))}")
-            y -= 4.6 * mm
-            if (s.get("what_happened") or "").strip():
-                y = _wrap(c, s["what_happened"].strip(), x + 4 * mm, y, max_width - 4 * mm,
-                          size=9, leading=12, color=INK)
-            if (s.get("reflection_goal") or "").strip():
-                y -= 0.5 * mm
-                y = _wrap(c, "Goal set: " + s["reflection_goal"].strip(), x + 4 * mm, y,
-                          max_width - 4 * mm, size=9, leading=12, color=MUTED)
-            for title, lines in (s.get("resource_work") or []):
-                if y < margin + 22 * mm:
-                    y = _page_break()
-                c.setFillColor(MUTED)
-                c.setFont("Helvetica-Bold", 8)
-                c.drawString(x + 4 * mm, y, title.upper())
-                y -= 4 * mm
-                for line in lines:
-                    y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=8.5,
-                              leading=11, color=INK)
-            # A flag is the thing a reader must not miss, so it is stated even
-            # when the note itself is empty.
-            if s.get("safeguarding_flag"):
-                if y < margin + 20 * mm:
-                    y = _page_break()
-                note = (s.get("safeguarding_note") or "").strip()
-                c.setFillColor(RED)
-                c.setFont("Helvetica-Bold", 8.5)
-                c.drawString(x + 4 * mm, y, "SAFEGUARDING CONCERN RECORDED")
-                y -= 4.2 * mm
-                if note:
-                    y = _wrap(c, note, x + 8 * mm, y, max_width - 8 * mm, size=9,
-                              leading=12, color=INK)
-            y -= 4 * mm
 
         plan = (course.get("support_plan") or "").strip()
         if plan:
@@ -898,7 +764,7 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
             y -= 1 * mm
             c.setFillColor(TEAL_DARK)
             c.setFont("Helvetica-Bold", 9)
-            c.drawString(x, y, f"Follow-up chat, {uk(fu.get('date', ''))}")
+            c.drawString(x, y, f"Follow-up chat, {fu.get('date', '')}")
             y -= 5 * mm
             c.setFillColor(INK)
             c.setFont("Helvetica", 9)
@@ -944,6 +810,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
                        current_week, status, weeks, reflection=None, support_plan=None):
     """
     weeks: list of dicts with keys week_number, title, objective, date (session date recorded)
+    reflection: optional dict with pupil_engagement, course_effectiveness, recommended_next_steps
                 (only pass this when the viewer is entitled to see it, per spec 7.5a/7.6)
     """
     path = os.path.join(PDF_DIR, f"mentee_report_{enrolment_id}.pdf")
@@ -958,9 +825,9 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
         ("Pupil", pupil_name),
         ("Course", course_title),
         ("Mentor", mentor_name),
-        ("Started", uk(start_date)),
+        ("Started", start_date),
         ("Status", "Completed" if status == "completed" else f"Week {current_week} of 5"),
-        ("Issued", today_uk()),
+        ("Issued", datetime.date.today().isoformat()),
     ])
 
     page_no = 1
@@ -976,38 +843,36 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
             y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
         c.setFillColor(INK)
         c.setFont("Helvetica-Bold", 10.5)
-        c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
+        c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({wk.get('date','')})")
         y -= 5 * mm
         y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9.5)
-        y -= 3 * mm
-
-        # What the pupil ticked and wrote on the sheets that session. A body map
-        # filled in during session 1 was only ever visible in that session's own
-        # download, so it never reached the report a SENCO or a new form tutor
-        # actually reads.
-        for title, lines in (wk.get("resource_work") or []):
-            if y < margin + 24 * mm:
-                _doc_footer(c, w, margin, page_no)
-                c.showPage()
-                page_no += 1
-                y = _doc_header(c, w, h, margin, "Course report",
-                                meta=[("Pupil", pupil_name), ("Course", course_title)])
-                y = _doc_section(c, x, y, "Sessions covered (continued)", max_width)
-            c.setFillColor(MUTED)
-            c.setFont("Helvetica-Bold", 8.5)
-            c.drawString(x + 4 * mm, y, title.upper())
-            y -= 4.2 * mm
-            for line in lines:
-                y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=9,
-                          leading=12, color=INK)
-            y -= 2 * mm
-        y -= 3 * mm
+        y -= 4 * mm
 
     if not weeks:
         c.setFillColor(MUTED)
         c.setFont("Helvetica-Oblique", 10)
         c.drawString(x, y, "No sessions recorded yet.")
         y -= 6 * mm
+
+    if reflection:
+        if y < margin + 55 * mm:
+            _doc_footer(c, w, margin, page_no)
+            c.showPage()
+            page_no += 1
+            y = _doc_header(c, w, h, margin, "Course report",
+                            meta=[("Pupil", pupil_name), ("Course", course_title)])
+        y -= 3 * mm
+        y = _doc_section(c, x, y, "Completion reflection", max_width)
+        for label, key in (("How the pupil engaged", "pupil_engagement"),
+                            ("Whether the course suited them", "course_effectiveness"),
+                            ("Recommended next steps", "recommended_next_steps")):
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 9.5)
+            c.drawString(x, y, label)
+            y -= 5 * mm
+            c.setFillColor(INK)
+            y = _wrap(c, reflection.get(key, "") or "-", x + 4 * mm, y, max_width - 4 * mm, size=9.5)
+            y -= 5 * mm
 
     if support_plan:
         if y < margin + 45 * mm:
@@ -1030,7 +895,7 @@ def mentee_report_pdf(enrolment_id, pupil_name, course_title, mentor_name, start
 def full_mentoring_report_pdf(title, entries, out_name):
     """
     entries: list of dicts, each with pupil_name, course_title, mentor_name, start_date,
-             current_week, status, weeks (list)
+             current_week, status, weeks (list), reflection (dict or None)
     One section per entry, all in a single PDF, for a whole-establishment bulk export
     or a single named pupil. Same restricted fields as the individual course report
     (Enrolment, Course, Week, SessionRecord.date only), plus CompletionReflection
@@ -1046,7 +911,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
 
     y = _doc_header(c, w, h, margin, "Mentoring report", meta=[
         ("Report", title),
-        ("Issued", today_uk()),
+        ("Issued", datetime.date.today().isoformat()),
         ("Enrolments", len(entries)),
     ])
 
@@ -1076,7 +941,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 9.5)
         status_label = "Completed" if entry["status"] == "completed" else f"Week {entry['current_week']} of 5"
-        c.drawString(x, y, f"Mentor: {entry['mentor_name']}    Started: {uk(entry['start_date'])}    Status: {status_label}")
+        c.drawString(x, y, f"Mentor: {entry['mentor_name']}    Started: {entry['start_date']}    Status: {status_label}")
         y -= 8 * mm
 
         for wk in entry["weeks"]:
@@ -1085,7 +950,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
                 y = h - margin
             c.setFillColor(INK)
             c.setFont("Helvetica-Bold", 10)
-            c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({uk(wk.get('date',''))})")
+            c.drawString(x, y, f"Week {wk['week_number']}: {wk['title']}  ({wk.get('date','')})")
             y -= 5 * mm
             y = _wrap(c, wk.get("objective", ""), x + 4 * mm, y, max_width - 4 * mm, size=9)
             y -= 3 * mm
@@ -1096,6 +961,24 @@ def full_mentoring_report_pdf(title, entries, out_name):
             c.drawString(x, y, "No sessions recorded yet.")
             y -= 6 * mm
 
+        if entry.get("reflection"):
+            if y < margin + 30 * mm:
+                c.showPage()
+                y = h - margin
+            r = entry["reflection"]
+            c.setFillColor(AMBER)
+            c.setFont("Helvetica-Bold", 10.5)
+            c.drawString(x, y, "Completion reflection")
+            y -= 5 * mm
+            for label, key in (("Engagement", "pupil_engagement"), ("Effectiveness", "course_effectiveness"),
+                                ("Next steps", "recommended_next_steps")):
+                c.setFillColor(TEAL_DARK)
+                c.setFont("Helvetica-Bold", 9)
+                c.drawString(x + 2, y, label + ":")
+                y -= 4.5 * mm
+                y = _wrap(c, r.get(key, "") or "-", x + 6 * mm, y, max_width - 6 * mm, size=9)
+                y -= 3 * mm
+
         y -= 6 * mm
 
     c.showPage()
@@ -1103,7 +986,7 @@ def full_mentoring_report_pdf(title, entries, out_name):
     return path
 
 
-def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
+def caseload_report_xlsx(rows, show_mentor_col, out_name):
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill
 
@@ -1115,15 +998,12 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
     headers = ["Pupil", "Course"]
     if show_mentor_col:
         headers.append("Mentor")
-    headers += ["Started", "Expected end", "Progress", "Certificate", "Follow-up"]
+    headers += ["Started", "Scheduled end", "Progress", "Certificate", "Reflection"]
 
-    ws.append([f"Mentoring list \u2014 covering {period}"])
-    ws.append([])
     ws.append(headers)
     header_font = Font(bold=True, name="Arial")
     header_fill = PatternFill(start_color="F2EFE6", end_color="F2EFE6", fill_type="solid")
-    ws["A1"].font = Font(bold=True, name="Arial", size=12)
-    for cell in ws[3]:
+    for cell in ws[1]:
         cell.font = header_font
         cell.fill = header_fill
 
@@ -1131,15 +1011,14 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
         row = [r["pupil"], r["course"]]
         if show_mentor_col:
             row.append(r.get("mentor", ""))
-        row += [r["started"], r["scheduled_end"], r["progress"], r["certificate"],
-                r.get("follow_up", "-")]
+        row += [r["started"], r["scheduled_end"], r["progress"], r["certificate"], r["reflection"]]
         ws.append(row)
 
     for col_cells in ws.columns:
         length = max((len(str(c.value)) for c in col_cells if c.value is not None), default=10)
         ws.column_dimensions[col_cells[0].column_letter].width = min(max(length + 2, 12), 40)
 
-    for row in ws.iter_rows(min_row=4):
+    for row in ws.iter_rows(min_row=2):
         for cell in row:
             cell.font = Font(name="Arial")
 
@@ -1147,10 +1026,10 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
     return path
 
 
-def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time"):
+def caseload_report_pdf(title, rows, show_mentor_col, out_name):
     """
     rows: list of dicts with pupil, course, mentor (optional), started, scheduled_end,
-          progress, certificate, follow_up
+          progress, certificate, reflection
     """
     path = os.path.join(PDF_DIR, f"{out_name}.pdf")
     w, h = landscape(A4)
@@ -1159,52 +1038,30 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time
     x = margin
     y = h - margin
 
-    # The period goes in the header of every report. A PDF found in a drawer in
-    # three years is unreadable without it, and "All time" is worth saying too.
     y = _doc_header(c, w, h, margin, "Mentoring list", meta=[
         ("Report", title),
-        ("Covering", period),
-        ("Issued", today_uk()),
+        ("Issued", datetime.date.today().isoformat()),
         ("Pupils", len(rows)),
     ])
 
-    # Columns are weighted, not equal: a course title needs three times the room
-    # of a date. Equal widths plus a fixed 28-character cut meant long titles
-    # ("Safeguarding: exploitation and county lines awareness") ran straight
-    # through the next column.
-    cols = [("Pupil", 2.0), ("Course", 3.4)]
+    cols = ["Pupil", "Course"]
     if show_mentor_col:
-        cols.append(("Mentor", 2.0))
-    cols += [("Started", 1.3), ("Expected end", 1.5), ("Progress", 1.6),
-             ("Certificate", 1.3), ("Follow-up", 1.9)]
-    total_weight = sum(weight for _, weight in cols)
-    avail = w - 2 * margin
-    widths = [avail * weight / total_weight for _, weight in cols]
-
-    def fit(text, width, font, size):
-        """Trim to what actually fits, measured, with an ellipsis if trimmed."""
-        text = str(text)
-        if c.stringWidth(text, font, size) <= width:
-            return text
-        while text and c.stringWidth(text + "\u2026", font, size) > width:
-            text = text[:-1]
-        return text + "\u2026"
+        cols.append("Mentor")
+    cols += ["Started", "Scheduled end", "Progress", "Certificate", "Reflection"]
+    col_w = (w - 2 * margin) / len(cols)
 
     def draw_row(values, bold=False, fill=None):
         nonlocal y
         if fill:
             c.setFillColor(fill)
-            c.rect(x, y - 6 * mm, avail, 7 * mm, fill=1, stroke=0)
-        font = "Helvetica-Bold" if bold else "Helvetica"
-        c.setFont(font, 8.5)
+            c.rect(x, y - 6 * mm, w - 2 * margin, 7 * mm, fill=1, stroke=0)
+        c.setFont("Helvetica-Bold" if bold else "Helvetica", 8.5)
         c.setFillColor(NAVY if bold else INK)
-        cx = x
-        for val, cw in zip(values, widths):
-            c.drawString(cx + 2, y - 4.5 * mm, fit(val, cw - 6, font, 8.5))
-            cx += cw
+        for i, val in enumerate(values):
+            c.drawString(x + i * col_w + 2, y - 4.5 * mm, str(val)[:28])
         y -= 7 * mm
 
-    draw_row([label for label, _ in cols], bold=True, fill=HexColor("#F2EFE6"))
+    draw_row(cols, bold=True, fill=HexColor("#F2EFE6"))
     c.setStrokeColor(BORDER)
     c.line(x, y + 2, w - margin, y + 2)
 
@@ -1212,12 +1069,11 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time
         if y < margin + 10 * mm:
             c.showPage()
             y = h - margin
-            draw_row([label for label, _ in cols], bold=True, fill=HexColor("#F2EFE6"))
+            draw_row(cols, bold=True, fill=HexColor("#F2EFE6"))
         values = [r["pupil"], r["course"]]
         if show_mentor_col:
             values.append(r.get("mentor", ""))
-        values += [r["started"], r["scheduled_end"], r["progress"], r["certificate"],
-                   r.get("follow_up", "-")]
+        values += [r["started"], r["scheduled_end"], r["progress"], r["certificate"], r["reflection"]]
         draw_row(values)
 
     c.showPage()
@@ -1442,75 +1298,6 @@ def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
         c.drawString(x + box + 3 * mm, y - box + 0.6 * mm, item_text)
         y -= row_h
     return y - 2 * mm
-
-
-def _draw_body_map(c, x, top_y, max_width, items, figure_w=42 * mm):
-    """The body map as a figure with the tick list beside it.
-
-    A list of words asks a pupil to do the mapping in their head. The printed
-    sheet and the screen draw from the same geometry in body_map.py, so a pupil
-    filling in a photocopy and one filling it in on the mentor's laptop are
-    marking the same picture.
-    """
-    points = body_map.points_for(items)
-    scale = figure_w / body_map.VIEW_W
-    fig_h = body_map.VIEW_H * scale
-    base_y = top_y - fig_h
-
-    def px(vx):
-        return x + vx * scale
-
-    def py(vy):                       # the view grows downwards, the page up
-        return base_y + (body_map.VIEW_H - vy) * scale
-
-    c.setStrokeColor(BORDER)
-    c.setFillColor(HexColor("#F3F2EC"))
-    c.setLineWidth(1)
-    for part in body_map.PARTS.values():
-        if part[0] == "circle":
-            _, vx, vy, r = part
-            c.circle(px(vx), py(vy), r * scale, fill=1, stroke=1)
-        else:
-            _, vx, vy, w, h, r = part
-            c.roundRect(px(vx), py(vy + h), w * scale, h * scale, r * scale, fill=1, stroke=1)
-
-    for pt in points:
-        if pt["whole"]:
-            c.setStrokeColor(TEAL_DARK)
-            c.setDash(3, 3)
-            c.roundRect(px(8), py(176), 84 * scale, 172 * scale, 14 * scale, fill=0, stroke=1)
-            c.setDash()
-        c.setFillColor(TEAL_DARK)
-        c.setStrokeColor(TEAL_DARK)
-        c.circle(px(pt["x"]), py(pt["y"]), body_map.DOT_R * scale, fill=1, stroke=0)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setFont("Helvetica-Bold", 7.5)
-        c.drawCentredString(px(pt["x"]), py(pt["y"]) - 2.6, str(pt["n"]))
-
-    # The list sits to the right of the figure, numbered to match.
-    list_x = x + figure_w + 8 * mm
-    y = top_y - 2 * mm
-    box = 3.6 * mm
-    for n, item_text in enumerate(items, start=1):
-        c.setStrokeColor(BORDER)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setLineWidth(1)
-        c.rect(list_x, y - box, box, box, fill=1, stroke=1)
-        c.setFillColor(TEAL_DARK)
-        c.circle(list_x + box + 4 * mm, y - box + 1.3 * mm, 2.4 * mm, fill=1, stroke=0)
-        c.setFillColor(HexColor("#FFFFFF"))
-        c.setFont("Helvetica-Bold", 7)
-        c.drawCentredString(list_x + box + 4 * mm, y - box + 0.5 * mm, str(n))
-        c.setFont("Helvetica", 9.5)
-        c.setFillColor(INK)
-        c.drawString(list_x + box + 8 * mm, y - box + 0.6 * mm, item_text)
-        y -= 8 * mm
-    return min(base_y, y) - 4 * mm
-
-
-def _body_map_height(items, figure_w=42 * mm):
-    fig = body_map.VIEW_H * (figure_w / body_map.VIEW_W)
-    return max(fig, 8 * mm * len(items)) + 6 * mm
 
 
 def _table_height(headers, rows, row_h=9 * mm):
@@ -1772,8 +1559,6 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
         elif form:
             needed = 24 * mm + _form_height(form["fields"])
-        elif checklist and item.get("figure") == "body-map":
-            needed = 24 * mm + _body_map_height(checklist["items"])
         elif checklist:
             needed = 24 * mm + _checklist_height(checklist["items"])
         elif is_cycle:
@@ -1832,10 +1617,7 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
-            if item.get("figure") == "body-map":
-                state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
-            else:
-                state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
 
         elif is_cycle:
             steps = _parse_numbered_steps(body)
