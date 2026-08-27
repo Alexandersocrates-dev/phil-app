@@ -176,6 +176,31 @@ def _resource_keywords(name):
             if w not in _RESOURCE_STOPWORDS and len(w) > 2}
 
 
+_PRODUCE = re.compile(
+    r"\b(show|get out|lay out|open|deal|hand (them|him|her)|bring out|read out)\b[^.]{0,40}",
+    re.I)
+
+
+def _explicitly_produced_at(keywords, texts):
+    """The earliest step whose text tells the mentor to produce this resource.
+
+    Only counts when the instruction and the resource's own words are in the
+    same sentence, so "show the anger thermometer" pins it but a later passing
+    mention of "thermometer" does not.
+    """
+    if not keywords:
+        return None
+    for step in SESSION_STEPS:
+        if step == "home":
+            continue
+        for line in (texts[step] or "").split("\n"):
+            for match in _PRODUCE.finditer(line):
+                tail = line[match.start():match.start() + 90]
+                if len(keywords & _resource_keywords(tail)) >= min(2, len(keywords)):
+                    return step
+    return None
+
+
 def assign_resources_to_steps(week, items):
     """Works out which step of the session each resource belongs to, so it can be
     shown at the point of use rather than in a list at the top.
@@ -189,6 +214,18 @@ def assign_resources_to_steps(week, items):
     by_step = {step: [] for step in SESSION_STEPS}
     for item in items:
         keywords = _resource_keywords(item.get("name"))
+        # An instruction to produce the sheet beats any amount of scoring. A step
+        # that says "show the anger thermometer" needs the thermometer there;
+        # scoring sent it to whichever step happened to mention it most, so the
+        # mentor was told to show something that appeared two steps later.
+        # Only for reference material. A sheet the pupil writes on still goes
+        # where it is filled: "show the tally card" in the input would otherwise
+        # put it above the instruction that fills it, and the mentor scrolls back.
+        fill_in = bool(item.get("table") or item.get("form") or item.get("checklist"))
+        explicit = None if fill_in else _explicitly_produced_at(keywords, texts)
+        if explicit:
+            by_step[explicit].append(item)
+            continue
         scores = {step: len(keywords & _resource_keywords(texts[step])) for step in SESSION_STEPS}
         matched = [step for step in SESSION_STEPS if scores[step]]
         if not matched:
