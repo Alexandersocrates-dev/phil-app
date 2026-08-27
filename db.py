@@ -281,6 +281,17 @@ CREATE TABLE IF NOT EXISTS follow_ups (
     created_at TEXT NOT NULL
 );
 
+-- A mentor's list used to drop a pupil the moment their last course finished,
+-- which meant a pupil the mentor was still keeping an eye on vanished without
+-- anyone deciding it. The list now keeps them until the mentor removes them.
+-- Removal is per mentor, not per pupil: another mentor's list is unaffected.
+CREATE TABLE IF NOT EXISTS mentoring_list_removals (
+    mentor_id INTEGER NOT NULL REFERENCES users(id),
+    pupil_id INTEGER NOT NULL REFERENCES pupils(id),
+    removed_at TEXT NOT NULL,
+    PRIMARY KEY (mentor_id, pupil_id)
+);
+
 CREATE TABLE IF NOT EXISTS notifications (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL,

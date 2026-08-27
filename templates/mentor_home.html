@@ -125,7 +125,16 @@
   {% endfor %}
   </table>
   </div>
-  <p class="ml-link-row"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a></p>
+  <p class="ml-link-row"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a>
+    {# Only once nothing is running. A pupil mid-course stays put, so live work
+       can't be hidden by accident. #}
+    {% if p.can_remove %}
+    <form method="post" action="/mentor/pupils/{{ p.pupil_id }}/remove-from-list" class="ml-remove-form"
+          onsubmit="return confirm('Remove {{ p.forename }} {{ p.surname }} from your list? Their records and finished courses are kept.');">
+      <button type="submit" class="ml-remove">Remove from my list</button>
+    </form>
+    {% endif %}
+  </p>
 </details>
 {% endfor %}
 {% endif %}
@@ -260,6 +269,11 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .ml-c-course{min-width:170px;line-height:1.4;}
 .ml-c-progress{width:190px;}
 .ml-c-status{width:110px;white-space:nowrap;}
+.ml-remove-form{display:inline;}
+.ml-remove{background:none; border:none; padding:0; font-family:inherit; font-size:13px;
+  color:var(--muted); text-decoration:underline; text-underline-offset:2px; cursor:pointer;}
+.ml-remove:hover{color:var(--red, #A32D2D);}
+.ml-remove:focus-visible{outline:2px solid var(--teal-dark); outline-offset:2px;}
 .ml-link-row{margin:8px 0 0;}
 .ml-link{font-size:12px; margin-left:32px;}
 </style>

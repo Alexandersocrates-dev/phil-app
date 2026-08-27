@@ -254,6 +254,40 @@ def assign_resources_to_steps(week, items):
     return by_step
 
 
+_PHYSICAL = re.compile(
+    r"\b(sorts?|sorting|sorted|lay (out|it out|them out)|deals?|dealt|piles?|shuffle|"
+    r"cut out|spread|places? (each|them|it|their picks)|"
+    r"puts? (them|their picks|the picks) in order|matche?s? (each|the|them))\b", re.I)
+
+
+def mark_what_needs_printing(week, items):
+    """Flag the cards a mentor has to print and cut before the session.
+
+    Sorting into piles, dealing, laying out and matching cannot be done on a
+    screen. These were labelled "use on screen", so a mentor would arrive
+    without the one thing the activity needs.
+    """
+    lines = []
+    for field in ("input_content", "activity"):
+        lines += [ln for ln in (week.get(field) or "").split("\n") if ln.strip()]
+    for item in items:
+        if not item.get("cards"):
+            continue
+        keywords = _resource_keywords(item.get("name"))
+        if not keywords:
+            continue
+        for line in lines:
+            if not _PHYSICAL.search(line):
+                continue
+            # the verb and the resource have to be in the same instruction
+            # One word is enough here: the instruction has already been narrowed
+            # to a physical one, and "sort the cards" plainly means these cards.
+            if keywords & _resource_keywords(line):
+                item["print_first"] = True
+                break
+    return items
+
+
 def attach_figures(items):
     """Give a body-map resource the geometry both renderers draw from."""
     for item in items:
@@ -1669,7 +1703,7 @@ def mentor_home(request):
                       (SELECT count(*) FROM enrolments WHERE enrolments.pupil_id = pupils.id AND enrolments.mentor_id = ? AND enrolments.status='active') as active_enrolments
                FROM pupils
                WHERE establishment_id=? AND status='active'
-               AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=? AND status='active')
+               AND id IN (SELECT pupil_id FROM enrolments WHERE mentor_id=?)
                ORDER BY surname""",
             (user["id"], user["establishment_id"], user["id"]),
         ).fetchall()
@@ -1688,6 +1722,9 @@ def mentor_home(request):
         # nobody had touched since September.
         sched_summary, _, _ = schedule_for(conn, user)
         due_this_week = sched_summary["this_week"] + sched_summary["attention"]
+        removed_pupils = {r["pupil_id"] for r in conn.execute(
+            "SELECT pupil_id FROM mentoring_list_removals WHERE mentor_id=?",
+            (user["id"],)).fetchall()}
     finally:
         conn.close()
     # The list is about pupils, not enrolments. A pupil on three courses was
@@ -1705,12 +1742,17 @@ def mentor_home(request):
     for entry in mentoring_list:
         entry["active"] = sum(1 for c in entry["courses"] if c["status"] == "active")
         entry["completed"] = sum(1 for c in entry["courses"] if c["status"] == "completed")
-    # A pupil whose courses with this mentor have all finished is no longer
-    # someone they are mentoring, so they drop off this list. The completed
-    # courses stay attributed to whoever ran them and stay visible on the
-    # pupil's own record. A pupil who still has active work keeps their
-    # finished courses shown alongside it.
-    mentoring_list = [entry for entry in mentoring_list if entry["active"] > 0]
+    # A pupil used to drop off the moment their last course finished, so someone
+    # the mentor was still keeping an eye on disappeared without anyone deciding
+    # it. They now stay until the mentor removes them.
+    #
+    # Removal only hides a pupil with nothing active: if they are enrolled on a
+    # new course later, they come back on their own rather than needing to be
+    # un-removed.
+    for entry in mentoring_list:
+        entry["can_remove"] = entry["active"] == 0
+    mentoring_list = [entry for entry in mentoring_list
+                      if entry["active"] > 0 or entry["pupil_id"] not in removed_pupils]
 
     # Reviews the mentor agreed at the end of a course. Only ones that have come
     # round: a review three weeks away isn't work yet, and listing it would
@@ -1851,6 +1893,52 @@ def pupil_profile(request):
                   review_overdue_from=review_overdue_from,
                   default_review_date=(datetime.date.today() + datetime.timedelta(days=21)).isoformat(),
                   flash=flash_from_query(request))
+
+
+@router.post("/mentor/pupils/<pupil_id>/remove-from-list")
+def remove_from_mentoring_list(request):
+    """Take a pupil off this mentor's list once their courses have finished.
+
+    This is a view, not a deletion: the pupil, their records and their finished
+    courses are untouched, and another mentor's list is unaffected. If they are
+    enrolled on a new course later they come back on their own.
+    """
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    blocked = require_active_subscription(user)
+    if blocked:
+        return blocked
+    pupil_id = request.params["pupil_id"]
+    conn = db.get_conn()
+    try:
+        # The pupil has to be one of theirs, in their establishment, with nothing
+        # still running. Removing a pupil mid-course would hide live work.
+        row = conn.execute(
+            """SELECT p.id,
+                      (SELECT count(*) FROM enrolments e
+                        WHERE e.pupil_id = p.id AND e.mentor_id = ? AND e.status = 'active') AS active
+               FROM pupils p
+               WHERE p.id = ? AND p.establishment_id = ?
+                 AND p.id IN (SELECT pupil_id FROM enrolments WHERE mentor_id = ?)""",
+            (user["id"], pupil_id, user["establishment_id"], user["id"])).fetchone()
+        if row is None:
+            return render_done(user, "Not found",
+                               "That pupil isn't on your list.", "/mentor")
+        if row["active"]:
+            return render_done(user, "Still on a course",
+                               "This pupil has a course in progress, so they stay on your list "
+                               "until it finishes.", "/mentor")
+        conn.execute(
+            """INSERT OR IGNORE INTO mentoring_list_removals (mentor_id, pupil_id, removed_at)
+               VALUES (?, ?, ?)""",
+            (user["id"], pupil_id, datetime.date.today().isoformat()))
+        conn.commit()
+    finally:
+        conn.close()
+    return render_done(user, "Removed from your list",
+                       "Their records and finished courses are kept, and they'll reappear if "
+                       "you enrol them on something new.", "/mentor")
 
 
 @router.post("/mentor/pupils/<pupil_id>/archive")
@@ -2550,6 +2638,12 @@ def enrol_submit(request):
             (pupil_id, course_id, user["id"], datetime.date.today().isoformat(), "active",
              0, parent_access_enabled, db.now()),
         )
+        # Taking a pupil on again clears any earlier removal from this mentor's
+        # list. Without this they would reappear for the length of the course and
+        # then silently vanish again on a decision made months ago.
+        conn.execute(
+            "DELETE FROM mentoring_list_removals WHERE mentor_id=? AND pupil_id=?",
+            (user["id"], pupil_id))
         conn.commit()
     finally:
         conn.close()
@@ -2624,6 +2718,7 @@ def session_form(request):
         week["resource_items"] = resource_items_for(
             enrolment["course_module_number"], week["resources"])
         attach_figures(week["resource_items"])
+        mark_what_needs_printing(week, week["resource_items"])
         # The connection above is already closed by this point, so open one.
         conn2 = db.get_conn()
         try:
@@ -5695,6 +5790,7 @@ def session_record_edit(request):
     week["resource_items"] = resource_items_for(
         enrolment["course_module_number"], week["resources"])
     attach_figures(week["resource_items"])
+    mark_what_needs_printing(week, week["resource_items"])
     conn4 = db.get_conn()
     try:
         attach_earlier_entries(conn4, record["enrolment_id"], record["week_id"],
