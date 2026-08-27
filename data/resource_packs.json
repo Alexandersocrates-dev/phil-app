@@ -526,7 +526,7 @@
         "tone": "coral"
       },
       {
-        "name": "Copy for class teacher or pastoral file",
+        "name": "How staff can help me",
         "body": "What the class teacher needs, on one side of paper.",
         "tone": "blue",
         "cards": [
@@ -551,7 +551,12 @@
             "text": "How they'll ask for a minute. Allow it.",
             "note": "Refusing it undoes the work"
           }
-        ]
+        ],
+        "aliases": [
+          "Copy for class teacher or pastoral file"
+        ],
+        "editable": true,
+        "slug": "copy-for-class-teacher-or-pastoral-file"
       }
     ],
     "missing": []
@@ -3595,7 +3600,7 @@
         ]
       },
       {
-        "name": "Copy for class teacher or pastoral file",
+        "name": "How staff can help me",
         "body": "What the class teacher needs, on one side of paper.",
         "tone": "blue",
         "cards": [
@@ -3620,7 +3625,12 @@
             "text": "What they'll do, and what you can do to allow it.",
             "note": "Needs your consistency"
           }
-        ]
+        ],
+        "aliases": [
+          "Copy for class teacher or pastoral file"
+        ],
+        "editable": true,
+        "slug": "copy-for-class-teacher-or-pastoral-file"
       }
     ],
     "missing": []

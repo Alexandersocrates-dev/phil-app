@@ -321,6 +321,12 @@ def resource_work_for(conn, enrolment_id, week_id):
             lines.append(("Chose: " if card_titles and not check_items else "Ticked: ")
                          + ", ".join(ticked))
 
+        # Editable cards: the pupil's own words, against the card they wrote on.
+        for key in sorted(k for k in fields if k.startswith("e") and k[1:].isdigit()):
+            i = int(key[1:])
+            if i < len(card_titles) and str(fields[key]).strip():
+                lines.append(f"{card_titles[i]}: {fields[key].strip()}")
+
         if lines:
             out.append((name, lines))
     return sorted(out)
@@ -396,7 +402,13 @@ def _readable_entries(item, values):
     labels = rows or cards
     out = []
     for key, value in sorted(values.items()):
-        if key.startswith("c") and key[1:].isdigit() and labels:
+        if key.startswith("e") and key[1:].isdigit() and cards:
+            # An editable card: show what they wrote, not the card's own title.
+            index = int(key[1:])
+            if str(value).strip():
+                label = cards[index] if index < len(cards) else ""
+                out.append(f"{label}: {value.strip()}" if label else value.strip())
+        elif key.startswith("c") and key[1:].isdigit() and labels:
             index = int(key[1:])
             if index < len(labels) and str(value).lower() in ("yes", "on", "true", "1"):
                 out.append(labels[index])
@@ -552,7 +564,11 @@ def resource_items_for(module_number, resource_names):
             # The slug keys anything a pupil writes on this resource, so it comes
             # from the pack's own name rather than the week's wording — the two
             # differ, and entries must not move when a week is reworded.
-            out.append(dict(item, slug=resource_slug(item.get("name"))))
+            # A pack item may pin its own slug. Renaming a resource would
+            # otherwise change the slug and orphan everything a pupil had
+            # already written on it.
+            out.append(dict(item, slug=item.get("slug")
+                            or resource_slug(item.get("name"))))
     return out
 
 
