@@ -349,7 +349,7 @@
         "steps": [
           {
             "title": "Stop",
-            "art": "art-hand-up",
+            "art": "art-raise-card",
             "text": "Pause before you do or say anything."
           },
           {
@@ -3612,7 +3612,7 @@
           {
             "cat": "Act on this",
             "title": "The agreed strategy",
-            "art": "art-hand-up",
+            "art": "art-raise-card",
             "text": "What they'll do, and what you can do to allow it.",
             "note": "Needs your consistency"
           }
@@ -3673,7 +3673,7 @@
           {
             "cat": "School rule",
             "title": "Hand up, don't call out",
-            "art": "art-hand-up",
+            "art": "art-raise-card",
             "text": "Raise your hand and wait to be asked.",
             "note": "Sort me"
           },
@@ -4422,7 +4422,7 @@
         "steps": [
           {
             "title": "Stop",
-            "art": "art-hand-up",
+            "art": "art-raise-card",
             "text": "Pause before you speak. That pause is the whole skill."
           },
           {
@@ -4445,7 +4445,7 @@
           {
             "cat": "Signal",
             "title": "Hand up",
-            "art": "art-hand-up",
+            "art": "art-raise-card",
             "text": "Raise your hand and wait, without speaking.",
             "note": "Agree it first"
           },
