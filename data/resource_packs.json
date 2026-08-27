@@ -527,36 +527,32 @@
       },
       {
         "name": "How staff can help me",
-        "body": "What the class teacher needs, on one side of paper.",
-        "tone": "blue",
-        "cards": [
-          {
-            "cat": "Context",
-            "title": "Course completed",
-            "art": "art-award",
-            "text": "Five weeks on naming feelings early and widening the gap before reacting.",
-            "note": ""
-          },
-          {
-            "cat": "Act on this",
-            "title": "Their early signs",
-            "art": "art-body-signals",
-            "text": "What it looks like before an outburst.",
-            "note": "Act here, not later"
-          },
-          {
-            "cat": "Act on this",
-            "title": "The phrase they'll use",
-            "art": "art-talk",
-            "text": "How they'll ask for a minute. Allow it.",
-            "note": "Refusing it undoes the work"
-          }
-        ],
+        "slug": "copy-for-class-teacher-or-pastoral-file",
         "aliases": [
           "Copy for class teacher or pastoral file"
         ],
-        "editable": true,
-        "slug": "copy-for-class-teacher-or-pastoral-file"
+        "body": "Tick the ones that would actually help. Based on what the Department for Education, the EEF and Ofsted say works: knowing the pupil, heading off known triggers, and keeping the same expectations with the support to meet them.",
+        "checklist": {
+          "items": [
+            "Say hello to me at the door, even on a bad day",
+            "Notice when I get it right, not only when I get it wrong",
+            "Warn me before something changes, so it isn't a surprise",
+            "Tell me off quietly, not in front of the class",
+            "Ask me what's going on before deciding what happened",
+            "Let me use my signal instead of having to explain in the moment",
+            "Let me take a short break in the place we agreed",
+            "Give me a few seconds to answer before asking again",
+            "Give me instructions one at a time",
+            "Keep the same rules for me as everyone else, and help me meet them",
+            "Let me put it right afterwards instead of just being punished"
+          ]
+        },
+        "form": {
+          "fields": [
+            "Anything else that would help",
+            "Who will make sure this happens"
+          ]
+        }
       }
     ],
     "missing": []
@@ -3601,36 +3597,32 @@
       },
       {
         "name": "How staff can help me",
-        "body": "What the class teacher needs, on one side of paper.",
-        "tone": "blue",
-        "cards": [
-          {
-            "cat": "Context",
-            "title": "Course completed",
-            "art": "art-award",
-            "text": "Five weeks on recognising early body signals of anger.",
-            "note": ""
-          },
-          {
-            "cat": "Act on this",
-            "title": "Triggers and early signs",
-            "art": "art-trigger",
-            "text": "The pupil's own list, in their words.",
-            "note": "Watch for these first"
-          },
-          {
-            "cat": "Act on this",
-            "title": "The agreed strategy",
-            "art": "art-raise-card",
-            "text": "What they'll do, and what you can do to allow it.",
-            "note": "Needs your consistency"
-          }
-        ],
+        "slug": "copy-for-class-teacher-or-pastoral-file",
         "aliases": [
           "Copy for class teacher or pastoral file"
         ],
-        "editable": true,
-        "slug": "copy-for-class-teacher-or-pastoral-file"
+        "body": "Tick the ones that would actually help. Based on what the Department for Education, the EEF and Ofsted say works: knowing the pupil, heading off known triggers, and keeping the same expectations with the support to meet them.",
+        "checklist": {
+          "items": [
+            "Say hello to me at the door, even on a bad day",
+            "Notice when I get it right, not only when I get it wrong",
+            "Warn me before something changes, so it isn't a surprise",
+            "Tell me off quietly, not in front of the class",
+            "Ask me what's going on before deciding what happened",
+            "Let me use my signal instead of having to explain in the moment",
+            "Let me take a short break in the place we agreed",
+            "Give me a few seconds to answer before asking again",
+            "Give me instructions one at a time",
+            "Keep the same rules for me as everyone else, and help me meet them",
+            "Let me put it right afterwards instead of just being punished"
+          ]
+        },
+        "form": {
+          "fields": [
+            "Anything else that would help",
+            "Who will make sure this happens"
+          ]
+        }
       }
     ],
     "missing": []
