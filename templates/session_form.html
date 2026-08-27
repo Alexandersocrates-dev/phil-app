@@ -225,7 +225,7 @@
 <div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;margin-right:12px;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
 <div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p>{# The goal panel below already says what the session is for, so a generic
         "This session's focus" label above it was one line of nothing. #}
-        {% if week.staff_only %}<p style="font-size:12px;color:var(--muted);margin:2px 0 0;">No pupil in this one &mdash; it&rsquo;s written for other staff</p>{% endif %}</div>
+        {% if week.staff_only %}<p style="font-size:12px;color:var(--muted);margin:2px 0 0;">No pupil in this one &mdash; written for other staff, and not shown to the pupil or their family</p>{% endif %}</div>
 </div>
 
 {# The objective was already written as a goal — "Pupil can describe what anger
@@ -303,17 +303,9 @@
 <form method="post" action="{{ ("/mentor/session/record/" ~ editing_record.id ~ "/edit") if editing_record else ("/mentor/session/" ~ enrolment.id) }}" id="sessionForm">
 
 {% if week.staff_only %}
-{# Both sit inside the flow rather than above the page: the warning comes first
-   because it changes how the whole session is run, then the sheet the mentor
-   reads before writing anything. #}
-<div class="staff-only-banner">
-  <div class="staff-only-badge">Staff only</div>
-  <div class="step-body">
-    <strong>No pupil in this session.</strong>
-    <span>This is your write-up time after the course has finished. Nothing here is shown to the pupil or their parent or carer.</span>
-  </div>
-</div>
-
+{# The banner here said "no pupil in this session" for the third time on one
+   page: the subtitle says it, and so does step 1. Its one unique fact — that
+   nothing written here reaches the pupil or family — moved to the subtitle. #}
 <div class="summaries-panel">
   <div>
     <strong>Everything from the {{ pupil_sessions }} sessions, on one sheet</strong>
@@ -329,7 +321,7 @@
 <div class="step-block">
 <div class="step-num">1</div>
 <div class="step-body">
-<h5 class="step-head">{% if week.staff_only %}Where they started{% else %}Check-in{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
+<h5 class="step-head">{% if week.staff_only %}Where the pupil started{% else %}Check-in{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.checkin }} min{% endif %}</span></h5>
 {% if week.staff_only %}
 <p style="font-size:14px;color:var(--ink);line-height:1.5;margin:0 0 6px;"><strong>Each box below is a section of the plan.</strong> Fill them in order and the plan writes itself.</p>
 {% else %}
@@ -674,10 +666,6 @@ for (var i = 0; i < group.length; i++) {
 /* The five steps ran into one another as a single column of text. A rule and
    real space above each makes the boundary obvious at a glance, which matters
    when a mentor is finding their place mid-session. */
-.staff-only-banner{display:flex; align-items:flex-start; gap:12px; background:var(--navy); color:#fff;
-  border-radius:14px; padding:13px 15px; margin:0 0 14px; font-size:14px; line-height:1.5;}
-.staff-only-banner strong{display:block; margin-bottom:2px;}
-.staff-only-banner span{color:#C9D3E4;}
 .summaries-panel{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
   background:var(--teal-light); border:1px solid #9FE1CB; border-radius:12px; padding:12px 14px; margin:0 0 14px;
   font-size:13px; color:#04342C; line-height:1.5;}
@@ -685,8 +673,6 @@ for (var i = 0; i < group.length; i++) {
 .summaries-panel span{color:var(--muted); font-size:12px;}
 .summaries-download{display:inline-flex; align-items:center; gap:7px; flex-shrink:0;}
 .summaries-download svg{width:15px; height:15px;}
-.staff-only-badge{flex-shrink:0; background:var(--amber); color:#412402; font-size:11.5px; font-weight:800;
-  text-transform:uppercase; letter-spacing:.06em; padding:4px 9px; border-radius:6px; margin-top:2px;}
 /* The names are labels; the button is the only thing here that does something.
    Solid fill, a download icon and "opens in a new tab" make that unambiguous,
    and the names lose their pill shape so they stop looking pressable. */
