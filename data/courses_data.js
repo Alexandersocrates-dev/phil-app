@@ -369,13 +369,14 @@ module.exports = [
       {
         "title": "Riding the wave",
         "objective": "Pupil understands emotions rise and fall, and can describe a personal 'wave'.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'which grounding technique did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Get out the grounding technique cards and ask: 'which one did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
         "input": "1. Explain that a strong feeling peaks and falls on its own if nothing feeds it.\n2. Ask: 'does a strong feeling last for ever, or does it pass?' Use a wave, not a switch: it builds, breaks and settles.\n3. Explain what feeds it — replaying it, arguing back, staying in the same place.\n4. The skill is riding it out, not switching it off.",
-        "activity": "1. Get out the wave diagram template.\n2. Ask: 'can you think of a time recently when a feeling got really strong?'\n3. Pupil rates how strong it was before, during and after, on the wave diagram.\n4. Ask: 'where on that wave could you have used one of your strategies?'\n5. Make the point that the feeling came down on its own either way — the strategy makes it quicker, not magic.",
+        "activity": "1. Get out the wave diagram template.\n2. Ask: 'can you think of a time recently when a feeling got really strong?'\n3. Pupil rates how strong it was before, during and after, on the wave diagram.\n4. Ask: 'where on that wave could you have used one of the grounding techniques?'\n5. Make the point that the feeling came down on its own either way — the strategy makes it quicker, not magic.",
         "reflect": "1. Ask: 'when is a feeling most likely to get strong for you this week?'\n2. Pupil names that one moment as the place to try waiting it out instead of reacting.",
         "lookfor": "This concept lands well with pupils who feel emotions are permanent or unbearable, reassure that intensity does pass.",
         "resources": [
           "How am I right now? chart",
+          "Grounding technique cards",
           "Wave diagram template"
         ],
         "home": "When a strong feeling passes, point it out afterwards: 'that felt big, and it did pass', reinforcing that emotions rise and fall.",
@@ -392,11 +393,13 @@ module.exports = [
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
         "checkin": "1. Fill in the 'How am I right now?' chart again — calm, unsettled, overwhelmed, or shut down — and set it beside the week one one.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their sheets are above if they need reminding.\n2. That answer goes at the top of their toolkit page.",
-        "activity": "1. Ask: 'what are you like at your best, and what are you like at your worst?'\n2. Ask: 'what's the first sign that you're heading the wrong way?' Use the body map if it helps.\n3. Ask: 'which two strategies would you actually use?' Look back at the grounding cards.\n4. Now write all of that into the personal toolkit.\n5. Share the finished toolkit with the class teacher.",
+        "activity": "1. Get out the body map and the grounding technique cards from the earlier sessions.\n2. Ask: 'what are you like at your best, and what are you like at your worst?'\n3. Ask: 'what's the first sign that you're heading the wrong way?' The body map is there if it helps.\n4. Ask: 'which two grounding techniques would you actually use?'\n5. Now write all of that into the personal toolkit, and share it with the class teacher.",
         "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [
           "How am I right now? chart",
+          "Body map handout",
+          "Grounding technique cards",
           "Personal toolkit template"
         ],
         "home": "Look at the pupil's toolkit together and agree one way you can remind the pupil of it at home, like a note on the fridge.",
@@ -800,11 +803,12 @@ module.exports = [
         "objective": "Pupil has a written, realistic plan for the next steps on the avoidance ladder, shared with pastoral staff and family.",
         "checkin": "1. Take a worry thermometer reading and put it beside the week one number.\n2. Ask what they'd have said in week one about the step they've now managed.\n3. If the number hasn't moved, ask what has — often it's the avoidance, not the worry.",
         "input": "1. Ask: 'which part of what we've done would you want a teacher to know about?' Their sheets are above if they need reminding.\n2. Keep that answer — it goes into the plan in their own words later in this session.",
-        "activity": "1. Ask: 'which two or three steps come next on your ladder?'\n2. Ask: 'how long do you want for each one?' Realistic dates, not hopeful ones.\n3. Ask: 'what should staff do if a step doesn't happen?'\n4. Ask: 'which grounding technique are you keeping, and who do you contact if you're struggling?'\n5. Now write all of that into the return-to-school plan, and set a review date.\n6. Share the finished plan with the SENCO, the pastoral lead and family.",
+        "activity": "1. Ask: 'which two or three steps come next on your ladder?'\n2. Ask: 'how long do you want for each one?' Realistic dates, not hopeful ones.\n3. Ask: 'what should staff do if a step doesn't happen?'\n4. Get out the grounding technique card and ask: 'which one are you keeping, and who do you contact if you're struggling?'\n5. Now write all of that into the return-to-school plan, and set a review date.\n6. Share the finished plan with the SENCO, the pastoral lead and family.",
         "reflect": "1. Ask: 'what's helped most out of everything we've tried?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This type of plan needs regular review, weekly or fortnightly, rather than a single course, build in a clear next check-in date.",
         "resources": [
           "Worry thermometer",
+          "Grounding technique card",
           "My return-to-school plan"
         ],
         "home": "Read the plan together and ask what would help most from you specifically.",
