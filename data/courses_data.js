@@ -111,9 +111,10 @@ module.exports = [
         "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Put both numbers side by side and ask what's different.\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
         "input": "1. Recap the four stages of the anger cycle and ask them to name their own first body signal.\n2. Recap their two chosen strategies from week three.\n3. Ask: 'if something happened tomorrow, which of the two would you use?' That answer goes in the hot and cold plan.",
         "activity": "1. Ask: 'what are your triggers, and what's the first warning sign?' Pupil fills both into the hot and cold plan.\n2. Pupil writes in that strategy and their second choice.\n3. Ask: 'who would you go to if the anger started building?' Add that name to the plan.\n4. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is holding up.\n5. Share the finished plan with the class teacher or pastoral lead.",
-        "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer \u2014 it goes into the course summary.",
+        "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
+          "Mood scale card",
           "My hot and cold plan",
           "Copy for class teacher or pastoral file"
         ],
@@ -381,12 +382,13 @@ module.exports = [
       {
         "title": "My emotional toolkit",
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
-        "checkin": "1. Check in with the same four words, and compare with the week one baseline.\n2. Ask what they'd have said in week one about the same situation.",
+        "checkin": "1. Fill in the 'How am I right now?' chart again and set it beside the week one one.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Recap the four parts: naming the feeling, the body signal, the strategy, the wave.\n2. Ask which one they'd keep if they could only keep one.\n3. That answer goes at the top of their toolkit page.",
         "activity": "1. Ask: 'what are you like at your best, and what are you like at your worst?' Pupil fills both into the toolkit.\n2. Ask: 'what's the first sign that you're heading the wrong way?' Add it to the toolkit.\n3. Pupil writes in the two strategies they would actually use.\n4. Share the finished toolkit with the class teacher.",
         "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [
+          "How am I right now? chart",
           "Personal toolkit template"
         ],
         "home": "Look at the pupil's toolkit together and agree one way you can remind the pupil of it at home, like a note on the fridge.",
@@ -521,6 +523,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing from these five weeks you're proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share relevant, appropriate context with the pastoral team so peer dynamics are monitored beyond the course.",
         "resources": [
+          "I statement card",
           "Social goals plan template"
         ],
         "home": "Ask about one positive step with friends this week and celebrate it, however small.",
@@ -655,6 +658,7 @@ module.exports = [
         "reflect": "1. Ask: 'of everything we've tried, which one will you actually keep doing?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat date, to check whether the classroom system is still being used and is still effective.",
         "resources": [
+          "Tally card",
           "Self-monitoring chart",
           "Teacher briefing note"
         ],
@@ -730,6 +734,7 @@ module.exports = [
         "reflect": "1. Ask: 'which one on that ladder is the smallest?'\n2. Pupil marks it — that's the one they'll try first, not the one that matters most.",
         "lookfor": "Involve parents or carers and the SENCO in building this ladder where possible, plans work best with a joined-up home-school approach.",
         "resources": [
+          "Worry thermometer",
           "Avoidance ladder template"
         ],
         "home": "Look at the avoidance ladder together if the pupil is happy to share it, and ask which step feels smallest.",
@@ -770,6 +775,7 @@ module.exports = [
         "reflect": "1. Ask: 'which moment in the day would this be most useful?'\n2. Pupil agrees to try it there once this week, even on a day that feels fine.",
         "lookfor": "Some pupils benefit from a discreet, non-stigmatising version, such as a fidget object, rather than an obvious technique.",
         "resources": [
+          "Worry thermometer",
           "Grounding technique card"
         ],
         "home": "Practise the grounding technique together at home so it's familiar before a harder morning.",
@@ -790,6 +796,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's helped most out of everything we've tried?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This type of plan needs regular review, weekly or fortnightly, rather than a single course, build in a clear next check-in date.",
         "resources": [
+          "Worry thermometer",
           "My return-to-school plan"
         ],
         "home": "Read the plan together and ask what would help most from you specifically.",
@@ -864,6 +871,7 @@ module.exports = [
         "reflect": "1. Ask: 'which one of those happens most at school?'\n2. Pupil agrees to watch for it this week and notice when it turns up.",
         "lookfor": "If task difficulty is the main trigger, flag this to the class teacher, it may need an academic support response alongside this module.",
         "resources": [
+          "Focus timeline template",
           "Disengagement trigger cards"
         ],
         "home": "Notice which trigger, tired, bored, distracted, shows up most during homework time at home.",
@@ -924,6 +932,7 @@ module.exports = [
         "reflect": "1. Ask: 'which lesson has changed most since week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree light-touch monitoring, such as teacher spot-checks at agreed points, rather than close supervision, which can undermine trust.",
         "resources": [
+          "Focus timeline template",
           "Engagement plan template"
         ],
         "home": "Read the plan together and ask what's changed since the start of the course.",
@@ -1321,12 +1330,13 @@ module.exports = [
       {
         "title": "My prevention and response plan",
         "objective": "Pupil has a personalised prevention and response plan shared with relevant staff.",
-        "checkin": "1. Compare with the week one baseline.\n2. Ask: 'what's changed in how you notice it building?'\n3. Ask: 'has anyone else noticed a difference?'",
+        "checkin": "1. Get out the week one incident timeline and compare it with how things are now.\n2. Ask: 'what's changed in how you notice it building?'\n3. Ask: 'has anyone else noticed a difference?'",
         "input": "1. Recap the chain: trigger, feeling, body signal, urge, action.\n2. Ask: 'where in that chain could you interrupt it now?'\n3. That interruption point, and the outlet that works, go into the plan.",
         "activity": "1. Ask: 'what are your triggers, and what's the first sign?' Pupil fills both into the prevention and response plan.\n2. Ask: 'what's your safe outlet, and where is it kept?' Add it.\n3. Ask: 'and if it happens anyway, what should putting it right look like?' Add that too.\n4. Share the finished plan with the class teacher and pastoral lead.",
         "reflect": "1. Ask: 'which part of that plan are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
+          "Incident timeline template",
           "Prevention and response plan template"
         ],
         "home": "Read the plan together and agree where the safe outlet will be kept at home.",
@@ -1458,12 +1468,13 @@ module.exports = [
       {
         "title": "My anger-management plan",
         "objective": "Pupil has a personalised, written anger-management plan and understands what happens next.",
-        "checkin": "1. Ask for a mood number and put it beside the week one number.\n2. Ask: 'what would you have done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
+        "checkin": "1. Take a reading on the anger thermometer and put it beside the week one number.\n2. Ask: 'what would you have done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
         "input": "1. Recap the four parts: naming precisely, their triggers, the gap and STOP, assertive phrasing.\n2. Ask which one they'd use tomorrow without being reminded.\n3. That goes at the top of the plan and on the copy for the class teacher.",
         "activity": "1. Ask: 'what are your triggers, and what's your first warning sign?' Pupil fills both into the anger-management plan.\n2. Pupil writes in the two strategies they'd actually use, and one phrase from the bank.\n3. Ask: 'who would you go to if it started building?' Add that name.\n4. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is working.\n5. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (two to three weeks later) rather than ending support abruptly.",
         "resources": [
+          "Anger thermometer",
           "My anger-management plan",
           "Copy for class teacher or pastoral file"
         ],
@@ -1539,6 +1550,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those feels biggest at the moment?'\n2. Pupil picks one small thing to try differently this week.",
         "lookfor": "Stay alert to caring responsibilities or family circumstances that may need wider support beyond mentoring, loop in the pastoral team if so.",
         "resources": [
+          "Attendance story template",
           "Push/pull factor card set"
         ],
         "home": "Notice what seems to make attendance easier or harder this week, without pressure, small practical patterns matter more than a single conversation, and the pattern may not be about mornings at all.",
@@ -1742,6 +1754,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
+          "Where am I now scale",
           "One-page vaping support plan",
           "Copy for pastoral file"
         ],
@@ -1883,6 +1896,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch follow-up chat rather than closing support entirely.",
         "resources": [
+          "My day timeline template",
           "One-page young carer support plan",
           "Copy for pastoral file"
         ],
@@ -2024,6 +2038,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Screen time boundaries work best when the pupil sets them, not when they're imposed, a self-chosen boundary is far more likely to stick.",
         "resources": [
+          "My digital day map",
           "One-page digital wellbeing plan",
           "Copy for pastoral file"
         ],
@@ -2165,6 +2180,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat ahead of the next assessment period rather than ending support after one round of exams, pressure often returns and the plan needs revisiting.",
         "resources": [
+          "Exam stress thermometer",
           "One-page exam wellbeing plan",
           "Copy for pastoral file"
         ],
@@ -2306,6 +2322,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than treating this as a fixed plan, sensory needs can shift with age, environment changes, or overall stress levels.",
         "resources": [
+          "Sensory profile scale",
           "One-page sensory support plan",
           "Copy for SENCO or pastoral file"
         ],
@@ -2729,6 +2746,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels uncertain?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat a few weeks into the new setting, since transition difficulties often only fully surface once the move has actually happened, not before.",
         "resources": [
+          "Worries and hopes chart",
           "One-page transition plan",
           "Copy for receiving school or pastoral file"
         ],

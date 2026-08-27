@@ -23,6 +23,15 @@
     </span>
   </summary>
   {% if item.body %}{% for para in item.body.split('\n') %}{% if para.strip() %}<p class="res-inline-p">{{ para }}</p>{% endif %}{% endfor %}{% endif %}
+  {# What was written on this same sheet earlier in the course. Several sessions
+     say "put both numbers side by side" or "compare with week one", which a
+     mentor can't do if the earlier answer is only stored against that week. #}
+  {% if item.earlier_values %}
+  <div class="res-earlier">
+    <span class="res-earlier-label">Recorded in session {{ item.earlier_week }}</span>
+    <span class="res-earlier-values">{{ item.earlier_values|join(' &middot; ') }}</span>
+  </div>
+  {% endif %}
   {% if item.table %}
   <table class="res-table">
     <tr>{% for hd in item.table.headers %}<th>{{ hd }}</th>{% endfor %}</tr>
@@ -523,7 +532,15 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 .res-inline[open] .res-toggle::after{content:"Hide";}
 .res-inline[open] > summary{margin-bottom:8px;}
 @media print{ .res-toggle{display:none;} }
-.res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
+/* The earlier answer sits above the blank sheet, so a comparison can be made
+   without leaving the page. */
+.res-earlier{display:flex; align-items:baseline; flex-wrap:wrap; margin:0 0 8px;
+  padding:6px 10px; background:#F3F2EC; border-radius:8px;}
+.res-earlier-label{font-size:11.5px; font-weight:800; letter-spacing:.05em;
+  text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
+.res-earlier-values{font-size:13px; color:var(--ink); min-width:0;}
+
+.res-inline-p{.res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
 .res-tag{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
 .res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
 /* The number and the field share one line: the input is a block by default, so

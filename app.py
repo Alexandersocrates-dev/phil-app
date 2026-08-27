@@ -333,6 +333,69 @@ def resource_entries_for(conn, enrolment_id, week_id):
     return out
 
 
+def earlier_entries_for(conn, enrolment_id, week_id, slugs):
+    """What was written on the same sheet in an earlier session.
+
+    Entries are stored per week, so a sheet that reappears — the mood scale in
+    weeks one and five, the worry thermometer throughout — came up blank the
+    second time. The instruction says "put both numbers side by side", which a
+    mentor can't do without the first one in front of them.
+    """
+    if not slugs:
+        return {}
+    marks = ",".join("?" for _ in slugs)
+    rows = conn.execute(
+        f"""SELECT re.resource_slug, re.field_key, re.value, w.week_number
+            FROM resource_entries re
+            JOIN weeks w ON w.id = re.week_id
+            WHERE re.enrolment_id = ?
+              AND re.resource_slug IN ({marks})
+              AND w.week_number < (SELECT week_number FROM weeks WHERE id = ?)
+            ORDER BY w.week_number""",
+        (enrolment_id, *slugs, week_id)).fetchall()
+    out = {}
+    for r in rows:
+        if not (r["value"] or "").strip():
+            continue
+        out.setdefault(r["resource_slug"], {}).setdefault(r["week_number"], {})[
+            r["field_key"]] = r["value"]
+    return out
+
+
+def attach_earlier_entries(conn, enrolment_id, week_id, items):
+    """Give each resource the record of what was written on it before."""
+    found = earlier_entries_for(conn, enrolment_id, week_id,
+                                [i.get("slug") for i in items if i.get("slug")])
+    for item in items:
+        prior = found.get(item.get("slug"))
+        if not prior:
+            continue
+        # Most recent earlier session only: two columns is a comparison, five is
+        # a table nobody reads mid-session.
+        wk = max(prior)
+        item["earlier_week"] = wk
+        item["earlier_values"] = _readable_entries(item, prior[wk])
+    return items
+
+
+def _readable_entries(item, values):
+    """Turn stored field keys back into something a mentor can read.
+
+    A tick list stores {"c2": "yes"}, so printing the values gives "yes". What
+    the mentor needs is which row was ticked.
+    """
+    rows = (item.get("checklist") or {}).get("items") or []
+    out = []
+    for key, value in sorted(values.items()):
+        if key.startswith("c") and key[1:].isdigit() and rows:
+            index = int(key[1:])
+            if index < len(rows) and str(value).lower() in ("yes", "on", "true", "1"):
+                out.append(rows[index])
+        elif str(value).strip():
+            out.append(str(value).strip())
+    return out
+
+
 def save_resource_entries(conn, enrolment_id, week_id, request, user_id):
     """Stores what was typed into a resource this session.
 
@@ -2351,6 +2414,7 @@ def session_form(request):
         week["resource_items"] = resource_items_for(
             enrolment["course_module_number"], week["resources"])
         attach_figures(week["resource_items"])
+        attach_earlier_entries(conn, enrolment["id"], week["id"], week["resource_items"])
         week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
         for step, group in week["resource_steps"].items():
             for item in group:
@@ -5408,6 +5472,12 @@ def session_record_edit(request):
     week["resource_items"] = resource_items_for(
         enrolment["course_module_number"], week["resources"])
     attach_figures(week["resource_items"])
+    conn4 = db.get_conn()
+    try:
+        attach_earlier_entries(conn4, record["enrolment_id"], record["week_id"],
+                               week["resource_items"])
+    finally:
+        conn4.close()
     week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
     for step, group in week["resource_steps"].items():
         for item in group:
