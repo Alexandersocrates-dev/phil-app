@@ -251,7 +251,7 @@ module.exports = [
         "objective": "Pupil has a co-created behaviour agreement and knows how it will be reviewed.",
         "checkin": "1. Look back at the friction baseline from week one.\n2. Ask what's different, if anything.\n3. No change is still an answer — ask what would need to be true for it to shift.",
         "input": "1. Ask: 'out of everything we've tried, which bit have you actually used?' Their sheets are above if they need reminding.\n2. That one goes into the agreement, because it's the one that works for them.",
-        "activity": "1. Ask: 'what three or four things could you realistically agree to?' Pupil writes them into the behaviour agreement.\n2. Ask: 'and what do you need from staff in return?' Add those too — it's an agreement, not a list of demands.\n3. Read it back. If any line sounds like something they'd break by Tuesday, change it now.\n4. Ask: 'when should we look at this again?' Tell them the follow-up chat is when you'll check how it's held up.\n5. Share the finished agreement with the class teacher.",
+        "activity": "1. Ask: 'what three or four things could you realistically agree to?'\n2. Ask: 'and what do you need from staff in return?' It's an agreement, not a list of demands.\n3. Ask: 'when should we look at this again?' Tell them the follow-up chat is when you'll check how it's held up.\n4. Now write all of that into the behaviour agreement, and read it back. If any line sounds like something they'd break by Tuesday, change it now.\n5. Share the finished agreement with the class teacher.",
         "reflect": "1. Ask: 'which part of that agreement are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agreements work best when the pupil has genuine input, not just staff-authored rules relabelled, protect the pupil's voice in the wording.",
         "resources": [
@@ -387,7 +387,7 @@ module.exports = [
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
         "checkin": "1. Fill in the 'How am I right now?' chart again and set it beside the week one one.\n2. Ask what they'd have said in week one about the same situation.",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their sheets are above if they need reminding.\n2. That answer goes at the top of their toolkit page.",
-        "activity": "1. Ask: 'what are you like at your best, and what are you like at your worst?' Pupil fills both into the toolkit.\n2. Ask: 'what's the first sign that you're heading the wrong way?' Add it to the toolkit.\n3. Pupil writes in the two strategies they would actually use.\n4. Share the finished toolkit with the class teacher.",
+        "activity": "1. Ask: 'what are you like at your best, and what are you like at your worst?'\n2. Ask: 'what's the first sign that you're heading the wrong way?' Use the body map if it helps.\n3. Ask: 'which two strategies would you actually use?' Look back at the grounding cards.\n4. Now write all of that into the personal toolkit.\n5. Share the finished toolkit with the class teacher.",
         "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it's reinforced outside sessions.",
         "resources": [
@@ -522,7 +522,7 @@ module.exports = [
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
         "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask: 'would the other person say the same thing?'\n3. Keep both answers — they go into the plan later in this session.",
         "input": "1. Ask: 'if it happened again tomorrow, which would you use — the restorative questions, seeing it from their side, or an I statement?' Their sheets are above if they need reminding.\n2. That's the one that goes at the top of their plan.",
-        "activity": "1. Ask: 'what's one thing you'd like to be different socially next term?'\n2. Pupil writes one or two goals into the plan — sitting with a particular group, joining a club.\n3. Ask: 'what would staff need to do to help that happen?' Add it to the plan.\n4. Share the finished plan with the class teacher or pastoral lead.",
+        "activity": "1. Ask: 'what's one thing you'd like to be different socially next term?'\n2. Ask: 'what would staff need to do to help that happen?'\n3. Ask: 'what's the first step, and when would you take it?'\n4. Now write all of that into the social goals plan, and set a review date.\n5. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing from these five weeks you're proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share relevant, appropriate context with the pastoral team so peer dynamics are monitored beyond the course.",
         "resources": [
@@ -657,7 +657,7 @@ module.exports = [
         "objective": "Pupil has an agreed, ongoing self-monitoring system shared with the class teacher.",
         "checkin": "1. Put the week one tally next to this week's and compare.\n2. Ask: 'what do you think made the difference?'\n3. If the number hasn't dropped, ask: 'which lesson is still hardest, and why?'",
         "input": "1. Ask: 'which of the things we've tried would you keep doing without being asked?' Their sheets are above if they need reminding.\n2. That one goes on the teacher briefing note, so the next teacher knows what works.",
-        "activity": "1. Ask: 'which lessons should this carry on in after the course finishes?'\n2. Pupil finalises the self-monitoring chart for those lessons.\n3. Ask: 'what would make it worth keeping up?' Agree a simple bit of feedback with the teacher.\n4. Share the chart and the briefing note with the class teacher.",
+        "activity": "1. Ask: 'which lessons should this carry on in after the course finishes?'\n2. Ask: 'what would make it worth keeping up?' Agree a simple bit of feedback with the teacher.\n3. Now finalise the self-monitoring chart for those lessons.\n4. Share the chart and the briefing note with the class teacher.",
         "reflect": "1. Ask: 'of everything we've tried, which one will you actually keep doing?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat date, to check whether the classroom system is still being used and is still effective.",
         "resources": [
@@ -795,7 +795,7 @@ module.exports = [
         "objective": "Pupil has a written, realistic plan for the next steps on the avoidance ladder, shared with pastoral staff and family.",
         "checkin": "1. Take a worry thermometer reading and put it beside the week one number.\n2. Ask what they'd have said in week one about the step they've now managed.\n3. If the number hasn't moved, ask what has — often it's the avoidance, not the worry.",
         "input": "1. Ask: 'which part of what we've done would you want a teacher to know about?' Their sheets are above if they need reminding.\n2. Keep that answer — it goes into the plan in their own words later in this session.",
-        "activity": "1. Ask: 'which two or three steps come next on your ladder?' Pupil writes them into the return-to-school plan.\n2. Ask: 'how long do you want for each one?' Put realistic dates against them.\n3. Ask: 'what should staff do if a step doesn't happen?' Add that to the plan.\n4. Share the finished plan with the SENCO, the pastoral lead and family.",
+        "activity": "1. Ask: 'which two or three steps come next on your ladder?'\n2. Ask: 'how long do you want for each one?' Realistic dates, not hopeful ones.\n3. Ask: 'what should staff do if a step doesn't happen?'\n4. Ask: 'which grounding technique are you keeping, and who do you contact if you're struggling?'\n5. Now write all of that into the return-to-school plan, and set a review date.\n6. Share the finished plan with the SENCO, the pastoral lead and family.",
         "reflect": "1. Ask: 'what's helped most out of everything we've tried?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This type of plan needs regular review, weekly or fortnightly, rather than a single course, build in a clear next check-in date.",
         "resources": [
@@ -931,7 +931,7 @@ module.exports = [
         "objective": "Pupil has a simple, personalised engagement plan shared with the class teacher.",
         "checkin": "1. Put this week's focus timeline beside week one's.\n2. Ask: 'which lesson changed most?'\n3. Ask: 'what did you do differently in that lesson?' That's the thing worth keeping.",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their sheets are above if they need reminding.\n2. That goes at the top of the engagement plan.",
-        "activity": "1. Ask: 'what are the two things most likely to make you drift?' Pupil writes them into the engagement plan.\n2. Ask: 'and what's your go-to strategy when it happens?' Add it.\n3. Add the goal from last week at the top of the plan.\n4. Share the finished plan with the class teacher.",
+        "activity": "1. Ask: 'what are the two things most likely to make you drift?' Look back at the trigger cards.\n2. Ask: 'and what's your go-to strategy when it happens?'\n3. Ask: 'what was the goal you named last week?'\n4. Now write all of that into the engagement plan, with the goal at the top.\n5. Share the finished plan with the class teacher.",
         "reflect": "1. Ask: 'what will you keep doing in that lesson next term?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree light-touch monitoring, such as teacher spot-checks at agreed points, rather than close supervision, which can undermine trust.",
         "resources": [
@@ -1066,7 +1066,7 @@ module.exports = [
         "objective": "Pupil has an agreed, simple plan for working with key staff members going forward.",
         "checkin": "1. Ask: 'how are things now with the adult you named in week one?'\n2. Compare with what they said then.\n3. Ask: 'what would you want that adult to know?'",
         "input": "1. Ask: 'which part of what we've done made an actual difference?' Their sheets are above if they need reminding.\n2. That goes into the working relationship plan, in their words.",
-        "activity": "1. Ask: 'which one or two staff does this matter most with?' Pupil writes them into the working relationship plan.\n2. Ask: 'what should they do instead of telling you off in front of everyone?' Add it.\n3. Ask: 'and what will you do differently?' Both halves go in — it's not a list of staff duties.\n4. Share the finished plan with those staff.",
+        "activity": "1. Ask: 'which one or two staff does this matter most with?'\n2. Ask: 'what should they do instead of telling you off in front of everyone?'\n3. Ask: 'and what will you do differently?' Both halves matter — it's not a list of staff duties.\n4. Now write all of that into the working relationship plan, and set a review date.\n5. Share the finished plan with those staff.",
         "reflect": "1. Ask: 'which change do you think has the best chance of working?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share the plan with relevant staff directly, it only works if both sides know what's been agreed.",
         "resources": [
@@ -1200,7 +1200,7 @@ module.exports = [
         "objective": "Pupil has one or two realistic, agreed social goals with identified support.",
         "checkin": "1. Ask: 'how have the five weeks felt overall?'\n2. Ask: 'what was easier than you expected, and what wasn't?'\n3. Compare with how week one felt, if they'll say.",
         "input": "1. Ask: 'which of these would you keep doing without me there?' Their sheets are above if they need reminding.\n2. That goes at the top of the connection plan.",
-        "activity": "1. Ask: 'what's one social thing you'd like to be different next term?' Pupil writes it into the connection plan.\n2. Ask: 'what support needs to be in place for that?' Add it.\n3. Ask: 'who could you check in with?' Add that name.\n4. Share the finished plan with the class teacher or pastoral lead.",
+        "activity": "1. Ask: 'what's one social thing you'd like to be different next term?'\n2. Ask: 'what support needs to be in place for that?'\n3. Ask: 'who could you check in with, and what's your first step?'\n4. Now write all of that into the connection plan, and set a review date.\n5. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's felt most different since week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This module often benefits from a longer review window than others, such as half a term, since social change happens gradually, avoid declaring early success or failure.",
         "resources": [
@@ -1335,7 +1335,7 @@ module.exports = [
         "objective": "Pupil has a personalised prevention and response plan shared with relevant staff.",
         "checkin": "1. Get out the week one incident timeline and compare it with how things are now.\n2. Ask: 'what's changed in how you notice it building?'\n3. Ask: 'has anyone else noticed a difference?'",
         "input": "1. Ask: 'looking at your own timeline, where could you interrupt it now?' Their sheets are above if they need reminding.\n2. That interruption point, and the outlet that works, go into the plan.",
-        "activity": "1. Ask: 'what are your triggers, and what's the first sign?' Pupil fills both into the prevention and response plan.\n2. Ask: 'what's your safe outlet, and where is it kept?' Add it.\n3. Ask: 'and if it happens anyway, what should putting it right look like?' Add that too.\n4. Share the finished plan with the class teacher and pastoral lead.",
+        "activity": "1. Ask: 'what are your triggers, and what's the first sign?'\n2. Ask: 'what's your safe outlet, and where is it kept?'\n3. Ask: 'and if it happens anyway, what should putting it right look like?'\n4. Now write all of that into the prevention and response plan.\n5. Share the finished plan with the class teacher and pastoral lead.",
         "reflect": "1. Ask: 'which part of that plan are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
@@ -1473,7 +1473,7 @@ module.exports = [
         "objective": "Pupil has a personalised, written anger-management plan and understands what happens next.",
         "checkin": "1. Take a reading on the anger thermometer and put it beside the week one number.\n2. Ask: 'what would you have done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
         "input": "1. Ask: 'which of the things we've practised would you use tomorrow without being reminded?' Their sheets are above if they need reminding.\n2. That goes at the top of the plan and on the copy for the class teacher.",
-        "activity": "1. Ask: 'what are your triggers, and what's your first warning sign?' Pupil fills both into the anger-management plan.\n2. Pupil writes in the two strategies they'd actually use, and one phrase from the bank.\n3. Ask: 'who would you go to if it started building?' Add that name.\n4. How can staff help me? Go through the list together and tick the ones that would actually make a difference.\n5. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is working.\n6. Share the finished plan with the class teacher or pastoral lead.",
+        "activity": "1. Ask: 'what are your triggers, and what's your first warning sign?'\n2. Ask: 'which two strategies would you actually use, and which phrase from the bank?'\n3. Ask: 'who would you go to if it started building?'\n4. How can staff help me? Go through the list together and tick the ones that would actually make a difference.\n5. Now write all of that into the anger-management plan, and set a review date.\n6. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is working.\n7. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (two to three weeks later) rather than ending support abruptly.",
         "resources": [
@@ -1611,7 +1611,7 @@ module.exports = [
         "objective": "Pupil has a graded, realistic attendance plan and understands what happens next.",
         "checkin": "1. Look at attendance across the five weeks together.\n2. Ask: 'which week was best, and what was different about it?'\n3. If nothing has shifted yet, ask: 'what would have to change first?'",
         "input": "1. Ask: 'which part of what we've done made the most difference?' Their sheets are above if they need reminding.\n2. Explain how the graded plan works: it starts from what they're already managing, not from full attendance.",
-        "activity": "1. Ask: 'what could you manage next week — not next term?' Pupil writes it into the graded attendance plan.\n2. Set the step after that, and the one after — building up, not jumping to full attendance.\n3. Ask: 'what should happen if you miss a step?' Add it, so a bad week isn't the end of the plan.\n4. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is holding up.\n5. Share the plan with the attendance lead.",
+        "activity": "1. Ask: 'what could you manage next week — not next term?'\n2. Ask: 'and the step after that, once the first one is steady?' Building up, not jumping to full attendance.\n3. Ask: 'what should happen if you miss a step?' So a bad week isn't the end of the plan.\n4. Ask: 'who's supporting you with this?'\n5. Now write all of that into the graded attendance plan, and set a review date.\n6. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is holding up.\n7. Share the plan with the attendance lead.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hardest?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat with the attendance team, and loop in the Education Welfare Officer if statutory thresholds are a concern.",
         "resources": [
@@ -1753,7 +1753,7 @@ module.exports = [
         "objective": "Pupil has a personalised plan and knows who to speak to at school if the pupil wants support later.",
         "checkin": "1. Take a 'where am I now' reading and put it beside the week one one.\n2. Ask what's changed in how they think about it, not just what they've done.\n3. Both count.",
         "input": "1. Ask: 'who would you go to if you wanted help with this in six months?' Their sheets are above if they need reminding.\n2. Put that name on the plan. A plan without a person behind it rarely survives.",
-        "activity": "1. Ask: 'what are your main triggers?' Pupil writes them into the vaping support plan.\n2. Pupil adds the refusal line and the strategy that felt most like them.\n3. Ask: 'who at school would you actually go to?' Add that name.\n4. Agree who gets a copy — and check they're comfortable with that before it's shared.",
+        "activity": "1. Ask: 'what are your main triggers?'\n2. Ask: 'which refusal line and which strategy felt most like you?'\n3. Ask: 'who at school would you actually go to?'\n4. Now write all of that into the vaping support plan, and set a review date.\n5. Agree who gets a copy — and check they're comfortable with that before it's shared.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
@@ -1895,7 +1895,7 @@ module.exports = [
         "objective": "Pupil has a personalised plan and knows how to flag it if the pupil's caring responsibilities change.",
         "checkin": "1. Look at the week one timeline beside how this week looked.\n2. Ask: 'what feels different, if anything?'\n3. Ask: 'what would you want school to understand about your week?'",
         "input": "1. Ask: 'what would make the biggest difference at school?' Their sheets are above if they need reminding.\n2. That goes on the plan, and on the copy for the pastoral file if they agree to it.",
-        "activity": "1. Ask: 'who's your main person at school?' Pupil writes that name into the young carer plan.\n2. Pupil adds the one coping strategy from week three that actually worked.\n3. Ask: 'if things got harder at home, how would you let school know?' Agree something simple — a word, a note.\n4. Share the finished plan with that named person.",
+        "activity": "1. Ask: 'who's your main person at school?'\n2. Ask: 'which of the things from week three actually helped?'\n3. Ask: 'if things got harder at home, how would you let school know?' Something simple — a word, a note.\n4. Now write all of that into the young carer plan, and set a review date.\n5. Share the finished plan with that named person.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch follow-up chat rather than closing support entirely.",
         "resources": [
@@ -2037,7 +2037,7 @@ module.exports = [
         "objective": "Pupil has a personalised plan covering online safety steps, screen time balance, and who to tell if something happens.",
         "checkin": "1. Put this week's digital day map beside week one's.\n2. Ask what's changed — in the hours, or in how the parts feel.\n3. Either is progress.",
         "input": "1. Ask: 'which part of this would you pass on to a younger pupil?' Their sheets are above if they need reminding.\n2. Keep that answer — it goes at the top of their plan later in this session.",
-        "activity": "1. Ask: 'which privacy settings are you keeping in place?' Pupil writes them into the digital wellbeing plan.\n2. Ask: 'what's one boundary you'd actually keep — a time, a room, a app?' Add it.\n3. Ask: 'and who would you go to?' Add that name.\n4. Agree who gets a copy, and check they're comfortable with that first.",
+        "activity": "1. Ask: 'which privacy settings are you keeping in place?'\n2. Ask: 'what's one boundary you'd actually keep — a time, a room, an app?'\n3. Ask: 'and who would you go to if something happened?'\n4. Now write all of that into the digital wellbeing plan, and set a review date.\n5. Agree who gets a copy, and check they're comfortable with that first.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Screen time boundaries work best when the pupil sets them, not when they're imposed, a self-chosen boundary is far more likely to stick.",
         "resources": [
@@ -2179,7 +2179,7 @@ module.exports = [
         "objective": "Pupil has a personalised plan balancing academic effort with rest, and knows how to adjust it going forward.",
         "checkin": "1. Take a stress thermometer reading and set it beside week one's.\n2. Ask what's changed about how they revise, not just how they feel.\n3. If the number is higher because exams are closer, say that's expected.",
         "input": "1. Ask: 'which of these would you want in place the morning of your first exam?' Their sheets are above if they need reminding.\n2. That goes at the top of the plan, and on the copy for the pastoral file.",
-        "activity": "1. Ask: 'which bit of the routine actually worked?' Pupil writes it into the exam wellbeing plan.\n2. Pupil adds the coping strategy they'd use before an assessment.\n3. Ask: 'who would you tell if it started building again?' Add that name.\n4. Ask: 'what would you change first if this routine stopped working?' Write that on the plan, so they know it's theirs to adjust.\n5. Share the finished plan with that person.",
+        "activity": "1. Ask: 'which bit of the routine actually worked?'\n2. Ask: 'which coping strategy would you use before an assessment?'\n3. Ask: 'who would you tell if it started building again?'\n4. Ask: 'what would you change first if this routine stopped working?' So they know the plan is theirs to adjust.\n5. Now write all of that into the exam wellbeing plan, and set a review date.\n6. Share the finished plan with that person.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat ahead of the next assessment period rather than ending support after one round of exams, pressure often returns and the plan needs revisiting.",
         "resources": [
@@ -2321,7 +2321,7 @@ module.exports = [
         "objective": "Pupil has a personalised sensory support plan shared with relevant staff.",
         "checkin": "1. Fill in the sensory profile again and set it beside week one's.\n2. Ask: 'which part of the day has changed most?'\n3. Ask: 'what still needs solving?' There's usually one thing left.",
         "input": "1. Ask: 'what would you want a new teacher to know about you, in one sentence?' Their sheets are above if they need reminding.\n2. That sentence goes at the top of the plan and on the copy for the SENCO.",
-        "activity": "1. Ask: 'what are the sensory things that get you most?' Pupil writes them into the sensory support plan.\n2. Pupil adds the tools that worked and the signal they designed.\n3. Ask: 'what would need to change about where you sit, or when you move?' Add those requests.\n4. Share the finished plan with the SENCO and the staff who teach them.",
+        "activity": "1. Ask: 'what are the sensory things that get you most?'\n2. Ask: 'which tools worked, and what signal did you settle on?'\n3. Ask: 'what would need to change about where you sit, or when you move?'\n4. Now write all of that into the sensory support plan, and set a review date.\n5. Share the finished plan with the SENCO and the staff who teach them.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than treating this as a fixed plan, sensory needs can shift with age, environment changes, or overall stress levels.",
         "resources": [
@@ -2463,7 +2463,7 @@ module.exports = [
         "objective": "Pupil has a personalised support plan and knows what further help is available if needed.",
         "checkin": "1. Look back over the five weeks gently.\n2. Ask what's felt most useful, rather than what's improved.\n3. Let them say 'none of it' if that's true.",
         "input": "1. Ask: 'has any of this been useful?' Take whatever answer comes, including none of it.\n2. Say clearly that grief support often needs far longer than five weeks, and that's normal.\n3. Say you'll go through what support exists, and name a real person at school, before the end of today.\n4. Make sure they leave knowing this ending isn't the end of the support.",
-        "activity": "1. Ask: 'which of the things we've tried actually helped?' Pupil writes it into the support plan.\n2. Add any dates coming up that are likely to be hard.\n3. Add the name of the person at school they'd go to.\n4. Go through the support services card so they know what exists, without any expectation of using it.\n5. Ask who should have the copy for the pastoral file, and check they're comfortable with that before it goes anywhere.",
+        "activity": "1. Ask: 'which of the things we've tried actually helped?'\n2. Ask: 'are there dates coming up that are likely to be hard?'\n3. Ask: 'who at school would you talk to?'\n4. Now write all of that into the support plan.\n5. Go through the support services card so they know what exists, without any expectation of using it.\n6. Ask who should have the copy for the pastoral file, and check they're comfortable with that before it goes anywhere.",
         "reflect": "1. Ask: 'what's felt most helpful about this course?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
         "resources": [
@@ -2604,7 +2604,7 @@ module.exports = [
         "objective": "Pupil knows at least two trusted adults and one reporting route, at school and beyond, if the pupil ever needs help.",
         "checkin": "1. Review the five weeks in general terms.\n2. Ask what's felt most useful.",
         "input": "1. Ask: 'what's the main thing you'd take away from these five weeks?'\n2. Go through reporting routes properly: the designated safeguarding lead by name, Childline on 0800 1111, and the police.\n3. Say that reporting about a friend is allowed, and often how it starts.\n4. Say the card gets filled in today and leaves with them, not kept in a file here.",
-        "activity": "1. Ask: 'who are two adults you'd go to?' Pupil writes them onto the safety card.\n2. Add the school's safeguarding lead by name, not just the job title.\n3. Add Childline's number from the reporting routes card.\n4. Ask: 'where will you keep this so it's there but private?'",
+        "activity": "1. Ask: 'who are two adults you'd go to?'\n2. Ask: 'do you know the school's safeguarding lead by name?' If not, tell them now.\n3. Now write both onto the safety card, with Childline's number from the reporting routes card.\n4. Ask: 'where will you keep this so it's there but private?'",
         "reflect": "1. Ask: 'which of those adults would you actually go to first?'\n2. The card is theirs — nothing needs to happen with it.",
         "lookfor": "This session should end on a note of empowerment and clear, practical routes to help, not fear. If any concerns have emerged across the five weeks, ensure your school's safeguarding lead has been informed through the proper channel, separately from this course record.",
         "resources": [
@@ -2745,7 +2745,7 @@ module.exports = [
         "objective": "Pupil has a personalised transition plan and knows who to go to in the new setting if things feel hard.",
         "checkin": "1. Get out the week one worries and hopes chart.\n2. Ask: 'which worries have shrunk, and are any of them new?'\n3. New worries at this point are normal — they mean it's become real.",
         "input": "1. Ask: 'what would you want the new school to know about you on day one?' Their sheets are above if they need reminding.\n2. That goes on the plan, and on the copy for the receiving school.",
-        "activity": "1. Ask: 'what's the biggest worry now, and what's the plan if it happens?' Pupil writes both into the transition plan.\n2. Pupil adds the coping strategy they chose.\n3. Ask: 'who's the adult at the new school you'd go to?' Add that name.\n4. Share the finished plan with the receiving school.",
+        "activity": "1. Ask: 'what's the biggest worry now, and what's the plan if it happens?'\n2. Ask: 'which coping strategy are you taking with you?'\n3. Ask: 'who's the adult at the new school you'd go to?'\n4. Now write all of that into the transition plan.\n5. Share the finished plan with the receiving school.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels uncertain?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat a few weeks into the new setting, since transition difficulties often only fully surface once the move has actually happened, not before.",
         "resources": [
