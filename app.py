@@ -2925,6 +2925,12 @@ def session_submit(request):
         conn.execute("UPDATE enrolments SET current_week=?, status=? WHERE id=?",
             (new_current_week, new_status, enrolment_id))
 
+        if safeguarding_flag:
+            notify_safeguarding(conn, enrolment.get("establishment_id") or user["establishment_id"],
+                                pupil_name, mentor_name,
+                                f"session {next_week_number} of {enrolment['course_title']}",
+                                safeguarding_note)
+
         conn.execute("DELETE FROM session_drafts WHERE enrolment_id=? AND week_number=?",
                      (enrolment_id, next_week_number))
 
@@ -4657,6 +4663,30 @@ def _raise_once(conn, kind, estab_id, key, body):
     return 1
 
 
+def notify_safeguarding(conn, establishment_id, pupil_name, mentor_name, where, note):
+    """Tell the establishment's admins that a safeguarding concern was recorded.
+
+    The flag was being saved on the record and nowhere else, so unless an admin
+    happened to open that session nobody was told. This puts it on the
+    notifications page, where a DSL is looking.
+
+    The note itself is not copied into the payload: notifications are a
+    signpost, and the detail stays on the record behind the school's own access
+    controls.
+    """
+    if not establishment_id:
+        return 0
+    detail = "A note was recorded." if note else "No note was added."
+    conn.execute(
+        """INSERT INTO notifications (type, recipient, establishment_id, payload, status, sent_at)
+           VALUES (?,?,?,?,?,?)""",
+        ("safeguarding", "admin", establishment_id,
+         f"Safeguarding concern flagged for {pupil_name} by {mentor_name}, in {where}. "
+         f"{detail} Open the record for the detail.",
+         "unread", db.now()))
+    return 1
+
+
 def check_pilots_ending(conn, days=3):
     """Pilots about to expire.
 
@@ -5894,6 +5924,23 @@ def session_record_edit_submit(request):
              1 if request.field("safeguarding_flag") == "yes" else 0,
              safeguarding_note,
              request.params["record_id"]))
+        # An edit can raise a concern that wasn't there when the session was
+        # first written up. Only notify when it's newly raised — re-saving a
+        # record that was already flagged shouldn't tell the DSL twice.
+        if request.field("safeguarding_flag") == "yes" and not record["safeguarding_flag"]:
+            who = conn.execute(
+                """SELECT p.forename, p.surname, p.establishment_id, w.week_number, c.title
+                   FROM enrolments e
+                   JOIN pupils p ON p.id = e.pupil_id
+                   JOIN courses c ON c.id = e.course_id
+                   JOIN weeks w ON w.id = ?
+                   WHERE e.id = ?""",
+                (record["week_id"], record["enrolment_id"])).fetchone()
+            if who:
+                notify_safeguarding(conn, who["establishment_id"],
+                                    f"{who['forename']} {who['surname']}", user["name"],
+                                    f"session {who['week_number']} of {who['title']} (added when the "
+                                    f"record was edited)", safeguarding_note)
         # pdf_path is cleared rather than regenerated here: the download route
         # rebuilds it on demand, so the PDF can never disagree with the record.
         db.log_action(conn, user["id"], "session_record_edited", "session_record",
@@ -6251,6 +6298,10 @@ def follow_up_save(request):
         conn.execute("UPDATE enrolments SET review_done=1 WHERE id=?", (enrolment_id,))
         db.log_action(conn, user["id"], "follow_up_recorded", "enrolment", enrolment_id,
                       "%s / %s" % (helped, behaviour))
+        if safeguarding_flag:
+            notify_safeguarding(conn, enrolment["establishment_id"],
+                                f"{enrolment['forename']} {enrolment['surname']}",
+                                user["name"], "a follow-up chat", safeguarding_note)
         conn.commit()
         pupil_id = enrolment["pupil_id"]
         forename = enrolment["forename"]

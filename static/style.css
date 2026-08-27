@@ -416,6 +416,24 @@ details.acc .acc-body{padding:0 var(--sp-4) var(--sp-3);}
 .notif-item{display:flex; align-items:flex-start; gap:var(--sp-3); padding:var(--sp-3) var(--sp-4);}
 .notif-item form{flex-shrink:0; margin:0;}
 .notif-unread{border-color:var(--teal); box-shadow:0 1px 3px rgba(15,110,86,0.08);}
+/* The bell looked the same whether or not anything was waiting: only a small
+   badge changed, which is easy to miss on a busy topbar and invisible to
+   anyone who doesn't distinguish the badge colour. The icon itself now changes
+   too, and the count is in the tooltip and for screen readers. */
+.app-topbar-icon--alert{background:var(--coral-light, #FDEDE9); color:var(--coral, #C4553D);}
+.app-topbar-icon--alert:hover{background:var(--coral, #C4553D); color:#fff;}
+.app-topbar-icon--alert svg{stroke-width:2.4;}
+
+@media (prefers-reduced-motion: no-preference){
+  .app-topbar-icon--alert svg{animation:bell-nudge 2.4s ease-in-out 1;}
+  @keyframes bell-nudge{
+    0%, 70%, 100%{transform:rotate(0);}
+    75%{transform:rotate(-9deg);}
+    82%{transform:rotate(7deg);}
+    89%{transform:rotate(-4deg);}
+  }
+}
+
 .notif-badge{position:absolute; top:-4px; right:-6px; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--coral); color:#fff; font-size:9.5px; font-weight:800; line-height:16px; text-align:center; font-family:var(--font-head); box-shadow:0 0 0 2px var(--card);}
 
 
