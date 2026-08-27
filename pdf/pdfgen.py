@@ -568,7 +568,17 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         c.drawString(x, y, "No sessions recorded yet.")
 
     for row in rows:
+        # Each block now carries what happened, the goal, the pupil's own work
+        # and any safeguarding note, so the old 34mm estimate would start a
+        # session near the foot of a page and split it.
         block = 34 * mm
+        block += 6 * mm * len([p for p in (row["what_happened"] or "").split("\n\n") if p.strip()]) \
+            if "what_happened" in row.keys() else 0
+        block += 10 * mm * len(row["resource_work"] or []) \
+            if "resource_work" in row.keys() else 0
+        block += 8 * mm if ("safeguarding_note" in row.keys()
+                            and (row["safeguarding_note"] or "").strip()) else 0
+        block = min(block, 150 * mm)
         if y - block < margin + 24 * mm:
             _doc_footer(c, w, margin, page_no)
             c.showPage()
@@ -596,6 +606,15 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
             c.drawString(x, y, "No summary written for this session.")
             y -= 5 * mm
 
+        # What actually happened in the room. Stored as "Check-in: ... / Input:
+        # ... / Activity: ...", and until now it lived only in the session
+        # record, so this sheet could not replace opening one.
+        happened = (row["what_happened"] or "").strip() if "what_happened" in row.keys() else ""
+        for part in [p.strip() for p in happened.split("\n\n") if p.strip()]:
+            y -= 1.5 * mm
+            c.setFillColor(INK)
+            y = _wrap(c, part, x, y, max_width, size=9.5)
+
         goal = (row["reflection_goal"] or "").strip()
         if goal:
             y -= 2 * mm
@@ -604,6 +623,28 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
             c.drawString(x, y, "Goal set:")
             c.setFillColor(INK)
             y = _wrap(c, goal, x + 18 * mm, y, max_width - 18 * mm, size=9.5)
+
+        # What the pupil ticked or wrote on their own sheets.
+        work = row["resource_work"] if "resource_work" in row.keys() else None
+        for name, lines in (work or []):
+            y -= 2 * mm
+            c.setFillColor(TEAL_DARK)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(x, y, name)
+            y -= 4.5 * mm
+            c.setFillColor(INK)
+            for line in lines:
+                y = _wrap(c, line, x + 5 * mm, y, max_width - 5 * mm, size=9)
+
+        # The flag alone told a reader something was raised but not what.
+        note = (row["safeguarding_note"] or "").strip() if "safeguarding_note" in row.keys() else ""
+        if note:
+            y -= 2 * mm
+            c.setFillColor(RED)
+            c.setFont("Helvetica-Bold", 9)
+            c.drawString(x, y, "Safeguarding:")
+            c.setFillColor(INK)
+            y = _wrap(c, note, x + 24 * mm, y, max_width - 24 * mm, size=9.5)
         y -= 7 * mm
 
     _doc_footer(c, w, margin, page_no)
@@ -1459,7 +1500,7 @@ def _card_height(card):
     return 42 * mm
 
 
-def _draw_cut_cards(c, x, y, max_width, cards):
+def _draw_cut_cards(c, x, y, max_width, cards, new_page=None, bottom=None):
     """Draws a card set as a grid of dashed boxes, two per row, so the sheet can
     be cut up. Each card carries its illustration, drawn from the same sprite the
     screen uses."""
@@ -1470,6 +1511,11 @@ def _draw_cut_cards(c, x, y, max_width, cards):
         col = i % 2
         if col == 0 and i > 0:
             y -= card_h + gap
+            # A twelve-card set is taller than a page, so the whole grid can
+            # never fit in one block however the estimate is calculated. Break
+            # between rows instead, and carry on at the top of the next page.
+            if new_page is not None and bottom is not None and y - card_h < bottom:
+                y = new_page()
         cx = x + col * (col_w + gap)
         c.setStrokeColor(BORDER)
         c.setLineWidth(0.9)
@@ -1508,8 +1554,11 @@ def _draw_cut_cards(c, x, y, max_width, cards):
 
 
 def _cards_height(cards):
+    # Must match _draw_cut_cards: 42mm per card and a 4mm gap between rows. It
+    # said 32mm, so a set of six was estimated 30mm shorter than it draws — the
+    # page-break check passed and the last row ran off the bottom of the sheet.
     rows = (len(cards) + 1) // 2
-    return rows * 32 * mm + (rows - 1) * 4 * mm
+    return rows * 42 * mm + (rows - 1) * 4 * mm
 
 
 # A step's illustration sits to the left of its text, so a sequence reads as a
@@ -1624,10 +1673,15 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _steps_height(steps)
         elif table:
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
+        elif checklist:
+            # An item can carry a checklist and a form — "How staff can help me"
+            # is a tick list with two free fields under it. The chain drew only
+            # one of them, so eleven of its thirteen lines never printed.
+            needed = 24 * mm + _checklist_height(checklist["items"])
+            if form:
+                needed += _form_height(form["fields"])
         elif form:
             needed = 24 * mm + _form_height(form["fields"])
-        elif checklist:
-            needed = 24 * mm + _checklist_height(checklist["items"])
         elif is_cycle:
             needed = 140 * mm
         elif is_scale:
@@ -1653,7 +1707,9 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
-            state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards)
+            state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
+                                         new_page=lambda: (new_page(), state["y"])[1],
+                                         bottom=margin)
             state["y"] -= 3 * mm
 
         elif steps:
@@ -1673,18 +1729,21 @@ def resource_pack_pdf(course_num, course_title, items):
             state["y"] -= 4 * mm
             state["y"] = _draw_grid_table(c, margin, state["y"], max_width, table["headers"], table["rows"])
 
+        elif checklist:
+            for para in body.split("\n"):
+                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+            state["y"] -= 4 * mm
+            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+            if form:
+                state["y"] -= 3 * mm
+                state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
+
         elif form:
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
             state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
             state["y"] -= 3 * mm
-
-        elif checklist:
-            for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-            state["y"] -= 4 * mm
-            state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
 
         elif is_cycle:
             steps = _parse_numbered_steps(body)
