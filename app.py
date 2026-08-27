@@ -303,18 +303,23 @@ def resource_work_for(conn, enrolment_id, week_id):
             label = form_fields[i] if i < len(form_fields) else "Answer"
             lines.append(f"{label}: {fields[key]}")
 
-        # Checklists: print what was ticked, not the word "yes".
+        # Checklists and pickable scale cards: print what was chosen, not the
+        # word "yes". Both store the same c<n> keys, so a scale card that isn't
+        # resolved here drops out of the report entirely.
         check_items = (item.get("checklist") or {}).get("items") or []
+        card_titles = [c.get("title") or "" for c in (item.get("cards") or [])]
+        labels = check_items or card_titles
         ticked = []
         for key in sorted(k for k in fields if k.startswith("c")):
             try:
                 i = int(key[1:])
             except ValueError:
                 continue
-            if i < len(check_items):
-                ticked.append(check_items[i])
+            if i < len(labels) and str(fields[key]).strip():
+                ticked.append(labels[i])
         if ticked:
-            lines.append("Ticked: " + ", ".join(ticked))
+            lines.append(("Chose: " if card_titles and not check_items else "Ticked: ")
+                         + ", ".join(ticked))
 
         if lines:
             out.append((name, lines))
@@ -459,6 +464,36 @@ def work_so_far(conn, enrolment_id, module_number, before_week_number):
                     "name": (item or {}).get("name") or slug.replace("-", " "),
                     "answers": readable})
     return out
+
+
+_COMPARE_LINE = re.compile(
+    r"\b(is that different|what's different|compare|beside|next to this week|"
+    r"has it changed|what has changed)\b", re.I)
+
+
+def move_earlier_to_comparison(week):
+    """Show the earlier answer at the line that asks for the comparison.
+
+    On the card it sits beside the blank sheet, which is where the pupil is
+    answering now. The mentor needs it one line later, when they ask whether
+    anything has changed.
+    """
+    for step, group in (week.get("resource_lines") or {}).items():
+        carried = [it for it in (group.get("lines") and
+                                 [r for ln in group["lines"] for r in ln["resources"]] or [])
+                   if it.get("earlier_values")]
+        carried += [it for it in (group.get("leftover") or []) if it.get("earlier_values")]
+        if not carried:
+            continue
+        target = next((ln for ln in group["lines"]
+                       if _COMPARE_LINE.search(ln.get("text") or "")), None)
+        if target is None:
+            continue
+        target["earlier"] = [{"week": it["earlier_week"], "name": it["name"],
+                              "answers": it["earlier_values"]} for it in carried]
+        for it in carried:
+            it.pop("earlier_values", None)
+    return week
 
 
 def save_resource_entries(conn, enrolment_id, week_id, request, user_id):
@@ -2497,6 +2532,7 @@ def session_form(request):
             for item in group:
                 item["_step"] = step
         week["resource_lines"] = assign_resources_to_lines(week, week["resource_items"])
+        move_earlier_to_comparison(week)
     prev_record = completed_records[-1] if completed_records else None
     # Last week's sheets were shown in full above this session's first step,
     # which pushed the instructions off the screen and replayed work already

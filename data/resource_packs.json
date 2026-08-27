@@ -81,7 +81,8 @@
             "text": "Past thinking.",
             "note": "Adult help, not self-management"
           }
-        ]
+        ],
+        "selectable": true
       },
       {
         "name": "Safe outlet ideas",
@@ -222,7 +223,8 @@
             "text": "About to lose control.",
             "note": "Leave, then talk later"
           }
-        ]
+        ],
+        "selectable": true
       },
       {
         "name": "Feeling word cards",
@@ -903,7 +905,8 @@
             "text": "I notice when I haven't.",
             "note": "Ask for help, not just willpower"
           }
-        ]
+        ],
+        "selectable": true
       },
       {
         "name": "Trigger map template",
@@ -3310,7 +3313,8 @@
             "text": "Past thinking clearly.",
             "note": "Get out of the situation"
           }
-        ]
+        ],
+        "selectable": true
       },
       {
         "name": "Trigger list",
@@ -4585,7 +4589,8 @@
             "text": "Body has taken over.",
             "note": "Not a moment for a new step"
           }
-        ]
+        ],
+        "selectable": true
       },
       {
         "name": "Avoidance ladder template",

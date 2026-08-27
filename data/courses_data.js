@@ -108,9 +108,9 @@ module.exports = [
       {
         "title": "My hot and cold plan",
         "objective": "Pupil has a personalised, written hot and cold plan and understands what happens next.",
-        "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Put both numbers side by side and ask what's different.\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
+        "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Ask: 'is that different from where you were in week one?'\n3. If the number hasn't moved, that's still worth discussing — progress isn't always a rating.",
         "input": "1. Ask: 'out of everything we've done, which bit actually worked for you?' Their sheets are above if they need reminding.\n2. Ask: 'if something happened tomorrow, would you use that one?' That answer goes in the hot and cold plan.",
-        "activity": "1. Ask: 'what are your triggers, and what's the first warning sign?' Pupil fills both into the hot and cold plan.\n2. Pupil writes in that strategy and their second choice.\n3. Ask: 'who would you go to if the anger started building?' Add that name to the plan.\n4. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is holding up.\n5. Share the finished plan with the class teacher or pastoral lead.",
+        "activity": "1. Ask: 'what are your triggers, and what's the first warning sign?' Pupil fills both into the hot and cold plan.\n2. Ask: 'and if that one doesn't work, what's the next thing you'd try?' Pupil writes both into the plan.\n3. Ask: 'who would you go to if the anger started building?' Add that name to the plan.\n4. Tell them what happens next: this is the last session together, and you'll have a follow-up chat in a few weeks to see how the plan is going.",
         "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
@@ -119,7 +119,7 @@ module.exports = [
           "My hot and cold plan",
           "Copy for class teacher or pastoral file"
         ],
-        "home": "Read through the one-page plan together and ask what part the pupil feels most confident about. Keep a copy somewhere visible at home.",
+        "home": "Read through the plan together and ask what part they feel most confident about. Keep a copy somewhere visible at home. You'll share it with the class teacher or pastoral lead after the write-up.",
         "timing": {
           "checkin": 5,
           "input": 10,
