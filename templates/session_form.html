@@ -398,7 +398,7 @@
   </div>
 </details>
 {% endif %}
-<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% elif week.resource_lines and week.resource_lines['input'].lines|selectattr('resources')|list %}Anything the sheet doesn&rsquo;t capture &mdash; how they answered, what surprised you&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
+<textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets the pupil off, and the first sign a teacher would notice&hellip;{% elif week.resource_lines and week.resource_lines['input'].lines|selectattr('resources')|list %}Anything the sheet doesn&rsquo;t capture &mdash; how the pupil answered, what surprised you&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
 </div>
@@ -464,14 +464,14 @@
    first option means an unanswered rating stays unanswered. #}
 {% if not week.staff_only %}
 <div class="field">
-<label for="mood_rating">How they seemed in today&rsquo;s session</label>
+<label for="mood_rating">How the pupil seemed in today&rsquo;s session</label>
 <select id="mood_rating" name="mood_rating">
 <option value="">Not rated</option>
 {% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.mood_rating|string == i|string %}selected{% endif %}>{{ MOOD_LABELS[i] }}</option>{% endfor %}
 </select>
 </div>
 <div class="field">
-<label for="engagement_rating">How well they took part today</label>
+<label for="engagement_rating">How well the pupil took part today</label>
 <select id="engagement_rating" name="engagement_rating">
 <option value="">Not rated</option>
 {% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.engagement_rating|string == i|string %}selected{% endif %}>{{ ENGAGEMENT_LABELS[i] }}</option>{% endfor %}

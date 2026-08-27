@@ -26,7 +26,7 @@
       <textarea id="mentor_notes" name="mentor_notes" rows="3">{{ record.mentor_notes or '' }}</textarea>
     </div>
     <div class="field">
-      <label for="mood_rating">How they seemed in that session</label>
+      <label for="mood_rating">How the pupil seemed in that session</label>
       <select id="mood_rating" name="mood_rating">
         <option value="">Not recorded</option>
         {% for n in [1,2,3,4,5] %}
@@ -35,7 +35,7 @@
       </select>
     </div>
     <div class="field">
-      <label for="engagement_rating">How well they took part</label>
+      <label for="engagement_rating">How well the pupil took part</label>
       <select id="engagement_rating" name="engagement_rating">
         <option value="">Not recorded</option>
         {% for n in [1,2,3,4,5] %}
