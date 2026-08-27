@@ -20,7 +20,7 @@
   <summary class="res-inline-summary">
     <span class="res-inline-head">
       <span class="res-inline-name">{{ item.name }}</span>
-      {% if fill_in %}<span class="res-tag">fill in here or print</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
+      {% if item.print_first %}<span class="res-tag res-tag--print">print and cut out first</span>{% elif fill_in %}<span class="res-tag">best printed &middot; or fill in here</span>{% else %}<span class="res-tag res-tag--screen">use on screen</span>{% endif %}
       <span class="res-toggle" aria-hidden="true"></span>
     </span>
   </summary>
@@ -273,6 +273,18 @@
 </div>
 
 {% if week.resources %}
+{# Cards that get sorted or dealt cannot be used on a screen. Saying so at the
+   top means a mentor finds out before the session, not during it. #}
+{% set to_print = week.resource_items|selectattr('print_first')|list %}
+{% if to_print %}
+<div class="print-first-note">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>
+  <span><strong>Print before this session:</strong>
+    {% for item in to_print %}{{ item.name }}{% if not loop.last %}, {% endif %}{% endfor %}.
+    {% if to_print|length == 1 %}This one gets{% else %}These get{% endif %} sorted by hand, so
+    {% if to_print|length == 1 %}it{% else %}they{% endif %} can&rsquo;t be used on screen.</span>
+</div>
+{% endif %}
 <div style="margin:0 0 14px 32px;">
 <p style="font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.04em;margin:0 0 6px;">{% if week.staff_only %}The plan you&rsquo;re filling in <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; the same sheet the pupil has been working towards</span>{% else %}Resources for this session <span style="font-weight:400;text-transform:none;letter-spacing:0;">&middot; each one appears at the step where you use it</span>{% endif %}</p>
 <div class="res-row">
@@ -636,6 +648,15 @@ for (var i = 0; i < group.length; i++) {
 .res-earlier-values{font-size:13px; color:var(--ink); min-width:0;}
 
 .res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
+/* A card that has to exist on paper. Amber, because it is something to do
+   before the session rather than a warning. */
+.res-tag--print{color:#412402; background:var(--amber-light);}
+.print-first-note{display:flex; align-items:flex-start; background:var(--amber-light);
+  border-left:4px solid var(--amber-dark); border-radius:0 10px 10px 0;
+  padding:10px 14px; margin:0 0 12px; font-size:13px; line-height:1.5; color:#412402;}
+.print-first-note svg{width:16px; height:16px; flex-shrink:0; margin:2px 10px 0 0;
+  color:var(--amber-dark);}
+
 .res-tag{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--amber-dark);background:var(--amber-light);border-radius:20px;padding:2px 7px;white-space:nowrap;}
 .res-tag--screen{color:var(--teal-darker);background:var(--teal-light);}
 /* The number and the field share one line: the input is a block by default, so
