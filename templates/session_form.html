@@ -462,7 +462,7 @@
 <div class="step-block">
 <div class="step-num">5</div>
 <div class="step-body">
-<h5 class="step-head">{% if week.staff_only %}Who does what{% else %}Home task{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
+<h5 class="step-head">{% if week.staff_only %}Who does what{% else %}For home &mdash; note for the parent or carer{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.home }} min{% endif %}</span></h5>
 {% if week.home_activity %}
 <div style="background:var(--teal-light);border-radius:10px;padding:9px 11px;margin-bottom:8px;">
 {% for line in week.home_activity.split('\n') %}{% if line.strip() %}<p class="step-line{% if not line.strip()[0].isdigit() %} step-line--plain{% endif %}" style="color:var(--teal-darker);font-size:14px;">{{ line }}</p>{% endif %}{% endfor %}
