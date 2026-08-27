@@ -3914,29 +3914,39 @@
         ]
       },
       {
-        "name": "First/then visual cue cards",
-        "body": "Show the two examples first, then fill in the empty rows with the pupil using something from their own timetable.",
-        "cards": [
+        "name": "First-time response card",
+        "slug": "first-then-visual-cue-cards",
+        "aliases": [
+          "First/then visual cue cards"
+        ],
+        "body": "What to do in the three seconds after you're asked to do something.",
+        "tone": "teal",
+        "steps": [
           {
-            "cat": "Worked example",
-            "title": "Finish this question",
-            "art": "art-first-then",
-            "text": "Then: a short break.",
-            "note": "First, then → break"
+            "title": "Hear it",
+            "art": "art-listen",
+            "text": "Stop what you're doing and look at them."
           },
           {
-            "cat": "Worked example",
-            "title": "Put the phone away",
-            "art": "art-first-then",
-            "text": "Then: carry on with the lesson.",
-            "note": "First, then → back to work"
+            "title": "Pause",
+            "art": "art-countdown",
+            "text": "Count to three in your head. Nobody else can tell you're doing it."
+          },
+          {
+            "title": "Choose",
+            "art": "art-fork",
+            "text": "Do it now, or ask one question. Those are the two that work."
+          },
+          {
+            "title": "Say it",
+            "art": "art-talk",
+            "text": "“Can I finish this line first?” gets further than “no”."
           }
         ],
-        "tone": "amber",
         "table": {
           "headers": [
-            "First, I will…",
-            "Then, I get…"
+            "An instruction I get a lot",
+            "What I'll do in the pause"
           ],
           "rows": [
             [
@@ -3952,20 +3962,14 @@
               ""
             ]
           ]
-        }
+        },
+        "note": "The pause is the whole skill. Everything else follows from it"
       },
       {
         "name": "Assertive disagreement script card",
-        "body": "A respectful way to disagree. Read the structure, look at the examples, then write two of your own for situations that come up for you.",
+        "body": "Say what you want, give the reason, offer an alternative. Look at the examples, then write two of your own.",
         "tone": "teal",
         "cards": [
-          {
-            "cat": "The structure",
-            "title": "I don't want to do X because Y. Can we agree to Z instead?",
-            "art": "art-assertive",
-            "text": "Say what you want, give the reason, offer an alternative.",
-            "note": "All three parts matter"
-          },
           {
             "cat": "Example",
             "title": "Being moved seats",

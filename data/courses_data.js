@@ -169,8 +169,8 @@ module.exports = [
         "objective": "Pupil can describe a personal view of school rules and identify which feel fairest and least fair.",
         "checkin": "1. Start with something outside school — what they did at the weekend, what they're into.\n2. Ask: 'how has your week been, one to five?'\n3. Keep this short and light. Rapport now makes the rule conversation possible later.",
         "input": "1. Ask 'what are rules actually for?' before offering any answer.\n2. Take whatever they say seriously, including 'to control us'.\n3. Offer the alternative: most rules exist to keep people safe or to keep things fair.\n4. Ask questions rather than lecture — a pupil who feels argued at stops talking.",
-        "activity": "1. Lay out the rule cards and ask: 'which of these make sense to you, and which feel unfair?'\n2. Pupil sorts them into two piles.\n3. Take two or three from each pile and ask: 'why did that one go there?'\n4. Don't argue with the unfair pile — the point is hearing their reasoning.",
-        "reflect": "1. Ask: 'which rule causes you the most trouble day to day?'\n2. Pupil picks one moment this week to notice when following a rule felt hard, and marks it on the tracking card.",
+        "activity": "1. Get out the rule card set and lay it out. Ask: 'which of these make sense to you, and which feel unfair?'\n2. Pupil sorts them into two piles.\n3. Take two or three from each pile and ask: 'why did that one go there?'\n4. Don't argue with the unfair pile — the point is hearing their reasoning.",
+        "reflect": "1. Ask: 'which of those causes you the most trouble day to day?'\n2. Pupil picks one moment this week to notice when following it felt hard, and marks it on the notice-and-note tracking card.",
         "lookfor": "If the pupil is very guarded, keep this session light, the goal is rapport, not a full audit of the pupil's view of authority.",
         "resources": [
           "Rule card set",
@@ -210,8 +210,8 @@ module.exports = [
         "title": "Listening and following instructions",
         "objective": "Pupil can follow a first-time instruction using an agreed strategy during the session.",
         "checkin": "1. Ask: 'did you spot a moment this week where you made a choice, and something happened because of it?'\n2. Ask: 'what did you choose, and what happened next?'\n3. If they can't think of one, use something that happened in the last hour.",
-        "input": "1. Show the first/then cue cards and read the two worked examples aloud.\n2. Explain the pause: an instruction doesn't need an answer in the first second.\n3. Agree what a pause looks like for them — counting to three, or saying 'give me a second'.\n4. Fill in the two blank rows together using something from their real timetable.",
-        "activity": "1. Give a small instruction using the first/then visual cue cards: first this, then that.\n2. Pupil practises the pause before answering — a count of two, not an instant reply.\n3. Build up: three or four instructions, getting slightly less appealing each time.\n4. Ask: 'which of those was hardest, and why?'",
+        "input": "1. Explain the three seconds: an instruction doesn't need an answer in the first second, and nobody can tell you're counting.\n2. Say why the pause works — most of what gets a pupil in trouble is said inside that first second.\n3. Say there are only two things that work after the pause: do it, or ask one question.\n4. Make clear that asking a question is not the same as refusing, and teachers hear it differently.",
+        "activity": "1. Get out the first-time response card.\n2. Pupil writes in two instructions they get a lot — the ones that annoy them most.\n3. Give the first of those now, the way a teacher would. Pupil counts to three, then does it or asks their one question.\n4. Do the second one. Then give two they haven't prepared for, so it isn't rehearsed.\n5. Ask: 'which of those was hardest, and what made it hard?'",
         "reflect": "1. Ask: 'what makes an instruction easier to follow, and what makes it harder?'\n2. Pupil picks one instruction they get regularly in class to practise the pause on this week.",
         "lookfor": "Some defiance is processing delay, not refusal, watch whether extra thinking time changes the response.",
         "resources": [
@@ -230,8 +230,8 @@ module.exports = [
         "title": "When I disagree",
         "objective": "Pupil can practise disagreeing assertively rather than defiantly.",
         "checkin": "1. Ask: 'how did the focus instruction go this week?'\n2. Ask: 'did you use the pause at all?'\n3. If they didn't, ask what happened instead — that's the material for today.",
-        "input": "1. Read out the defiant version: 'no, and I'm not explaining why'.\n2. Read the assertive version from the script card: what I want, the reason, an alternative.\n3. Ask: 'which of those two is more likely to get you what you actually want?'\n4. Say that they'll build their own version in a moment, using situations that actually come up.",
-        "activity": "1. Pupil writes two situations they'd want to push back on into the blank rows of the assertive disagreement script card.\n2. Role-play the first one: you give the instruction, they answer using the script.\n3. Do it twice more with different instructions, until it sounds like them and not a script.\n4. Ask: 'would you actually say that to a teacher?' If not, reword it together.",
+        "input": "1. Read out the defiant version: 'no, and I'm not explaining why'.\n2. Read the assertive version from the script card: what I want, the reason, an alternative.\n3. Ask: 'which of those two is more likely to get you what you actually want?'\n4. Say plainly that this is not about giving in — it is about being harder to say no to.",
+        "activity": "1. Get out the assertive disagreement script card.\n2. Pupil writes two situations they'd want to push back on into the blank rows, with what they could say instead.\n3. Role-play the first one: you give the instruction, they answer using their own words.\n4. Do the second, then one they haven't written, so it isn't just reading.\n5. Ask: 'would you actually say that to a teacher?' If not, reword it together.",
         "reflect": "1. Ask: 'which felt easier, your usual answer or the new one?'\n2. Pupil agrees one lesson this week to try the new version, even once.",
         "lookfor": "This is a genuinely hard skill under real stress, praise any attempt, even an imperfect one.",
         "resources": [
