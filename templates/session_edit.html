@@ -22,8 +22,13 @@
       <textarea id="reflection_goal" name="reflection_goal" rows="3">{{ record.reflection_goal or '' }}</textarea>
     </div>
     <div class="field">
-      <label for="mentor_notes">Notes for the next session</label>
+      <label for="mentor_notes">Summary for this session</label>
       <textarea id="mentor_notes" name="mentor_notes" rows="3">{{ record.mentor_notes or '' }}</textarea>
+      {# The same note as the session form: this box is not just a reminder for
+         next week, it is what the course summary gets written from. #}
+      <p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">Private to you.
+        These notes are what you write the course summary and next steps from in the final
+        session.</p>
     </div>
     <div class="field">
       <label for="mood_rating">How the pupil seemed in that session</label>

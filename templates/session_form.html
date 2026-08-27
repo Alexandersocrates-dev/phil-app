@@ -469,7 +469,7 @@
 <h5 class="step-head">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What happens next, who is doing it, and when you&rsquo;ll review&hellip;{% else %}What happened, what changed, and what to pick up next time&hellip;{% endif %}">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
-<p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course.{% else %}Private to you. Shown again at the start of Session {{ next_week_number + 1 }}, and collected into the summary sheet you can download at the end of the course.{% endif %}</p>
+<p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course, and what you take to the follow-up chat.{% else %}Private to you, and shown again at the start of Session {{ next_week_number + 1 }}. These notes are what you write the course summary and next steps from in the final session, so write for yourself in five weeks&rsquo; time.{% endif %}</p>
 </div>
 </div>
 
