@@ -400,18 +400,14 @@ def _readable_entries(item, values):
     return out
 
 
-# "their chosen way" in a bereavement session matched an earlier, looser
-# version of this and would have shown a pupil a wall of their own grief work
-# unasked. The phrases here have to be a mentor instruction to look back.
-_RECAP_WORDS = re.compile(
-    r"\b(recap|remind them|go back over|look back over|their two chosen|"
-    r"what they chose)\b", re.I)
-
-
-def _asks_for_a_recap(week):
-    """Does any step ask the mentor to recap earlier sessions?"""
-    return any(_RECAP_WORDS.search(week.get(field) or "")
-               for field in ("checkin", "input_content", "activity"))
+# The final session with the pupil is where the plan gets written from
+# everything that came before, so that is where their earlier sheets belong.
+# Keying this off wording was brittle: trimming the word "recap" out of the
+# session text silently switched the panel off.
+def _asks_for_a_recap(week, week_number, sessions_total):
+    """The last session with the pupil in the room."""
+    return bool(week_number) and week_number == (sessions_total or 6) - 1 \
+        and not week.get("staff_only")
 
 
 def work_so_far(conn, enrolment_id, module_number, before_week_number):
@@ -2490,7 +2486,7 @@ def session_form(request):
                                    week["resource_items"])
             # Only where a step actually asks for a recap. On every other page
             # it would be a wall of old answers nobody asked for.
-            if _asks_for_a_recap(week):
+            if _asks_for_a_recap(week, next_week_number, SESSIONS_PER_COURSE):
                 week["work_so_far"] = work_so_far(
                     conn2, enrolment["id"], enrolment["course_module_number"],
                     next_week_number)
