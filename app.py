@@ -488,8 +488,16 @@ def work_so_far(conn, enrolment_id, module_number, before_week_number):
            WHERE re.enrolment_id = ? AND w.week_number < ?
            ORDER BY w.week_number""",
         (enrolment_id, before_week_number)).fetchall()
-    if not rows:
-        return []
+    # Which sessions have actually been run. A session with nothing recorded was
+    # simply skipped in this list, so a mentor could not tell "nothing was
+    # written on the sheets" from "this panel is broken" — and the write-up asks
+    # where the pupil was at the start, which is session one.
+    done = [r["week_number"] for r in conn.execute(
+        """SELECT w.week_number FROM session_records r
+           JOIN weeks w ON w.id = r.week_id
+           WHERE r.enrolment_id = ? AND w.week_number < ?
+           ORDER BY w.week_number""",
+        (enrolment_id, before_week_number)).fetchall()]
 
     # slug -> the pack item, so a stored slug can be shown with its real name
     # and its tick labels resolved.
@@ -517,7 +525,14 @@ def work_so_far(conn, enrolment_id, module_number, before_week_number):
         out.append({"week": week_number,
                     "name": (item or {}).get("name") or slug.replace("-", " "),
                     "answers": readable})
-    return out
+    # A completed session with nothing on its sheets says so, rather than
+    # vanishing from the list.
+    have = {r["week"] for r in out}
+    for week_number in done:
+        if week_number not in have:
+            out.append({"week": week_number, "name": "", "answers": [],
+                        "nothing_recorded": True})
+    return sorted(out, key=lambda r: (r["week"], r["name"]))
 
 
 _COMPARE_LINE = re.compile(

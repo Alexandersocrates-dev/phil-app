@@ -371,8 +371,12 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
+      {% if row.nothing_recorded %}
+      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
+      {% else %}
       <span class="work-row-name">{{ row.name }}</span>
       <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -403,8 +407,12 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
+      {% if row.nothing_recorded %}
+      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
+      {% else %}
       <span class="work-row-name">{{ row.name }}</span>
       <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -617,6 +625,7 @@ for (var i = 0; i < group.length; i++) {
   border-top:1px solid var(--border);}
 .work-row-week{font-size:11.5px; font-weight:800; letter-spacing:.04em;
   text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
+.work-row-empty{font-size:13px; color:var(--muted); font-style:italic; min-width:0;}
 .work-row-name{font-size:12px; color:var(--muted); margin-right:8px;}
 .work-row-values{font-size:13px; color:var(--ink); min-width:0;}
 
