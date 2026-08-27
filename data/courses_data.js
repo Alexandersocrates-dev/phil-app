@@ -391,7 +391,7 @@ module.exports = [
       {
         "title": "My emotional toolkit",
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'is that different from where you were in week one?'\n3. Ask what they'd have said in week one about the same situation.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'is that different from where you were in week one?'\n3. Ask: 'what put you there today?' Then: 'would that same thing have put you somewhere worse in week one?'",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their earlier sheets are in this step if they need reminding.\n2. That answer goes at the top of their toolkit page.",
         "activity": "1. Get out the body map and the grounding technique cards from the earlier sessions.\n2. Ask: 'what are you like at your best, and what are you like at your worst?'\n3. Ask: 'what's the first sign that you're heading the wrong way?' The body map is there if it helps.\n4. Ask: 'which two grounding techniques would you actually use?'\n5. Now write all of that into the personal toolkit, and share it with the class teacher.",
         "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
@@ -508,7 +508,7 @@ module.exports = [
       {
         "title": "Sorting it out",
         "objective": "Pupil can use an 'I statement' and take part in a structured repair conversation.",
-        "checkin": "1. Ask: 'what did you decide about your own part in it last week?'\n2. Ask: 'what would help if the same situation came round again?'\n3. Write that answer down — it feeds into the plan in week five.",
+        "checkin": "1. Ask: 'what did you decide about your own part in it last week?'\n2. Ask: 'if that fall-out happened again tomorrow, what would help?'\n3. Write that answer down — it feeds into the plan in week five.",
         "input": "1. Take the fall-out they've been working on for the last two weeks.\n2. Say the blaming version out loud, the way it usually comes out: 'you always leave me out, you're such a liar'.\n3. Show the I statement card and say the same thing from it: 'I felt left out when I wasn't invited, and I need to know if I'm included next time.'\n4. Ask: 'which of those two is the other person more likely to listen to?'\n5. Say why it works: it's harder to argue with how someone felt than with an accusation.",
         "activity": "1. Pupil builds their own I statement about the fall-out: how they felt, what caused it, and what they want instead.\n2. Say it back to them the blaming way, then their way, so they hear the difference.\n3. Practise it twice more until it sounds like something they'd actually say.\n4. If both pupils agree, arrange a joint conversation with a second mentor present.",
         "reflect": "1. Ask: 'if this got sorted out properly, what would that look like?'\n2. Check it's something that could actually happen, not the other person being punished.",
@@ -1460,7 +1460,7 @@ module.exports = [
         "title": "Speaking up without blowing up",
         "objective": "Pupil can practise expressing frustration assertively rather than aggressively or by shutting down.",
         "checkin": "1. Ask: 'last week you were going to try STOP once for real — did you get the chance?'\n2. If they did, ask: 'which letter did you actually get to?'\n3. If they didn't, ask: 'what happened too fast?' Usually the trigger wasn't spotted.",
-        "input": "1. Read the passive, aggressive and assertive cards for the same situation, in that order.\n2. Ask: 'which of those three gets you what you actually want?'\n3. Say they'll build their own version in a moment.\n4. Warn them it sounds different out loud than it reads. That's why it gets said, not just read.",
+        "input": "1. Take one thing they get told to do and don't want to — being moved seats, say. Read the passive, aggressive and assertive cards for it, in that order.\n2. Ask: 'which of those three gets you what you actually want?'\n3. Say they'll build their own version in a moment.\n4. Warn them it sounds different out loud than it reads. That's why it gets said, not just read.",
         "activity": "1. Get out the assertive phrase bank.\n2. Say an aggressive line out loud: 'this is stupid, I'm not doing it'.\n3. Pupil finds an assertive version of the same thing, using the phrase bank.\n4. Role-play it: you give the instruction, they use their version.\n5. Do it twice more until it sounds like something they'd say in a real lesson.",
         "reflect": "1. Ask: 'which of those phrases felt most like you?'\n2. Pupil agrees to use it once at school this week.",
         "lookfor": "Some pupils confuse assertiveness with rudeness, reinforce that tone and body language matter as much as the words chosen.",
