@@ -249,12 +249,14 @@ module.exports = [
       {
         "title": "My behaviour agreement",
         "objective": "Pupil has a co-created behaviour agreement and knows how it will be reviewed.",
-        "checkin": "1. Look back at the friction baseline from week one.\n2. Ask what's different, if anything.\n3. No change is still an answer — ask what would need to be true for it to shift.",
+        "checkin": "1. Get out the rule card set and the notice-and-note tracking card from week one.\n2. Ask: 'are the same rules still in the unfair pile?'\n3. Ask: 'is the same one still hardest day to day?'\n4. No change is still an answer — ask what would need to be true for it to shift.",
         "input": "1. Ask: 'out of everything we've tried, which bit have you actually used?' Their sheets are above if they need reminding.\n2. That one goes into the agreement, because it's the one that works for them.",
         "activity": "1. Ask: 'what three or four things could you realistically agree to?'\n2. Ask: 'and what do you need from staff in return?' It's an agreement, not a list of demands.\n3. Ask: 'when should we look at this again?' Tell them the follow-up chat is when you'll check how it's held up.\n4. Now write all of that into the behaviour agreement, and read it back. If any line sounds like something they'd break by Tuesday, change it now.\n5. Share the finished agreement with the class teacher.",
         "reflect": "1. Ask: 'which part of that agreement are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agreements work best when the pupil has genuine input, not just staff-authored rules relabelled, protect the pupil's voice in the wording.",
         "resources": [
+          "Rule card set",
+          "Notice-and-note tracking card",
           "Behaviour agreement template"
         ],
         "home": "Read the agreement together and ask what support the pupil would like from you at home to help keep it.",
@@ -520,7 +522,7 @@ module.exports = [
       {
         "title": "My social goals plan",
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
-        "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask: 'would the other person say the same thing?'\n3. Keep both answers — they go into the plan later in this session.",
+        "checkin": "1. Ask: 'the fall-out you told me about in week one — where is that now?'\n2. Ask: 'would the other person say the same thing?'\n3. Keep both answers — they go into the plan later in this session.",
         "input": "1. Ask: 'if it happened again tomorrow, which would you use — the restorative questions, seeing it from their side, or an I statement?' Their sheets are above if they need reminding.\n2. That's the one that goes at the top of their plan.",
         "activity": "1. Ask: 'what's one thing you'd like to be different socially next term?'\n2. Ask: 'what would staff need to do to help that happen?'\n3. Ask: 'what's the first step, and when would you take it?'\n4. Now write all of that into the social goals plan, and set a review date.\n5. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing from these five weeks you're proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
