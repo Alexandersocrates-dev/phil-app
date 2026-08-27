@@ -31,7 +31,7 @@
   {% if item.earlier_values %}
   <div class="res-earlier">
     <span class="res-earlier-label">Recorded in session {{ item.earlier_week }}</span>
-    <span class="res-earlier-values">{{ item.earlier_values|join(' &middot; ') }}</span>
+    <span class="res-earlier-values">{{ item.earlier_values|join(' · ') }}</span>
   </div>
   {% endif %}
   {% if item.table %}
@@ -353,7 +353,7 @@
 {% for ln in week.resource_lines['checkin'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}
 {# What they answered last time, at the line that asks whether it has changed. #}
-{% for e in ln.earlier %}<div class="res-earlier"><span class="res-earlier-label">Session {{ e.week }}</span><span class="res-earlier-values">{{ e.answers|join(' &middot; ') }}</span></div>{% endfor %}{% endfor %}
+{% for e in ln.earlier %}<div class="res-earlier"><span class="res-earlier-label">Session {{ e.week }}</span><span class="res-earlier-values">{{ e.answers|join(' · ') }}</span></div>{% endfor %}{% endfor %}
 
 {% for item in week.resource_lines['checkin'].leftover %}{{ resource_card(item) }}{% endfor %}
 <textarea class="note-field" name="checkin_note" data-field="checkin_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}The behaviour that led to the referral, and what&rsquo;s different now&hellip;{% else %}Notes on how the pupil seemed today&hellip;{% endif %}">{{ draft.checkin_note if draft and draft.checkin_note else '' }}</textarea>
@@ -382,7 +382,7 @@
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
       <span class="work-row-name">{{ row.name }}</span>
-      <span class="work-row-values">{{ row.answers|join(' &middot; ') }}</span>
+      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
     </div>
     {% endfor %}
   </div>
