@@ -67,7 +67,7 @@ module.exports = [
         "objective": "Pupil can name and practise at least two ways to leave a situation before it becomes physical.",
         "checkin": "1. Look at the trigger tally together and count the marks.\n2. Ask: 'which trigger came up most, and did that surprise you?'\n3. If the tally is empty, fill it in from memory now rather than skipping it.",
         "input": "1. Show the getting out card and read the options together.\n2. Explain the point: leaving is not losing. It is the one thing that always works at the escalation phase.\n3. Say that a plan only works if staff know it, so their teacher will be told which one they picked.\n4. Say they'll practise it in a moment, because the first real use should not be the first attempt.",
-        "activity": "1. Pupil picks two ways out from the card that they would actually use.\n2. Pupil fills in where they go, who they tell, and what to do if that person isn't there.\n3. Role-play it: you play the teacher, they leave using their first choice.\n4. Do it again with you not noticing at first, so they've practised being ignored.\n5. Ask: 'which lesson would be hardest to do this in?' That is the one to tell the teacher about.",
+        "activity": "1. Pupil picks two ways out from the card that they would actually use. If one of them is their signal card, get it out now.\n2. Pupil fills in where they go, who they tell, and what to do if that person isn't there.\n3. Role-play it: you play the teacher, they leave using their first choice.\n4. Do it again with you not noticing at first, so they've practised being ignored.\n5. Ask: 'which lesson would be hardest to do this in?' That is the one to tell the teacher about.",
         "reflect": "1. Ask: 'would you actually walk out if it was building?'\n2. If the answer is no, ask what would have to be true for it to be a yes. That answer is the useful one.",
         "lookfor": "Strategies only work if rehearsed when calm, resist the urge to introduce them for the first time during an actual incident.",
         "resources": [
@@ -116,6 +116,7 @@ module.exports = [
           "Mood scale card",
           "Trigger list",
           "Body map handout",
+          "Calm-down strategy cards",
           "Getting out card",
           "My hot and cold plan",
           "How staff can help me"
@@ -520,7 +521,7 @@ module.exports = [
         "title": "My social goals plan",
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
         "checkin": "1. Look back at the week one baseline and ask what's different.\n2. Ask: 'would the other person say the same thing?'\n3. Keep both answers — they go into the plan later in this session.",
-        "input": "1. Ask: 'if it happened again tomorrow, which of the things we've practised would you use?' Their sheets are above if they need reminding.\n2. That's the one that goes at the top of their plan.",
+        "input": "1. Ask: 'if it happened again tomorrow, which would you use — the restorative questions, seeing it from their side, or an I statement?' Their sheets are above if they need reminding.\n2. That's the one that goes at the top of their plan.",
         "activity": "1. Ask: 'what's one thing you'd like to be different socially next term?'\n2. Pupil writes one or two goals into the plan — sitting with a particular group, joining a club.\n3. Ask: 'what would staff need to do to help that happen?' Add it to the plan.\n4. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing from these five weeks you're proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share relevant, appropriate context with the pastoral team so peer dynamics are monitored beyond the course.",
@@ -1472,7 +1473,7 @@ module.exports = [
         "objective": "Pupil has a personalised, written anger-management plan and understands what happens next.",
         "checkin": "1. Take a reading on the anger thermometer and put it beside the week one number.\n2. Ask: 'what would you have done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
         "input": "1. Ask: 'which of the things we've practised would you use tomorrow without being reminded?' Their sheets are above if they need reminding.\n2. That goes at the top of the plan and on the copy for the class teacher.",
-        "activity": "1. Ask: 'what are your triggers, and what's your first warning sign?' Pupil fills both into the anger-management plan.\n2. Pupil writes in the two strategies they'd actually use, and one phrase from the bank.\n3. Ask: 'who would you go to if it started building?' Add that name.\n4. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is working.\n5. Share the finished plan with the class teacher or pastoral lead.",
+        "activity": "1. Ask: 'what are your triggers, and what's your first warning sign?' Pupil fills both into the anger-management plan.\n2. Pupil writes in the two strategies they'd actually use, and one phrase from the bank.\n3. Ask: 'who would you go to if it started building?' Add that name.\n4. How can staff help me? Go through the list together and tick the ones that would actually make a difference.\n5. Tell them what happens next: the course ends here, and you'll have a follow-up chat in a few weeks to see how the plan is working.\n6. Share the finished plan with the class teacher or pastoral lead.",
         "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat (two to three weeks later) rather than ending support abruptly.",
         "resources": [
@@ -1757,7 +1758,6 @@ module.exports = [
         "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
           "Where am I now scale",
-          "Nicotine cycle diagram",
           "One-page vaping support plan",
           "Copy for pastoral file"
         ],
@@ -2420,7 +2420,7 @@ module.exports = [
         "title": "Coping with hard days",
         "objective": "Pupil can name at least one coping strategy for particularly difficult days, including anniversaries.",
         "checkin": "1. Ask: 'how did it go last week, expressing it your way?'\n2. Ask: 'has anything since been harder than you expected?'",
-        "input": "1. Explain that particular days bring grief back strongly, even long after things settle.\n2. Name them: birthdays, anniversaries, Christmas, Mother's or Father's Day, results day.\n3. Say why a plan helps — the day arrives whether or not you've thought about it.\n4. Say the toolkit gets built around a specific date if there's one coming up.",
+        "input": "1. Explain that particular days bring grief back strongly, even long after things settle.\n2. Name them: birthdays, anniversaries, Christmas, Mother's or Father's Day, results day.\n3. Say why a plan helps — the day arrives whether or not you've thought about it.\n4. Show the anniversary planning card, and say the toolkit gets built around a specific date if there's one coming up.",
         "activity": "1. Ask: 'who do you want to be near on a bad day?' Pupil writes them into the hard day toolkit.\n2. Ask: 'and what helps, even slightly?' Add those.\n3. Ask: 'what would you want school to do differently on a day like that?' Add it.\n4. Say clearly they're allowed to ask for a quieter day, and who to ask.",
         "reflect": "1. Ask: 'is there a date coming up you already know will be hard?'\n2. If there is, agree now what school should do around it.",
         "lookfor": "Hard days can also appear unexpectedly, triggered by something small (a smell, a song, a date on the calendar), reassure the pupil this is normal, not a sign the pupil isn't coping.",
@@ -2463,7 +2463,7 @@ module.exports = [
         "objective": "Pupil has a personalised support plan and knows what further help is available if needed.",
         "checkin": "1. Look back over the five weeks gently.\n2. Ask what's felt most useful, rather than what's improved.\n3. Let them say 'none of it' if that's true.",
         "input": "1. Ask: 'has any of this been useful?' Take whatever answer comes, including none of it.\n2. Say clearly that grief support often needs far longer than five weeks, and that's normal.\n3. Say you'll go through what support exists, and name a real person at school, before the end of today.\n4. Make sure they leave knowing this ending isn't the end of the support.",
-        "activity": "1. Ask: 'which of the things we've tried actually helped?' Pupil writes it into the support plan.\n2. Add any dates coming up that are likely to be hard.\n3. Add the name of the person at school they'd go to.\n4. Go through the support services card so they know what exists, without any expectation of using it.",
+        "activity": "1. Ask: 'which of the things we've tried actually helped?' Pupil writes it into the support plan.\n2. Add any dates coming up that are likely to be hard.\n3. Add the name of the person at school they'd go to.\n4. Go through the support services card so they know what exists, without any expectation of using it.\n5. Ask who should have the copy for the pastoral file, and check they're comfortable with that before it goes anywhere.",
         "reflect": "1. Ask: 'what's felt most helpful about this course?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
         "resources": [
@@ -2660,7 +2660,7 @@ module.exports = [
         "title": "What's changing",
         "objective": "Pupil can name the specific transition this course is supporting, at least two specific worries, and two things the pupil is looking forward to about it.",
         "checkin": "1. Ask how they're feeling about the move — excited, worried, or both.\n2. Both is the most common answer. Say so if they seem to think it's odd.\n3. Don't reassure yet. You need the worries named before you can address them.",
-        "input": "1. Name the specific move this course is about: primary to secondary, a mid-year move, or a new key stage.\n2. Ask: 'what do you already know about the new school, and where did you hear it?'\n3. Correct anything that's plainly rumour, gently — sibling stories can be years out of date.\n4. Introduce the worries and hopes chart, and say that both columns get filled in, not just the worries.",
+        "input": "1. Name the specific move this course is about: primary to secondary, a mid-year move, or a new key stage.\n2. Ask: 'what do you already know about the new school, and where did you hear it?'\n3. Correct anything that's plainly rumour, gently — sibling stories can be years out of date.\n4. Use the briefing card to say that feeling mixed about it — worried and looking forward at once — is normal.\n5. Introduce the worries and hopes chart, and say that both columns get filled in, not just the worries.",
         "activity": "1. Ask: 'what are you worried about with the move?' Pupil writes each one into the worries column.\n2. Ask: 'and what are you actually looking forward to?' Fill the hopes column too.\n3. Push for specifics — not 'everything', but getting lost, or lunch.\n4. Ask: 'which column filled up faster?'",
         "reflect": "1. Ask: 'which of those worries is the biggest?'\n2. Tell them that's the one you'll work on properly next week.",
         "lookfor": "Vague, general anxiety ('I just don't want to go') is common and can be hard to work with directly, gently help the pupil break it into specific, addressable worries over the five weeks.",
