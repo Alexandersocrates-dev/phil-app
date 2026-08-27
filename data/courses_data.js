@@ -305,7 +305,7 @@ module.exports = [
       {
         "title": "Naming my feelings",
         "objective": "Pupil can name at least five emotions beyond 'happy', 'sad' and 'angry'.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'what put you there?'\n3. Record the answer — this is the baseline you'll compare against in week five.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'what put you there?'\n3. Record the answer — this is the baseline you'll compare against in week five.",
         "input": "1. Show the emotions wheel.\n2. Ask them to find a word they'd never normally use.\n3. Explain why the vocabulary matters: 'angry' covers ten different feelings, and they need different responses.",
         "activity": "1. Lay out the emotion word cards and ask: 'which of these have you felt in the last week?'\n2. Pupil sorts the ones they pick into calm, unsettled or overwhelmed.\n3. Take two or three and ask: 'when was the last time you felt that one?'\n4. Note the words they use in the box below — these are the words to reuse in later sessions.",
         "reflect": "1. Ask: 'which of those words is the hardest one to say out loud?'\n2. Pupil picks four words to use this week, even if only in their own head.",
@@ -327,7 +327,7 @@ module.exports = [
       {
         "title": "My body and my feelings",
         "objective": "Pupil can identify physical sensations linked to at least two emotions.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'did that word change at any point since we last met?'",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'did that word change at any point since we last met?'",
         "input": "1. Explain that the body reacts before the mind catches up.\n2. Ask: 'have you ever jumped before you knew why?' The jolt before you realise you nearly fell.\n3. Say why this matters: the body is the early warning, and it's noticeable if you know what to look for.",
         "activity": "1. Ask: 'when you feel worried or upset, where do you feel it in your body?' Pupil ticks those areas on the body map.\n2. Ask: 'what does it feel like there — tight, fidgety, heavy?' Note their words in the box below.\n3. Now pick a different feeling from last week's cards and ask: 'where do you feel that one?' Pupil ticks those areas too.\n4. Ask: 'is it the same place for both, or does it move?'",
         "reflect": "1. Ask: 'do you know the first thing your body does when you start to feel worried?'\n2. If they know it, pupil watches for that one this week. If they don't, they look out for whatever comes first and tell you next session.",
@@ -348,7 +348,7 @@ module.exports = [
       {
         "title": "Calming strategies",
         "objective": "Pupil can try two grounding or calming techniques.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Ask: 'did you notice any of the body signals we found last week?'\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'did you notice any of the body signals we found last week?'\n3. If not, ask what their body does when they're nervous — most pupils can answer that.",
         "input": "1. Show the grounding technique cards and read through them.\n2. Explain what grounding does: it gives the mind something ordinary to hold on to.\n3. Ask: 'have you ever done anything like that on purpose?' Say you'll try three in a moment and score each one.\n4. Say plainly that some will suit them and some won't, and that's the point of trying all three.",
         "activity": "1. Do 5-4-3-2-1 together: five things you can see, four you can hear, three you can feel.\n2. Then box breathing: in for four, hold four, out four, hold four. Two rounds.\n3. Then grounding through touch — hold something with a texture and describe it out loud.\n4. After each one, ask for a rating out of 10. Write the numbers down; they choose from these next week.\n5. Ask: 'which of those would you use in a lesson without anyone noticing?' That is the check — a technique they'd only use alone is not yet usable.",
         "reflect": "1. Ask: 'which of those three would you actually use if you were upset?'\n2. Pupil agrees to try it once this week at a calm moment, so it's practised before it's needed.",
@@ -369,7 +369,7 @@ module.exports = [
       {
         "title": "Riding the wave",
         "objective": "Pupil understands emotions rise and fall, and can describe a personal 'wave'.",
-        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?'\n2. Get out the grounding technique cards and ask: 'which one did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Get out the grounding technique cards and ask: 'which one did you try, and how did it go?'\n3. If neither got used, ask when the last strong feeling was — you'll use it in the activity.",
         "input": "1. Explain that a strong feeling peaks and falls on its own if nothing feeds it.\n2. Ask: 'does a strong feeling last for ever, or does it pass?' Use a wave, not a switch: it builds, breaks and settles.\n3. Explain what feeds it — replaying it, arguing back, staying in the same place.\n4. The skill is riding it out, not switching it off.",
         "activity": "1. Get out the wave diagram template.\n2. Ask: 'can you think of a time recently when a feeling got really strong?'\n3. Pupil rates how strong it was before, during and after, on the wave diagram.\n4. Ask: 'where on that wave could you have used one of the grounding techniques?'\n5. Make the point that the feeling came down on its own either way — the strategy makes it quicker, not magic.",
         "reflect": "1. Ask: 'when is a feeling most likely to get strong for you this week?'\n2. Pupil names that one moment as the place to try waiting it out instead of reacting.",
@@ -391,7 +391,7 @@ module.exports = [
       {
         "title": "My emotional toolkit",
         "objective": "Pupil has a personalised emotional toolkit shared with key staff.",
-        "checkin": "1. Fill in the 'How am I right now?' chart again — calm, unsettled, overwhelmed, or shut down — and set it beside the week one one.\n2. Ask what they'd have said in week one about the same situation.",
+        "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Their week one answer is shown underneath. Ask: 'is that different from where you were then?'\n3. Ask what they'd have said in week one about the same situation.",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their sheets are above if they need reminding.\n2. That answer goes at the top of their toolkit page.",
         "activity": "1. Get out the body map and the grounding technique cards from the earlier sessions.\n2. Ask: 'what are you like at your best, and what are you like at your worst?'\n3. Ask: 'what's the first sign that you're heading the wrong way?' The body map is there if it helps.\n4. Ask: 'which two grounding techniques would you actually use?'\n5. Now write all of that into the personal toolkit, and share it with the class teacher.",
         "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",

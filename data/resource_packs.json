@@ -4059,36 +4059,40 @@
       },
       {
         "name": "How am I right now? chart",
-        "body": "Four ways of feeling, and something to try for each. There's no right one to be in.",
-        "table": {
-          "headers": [
-            "How I am",
-            "What it can look like",
-            "Something to try"
-          ],
-          "rows": [
-            [
-              "Calm",
-              "Settled, able to think, ready to get on with things.",
-              "Nothing needs fixing. Notice what helped you get here."
-            ],
-            [
-              "Unsettled",
-              "Fidgety, silly, nervous, excited, hard to settle.",
-              "Move: a walk, a errand, a drink of water. Then come back to it."
-            ],
-            [
-              "Overwhelmed",
-              "Too much at once. Angry, tearful, want to get out.",
-              "Somewhere quieter, slower breathing, and tell an adult where you are."
-            ],
-            [
-              "Shut down",
-              "Flat, tired, switched off, nothing feels worth it.",
-              "Something small and doable. A short chat, fresh air, one easy task."
-            ]
-          ]
-        },
+        "slug": "how-am-i-right-now-chart",
+        "body": "Pick the one closest to today. There's no right one to be in.",
+        "selectable": true,
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "How I am",
+            "title": "Calm",
+            "art": "art-level",
+            "text": "Settled, able to think, ready to get on with things.",
+            "note": "Notice what helped you get here"
+          },
+          {
+            "cat": "How I am",
+            "title": "Unsettled",
+            "art": "art-jagged",
+            "text": "Fidgety, silly, nervous, excited, hard to settle.",
+            "note": "Move: a walk, an errand, a drink of water"
+          },
+          {
+            "cat": "How I am",
+            "title": "Overwhelmed",
+            "art": "art-overload",
+            "text": "Too much at once. Angry, tearful, want to get out.",
+            "note": "Somewhere quieter, slower breathing, tell an adult"
+          },
+          {
+            "cat": "How I am",
+            "title": "Shut down",
+            "art": "art-tired",
+            "text": "Flat, tired, switched off, nothing feels worth it.",
+            "note": "Something small and doable. Fresh air, one easy task"
+          }
+        ],
         "source": "Plain-language states used in UK pastoral practice. Not based on any branded self-regulation framework."
       },
       {
