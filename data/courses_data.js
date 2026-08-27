@@ -115,6 +115,7 @@ module.exports = [
         "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
           "Mood scale card",
+          "Anger cycle diagram",
           "My hot and cold plan",
           "Copy for class teacher or pastoral file"
         ],
@@ -1755,6 +1756,7 @@ module.exports = [
         "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
           "Where am I now scale",
+          "Nicotine cycle diagram",
           "One-page vaping support plan",
           "Copy for pastoral file"
         ],

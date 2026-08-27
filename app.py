@@ -385,14 +385,83 @@ def _readable_entries(item, values):
     the mentor needs is which row was ticked.
     """
     rows = (item.get("checklist") or {}).get("items") or []
+    # A card set stores the same c<n> keys, so resolve those to the card's title
+    # rather than printing the stored "yes".
+    cards = [c.get("title") or "" for c in (item.get("cards") or [])]
+    labels = rows or cards
     out = []
     for key, value in sorted(values.items()):
-        if key.startswith("c") and key[1:].isdigit() and rows:
+        if key.startswith("c") and key[1:].isdigit() and labels:
             index = int(key[1:])
-            if index < len(rows) and str(value).lower() in ("yes", "on", "true", "1"):
-                out.append(rows[index])
+            if index < len(labels) and str(value).lower() in ("yes", "on", "true", "1"):
+                out.append(labels[index])
         elif str(value).strip():
             out.append(str(value).strip())
+    return out
+
+
+# "their chosen way" in a bereavement session matched an earlier, looser
+# version of this and would have shown a pupil a wall of their own grief work
+# unasked. The phrases here have to be a mentor instruction to look back.
+_RECAP_WORDS = re.compile(
+    r"\b(recap|remind them|go back over|look back over|their two chosen|"
+    r"what they chose)\b", re.I)
+
+
+def _asks_for_a_recap(week):
+    """Does any step ask the mentor to recap earlier sessions?"""
+    return any(_RECAP_WORDS.search(week.get(field) or "")
+               for field in ("checkin", "input_content", "activity"))
+
+
+def work_so_far(conn, enrolment_id, module_number, before_week_number):
+    """Everything the pupil has written on their sheets in earlier sessions.
+
+    The final session opens by recapping the whole course, and several modules
+    ask the mentor to remind the pupil what they chose in week three. Without
+    this the mentor is recapping from memory, or the pupil is asked to remember
+    a decision they made a month ago.
+
+    Returns [{"week": 3, "name": "Calm-down strategy cards", "answers": [...]}]
+    in session order. The key is "answers", not "values": dict.values is a
+    builtin, so a template reading row.values gets the method, not the data.
+    """
+    rows = conn.execute(
+        """SELECT re.resource_slug, re.field_key, re.value, w.week_number
+           FROM resource_entries re
+           JOIN weeks w ON w.id = re.week_id
+           WHERE re.enrolment_id = ? AND w.week_number < ?
+           ORDER BY w.week_number""",
+        (enrolment_id, before_week_number)).fetchall()
+    if not rows:
+        return []
+
+    # slug -> the pack item, so a stored slug can be shown with its real name
+    # and its tick labels resolved.
+    packs = _load_resource_packs()
+    entry = packs.get(str(module_number).zfill(2)) or {}
+    items = entry["items"] if isinstance(entry, dict) and "items" in entry else entry
+    by_slug = {resource_slug(i["name"]): i for i in (items or [])}
+    for i in (items or []):
+        for alias in (i.get("aliases") or []):
+            by_slug.setdefault(resource_slug(alias), i)
+
+    grouped = {}
+    for r in rows:
+        if not (r["value"] or "").strip():
+            continue
+        grouped.setdefault((r["week_number"], r["resource_slug"]), {})[
+            r["field_key"]] = r["value"]
+
+    out = []
+    for (week_number, slug), values in sorted(grouped.items()):
+        item = by_slug.get(slug)
+        readable = _readable_entries(item or {}, values)
+        if not readable:
+            continue
+        out.append({"week": week_number,
+                    "name": (item or {}).get("name") or slug.replace("-", " "),
+                    "answers": readable})
     return out
 
 
@@ -2419,6 +2488,12 @@ def session_form(request):
         try:
             attach_earlier_entries(conn2, enrolment["id"], week["id"],
                                    week["resource_items"])
+            # Only where a step actually asks for a recap. On every other page
+            # it would be a wall of old answers nobody asked for.
+            if _asks_for_a_recap(week):
+                week["work_so_far"] = work_so_far(
+                    conn2, enrolment["id"], enrolment["course_module_number"],
+                    next_week_number)
         finally:
             conn2.close()
         week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])

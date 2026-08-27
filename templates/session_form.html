@@ -349,6 +349,26 @@
 {% for ln in week.resource_lines['input'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
+{# The final session opens by recapping the whole course, and asks the mentor to
+   remind the pupil what they chose weeks ago. Without this the recap is done
+   from memory, or the pupil is asked to remember a decision from a month ago. #}
+{% if week.work_so_far %}
+<details class="work-so-far">
+  <summary class="work-so-far-summary"><span class="work-so-far-head">
+    <span>What {{ pupil.forename }} has written so far</span>
+    <span class="res-toggle" aria-hidden="true"></span>
+  </span></summary>
+  <div class="work-so-far-body">
+    {% for row in week.work_so_far %}
+    <div class="work-row">
+      <span class="work-row-week">Session {{ row.week }}</span>
+      <span class="work-row-name">{{ row.name }}</span>
+      <span class="work-row-values">{{ row.answers|join(' &middot; ') }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</details>
+{% endif %}
 <textarea class="note-field" name="input_note" data-field="input_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What sets them off, and the first sign a teacher would notice&hellip;{% elif week.resource_lines and week.resource_lines['input'].lines|selectattr('resources')|list %}Anything the sheet doesn&rsquo;t capture &mdash; how they answered, what surprised you&hellip;{% else %}Notes on the pupil&rsquo;s thoughts&hellip;{% endif %}">{{ draft.input_note if draft and draft.input_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 </div>
@@ -534,6 +554,21 @@ timers[field] = setTimeout(function(){ autosaveField(field, el.value, hintEl); }
 @media print{ .res-toggle{display:none;} }
 /* The earlier answer sits above the blank sheet, so a comparison can be made
    without leaving the page. */
+/* Folded by default: it's a reference for the recap, not the session. */
+.work-so-far{border:1px solid var(--border); border-radius:10px; margin:0 0 10px;
+  background:#FCFBF7;}
+.work-so-far-summary{padding:9px 12px; list-style:none;}
+.work-so-far-summary::-webkit-details-marker{display:none;}
+.work-so-far-head{display:flex; align-items:center; justify-content:space-between;
+  font-size:12px; font-weight:700; color:var(--muted);}
+.work-so-far-body{padding:0 12px 10px;}
+.work-row{display:flex; flex-wrap:wrap; align-items:baseline; padding:5px 0;
+  border-top:1px solid var(--border);}
+.work-row-week{font-size:11.5px; font-weight:800; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
+.work-row-name{font-size:12px; color:var(--muted); margin-right:8px;}
+.work-row-values{font-size:13px; color:var(--ink); min-width:0;}
+
 .res-earlier{display:flex; align-items:baseline; flex-wrap:wrap; margin:0 0 8px;
   padding:6px 10px; background:#F3F2EC; border-radius:8px;}
 .res-earlier-label{font-size:11.5px; font-weight:800; letter-spacing:.05em;
