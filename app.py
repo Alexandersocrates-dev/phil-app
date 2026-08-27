@@ -2414,7 +2414,13 @@ def session_form(request):
         week["resource_items"] = resource_items_for(
             enrolment["course_module_number"], week["resources"])
         attach_figures(week["resource_items"])
-        attach_earlier_entries(conn, enrolment["id"], week["id"], week["resource_items"])
+        # The connection above is already closed by this point, so open one.
+        conn2 = db.get_conn()
+        try:
+            attach_earlier_entries(conn2, enrolment["id"], week["id"],
+                                   week["resource_items"])
+        finally:
+            conn2.close()
         week["resource_steps"] = assign_resources_to_steps(week, week["resource_items"])
         for step, group in week["resource_steps"].items():
             for item in group:
