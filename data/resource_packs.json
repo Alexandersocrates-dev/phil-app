@@ -4282,7 +4282,7 @@
     "items": [
       {
         "name": "Restorative question prompt card",
-        "body": "Asked of everyone involved, not just one pupil. One at a time.",
+        "body": "The four questions a restorative conversation uses, asked here of one pupil about their own part. One at a time. You're collecting their account, not testing it.",
         "tone": "teal",
         "cards": [
           {
@@ -4403,6 +4403,41 @@
             "art": "art-share",
             "text": "“I felt angry when my things were taken, and I need you to ask first.”",
             "note": ""
+          }
+        ]
+      },
+      {
+        "name": "Joint conversation briefing note",
+        "body": "For you, not the pupil. A joint conversation is the school's process, not part of the mentoring session. Read this before you say anything to the pupil about one.",
+        "tone": "teal",
+        "cards": [
+          {
+            "cat": "Who runs it",
+            "title": "Not you",
+            "art": "art-person-pin",
+            "text": "Your pastoral lead or DSL arranges and chairs it. You prepare your pupil, and you may sit with them.",
+            "note": "Ask, don't arrange"
+          },
+          {
+            "cat": "When not to",
+            "title": "Where one has power over the other",
+            "art": "art-shield",
+            "text": "Repeated targeting, or an imbalance between them, makes a joint meeting a place where the harm can happen again.",
+            "note": "Take it to the DSL instead"
+          },
+          {
+            "cat": "Consent",
+            "title": "A yes under pressure is not a yes",
+            "art": "art-stop",
+            "text": "Ask privately, more than once, on different days. Saying no has to cost them nothing.",
+            "note": "Never pass on a request from the other pupil"
+          },
+          {
+            "cat": "If it goes ahead",
+            "title": "Both prepared separately",
+            "art": "art-repair",
+            "text": "Each pupil is prepared by a different adult before anyone sits down together.",
+            "note": "Rehearsal on its own is a complete session"
           }
         ]
       },

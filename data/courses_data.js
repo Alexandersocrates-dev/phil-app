@@ -447,20 +447,20 @@ module.exports = [
     "weeks": [
       {
         "title": "What's going on between us",
-        "objective": "Pupil can describe a recent conflict from a personal perspective without assigning blame to start.",
-        "checkin": "1. Start with something unrelated to the conflict — what they're into, how the week went.\n2. Say plainly that today isn't about deciding who was in the wrong.\n3. A pupil who thinks they're on trial will give you nothing useful.",
-        "input": "1. Show the restorative question prompt card and read the four questions aloud.\n2. Ask: 'is it fair that everyone involved gets asked the same four questions?'\n3. Explain that you'll work through them one at a time, with room to think between each.\n4. Say you won't be correcting their version — you're collecting it, not testing it.",
-        "activity": "1. Ask: 'can you tell me about a fall-out you've had recently?'\n2. Work through the four restorative questions on the card, one at a time.\n3. Leave a silence after each — the first answer is rarely the full one.\n4. Note what they say in the box below, in their words, without taking sides.",
+        "objective": "Pupil can describe a conflict from their own perspective, real or made up, without starting from blame.",
+        "checkin": "1. Start with something unrelated — what they're into, how the week went.\n2. Say plainly that today isn't about deciding who was in the wrong.\n3. A pupil who thinks they're on trial will give you nothing useful.",
+        "input": "1. Ask: 'is there a fall-out with someone that's still on your mind?' Take whatever comes back, including 'not really'.\n2. If nothing comes, use something smaller — a group chat, someone who went quiet on them — or a made-up one. Either works today; it's the structure they're learning.\n3. Show the restorative question prompt card and read the four questions aloud.\n4. Ask: 'does it seem fair that everyone involved gets asked these same four questions?' Today you're doing their part of it.\n5. Say you'll take them one at a time with room to think, and you won't be correcting their version — you're collecting it, not testing it.",
+        "activity": "1. Take the situation from the input and work through the four questions on the card, one at a time.\n2. Leave a silence after each — the first answer is rarely the full one.\n3. Note what they say in the box below, in their words, without taking sides.",
         "reflect": "1. Ask: 'if the other person could understand one thing about your side, what would it be?'\n2. Tell them to hold on to that — you'll come back to it next week.",
-        "lookfor": "Keep this session focused on the pupil's own experience, perspective-taking on the other party comes later, so don't rush it.",
+        "lookfor": "Keep this session focused on the pupil's own experience — perspective-taking on the other party comes later, so don't rush it. A made-up fall-out does the job as well as a real one; the structure is what's being learnt, and a pupil with nothing recent is not a session without content.",
         "resources": [
           "Restorative question prompt card"
         ],
         "home": "Ask what happened using 'what happened, and how did that feel?' rather than 'whose fault was it?'",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 12,
+          "activity": 18,
           "reflect": 5,
           "home": 5
         }
@@ -507,14 +507,15 @@ module.exports = [
       },
       {
         "title": "Sorting it out",
-        "objective": "Pupil can use an 'I statement' and take part in a structured repair conversation.",
+        "objective": "Pupil can build an 'I statement' about a real fall-out and rehearse it until they would say it.",
         "checkin": "1. Ask: 'what did you decide about your own part in it last week?'\n2. Ask: 'if that fall-out happened again tomorrow, what would help?'\n3. Write that answer down — it feeds into the plan in week five.",
         "input": "1. Take the fall-out they've been working on for the last two weeks.\n2. Say the blaming version out loud, the way it usually comes out: 'you always leave me out, you're such a liar'.\n3. Show the I statement card and say the same thing from it: 'I felt left out when I wasn't invited, and I need to know if I'm included next time.'\n4. Ask: 'which of those two is the other person more likely to listen to?'\n5. Say why it works: it's harder to argue with how someone felt than with an accusation.",
-        "activity": "1. Pupil builds their own I statement about the fall-out: how they felt, what caused it, and what they want instead.\n2. Say it back to them the blaming way, then their way, so they hear the difference.\n3. Practise it twice more until it sounds like something they'd actually say.\n4. If both pupils agree, arrange a joint conversation with a second mentor present.",
+        "activity": "1. Pupil builds their own I statement about the fall-out: how they felt, what caused it, and what they want instead.\n2. Say it back to them the blaming way, then their way, so they hear the difference.\n3. Practise it twice more until it sounds like something they'd actually say.\n4. Don't arrange a joint conversation yourself, and don't ask the other pupil anything.\n5. If your pupil wants one, ask what they'd want out of it, then take it to your pastoral lead or DSL — read the joint conversation briefing note first.",
         "reflect": "1. Ask: 'if this got sorted out properly, what would that look like?'\n2. Check it's something that could actually happen, not the other person being punished.",
-        "lookfor": "A joint conversation should only happen if genuinely appropriate and consensual, this session can be adapted to rehearsal only.",
+        "lookfor": "Rehearsal is the whole session — it is not a lesser version of it. Any joint conversation is arranged by the pastoral lead or DSL, never by the mentor, and never where there has been repeated targeting or an imbalance between the two pupils.",
         "resources": [
-          "I statement card"
+          "I statement card",
+          "Joint conversation briefing note"
         ],
         "home": "Practise one of these sentences together for something small at home — 'I felt annoyed when the telly went off, and I'd like a warning next time' — so it feels familiar.",
         "timing": {
@@ -1698,7 +1699,7 @@ module.exports = [
         "title": "My triggers and social pressure",
         "objective": "Pupil can name at least two personal triggers for vaping, including social pressure situations.",
         "checkin": "1. Ask: 'did anything we talked about last week come back to you during the week?'\n2. Ask: 'what was happening at the time?'\n3. No pressure to have noticed anything — week one may just have been information.",
-        "input": "1. Explain that triggers are often social as much as physical: being offered one, fitting in.\n2. Ask: 'when in the day would you most want one?' Boredom, stress, or simply habit at a particular time.\n3. Say why naming them matters — you can plan for a named trigger, not a vague urge.\n4. Explain the ranking you'll use: hardest means hardest to say no to, not most frequent.",
+        "input": "1. Explain that triggers are often social as much as physical: being offered one, fitting in.\n2. Ask: 'when in the day would you most want one?' Boredom, stress, or simply habit at a particular time.\n3. Get out the trigger difficulty ranking card and read the three kinds together: social, emotional, habit.\n4. Say why naming them matters — you can plan for a named trigger, not a vague urge.\n5. Explain the ranking you'll use: hardest means hardest to say no to, not most frequent.",
         "activity": "1. Ask: 'who are you usually with, and where are you, when it happens?' Pupil fills the trigger map.\n2. Ask: 'and when — break, after school, weekends?' Add those.\n3. Pupil ranks each one for how hard it would be to say no.\n4. Ask about the hardest one: 'what makes that one so difficult?'",
         "reflect": "1. Ask: 'which of those was hardest to say out loud?'\n2. Pupil agrees to notice one trigger this week — just notice it, not resist it.",
         "lookfor": "Peer pressure is often the hardest trigger to discuss honestly, pupils may minimise how much friendship groups influence use. Normalise this rather than challenging it directly.",
@@ -2266,7 +2267,7 @@ module.exports = [
         "title": "My triggers",
         "objective": "Pupil can name at least two specific school environments or situations that are hardest for the pupil sensorially.",
         "checkin": "1. Ask: 'what happened in the sensory moment you noticed?'\n2. Ask: 'where were you, and what time was it?'\n3. Place matters more than feeling here — you're building a map.",
-        "input": "1. Explain that some places stack several sensory demands at once.\n2. Ask: 'which is harder, the lesson or the five minutes before it?'\n3. Name the usual ones: corridors between lessons, assembly, the lunch hall, PE changing rooms.\n4. Say the gaps between lessons often matter more than the lessons themselves.",
+        "input": "1. Explain that some places stack several sensory demands at once.\n2. Ask: 'which is harder, the lesson or the five minutes before it?'\n3. Get out the difficult environments card and go through them together: corridors, assembly, the lunch hall, changing rooms.\n4. Say the gaps between lessons often matter more than the lessons themselves.",
         "activity": "1. Ask: 'walk me through your school day, from the gate.' Pupil fills in the school day sensory timeline.\n2. Pupil marks the points that are hardest.\n3. Ask about each one: 'what exactly is it — the noise, the light, the people?'\n4. Don't skip the corridors and the queues — they're usually worse than the lessons.",
         "reflect": "1. Ask: 'which of those was hardest to say was difficult?'\n2. Say plainly there's no judgement in naming any of it.",
         "lookfor": "Pupils sometimes mask sensory distress well in the moment and only show the effects later (exhaustion, meltdown at home), take the timeline seriously even if the pupil seems fine in session.",
@@ -2711,7 +2712,7 @@ module.exports = [
         "title": "Making friends",
         "objective": "Pupil can rehearse at least one practical way to start a conversation or join a group in a new setting.",
         "checkin": "1. Ask: 'how did preparing the practical thing go?'\n2. Ask: 'did it make the move feel any closer or easier?'",
-        "input": "1. Say that nobody arrives with friends already made, and everyone is watching everyone else.\n2. Ask: 'how many people do you reckon arrive already knowing everyone?' Nobody does, and everyone is watching everyone else.\n3. Add the low-pressure routes in: sitting near others at lunch, joining a club in the first fortnight.\n4. Set the expectation honestly — the first weeks are about acquaintances, not best friends.",
+        "input": "1. Say that nobody arrives with friends already made, and everyone is watching everyone else.\n2. Ask: 'how many people do you reckon arrive already knowing everyone?' Nobody does, and everyone is watching everyone else.\n3. Add the low-pressure routes in: sitting near others at lunch, joining a club in the first fortnight.\n4. Get out the joining a club or group ideas card — a shared activity gives you a reason to talk, which is easier than talking for its own sake.\n5. Set the expectation honestly — the first weeks are about acquaintances, not best friends.",
         "activity": "1. Get out the starting a conversation prompt cards.\n2. Pupil picks two openers from the prompt cards that they'd actually say.\n3. Role-play it: you're a new classmate, they start the conversation.\n4. Do it once where you reply well, once where you're short with them.\n5. Ask: 'what would you do if they didn't say much back?'",
         "reflect": "1. Ask: 'which of those felt least strange to say?'\n2. Pupil agrees to start one small conversation in the first couple of weeks. One is enough.",
         "lookfor": "Reassure the pupil that friendships often take weeks, not days, to form in a new setting, this is normal, not a sign that something's wrong.",
