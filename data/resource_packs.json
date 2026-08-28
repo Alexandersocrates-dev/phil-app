@@ -4708,47 +4708,70 @@
       },
       {
         "name": "Avoidance ladder template",
-        "body": "Six things you'd get out of if you could, one per row. Step 1 is the easiest, step 6 the hardest. Be specific: not 'lessons', but 'walking into maths late'.",
+        "body": "Six things you'd get out of if you could, the easiest at the top. Look at the examples, then fill in your own. A first step is always smaller than the thing itself.",
         "table": {
           "headers": [
-            "Step",
             "What you'd avoid",
-            "How worried, 1-10"
+            "A first step towards it",
+            "How hard, 1-10"
           ],
           "rows": [
             [
-              "1 (easiest)",
+              "",
               "",
               ""
             ],
             [
-              "2",
+              "",
               "",
               ""
             ],
             [
-              "3",
+              "",
               "",
               ""
             ],
             [
-              "4",
+              "",
               "",
               ""
             ],
             [
-              "5",
+              "",
               "",
               ""
             ],
             [
-              "6 (hardest)",
+              "",
               "",
               ""
             ]
           ]
         },
-        "source": "Graded exposure, as described in DfE statutory guidance Working together to improve school attendance and in cognitive behavioural practice."
+        "source": "Graded exposure, as described in DfE statutory guidance Working together to improve school attendance and in cognitive behavioural practice.",
+        "cards": [
+          {
+            "cat": "Example",
+            "title": "Walking into maths late",
+            "art": "art-clock",
+            "text": "First step: wait outside the door for the last few minutes of break, so you walk in with everyone else.",
+            "note": "Smaller than the whole thing"
+          },
+          {
+            "cat": "Example",
+            "title": "The lunch hall",
+            "art": "art-friends-out",
+            "text": "First step: go in with one person, stay two minutes, then leave.",
+            "note": "Two minutes still counts"
+          },
+          {
+            "cat": "Example",
+            "title": "Answering in class",
+            "art": "art-talk",
+            "text": "First step: answer one question you already know the answer to.",
+            "note": "Pick the easy one on purpose"
+          }
+        ]
       },
       {
         "name": "Step-planning worksheet",
