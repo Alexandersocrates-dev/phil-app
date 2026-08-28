@@ -742,10 +742,10 @@ module.exports = [
         "title": "Mapping my avoidance",
         "objective": "Pupil and mentor have identified specific situations that are avoided, ranked by difficulty.",
         "checkin": "1. Worry thermometer check-in: where are they on it right now?\n2. Ask: 'what was the number at its highest this week, and when was that?'\n3. Don't challenge the number. You're building a picture, not negotiating.",
-        "input": "1. Explain the trade avoidance makes: instant relief now, more fear next time.\n2. Ask: 'have you ever put off a phone call?' And what happened to it while you waited.\n3. Say plainly that the goal is not to feel no worry. That would be a strange goal.\n4. The goal is doing the thing while the worry is there, starting small.",
+        "input": "1. Explain what avoiding something buys you: relief right now, and more fear next time.\n2. Ask: 'have you ever put off a phone call?' Then ask what happened to it while they waited.\n3. Say plainly that the goal isn't to stop feeling worried — it's to do the thing while the worry is still there, starting small.",
         "activity": "1. Get out the avoidance ladder template.\n2. Ask: 'what are the bits of school you'd get out of if you could?'\n3. Pupil writes each one onto the avoidance ladder.\n4. Put them in order together, easiest at the bottom, hardest at the top.\n5. Be specific: not 'lessons', but 'walking into maths late'.",
         "reflect": "1. Ask: 'which one on that ladder is the smallest?'\n2. Pupil marks it — that's the one they'll try first, not the one that matters most.",
-        "lookfor": "Involve parents or carers and the SENCO in building this ladder where possible, plans work best with a joined-up home-school approach.",
+        "lookfor": "Build the ladder with the people around the pupil where you can — family, and whoever supports them in school. A ladder that home and school both know about is the one that gets climbed.",
         "resources": [
           "Worry thermometer",
           "Avoidance ladder template"
@@ -753,8 +753,8 @@ module.exports = [
         "home": "Look at the avoidance ladder together if the pupil is happy to share it, and ask which step feels smallest.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 8,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
