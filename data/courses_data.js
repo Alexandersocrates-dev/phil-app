@@ -449,8 +449,8 @@ module.exports = [
         "title": "What's going on between us",
         "objective": "Pupil can describe a conflict from their own perspective, real or made up, without starting from blame.",
         "checkin": "1. Start with something unrelated — what they're into, how the week went.\n2. Say plainly that today isn't about deciding who was in the wrong.\n3. A pupil who thinks they're on trial will give you nothing useful.",
-        "input": "1. Ask: 'is there a fall-out with someone that's still on your mind?'\n2. If nothing comes, use a smaller one, or make one up. It works the same.\n3. Show the restorative question prompt card.\n4. Read the four questions aloud.\n5. Say you won't be correcting their answers.",
-        "activity": "1. Work through the four questions, one at a time, on the situation from the input.\n2. Leave a silence after each — the first answer is rarely the full one.\n3. Note what they say in the box below, in their words, without taking sides.",
+        "input": "1. Ask: 'is there a fall-out with someone that's still on your mind?'\n2. If nothing comes, use a smaller one, or make one up. It works the same.\n3. Show the restorative question prompt card.",
+        "activity": "1. Say you won't be correcting their answers.\n2. Read the four questions aloud, then work through them one at a time on the situation from the input.\n3. Leave a silence after each — the first answer is rarely the full one.\n4. Note what they say in the box below, in their words, without taking sides.",
         "reflect": "1. Ask: 'if the other person could understand one thing about your side, what would it be?'\n2. Tell them to hold on to that — you'll come back to it next week.",
         "lookfor": "Keep this session focused on the pupil's own experience — perspective-taking on the other party comes later, so don't rush it. A made-up fall-out does the job as well as a real one; the structure is what's being learnt, and a pupil with nothing recent is not a session without content.",
         "resources": [
