@@ -350,7 +350,10 @@ def check_css(path, findings):
     blocks = re.findall(r"<style[^>]*>(.*?)</style>", text, re.S)
     css = "\n".join(blocks) if blocks else text
 
-    stripped = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    # Blank the comments but keep their newlines, so every line number below
+    # still points at the right line of the real file.
+    stripped = re.sub(r"/\*.*?\*/",
+                      lambda m: "\n" * m.group(0).count("\n"), css, flags=re.S)
     opens = stripped.count("{")
     closes = stripped.count("}")
     if opens != closes:
@@ -371,6 +374,27 @@ def check_css(path, findings):
                                         "unmatched '}' at line %d of %s" % (line, path)))
                 depth = 0
 
+    # Which at-rule, if any, each line sits inside. A selector repeated inside
+    # @media or @print is not a duplicate — that is what media queries are for.
+    # Only repeats at the same level are worth reporting.
+    scope_of, depth, scope = {}, 0, None
+    line_no = 1
+    for i, ch in enumerate(stripped):
+        if ch == "\n":
+            line_no += 1
+        scope_of[line_no] = scope
+        if ch == "{":
+            if depth == 0:
+                head = stripped[:i].rsplit("}", 1)[-1].strip()
+                if head.startswith("@"):
+                    scope = re.sub(r"\s+", " ", head)
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth <= 0:
+                depth = 0
+                scope = None
+
     selectors = {}
     for m in re.finditer(r"(^|[};])\s*([^{}@;/][^{}]*?)\{", stripped):
         raw = m.group(2)
@@ -380,14 +404,15 @@ def check_css(path, findings):
         if not key or key.startswith("@"):
             continue
         line = stripped[:m.start(2)].count("\n") + 1
-        selectors.setdefault(key, []).append(line)
+        selectors.setdefault((scope_of.get(line), key), []).append(line)
 
-    for key, lines in sorted(selectors.items()):
+    for (scope, key), lines in sorted(selectors.items(), key=lambda kv: kv[1][0]):
         if len(lines) > 1:
+            where = " inside %s" % scope if scope else ""
             findings.append(Finding("WARNING", None, None, "css",
-                                    "selector '%s' declared %d times (lines %s) — "
+                                    "selector '%s' declared %d times%s (lines %s) — "
                                     "the last one wins"
-                                    % (key[:60], len(lines),
+                                    % (key[:60], len(lines), where,
                                        ", ".join(str(n) for n in lines))))
 
 
