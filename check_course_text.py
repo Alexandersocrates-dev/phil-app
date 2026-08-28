@@ -42,13 +42,23 @@ GENERIC_TAIL = ("handout", "card", "cards", "sheet", "sheets", "chart",
                 "diagram", "list", "table", "form", "grid", "scale",
                 "template", "poster", "checklist", "tracker", "map")
 
-# A resource is "introduced" when a step tells the mentor to produce it.
+# A resource counts as produced when a step has the mentor physically handling
+# it — getting it out, drawing it, or writing on it. The earlier version listed
+# only presentation verbs ("show", "hand out"), which missed the way these
+# sessions are actually written: "deal a scenario card", "draw the nicotine
+# cycle", "pupil fills the trigger map", "take a reading and put it beside week
+# one's". All of those mean the sheet is in the mentor's hands.
 INTRO_VERB = re.compile(
-    r"\b(show|shows|showing|hand(?:\s+(?:out|over|them|the))?|give|gives|giving|"
-    r"read|reads|bring\s+out|take\s+out|get\s+out|put\s+out|lay\s+out|"
-    r"introduce|introduces|place|places|share|shares|open|opens|"
-    r"fill\s+in|complete|completes|use|uses|using|work\s+through)\b",
+    r"\b(show|shows|showing|hand|hands|handing|give|gives|giving|"
+    r"read|reads|reading|draw|draws|deal|deals|dealing|"
+    r"bring|take|takes|get|gets|put|puts|lay|lays|place|places|"
+    r"introduce|introduces|share|shares|open|opens|"
+    r"fill|fills|filling|write|writes|writing|mark|marks|tick|ticks|"
+    r"sort|sorts|rank|ranks|rate|rates|add|adds|note|notes|"
+    r"complete|completes|finalise|finalises|use|uses|using|"
+    r"look\s+at|go\s+through|work\s+through|turn\s+to|check\s+in)\b",
     re.I)
+
 
 NUM_LINE = re.compile(r"^\s*(\d+)[.)]\s+")
 
@@ -132,7 +142,7 @@ def normalise(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
-def match_keys(name, aliases=None):
+def match_keys(name, aliases=None, loose=True):
     """Phrases that would count as naming this resource in a mentor's wording.
 
     Longest first, so the fullest match wins. The shortened forms exist because
@@ -149,8 +159,12 @@ def match_keys(name, aliases=None):
     while len(words) > 2 and words[-1] in GENERIC_TAIL:
         words = words[:-1]
         keys.append(" ".join(words))
-    # "the anger cycle diagram" also reads as "the cycle diagram"
-    if len(base.split()) > 2:
+    # The "last two words" key catches a week that shortens its own resource —
+    # "the anger cycle diagram" read as "the cycle diagram". It is only safe
+    # within the week that lists the resource. Across weeks it misattributes,
+    # because these tails are generic: "Role-play scenario cards" would match
+    # every mention of a scenario card anywhere in the course.
+    if loose and len(base.split()) > 2:
         keys.append(" ".join(base.split()[-2:]))
     seen, out = set(), []
     for k in keys:
@@ -311,7 +325,7 @@ def check_resource_vocabulary(module, findings, aliases=None):
     vocabulary = {}
     for week in weeks:
         for name in week.get("resources") or []:
-            vocabulary[name] = match_keys(name, aliases)
+            vocabulary[name] = match_keys(name, aliases, loose=False)
 
     for i, week in enumerate(weeks, 1):
         if week.get("staff_only"):
