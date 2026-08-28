@@ -644,20 +644,20 @@ module.exports = [
       },
       {
         "title": "Practising self-control",
-        "objective": "Pupil can use the agreed signal across at least one real lesson, tracked with a self-monitoring chart.",
+        "objective": "Pupil can rate their own self-control on an agreed one-to-five scale, and has a chart set up for the week ahead.",
         "checkin": "1. Ask: 'did you use the signal, and how did the teacher respond?'\n2. If the teacher missed it, that's worth solving now rather than later.\n3. Ask: 'does the signal still feel like the right one?'",
-        "input": "1. Explain the one-to-five rating they'll be using to score their own lessons.\n2. Make clear the pupil rates themselves — nobody else marks it.\n3. Say why it gets filled in straight after a lesson: by home time the detail has gone.\n4. Ask: 'what would a 3 look like for you?' So the numbers mean something consistent.",
-        "activity": "1. Take a lesson from this week and fill the self-monitoring chart in together, so they've done one with you.\n2. Ask: 'what would a five look like for you, and what would a one look like?'\n3. Pupil picks which lessons to track this week and writes them on the chart.\n4. Agree when they'll fill it in — end of the lesson, not the end of the day.",
+        "input": "1. Say what this week adds: keeping a short record of how each lesson went.\n2. Make clear the pupil rates themselves — nobody else marks it.\n3. Say why it gets filled in straight after a lesson: by home time the detail has gone.",
+        "activity": "1. Get out the self-monitoring chart and read the one-to-five scale on it.\n2. Ask: 'what would a five look like for you, and what would a one look like?'\n3. Note their words. The numbers only mean anything if they mean the same thing each time.\n4. Take a lesson from this week and fill a row in together, so they've done one with you.\n5. Pupil picks which lessons to track this week and writes them on the chart.\n6. Agree when they'll fill it in — end of the lesson, not the end of the day.",
         "reflect": "1. Ask: 'what would help you remember to fill it in?'\n2. Agree that one thing, and who else needs to know about it.",
-        "lookfor": "Self-monitoring is most effective when paired with brief, positive teacher feedback, loop in the class teacher where possible.",
+        "lookfor": "Self-monitoring works best alongside brief, positive feedback from the class teacher. Where you can, tell the teacher what the pupil is tracking and what to look for.",
         "resources": [
           "Self-monitoring chart"
         ],
         "home": "Ask the pupil to rate how control felt in one moment this week, out of 5, just like the school chart.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 8,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
