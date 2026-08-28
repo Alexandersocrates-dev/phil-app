@@ -2926,7 +2926,12 @@ def session_submit(request):
             (new_current_week, new_status, enrolment_id))
 
         if safeguarding_flag:
-            notify_safeguarding(conn, enrolment.get("establishment_id") or user["establishment_id"],
+            # enrolment is a sqlite3.Row, which has no .get(). Whether
+            # establishment_id comes back depends on the enrolments table, so
+            # the column is checked by name rather than assumed.
+            enrolment_estab = (enrolment["establishment_id"]
+                               if "establishment_id" in enrolment.keys() else None)
+            notify_safeguarding(conn, enrolment_estab or user["establishment_id"],
                                 pupil_name, mentor_name,
                                 f"session {next_week_number} of {enrolment['course_title']}",
                                 safeguarding_note)
