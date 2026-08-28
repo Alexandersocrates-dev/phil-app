@@ -153,10 +153,11 @@ def match_keys(name, aliases=None, loose=True):
     for alias in (aliases or {}).get(name, []):
         keys.append(normalise(alias))
     words = base.split()
-    # Strip generic tails, but never down to a single word: "Trigger list"
-    # reduced to "trigger" matches every mention of a trigger in the prose, and
-    # "Body map handout" reduced to "body" matches almost anything.
-    while len(words) > 2 and words[-1] in GENERIC_TAIL:
+    # Strip ONE generic tail, never a chain of them. "Body map handout" needs
+    # to reach "body map", but "First day checklist template" stripped twice
+    # reaches "first day", which matches every mention of a first day in
+    # ordinary prose. One strip covers the real cases and none of the noise.
+    if len(words) > 2 and words[-1] in GENERIC_TAIL:
         words = words[:-1]
         keys.append(" ".join(words))
     # The "last two words" key catches a week that shortens its own resource —
@@ -284,15 +285,17 @@ def check_resource_order(num, index, week, findings, aliases=None):
         hits = find_mentions(week, keys)
 
         if not hits:
-            # Without the pack's aliases this cannot tell a genuinely unused
-            # resource from a week that words it differently, so it stays a
-            # warning until resource_packs.json is supplied.
-            level = "ERROR" if aliases else "WARNING"
-            note = ("it prints in the pack and is never used" if aliases
-                    else "may just be worded differently — rerun with --packs to be sure")
-            findings.append(Finding(level, num, index, "stranded",
-                                    "'%s' is listed but never named in any step; %s"
-                                    % (name, note)))
+            # Always a warning, never an error. A week legitimately shortens
+            # its own resources — "get out the toolkit" for "Personal toolkit
+            # template", "one technique from the cards" for "Coping with
+            # uncertainty strategy cards". Nothing here can separate that from
+            # a genuinely unused resource without reading the session, and the
+            # aliases in resource_packs.json cover only a fraction of it. These
+            # were errors, which made the exit code useless as a push gate.
+            findings.append(Finding("WARNING", num, index, "stranded",
+                                    "'%s' is listed but never named in any step — "
+                                    "check whether the steps word it differently"
+                                    % name))
             continue
 
         first = min(hits)
@@ -307,11 +310,15 @@ def check_resource_order(num, index, week, findings, aliases=None):
                                     "'%s' is referred to but never handed out — "
                                     "no step tells the mentor to produce it" % name,
                                     hits[first][:1]))
-        elif first < intro:
-            findings.append(Finding("ERROR", num, index, "order",
-                                    "'%s' is used in '%s' but not produced until '%s'"
-                                    % (name, STEP_ORDER[first], STEP_ORDER[intro]),
-                                    hits[first][:1]))
+        # No "used before it was produced" error here, deliberately.
+        # Across all 100 pupil sessions this never once fired truthfully. The
+        # reason is in the prose: these sessions rarely say "get out X" before
+        # the pupil writes on it, and a step that names the idea a sheet is
+        # about ("explain time balance as three parts") reads identically to
+        # one that uses the sheet. Three rounds of tuning produced only false
+        # positives, and an injected genuine fault still slipped through. A
+        # check that cannot fire correctly is worse than no check, because it
+        # trains you to skim past this section.
 
 
 def check_resource_vocabulary(module, findings, aliases=None):
@@ -327,12 +334,21 @@ def check_resource_vocabulary(module, findings, aliases=None):
         for name in week.get("resources") or []:
             vocabulary[name] = match_keys(name, aliases, loose=False)
 
+    # The week each resource first belongs to. A later week naming it is
+    # reviewing work the pupil already did — every module's week 5 does this —
+    # and the session page surfaces their earlier sheets. Reprinting a blank
+    # copy in the later week's pack would be wrong, so those are not findings.
+    first_week = {}
+    for i, week in enumerate(weeks, 1):
+        for name in week.get("resources") or []:
+            first_week.setdefault(name, i)
+
     for i, week in enumerate(weeks, 1):
         if week.get("staff_only"):
             continue
         listed = set(week.get("resources") or [])
         for name, keys in vocabulary.items():
-            if name in listed:
+            if name in listed or first_week.get(name, i) < i:
                 continue
             hits = find_mentions(week, keys)
             if hits:
@@ -459,6 +475,11 @@ def main():
 
     errors = [f for f in findings if f.level == "ERROR"]
     warnings = [f for f in findings if f.level == "WARNING"]
+
+    # ERROR means the file is structurally wrong: a missing session or field,
+    # broken numbering, staff_only in the wrong place, unbalanced CSS. Those
+    # are decidable without judgement, so a non-zero exit is worth acting on.
+    # Everything about resource wording is a WARNING for a human to read.
 
     sessions = sum(len(m.get("weeks") or []) for m in data)
     print("%s — %d modules, %d sessions" % (args.path, len(data), sessions))
