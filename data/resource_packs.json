@@ -4521,6 +4521,42 @@
         "source": "A self-instruction sequence from cognitive behavioural practice, widely used in UK SEMH settings."
       },
       {
+        "name": "Quick-fire question card",
+        "body": "Rules: you ask, they put a hand up and wait to be asked. Calling out ends the round. Read them straight down, barely pausing - the speed is what makes the urge show up.",
+        "table": {
+          "headers": [
+            "Round one",
+            "Round two"
+          ],
+          "rows": [
+            [
+              "What is 2 add 2?",
+              "What is 5 add 5?"
+            ],
+            [
+              "What colour is a banana?",
+              "What colour is grass?"
+            ],
+            [
+              "Name a day of the week.",
+              "Name a month of the year."
+            ],
+            [
+              "How many legs has a spider?",
+              "How many wheels on a bike?"
+            ],
+            [
+              "What is the capital of France?",
+              "What is the capital of Spain?"
+            ],
+            [
+              "Name a football team.",
+              "Name a subject you do at school."
+            ]
+          ]
+        }
+      },
+      {
         "name": "Signal card options",
         "body": "Choose one with your class teacher.",
         "cards": [
