@@ -489,7 +489,7 @@ module.exports = [
         "title": "Bullying: bystander, target, or both",
         "objective": "Pupil can identify which role or roles were played in a bullying dynamic and what each role needs.",
         "checkin": "1. Ask: 'what surprised you about seeing the situation from the other side?'\n2. If nothing did, ask what they still disagree with — that's just as useful.",
-        "input": "1. Show the roles handout: target, instigator, bystander, defender.\n2. Explain that most people move between these rather than being one of them.\n3. Ask which role they've been in this term — you may get more than one answer.\n4. Avoid labelling the pupil; the point is that roles change, which means they can be chosen.",
+        "input": "1. Name the four roles out loud: target, instigator, bystander, defender.\n2. Explain that most people move between these rather than being one of them.\n3. Avoid labelling the pupil. The point is that roles change, which means they can be chosen.",
         "activity": "1. Ask: 'thinking about something that's happened this term, which of these four roles were you?'\n2. Pupil marks that role on the handout.\n3. Ask: 'what would someone in that role need — to feel safe, to get help, or a way to stop?'\n4. Ask: 'have you ever been one of the other roles too?' Most people have.",
         "reflect": "1. Ask: 'if that same thing happened again next week, what's one thing that would help you?'\n2. Pupil names that one thing, and who they'd need to tell for it to happen.",
         "lookfor": "Be alert to safeguarding disclosures in this session and follow your school's reporting procedure if anything raises concern.",
