@@ -762,12 +762,13 @@ module.exports = [
       {
         "title": "Small steps",
         "objective": "Pupil has agreed and attempted the first, smallest step on the avoidance ladder.",
-        "checkin": "1. Look at the ladder together and read the steps out.\n2. Ask: 'did you try any step on the ladder, even partly?'\n3. A partial attempt counts. Say so before they tell you it doesn't.",
+        "checkin": "1. Get out the avoidance ladder template and read their steps back to them.\n2. Ask: 'did you try any step on the ladder, even partly?'\n3. A partial attempt counts. Say so before they tell you it doesn't.\n4. Ask what has changed about the order, if anything, since last week.",
         "input": "1. Define success out loud: attempting the step, whatever it felt like.\n2. Make clear they don't have to feel calm first — waiting to feel ready is the trap.\n3. Ask: 'what would the smallest possible version of the next step be?'\n4. If they can't imagine doing it, it's too big. Halve it.",
         "activity": "1. Ask: 'when this week could you do that first step?' Pupil writes the day and time on the worksheet.\n2. Ask: 'who needs to know, so they're expecting you?' Add that name.\n3. Walk the route or rehearse it now if that would help.\n4. Agree what counts as done: trying it, however it felt.",
         "reflect": "1. Ask: 'what would make that step feel more doable?'\n2. Check the thing they name is something a person at school can actually provide.",
         "lookfor": "If even the smallest step feels impossible, break it down further, the ladder can always be made gentler.",
         "resources": [
+          "Avoidance ladder template",
           "Step-planning worksheet"
         ],
         "home": "Support the agreed first step this week, just showing up counts as success, however it feels.",
