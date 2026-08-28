@@ -4708,35 +4708,42 @@
       },
       {
         "name": "Avoidance ladder template",
-        "body": "List situations from least to most anxiety-provoking, and rate each 1-10.",
+        "body": "Six things you'd get out of if you could, in order: the one you'd find easiest at step 1, the hardest at step 6. Be specific - not 'lessons', but 'walking into maths late'. Then rate how worried each one makes you, 1 to 10. You start at step 1, not step 6.",
         "table": {
           "headers": [
             "Step",
-            "Situation and worry rating (1-10)"
+            "What the situation is",
+            "Worry 1-10"
           ],
           "rows": [
             [
               "1 (easiest)",
+              "",
               ""
             ],
             [
               "2",
+              "",
               ""
             ],
             [
               "3",
+              "",
               ""
             ],
             [
               "4",
+              "",
               ""
             ],
             [
               "5",
+              "",
               ""
             ],
             [
               "6 (hardest)",
+              "",
               ""
             ]
           ]
