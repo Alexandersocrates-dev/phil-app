@@ -4593,11 +4593,11 @@
       },
       {
         "name": "Self-monitoring chart",
-        "body": "Rate your self-control each lesson, 1 (hard) to 5 (great).",
+        "body": "One row per lesson. How well did you hold back from calling out? 1 means it got away from you, 5 means you held it every time. Fill it in as the lesson ends, not at home time.",
         "table": {
           "headers": [
             "Lesson",
-            "Rating (1-5) and note"
+            "1-5, and what made it that number"
           ],
           "rows": [
             [
