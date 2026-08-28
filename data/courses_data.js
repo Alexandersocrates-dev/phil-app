@@ -881,19 +881,19 @@ module.exports = [
         "title": "What switches me off",
         "objective": "Pupil can name two or three personal disengagement triggers, such as boredom, task difficulty, distraction or tiredness.",
         "checkin": "1. Look at the focus timeline together.\n2. Ask: 'where were the dips, and what was happening at the time?'\n3. If it wasn't filled in, fill it in now from memory for yesterday.",
-        "input": "1. Lay out the disengagement trigger cards face up.\n2. Ask: 'which of these do you reckon are yours?' Everyone has some — the point is which.\n3. Say they'll pick out the ones that are theirs and put them in order.\n4. Explain why the order matters: the top one is where a strategy is worth aiming.",
-        "activity": "1. Ask: 'which of these happen to you?' Pupil picks out the ones that apply.\n2. Pupil puts their picks in order, the most common at the top.\n3. Ask: 'what makes the top one worse, and what makes it easier?'\n4. If they say none apply, ask about the last lesson that dragged.",
+        "input": "1. Explain what a disengagement trigger is: the thing that makes you stop trying, not the thing that gets you in trouble.\n2. Say that everyone has some. The question is which ones are theirs.\n3. Explain why the order will matter: a strategy is worth aiming at the one that happens most.",
+        "activity": "1. Lay out the disengagement trigger cards face up.\n2. Ask: 'which of these happen to you?' Pupil picks out the ones that apply.\n3. Pupil puts their picks in order, the most common at the top.\n4. Ask: 'what makes the top one worse, and what makes it easier?'\n5. If they say none apply, ask about the last lesson that dragged.",
         "reflect": "1. Ask: 'which one of those happens most at school?'\n2. Pupil agrees to watch for it this week and notice when it turns up.",
-        "lookfor": "If task difficulty is the main trigger, flag this to the class teacher, it may need an academic support response alongside this module.",
+        "lookfor": "If task difficulty is the main trigger, tell the class teacher. That one needs an academic response alongside this module, not a mentoring one on its own.",
         "resources": [
           "Focus timeline template",
           "Disengagement trigger cards"
         ],
-        "home": "Notice which trigger, tired, bored, distracted, shows up most during homework time at home.",
+        "home": "Notice which trigger — tired, bored, distracted — shows up most during homework at home.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 8,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
