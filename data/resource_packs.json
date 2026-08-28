@@ -4951,8 +4951,8 @@
         "tone": "amber"
       },
       {
-        "name": "Chunking checklist template",
-        "body": "Break a task into small steps and tick each one off.",
+        "name": "Breaking a task into steps",
+        "body": "One task, broken into parts you can actually finish. Write a step on each line, then tick them off as you go.",
         "table": {
           "headers": [
             "Step",
@@ -4980,7 +4980,20 @@
               ""
             ]
           ]
-        }
+        },
+        "slug": "chunking-checklist-template",
+        "aliases": [
+          "Chunking checklist template"
+        ],
+        "cards": [
+          {
+            "cat": "Example",
+            "title": "Write a paragraph on the water cycle",
+            "art": "art-pencil",
+            "text": "1. Read the question twice. 2. Write down three things you already know. 3. Turn the first one into a sentence. 4. Add the other two. 5. Read it back and change one word.",
+            "note": "Each step is one thing"
+          }
+        ]
       },
       {
         "name": "Goal-mapping worksheet",

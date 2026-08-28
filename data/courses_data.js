@@ -903,11 +903,11 @@ module.exports = [
         "objective": "Pupil can try at least one practical focus strategy.",
         "checkin": "1. Ask: 'of the triggers you picked out last week, which one came up most?'\n2. Ask: 'what did you do when it happened?'\n3. Whatever they did is the current strategy, even if it's leaving the room.",
         "input": "1. Explain the idea: one task, broken into parts you can finish.\n2. Say you'll do it with a real piece of their work in a moment, not a made-up task.\n3. Add one other strategy that fits their top trigger — a movement break, or a focus object.\n4. Ask: 'which lesson would you try that in first?'",
-        "activity": "1. Get out the chunking checklist template.\n2. Get out a real piece of their classwork, not a made-up task.\n3. Break it into parts together on the chunking checklist.\n4. Pupil works on the first chunk for five minutes while you time it.\n5. Ask: 'was that easier or harder than doing the whole thing?'",
+        "activity": "1. Get out the breaking a task into steps sheet.\n2. Get out a real piece of their classwork, not a made-up task.\n3. Read the example on the sheet together, then break their work into steps on it.\n4. Pupil works on the first step for five minutes while you time it.\n5. Ask: 'was that easier or harder than doing the whole thing?'",
         "reflect": "1. Ask: 'could you do that chunking on your own in a lesson?'\n2. Pupil picks one lesson this week to try it in.",
         "lookfor": "Strategies should be low-effort to set up, anything requiring lots of teacher management is unlikely to be sustained.",
         "resources": [
-          "Chunking checklist template"
+          "Breaking a task into steps"
         ],
         "home": "Try the chosen focus strategy together for one piece of homework this week.",
         "timing": {
