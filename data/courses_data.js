@@ -606,7 +606,7 @@ module.exports = [
         "objective": "Pupil can explain a simple stop-think-choose technique in the pupil's own words.",
         "checkin": "1. Look at the tally together and add up the marks.\n2. Ask: 'which lesson had the most marks, and is that what you expected?'\n3. If the tally wasn't filled in, do it now from memory rather than skipping it.",
         "input": "1. Show the stop-think-choose card and read the three steps.\n2. Explain the gap: the urge to speak and the speaking are not the same moment.\n3. Ask: 'is wanting to say something the same as saying it?' Then practise once — you say something they'd want to answer, they pause instead.\n4. Name what the pause feels like, so it's recognisable in a lesson.",
-        "activity": "1. Explain the rules: you ask, they put a hand up and wait to be asked. Calling out ends the round.\n2. Get out the quick-fire question card and read round one straight down, barely pausing. The speed is the point.\n3. When they call out, stop and ask: 'what did you notice just before you spoke?'\n4. Run round two so they finish having managed it.",
+        "activity": "1. Say what it's for: 'this isn't about the answers. It's practice at catching the moment before you speak - the gap we just talked about.'\n2. Give the rules: you ask, they put a hand up and wait to be asked.\n3. Say plainly that calling out isn't losing. It's the moment you both want to catch, so it's worth something when it happens.\n4. Read round one off the quick-fire question card, straight down, barely pausing. Don't wait for a right answer - the speed is what brings the urge up.\n5. Each time they call out, stop and ask: 'what did you notice just before you spoke?' Then pick up where you left off.\n6. If they get all the way through, ask which one was hardest to hold in.\n7. Run round two, then tell them one thing you saw them do differently, however small.",
         "reflect": "1. Ask: 'what does it feel like just before you call out?'\n2. If they don't know yet, they watch for it this week and tell you next session.",
         "lookfor": "Impulse control is a skill that needs repetition, don't expect mastery this session, just recognition of the pause point.",
         "resources": [
@@ -615,9 +615,9 @@ module.exports = [
         ],
         "home": "Practise 'pause, notice, choose' with a fun game at home, like waiting your turn to answer a question.",
         "timing": {
-          "checkin": 5,
+          "checkin": 3,
           "input": 10,
-          "activity": 20,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
