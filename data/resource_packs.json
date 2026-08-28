@@ -4708,12 +4708,12 @@
       },
       {
         "name": "Avoidance ladder template",
-        "body": "Six things you'd get out of if you could, in order: the one you'd find easiest at step 1, the hardest at step 6. Be specific - not 'lessons', but 'walking into maths late'. Then rate how worried each one makes you, 1 to 10. You start at step 1, not step 6.",
+        "body": "Six things you'd get out of if you could, one per row. Step 1 is the easiest, step 6 the hardest. Be specific: not 'lessons', but 'walking into maths late'.",
         "table": {
           "headers": [
             "Step",
-            "What the situation is",
-            "Worry 1-10"
+            "What you'd avoid",
+            "How worried, 1-10"
           ],
           "rows": [
             [
