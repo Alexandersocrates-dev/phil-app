@@ -4408,22 +4408,22 @@
       },
       {
         "name": "Joint conversation briefing note",
-        "body": "For you, not the pupil. A joint conversation is the school's process, not part of the mentoring session. Read this before you say anything to the pupil about one.",
+        "body": "For you, not the pupil. A joint conversation runs through the school's own route, not inside a mentoring session. Read this before you say anything to the pupil about one.",
         "tone": "teal",
         "cards": [
           {
-            "cat": "Who runs it",
-            "title": "Not you",
+            "cat": "Who decides",
+            "title": "Your school's route",
             "art": "art-person-pin",
-            "text": "Your pastoral lead or DSL arranges and chairs it. You prepare your pupil, and you may sit with them.",
-            "note": "Ask, don't arrange"
+            "text": "It goes through however your school handles this, which may or may not be you. Find out before you offer it to a pupil.",
+            "note": "Check the route first"
           },
           {
             "cat": "When not to",
             "title": "Where one has power over the other",
             "art": "art-shield",
             "text": "Repeated targeting, or an imbalance between them, makes a joint meeting a place where the harm can happen again.",
-            "note": "Take it to the DSL instead"
+            "note": "Raise it with whoever leads on safeguarding"
           },
           {
             "cat": "Consent",
