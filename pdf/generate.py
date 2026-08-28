@@ -1573,26 +1573,12 @@ SCALE_KEYWORDS = ("thermometer", "scale")
 # --- card artwork -----------------------------------------------------------
 # The screen and the printed pack draw from one sprite file, templates/_card_art.svg,
 # so a motif is never redrawn twice or allowed to drift between the two.
-# svglib is optional: if it isn't installed the cards still print, just without
-# the illustration. A missing drawing is a lesser fault than a pack that won't
-# generate at all.
+# The motifs are drawn by svgdraw.py, which renders them with reportlab
+# directly. svglib was removed: it drew each symbol at its native size instead
+# of inside the box it was given, which is what put artwork over the card text.
 
 _ART_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "templates", "_card_art.svg")
 _art_cache = {}
-_svg2rlg = None
-_svg2rlg_checked = False
-
-
-def _get_svg2rlg():
-    global _svg2rlg, _svg2rlg_checked
-    if not _svg2rlg_checked:
-        _svg2rlg_checked = True
-        try:
-            from svglib.svglib import svg2rlg
-            _svg2rlg = svg2rlg
-        except Exception:
-            _svg2rlg = None
-    return _svg2rlg
 
 
 def _art_symbol(art_id):
