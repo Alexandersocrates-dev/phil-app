@@ -4349,7 +4349,7 @@
         "table": {
           "headers": [
             "Role",
-            "What this looks like / what this role needs"
+            "What this role needs"
           ],
           "rows": [
             [
