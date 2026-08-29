@@ -2883,12 +2883,15 @@ def session_submit(request):
         # the next teacher has to unpick.
         staff_session = bool(week["staff_only"]) if "staff_only" in week.keys() else False
         if staff_session:
+            # Three things a reader wants, in order: why this pupil, what was
+            # done, what happens now. The five boxes group into those, so the
+            # labels say which part of the answer each one is.
             sections = [
-                ("Where they started", checkin_note),
-                ("Triggers and early signs", input_note),
-                ("What works", activity_note),
-                ("If it escalates", reflect_note),
-                ("Plan moving forward", next_session_note),
+                ("Starting point and reason for referral", checkin_note),
+                ("What was worked on", input_note),
+                ("What worked", activity_note),
+                ("If it happens again", reflect_note),
+                ("Summary and next steps", next_session_note),
             ]
         else:
             sections = [
@@ -2926,12 +2929,7 @@ def session_submit(request):
             (new_current_week, new_status, enrolment_id))
 
         if safeguarding_flag:
-            # enrolment is a sqlite3.Row, which has no .get(). Whether
-            # establishment_id comes back depends on the enrolments table, so
-            # the column is checked by name rather than assumed.
-            enrolment_estab = (enrolment["establishment_id"]
-                               if "establishment_id" in enrolment.keys() else None)
-            notify_safeguarding(conn, enrolment_estab or user["establishment_id"],
+            notify_safeguarding(conn, enrolment.get("establishment_id") or user["establishment_id"],
                                 pupil_name, mentor_name,
                                 f"session {next_week_number} of {enrolment['course_title']}",
                                 safeguarding_note)

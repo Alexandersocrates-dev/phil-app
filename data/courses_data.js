@@ -132,13 +132,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -270,13 +270,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -413,13 +413,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -549,13 +549,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -686,13 +686,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -825,13 +825,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -961,13 +961,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1095,13 +1095,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1229,13 +1229,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1365,13 +1365,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1504,13 +1504,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1641,13 +1641,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1784,13 +1784,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -1926,13 +1926,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2068,13 +2068,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2210,13 +2210,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2352,13 +2352,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2494,13 +2494,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2634,13 +2634,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: who this pupil goes to, and what that person should know.\n2. The named adults are on their safety card in step 1, with how each is reached.\n3. Add what the pupil says feels safe, and what doesn't.\n4. Be specific about how each person is contacted, not just that they exist.",
         "reflect": "1. In the box: what should happen if this pupil discloses something new.\n2. Name the designated safeguarding lead, and what to do in the first five minutes.\n3. Note anything already reported, and to whom.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
@@ -2776,13 +2776,13 @@ module.exports = [
       },
       {
         "title": "Course summary and next steps",
-        "objective": "The mentor has a one-page plan that other staff can pick up and use.",
-        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: where they were when the course started, and what has changed since. Their week one rating and their own words are below.",
+        "objective": "The mentor has a one-page record of why the pupil was referred, what the course did, and what happens next.",
+        "checkin": "1. No pupil in this one. Twenty minutes on your own, after the course.\n2. Read the session summaries and the pupil's own sheets below before writing anything.\n3. In the box: why this pupil was referred, and what was happening at the time.\n4. Then where they were when the course started. Their week one rating and their own words are below.",
         "input": "1. In the box: what sets this pupil off, and the first thing a teacher would notice.\n2. Both are on their sheets in step 1 — the triggers they listed, and where they feel it first. Use their words, not yours.\n3. Be specific. Not 'gets angry easily', but 'being laughed at in front of other people'.",
         "activity": "1. In the box: what actually worked, in enough detail for another teacher to copy it.\n2. The strategies they chose are on their sheets in step 1, including the ones they said they'd really use.\n3. Say when and where it works, not just what it is.\n4. Not 'needs support in lessons', but 'in maths, when he goes quiet, let him use the blue card and take five minutes outside'.",
         "reflect": "1. In the box: what to do if it happens anyway.\n2. What the pupil asked staff to do is on their sheet in step 1. Include what not to do, and who to call.\n3. Assume the reader has five minutes and has never met this pupil.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
-        "home": "1. In the box: who is doing what, and by when. Name people, not job titles.\n2. Agree it with your line manager before it goes anywhere.\n3. Share it with the pupil's class teachers and your pastoral lead, and bring it to the follow-up chat you agreed.",
+        "home": "1. In the box, first: two or three lines on what the course did. What changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager before it goes anywhere.\n4. Share it with the pupil's class teachers and whoever leads on pastoral support, and bring it to the follow-up chat you agreed.",
         "resources": [],
         "staff_only": true
       }
