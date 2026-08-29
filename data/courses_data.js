@@ -904,7 +904,7 @@ module.exports = [
         "checkin": "1. Ask: 'which of the things that switch you off happened most this week?'\n2. If they can't think of one, ask about the last lesson that dragged.\n3. Ask: 'and what did you do when it happened?'\n4. Don't correct the answer. Whatever they did is their strategy at the moment, even if it was walking out.",
         "input": "1. Explain why starting is the hard part: a task you can't see the end of feels bigger than it is.\n2. Say the fix is making the first bit small enough that starting is easy.\n3. Offer one other thing to try alongside it, chosen to fit what switches them off — a movement break, or something to hold.",
         "activity": "1. Get out the breaking a task into steps sheet.\n2. Get out a real piece of their classwork, not a made-up task.\n3. Read the example on the sheet together, then break their work into steps on it.\n4. Pupil works on the first step for five minutes while you time it.\n5. Ask: 'was that easier or harder than doing the whole thing?'",
-        "reflect": "1. Ask: 'could you do that chunking on your own in a lesson?'\n2. Pupil picks one lesson this week to try it in.",
+        "reflect": "1. Ask: 'could you break work up like that on your own, in a lesson?'\n2. Pupil picks one lesson this week to try it in.",
         "lookfor": "Strategies should be low-effort to set up, anything requiring lots of teacher management is unlikely to be sustained.",
         "resources": [
           "Breaking a task into steps"
@@ -921,7 +921,7 @@ module.exports = [
       {
         "title": "Setting goals that matter",
         "objective": "Pupil can link a personal goal to effort in at least one subject.",
-        "checkin": "1. Ask: 'did you use the chunking, and in which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't use it, ask: 'what would have needed to be true for you to?'",
+        "checkin": "1. Ask: 'did you break anything into steps last week, and in which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't, ask: 'what would have needed to be true for you to?'",
         "input": "1. Explain that effort holds better when it's tied to something they want, not to being told.\n2. Say you'll ask what they want to be doing, and that any answer counts — vague or unrealistic is fine.\n3. Say you'll then look for a subject that connects to it, however loosely.\n4. Ask: 'would a link I picked for you actually work?' It has to be theirs, or it won't hold.",
         "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. Ask: 'which subject has anything at all to do with that?' Even loosely.\n3. Draw the line between the two on the worksheet, in their words.\n4. If they can't see a link, say so honestly and find a different subject.",
         "reflect": "1. Ask: 'what's one piece of work this week you'd do differently, thinking about that?'\n2. Pupil names the lesson and the piece of work.",
