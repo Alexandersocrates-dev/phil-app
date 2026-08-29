@@ -1889,75 +1889,49 @@ def resource_pack_pdf(course_num, course_title, items):
 
         body = _clean_pdf_text(item.get("body", ""))
 
-        if cards:
+        if cards or steps or table or checklist or form:
+            # This used to be an if/elif chain, so an item carrying more than one
+            # block printed the first and silently dropped the rest. Four
+            # resources lost a table, a form or their guidance steps that way.
+            # Everything present is now drawn, in the order a pupil meets it:
+            # what the sheet is, the fields that identify it, the grid, the
+            # tick-list, then examples and guidance under it.
             for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
+                state["y"] = _wrap(c, para, margin, state["y"], max_width,
+                                   font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
-            # The chain used to be `if cards ... elif table ... elif form`, so an
-            # item carrying cards alongside any of these printed the cards and
-            # silently dropped the rest. Draw whatever is there, in the order the
-            # pupil meets it: the sheet first, examples under it.
-            if table:
-                state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
-                                              table["headers"], table["rows"])
-                state["y"] -= 4 * mm
-            if form:
+
+            if form and not checklist:
                 state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
                 state["y"] -= 4 * mm
-            if checklist:
-                state["y"] = _draw_checklist(c, margin, state["y"], max_width,
-                                             checklist["items"])
-                state["y"] -= 4 * mm
-            state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
-                                         new_page=lambda: (new_page(), state["y"])[1],
-                                         bottom=PACK_BOTTOM)
-            state["y"] -= 3 * mm
-            if steps:
-                # Same fault as the table above: an item carrying cards and
-                # steps together printed only the cards. The restorative prompt
-                # card's before-and-after guidance was being dropped.
-                state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
-                state["y"] -= 3 * mm
-
-        elif steps:
-            for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-            state["y"] -= 4 * mm
             if table:
                 state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
                                               table["headers"], table["rows"])
                 state["y"] -= 4 * mm
-            state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
-            if item.get("note"):
+            if checklist:
+                if item.get("figure") == "body-map":
+                    state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
+                else:
+                    state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
+                state["y"] -= 4 * mm
+                if form:
+                    # A checklist with a form after it is the existing pairing on
+                    # three items: tick the boxes, then write underneath.
+                    state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
+                    state["y"] -= 4 * mm
+            if cards:
+                state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
+                                             new_page=lambda: (new_page(), state["y"])[1],
+                                             bottom=PACK_BOTTOM)
+                state["y"] -= 3 * mm
+            if steps:
+                state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
+                state["y"] -= 3 * mm
+            if steps and item.get("note"):
                 c.setFillColor(MUTED)
                 c.setFont("Helvetica-Oblique", 7.5)
                 c.drawString(margin, state["y"], _clean_pdf_text(item["note"]))
                 state["y"] -= 5 * mm
-
-        elif table:
-            for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-            state["y"] -= 4 * mm
-            state["y"] = _draw_grid_table(c, margin, state["y"], max_width, table["headers"], table["rows"])
-
-        elif checklist:
-            for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-            state["y"] -= 4 * mm
-            if item.get("figure") == "body-map":
-                state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
-            else:
-                state["y"] = _draw_checklist(c, margin, state["y"], max_width, checklist["items"])
-            if form:
-                state["y"] -= 3 * mm
-                state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
-
-        elif form:
-            for para in body.split("\n"):
-                state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
-            state["y"] -= 4 * mm
-            state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
-            state["y"] -= 3 * mm
 
         elif is_cycle:
             steps = _parse_numbered_steps(body)

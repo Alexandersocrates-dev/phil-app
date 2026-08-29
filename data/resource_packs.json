@@ -5204,33 +5204,47 @@
       },
       {
         "name": "Working relationship plan template",
-        "body": "Agreed with one or two key staff — the ones where it matters most. Both halves get filled in. A plan that only lists what staff should change is not an agreement.",
+        "body": "One or two key staff. Fill in a row for each thing that tends to go wrong. Both sides fill in their column, and the last one is what you settle on together.",
         "form": {
           "fields": [
             "Staff member and subject",
-            "What tends to go wrong between us",
-            "What I need them to do instead",
-            "What they can expect from me",
-            "What we both do if it happens again",
             "Review date"
           ]
         },
-        "cards": [
-          {
-            "cat": "Example",
-            "title": "Being told off in front of everyone",
-            "art": "art-talked-over",
-            "text": "Goes wrong: I get told off in front of the class and I answer back. They do: say my name and 'see me at the end' instead. I do: leave it and go to him at the end, not argue in the room. If it happens again: I write it down and we sort it after the lesson.",
-            "note": "Something they could actually do"
-          },
-          {
-            "cat": "Example",
-            "title": "Work I don't understand",
-            "art": "art-too-hard",
-            "text": "Goes wrong: I don't get the work so I put my head down and do nothing. They do: check on me in the first five minutes without making it obvious. I do: put my hand up once before giving up. If it happens again: I finish what I can and show her at the end.",
-            "note": "Small enough to do every lesson"
-          }
-        ]
+        "table": {
+          "headers": [
+            "What goes wrong",
+            "What I'll do",
+            "What they'll do",
+            "What we've agreed"
+          ],
+          "rows": [
+            [
+              "Example: I get told off in front of the class",
+              "Leave it and see him at the end",
+              "Say 'see me at the end' instead",
+              "Sort it after the lesson, not during"
+            ],
+            [
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       }
     ],
     "missing": []
