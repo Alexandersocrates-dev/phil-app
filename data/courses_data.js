@@ -1017,14 +1017,14 @@ module.exports = [
         "title": "Seeing the adult's side",
         "objective": "Pupil can describe one plausible pressure or motivation a staff member might have.",
         "checkin": "1. Ask: 'what makes you more likely to listen to an adult?'\n2. Ask: 'did that happen at all this week?'\n3. Take a critical answer seriously — dismissing it undoes week one.",
-        "input": "1. Explain that staff are managing thirty people, a timetable and safety at once.\n2. Ask: 'how many people is a teacher keeping track of at once?' This doesn't excuse an adult being unfair or rude.\n3. Say why it's worth knowing anyway: it makes an adult's reaction predictable rather than personal.\n4. Say that you'll work out together what the adult might have been dealing with.",
-        "activity": "1. Ask: 'can you tell me about a time recently you fell out with a member of staff?'\n2. Ask: 'what do you think was going on for them right then?' Pupil fills that into the worksheet.\n3. Ask: 'what were they probably worried about in that moment?' Add it.\n4. Say plainly this doesn't mean they were right — you're working out what was going on.",
+        "input": "1. Explain that staff are managing thirty people, a timetable and safety all at once.\n2. Ask: 'how many people do you think a teacher is keeping track of at once?'\n3. Be clear that none of this excuses an adult being unfair or rude.\n4. Say why it's worth knowing anyway: it makes an adult's reaction predictable rather than personal.",
+        "activity": "1. Ask: 'can you tell me about a time recently when you fell out with a member of staff?' Pupil writes what happened on the worksheet.\n2. Ask: 'what were you thinking at the time?' Pupil adds that.\n3. Ask: 'what do you think that adult was dealing with right then?' Pupil adds that too.\n4. Say plainly that this doesn't mean the adult was right. You're working out what was going on, not who was in the wrong.\n5. Ask: 'knowing that, what could you try differently next time?' Pupil writes it in the last row.",
         "reflect": "1. Ask: 'does that change how you see it, even a bit?'\n2. If it doesn't, ask: 'what would they have needed to do differently?'",
-        "lookfor": "Balance this carefully, the goal is perspective, not making the pupil feel at fault for an adult's poor handling of a situation.",
+        "lookfor": "Balance this carefully. The goal is perspective, not making a pupil feel at fault for how an adult handled something.",
         "resources": [
           "Perspective-taking worksheet (staff)"
         ],
-        "home": "Gently point out a moment where an adult, including you, was under pressure, to build the same perspective-taking at home.",
+        "home": "Point out a moment when an adult was under pressure — you included. It builds the same habit at home.",
         "timing": {
           "checkin": 5,
           "input": 10,

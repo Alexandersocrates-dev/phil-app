@@ -5085,7 +5085,7 @@
       },
       {
         "name": "Perspective-taking worksheet (staff)",
-        "body": "Explore a recent incident with a specific staff member.",
+        "body": "One fall-out with a member of staff, looked at from both sides.",
         "table": {
           "headers": [
             "Question",
@@ -5093,19 +5093,19 @@
           ],
           "rows": [
             [
-              "What happened",
+              "What happened?",
               ""
             ],
             [
-              "What I was thinking",
+              "What was I thinking at the time?",
               ""
             ],
             [
-              "What the adult might have been managing",
+              "What might the adult have been dealing with?",
               ""
             ],
             [
-              "What I could try differently",
+              "What could I try differently next time?",
               ""
             ]
           ]
