@@ -1845,6 +1845,10 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _cards_height(cards)
             if table:
                 needed += _table_height(table["headers"], table["rows"])
+            if form:
+                needed += _form_height(form["fields"])
+            if checklist:
+                needed += _checklist_height(checklist["items"])
             if steps:
                 needed += _steps_height(steps)
         elif steps:
@@ -1889,12 +1893,20 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
+            # The chain used to be `if cards ... elif table ... elif form`, so an
+            # item carrying cards alongside any of these printed the cards and
+            # silently dropped the rest. Draw whatever is there, in the order the
+            # pupil meets it: the sheet first, examples under it.
             if table:
-                # The chain used to be `if cards ... elif table`, so any item
-                # with both printed the cards and silently dropped the table.
-                # On screen the table comes first, so it does here too.
                 state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
                                               table["headers"], table["rows"])
+                state["y"] -= 4 * mm
+            if form:
+                state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
+                state["y"] -= 4 * mm
+            if checklist:
+                state["y"] = _draw_checklist(c, margin, state["y"], max_width,
+                                             checklist["items"])
                 state["y"] -= 4 * mm
             state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
                                          new_page=lambda: (new_page(), state["y"])[1],

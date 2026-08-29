@@ -1078,7 +1078,7 @@ module.exports = [
         "objective": "Pupil has an agreed, simple plan for working with key staff members going forward.",
         "checkin": "1. Ask: 'how are things now with the adult you named in week one?'\n2. Compare with what they said then.\n3. Ask: 'what would you want that adult to know?'",
         "input": "1. Ask: 'which part of what we've done made an actual difference?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes into the plan in their words later in this session.",
-        "activity": "1. Ask: 'which one or two staff does this matter most with?'\n2. Ask: 'what should they do instead of telling you off in front of everyone?'\n3. Ask: 'and what will you do differently?' Both halves matter — it's not a list of staff duties.\n4. Now write all of that into the working relationship plan, and set a review date.\n5. Share the finished plan with those staff.",
+        "activity": "1. Ask: 'which one or two staff does this matter most with?'\n2. Ask: 'what tends to go wrong between you?' Their words, on the plan.\n3. Read the two examples on the plan together before going further.\n4. Ask: 'what could they do instead?' Something they could actually do, not 'stop telling me off'.\n5. Ask: 'and what will you do differently?' Both halves matter — it's not a list of staff duties.\n6. Ask: 'what do you both do if it happens again anyway?' It will, and the plan needs to survive it.\n7. Set a review date, then share the finished plan with those staff.",
         "reflect": "1. Ask: 'which change do you think has the best chance of working?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share the plan with relevant staff directly, it only works if both sides know what's been agreed.",
         "resources": [
@@ -1087,8 +1087,8 @@ module.exports = [
         "home": "Ask what one change the pupil is hopeful about, and how you can support it at home.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 8,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
