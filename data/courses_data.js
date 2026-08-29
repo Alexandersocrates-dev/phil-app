@@ -1077,9 +1077,9 @@ module.exports = [
         "title": "My working relationship plan",
         "objective": "Pupil has an agreed, simple plan for working with key staff members going forward.",
         "checkin": "1. Ask: 'how are things now with the adult you named in week one?'\n2. Compare with what they said then.\n3. Ask: 'what would you want that adult to know?'",
-        "input": "1. Ask: 'which part of what we've done made an actual difference?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes into the plan in their words later in this session.",
-        "activity": "1. Ask: 'which one or two staff does this matter most with?' Write the name and subject at the top.\n2. Read the example row together before filling anything in.\n3. Ask: 'what situations keep going wrong?' One row each, in their words.\n4. Pupil completes their own column first, for every row.\n5. Fill the staff column with what the pupil would ask of them. The staff member confirms or changes it when the plan is shared.\n6. Agree the last column together. That is the line the staff member is signing up to, so it has to work for both.\n7. Set a review date, then share the finished plan with those staff.",
-        "reflect": "1. Ask: 'which change do you think has the best chance of working?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "input": "1. Ask: 'which part of this course has made a real difference?' Their earlier sheets are in this step if they need reminding.\n2. Note the answer. It goes into the plan in their own words later in this session.",
+        "activity": "1. Ask: 'which one or two staff does this matter most with?' Write the name and subject at the top.\n2. Read the example row together before filling anything in.\n3. Ask: 'what situations keep going wrong?' One row for each.\n4. Work across each row: the pupil's column first, then what they would ask of the staff member, then the last column agreed between them.\n5. Set a review date, then share the plan with those staff so they can confirm or change their column.",
+        "reflect": "1. Ask: 'which change is most likely to work?'\n2. Ask: 'what still feels difficult?' Note the answer for the course summary.",
         "lookfor": "Share the plan with relevant staff directly, it only works if both sides know what's been agreed.",
         "resources": [
           "Working relationship plan template"
