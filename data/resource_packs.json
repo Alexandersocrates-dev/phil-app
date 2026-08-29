@@ -5204,7 +5204,7 @@
       },
       {
         "name": "Working relationship plan template",
-        "body": "One or two key staff. Fill in a row for each thing that tends to go wrong. Both sides fill in their column, and the last one is what you settle on together.",
+        "body": "One row for each situation. The pupil completes their column, the staff member completes theirs, and the last column is agreed by both.",
         "form": {
           "fields": [
             "Staff member and subject",
@@ -5213,17 +5213,17 @@
         },
         "table": {
           "headers": [
-            "What goes wrong",
-            "What I'll do",
-            "What they'll do",
-            "What we've agreed"
+            "The situation",
+            "The pupil will",
+            "The staff member will",
+            "Agreed by both"
           ],
           "rows": [
             [
-              "Example: I get told off in front of the class",
-              "Leave it and see him at the end",
+              "Example: corrected in front of the class",
+              "Leave it and speak to him at the end",
               "Say 'see me at the end' instead",
-              "Sort it after the lesson, not during"
+              "Disagreements are raised after the lesson"
             ],
             [
               "",
