@@ -4,70 +4,54 @@
     "items": [
       {
         "name": "Incident timeline template",
-        "body": "Work backwards from the damage. Facts only — what happened and roughly when, not whose fault it was.",
-        "table": {
-          "headers": [
-            "Stage",
-            "What happened",
-            "Roughly when",
-            "Could I have stopped here?"
-          ],
-          "rows": [
-            [
-              "Something ordinary before it",
-              "",
-              "",
-              ""
-            ],
-            [
-              "The first thing that annoyed me",
-              "",
-              "",
-              ""
-            ],
-            [
-              "What built up after that",
-              "",
-              "",
-              ""
-            ],
-            [
-              "The damage",
-              "",
-              "",
-              ""
-            ],
-            [
-              "Straight afterwards",
-              "",
-              "",
-              ""
-            ]
-          ]
-        },
+        "body": "Read the example first, then fill in your own. Start with what you did and work back up. Facts and times, not blame.",
         "cards": [
           {
-            "cat": "How to fill it",
-            "title": "Work backwards",
-            "art": "art-question",
-            "text": "Start at the damage, not the start of the day.",
-            "note": "Ask 'and just before that?'"
-          },
-          {
-            "cat": "How to fill it",
-            "title": "Facts, not blame",
+            "cat": "Example",
+            "title": "What I was doing before",
             "art": "art-clock",
-            "text": "What happened and roughly when.",
-            "note": "No 'because he...'"
+            "text": "12:35 - walking back from lunch, normal day.",
+            "note": "Somewhere ordinary"
           },
           {
-            "cat": "How to fill it",
-            "title": "Find the gap",
-            "art": "art-fork",
-            "text": "Tick the earliest row you could have stopped.",
-            "note": "Usually earlier than it feels"
+            "cat": "Example",
+            "title": "The first thing that bothered me",
+            "art": "art-bump",
+            "text": "12:50 - someone knocked my bag off the desk.",
+            "note": "The first thing, not the worst"
+          },
+          {
+            "cat": "Example",
+            "title": "How it built up",
+            "art": "art-too-hard",
+            "text": "12:55 - nobody said sorry. I sat there getting angrier.",
+            "note": "This bit is usually the longest"
+          },
+          {
+            "cat": "Example",
+            "title": "What I did",
+            "art": "art-stop",
+            "text": "1:05 - kicked the chair over and slammed the door.",
+            "note": "Facts only"
+          },
+          {
+            "cat": "Example",
+            "title": "What happened after",
+            "art": "art-door-exit",
+            "text": "1:10 - sent out, missed the rest of the lesson.",
+            "note": "Including what it cost you"
           }
-        ]
+        ],
+        "form": {
+          "fields": [
+            "What I was doing before (and what time)",
+            "The first thing that bothered me",
+            "How it built up",
+            "What I did",
+            "What happened after",
+            "The earliest point I could have stopped"
+          ]
+        }
       },
       {
         "name": "Body map handout",

@@ -1874,7 +1874,15 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 55 * mm
         else:
             needed = 28 * mm
-        if state["y"] < PACK_BOTTOM + needed + SEPARATOR_H:
+        # Only break if something has already been drawn on this page. An item
+        # taller than a whole page would otherwise push itself onto a fresh one
+        # and leave the first blank, which is what a five-card example plus six
+        # write-on lines did.
+        # first_on_page is already computed above from the header's depth. If
+        # nothing has been drawn on this page yet, breaking would leave it blank
+        # and put the item on the next one no better off, so let it overflow and
+        # let _draw_cut_cards paginate as it goes.
+        if not first_on_page and state["y"] < PACK_BOTTOM + needed + SEPARATOR_H:
             new_page()
             first_on_page = True
 
@@ -1901,6 +1909,18 @@ def resource_pack_pdf(course_num, course_title, items):
                                    font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
 
+            # Cards and steps come first. On every item that has both, the
+            # cards are worked examples and the table or form is the blank the
+            # pupil fills in, so examples-then-blank is the order they are meant
+            # to be read in. Printing the blank first was backwards.
+            if cards:
+                state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
+                                             new_page=lambda: (new_page(), state["y"])[1],
+                                             bottom=PACK_BOTTOM)
+                state["y"] -= 6 * mm
+            if steps:
+                state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
+                state["y"] -= 3 * mm
             if form and not checklist:
                 state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
                 state["y"] -= 4 * mm
@@ -1919,14 +1939,6 @@ def resource_pack_pdf(course_num, course_title, items):
                     # three items: tick the boxes, then write underneath.
                     state["y"] = _draw_form_fields(c, margin, state["y"], max_width, form["fields"])
                     state["y"] -= 4 * mm
-            if cards:
-                state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
-                                             new_page=lambda: (new_page(), state["y"])[1],
-                                             bottom=PACK_BOTTOM)
-                state["y"] -= 3 * mm
-            if steps:
-                state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
-                state["y"] -= 3 * mm
             if steps and item.get("note"):
                 c.setFillColor(MUTED)
                 c.setFont("Helvetica-Oblique", 7.5)
