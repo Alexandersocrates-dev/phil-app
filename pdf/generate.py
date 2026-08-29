@@ -196,8 +196,19 @@ def _doc_header(c, w, h, margin, doc_title, meta=None, subtitle="Structured ment
     return y - 9 * mm
 
 
-def _doc_footer(c, w, margin, page_no, note="Confidential. Share only with those who need it."):
-    """Page number and a confidentiality line, on every page of every report."""
+# Two different concerns, so two lines. A report carries a named pupil's own
+# words, which is a confidentiality matter. A resource pack carries Phil's
+# material, which is an ownership one. Both end up on every page of everything
+# that leaves the app.
+OWNER = "Phil Education LTD"
+FOOTER_REPORT = ("Confidential. Share only with those who need it. "
+                 "Produced by %s." % OWNER)
+FOOTER_PACK = ("Produced by %s for use in subscribing schools. "
+               "Not for redistribution or resale." % OWNER)
+
+
+def _doc_footer(c, w, margin, page_no, note=FOOTER_REPORT):
+    """Page number and an ownership line, on every page of every report."""
     c.setStrokeColor(BORDER)
     c.setLineWidth(0.5)
     c.line(margin, 14 * mm, w - margin, 14 * mm)
@@ -414,6 +425,10 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     c.drawCentredString(w / 2, margin + 14 * mm,
                         "This certificate records completion of a mentoring course. "
                         "It is not a formal qualification.")
+    # The pupil keeps this one, so the confidentiality line would be wrong here.
+    # Only the ownership half applies.
+    c.setFont("Times-Roman", 7.5)
+    c.drawCentredString(w / 2, margin + 9 * mm, "Issued through Phil, produced by %s." % OWNER)
 
     c.showPage()
     c.save()
@@ -1184,6 +1199,12 @@ def caseload_report_xlsx(rows, show_mentor_col, out_name, period="All time"):
         for cell in row:
             cell.font = Font(name="Arial")
 
+    # A spreadsheet has no page footer, so the notice goes two rows under the
+    # data. It carries named pupils, same as the PDF version of this report.
+    ws.append([])
+    ws.append([FOOTER_REPORT])
+    ws.cell(row=ws.max_row, column=1).font = Font(name="Arial", size=8, italic=True)
+
     wb.save(path)
     return path
 
@@ -1249,9 +1270,14 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time
     c.setStrokeColor(BORDER)
     c.line(x, y + 2, w - margin, y + 2)
 
+    page_no = 1
     for r in rows:
-        if y < margin + 10 * mm:
+        # 20mm, not 10mm: the footer rule sits at 14mm and rows were being
+        # drawn straight through it.
+        if y < margin + 20 * mm:
+            _doc_footer(c, w, margin, page_no)
             c.showPage()
+            page_no += 1
             y = h - margin
             draw_row([label for label, _ in cols], bold=True, fill=HexColor("#F2EFE6"))
         values = [r["pupil"], r["course"]]
@@ -1261,6 +1287,7 @@ def caseload_report_pdf(title, rows, show_mentor_col, out_name, period="All time
                    r.get("follow_up", "-")]
         draw_row(values)
 
+    _doc_footer(c, w, margin, page_no)
     c.showPage()
     c.save()
     return path
@@ -1747,7 +1774,7 @@ def resource_pack_pdf(course_num, course_title, items):
     c = canvas.Canvas(path, pagesize=A4)
     margin = 18 * mm
     max_width = w - margin * 2
-    state = {"y": h - margin}
+    state = {"y": h - margin, "page": 1}
 
     def header():
         state["y"] = h - margin
@@ -1764,8 +1791,19 @@ def resource_pack_pdf(course_num, course_title, items):
         c.line(margin, state["y"], w - margin, state["y"])
         state["y"] -= 9 * mm
 
+    def pack_footer():
+        c.setStrokeColor(BORDER)
+        c.setLineWidth(0.5)
+        c.line(margin, 14 * mm, w - margin, 14 * mm)
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 7.5)
+        c.drawString(margin, 10 * mm, FOOTER_PACK)
+        c.drawRightString(w - margin, 10 * mm, "Page %d" % state["page"])
+
     def new_page():
+        pack_footer()
         c.showPage()
+        state["page"] += 1
         header()
 
     def cut_line():
@@ -1786,6 +1824,7 @@ def resource_pack_pdf(course_num, course_title, items):
     header()
 
     SEPARATOR_H = 16 * mm
+    PACK_BOTTOM = 20 * mm   # clears the footer rule at 14mm
 
     for index, item in enumerate(items):
         first_on_page = state["y"] >= h - margin - 26 * mm
@@ -1831,7 +1870,7 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 55 * mm
         else:
             needed = 28 * mm
-        if state["y"] < margin + needed + SEPARATOR_H:
+        if state["y"] < PACK_BOTTOM + needed + SEPARATOR_H:
             new_page()
             first_on_page = True
 
@@ -1859,7 +1898,7 @@ def resource_pack_pdf(course_num, course_title, items):
                 state["y"] -= 4 * mm
             state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
                                          new_page=lambda: (new_page(), state["y"])[1],
-                                         bottom=margin)
+                                         bottom=PACK_BOTTOM)
             state["y"] -= 3 * mm
             if steps:
                 # Same fault as the table above: an item carrying cards and
@@ -1959,6 +1998,7 @@ def resource_pack_pdf(course_num, course_title, items):
                                color=MUTED)
             state["y"] -= 4 * mm
 
+    pack_footer()
     c.showPage()
     c.save()
     return path
@@ -1972,8 +2012,18 @@ def legal_doc_pdf(key, paras):
     max_width = w - margin * 2
     state = {"y": h - margin}
 
+    state["page"] = 1
+
+    def legal_footer():
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 7.5)
+        c.drawString(margin, 10 * mm, "Produced by %s." % OWNER)
+        c.drawRightString(w - margin, 10 * mm, "Page %d" % state["page"])
+
     def new_page():
+        legal_footer()
         c.showPage()
+        state["page"] += 1
         state["y"] = h - margin
 
     cover = []
@@ -2062,6 +2112,7 @@ def legal_doc_pdf(key, paras):
             state["y"] = _wrap(c, text, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 2 * mm
 
+    legal_footer()
     c.showPage()
     c.save()
     return path
