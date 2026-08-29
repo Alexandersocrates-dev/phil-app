@@ -1800,9 +1800,16 @@ def resource_pack_pdf(course_num, course_title, items):
         cards = item.get("cards")
         steps = item.get("steps")
         if cards:
+            # An item can carry a table and cards together, the same way one can
+            # carry a checklist and a form. Reserve room for both or the table
+            # gets pushed off the page it was measured for.
             needed = 24 * mm + _cards_height(cards)
+            if table:
+                needed += _table_height(table["headers"], table["rows"])
         elif steps:
             needed = 24 * mm + _steps_height(steps)
+            if table:
+                needed += _table_height(table["headers"], table["rows"])
         elif table:
             needed = 24 * mm + _table_height(table["headers"], table["rows"])
         elif checklist and item.get("figure") == "body-map":
@@ -1841,6 +1848,13 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
+            if table:
+                # The chain used to be `if cards ... elif table`, so any item
+                # with both printed the cards and silently dropped the table.
+                # On screen the table comes first, so it does here too.
+                state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
+                                              table["headers"], table["rows"])
+                state["y"] -= 4 * mm
             state["y"] = _draw_cut_cards(c, margin, state["y"], max_width, cards,
                                          new_page=lambda: (new_page(), state["y"])[1],
                                          bottom=margin)
@@ -1850,6 +1864,10 @@ def resource_pack_pdf(course_num, course_title, items):
             for para in body.split("\n"):
                 state["y"] = _wrap(c, para, margin, state["y"], max_width, font="Helvetica", size=9.5, leading=13, color=INK)
             state["y"] -= 4 * mm
+            if table:
+                state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
+                                              table["headers"], table["rows"])
+                state["y"] -= 4 * mm
             state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
             if item.get("note"):
                 c.setFillColor(MUTED)
