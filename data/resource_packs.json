@@ -5011,7 +5011,7 @@
       },
       {
         "name": "Goal-mapping worksheet",
-        "body": "Connect your work to something you care about.",
+        "body": "Three things: what you want, the subject that gets you closer to it, and one thing you'll do differently this week.",
         "table": {
           "headers": [
             "Question",
@@ -5019,11 +5019,15 @@
           ],
           "rows": [
             [
-              "My personal goal",
+              "What I want to be doing",
               ""
             ],
             [
-              "How this subject connects to it",
+              "The subject that connects to it",
+              ""
+            ],
+            [
+              "How it connects",
               ""
             ],
             [

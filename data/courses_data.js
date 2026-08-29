@@ -920,12 +920,12 @@ module.exports = [
       },
       {
         "title": "Setting goals that matter",
-        "objective": "Pupil can link a personal goal to effort in at least one subject.",
+        "objective": "Pupil can name something they want in the future, and one subject that helps them get to it.",
         "checkin": "1. Ask: 'did you break anything into steps last week, and in which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't, ask: 'what would have needed to be true for you to?'",
         "input": "1. Explain that effort holds better when it's tied to something they want, not to being told.\n2. Say you'll ask what they want to be doing, and that any answer counts — vague or unrealistic is fine.\n3. Say you'll then look for a subject that connects to it, however loosely.\n4. Ask: 'would a link I picked for you actually work?' It has to be theirs, or it won't hold.",
-        "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. Ask: 'which subject has anything at all to do with that?' Even loosely.\n3. Draw the line between the two on the worksheet, in their words.\n4. If they can't see a link, say so honestly and find a different subject.",
+        "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. Ask: 'which subject has anything at all to do with that?' Even loosely. Pupil writes the subject down.\n3. Ask how it connects, and write that on the worksheet in their words.\n4. If they can't see a link, say so honestly and try a different subject.",
         "reflect": "1. Ask: 'what's one piece of work this week you'd do differently, thinking about that?'\n2. Pupil names the lesson and the piece of work.",
-        "lookfor": "Keep this grounded and realistic, forced enthusiasm rarely works, a believable connection does.",
+        "lookfor": "Keep it believable. A connection the pupil half-invents to please you will not survive contact with a Tuesday afternoon; a loose but real one will.",
         "resources": [
           "Goal-mapping worksheet"
         ],
