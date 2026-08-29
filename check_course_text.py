@@ -207,6 +207,64 @@ def check_structure(data, findings):
         seen[num] = True
 
 
+
+# Words too common to mean two lines are about the same thing.
+_ECHO_STOP = set("""a an the and or of to in on it is are was were be been being for with as at
+by from this that these those you your they their them he she his her we our us i my me
+if then so but not no yes do does did done doing say says said ask asks asked
+one two three four five what which who when where why how can could would will
+about into out up down over under again more most some any each other another
+thing things something anything week last next now today first second
+pupil pupils mentor staff session sessions""".split())
+
+
+def _echo_words(text):
+    return {w for w in normalise(text).split()
+            if w not in _ECHO_STOP and len(w) > 3}
+
+
+def check_asked_twice(module, findings):
+    """An input line that restates a line in the activity or reflect below it.
+
+    The pupil answers a question in the input, then gets asked it again with the
+    resource in front of them. The second ask is the real one, so the first is
+    wasted and slightly deflating.
+
+    Some overlap is correct - the input explains a concept the activity applies,
+    and both will use the topic's vocabulary. The threshold is set where a line
+    reads as the same instruction rather than a related one, so this reports and
+    never blocks: it needs a person to tell those apart.
+    """
+    num = module.get("num")
+    for i, week in enumerate(module.get("weeks") or [], 1):
+        if week.get("staff_only"):
+            continue
+        for line in (week.get("input") or "").split("\n"):
+            if not line.strip():
+                continue
+            words = _echo_words(line)
+            if len(words) < 3:
+                continue
+            for field in ("activity", "reflect"):
+                for later in (week.get(field) or "").split("\n"):
+                    others = _echo_words(later)
+                    if not others:
+                        continue
+                    shared = words & others
+                    if len(shared) < 3:
+                        continue
+                    if len(shared) / min(len(words), len(others)) < 0.6:
+                        continue
+                    findings.append(Finding(
+                        "WARNING", num, i, "asked twice",
+                        "an input line restates a line in the %s" % field,
+                        [line.strip(), later.strip()]))
+                    break
+                else:
+                    continue
+                break
+
+
 def check_module(module, findings, aliases=None):
     num = module.get("num")
     for field in REQUIRED_MODULE_FIELDS:
@@ -231,6 +289,7 @@ def check_module(module, findings, aliases=None):
         check_week(num, i, week, findings, aliases)
 
     check_resource_vocabulary(module, findings, aliases)
+    check_asked_twice(module, findings)
 
 
 def check_week(num, index, week, findings, aliases=None):
