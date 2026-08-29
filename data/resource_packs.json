@@ -4,27 +4,70 @@
     "items": [
       {
         "name": "Incident timeline template",
-        "body": "Facts only - what happened before, during and after.",
+        "body": "Work backwards from the damage. Facts only — what happened and roughly when, not whose fault it was.",
         "table": {
           "headers": [
             "Stage",
-            "What happened"
+            "What happened",
+            "Roughly when",
+            "Could I have stopped here?"
           ],
           "rows": [
             [
-              "Before",
+              "Something ordinary before it",
+              "",
+              "",
               ""
             ],
             [
-              "During",
+              "The first thing that annoyed me",
+              "",
+              "",
               ""
             ],
             [
-              "After",
+              "What built up after that",
+              "",
+              "",
+              ""
+            ],
+            [
+              "The damage",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Straight afterwards",
+              "",
+              "",
               ""
             ]
           ]
-        }
+        },
+        "cards": [
+          {
+            "cat": "How to fill it",
+            "title": "Work backwards",
+            "art": "art-question",
+            "text": "Start at the damage, not the start of the day.",
+            "note": "Ask 'and just before that?'"
+          },
+          {
+            "cat": "How to fill it",
+            "title": "Facts, not blame",
+            "art": "art-clock",
+            "text": "What happened and roughly when.",
+            "note": "No 'because he...'"
+          },
+          {
+            "cat": "How to fill it",
+            "title": "Find the gap",
+            "art": "art-fork",
+            "text": "Tick the earliest row you could have stopped.",
+            "note": "Usually earlier than it feels"
+          }
+        ]
       },
       {
         "name": "Body map handout",

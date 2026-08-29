@@ -1266,9 +1266,9 @@ module.exports = [
         "objective": "Pupil can describe, without judgement, what usually happens right before an incident of damage.",
         "checkin": "1. Mood check first, and keep it light.\n2. Say plainly that this session is not about punishing what happened.\n3. A pupil braced for a telling-off won't describe the moment honestly, and the moment is what you need.",
         "input": "1. Explain that damage is usually impulsive, not planned — it comes at the end of a build-up.\n2. Say that this makes it predictable, which means it can be interrupted.\n3. Explain how you'll look at it: backwards from the damage, not forwards from the start.\n4. Keep asking 'and just before that?' until you reach something ordinary.",
-        "activity": "1. Get out the incident timeline template.\n2. Ask: 'can you talk me through what happened, from before it started?'\n3. Pupil fills the incident timeline: before, during, after.\n4. Stick to facts — what happened and when, not whose fault it was.\n5. Ask: 'how long was it between the first annoyance and the damage?'",
-        "reflect": "1. Ask: 'looking at that timeline, where's the earliest point it could have gone differently?'\n2. Pupil marks that point — it's usually much earlier than they expect.",
-        "lookfor": "Watch for shame or defensiveness, many pupils already feel bad about these incidents; the tone here should be understanding, not another telling-off.",
+        "activity": "1. Get out the incident timeline template and read the three cards on it together.\n2. Ask: 'can you talk me through what happened?' Start at the damage and work backwards.\n3. Keep asking 'and just before that?' until you reach something ordinary. That is the top row.\n4. Fill a row for each step, with roughly what time it was.\n5. Stick to facts — what happened and when, not whose fault it was.\n6. Ask: 'how long was it, start to finish?' The answer is usually longer than the pupil expects.",
+        "reflect": "1. Ask: 'looking at that timeline, where is the earliest point it could have gone differently?'\n2. Pupil ticks that row in the last column. It is usually much earlier than they expect.",
+        "lookfor": "Watch for shame or defensiveness. Many pupils already feel bad about these incidents, and the tone here should be understanding rather than a second reprimand.",
         "resources": [
           "Incident timeline template"
         ],
