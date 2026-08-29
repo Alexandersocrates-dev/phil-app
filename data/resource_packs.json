@@ -4988,10 +4988,24 @@
         "cards": [
           {
             "cat": "Example",
-            "title": "Write a paragraph on the water cycle",
+            "title": "A page of maths questions",
             "art": "art-pencil",
-            "text": "1. Read the question twice. 2. Write down three things you already know. 3. Turn the first one into a sentence. 4. Add the other two. 5. Read it back and change one word.",
-            "note": "Each step is one thing"
+            "text": "1. Get the sheet and a pen out. 2. Do question one. 3. Do the next two. 4. Finish the rest.",
+            "note": "Starting is the hard bit, not the maths"
+          },
+          {
+            "cat": "Example",
+            "title": "Writing you don't know how to start",
+            "art": "art-document",
+            "text": "1. Write the title. 2. Write one sentence, even a bad one. 3. Add two more. 4. Read it back and fix one thing.",
+            "note": "A bad first sentence still counts"
+          },
+          {
+            "cat": "Example",
+            "title": "Work you've fallen behind on",
+            "art": "art-behind",
+            "text": "1. Find out exactly what's missing. 2. Pick the shortest one. 3. Do that one today. 4. Ask about the rest tomorrow.",
+            "note": "Shortest first, not most important"
           }
         ]
       },
