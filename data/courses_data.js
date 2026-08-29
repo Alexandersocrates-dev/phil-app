@@ -1057,10 +1057,10 @@ module.exports = [
         "title": "Repair and restore",
         "objective": "Pupil takes part in, or rehearses for, a restorative conversation with a specific staff member.",
         "checkin": "1. Ask: 'did you use the script, and who with?'\n2. Ask: 'how did the adult respond?'\n3. If it went badly, work out which part slipped — usually the timing.",
-        "input": "1. Explain that a restorative conversation isn't an apology for its own sake.\n2. Ask: 'what would an apology be for — you, or them?' Its purpose is repairing one working relationship they still need.\n3. Show the restorative conversation prompt card and read the four questions.\n4. Say they'll choose which relationship is worth repairing, and whether they want you there.",
+        "input": "1. Explain that a restorative conversation isn't an apology for its own sake.\n2. Ask: 'what would an apology be for — you, or them?' Its purpose is repairing one working relationship they still need.\n3. Say plainly that this is not the soft option. Both people answer the same five questions, and both have to agree to something.\n4. Show the restorative conversation prompt card and read the five questions.\n5. Say they choose which relationship is worth repairing, and whether they want you there. They can also choose not to.",
         "activity": "1. Ask: 'which member of staff would be most worth sorting things out with?'\n2. Work through the restorative prompts together so they know what they'll say.\n3. Rehearse it with you playing the adult, twice.\n4. If the staff member agrees and the pupil is willing, hold the real conversation with you there.",
         "reflect": "1. Ask: 'what would make things easier with that member of staff from now on?'\n2. Check it's something both sides could actually do.",
-        "lookfor": "Only proceed with a real conversation if the staff member is willing and the pupil is ready, rehearsal alone is a valid outcome for this session.",
+        "lookfor": "Rehearsal alone is a full outcome for this session. Only hold a real conversation if both the staff member and the pupil are willing, and both have seen the questions first. A pupil who feels made to do it will perform an apology, which is worse than not having the conversation at all.",
         "resources": [
           "Restorative conversation prompt card"
         ],

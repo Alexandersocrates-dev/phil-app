@@ -1806,6 +1806,8 @@ def resource_pack_pdf(course_num, course_title, items):
             needed = 24 * mm + _cards_height(cards)
             if table:
                 needed += _table_height(table["headers"], table["rows"])
+            if steps:
+                needed += _steps_height(steps)
         elif steps:
             needed = 24 * mm + _steps_height(steps)
             if table:
@@ -1859,6 +1861,12 @@ def resource_pack_pdf(course_num, course_title, items):
                                          new_page=lambda: (new_page(), state["y"])[1],
                                          bottom=margin)
             state["y"] -= 3 * mm
+            if steps:
+                # Same fault as the table above: an item carrying cards and
+                # steps together printed only the cards. The restorative prompt
+                # card's before-and-after guidance was being dropped.
+                state["y"] = _draw_steps(c, margin, state["y"], max_width, steps)
+                state["y"] -= 3 * mm
 
         elif steps:
             for para in body.split("\n"):
