@@ -921,10 +921,10 @@ module.exports = [
       {
         "title": "Setting goals that matter",
         "objective": "Pupil can name something they want in the future, and one subject that helps them get to it.",
-        "checkin": "1. Ask: 'did you break anything into steps last week, and in which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't, ask: 'what would have needed to be true for you to?'",
-        "input": "1. Explain that effort holds better when it's tied to something they want, not to being told.\n2. Say you'll ask what they want to be doing, and that any answer counts — vague or unrealistic is fine.\n3. Say you'll then look for a subject that connects to it, however loosely.\n4. Ask: 'would a link I picked for you actually work?' It has to be theirs, or it won't hold.",
-        "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. Ask: 'which subject has anything at all to do with that?' Even loosely. Pupil writes the subject down.\n3. Ask how it connects, and write that on the worksheet in their words.\n4. If they can't see a link, say so honestly and try a different subject.",
-        "reflect": "1. Ask: 'what's one piece of work this week you'd do differently, thinking about that?'\n2. Pupil names the lesson and the piece of work.",
+        "checkin": "1. Ask: 'did you break any tasks into steps last week? Which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they didn't, ask what would have made it possible. Take the answer and move on.",
+        "input": "1. Explain that effort lasts longer when it's tied to something they want, rather than to being told.\n2. Say the link doesn't have to be impressive. A loose one they believe beats a neat one they don't.\n3. Say there's no wrong answer coming, including 'I don't know'.",
+        "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. If they don't know, ask what they'd want to avoid, or what they'd do with a free day. Write that instead.\n3. Ask: 'which subject has anything at all to do with that?' Pupil writes the subject down.\n4. If nothing connects, take the subject they dislike least and find one small link — a teacher, or just turning up.\n5. Ask how it connects, and write that on the worksheet in their words.",
+        "reflect": "1. Ask: 'what's one piece of work this week you'd do differently because of that link?'\n2. Pupil writes the lesson and the piece of work on the last row of the worksheet.",
         "lookfor": "Keep it believable. A connection the pupil half-invents to please you will not survive contact with a Tuesday afternoon; a loose but real one will.",
         "resources": [
           "Goal-mapping worksheet"
@@ -932,8 +932,8 @@ module.exports = [
         "home": "Ask how tonight's homework connects to something the pupil cares about, even a loose link helps.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 8,
+          "activity": 22,
           "reflect": 5,
           "home": 5
         }
