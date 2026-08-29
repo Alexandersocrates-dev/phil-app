@@ -860,10 +860,10 @@ module.exports = [
       {
         "title": "Where's my focus",
         "objective": "Pupil can describe, using a recent example, what disengagement looks and feels like.",
-        "checkin": "1. Rapport chat first — something outside lessons.\n2. Ask: 'which lesson did the week go best in, and which worst?'\n3. Don't frame this as being in trouble for drifting off.",
-        "input": "1. Explain that focus naturally comes and goes for everyone, including adults.\n2. Ask: 'can anyone concentrate for a whole lesson?' The aim isn't constant focus — that isn't available to anyone.\n3. The skill is noticing the drift sooner, so less of the lesson is lost.\n4. Say you'll map a real lesson out in a moment, drift and all.",
-        "activity": "1. Get out the focus timeline template.\n2. Ask: 'think of a lesson this week — when were you actually working, and when did you drift?'\n3. Pupil marks those points on the focus timeline.\n4. Ask: 'how long did you last before the first drift?'\n5. Be clear that everyone drifts — you're finding the pattern, not the failure.",
-        "reflect": "1. Ask: 'what was happening right before you drifted?'\n2. Pupil watches for that one thing this week and tells you next session.",
+        "checkin": "1. Rapport chat first — something outside lessons.\n2. Ask: 'which lesson did the week go best in, and which worst?'\n3. Don't frame this as being in trouble for switching off.",
+        "input": "1. Explain that focus naturally comes and goes for everyone, including adults.\n2. Ask: 'can anyone concentrate for a whole lesson?' The aim isn't constant focus — that isn't available to anyone.\n3. The skill is noticing sooner that you've switched off, so less of the lesson is lost.\n4. Say you'll map a real lesson out in a moment, the switched-off bits included.",
+        "activity": "1. Get out the focus timeline template.\n2. Ask: 'think of a lesson this week — when were you actually working, and when did you lose focus?'\n3. Pupil marks those points on the focus timeline.\n4. Ask: 'how long did you last before you first lost focus?'\n5. Be clear that everyone loses focus — you're finding the pattern, not the failure.",
+        "reflect": "1. Ask: 'what was happening right before you lost focus?'\n2. Pupil watches for that one thing this week and tells you next session.",
         "lookfor": "Disengagement is easy to miss in quiet pupils, this module is often as valuable for these pupils as louder disruption modules are for others.",
         "resources": [
           "Focus timeline template"
@@ -942,8 +942,8 @@ module.exports = [
         "title": "My engagement plan",
         "objective": "Pupil has a simple, personalised engagement plan shared with the class teacher.",
         "checkin": "1. Put this week's focus timeline beside week one's.\n2. Ask: 'which lesson changed most?'\n3. Ask: 'what did you do differently in that lesson?' That's the thing worth keeping.",
-        "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of the plan later in this session.",
-        "activity": "1. Ask: 'what are the two things most likely to make you drift?' Their week two sheets are in this step if they need reminding.\n2. Ask: 'and what's your go-to strategy when it happens?'\n3. Ask: 'what was the goal you named last week?'\n4. Now write all of that into the engagement plan, with the goal at the top, and set a review date.\n5. Share the finished plan with the class teacher.",
+        "input": "1. Ask: 'what's been the most helpful thing you've learnt from this course?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of the plan later in this session.",
+        "activity": "1. Ask: 'what are the two things most likely to make you lose focus?' Their week two sheets are in this step if they need reminding.\n2. Ask: 'and what's your go-to strategy when it happens?'\n3. Ask: 'what was the goal you named last week?'\n4. Now write all of that into the engagement plan, with the goal at the top, and set a review date.\n5. Share the finished plan with the class teacher.",
         "reflect": "1. Ask: 'what will you keep doing in that lesson next term?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree light-touch monitoring, such as teacher spot-checks at agreed points, rather than close supervision, which can undermine trust.",
         "resources": [
