@@ -21,6 +21,9 @@
     <nav class="app-sidebar-nav">
       <a class="app-sidebar-item" href="{{ shell_home }}">{{ icon_home() }}<span>Home</span></a>
       {% if user.role == 'admin' %}
+      {# Admins mentor pupils of their own and /mentor/schedule allows them, but
+         the only route to it was a link buried on the mentor dashboard. #}
+      <a class="app-sidebar-item" href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg><span>To-do list</span></a>
       <a class="app-sidebar-item" href="/admin/pupils">{{ icon_users() }}<span>Pupils</span></a>
       <a class="app-sidebar-item" href="/courses">{{ icon_book() }}<span>Courses</span></a>
       <a class="app-sidebar-item" href="/admin/reports">{{ icon_chart() }}<span>Reports</span></a>
@@ -103,6 +106,7 @@
 <nav class="app-bottomnav-mobile">
   <a href="{{ shell_home }}">{{ icon_home() }}Home</a>
   {% if user.role == 'admin' %}
+  <a href="/mentor/schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>To-do</a>
   <a href="/admin/pupils">{{ icon_users() }}Pupils</a>
   <a href="/courses">{{ icon_book() }}Courses</a>
   <a href="/admin/reports">{{ icon_chart() }}Reports</a>
