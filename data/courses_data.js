@@ -1057,7 +1057,7 @@ module.exports = [
         "title": "Repair and restore",
         "objective": "Pupil takes part in, or rehearses for, a restorative conversation with a specific staff member.",
         "checkin": "1. Ask: 'did you use the script, and who with?'\n2. Ask: 'how did the adult respond?'\n3. If it went badly, work out which part slipped — usually the timing.",
-        "input": "1. Explain that a restorative conversation isn't an apology for its own sake.\n2. Ask: 'what would an apology be for — you, or them?' Its purpose is repairing one working relationship they still need.\n3. Say plainly that this is not the soft option. Both people answer the same five questions, and both have to agree to something.\n4. Show the restorative conversation prompt card and read the five questions.\n5. Say they choose which relationship is worth repairing, and whether they want you there. They can also choose not to.",
+        "input": "1. Explain what a restorative conversation is: a structured conversation that repairs a relationship after something has gone wrong between two people.\n2. Say it is used in schools, workplaces and families. Here it is with a member of staff.\n3. Say it is not an apology for its own sake. Ask: 'what would an apology be for — you, or them?'\n4. Say the aim is to make a room easier to work in, not to decide who was right. They will be in that lesson twice a week either way.\n5. Say plainly this is not the soft option: both people answer the same five questions, and both agree to something.\n6. Show the restorative conversation prompt card and read the five questions.\n7. Say they choose who it is with, and whether they want you there. They can also choose not to.",
         "activity": "1. Ask: 'which member of staff would be most worth sorting things out with?'\n2. Work through the restorative prompts together so they know what they'll say.\n3. Rehearse it with you playing the adult, twice.\n4. If the staff member agrees and the pupil is willing, hold the real conversation with you there.",
         "reflect": "1. Ask: 'what would make things easier with that member of staff from now on?'\n2. Check it's something both sides could actually do.",
         "lookfor": "Rehearsal alone is a full outcome for this session. Only hold a real conversation if both the staff member and the pupil are willing, and both have seen the questions first. A pupil who feels made to do it will perform an apology, which is worse than not having the conversation at all.",
@@ -1067,8 +1067,8 @@ module.exports = [
         "home": "If there's been a difficult moment at home, model a short repair conversation yourself so the pupil can see how it works.",
         "timing": {
           "checkin": 5,
-          "input": 10,
-          "activity": 20,
+          "input": 12,
+          "activity": 18,
           "reflect": 5,
           "home": 5
         }

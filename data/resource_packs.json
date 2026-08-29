@@ -5144,43 +5144,43 @@
       },
       {
         "name": "Restorative conversation prompt card",
-        "body": "For repairing one working relationship the pupil still needs. Both people answer the same questions, in the same order, and neither is asked to apologise on cue.",
+        "body": "A structured conversation that repairs a relationship after something has gone wrong. Both people answer the same five questions, in the same order. Nobody apologises on cue.",
         "tone": "teal",
         "cards": [
           {
             "cat": "Question 1",
             "title": "What happened?",
             "art": "art-question",
-            "text": "Both people answer this, not just the pupil. Facts before feelings.",
-            "note": "No interrupting the other's account"
+            "text": "Both of you answer.",
+            "note": "Let each finish"
           },
           {
             "cat": "Question 2",
             "title": "What were you thinking at the time?",
             "art": "art-body-signals",
-            "text": "Context, not an excuse. What someone was thinking explains a reaction without approving of it.",
+            "text": "Explains it. Doesn't excuse it.",
             "note": "Don't argue with the answer"
           },
           {
             "cat": "Question 3",
             "title": "What have you thought about since?",
             "art": "art-thoughts",
-            "text": "The question most often skipped, and the one that changes the conversation. Leave a long silence after it.",
-            "note": "Wait. Don't fill the gap"
+            "text": "The one that changes things.",
+            "note": "Wait. Don't fill the silence"
           },
           {
             "cat": "Question 4",
-            "title": "Who has been affected, and how?",
+            "title": "Who else has this affected?",
             "art": "art-apart",
-            "text": "Widen it past the two of them: the rest of the class, other staff, people at home.",
+            "text": "Not just the two of you.",
             "note": "Name people, not 'everyone'"
           },
           {
             "cat": "Question 5",
-            "title": "What needs to happen to put this right?",
+            "title": "What would put this right?",
             "art": "art-repair",
-            "text": "Both people answer, and both agree to something. One specific, small thing each is better than a long list.",
-            "note": "An undertaking, not a wish"
+            "text": "One thing each.",
+            "note": "Something you'd actually do"
           }
         ],
         "steps": [
