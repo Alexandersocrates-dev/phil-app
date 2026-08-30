@@ -905,8 +905,15 @@ for (var i = 0; i < group.length; i++) {
    title or a missing note shift everything below it. */
 .res-card{scroll-snap-align:start;flex:0 0 152px;display:grid;
   grid-template-rows:16px 52px 60px 1fr auto;border-radius:12px;padding:12px;border:1.5px dashed;}
-.res-card-cat{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
-.res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;overflow:hidden;}
+/* The label sits in a fixed 16px row, so the titles, art and notes line up
+   across the strip. A label too long for that row used to wrap and draw itself
+   over the title underneath. Held to one line: a long label now shrinks its
+   tracking and then truncates, which is visible in review rather than silently
+   overlapping the card's own title. */
+.res-card-cat{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;
+  align-self:start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;
+  overflow:hidden;overflow-wrap:break-word;}
 .res-card-art{display:flex;align-items:center;justify-content:center;}
 .res-card .res-art{height:56px;margin:0;}
 .res-card-text{font-size:13px;line-height:1.4;margin:6px 0 0;}
