@@ -1488,19 +1488,47 @@
       },
       {
         "name": "Local young carers services info card",
-        "body": "These exist because the role is recognised, not because anything has gone wrong.",
+        "body": "These exist because the role is recognised, not because anything has gone wrong. Fill in the local service before the card goes home.",
         "tone": "blue",
         "cards": [
           {
-            "cat": "Outside school",
-            "title": "Young carers services",
+            "cat": "Find one",
+            "title": "The Children's Society",
             "art": "art-join",
-            "text": "Breaks, activities, and someone to talk to.",
-            "note": "Often free"
+            "text": "Their service finder lists young carer projects by area.",
+            "note": "Breaks, activities, other young carers"
+          },
+          {
+            "cat": "Advice",
+            "title": "Carers Trust",
+            "art": "art-person-pin",
+            "text": "Information and advice, and they run local services too.",
+            "note": "Also covers your rights"
+          },
+          {
+            "cat": "By text",
+            "title": "Sidekick",
+            "art": "art-message",
+            "text": "Text and email support for young carers, from Action for Children.",
+            "note": "No phone call needed"
+          },
+          {
+            "cat": "Any time",
+            "title": "Childline",
+            "art": "art-message",
+            "text": "0800 1111. Free, and it won't show on the bill.",
+            "note": "Day or night"
+          },
+          {
+            "cat": "Your right",
+            "title": "Ask for an assessment",
+            "art": "art-stand",
+            "text": "The council must assess a young carer's needs, whatever the level of care.",
+            "note": "You or your family can ask"
           },
           {
             "cat": "In school",
-            "title": "Young carers or pastoral lead",
+            "title": "Someone here",
             "art": "art-person-pin",
             "text": "Name the actual person before the session ends.",
             "note": "A name, not a role"
@@ -1512,7 +1540,8 @@
             "text": "Getting support doesn't take the caring role away.",
             "note": "The fear that stops most referrals"
           }
-        ]
+        ],
+        "source": "Services listed on the NHS page Help for young carers. Local young carer services are commissioned borough by borough and change on re-tender, so the card points at the finder rather than naming one."
       },
       {
         "name": "One-page young carer support plan",

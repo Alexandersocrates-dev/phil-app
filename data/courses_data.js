@@ -1909,6 +1909,7 @@ module.exports = [
         "reflect": "1. Ask: 'who would you go to if things got harder?'\n2. Nothing to do with that yet — knowing the name is enough for now.",
         "lookfor": "Some pupils worry that accessing support means their family will be seen as failing, or that they'll be taken away from caring duties they value, reassure that support is about helping the whole family, not removing the pupil's role.",
         "resources": [
+          "Five-minute reset ideas card",
           "What helps me list template",
           "My support network map",
           "Local young carers services info card"
