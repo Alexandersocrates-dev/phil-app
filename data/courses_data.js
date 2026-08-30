@@ -1429,6 +1429,7 @@ module.exports = [
         "reflect": "1. Ask: 'which single trigger comes up most often?'\n2. Pupil picks that one to track this week.",
         "lookfor": "Some pupils may reveal home stressors while mapping triggers, handle sensitively and follow your school's safeguarding procedure if anything raises concern.",
         "resources": [
+          "Anger thermometer",
           "Triggers map"
         ],
         "home": "If something at home seems to be a trigger, ask gently rather than dismissing it, 'I noticed that seemed to frustrate you, want to tell me about it?'",
