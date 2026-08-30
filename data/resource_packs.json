@@ -113,7 +113,7 @@
       },
       {
         "name": "Safe outlet ideas",
-        "body": "Agree with the class teacher where each is kept. An outlet you can't reach is no use.",
+        "body": "Try them, then write down the one you will actually use. An outlet you cannot reach is no use, so agree where it is kept with the class teacher.",
         "aliases": [
           "Sample sensory or physical outlet items, such as a stress ball or scrap paper"
         ],
@@ -147,7 +147,14 @@
             "text": "An errand is easier to ask for than a break.",
             "note": "Agree the route"
           }
-        ]
+        ],
+        "form": {
+          "fields": [
+            "The outlet I am going to use",
+            "Where it is kept",
+            "Who knows it is there"
+          ]
+        }
       },
       {
         "name": "Restorative conversation prompt card",

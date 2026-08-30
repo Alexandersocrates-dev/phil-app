@@ -1307,7 +1307,7 @@ module.exports = [
         "objective": "Pupil can name and try one safe physical alternative to damaging behaviour.",
         "checkin": "1. Ask: 'did you notice the feeling before the urge at any point this week?'\n2. Ask: 'what did you do with it?'\n3. If nothing came up, ask about the closest they got — near-misses count.",
         "input": "1. Explain that the urge is physical, so it needs something physical to do with it, not just calm words.\n2. Show the safe outlet ideas: squeezing something, tearing scrap paper, pushing against a wall.\n3. Say plainly that they will try these out in a moment, and that it is fine to decide one of them does nothing for them.",
-        "activity": "1. Try two or three of the safe outlet ideas here and now, properly.\n2. Ask after each: 'did that help at all, or not really?'\n3. Ask: 'which of those could you do at school without drawing attention?'\n4. Agree where it would be kept, and who needs to know it is there.",
+        "activity": "1. Try two or three of the safe outlet ideas here and now, properly.\n2. Ask after each: 'did that help at all, or not really?'\n3. Ask: 'which of those could you do at school without drawing attention?'\n4. Agree where it would be kept and who needs to know, and write all three on the card.",
         "reflect": "1. Ask: 'which one would you actually reach for when it's happening?'\n2. Check they could get to it in the room where incidents usually happen.",
         "lookfor": "An outlet the pupil cannot reach in the moment is not an outlet. Agree with the class teacher where it is kept and how the pupil asks for it, before the session ends.",
         "resources": [
@@ -1331,6 +1331,7 @@ module.exports = [
         "reflect": "1. Ask: 'how did that feel compared to just being told off?'\n2. If it felt worse, say so honestly — repair is harder than punishment, and that's the point.",
         "lookfor": "Whatever is agreed should be proportionate and chosen by the pupil where possible. It is not a punishment by another name. Check the school's policy before agreeing anything specific.",
         "resources": [
+          "Safe outlet ideas",
           "Restorative conversation prompt card"
         ],
         "home": "If something's been damaged at home, involve the pupil in putting it right together, calmly and without shame.",
@@ -1351,6 +1352,7 @@ module.exports = [
         "reflect": "1. Ask: 'which part of that plan are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
+          "Safe outlet ideas",
           "Incident timeline template",
           "Prevention and response plan template"
         ],
