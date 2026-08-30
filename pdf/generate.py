@@ -62,6 +62,7 @@ import re
 import math
 
 import body_map
+import thermometer
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.units import mm
 from reportlab.lib.colors import HexColor
@@ -1512,6 +1513,109 @@ def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
     return y - 2 * mm
 
 
+def _thermometer_height(figure_w=42 * mm):
+    fig = thermometer.VIEW_H * (figure_w / thermometer.VIEW_W)
+    return max(fig, 12 * mm * len(thermometer.LEVELS)) + 6 * mm
+
+
+def _draw_thermometer(c, x, top_y, max_width, figure_w=42 * mm):
+    """The anger scale as a drawn thermometer, with the levels beside it.
+
+    Five table rows ask a pupil to hold "7-8" and "about to lose control"
+    together in their head. A scale lets them point at a height instead.
+    Geometry comes from thermometer.py, so the printed sheet and the screen draw
+    the same picture, as with the body map. The level names are laid out here in
+    page units rather than inside the 100x200 box, so they use the width of the
+    sheet instead of leaving the figure stranded in the left third of it.
+    """
+    scale = figure_w / thermometer.VIEW_W
+    fig_h = thermometer.VIEW_H * scale
+    base_y = top_y - fig_h
+
+    def px(vx):
+        return x + vx * scale
+
+    def py(vy):                       # the view grows downwards, the page up
+        return base_y + (thermometer.VIEW_H - vy) * scale
+
+    outline = HexColor(thermometer.OUTLINE)
+    tube_x = px(thermometer.TUBE_X)
+    tube_right = px(thermometer.TUBE_X + thermometer.TUBE_W)
+    foot_y = py(thermometer.TUBE_BOTTOM)
+    dome_y = py(thermometer.TUBE_TOP + thermometer.TUBE_R)
+    tube_r = thermometer.TUBE_R * scale
+
+    def tube_path(close):
+        """Domed top, square foot - the same shape as thermometer.tube_path_d.
+
+        Closed for the clip, open for the outline: a closed outline would draw
+        the tube's foot across the inside of the bulb, which is the seam that
+        made the bulb read as a circle parked underneath rather than the bottom
+        of the same vessel.
+        """
+        p = c.beginPath()
+        p.moveTo(tube_x, foot_y)
+        p.lineTo(tube_x, dome_y)
+        p.arcTo(tube_x, dome_y - tube_r, tube_right, dome_y + tube_r, 180, -180)
+        p.lineTo(tube_right, foot_y)
+        if close:
+            p.close()
+        return p
+
+    # Bulb first, so the foot of the tube sits over it and the two read as one
+    # vessel. Its fill matches the coolest band, so the join leaves no seam.
+    c.setStrokeColor(outline)
+    c.setLineWidth(1.2)
+    c.setFillColor(HexColor(thermometer.BULB_FILL))
+    c.circle(px(thermometer.BULB_CX), py(thermometer.BULB_CY),
+             thermometer.BULB_R * scale, fill=1, stroke=1)
+
+    # Every band is filled, on a ramp from the bulb up: a thermometer fills from
+    # the bottom, and shading only the top two said the opposite of what the
+    # picture is for.
+    rows = thermometer.bands()
+    c.saveState()
+    c.clipPath(tube_path(close=True), stroke=0, fill=0)
+    for b in rows:
+        c.setFillColor(HexColor(b["fill"]))
+        c.rect(px(b["x"]), py(b["bottom"]),
+               b["w"] * scale, (b["bottom"] - b["top"]) * scale,
+               fill=1, stroke=0)
+        if b is not rows[-1]:
+            c.setStrokeColor(outline)
+            c.setLineWidth(0.8)
+            c.line(tube_x, py(b["top"]), tube_right, py(b["top"]))
+    c.restoreState()
+
+    c.setStrokeColor(outline)
+    c.setLineWidth(1.2)
+    c.drawPath(tube_path(close=False), fill=0, stroke=1)
+
+    # The numerals sit on the band they belong to, so a pupil pointing at a
+    # height is pointing at "7-8" and at "Angry" in one gesture.
+    for b in rows:
+        c.setFillColor(HexColor(b["ink"]))
+        c.setFont("Helvetica-Bold", 9.5)
+        c.drawCentredString(px(thermometer.BULB_CX), py(b["mid"]) - 3, b["span"])
+
+    # The levels sit to the right of the figure, each beside its own band.
+    label_x = x + figure_w + 8 * mm
+    label_w = max_width - figure_w - 8 * mm
+    lowest = top_y
+    for b in rows:
+        row_y = py(b["mid"])
+        c.setFillColor(RED if b["hot"] else INK)
+        c.setFont("Helvetica-Bold", 10)
+        c.drawString(label_x, row_y + 1.4 * mm, "%s (%s)" % (b["name"], b["span"]))
+        detail = "%s \u2014 %s" % (b["feels"], b["do"])
+        y = _wrap(c, detail, label_x, row_y - 2.8 * mm, label_w,
+                  font="Helvetica", size=8.5, leading=11, color=MUTED)
+        lowest = min(lowest, y)
+
+    c.setFillColor(INK)
+    return min(base_y, lowest) - 4 * mm
+
+
 def _draw_body_map(c, x, top_y, max_width, items, figure_w=42 * mm):
     """The body map as a figure with the tick list beside it.
 
@@ -1838,7 +1942,14 @@ def resource_pack_pdf(course_num, course_title, items):
 
         cards = item.get("cards")
         steps = item.get("steps")
-        if cards:
+        if thermometer.is_thermometer(item):
+            # A drawn scale, plus whatever else the item carries.
+            needed = 24 * mm + _thermometer_height()
+            if cards:
+                needed += _cards_height(cards)
+            if form:
+                needed += _form_height(form["fields"])
+        elif cards:
             # An item can carry a table and cards together, the same way one can
             # carry a checklist and a form. Reserve room for both or the table
             # gets pushed off the page it was measured for.
@@ -1897,7 +2008,7 @@ def resource_pack_pdf(course_num, course_title, items):
 
         body = _clean_pdf_text(item.get("body", ""))
 
-        if cards or steps or table or checklist or form:
+        if cards or steps or table or checklist or form or thermometer.is_thermometer(item):
             # This used to be an if/elif chain, so an item carrying more than one
             # block printed the first and silently dropped the rest. Four
             # resources lost a table, a form or their guidance steps that way.
@@ -1928,6 +2039,8 @@ def resource_pack_pdf(course_num, course_title, items):
                 state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
                                               table["headers"], table["rows"])
                 state["y"] -= 4 * mm
+            if thermometer.is_thermometer(item):
+                state["y"] = _draw_thermometer(c, margin, state["y"], max_width)
             if checklist:
                 if item.get("figure") == "body-map":
                     state["y"] = _draw_body_map(c, margin, state["y"], max_width, checklist["items"])
