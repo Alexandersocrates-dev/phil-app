@@ -1927,7 +1927,7 @@ module.exports = [
         "objective": "Pupil has a personalised plan and knows how to flag it if the pupil's caring responsibilities change.",
         "checkin": "1. Look at the week one timeline beside how this week looked.\n2. Ask: 'what feels different, if anything?'\n3. Ask: 'what would you want school to understand about your week?'",
         "input": "1. Ask: 'what would make the biggest difference at school?' Their earlier sheets are in this step if they need reminding.\n2. That goes on the plan, and on the copy for the pastoral file if they agree to it.",
-        "activity": "1. Ask: 'who's your main person at school?'\n2. Ask: 'which of the things from week three actually helped?'\n3. Ask: 'if things got harder at home, how would you let school know?' Something simple — a word, a note.\n4. Now write all of that into the young carer plan, and set a review date.\n5. Share the finished plan with that named person.",
+        "activity": "1. Ask: 'who at school would you go to first?' That person is their named contact.\n2. Ask: 'which of the things from week three actually helped?'\n3. Ask: 'if things got harder at home, how would you let school know?' Something simple — a word, a note.\n4. Now write all of that into the young carer plan, and set a review date.\n5. Share the finished plan with that named person.",
         "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch follow-up chat rather than closing support entirely.",
         "resources": [
