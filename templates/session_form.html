@@ -78,10 +78,16 @@
   {% endif %}
   {% if item.form %}
   <table class="res-table">
+    {# A field is a label, or a label with an example of the size of answer
+       wanted. Both shapes are accepted, so the forms that are still plain
+       strings need no edit. #}
     {% for f in item.form.fields %}{% set fk = 'f' ~ loop.index0 %}
-    <tr><th style="width:45%;">{{ f }}</th>
+    {%- set label = f.label if f is mapping else f %}
+    {%- set eg = f.eg if f is mapping else '' %}
+    <tr><th style="width:45%;">{{ label }}
+      {%- if eg %}<span class="res-eg">for example: {{ eg }}</span>{% endif %}</th>
       <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
-        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}" aria-label="{{ f }}"></td>
+        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}" aria-label="{{ label }}"></td>
     </tr>{% endfor %}
   </table>
   {% endif %}
@@ -713,6 +719,10 @@ for (var i = 0; i < group.length; i++) {
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
+/* The worked example under a form field's label. Lighter and smaller, so it
+   reads as a prompt rather than as part of the pupil's own answer. */
+.res-eg{display:block;font-weight:400;font-style:italic;font-size:12px;
+  color:var(--muted);margin-top:2px;}
 /* The anger thermometer. Sized off one number: the box is 100 x 200, so the
    figure's height is twice its width. The levels sit beside it rather than
    inside the drawing, so they wrap like the rest of a resource. */

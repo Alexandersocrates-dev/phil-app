@@ -1482,15 +1482,41 @@ def _draw_grid_table(c, x, top_y, max_width, headers, rows, row_h=9 * mm):
     return bottom_y - 5 * mm
 
 
+def form_field(field):
+    """A form field is a label, or a label with an example of an answer.
+
+    Fields were plain strings and most still are. A pupil looking at "My first
+    small target" with a blank line under it often writes nothing, or writes
+    something far too big; one worked example shows the size of answer wanted.
+    Both shapes are accepted so the other forms need no edit.
+    """
+    if isinstance(field, dict):
+        return field.get("label", ""), (field.get("eg") or "").strip()
+    return field, ""
+
+
+EG_H = 4.4 * mm          # the extra height an example line costs
+
+
 def _draw_form_fields(c, x, top_y, max_width, fields, line_h=13 * mm):
     """Draws each field label with a ruled blank line beneath it to write on,
-    for plan/agreement templates that are a list of labels, not a table."""
+    for plan/agreement templates that are a list of labels, not a table.
+
+    An example, where the field has one, sits between the label and the line, in
+    lighter type so it doesn't read as part of the pupil's own answer.
+    """
     y = top_y
-    for label in fields:
+    for field in fields:
+        label, eg = form_field(field)
         c.setFont("Helvetica-Bold", 9)
         c.setFillColor(TEAL_DARK)
         c.drawString(x, y, label)
         y -= 5 * mm
+        if eg:
+            c.setFont("Helvetica-Oblique", 7.5)
+            c.setFillColor(MUTED)
+            c.drawString(x, y, "for example: " + eg)
+            y -= EG_H
         c.setStrokeColor(BORDER)
         c.setLineWidth(0.75)
         c.line(x, y, x + max_width, y)
@@ -1690,7 +1716,7 @@ def _table_height(headers, rows, row_h=9 * mm):
 
 
 def _form_height(fields, line_h=13 * mm):
-    return line_h * len(fields)
+    return line_h * len(fields) + EG_H * sum(1 for f in fields if form_field(f)[1])
 
 
 def _checklist_height(items, row_h=7 * mm):

@@ -754,11 +754,30 @@
         "body": "Realistic short-term targets, agreed with my mentor and the attendance team.",
         "form": {
           "fields": [
-            "My current attendance pattern",
-            "My first small target",
-            "My next target, once the first is steady",
-            "Who's supporting me",
-            "Review date"
+            {
+              "label": "My current attendance pattern",
+              "eg": "present most Mondays and Tuesdays, rarely present after Wednesday"
+            },
+            {
+              "label": "My first small target",
+              "eg": "present for registration and period 1 on Thursday"
+            },
+            {
+              "label": "My next target, once the first is steady",
+              "eg": "stay for the whole of Thursday morning"
+            },
+            {
+              "label": "What happens if I miss a step",
+              "eg": "we go back to the last target that worked, we don't start again"
+            },
+            {
+              "label": "Who's supporting me",
+              "eg": "the person who meets me at reception on Thursday, and Mum in the mornings"
+            },
+            {
+              "label": "Review date",
+              "eg": "four weeks from today"
+            }
           ]
         }
       },
