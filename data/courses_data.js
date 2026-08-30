@@ -72,6 +72,7 @@ module.exports = [
         "reflect": "1. Ask: 'would you actually walk out if it was building?'\n2. If the answer is no, ask what would have to be true for it to be a yes. That answer is the useful one.",
         "lookfor": "Strategies only work if rehearsed when calm, resist the urge to introduce them for the first time during an actual incident.",
         "resources": [
+          "Tally tracking card",
           "Getting out card",
           "My signal card"
         ],
@@ -612,6 +613,7 @@ module.exports = [
         "reflect": "1. Ask: 'what does it feel like just before you call out?'\n2. If they don't know yet, they watch for it this week and tell you next session.",
         "lookfor": "Impulse control is a skill that needs repetition, don't expect mastery this session, just recognition of the pause point.",
         "resources": [
+          "Tally card",
           "Stop-think-choose technique card",
           "Quick-fire question card"
         ],
@@ -633,6 +635,7 @@ module.exports = [
         "reflect": "1. Ask: 'would you be comfortable using that in a full class?'\n2. Check they'd use it with a teacher they find hardest, not just an easy one.",
         "lookfor": "The system only works if the class teacher consistently responds to it, check this is set up before the pupil relies on it.",
         "resources": [
+          "Stop-think-choose technique card",
           "Signal card options"
         ],
         "home": "Agree a home version of the pupil's signal, a hand up or a word, for when the pupil wants your attention while you're busy.",
@@ -653,6 +656,7 @@ module.exports = [
         "reflect": "1. Ask: 'what would help you remember to fill it in?'\n2. Agree that one thing, and who else needs to know about it.",
         "lookfor": "Self-monitoring works best alongside brief, positive feedback from the class teacher. Where you can, tell the teacher what the pupil is tracking and what to look for.",
         "resources": [
+          "Signal card options",
           "Self-monitoring chart"
         ],
         "home": "Ask the pupil to rate how control felt in one moment this week, out of 5, just like the school chart.",
@@ -791,6 +795,7 @@ module.exports = [
         "reflect": "1. Ask: 'which moment in the day would this be most useful?'\n2. Pupil agrees to try it there once this week, even on a day that feels fine.",
         "lookfor": "Some pupils benefit from a discreet, non-stigmatising version, such as a fidget object, rather than an obvious technique.",
         "resources": [
+          "Avoidance ladder template",
           "Worry thermometer",
           "Grounding technique card"
         ],
@@ -1064,6 +1069,7 @@ module.exports = [
         "reflect": "1. Ask: 'what would make things easier with that member of staff from now on?'\n2. Check it's something both sides could actually do.",
         "lookfor": "Rehearsal alone is a full outcome for this session. Only hold a real conversation if both the staff member and the pupil are willing, and both have seen the questions first. A pupil who feels made to do it will perform an apology, which is worse than not having the conversation at all.",
         "resources": [
+          "Respectful disagreement script card",
           "Restorative conversation prompt card"
         ],
         "home": "If there's been a difficult moment at home, model a short restorative conversation yourself so the pupil can see how it works.",
@@ -1292,6 +1298,7 @@ module.exports = [
         "reflect": "1. Ask: 'do you know what your body does just before that urge?'\n2. If they know it, they watch for it this week. If not, they look out for whatever comes first and tell you next session.",
         "lookfor": "If this pattern closely mirrors physical aggression towards people too, consider running Module 1 alongside or after this one.",
         "resources": [
+          "Incident timeline template",
           "Body map handout",
           "Feelings scale"
         ],
@@ -1736,6 +1743,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those sounded most like you?'\n2. Pupil agrees to use it if the moment comes up — no pressure to go looking for one.",
         "lookfor": "A script that sounds too formal or adult often won't get used in the moment, prioritise pupil's own wording over a 'correct' answer.",
         "resources": [
+          "Trigger map template",
           "Refusal script cards",
           "Role-play offer scenario cards"
         ],
@@ -1757,6 +1765,7 @@ module.exports = [
         "reflect": "1. Ask: 'what would make that easier to actually do at school?'\n2. Pupil agrees one small step for the week — small enough that it'll happen.",
         "lookfor": "Avoid framing this week as pass/fail, a pupil who vapes less, or delays a first use later in the day, is real progress worth naming.",
         "resources": [
+          "Refusal script cards",
           "Reduction strategy cards",
           "Habit-swap prompt card"
         ],
@@ -1857,6 +1866,7 @@ module.exports = [
         "reflect": "1. Ask: 'which part feels most squeezed at the moment?'\n2. Pupil picks one moment this week to notice when time felt tight.",
         "lookfor": "Homework and coursework deadlines are often the first thing to slip for young carers, flag this gently as something the school can help adjust, not something to feel guilty about.",
         "resources": [
+          "My day timeline template",
           "Time balance chart",
           "Weekly activity card set"
         ],
@@ -2043,6 +2053,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those lines felt most like something you'd say?'\n2. Nothing to do with it this week — knowing the line is the point.",
         "lookfor": "The goal is a rehearsed, low-stakes opening line the pupil can reach for under pressure, not a perfect script, since real disclosures rarely follow a script exactly.",
         "resources": [
+          "Privacy settings checklist",
           "Telling a trusted adult opening line cards",
           "Role-play scenario cards"
         ],
@@ -2143,6 +2154,7 @@ module.exports = [
         "reflect": "1. Ask: 'did the fairer version feel any more true?'\n2. Pupil agrees to catch that thought once this week when it turns up.",
         "lookfor": "The goal isn't to eliminate worry entirely, some concern about exams is normal and even motivating. Watch for the difference between healthy concern and thoughts that spiral into hopelessness.",
         "resources": [
+          "Exam stress thermometer",
           "Thought-balance worksheet",
           "Catastrophic thinking examples card"
         ],
@@ -2164,6 +2176,7 @@ module.exports = [
         "reflect": "1. Ask: 'which part of that would you actually stick to?'\n2. Agree to try it for one week and change what doesn't fit, rather than starting again.",
         "lookfor": "Pupils under high academic pressure sometimes build routines with no rest at all, gently push back on this rather than accepting it as dedication.",
         "resources": [
+          "Thought-balance worksheet",
           "Weekly routine template",
           "Revision session length guide"
         ],
@@ -2185,6 +2198,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those would you manage when you're actually nervous?'\n2. Pupil agrees to run through it once more before their next real assessment.",
         "lookfor": "Strategies only work if rehearsed when calm, encourage practising away from an actual exam, not for the first time during one.",
         "resources": [
+          "Weekly routine template",
           "Exam-day coping strategy cards",
           "Breathing technique guide"
         ],
@@ -2285,6 +2299,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those was hardest to say was difficult?'\n2. Say plainly there's no judgement in naming any of it.",
         "lookfor": "Pupils sometimes mask sensory distress well in the moment and only show the effects later (exhaustion, meltdown at home), take the timeline seriously even if the pupil seems fine in session.",
         "resources": [
+          "Sensory profile scale",
           "School day sensory timeline",
           "Difficult environments card"
         ],
@@ -2306,6 +2321,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those was most useful?'\n2. Pupil agrees to use it once this week in a real moment, not just in here.",
         "lookfor": "Tools only work if pupils feel able to use them without standing out or facing comment from peers, discuss how to use them discreetly if that matters to the pupil.",
         "resources": [
+          "School day sensory timeline",
           "Sensory toolkit options card",
           "My personal toolkit list template"
         ],
@@ -2469,6 +2485,7 @@ module.exports = [
         "reflect": "1. Ask: 'what was it like spending time with that today?'\n2. Say they can add to it whenever they want. There's no deadline and no finished version.",
         "lookfor": "Some pupils find memory work comforting; others find it too painful right now, if the activity feels overwhelming, pause and return to simpler coping strategies from Week 3 instead.",
         "resources": [
+          "Hard day toolkit template",
           "Memory box list template",
           "Letter-writing prompt card"
         ],
@@ -2751,6 +2768,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those would you actually use?'\n2. Agree it's the one for the first day, when it's most likely to be needed.",
         "lookfor": "Some pupils cope by over-preparing to the point of exhaustion, balance practical preparation with reassurance that it's fine not to have everything figured out in advance.",
         "resources": [
+          "Starting a conversation prompt cards",
           "Coping with uncertainty strategy cards",
           "My go-to person and place card"
         ],
