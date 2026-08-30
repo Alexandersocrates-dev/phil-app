@@ -1524,6 +1524,53 @@ def _draw_form_fields(c, x, top_y, max_width, fields, line_h=13 * mm):
     return y
 
 
+def _answers_height(rows, max_width=None):
+    return 16 * mm + 15 * mm * len(rows)
+
+
+def _draw_answer_key(c, x, top_y, max_width, answers):
+    """The answer key, on the mentor's side of a cut line.
+
+    A true/false sort is only worth doing if the pupil commits to an answer
+    first, so the answers can't sit under the grid they've just filled in - that
+    is the sheet they are writing on. This prints below the cut, headed so it is
+    obvious which half to keep.
+    """
+    y = top_y
+    c.setFont("Helvetica-Bold", 10)
+    c.setFillColor(TEAL_DARK)
+    c.drawString(x, y, answers.get("title") or "Answer key")
+    y -= 4.5 * mm
+    c.setFont("Helvetica-Oblique", 7.5)
+    c.setFillColor(RED)
+    c.drawString(x, y, answers.get("note")
+                 or "Mentor's copy. Cut this off before giving the sheet to the pupil.")
+    y -= 6 * mm
+    for row in answers.get("rows") or []:
+        c.setFont("Helvetica-Bold", 8.5)
+        c.setFillColor(INK)
+        verdict = (row.get("answer") or "").upper()
+        c.drawString(x, y, verdict)
+        w_v = c.stringWidth(verdict, "Helvetica-Bold", 8.5)
+        c.setFont("Helvetica", 8.5)
+        c.setFillColor(INK)
+        # The gap goes in the x, not in the string: the wrapper strips leading
+        # spaces, so "  " + text drew the verdict and statement flush together.
+        gap = w_v + 2.5 * mm
+        y = _wrap(c, row.get("statement") or "", x + gap, y,
+                  max_width - gap, font="Helvetica", size=8.5, leading=11)
+        if row.get("why"):
+            y = _wrap(c, row["why"], x + 6 * mm, y - 0.5 * mm, max_width - 6 * mm,
+                      font="Helvetica", size=8, leading=10, color=MUTED)
+        if row.get("source"):
+            y = _wrap(c, "Source: " + row["source"], x + 6 * mm, y,
+                      max_width - 6 * mm, font="Helvetica-Oblique", size=7,
+                      leading=9, color=MUTED)
+        y -= 3 * mm
+    c.setFillColor(INK)
+    return y
+
+
 def _draw_checklist(c, x, top_y, max_width, items, row_h=7 * mm):
     """Draws a tick-box list: an empty square before each item."""
     y = top_y
@@ -2065,6 +2112,16 @@ def resource_pack_pdf(course_num, course_title, items):
                 state["y"] = _draw_grid_table(c, margin, state["y"], max_width,
                                               table["headers"], table["rows"])
                 state["y"] -= 4 * mm
+            if item.get("answers"):
+                # Its own cut, so the pupil's grid and the mentor's answers come
+                # apart. Drawn straight after the table it answers.
+                if state["y"] - _answers_height(item["answers"].get("rows") or []) < PACK_BOTTOM:
+                    new_page()
+                else:
+                    cut_line()
+                state["y"] = _draw_answer_key(c, margin, state["y"], max_width,
+                                              item["answers"])
+                state["y"] -= 2 * mm
             if thermometer.is_thermometer(item):
                 state["y"] = _draw_thermometer(c, margin, state["y"], max_width)
             if checklist:

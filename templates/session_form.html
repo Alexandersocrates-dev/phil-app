@@ -170,6 +170,23 @@
   </div>
   <p class="res-cards-hint">{{ item.cards|length }} cards &middot; scroll for more, or print the pack to cut them out</p>
   {% endif %}
+  {# The answer key stays shut until the mentor opens it. A true/false sort only
+     works if the pupil commits to an answer first, so this is a reveal, not a
+     panel. #}
+  {% if item.answers %}
+  <details class="res-answers">
+    <summary>{{ item.answers.title or 'Show the answers' }}</summary>
+    {% if item.answers.note %}<p class="res-answers-note">{{ item.answers.note }}</p>{% endif %}
+    <ol>
+      {%- for a in item.answers.rows %}
+      <li><span class="res-verdict">{{ a.answer }}</span> {{ a.statement }}
+        {%- if a.why %}<span class="res-why">{{ a.why }}</span>{% endif %}
+        {%- if a.source %}<span class="res-answer-source">Source: {{ a.source }}</span>{% endif %}
+      </li>
+      {%- endfor %}
+    </ol>
+  </details>
+  {% endif %}
   {% if item.source %}<p class="res-source">{{ item.source }}</p>{% endif %}
 </details>
 {% endmacro %}
@@ -896,6 +913,14 @@ for (var i = 0; i < group.length; i++) {
 .res-card-note{font-size:12px;margin:8px 0 0;padding-top:7px;border-top:1px solid;min-height:14px;}
 .res-card-note--empty{border-top-color:transparent;}
 .res-source{margin:8px 0 0; font-size:12px; line-height:1.45; color:var(--muted); font-style:italic;}
+.res-answers{margin:10px 0 0;border:1px solid var(--border);border-radius:8px;padding:8px 12px;}
+.res-answers>summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--teal-dark,#0F6E56);}
+.res-answers-note{margin:6px 0 0;font-size:12px;font-style:italic;color:#A32D2D;}
+.res-answers ol{margin:8px 0 2px;padding-left:20px;font-size:13px;}
+.res-answers li{margin-bottom:8px;}
+.res-verdict{font-weight:700;margin-right:4px;}
+.res-why{display:block;color:var(--muted);margin-top:2px;}
+.res-answer-source{display:block;font-size:11.5px;font-style:italic;color:var(--muted);margin-top:2px;}
 .res-cards-hint{font-size:12px;color:var(--muted);margin:0;}
 .res-foot{font-size:12px;color:var(--muted);margin:8px 0 0;}
 .tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}

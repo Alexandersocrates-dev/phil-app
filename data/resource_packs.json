@@ -820,7 +820,7 @@
     "items": [
       {
         "name": "True/false myth-busting cards",
-        "body": "Sort each statement: true or false?",
+        "body": "Sort each statement: true or false? Answer before your mentor shows you the answers.",
         "table": {
           "headers": [
             "Statement",
@@ -828,11 +828,7 @@
           ],
           "rows": [
             [
-              "\"Vaping is basically harmless.\"",
-              ""
-            ],
-            [
-              "\"Nicotine is addictive within days for some people.\"",
+              "\"Vaping is fine, as long as you're not smoking cigarettes.\"",
               ""
             ],
             [
@@ -840,13 +836,63 @@
               ""
             ],
             [
-              "\"You can become dependent on vaping just like smoking.\"",
+              "\"A vape sold as nicotine-free definitely has no nicotine in it.\"",
               ""
             ],
             [
-              "\"Second-hand vapour has zero effect on people nearby.\"",
+              "\"You can get addicted within days, even if you only vape now and then.\"",
+              ""
+            ],
+            [
+              "\"Nicotine can affect your concentration, learning and mood while your brain is still developing.\"",
+              ""
+            ],
+            [
+              "\"Young people who vape are more likely to end up smoking cigarettes.\"",
               ""
             ]
+          ]
+        },
+        "answers": {
+          "title": "Answer key",
+          "note": "Mentor's copy. Cut this off before giving the sheet to the pupil, and reveal it only after they have committed to an answer.",
+          "rows": [
+            {
+              "statement": "Vaping is fine, as long as you're not smoking cigarettes.",
+              "answer": "False",
+              "why": "Nicotine is riskier for young people than for adults, because the developing brain is more sensitive to its addictive effects. It is against the law to sell vapes to under-18s.",
+              "source": "NHS Better Health, Young people and vaping"
+            },
+            {
+              "statement": "Most vapes contain only water vapour.",
+              "answer": "False",
+              "why": "It is an aerosol, not water vapour. Most vapes contain nicotine, along with propylene glycol, glycerine and flavourings.",
+              "source": "NHS inform, Vapes (e-cigarettes)"
+            },
+            {
+              "statement": "A vape sold as nicotine-free definitely has no nicotine in it.",
+              "answer": "False",
+              "why": "Vapes sold as nicotine-free can still contain harmful chemicals, and what is on the label is not always what is in the vape.",
+              "source": "NHS Healthier Together, Vaping"
+            },
+            {
+              "statement": "You can get addicted within days, even if you only vape now and then.",
+              "answer": "True",
+              "why": "Young people can become dependent very quickly, even after a small number of puffs, and even if they only vape occasionally.",
+              "source": "NHS inform, Vaping addiction soon takes hold; NHS Healthier Together, Vaping"
+            },
+            {
+              "statement": "Nicotine can affect your concentration, learning and mood while your brain is still developing.",
+              "answer": "True",
+              "why": "The brain keeps developing through the teenage years, and nicotine can affect concentration, learning and impulse control while it does.",
+              "source": "Alder Hey Children's Hospital NHS Foundation Trust, on the first NHS vaping cessation clinic for 11 to 15 year olds"
+            },
+            {
+              "statement": "Young people who vape are more likely to end up smoking cigarettes.",
+              "answer": "True",
+              "why": "Young people who vape are more likely to go on to smoke cigarettes later, even if they never planned to. Say it as a link, not a certainty: it is what the pattern shows, not a prediction about them.",
+              "source": "NHS Healthier Together, Vaping"
+            }
           ]
         }
       },
