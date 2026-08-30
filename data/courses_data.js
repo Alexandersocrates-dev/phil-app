@@ -1594,6 +1594,7 @@ module.exports = [
         "reflect": "1. Ask: 'which one of those pulls hardest?'\n2. Pupil agrees one thing to do with it this week — meeting a friend at the gate, going to one club.",
         "lookfor": "If a pupil can't identify any reason at all, this may signal deeper disengagement needing wider pastoral involvement, not just mentoring.",
         "resources": [
+          "Push/pull factor card set",
           "Reasons-to-be-here mapping sheet"
         ],
         "home": "Ask what or who the pupil is looking forward to seeing at school this week, and encourage that connection specifically.",
@@ -2020,6 +2021,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those did you already know, and which was new?'\n2. Pupil picks one privacy setting from the checklist to check this week.",
         "lookfor": "Some pupils feel reporting will make things worse (retaliation, being seen as 'snitching'), validate this concern honestly rather than dismissing it, and discuss how reporting privately differs from confronting someone publicly.",
         "resources": [
+          "Cyberbullying scenario sort cards",
           "Block, report, save evidence step card",
           "Privacy settings checklist"
         ],
