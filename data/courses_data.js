@@ -1403,11 +1403,11 @@ module.exports = [
     "weeks": [
       {
         "title": "Naming the anger, not just the blow-up",
-        "objective": "Pupil can name at least three different intensities of anger (for example irritated, frustrated, furious) rather than one label.",
+        "objective": "Pupil can name at least three different intensities of anger (for example annoyed, frustrated, furious) rather than one label.",
         "checkin": "1. Rapport chat, then ask for a mood number from one to five.\n2. Ask: 'what would make that number one higher?'\n3. Record the number — it's the week five comparison.",
-        "input": "1. Show the anger thermometer and read the levels from irritated up to enraged.\n2. Ask: 'how many different words do you use for angry?' Most people use one, for all of it.\n3. Explain why that matters: you can act on 'irritated', but not on 'enraged'.\n4. Show the feeling word cards, and explain that each one belongs somewhere on the thermometer.",
+        "input": "1. Show the anger thermometer and read the levels from calm up to furious.\n2. Ask: 'how many different words do you use for angry?' Most people use one, for all of it.\n3. Explain why that matters: you can act on 'annoyed', but not on 'furious'.\n4. Show the feeling word cards, and explain that each one belongs somewhere on the thermometer.",
         "activity": "1. Ask: 'which of these words have you actually felt?' Pupil picks the ones that apply and places each on the thermometer, coolest at the bottom.\n2. Go through two or three and ask: 'when was the last time you felt that one?'\n3. Point out the gap between the words they normally use and the words they've just placed.",
-        "reflect": "1. Ask: 'which word do you reach for most?'\n2. Pupil agrees to name one moment of irritation to themselves this week, without having to do anything about it.",
+        "reflect": "1. Ask: 'which word do you reach for most?'\n2. Pupil agrees to name one moment of annoyance to themselves this week, without having to do anything about it.",
         "lookfor": "Watch for pupils who can only access 'fine' or 'angry' as options, model naming smaller, milder feelings first to widen the vocabulary.",
         "resources": [
           "Anger thermometer",
@@ -2626,7 +2626,7 @@ module.exports = [
         "title": "My safety plan",
         "objective": "Pupil knows at least two trusted adults and one reporting route, at school and beyond, if the pupil ever needs help.",
         "checkin": "1. Review the five weeks in general terms.\n2. Ask what's felt most useful.",
-        "input": "1. Ask: 'what's the main thing you'd take away from these five weeks?'\n2. Show the reporting routes information card and go through it properly: the designated safeguarding lead by name, Childline on 0800 1111, and the police.\n3. Say that reporting about a friend is allowed, and often how it starts.\n4. Say the card gets filled in today and leaves with them, not kept in a file here.",
+        "input": "1. Ask: 'what's the main thing you'd take away from these five weeks?'\n2. Show the reporting routes information card and go through it properly: whoever leads on safeguarding in your school, by name, Childline on 0800 1111, and the police.\n3. Say that reporting about a friend is allowed, and often how it starts.\n4. Say the card gets filled in today and leaves with them, not kept in a file here.",
         "activity": "1. Ask: 'who are two adults you'd go to?'\n2. Ask: 'do you know who leads on safeguarding here, by name?' If not, tell them now.\n3. Now write both onto the safety card, with Childline's number from the reporting routes card.\n4. Ask: 'where will you keep this so it's there but private?'",
         "reflect": "1. Ask: 'which of those adults would you actually go to first?'\n2. The card is theirs — nothing needs to happen with it.",
         "lookfor": "This session should end on a note of empowerment and clear, practical routes to help, not fear. If any concerns have emerged across the five weeks, ensure your school's safeguarding lead has been informed through the proper channel, separately from this course record.",
@@ -2649,7 +2649,7 @@ module.exports = [
         "checkin": "1. Twenty minutes on your own, after the course. Read their sheets below first.\n2. Why this pupil was referred, and what was happening at the time.\n3. Then where they were when the course started, in their own words.",
         "input": "1. What this pupil finds hard, and the first thing a teacher would notice.\n2. Use their words from their own sheets, not yours.\n3. Be specific. Not 'struggles in lessons', but 'being asked to read out loud'.",
         "activity": "1. Who this pupil goes to, and what that person should know.\n2. Add what the pupil says feels safe, and what doesn't.\n3. Be specific about how each person is contacted, not just that they exist.",
-        "reflect": "1. What should happen if this pupil discloses something new.\n2. Name the designated safeguarding lead, and what to do in the first five minutes.\n3. Note anything already reported, and to whom.",
+        "reflect": "1. What should happen if this pupil discloses something new.\n2. Name whoever leads on safeguarding in your school, and what to do in the first five minutes.\n3. Note anything already reported, and to whom.",
         "lookfor": "A plan that is short, specific and owned by someone. Vague plans and long plans both get ignored.",
         "home": "1. Two or three lines on what the course did: what changed, what did not, and whether it met what they were referred for.\n2. Then who is doing what, and by when. Name people, not job titles.\n3. Agree it with your line manager, then share it with the pupil's class teachers and whoever leads on pastoral support. Bring it to the follow-up chat.",
         "resources": [],
