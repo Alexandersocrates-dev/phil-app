@@ -1299,14 +1299,24 @@
       },
       {
         "name": "Time balance chart",
-        "body": "Sort a typical week's activities into balance.",
+        "body": "Sort a typical week into the three columns, one activity per box. Use the activity cards, and add anything of your own. Build the real week, not an ideal one.",
         "table": {
           "headers": [
             "Caring",
             "School",
-            "Personal time"
+            "Time that's yours"
           ],
           "rows": [
+            [
+              "Example: helping with medication",
+              "Homework",
+              "Seeing friends"
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
             [
               "",
               "",
