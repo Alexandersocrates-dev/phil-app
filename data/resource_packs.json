@@ -216,52 +216,13 @@
     "items": [
       {
         "name": "Anger thermometer",
-        "body": "Most people use one word for all of this. Five levels, coolest at the top. Point at where you are.",
+        "body": "Most people use one word for all of this. Five levels, coolest at the bottom. Point at where you are.",
         "aliases": [
           "Anger thermometer handout"
         ],
         "tone": "red",
         "selectable": true,
-        "table": {
-          "headers": [
-            "Level",
-            "Word for it",
-            "What it feels like",
-            "What to do"
-          ],
-          "rows": [
-            [
-              "1-2",
-              "Calm",
-              "Totally settled",
-              "Nothing needed"
-            ],
-            [
-              "3-4",
-              "Annoyed",
-              "Slightly irritated",
-              "You can act on this one"
-            ],
-            [
-              "5-6",
-              "Frustrated",
-              "Building now",
-              "The gap is still open"
-            ],
-            [
-              "7-8",
-              "Angry",
-              "Hard to think past it",
-              "STOP goes here"
-            ],
-            [
-              "9-10",
-              "Furious",
-              "About to lose control",
-              "Leave, then talk later"
-            ]
-          ]
-        }
+        "figure": "thermometer"
       },
       {
         "name": "Feeling word cards",

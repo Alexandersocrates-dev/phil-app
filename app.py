@@ -17,6 +17,7 @@ import re
 
 import db
 import body_map
+import thermometer
 import auth as authlib
 import billing
 from framework import Router, Request, Response, render, redirect, pdf_response, make_wsgi_app
@@ -289,13 +290,20 @@ def mark_what_needs_printing(week, items):
 
 
 def attach_figures(items):
-    """Give a body-map resource the geometry both renderers draw from."""
+    """Give a body-map or thermometer resource the geometry both renderers draw from."""
     for item in items:
         if body_map.is_body_map(item):
             rows = (item.get("checklist") or {}).get("items") or []
             item["figure_points"] = body_map.points_for(rows)
             item["figure_parts"] = body_map.PARTS
             item["figure_view"] = (body_map.VIEW_W, body_map.VIEW_H)
+        # The thermometer needs nothing from the item - the tube is the same
+        # picture every time - so it gets the finished SVG plus the bands for
+        # the level names beside it. The uid keeps two figures on one page from
+        # sharing a clipPath id.
+        if thermometer.is_thermometer(item):
+            item["therm_svg"] = thermometer.svg(uid="therm-%s" % item.get("slug", ""))
+            item["therm_bands"] = thermometer.bands()
     return items
 
 

@@ -57,6 +57,25 @@
     {%- endfor %}</tr>{% endfor %}
   </table>
   {% endif %}
+  {# The anger thermometer, drawn rather than tabulated. Same idea as the body
+     map above: five rows asked a pupil to hold "7-8" and "about to lose
+     control" together in their head, and a scale lets them point at a height
+     instead. The tube comes from thermometer.py so the screen and the printed
+     pack draw one picture, and the levels sit beside it in HTML so they wrap
+     like the rest of a resource instead of being baked in at a fixed size. #}
+  {% if item.therm_svg %}
+  <div class="therm">
+    <div class="therm-fig-wrap">{{ item.therm_svg|safe }}</div>
+    <ol class="therm-levels">
+      {%- for b in item.therm_bands|reverse %}
+      <li class="therm-level{% if b.hot %} is-hot{% endif %}">
+        <span class="therm-name">{{ b.name }} ({{ b.span }})</span>
+        <span class="therm-detail">{{ b.feels }} &mdash; {{ b.do }}</span>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+  {% endif %}
   {% if item.form %}
   <table class="res-table">
     {% for f in item.form.fields %}{% set fk = 'f' ~ loop.index0 %}
@@ -694,6 +713,26 @@ for (var i = 0; i < group.length; i++) {
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
+/* The anger thermometer. Sized off one number: the box is 100 x 200, so the
+   figure's height is twice its width. The levels sit beside it rather than
+   inside the drawing, so they wrap like the rest of a resource. */
+.therm{--fig-w:132px;--fig-h:calc(var(--fig-w) * 2);display:flex;
+  align-items:flex-start;gap:24px;flex-wrap:wrap;margin:8px 0 4px;}
+.therm-fig-wrap{flex:0 0 var(--fig-w);}
+.therm-fig{display:block;width:100%;height:auto;}
+/* thermometer.label_track(): the tube starts 5% down the figure and is 71% of
+   its height, because the bulb takes the rest. A percentage has no definite
+   height to resolve against inside a flex row, hence calc off --fig-h. */
+.therm-levels{flex:1;min-width:180px;margin:calc(var(--fig-h) * .05) 0 0;
+  height:calc(var(--fig-h) * .71);display:grid;grid-template-rows:repeat(5,1fr);
+  align-items:center;padding-left:0;list-style:none;font-size:13px;}
+.therm-level{display:flex;flex-direction:column;gap:1px;}
+.therm-name{font-weight:700;color:var(--ink);}
+.therm-level.is-hot .therm-name{color:#A32D2D;}
+.therm-detail{color:var(--muted);}
+/* Two columns are kept on a narrow screen: stacking would break the alignment
+   between a level and its band, which is the point of the picture. */
+@media (max-width:520px){ .therm{--fig-w:104px;gap:14px;} }
 .res-check{margin:6px 0 0;padding-left:0;font-size:13px;list-style:none;}
 /* The bullet was a third mark on a row that already has a tick box and a
    number. */
