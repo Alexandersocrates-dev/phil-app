@@ -50,6 +50,7 @@ module.exports = [
         "reflect": "1. Ask: 'which trigger comes up most at school?'\n2. Pupil picks one trigger to track this week, and marks a tally on the card each time it happens.",
         "lookfor": "Some pupils find it easier to identify triggers through drawing or examples from TV or games rather than direct discussion, adapt the format if needed.",
         "resources": [
+          "Body map handout",
           "Trigger list",
           "Tally tracking card"
         ],
@@ -194,6 +195,7 @@ module.exports = [
         "reflect": "1. Ask: 'was there a moment this week where a different choice might have gone better?'\n2. No blame — if nothing comes to mind, that's a fine answer too.",
         "lookfor": "Keep the tone curious, not punitive, pupils who feel judged will disengage from this exercise fast.",
         "resources": [
+          "Notice-and-note tracking card",
           "Choices game scenario cards",
           "Possible outcome cards"
         ],
@@ -1430,6 +1432,7 @@ module.exports = [
         "lookfor": "Some pupils may reveal home stressors while mapping triggers, handle sensitively and follow your school's safeguarding procedure if anything raises concern.",
         "resources": [
           "Anger thermometer",
+          "Feeling word cards",
           "Triggers map"
         ],
         "home": "If something at home seems to be a trigger, ask gently rather than dismissing it, 'I noticed that seemed to frustrate you, want to tell me about it?'",
@@ -1895,6 +1898,7 @@ module.exports = [
         "reflect": "1. Ask: 'who would you go to if things got harder?'\n2. Nothing to do with that yet — knowing the name is enough for now.",
         "lookfor": "Some pupils worry that accessing support means their family will be seen as failing, or that they'll be taken away from caring duties they value, reassure that support is about helping the whole family, not removing the pupil's role.",
         "resources": [
+          "What helps me list template",
           "My support network map",
           "Local young carers services info card"
         ],
