@@ -1861,9 +1861,9 @@ module.exports = [
         "title": "Balancing my time",
         "objective": "Pupil can identify where caring responsibilities and school demands compete, and name one area of tension.",
         "checkin": "1. Ask: 'did anything about the timeline stay with you?'\n2. Ask: 'was last week a normal week, or an unusual one?'\n3. Both are worth knowing — caring load rarely holds steady.",
-        "input": "1. Explain time balance as three parts: caring, school, and time that's theirs.\n2. Ask: 'which of those three usually gets squeezed?' It happens gradually, without anyone deciding it.\n3. Say you'll build their actual week in a moment, not an ideal one.\n4. Don't suggest doing less caring. That isn't within their control and saying so damages trust.",
-        "activity": "1. Ask: 'what does a week look like for you?' Pupil sorts the activity cards into the three columns of the balance chart: caring, school, and time that's yours.\n2. Ask: 'which column is fullest?'\n3. Ask: 'which one gets squeezed when something goes wrong at home?'\n4. If the third column is empty, name that out loud without making it a problem to fix today.",
-        "reflect": "1. Ask: 'which part feels most squeezed at the moment?'\n2. Pupil picks one moment this week to notice when time felt tight.",
+        "input": "1. Explain time balance as three parts: caring, school, and time that's theirs.\n2. Ask: 'which of those three usually loses out?' It happens gradually, without anyone deciding it.\n3. Say you'll build their actual week in a moment, not an ideal one.\n4. Don't suggest doing less caring. That isn't within their control and saying so damages trust.",
+        "activity": "1. Ask: 'what does a week look like for you?' Pupil sorts the activity cards into the three columns of the balance chart: caring, school, and time that's yours.\n2. Ask: 'which column is fullest?'\n3. Ask: 'which one loses out when something goes wrong at home?'\n4. If the third column is empty, name that out loud without making it a problem to fix today.",
+        "reflect": "1. Ask: 'which part feels most under pressure at the moment?'\n2. Pupil picks one moment this week to notice when time felt tight.",
         "lookfor": "Homework and coursework deadlines are often the first thing to slip for young carers, flag this gently as something the school can help adjust, not something to feel guilty about.",
         "resources": [
           "My day timeline template",
