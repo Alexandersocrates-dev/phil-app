@@ -1450,6 +1450,7 @@ module.exports = [
         "reflect": "1. Ask: 'what made pausing hard in the role-play?'\n2. Pupil agrees to try STOP once this week for real, even somewhere it barely matters.",
         "lookfor": "Strategies only work if rehearsed when calm, resist introducing them for the first time mid-incident.",
         "resources": [
+          "Triggers map",
           "STOP technique card",
           "Role-play scenario cards"
         ],
@@ -1471,6 +1472,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those phrases felt most like you?'\n2. Pupil agrees to use it once at school this week.",
         "lookfor": "Some pupils confuse assertiveness with rudeness, reinforce that tone and body language matter as much as the words chosen.",
         "resources": [
+          "STOP technique card",
           "Passive / aggressive / assertive cards",
           "Assertive phrase bank"
         ],
