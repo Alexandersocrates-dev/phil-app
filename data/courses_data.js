@@ -1064,7 +1064,7 @@ module.exports = [
         "resources": [
           "Restorative conversation prompt card"
         ],
-        "home": "If there's been a difficult moment at home, model a short repair conversation yourself so the pupil can see how it works.",
+        "home": "If there's been a difficult moment at home, model a short restorative conversation yourself so the pupil can see how it works.",
         "timing": {
           "checkin": 5,
           "input": 12,
@@ -1324,12 +1324,12 @@ module.exports = [
       },
       {
         "title": "Making it right",
-        "objective": "Pupil understands the impact of a past incident and takes part in a repair conversation or action.",
+        "objective": "Pupil understands the impact of a past incident and either takes part in a restorative conversation or agrees an action that puts it right.",
         "checkin": "1. Ask: 'did you use one of the other outlets, and where?'\n2. If they did, ask: 'what happened to the urge afterwards?'\n3. If they didn't, ask: 'was it not available, or did it not come to mind?'",
         "input": "1. Explain repair as understanding real impact: what it cost, who fixed it, how long it took.\n2. Be concrete — a number and a name land better than 'people were upset'.\n3. Show the restorative conversation prompt card and read the questions.\n4. Ask: 'what could putting it right look like?' Keep it achievable.",
         "activity": "1. Ask: 'which incident would be worth putting right?'\n2. Work through the restorative prompts so they know what they'll say.\n3. Ask: 'what would actually put it right — saying something, helping fix it?'\n4. Arrange it if the other person agrees, or rehearse it fully with you.",
         "reflect": "1. Ask: 'how did that feel compared to just being told off?'\n2. If it felt worse, say so honestly — repair is harder than punishment, and that's the point.",
-        "lookfor": "Repair should be proportionate and pupil-led where possible, not punitive labour, check school policy on this before agreeing specific actions.",
+        "lookfor": "Whatever is agreed should be proportionate and chosen by the pupil where possible. It is not a punishment by another name. Check the school's policy before agreeing anything specific.",
         "resources": [
           "Restorative conversation prompt card"
         ],
