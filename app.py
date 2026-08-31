@@ -1290,13 +1290,25 @@ def course_resources_pdf(request):
     if not course:
         return Response("Course not found", status="404 Not Found")
     packs = _load_resource_packs()
+    # Keyed by module number first. Matching on the title alone meant renaming a
+    # course silently took its whole resource pack away — module 20 was
+    # "Moving up: primary-to-secondary and other school transitions" against a
+    # pack still called "Moving up: transition support", and the pack 404ed.
+    # The title is kept as a fallback for a course whose module number has no
+    # pack of its own.
     entry = None
     course_num = None
-    for k, v in packs.items():
-        if v.get("title") == course["title"]:
-            entry = v
-            course_num = k
-            break
+    num = course["module_number"] if "module_number" in course.keys() else None
+    if num is not None:
+        key = "%02d" % int(num)
+        if key in packs:
+            entry, course_num = packs[key], key
+    if not entry:
+        for k, v in packs.items():
+            if v.get("title") == course["title"]:
+                entry = v
+                course_num = k
+                break
     if not entry:
         return Response("Resource pack not available for this course yet", status="404 Not Found")
 

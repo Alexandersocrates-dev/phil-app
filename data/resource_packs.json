@@ -2720,7 +2720,7 @@
       },
       {
         "name": "Private note template",
-        "body": "A note that doesn't need to be shared.",
+        "body": "A note you keep. Your mentor won't read it or file it — unless something in it worries them about your safety, and they'd tell you who they have to speak to.",
         "form": {
           "fields": [
             "Something I'm feeling today",
@@ -2801,7 +2801,7 @@
       },
       {
         "name": "Letter-writing prompt card",
-        "body": "Only if you'd like to. Nobody reads this — not your mentor, not your family, not the file.",
+        "body": "Only if you'd like to. This isn't filed and isn't read — unless something in it worries your mentor about your safety, and they'd tell you who they have to speak to.",
         "tone": "teal",
         "table": {
           "headers": [
@@ -3188,7 +3188,7 @@
     "missing": []
   },
   "20": {
-    "title": "Moving up: transition support",
+    "title": "Moving up: primary-to-secondary and other school transitions",
     "items": [
       {
         "name": "Worries and hopes chart",
