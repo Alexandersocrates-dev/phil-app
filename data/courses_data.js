@@ -2342,7 +2342,7 @@ module.exports = [
       {
         "title": "Communicating my needs",
         "objective": "Pupil can rehearse asking for a sensory break or accommodation using the pupil's own words or a signal card.",
-        "checkin": "1. Ask: 'did you use the tool, and where?'\n2. Ask: 'did anyone comment, and how did that feel?'\n3. Being noticed is often the real barrier, not the tool itself.",
+        "checkin": "1. Ask: 'which tool from your toolkit list did you use, and where?'\n2. Ask: 'did anyone comment, and how did that feel?'\n3. Being noticed is often the real barrier, not the tool itself.",
         "input": "1. Explain the point of a signal: telling staff you need a break without explaining yourself mid-lesson.\n2. Ask: 'would you rather explain, or just hold something up?' Let them choose the form — card, phrase or gesture.\n3. Say you'll practise it here, so the first real use isn't the first attempt.\n4. Agree who will tell their teachers, and by when.",
         "activity": "1. Get out the signal or exit card template and the role-play scenario cards.\n2. Pupil designs their signal or exit card — it has to be something they'd hold up in front of others.\n3. Role-play a busy moment: they use the card, you respond.\n4. Do it again with you not noticing at first, so they've practised repeating it.\n5. Ask: 'which teacher would be easiest to try this with?'",
         "reflect": "1. Ask: 'was that usable, or too obvious?' Change it now if it's the second.\n2. Pupil agrees to use it once this week if the moment comes up.",
