@@ -2160,32 +2160,78 @@
     "items": [
       {
         "name": "Sensory profile scale",
-        "body": "How does each sense feel to you at school? Take a reading now and again in week five.",
+        "body": "One sense at a time: fine, bearable, or too much? Mark week one now, and the same sheet again in week five.",
         "tone": "blue",
         "cards": [
           {
             "cat": "1",
-            "title": "Comfortable",
+            "title": "Fine",
             "art": "art-level-1",
             "text": "I barely notice it.",
             "note": ""
           },
           {
             "cat": "2",
-            "title": "Tolerable",
+            "title": "Bearable",
             "art": "art-level-3",
             "text": "I notice it, but I can carry on.",
             "note": "Watch this one on a bad day"
           },
           {
             "cat": "3",
-            "title": "Overwhelming",
+            "title": "Too much",
             "art": "art-overload",
             "text": "I can't think past it.",
             "note": "This is what the toolkit is for"
           }
         ],
-        "source": "Sensory sensitivities to noise, lighting and personal space are named in NICE guideline CG170, Autism spectrum disorder in under 19s, recommendation 1.1.9. The three-point wording is Phil's, so a pupil can answer it without a clinician."
+        "source": "Sensory sensitivities to noise, lighting and personal space are named in NICE guideline CG170, Autism spectrum disorder in under 19s, recommendation 1.1.9. The three-point wording is Phil's, so a pupil can answer it without a clinician.",
+        "table": {
+          "headers": [
+            "Sense",
+            "Week 1",
+            "Week 5",
+            "What exactly is it?"
+          ],
+          "rows": [
+            [
+              "Sound",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Light",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Touch",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Smell",
+              "",
+              "",
+              ""
+            ],
+            [
+              "Being crowded",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Sense-by-sense examples card",
