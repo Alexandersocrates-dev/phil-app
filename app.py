@@ -2975,6 +2975,24 @@ def session_submit(request):
         # reaches the reports already structured, instead of as one long block
         # the next teacher has to unpick.
         staff_session = bool(week["staff_only"]) if "staff_only" in week.keys() else False
+
+        # Both ratings feed the impact report's change-over-time figure, which is
+        # last session minus first. A skipped rating doesn't lower the number, it
+        # takes the pupil out of it — so a report to governors quietly rests on
+        # whoever remembered. Required on the pupil sessions; the staff write-up
+        # has no pupil in the room to rate.
+        if not staff_session:
+            mood = (request.field("mood_rating", "") or "").strip()
+            engagement = (request.field("engagement_rating", "") or "").strip()
+            missing = [label for value, label in
+                       ((mood, "how the pupil seemed"), (engagement, "how well they took part"))
+                       if value not in {"1", "2", "3", "4", "5"}]
+            if missing:
+                return with_flash(
+                    f"/mentor/session/{enrolment_id}",
+                    "Before saving, rate " + " and ".join(missing) +
+                    ". Both go into the impact report.", "error")
+
         if staff_session:
             # Three things a reader wants, in order: why this pupil, what was
             # done, what happens now. The five boxes group into those, so the
