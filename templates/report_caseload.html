@@ -6,8 +6,9 @@
 <header class="ml-head">
   <span class="ml-eyebrow">Reports</span>
   <h1>{{ title }}</h1>
-  <p class="ml-lede">Where every course is up to, one row per pupil. Progress and dates only &mdash;
-  no session notes and nothing a pupil wrote.</p>
+  <p class="ml-lede">{% if by_mentor is defined %}Who each mentor is working with, and where every
+  course is up to.{% else %}Where every course is up to, one row per pupil.{% endif %}
+  Progress and dates only &mdash; no session notes and nothing a pupil wrote.</p>
 </header>
 
 <div class="ml-layout">
@@ -24,6 +25,21 @@
           {% endfor %}
         </select>
         {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
+        {% if selected_term is defined %}<input type="hidden" name="term" value="{{ selected_term }}">{% endif %}
+      </form>
+      {% endif %}
+
+      {% if terms %}
+      <form method="get" action="{{ year_action }}" class="ctl-field">
+        <label class="ctl-label" for="term">Term</label>
+        <select class="ctl" id="term" name="term" onchange="this.form.submit()">
+          <option value="all" {% if selected_term == 'all' %}selected{% endif %}>Whole year</option>
+          {% for t in terms %}
+          <option value="{{ t.id }}" {% if selected_term == t.id|string %}selected{% endif %}>{{ t.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="hidden" name="year" value="{{ selected_year }}">
+        {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
       </form>
       {% endif %}
 
@@ -37,10 +53,13 @@
           {% endfor %}
         </select>
         <input type="hidden" name="year" value="{{ selected_year }}">
+        {% if selected_term is defined %}<input type="hidden" name="term" value="{{ selected_term }}">{% endif %}
       </form>
       {% endif %}
-      <p class="ml-filter-note">A course belongs to the academic year its sessions ran in.
-      Only years with recorded sessions are listed.</p>
+      <p class="ml-filter-note">A course belongs to the academic year and term its sessions ran in, so
+      one that spans a half-term shows in both.{% if terms is defined and not terms %} Term dates are
+      set on <a href="/admin/terms">term dates</a>.{% endif %}
+      Only periods with recorded sessions are listed.</p>
     </div>
 
     {% if not pupils %}
@@ -50,9 +69,9 @@
     </div>
     {% else %}
 
-    <div class="ml-list">
-      {% for p in pupils %}
-      <details class="card ml-pupil" {% if pupils|length == 1 %}open{% endif %}>
+    {% macro pupil_card(p, open_it, with_mentor) %}
+      <details class="card ml-pupil" {% if open_it %}open{% endif %}>
+      <details class="card ml-pupil" {% if open_it %}open{% endif %}>
                 {# The flex row lives in a span inside the summary, not on the summary
            itself: display:flex on a <summary> is refused by older engines and by
            some print renderers, which stacks the row into separate lines. #}
@@ -75,7 +94,7 @@
               <thead>
                 <tr>
                   <th class="c-course">Course</th>
-                  {% if show_mentor %}<th class="c-tight">Mentor</th>{% endif %}
+                  {% if with_mentor %}<th class="c-tight">Mentor</th>{% endif %}
                   <th class="c-tight">Started</th>
                   <th class="c-tight">Expected end</th>
                   <th class="c-tight">Progress</th>
@@ -88,7 +107,7 @@
                 {% for r in p.courses %}
                 <tr>
                   <td class="c-course">{{ r.course }}</td>
-                  {% if show_mentor %}<td class="c-tight">{{ r.mentor }}</td>{% endif %}
+                  {% if with_mentor %}<td class="c-tight">{{ r.mentor }}</td>{% endif %}
                   <td class="c-tight">{{ r.started }}</td>
                   <td class="c-tight">{{ r.scheduled_end }}</td>
                   <td class="c-tight">{{ r.progress }}</td>
@@ -106,7 +125,21 @@
           </div>
         </div>
       </details>
+    {% endmacro %}
+
+    <div class="ml-list">
+      {% if by_mentor is defined %}
+      {% for g in by_mentor %}
+      <section class="ml-mentor">
+        <h2 class="ml-mentor-name">{{ g.mentor }}</h2>
+        <p class="ml-mentor-count">{{ g.total }} pupil{{ '' if g.total == 1 else 's' }}
+          &middot; {{ g.active }} active &middot; {{ g.completed }} completed</p>
+        {% for p in g.pupils %}{{ pupil_card(p, g.pupils|length == 1, false) }}{% endfor %}
+      </section>
       {% endfor %}
+      {% else %}
+      {% for p in pupils %}{{ pupil_card(p, pupils|length == 1, show_mentor) }}{% endfor %}
+      {% endif %}
     </div>
     {% endif %}
   </main>
@@ -115,9 +148,10 @@
     <div class="card ml-panel">
       <span class="ml-eyebrow">Download</span>
       <h2>The whole list</h2>
-      <p class="ml-panel-period">{{ 'All time' if selected_year == 'all' else selected_year }}</p>
-      <p class="ml-panel-body">One line per course: start date, expected end, progress, whether a
-      certificate was issued, and where the follow-up chat stands.</p>
+      <p class="ml-panel-period">{{ period if period is defined else ('All time' if selected_year == 'all' else selected_year) }}</p>
+      <p class="ml-panel-body">One line per course: mentor, pupil, course, start date, expected end,
+      which session they are on, whether a certificate was issued, and where the follow-up chat
+      stands.</p>
       <div class="ml-dl">
         <a class="btn btn-primary btn-sm" href="{{ pdf_url }}" target="_blank" rel="noopener">PDF</a>
         {% if xlsx_url %}<a class="btn btn-secondary btn-sm" href="{{ xlsx_url }}">Excel</a>{% endif %}
@@ -147,6 +181,12 @@
 .ml-filter-note{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
 
 .ml-list{display:flex;flex-direction:column;gap:12px;}
+/* The mentor heads their own group, so their name is said once rather than
+   repeated down a column of every pupil they see. */
+.ml-mentor{display:flex;flex-direction:column;gap:12px;}
+.ml-mentor + .ml-mentor{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);}
+.ml-mentor-name{font-size:16px;margin:0;letter-spacing:-.01em;}
+.ml-mentor-count{margin:-8px 0 0;font-size:12px;color:var(--muted);}
 .ml-pupil{margin:0;padding:0 24px;}
 .ml-summary{display:flex;align-items:center;gap:12px;cursor:pointer;list-style:none;padding:16px 0;}
 .ml-summary::-webkit-details-marker{display:none;}

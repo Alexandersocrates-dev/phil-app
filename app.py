@@ -3921,13 +3921,13 @@ def admin_reports_chooser(request):
         {"title": "Impact report", "desc": "How mentoring is going across the school: pupils supported, completion, change in engagement, and follow-ups outstanding. For governors and SLT. Choose any period.",
          "href": "/admin/reports/impact", "icon": _ICON_CHART,
          "bg": "var(--amber-light)"},
-        {"title": "Whole-establishment report", "desc": "Every pupil, who mentors them, course(s), sessions completed and progress.",
-         "href": "/admin/reports/full", "icon": _ICON_LIST, "bg": "var(--teal-light)"},
+        {"title": "Establishment mentoring list", "desc": "Who each mentor is working with: pupil, course, "
+                                                          "which session they are on, and whether a certificate is out. "
+                                                          "Filter by academic year, term or mentor. PDF or spreadsheet.",
+         "href": "/admin/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
         {"title": "Pupil report", "desc": "Everything on one pupil: every course, session by session, "
                                           "with their goals and the course summaries.",
          "href": "/admin/reports/pupils", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
-        {"title": "Mentor reports", "desc": "Choose a mentor, then download their mentoring list as a PDF or spreadsheet.",
-         "href": "/admin/reports/caseload", "icon": _ICON_USERS, "bg": "var(--amber-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards, intro=None, note=None,
                   flash=flash_from_query(request))
@@ -4173,10 +4173,26 @@ def mentee_report_pdf_download(request):
     return pdf_response(path, "course-report.pdf")
 
 
-def period_label(year):
+def period_label(year, term_label=None):
     """What a report says it covers. Printed in the header, so a PDF found in a
-    drawer in three years still says which year it is about."""
-    return "All time" if year == "all" else f"Academic year {year}"
+    drawer in three years still says which period it is about."""
+    base = "All time" if year == "all" else f"Academic year {year}"
+    return f"{base} \u2014 {term_label}" if term_label else base
+
+
+def chosen_term(request, conn, establishment_id):
+    """(choice, from, to, label, terms) for a report's term picker.
+
+    Terms are the ones the school entered on /admin/terms, so a report is cut
+    by the dates that school actually works to rather than a guess. Keyed by id,
+    not name: every year has an "Autumn 1".
+    """
+    terms = school_terms(conn, establishment_id)
+    choice = request.query.get("term", ["all"])[0]
+    for t in terms:
+        if choice == str(t["id"]):
+            return str(t["id"]), t["date_from"], t["date_to"], t["name"], terms
+    return "all", None, None, None, terms
 
 
 def _year_filter(year_from, year_to):
@@ -4196,7 +4212,7 @@ def _year_filter(year_from, year_to):
 
 
 def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False,
-                   year_from=None, year_to=None):
+                   year_from=None, year_to=None, term_from=None, term_to=None):
     query = """
         SELECT enrolments.id, enrolments.start_date, enrolments.current_week, enrolments.status,
                enrolments.review_date, enrolments.review_done,
@@ -4219,6 +4235,9 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
     year_sql, year_args = _year_filter(year_from, year_to)
     query += year_sql
     params += year_args
+    term_sql, term_args = _year_filter(term_from, term_to)
+    query += term_sql
+    params += term_args
     query += " ORDER BY enrolments.status, pupils.surname"
     rows = conn.execute(query, params).fetchall()
 
@@ -4259,6 +4278,32 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
             row["mentor"] = r["mentor_name"]
         result.append(row)
     return result
+
+
+def _caseload_by_mentor(rows):
+    """The same rows, grouped under the mentor who runs them.
+
+    An admin opens this to ask "who is each of my staff mentoring?" A list led
+    by pupil names answers a different question, and leaves the mentor's name
+    repeated down a column instead of at the head of their own group.
+    """
+    mentors, by_name = [], {}
+    for row in rows:
+        name = row.get("mentor") or "Unassigned"
+        group = by_name.get(name)
+        if group is None:
+            group = {"mentor": name, "rows": []}
+            by_name[name] = group
+            mentors.append(group)
+        group["rows"].append(row)
+    for group in mentors:
+        # A mentor's own pupils are still grouped, so someone on three courses
+        # is one person with three courses rather than three children.
+        group["pupils"] = _caseload_grouped(group["rows"])
+        group["total"] = len(group["pupils"])
+        group["active"] = sum(1 for r in group["rows"] if r["status"] == "active")
+        group["completed"] = sum(1 for r in group["rows"] if r["status"] == "completed")
+    return sorted(mentors, key=lambda g: g["mentor"].lower())
 
 
 def chosen_year(request, conn, establishment_id):
@@ -4318,7 +4363,7 @@ def mentor_caseload(request):
     suffix = f"?year={year}"
     return render("report_caseload.html", user=user, rows=rows,
                   pupils=_caseload_grouped(rows), show_mentor=False,
-                  title="My mentoring list", pdf_url="/mentor/reports/caseload/pdf" + suffix,
+                  title="Your mentoring list", pdf_url="/mentor/reports/caseload/pdf" + suffix,
                   xlsx_url="/mentor/reports/caseload/xlsx" + suffix,
                   years=years, selected_year=year, year_action="/mentor/reports/caseload",
                   filter_form=None, flash=flash_from_query(request))
@@ -4357,17 +4402,23 @@ def admin_caseload(request):
         ).fetchall()
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
+        term, t_from, t_to, term_label, terms = chosen_term(request, conn, user["establishment_id"])
+        # show_mentor is always on here: the page groups by mentor, and the
+        # spreadsheet wants the column whether or not one mentor is selected.
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"),
-                               year_from=y_from, year_to=y_to)
+                               show_mentor=True, year_from=y_from, year_to=y_to,
+                               term_from=t_from, term_to=t_to)
     finally:
         conn.close()
-    pdf_url = f"/admin/reports/caseload/pdf?mentor_id={mentor_filter}&year={year}"
-    xlsx_url = f"/admin/reports/caseload/xlsx?mentor_id={mentor_filter}&year={year}"
+    suffix = f"?mentor_id={mentor_filter}&year={year}&term={term}"
     return render("report_caseload.html", user=user, rows=rows,
-                  pupils=_caseload_grouped(rows), show_mentor=(mentor_filter == "all"),
-                  title="Establishment mentoring list", pdf_url=pdf_url, xlsx_url=xlsx_url, mentors=mentors,
+                  pupils=_caseload_grouped(rows), by_mentor=_caseload_by_mentor(rows),
+                  show_mentor=True,
+                  title="Establishment mentoring list",
+                  pdf_url="/admin/reports/caseload/pdf" + suffix,
+                  xlsx_url="/admin/reports/caseload/xlsx" + suffix, mentors=mentors,
                   years=years, selected_year=year, year_action="/admin/reports/caseload",
+                  terms=terms, selected_term=term, period=period_label(year, term_label),
                   selected_mentor=mentor_filter, flash=flash_from_query(request))
 
 
@@ -4384,14 +4435,15 @@ def admin_caseload_pdf(request):
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
+        term, t_from, t_to, term_label, _terms = chosen_term(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"),
-                               year_from=y_from, year_to=y_to)
+                               show_mentor=True, year_from=y_from, year_to=y_to,
+                               term_from=t_from, term_to=t_to)
     finally:
         conn.close()
-    path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, mentor_filter == "all",
+    path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, True,
                                        f"caseload_admin_{user['establishment_id']}",
-                                       period=period_label(year))
+                                       period=period_label(year, term_label))
     return pdf_response(path, "mentoring-list.pdf")
 
 
@@ -4430,14 +4482,15 @@ def admin_caseload_xlsx(request):
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
+        term, t_from, t_to, term_label, _terms = chosen_term(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
-                               show_mentor=(mentor_filter == "all"),
-                               year_from=y_from, year_to=y_to)
+                               show_mentor=True, year_from=y_from, year_to=y_to,
+                               term_from=t_from, term_to=t_to)
     finally:
         conn.close()
-    path = pdfgen.caseload_report_xlsx(rows, mentor_filter == "all",
+    path = pdfgen.caseload_report_xlsx(rows, True,
                                        f"caseload_admin_{user['establishment_id']}",
-                                       period=period_label(year))
+                                       period=period_label(year, term_label))
     with open(path, "rb") as f:
         data = f.read()
     return Response(
@@ -4447,62 +4500,20 @@ def admin_caseload_xlsx(request):
     )
 
 
-def _full_report_entries(conn, establishment_id, pupil_id=None):
-    query = """
-        SELECT enrolments.id, enrolments.start_date, enrolments.current_week, enrolments.status,
-               pupils.forename, pupils.surname, courses.title as course_title, users.name as mentor_name
-        FROM enrolments
-        JOIN pupils ON pupils.id = enrolments.pupil_id
-        JOIN courses ON courses.id = enrolments.course_id
-        JOIN users ON users.id = enrolments.mentor_id
-        WHERE pupils.establishment_id=?
-    """
-    params = [establishment_id]
-    if pupil_id:
-        query += " AND pupils.id=?"
-        params.append(pupil_id)
-    query += " ORDER BY pupils.surname, enrolments.created_at"
-    rows = conn.execute(query, params).fetchall()
-
-    entries = []
-    for r in rows:
-        weeks = conn.execute(
-            """SELECT weeks.week_number, weeks.title, weeks.objective, session_records.date
-               FROM session_records JOIN weeks ON weeks.id = session_records.week_id
-               WHERE session_records.enrolment_id=? ORDER BY weeks.week_number""",
-            (r["id"],),
-        ).fetchall()
-        reflection = None
-        if r["status"] == "completed":
-            refl_row = conn.execute("SELECT * FROM completion_reflections WHERE enrolment_id=?", (r["id"],)).fetchone()
-            reflection = dict(refl_row) if refl_row else None
-        entries.append({
-            "pupil_name": f"{r['forename']} {r['surname']}",
-            "course_title": r["course_title"],
-            "mentor_name": r["mentor_name"],
-            "start_date": r["start_date"],
-            "current_week": r["current_week"],
-            "status": r["status"],
-            "weeks": [dict(w) for w in weeks],
-            "reflection": reflection,
-        })
-    return entries
-
+# The whole-establishment report is retired. Its rows were the mentoring list
+# with a session-by-session breakdown nobody asked for, and its pupil dropdown
+# was the pupil report under another name. Both survive; this did not. Kept as a
+# redirect so a bookmark or an emailed link still lands somewhere useful.
 
 @router.get("/admin/reports/full")
 def admin_full_report_form(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
-    selected_pupil = request.query.get("pupil_id", ["all"])[0]
-    conn = db.get_conn()
-    try:
-        pupils = conn.execute("SELECT * FROM pupils WHERE establishment_id=? AND status='active' ORDER BY surname",
-                               (user["establishment_id"],)).fetchall()
-    finally:
-        conn.close()
-    return render("report_full.html", user=user, pupils=pupils, selected_pupil=selected_pupil,
-                  flash=flash_from_query(request))
+    pupil_filter = request.query.get("pupil_id", ["all"])[0]
+    if pupil_filter != "all":
+        return redirect(f"/admin/reports/pupils?pupil_id={pupil_filter}")
+    return redirect("/admin/reports/caseload")
 
 
 @router.get("/admin/reports/full/pdf")
@@ -4510,19 +4521,7 @@ def admin_full_report_pdf(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
-    pupil_filter = request.query.get("pupil_id", ["all"])[0]
-    conn = db.get_conn()
-    try:
-        pupil_id = int(pupil_filter) if pupil_filter != "all" else None
-        entries = _full_report_entries(conn, user["establishment_id"], pupil_id)
-        title = "Full mentoring report"
-        if pupil_id:
-            p = conn.execute("SELECT forename, surname FROM pupils WHERE id=?", (pupil_id,)).fetchone()
-            title = f"Full mentoring report - {p['forename']} {p['surname']}" if p else title
-    finally:
-        conn.close()
-    path = pdfgen.full_mentoring_report_pdf(title, entries, f"full_report_{user['establishment_id']}_{pupil_filter}")
-    return pdf_response(path, "full-mentoring-report.pdf")
+    return redirect("/admin/reports/caseload")
 
 
 # --------------------------------------------------------------- phil staff --
