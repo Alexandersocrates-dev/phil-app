@@ -675,12 +675,13 @@ module.exports = [
       {
         "title": "My classroom plan",
         "objective": "Pupil has an agreed, ongoing self-monitoring system shared with the class teacher.",
-        "checkin": "1. Put the week one tally next to this week's and compare.\n2. Ask: 'what do you think made the difference?'\n3. If the number hasn't dropped, ask: 'which lesson is still hardest, and why?'",
+        "checkin": "1. Fill in the week five tally card, then set the week one card beside it and compare.\n2. Ask: 'what do you think made the difference?'\n3. If the number hasn't dropped, ask: 'which lesson is still hardest, and why?'",
         "input": "1. Look back over the things you've tried across the five weeks. Their earlier sheets are in this step if they need reminding.\n2. Say that what they keep doing is going to the next teacher later in this session, so it is worth thinking about now.",
         "activity": "1. Ask: 'which lessons should this carry on in after the course finishes?'\n2. Ask: 'what would make it worth keeping up?' Agree a simple bit of feedback with the teacher.\n3. Now finalise the self-monitoring chart for those lessons.\n4. Agree it with your line manager, then share the chart and the briefing note with the class teacher.",
         "reflect": "1. Ask: 'of everything we've tried, which one will you actually keep doing?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat date, to check whether the classroom system is still being used and is still effective.",
         "resources": [
+          "Tally card (week five)",
           "Tally card",
           "Self-monitoring chart",
           "Teacher briefing note"

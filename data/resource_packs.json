@@ -1273,27 +1273,32 @@
     "items": [
       {
         "name": "My day timeline template",
-        "body": "Map a typical day, including caring tasks.",
+        "body": "Map a typical day, including caring tasks. Week one now, and again in week five.",
         "table": {
           "headers": [
             "Time",
-            "What I'm doing"
+            "Week 1",
+            "Week 5"
           ],
           "rows": [
             [
               "Morning",
+              "",
               ""
             ],
             [
               "School day",
+              "",
               ""
             ],
             [
               "After school",
+              "",
               ""
             ],
             [
               "Evening",
+              "",
               ""
             ]
           ]
@@ -1629,27 +1634,37 @@
     "items": [
       {
         "name": "My digital day map",
-        "body": "Map a typical day's online activity.",
+        "body": "Map a typical day's online activity. Week one now, and the same apps again in week five.",
         "table": {
           "headers": [
             "App or platform",
-            "How it makes me feel"
+            "Week 1: how it makes me feel",
+            "Week 5: how it makes me feel"
           ],
           "rows": [
             [
               "1.",
+              "",
               ""
             ],
             [
               "2.",
+              "",
               ""
             ],
             [
               "3.",
+              "",
               ""
             ],
             [
               "4.",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
               ""
             ]
           ]
@@ -4747,6 +4762,44 @@
         }
       },
       {
+        "name": "Tally card (week five)",
+        "body": "The same count again, five weeks on. Keep the week one card to set beside it.",
+        "table": {
+          "headers": [
+            "Lesson",
+            "Tally",
+            "Total"
+          ],
+          "rows": [
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
+      },
+      {
         "name": "Stop-think-choose technique card",
         "body": "For the moment you notice the urge to call out.",
         "tone": "teal",
@@ -5132,26 +5185,30 @@
     "items": [
       {
         "name": "Focus timeline template",
-        "body": "Mark whether you were on task at each point in the lesson.",
+        "body": "Mark whether you were on task at each point. Week one now, the same sheet again in week five.",
         "table": {
           "headers": [
             "Point in lesson",
-            "On task?",
-            "Notes"
+            "Week 1: on task?",
+            "Week 5: on task?",
+            "What changed"
           ],
           "rows": [
             [
               "Start",
+              "",
               "",
               ""
             ],
             [
               "Middle",
               "",
+              "",
               ""
             ],
             [
               "End",
+              "",
               "",
               ""
             ]
