@@ -1,1 +1,1342 @@
-{"white_paper":[["p","PHIL, PASTORAL MENTORING APP"],["p","White paper"],["p","The missing standard: structuring pastoral mentoring in English secondary schools"],["p","Why pastoral mentoring in English schools, support that reaches far wider than behaviour alone, has grown without structured courses or a training standard, and what Phil, a structured, evidence-informed mentoring app, changes for schools, mentors and pupils."],["p","By Alexander Socrates"],["p","August 2026"],["b",""],["h1","Executive summary"],["p","Almost every secondary school in England now runs some form of one-to-one or small-group mentoring for pupils whose behaviour, engagement or emotional wellbeing needs more support than a form tutor or classroom teacher can give within an ordinary lesson. Yet unlike the National Curriculum that governs what is taught in the classroom, there is no national standard for what happens in a mentoring session, no agreed sequence of content, no shared minimum standard for who delivers it, and no consistent way of showing a governor, an inspector, or a parent what a course of mentoring actually covered."],["p","This is not a fringe issue. Persistent disruptive behaviour is the single most common reason for suspension in England, and disadvantaged pupils and those with special educational needs are suspended and excluded at several times the rate of their peers (DfE, 2025). Ofsted has, since 2019, inspected schools explicitly on pupils' personal development and on behaviour and attitudes, and from November 2025 has folded attendance and behaviour into one of the central evaluation areas on its new report card (Ofsted, 2025). Government has responded with programmes like Behaviour Hubs, which pair schools with strong behaviour cultures with those still building theirs (DfE, 2024). What government guidance has not done, because it is not really government's job to do, is specify what a good mentoring session contains, or set a training standard for the person delivering it."],["p","Phil is built to close that specific gap. It is an app for schools, independent mentors and pupils that provides a ready-made library of five-week mentoring courses across twelve of the most common behaviour and wellbeing presentations in UK secondary schools, each grounded in published DfE and Ofsted guidance and EEF evidence; a structured, mandatory way of recording every session, including a safeguarding step consistent with the culture Keeping Children Safe in Education (KCSIE) asks every member of staff to hold; and a reporting layer that turns a term's worth of mentoring into evidence a school can actually use, for governors, for Ofsted, for parents, and for the pupil's own continuity of support."],["p","This paper sets out the evidence for the gap, what regulators and researchers say about it, and exactly how Phil addresses it, for the school, for the mentor, and for the pupil. Section 3 sets out, course by course, the specific DfE, Ofsted and EEF evidence and national statistics behind each of the twelve courses in the catalogue."],["b",""],["h1","1. The problem: mentoring without structured courses"],["h2","1.1 A role that grew without a standard"],["p","Structured pupil mentoring is not a new idea in English schools. Between 1999 and the mid-2000s, the Excellence in Cities initiative funded around 2,400 school-based \u201clearning mentors\u201d, rising to roughly 3,000, specifically to support pupils at risk of underachieving or disengaging (Wikipedia: Excellence in Cities, drawing on DfES programme records; infed.org). Government's own evaluation at the time found the learning mentor strand to be among the most effective parts of the programme (HMI, Excellence in Cities and Education Action Zones: management and impact). But the role was tied to time-limited, ring-fenced funding rather than embedded as a lasting national entitlement. As that funding wound down and wider school budgets tightened over the following decade, the standardised training and role definition that came with it was not replaced with anything equivalent, schools that still wanted to mentor pupils were left to design their own version of the role from scratch."],["p","The result, two decades later, is that pastoral and mentoring roles have grown again, informally, and largely without a shared standard. Academic research into pastoral support staff working with pupils who have social, emotional and mental health needs found that \u201cdespite the rapid increase in pastoral support staff numbers there are no clear national guidelines or qualifications for these roles\u201d, and that teachers themselves repeatedly asked for more training to prepare them for pastoral work that sits outside their core subject training (Lawson & te Riele, in Pastoral Care in Education, 2021)."],["h2","1.2 A course-content gap, not just a training gap"],["p","The absence of a shared standard is not only about who delivers mentoring, it is about what a mentoring session actually contains. A subject lesson follows a national curriculum with defined content, sequencing and assessment. A mentoring session, by contrast, is frequently improvised by whichever member of staff has been given the pupil, built around their own experience and whatever resources they can find, and rarely written down in a way another colleague could pick up and continue. Two pupils with an almost identical presentation, say, difficulty managing anger after a peer conflict, can receive entirely different content, over a different number of sessions, assessed against no shared objective, depending only on which member of staff is mentoring them and how much time they have that week."],["p","This matters because school-wide behaviour approaches, on their own, do not work for every pupil. The Education Endowment Foundation's guidance report on improving behaviour in schools is explicit that \u201cuniversal systems are unlikely to work for all students\u201d, and that pupils who need more intensive support are better served by a personalised approach, the report cites structured tools such as daily report cards as a well-evidenced example (EEF, Improving Behaviour in Schools: Guidance Report). A personalised approach without structure, though, is not the same as a personalised approach with structure: EEF's own recommendation is for schools to be consistent and clear when embedding a new behaviour strategy, precisely because inconsistency is where personalised support tends to fail."],["h2","1.3 The cost of leaving it unstructured"],["p","The pressure this creates is visible in the national data. In the autumn term of 2024/25 alone, English schools recorded 335,671 suspensions and 3,715 permanent exclusions, a suspension rate of just over 4 per 100 pupils (DfE, Suspensions and permanent exclusions in England: Autumn term 2024/25). Persistent disruptive behaviour remains the most common single reason given. The burden falls unevenly: pupils eligible for free school meals are suspended at more than four times the rate of their peers (9.73 per 100 versus 2.11), and pupils on SEN Support or with an Education, Health and Care Plan are suspended at more than four times the rate of pupils with no identified SEN (11.09 and 10.31 per 100, against 2.46) (DfE, 2025)."],["p","At the same time, the staff being asked to provide pastoral and mentoring support are already stretched. DfE's own Working Lives of Teachers and Leaders survey found that 86 per cent of teachers and leaders reported experiencing work-related stress, with workload the leading cause and pupil behaviour a major contributing factor (DfE, Working Lives of Teachers and Leaders: Wave 4, 2025). Asking already-stretched staff to design, deliver and document mentoring from scratch, session by session, with no shared content to draw on, is not a sustainable way to meet a need that the data shows is significant and unevenly distributed."],["b",""],["h1","2. What Ofsted, the DfE and the evidence base say"],["h2","2.1 Ofsted: behaviour and personal development are inspected, not optional"],["p","Under the Education Inspection Framework that has applied since 2019, Ofsted has judged schools separately on behaviour and attitudes and on personal development, the latter defined explicitly as extending \u201cbeyond the academic, technical or vocational\u201d to cover a pupil's character, resilience, independence and confidence (Ofsted, Education Inspection Framework). From November 2025, Ofsted's new report-card model goes further, combining attendance and behaviour into one of its central evaluation areas, graded on a five-point scale from Urgent Improvement to Exceptional, an explicit acknowledgement that attendance, behaviour and wellbeing are linked, and that a school's ability to support pupils through difficulty is now judged on its own terms, not folded quietly into an overall headline grade (Ofsted, Education Inspection Framework: Report Cards, 2025)."],["p","A structured mentoring offer speaks directly to both of these areas. It gives a school something concrete to describe when an inspector asks how pupils who struggle with behaviour or engagement are supported, and, because Phil's course content addresses named presentations such as anger management, peer conflict and bullying, anxiety and avoidance, and school avoidance, it maps naturally onto the personal-development themes of resilience, confidence and self-regulation that inspectors are asked to consider."],["h2","2.2 DfE: mentoring named, but never specified"],["p","The Department for Education's core behaviour guidance, Behaviour in Schools (February 2024), is explicit that some pupils will need more support than a whole-school behaviour policy provides on its own, and names mentoring, alongside engagement with parents, local partners and other professionals, as an example of that additional support (DfE, Behaviour in Schools: Advice for Headteachers and School Staff, February 2024). What the guidance does not do, deliberately, is specify what that mentoring should contain, how long a course should run, or what training a mentor needs, those decisions are left entirely to the school."],["p","Government's flagship behaviour improvement programme, Behaviour Hubs, illustrates the same pattern from a different angle. Launched in 2021 and running for three years, it paired schools with strong behaviour cultures with schools still developing theirs, supported by a taskforce of behaviour advisers and a set of training modules on managing high-challenge behaviour, attendance, SEND and leadership (DfE, Behaviour Hubs programme; Evaluation of the Behaviour Hubs Programme: Interim Report, November 2024). It reached several hundred schools with direct, peer-to-peer support, a genuinely valuable intervention, but one built around whole-school culture and system design, and, like Excellence in Cities before it, delivered as a time-limited grant programme rather than an embedded, permanent capability every school can draw on without waiting for a funding round."],["p","Safeguarding sits alongside this rather than inside it. Keeping Children Safe in Education requires every member of staff to receive safeguarding and child protection training at induction and at least annually thereafter, so they can recognise and respond appropriately to a concern (DfE, Keeping Children Safe in Education, 2024). That is a culture of vigilance the whole school holds, not mentoring course content, and not a substitute for it. A mentor can be fully KCSIE-trained and still have no structured course content, no consistent way of recording a session, and no shared standard for what \u201cgood\u201d mentoring looks like week to week."],["h2","2.3 The evidence: structure works, and inconsistency undermines it"],["p","The Education Endowment Foundation's guidance report on improving behaviour in schools sets out six recommendations across three areas: preventing misbehaviour before it happens, responding effectively when it does, and, critically, being consistent and clear when a new approach is introduced, since an inconsistently applied strategy is one of the most common reasons a behaviour intervention fails to show benefit (EEF, Improving Behaviour in Schools: Guidance Report). The report's evidence for personalised, structured tools such as daily report cards is good; its caution about universal, one-size-fits-all approaches for pupils who need more support is equally clear."],["p","Elsewhere in education, where mentoring is a mature profession, the standard the EEF implicitly calls for already exists. The Chartered College of Teaching has built a Mentoring Development Certificate and a Chartered Teacher (Mentor) status specifically for staff mentoring trainee and early-career teachers (Chartered College of Teaching, Mentoring Development Certificate; Chartered Teacher (Mentor) Status). The European Mentoring and Coaching Council (EMCC), described by its own accrediting body as the dominant standard across UK public-sector coaching and mentoring, operates a published competence framework and a five-year renewable quality award for training providers (EMCC Global, Accreditation and Competence Framework). Both show that the profession knows how to define, train for, and accredit mentoring rigorously. Neither framework, however, was built for, or has been widely adopted by, pupil-facing pastoral mentoring in secondary schools. The infrastructure exists for mentoring teachers. It does not yet exist, in any equivalent form, for mentoring pupils."],["b",""],["b",""],["b",""],["h1","3. Why these twelve courses"],["p","Phil's catalogue was not built as a generic list of \u201ccommon behaviour issues\u201d. Each course was chosen because it corresponds to a presentation that DfE or Ofsted guidance names directly, that EEF evidence supports a structured response to, or that shows up clearly in national data on suspensions, exclusions, absence or bullying, and each is written to reflect the approach that guidance recommends, not just its subject matter. The table below sets out, course by course, the evidence behind the choice."],["b",""],["p","Two national data points sit behind that table particularly directly. First, persistent absence, missing 10% or more of sessions, stood at 17.63% across autumn and spring 2024/25, more than 60% above the pre-pandemic rate of 10.53%, and reached 33.3% for pupils with an Education, Health and Care Plan (DfE, Pupil Absence in Schools in England, 2024/25), the single clearest justification for the two attendance-focused courses, Modules 6 and 12, treating anxiety-driven and disengagement-driven absence as genuinely different problems rather than one \u201ctruancy\u201d category. Second, a fifth of secondary-aged pupils still report being bullied in a given year (DfE, National Behaviour Survey, 2024/25), the direct evidence base for Module 4, built specifically around DfE's own anti-bullying advice rather than a generic conflict-resolution template."],["p","This is also why the catalogue does not stop at \u201cbehaviour\u201d in the narrow, disciplinary sense. Ofsted's personal development judgement, and the DfE advice on mental health and behaviour that sits behind it, are explicit that behaviour is often the visible symptom of something else, anxiety, low mood, disengagement, or a skills gap in regulating emotion or reading social situations. Five of the twelve courses (Emotional regulation, Anxiety and avoidance, Low-level disengagement, Social withdrawal, and Truancy and school avoidance) exist specifically because the evidence treats these as distinct presentations needing their own structured response, not sub-categories of a single generic \u201cbad behaviour\u201d course."],["b",""],["h2","3.1 A structured core, not a ceiling"],["p","The twelve courses above are not intended to be exhaustive, and Phil does not present them as such. A fixed, evidence-grounded catalogue is a foundation for consistent mentoring, not a claim that every pupil's need will map neatly onto one of twelve categories. Some pupils present with a need that sits outside all twelve, a specific SEND-related barrier, a family circumstance, a presentation the catalogue does not yet name, and mentors are expected to recognise that rather than force-fit a pupil into the nearest available module."],["p","Where a pupil's need is not met by the current catalogue, mentors are encouraged to use their own professional judgement and bring in supplementary resources, adapted activities, or a different approach entirely, alongside or instead of the structured course content, recording what they actually delivered in the same session log, so it remains part of the pupil's evidenced record either way. This mirrors what the DfE's SEND Code of Practice asks of support for pupils with additional needs generally: personalised provision built around the individual, not one model applied uniformly to everyone (DfE, Special Educational Needs and Disability Code of Practice: 0 to 25 years, 2015), and what the EEF describes, in its guidance on SEND in mainstream schools, as a repertoire of strategies used flexibly in response to individual need rather than a fixed script (EEF, Special Educational Needs in Mainstream Schools: Guidance Report, 2020)."],["p","The catalogue is also not static. As section 4.1 sets out, new courses are published as content rather than as an engineering project, and Phil expects, and plans, to keep extending the twelve as schools identify gaps, as new evidence emerges, and as national guidance is revised, in the same way DfE's own behaviour and attendance advice has itself been updated repeatedly over the past decade."],["p","None of this is an argument against having a core. A defined catalogue matters precisely because the alternative, no shared course structure at all, is the problem this paper opened with: two pupils with the same presentation currently receive two entirely different mentoring experiences depending only on which member of staff they happen to see, with no way for an establishment to know whether either pupil received something evidenced (Lawson et al., Pastoral Care in Education, 2021). A common core of twelve courses gives every mentor in an establishment a shared, evidenced starting point, so that flexibility sits on top of a consistent baseline of provision rather than replacing it, a combination consistent with how Ofsted expects good practice to work more broadly: a consistent entitlement for every pupil, adapted by staff exercising their own professional judgement for the pupil in front of them, not one or the other (Ofsted, Education Inspection Framework). In practice, that means every pupil at a Phil school is guaranteed the same evidenced starting point, and no pupil is limited to it."],["b",""],["h1","4. How Phil addresses the gap"],["p","Phil is not a replacement for a school's safeguarding procedures, its behaviour policy, or the professional judgement of its staff. It is the structured layer that currently does not exist between those things and an individual mentoring session, delivered through an app that mentors use to run every session, pupils use to see their own progress, and admins use to pull reports, the courses, the consistent record, and the reporting that turns mentoring from an improvised good deed into a documented, evidenced part of a school's pastoral offer."],["h2","4.1 A ready-made course library, not a blank page"],["li","Twelve courses covering the behaviour and wellbeing presentations most commonly seen in UK secondary schools, physical aggression, defiance and non-compliance, emotional regulation, peer conflict and bullying, verbal disruption, anxiety and avoidance, low-level disengagement, disrespect to authority, social withdrawal, property damage and destructive behaviour, anger management, and truancy and school avoidance, set out course by course, with the evidence behind each one, in section 3. Each is structured as five weekly sessions with a defined objective, activity set and resources."],["li","Every course is grounded in the evidence and guidance referenced in sections 2 and 3, DfE behaviour guidance, Ofsted's personal-development themes, and EEF's evidence on effective, personalised support, so a school can show its mentoring content is not improvised, but traceable to the same guidance its behaviour policy already draws on."],["li","The catalogue is designed to grow: new courses can be published without a developer, a redeploy, or an app-store update, so a school's own emerging needs, a new module for a specific cohort, for example, can be added as content, not as an engineering project. It is a starting point, not a ceiling, see section 3.1 on why a structured core and room for mentor judgement are not in tension."],["h2","4.2 Consistency, whoever is mentoring"],["li","Every mentor, whether a full-time pastoral lead, a subject teacher taking on mentoring alongside their timetable, or an independent mentor working with one school, delivers the same structured course content, closing the gap where two pupils with the same presentation currently receive two entirely different experiences."],["li","A mandatory step on every session record, flagged or not flagged, keeps every mentor, regardless of experience, engaging deliberately with safeguarding on every single session, consistent with the culture of vigilance KCSIE asks every member of staff to hold. Phil does not monitor, triage or act on this content; that responsibility, and the school's own safeguarding procedure, remain entirely the school's, exactly as KCSIE requires."],["li","A pupil is never limited to one mentor's memory of their progress. A CompletionReflection captures, in the mentor's own words, how the pupil engaged, how effective the course was, and what's recommended next, visible to the establishment's admin and to any mentor who later picks up that pupil, so continuity of support survives a staff change, a mentor's absence, or a pupil moving between courses."],["h2","4.3 Evidence a school can actually use"],["li","A Case load report gives any mentor, and, filtered by mentor or across the whole establishment, any admin, a single view of every pupil being mentored and how far each has progressed, replacing a mental list or a personal spreadsheet with something the whole establishment can see and rely on."],["li","A Full mentoring report gives an establishment admin exactly what a governor meeting, a parents' evening or an Ofsted conversation needs: what has been covered, pupil by pupil, across the whole establishment, including completed mentors' reflections, built without ever exposing session ratings, narrative notes or safeguarding content, so it is safe to hand over without a separate redaction step."],["li","An Individual mentee report lets a mentor, an admin, or, where the school and mentor choose to grant it, a parent or carer see a single pupil's progress at any point in a course, not only once it is finished, so a pupil's engagement is visible and evidenced throughout, not just retrospectively."],["h2","4.4 Built around how schools actually work"],["li","Works for a single independent mentor with one pupil, for a department of pastoral staff in one school, or for a multi-academy trust standardising mentoring across every one of its schools, the same structured content and reporting scale with the establishment, not against it."],["li","A three-week, no-card-required pilot lets a school trial the full offer with a small cohort before committing, and every pupil, mentor and session record created during the pilot carries over unchanged if the school converts."],["li","Optional parent and carer engagement, controllable by the mentor or the school's admin, and, when switched off, invisible rather than merely restricted, lets home involvement be part of the model where it helps, and stay entirely out of the picture where it would not."],["b",""],["h1","5. The benefits, made explicit"],["h2","5.1 For schools and establishments"],["li","Evidence for Ofsted and governors, a documented, DfE- and evidence-referenced mentoring offer to point to under the new attendance and behaviour evaluation area and the personal-development themes inspectors already assess, without building a case file by hand."],["li","A consistent standard across every mentor, no dependence on one experienced member of staff's personal approach, every mentor, however new to the role, works from the same structured, evidence-grounded course."],["li","Reduced burden on already-stretched staff, ready-made session content, resources and take-home activities remove the need to design mentoring from scratch, directly addressing the workload pressure DfE's own workforce survey identifies as the leading source of staff stress."],["li","Continuity of support that survives staff turnover, CompletionReflections and case load reporting mean a pupil's mentoring history is not lost when a mentor leaves, is absent, or a pupil is reassigned, a genuine answer to the \u201cno clear national guidelines\u201d gap identified in pastoral-support research."],["li","A safeguarding-conscious record without becoming a safeguarding system, a mandatory flag on every session keeps vigilance active without Phil ever displacing the school's own KCSIE-mandated procedures, Designated Safeguarding Lead, or professional judgement."],["li","Governance-ready reporting in minutes, not hours, roster, caseload and coverage exports in PDF, Excel or Google Sheets remove the need to manually compile mentoring evidence ahead of a governor meeting, a parents' evening, or an inspection."],["li","Scales from one mentor to a whole trust, the same platform serves an independent mentor, a single school, or a multi-academy trust standardising mentoring provision across every school it runs."],["li","A lower-risk way to start, a genuinely free, three-week pilot with no card required lets a school test the model with real pupils before making any financial commitment."],["b",""],["h2","5.2 For pupils"],["li","Consistent, structured support regardless of who is mentoring them, the same evidence-grounded course content and pace, whichever member of staff or independent mentor they are working with."],["li","Support that continues even when their mentor changes, a written reflection on their engagement and progress travels with them, so a new mentor picking up their case starts from what is already known, not from nothing."],["li","Visible, tangible progress, a live progress bar and an automatically issued completion certificate give pupils a concrete sense of what they have achieved, session by session, not just a vague sense that \u201cthings got better\u201d."],["li","Individualised, not one-size-fits-all, support, twelve distinct courses addressing different presentations mean a pupil struggling with anxiety and avoidance is not given the same content as a pupil working through peer conflict, directly reflecting EEF's evidence that personalised approaches outperform universal ones for pupils who need more support."],["li","Family involvement on the pupil's own terms, home engagement can be switched on where it helps a pupil's progress, and left off, invisibly, not just restricted, where home involvement is not appropriate or wanted."],["li","Privacy by design, a pupil's mentoring content is never exposed to a wider audience than necessary, safeguarding notes and session narrative stay with the mentor and the establishment's admin, never surfaced to parents or reproduced in establishment-wide reporting."],["b",""],["h1","6. Conclusion"],["p","England has spent two decades building an increasingly explicit expectation that schools support pupils' behaviour, attendance and personal development, most recently formalised in Ofsted's decision to make attendance and behaviour a standalone, graded evaluation area from November 2025. What has not kept pace is the infrastructure for the mentoring that so much of this support depends on: no shared national standard for what a mentoring session should contain, no training standard comparable to the one the profession has already built for mentoring teachers, and, as the pastoral-support research cited in this paper puts it plainly, no clear national guidelines or qualifications for the staff doing this work."],["p","Phil is built to be that missing layer: a structured, evidence-grounded library of mentoring courses; a consistent, safeguarding-conscious way of recording every session regardless of who is mentoring; and reporting that turns a term of mentoring into evidence a school can actually use, for governors, for Ofsted, for parents where appropriate, and, most importantly, for the pupil's own continuity of support. It does not replace a school's judgement, its safeguarding procedures, or its staff. It gives them mentoring courses to work from, and a record worth keeping."],["b",""],["h1","Sources"],["p","1.  Department for Education (2024). Behaviour in Schools: Advice for Headteachers and School Staff. February 2024."],["p","2.  Department for Education (2024). Keeping Children Safe in Education. Statutory guidance, effective from September 2024."],["p","3.  Department for Education (2024, updated). Behaviour Hubs programme, and Improving Behaviour in Schools collection, GOV.UK."],["p","4.  Department for Education (2024). Evaluation of the Behaviour Hubs Programme: Interim Report. November 2024."],["p","5.  Department for Education (2025). Suspensions and Permanent Exclusions in England: Autumn Term 2024/25. Explore Education Statistics, GOV.UK."],["p","6.  Department for Education (2025). Working Lives of Teachers and Leaders: Wave 4. November 2025."],["p","7.  Ofsted (2019, as amended). Education Inspection Framework, Behaviour and Attitudes; Personal Development."],["p","8.  Ofsted (2025). Education Inspection Framework: Report Cards, Attendance and Behaviour evaluation area, effective from November 2025."],["p","9.  Education Endowment Foundation (2019, current guidance). Improving Behaviour in Schools: Guidance Report."],["p","10.  Lawson, H. & colleagues, Pastoral Care in Education (2021). Research on the role and training of pastoral support staff working with pupils with social, emotional and mental health needs."],["p","11.  Chartered College of Teaching. Mentoring Development Certificate; Chartered Teacher (Mentor) Status."],["p","12.  EMCC Global. Accreditation and Competence Framework for coaching and mentoring."],["p","13.  Department for Education and Skills / HMI. Excellence in Cities and Education Action Zones: management and impact; background on the Learning Mentors programme, 1999\u20132000s."],["p","14.  Ofsted (2014). Below the Radar: Low-Level Disruption in the Country's Classrooms."],["p","15.  Department for Education (2024). Working Together to Improve School Attendance. Statutory guidance, effective from August 2024."],["p","16.  Department for Education (2017, updated 2022). Preventing and Tackling Bullying: Advice for Headteachers, Staff and Governing Bodies."],["p","17.  Department for Education (2018). Mental Health and Behaviour in Schools. Non-statutory advice, November 2018."],["p","18.  Department for Education (2025). National Behaviour Survey: Findings from Academic Year 2024 to 2025."],["p","19.  Department for Education (2025). Pupil Absence in Schools in England: Autumn and Spring Terms 2024/25. Explore Education Statistics, GOV.UK."],["p","20.  Department for Education (2015). Special Educational Needs and Disability Code of Practice: 0 to 25 years. Statutory guidance."],["p","21.  Education Endowment Foundation (2020). Special Educational Needs in Mainstream Schools: Guidance Report."],["b",""],["p","Phil \u00b7 structured support, real growth. This paper is provided to inform discussion with schools and establishments and does not constitute legal, safeguarding, or inspection advice."]],"privacy_policy":[["p","PHIL \u00b7 BEHAVIOUR MENTORING"],["p","Privacy policy"],["p","Draft v1, last reviewed 8 August 2026"],["b",""],["h1","1. Who we are"],["p","Phil (\u201cPhil\u201d, \u201cwe\u201d, \u201cus\u201d) provides a behaviour-mentoring platform used by UK secondary schools and independent mentors to run structured, evidence-informed mentoring courses with pupils. This policy explains what personal data Phil processes, why, and how it is protected. It applies to establishment admins, mentors, and parents/carers who use Phil, and to the pupils whose records are created within it by mentors and admins on an establishment's behalf."],["p","Contact: [Phil data protection contact name], [email address]. If Phil appoints a formal Data Protection Officer, their contact details will be added here."],["h1","2. Controller and processor roles"],["p","Data protection law draws a distinction between a data controller (who decides why and how personal data is processed) and a data processor (who processes it on the controller's instructions). Getting this right matters, because it determines who a parent, pupil or regulator should contact first."],["li","For a school or establishment subscribed to Phil, the establishment is the data controller for its pupils' personal data. Phil acts as a data processor, processing that data only on the establishment's instructions, under a data processing agreement (DPA) signed as part of onboarding."],["li","For an individual mentor on the independent plan, the mentor themselves is the data controller for the pupil data they enter, since there is no separate establishment instructing Phil on their behalf. Phil is still the processor of that data on the mentor's behalf."],["li","For account data about mentors, admins and parents/carers themselves (name, email, login activity), Phil is the controller, since this data relates to the use of Phil's own service rather than to a pupil an establishment is responsible for."],["b",""],["h1","3. What data we collect"],["h2","3.1 Account data"],["p","Name, email address, role (admin, mentor, or parent/carer), establishment, and authentication and login activity, for every person who holds a Phil account."],["h2","3.2 Pupil data"],["p","Pupils do not hold their own Phil account or log in. Pupil data is entered by mentors or admins as part of delivering mentoring, and includes: forename, surname, date of birth, year group, form class (optional), enrolment and course history, session dates, engagement and mood ratings, mentor's session notes, the safeguarding_flag and safeguarding_note fields described in section 6, and certificates issued."],["h2","3.3 Parent/carer data"],["p","Name, email address, and relationship to the pupil (or pupils) they are linked to, recorded only once an admin or mentor has confirmed the parent/carer is entitled to see that pupil's information."],["h2","3.4 Billing data"],["p","Establishment billing contact details, payment method type, and invoice records including any purchase order reference supplied. Card payments are handled directly by Stripe, our payment processor, Phil does not store full card numbers."],["h2","3.5 Technical and usage data"],["p","Login timestamps, device and browser information, and an access log of who viewed or exported a safeguarding-flagged session record, and when, kept so an establishment can audit access to sensitive records if it ever needs to."],["b",""],["h1","4. Our lawful basis for processing"],["p","Where Phil is a processor acting on an establishment's instructions, the establishment's own lawful basis applies, typically that processing pupil data is necessary for the school's public task of providing pastoral support and education (UK GDPR Article 6(1)(e)), or its legitimate interests. Because some session content (such as notes touching on a pupil's emotional or mental wellbeing) can be special category data, an establishment should hold an appropriate Article 9 condition too, such as the substantial public interest conditions used for safeguarding and pastoral welfare purposes under the Data Protection Act 2018, Schedule 1, this is the establishment's responsibility to confirm as controller, not Phil's."],["p","Where Phil is itself the controller (account data, and pupil data entered by an individual mentor with no establishment behind them), our lawful basis is performance of the contract with the account holder, and our legitimate interest in operating, securing and improving the service."],["b",""],["h1","5. Safeguarding data, how it's handled"],["b",""],["p","Within Phil, a session record, flagged or not, is visible to the mentor who recorded it and to their establishment's admin, who can look up any pupil's records across the whole establishment at their own initiative. This is a fixed feature of the admin role, not something granted case by case, and it is passive, look-it-up access, Phil does not push, alert, or route a flagged record to the admin, or to anyone else. Whether the same person holds both the Phil admin account and the establishment's own Designated Safeguarding Lead role is a decision the establishment makes for itself. Phil staff can access a specific record only in response to a specific, logged support request from the account holder, for example to help a mentor recover a record they can't find, never as routine monitoring."],["b",""],["h1","6. How we use data"],["li","To provide the service: creating and running enrolments and courses, recording sessions, generating certificates and PDFs, and showing progress to mentors, admins and linked parents/carers as described in the roles and permissions section of Phil's technical specification."],["li","To manage subscriptions and billing, including seat usage and invoicing."],["li","To respond to support requests from account holders."],["li","To meet our own legal and regulatory obligations, including responding to lawful requests from an establishment or from a data subject."],["li","To understand overall usage of the product, only in aggregate or anonymised form (for example, how many sessions are recorded per week across all establishments), never by reading individual pupil session content for this purpose."],["b",""],["h1","7. Who we share data with"],["p","We do not sell personal data, and we do not share it with advertisers. We share data only with the following categories of recipient, each bound by a data processing agreement or equivalent terms:"],["li","Hosting and infrastructure providers, to run the service."],["li","Stripe, to process card payments and invoicing."],["li","An email delivery provider, to send account, invite and billing notifications."],["li","An establishment's own nominated admin and mentors, exactly as described in the roles and permissions model, this is data sharing within the establishment's own organisation, which Phil simply enables."],["p","Phil is not affiliated with the Department for Education or any local authority, and does not share data with either as a matter of course."],["b",""],["h1","8. International transfers"],["p","Phil's production data is hosted in the UK/EU. Where any sub-processor involves a transfer of personal data outside the UK or European Economic Area, that transfer is made only under a UK GDPR-recognised safeguard, such as the UK's International Data Transfer Agreement or the EU Standard Contractual Clauses with the UK Addendum."],["b",""],["h1","9. How long we keep data"],["p","Pupil data is retained in line with the instructions of the establishment that controls it, typically matching the school's own data retention schedule for pastoral records. On request, or when a subscription ends, an establishment's data is exported and then deleted from Phil's systems within the timeframe set out in its data processing agreement. Account data for mentors, admins and parents/carers is retained while the account is active, and for a limited period afterwards to meet legal and accounting obligations."],["b",""],["h1","10. Security"],["li","Data is encrypted in transit and at rest."],["li","Access follows the roles and permissions model described in Phil's technical specification, mentors see only their own pupils, admins see roster and billing data but not session content, and so on."],["li","Access to safeguarding-flagged records is logged, so an establishment can audit who viewed or exported one, and when."],["li","Phil staff access to establishment data is limited to specific, logged support requests."],["b",""],["h1","11. Data subject rights"],["p","Under UK GDPR, individuals have rights to access, correct, erase, restrict or object to the processing of their personal data, and to receive a copy of it in a portable format. For pupil data, a request should generally be made to the establishment first, since it is the data controller; Phil will assist the establishment in responding to it. For account data Phil controls directly (mentor, admin and parent/carer accounts), requests can be made to Phil using the contact details in section 1."],["p","If you're unhappy with how your data has been handled, you also have the right to complain to the Information Commissioner's Office (ico.org.uk)."],["b",""],["h1","12. Children's data"],["p","Phil processes personal data about pupils, who are children. Pupils do not create their own account or interact with Phil directly, all pupil data is entered by school staff on the establishment's behalf, as part of its existing pastoral duties. Responsibility for notifying parents/carers and, where required, obtaining consent for this processing sits with the establishment as data controller, in line with its own privacy notices and safeguarding policy."],["b",""],["h1","13. Cookies"],["p","Phil uses only the minimal, essential cookies needed to keep an account holder securely signed in. Phil does not use third-party advertising or tracking cookies."],["b",""],["h1","14. Changes to this policy"],["p","We may update this policy as Phil's features or sub-processors change. Material changes will be notified to establishment admins in advance."],["b",""],["p","Phil \u00b7 structured support, real growth. This document is a working draft for planning purposes and should be reviewed by a qualified solicitor or data protection professional before publication."]],"terms_of_service":[["p","PHIL \u00b7 BEHAVIOUR MENTORING"],["p","Terms of service"],["p","Draft v1, last reviewed 8 August 2026"],["b",""],["h1","1. Agreement to these terms"],["p","These terms of service (\u201cTerms\u201d) govern access to and use of Phil, a behaviour-mentoring platform for secondary schools and independent mentors, provided by [PHIL LEGAL ENTITY NAME] (\u201cPhil\u201d, \u201cwe\u201d, \u201cus\u201d). By creating an account, subscribing to a plan, or otherwise using Phil, the person or establishment doing so (\u201cyou\u201d, the \u201cCustomer\u201d) agrees to these Terms. If you're accepting on behalf of a school or other establishment, you confirm you're authorised to do so."],["b",""],["h1","2. The service"],["p","Phil provides a library of structured, evidence-informed behaviour-mentoring courses, tools to record and track mentoring sessions, progress and certificates, and supporting features such as pupil records, parent/carer access, and admin reporting, as described on our website and in-product. We may add, change or retire individual features over time as the product develops; we'll aim to give reasonable notice of any change that materially reduces functionality you're actively using."],["b",""],["h1","3. Accounts and eligibility"],["li","Establishment accounts: a school or other establishment subscribes under the establishment plan, nominates one named admin, and that admin invites mentors up to the seats included in the subscription. The establishment is responsible for the accuracy of information it provides and for the conduct of every account it creates or authorises under its subscription."],["li","Individual mentor accounts: a mentor not attached to an establishment may sign up directly under the individual plan. They are responsible for their own account in the same way an establishment admin is responsible for establishment accounts."],["li","You must keep account credentials confidential and tell us promptly if you suspect unauthorised access."],["b",""],["h1","4. Subscriptions, fees and payment"],["li","Establishment plan: billed annually, includes 15 seats (1 admin plus 14 mentor seats). Additional seats beyond 15 are billed as a metered addition to the subscription, prorated from the date they're added. Current published pricing applies unless a separate written agreement says otherwise."],["li","Individual plan: billed monthly or annually, by card only, for 1 seat. You may cancel at any time; cancellation takes effect at the end of the current billing period."],["li","Payment methods: the establishment plan can be paid by card (charged automatically each renewal) or by invoice, with an optional purchase order reference, on standard payment terms communicated at the time of invoicing. The individual plan is card only."],["li","Free pilot: where offered, a pilot period runs for a defined trial window, capped at a limited number of mentor seats and enrolled pupils, with no payment card required. Continuing past the pilot requires converting to a paid establishment plan; if you don't convert, pilot data is retained for a limited period and then deleted in line with our data retention practice."],["li","Late or failed payment may result in restricted access to the account until the outstanding amount is resolved, though pupil data already recorded is not deleted solely for late payment."],["b",""],["h1","5. Cancellation and termination"],["p","You may cancel a subscription at any time from your account or by contacting us; cancellation takes effect at the end of the current paid term unless otherwise agreed. We may suspend or terminate an account for material breach of these Terms, including a serious or repeated breach of the acceptable use section below, after giving reasonable notice where practical to do so. On termination, we will make reasonable arrangements for you to export your data before deletion, consistent with our privacy policy and any data processing agreement in place."],["b",""],["h1","6. Your data and content"],["p","As between you and Phil, the establishment (or individual mentor, where there is no establishment) owns the pupil, mentor and session data it enters into Phil. Phil processes that data as a data processor acting on your instructions, as set out in our privacy policy and the data processing agreement entered into as part of onboarding. You're responsible for having the right to enter pupil information into Phil, and for using it in line with your own data protection and safeguarding obligations."],["b",""],["h1","7. Phil's intellectual property"],["p","Phil and its licensors own all rights in the Phil platform itself, and in the course content, resource packs, and other materials we author and publish into the platform (the \u201cPhil content\u201d). Subscribing to Phil gives you a non-exclusive, non-transferable licence to use the Phil content to deliver mentoring within your own establishment (or your own individual practice) for as long as your subscription is active, it doesn't transfer ownership, and doesn't permit redistributing Phil content outside your own establishment or reselling access to it."],["p","Where an establishment admin or content admin creates original course content using Phil's course-builder tools, that establishment retains ownership of the original material it authored, while Phil retains ownership of the underlying platform and any Phil-authored template structure used to build it."],["b",""],["h1","8. Safeguarding, what Phil does and does not do"],["p","Your establishment's admin account has visibility of session records, including safeguarding notes, across your whole establishment, not only for pupils that admin mentors directly. This is a fixed feature of the admin role, on the basis that it's typically held by a management-level member of staff, and it works by letting the admin look a record up when they choose to; it is not a notification, alert, or referral of any kind. It's your establishment's responsibility to ensure the person holding the admin account is appropriate to have this access."],["b",""],["h1","9. Acceptable use"],["p","You agree not to:"],["li","Use Phil for any purpose other than legitimate behaviour mentoring of pupils you or your establishment are responsible for;"],["li","Attempt to access another establishment's data, or another user's account, without authorisation;"],["li","Reverse engineer, resell, sublicense, or use Phil content outside the licence granted in section 7;"],["li","Upload unlawful, abusive, or materially inaccurate information about a real person, beyond ordinary human error;"],["li","Interfere with the operation or security of the service."],["b",""],["h1","10. Availability and support"],["p","We aim to keep Phil available and performant, but we don't currently offer a formal uptime service level agreement (SLA), this may change as the product matures, and any SLA offered to specific customers would be set out separately in writing. We provide support by [email/support channel] during UK business hours."],["b",""],["h1","11. Warranties and disclaimers"],["p","Phil is provided \u201cas is\u201d and \u201cas available\u201d. Except as expressly stated in these Terms, we don't make any warranty that the service will be uninterrupted, error-free, or fit for a particular purpose beyond what's described in our own product documentation. Phil's course content is designed as a universal, early-intervention pastoral resource and is not a substitute for specialist clinical, educational psychology, or safeguarding assessment."],["b",""],["h1","12. Limitation of liability"],["p","To the extent permitted by law, Phil's total liability arising out of or in connection with these Terms is limited to the fees paid by the Customer in the 12 months before the claim arose. Neither party excludes or limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot lawfully be excluded or limited. Phil is not liable for indirect or consequential losses, or for any safeguarding outcome, which remains the establishment's own responsibility as set out in section 8."],["b",""],["h1","13. Changes to these terms"],["p","We may update these Terms from time to time, for example to reflect new features or changes in law. We'll give reasonable notice of material changes to establishment admins and individual mentors before they take effect. Continuing to use Phil after a change takes effect means you accept the updated Terms."],["b",""],["h1","14. Governing law"],["p","These Terms are governed by the laws of England and Wales, and any dispute arising from them is subject to the exclusive jurisdiction of the courts of England and Wales."],["b",""],["h1","15. Contact"],["p","Questions about these Terms can be sent to [contact email]."],["b",""],["p","Phil \u00b7 structured support, real growth. This document is a working draft for planning purposes and should be reviewed by a qualified solicitor before publication."]],"safeguarding_policy":[["p","PHIL \u00b7 BEHAVIOUR MENTORING"],["p","Safeguarding policy template"],["p","For establishments using Phil to deliver mentoring, draft v1, 8 August 2026"],["b",""],["h1","1. Purpose and status of this document"],["p","This document explains how [ESTABLISHMENT NAME] expects staff to handle safeguarding when using Phil, the behaviour-mentoring platform, to deliver mentoring courses to pupils. It sits alongside, and does not replace, the school's main safeguarding and child protection policy. Where anything here appears to conflict with that policy, the main policy always takes precedence."],["p","This template exists because Phil is a session-recording and course-delivery tool, not a safeguarding reporting system. Adopting it clarifies, for every mentor using Phil, exactly where the platform's role ends and the school's normal safeguarding procedure begins."],["b",""],["h1","2. Scope"],["p","This policy applies to all staff at [ESTABLISHMENT NAME] who use Phil to deliver mentoring sessions to pupils, and to the Designated Safeguarding Lead(s) and admin who oversee that use."],["b",""],["h1","3. What Phil is, and isn't"],["li","Phil is a tool for planning and recording one-to-one behaviour-mentoring sessions: it holds course content, session notes, ratings, and a pupil's progress through a course."],["li","Phil is not a safeguarding reporting system. It does not send alerts, does not notify a DSL, and does not review, monitor or act on anything a mentor records, including the safeguarding_flag and safeguarding_note fields described in section 5."],["li","Using Phil does not change any part of [ESTABLISHMENT NAME]'s existing child protection procedures. Every existing reporting route, [e.g. CPOMS / MyConcern / paper referral form / direct conversation with the DSL], remains exactly as it was."],["b",""],["h1","4. Roles and responsibilities"],["h2","4.1 Mentors"],["li","Are responsible for recognising and responding to a safeguarding concern raised during a mentoring session, in line with this school's main safeguarding policy, Phil plays no part in this."],["li","Must report any concern to the DSL through the school's normal reporting route, the same day, regardless of whether they have also recorded anything in Phil."],["li","May use the safeguarding_flag and safeguarding_note fields in Phil as their own factual record of what happened in a session, in addition to, never instead of, reporting the concern through the school's normal route."],["h2","4.2 Designated Safeguarding Lead (DSL)"],["li","Remains the school's central point of contact for every safeguarding concern, exactly as under normal procedure. Phil does not inform the DSL of anything automatically, so mentors must continue to report to them directly and immediately, using the school's usual method, regardless of what's recorded in Phil or who can see it."],["li","If the DSL also holds [ESTABLISHMENT NAME]'s Phil admin account (see 4.3), they can look up any pupil's session records directly, including safeguarding notes. This is a convenience the school may choose to use, not a substitute for the mentor's direct report, a record sitting in Phil, unseen, is not the same as the DSL having been told."],["h2","4.3 Establishment (Phil) admin"],["li","Manages Phil user accounts and mentor seats. Unlike a mentor, who only sees their own pupils, the Phil admin account can view session records, including safeguarding notes, for every pupil at [ESTABLISHMENT NAME], by looking a record up directly. Nothing is sent or flagged to the admin automatically; this is access the admin has to actively use."],["li","Holding the Phil admin account does not, by itself, make someone this school's Designated Safeguarding Lead under Keeping Children Safe in Education, that remains a separate, formal appointment. Because of the level of access involved, [ESTABLISHMENT NAME] should make sure whoever holds the Phil admin account is an appropriate person to have it, in many schools, that will be the DSL or a senior pastoral lead, but it's the school's own decision to make and review."],["b",""],["h1","5. What actually happens when a mentor flags a session in Phil"],["b",""],["p","This matters because it would be easy for a mentor, under pressure, to assume that flagging a session in the app is itself a form of reporting, or that the admin will simply notice. Neither is true unless the admin happens to go looking. Section 6 sets out the process a mentor should actually follow."],["b",""],["h1","6. Step-by-step: during and after a session"],["p","1. Keep the pupil safe and calm. Do not promise absolute confidentiality, pupils should already have been told, before the course started, that anything raising a safety concern will be shared with [name/role, e.g. the DSL]."],["p","2. Do not attempt to investigate or resolve the concern yourself, and do not use restorative or mediation techniques from the course material on a safeguarding matter."],["p","3. Report the concern to [DSL NAME / ROLE] the same day, using [the school's normal method, e.g. CPOMS entry, in person, phone call], following the process set out in the main safeguarding policy."],["p","4. Separately, and in addition, record the session in Phil as normal: tick the safeguarding-flag field and add a brief, factual note. This is your own mentoring record, not a substitute for step 3."],["p","5. Follow any instructions from the DSL about next steps, further monitoring, or additional support for the pupil."],["b",""],["h1","7. Confidentiality"],["p","Before a course begins, mentors should tell each pupil clearly what is confidential and what isn't, for example: \u201cWhat you tell me stays between us, unless I'm worried about your safety or someone else's. If that happens, I have to tell [DSL name/role] myself.\u201d Because Phil does not share flagged sessions with anyone automatically, this promise can only be kept if the mentor follows through on it personally, every time, through the school's normal reporting route."],["b",""],["h1","8. Record-keeping"],["p","A Phil session record, including any safeguarding-flag and note, is a mentoring log, not this school's official safeguarding record. [ESTABLISHMENT NAME]'s official safeguarding record remains [CPOMS / MyConcern / the school's designated system], and any concern must be recorded there by the DSL (or the mentor, per your existing procedure) in addition to anything noted in Phil. Phil session records are retained in line with the school's own data retention schedule for pastoral records, see Phil's privacy policy for how Phil itself handles storage and deletion."],["b",""],["h1","9. Training"],["p","Any member of staff delivering mentoring sessions through Phil must hold current safeguarding training in line with Keeping Children Safe in Education, and should be familiar with this document and the school's main safeguarding policy before running their first session."],["b",""],["h1","10. Review"],["p","This document should be reviewed at the same interval as [ESTABLISHMENT NAME]'s main safeguarding policy, or sooner if Phil's own safeguarding-related functionality changes."],["b",""],["b",""],["p","Phil \u00b7 structured support, real growth. This template must be adapted to your establishment's own policy and approved by your DSL and governing body before use. Phil accepts no responsibility for safeguarding outcomes; safeguarding action is, and remains, the establishment's own responsibility."]]}
+{
+  "white_paper": [
+    [
+      "p",
+      "PHIL, PASTORAL MENTORING APP"
+    ],
+    [
+      "p",
+      "White paper"
+    ],
+    [
+      "p",
+      "The missing standard: structuring pastoral mentoring in English schools"
+    ],
+    [
+      "p",
+      "Why pastoral mentoring in English schools, support that reaches far wider than behaviour alone, has grown without structured courses or a training standard, and what Phil, a structured, evidence-informed mentoring app, changes for schools, mentors and pupils."
+    ],
+    [
+      "p",
+      "By Alexander Socrates"
+    ],
+    [
+      "p",
+      "August 2026"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "Executive summary"
+    ],
+    [
+      "p",
+      "Schools across England, primary and secondary, run some form of one-to-one or small-group mentoring for pupils whose behaviour, engagement or emotional wellbeing needs more support than a class teacher or form tutor can give within an ordinary lesson. Yet unlike the National Curriculum that governs what is taught in the classroom, there is no national standard for what happens in a mentoring session, no agreed sequence of content, no shared minimum standard for who delivers it, and no consistent way of showing a governor, an inspector, or a parent what a course of mentoring actually covered."
+    ],
+    [
+      "p",
+      "This is not a fringe issue. Persistent disruptive behaviour is the single most common reason for suspension in England, and disadvantaged pupils and those with special educational needs are suspended and excluded at several times the rate of their peers (DfE, 2025). Ofsted has, since 2019, inspected schools explicitly on pupils' personal development and on behaviour and attitudes, and from November 2025 has folded attendance and behaviour into one of the central evaluation areas on its new report card (Ofsted, 2025). Government has responded with programmes like Behaviour Hubs, which pair schools with strong behaviour cultures with those still building theirs (DfE, 2024). What government guidance has not done, because it is not really government's job to do, is specify what a good mentoring session contains, or set a training standard for the person delivering it."
+    ],
+    [
+      "p",
+      "Phil is built to close that specific gap. It is an app for schools, independent mentors and pupils that provides a ready-made library of five-week mentoring courses across twenty of the most common behaviour and wellbeing presentations in UK schools, each grounded in published DfE and Ofsted guidance and EEF evidence; a structured, mandatory way of recording every session, including a safeguarding step consistent with the culture Keeping Children Safe in Education (KCSIE) asks every member of staff to hold; and a reporting layer that turns a term's worth of mentoring into evidence a school can actually use, for governors, for Ofsted, for parents, and for the pupil's own continuity of support."
+    ],
+    [
+      "p",
+      "This paper sets out the evidence for the gap, what regulators and researchers say about it, and exactly how Phil addresses it, for the school, for the mentor, and for the pupil. Section 3 sets out, course by course, the specific DfE, Ofsted and EEF evidence and national statistics behind each of the twenty courses in the catalogue."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "1. The problem: mentoring without structured courses"
+    ],
+    [
+      "h2",
+      "1.1 A role that grew without a standard"
+    ],
+    [
+      "p",
+      "Structured pupil mentoring is not a new idea in English schools. Between 1999 and the mid-2000s, the Excellence in Cities initiative funded around 2,400 school-based “learning mentors”, rising to roughly 3,000, specifically to support pupils at risk of underachieving or disengaging (Wikipedia: Excellence in Cities, drawing on DfES programme records; infed.org). Government's own evaluation at the time found the learning mentor strand to be among the most effective parts of the programme (HMI, Excellence in Cities and Education Action Zones: management and impact). But the role was tied to time-limited, ring-fenced funding rather than embedded as a lasting national entitlement. As that funding wound down and wider school budgets tightened over the following decade, the standardised training and role definition that came with it was not replaced with anything equivalent, schools that still wanted to mentor pupils were left to design their own version of the role from scratch."
+    ],
+    [
+      "p",
+      "The result, two decades later, is that pastoral and mentoring roles have grown again, informally, and largely without a shared standard. Academic research into pastoral support staff working with pupils who have social, emotional and mental health needs found that “despite the rapid increase in pastoral support staff numbers there are no clear national guidelines or qualifications for these roles”, and that teachers themselves repeatedly asked for more training to prepare them for pastoral work that sits outside their core subject training (Lawson & te Riele, in Pastoral Care in Education, 2021)."
+    ],
+    [
+      "h2",
+      "1.2 A course-content gap, not just a training gap"
+    ],
+    [
+      "p",
+      "The absence of a shared standard is not only about who delivers mentoring, it is about what a mentoring session actually contains. A subject lesson follows a national curriculum with defined content, sequencing and assessment. A mentoring session, by contrast, is frequently improvised by whichever member of staff has been given the pupil, built around their own experience and whatever resources they can find, and rarely written down in a way another colleague could pick up and continue. Two pupils with an almost identical presentation, say, difficulty managing anger after a peer conflict, can receive entirely different content, over a different number of sessions, assessed against no shared objective, depending only on which member of staff is mentoring them and how much time they have that week."
+    ],
+    [
+      "p",
+      "This matters because school-wide behaviour approaches, on their own, do not work for every pupil. The Education Endowment Foundation's guidance report on improving behaviour in schools is explicit that “universal systems are unlikely to work for all students”, and that pupils who need more intensive support are better served by a personalised approach, the report cites structured tools such as daily report cards as a well-evidenced example (EEF, Improving Behaviour in Schools: Guidance Report). A personalised approach without structure, though, is not the same as a personalised approach with structure: EEF's own recommendation is for schools to be consistent and clear when embedding a new behaviour strategy, precisely because inconsistency is where personalised support tends to fail."
+    ],
+    [
+      "h2",
+      "1.3 The cost of leaving it unstructured"
+    ],
+    [
+      "p",
+      "The pressure this creates is visible in the national data. In the autumn term of 2024/25 alone, English schools recorded 335,671 suspensions and 3,715 permanent exclusions, a suspension rate of just over 4 per 100 pupils (DfE, Suspensions and permanent exclusions in England: Autumn term 2024/25). Persistent disruptive behaviour remains the most common single reason given. The burden falls unevenly: pupils eligible for free school meals are suspended at more than four times the rate of their peers (9.73 per 100 versus 2.11), and pupils on SEN Support or with an Education, Health and Care Plan are suspended at more than four times the rate of pupils with no identified SEN (11.09 and 10.31 per 100, against 2.46) (DfE, 2025)."
+    ],
+    [
+      "p",
+      "At the same time, the staff being asked to provide pastoral and mentoring support are already stretched. DfE's own Working Lives of Teachers and Leaders survey found that 86 per cent of teachers and leaders reported experiencing work-related stress, with workload the leading cause and pupil behaviour a major contributing factor (DfE, Working Lives of Teachers and Leaders: Wave 4, 2025). Asking already-stretched staff to design, deliver and document mentoring from scratch, session by session, with no shared content to draw on, is not a sustainable way to meet a need that the data shows is significant and unevenly distributed."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "2. What Ofsted, the DfE and the evidence base say"
+    ],
+    [
+      "h2",
+      "2.1 Ofsted: behaviour and personal development are inspected, not optional"
+    ],
+    [
+      "p",
+      "Under the Education Inspection Framework that has applied since 2019, Ofsted has judged schools separately on behaviour and attitudes and on personal development, the latter defined explicitly as extending “beyond the academic, technical or vocational” to cover a pupil's character, resilience, independence and confidence (Ofsted, Education Inspection Framework). From November 2025, Ofsted's new report-card model goes further, combining attendance and behaviour into one of its central evaluation areas, graded on a five-point scale from Urgent Improvement to Exceptional, an explicit acknowledgement that attendance, behaviour and wellbeing are linked, and that a school's ability to support pupils through difficulty is now judged on its own terms, not folded quietly into an overall headline grade (Ofsted, Education Inspection Framework: Report Cards, 2025)."
+    ],
+    [
+      "p",
+      "A structured mentoring offer speaks directly to both of these areas. It gives a school something concrete to describe when an inspector asks how pupils who struggle with behaviour or engagement are supported, and, because Phil's course content addresses named presentations such as anger management, peer conflict and bullying, anxiety and avoidance, and school avoidance, it maps naturally onto the personal-development themes of resilience, confidence and self-regulation that inspectors are asked to consider."
+    ],
+    [
+      "h2",
+      "2.2 DfE: mentoring named, but never specified"
+    ],
+    [
+      "p",
+      "The Department for Education's core behaviour guidance, Behaviour in Schools (February 2024), is explicit that some pupils will need more support than a whole-school behaviour policy provides on its own, and names mentoring, alongside engagement with parents, local partners and other professionals, as an example of that additional support (DfE, Behaviour in Schools: Advice for Headteachers and School Staff, February 2024). What the guidance does not do, deliberately, is specify what that mentoring should contain, how long a course should run, or what training a mentor needs, those decisions are left entirely to the school."
+    ],
+    [
+      "p",
+      "Government's flagship behaviour improvement programme, Behaviour Hubs, illustrates the same pattern from a different angle. Launched in 2021 and running for three years, it paired schools with strong behaviour cultures with schools still developing theirs, supported by a taskforce of behaviour advisers and a set of training modules on managing high-challenge behaviour, attendance, SEND and leadership (DfE, Behaviour Hubs programme; Evaluation of the Behaviour Hubs Programme: Interim Report, November 2024). It reached several hundred schools with direct, peer-to-peer support, a genuinely valuable intervention, but one built around whole-school culture and system design, and, like Excellence in Cities before it, delivered as a time-limited grant programme rather than an embedded, permanent capability every school can draw on without waiting for a funding round."
+    ],
+    [
+      "p",
+      "Safeguarding sits alongside this rather than inside it. Keeping Children Safe in Education requires every member of staff to receive safeguarding and child protection training at induction and at least annually thereafter, so they can recognise and respond appropriately to a concern (DfE, Keeping Children Safe in Education, 2024). That is a culture of vigilance the whole school holds, not mentoring course content, and not a substitute for it. A mentor can be fully KCSIE-trained and still have no structured course content, no consistent way of recording a session, and no shared standard for what “good” mentoring looks like week to week."
+    ],
+    [
+      "h2",
+      "2.3 The evidence: structure works, and inconsistency undermines it"
+    ],
+    [
+      "p",
+      "The Education Endowment Foundation's guidance report on improving behaviour in schools sets out six recommendations across three areas: preventing misbehaviour before it happens, responding effectively when it does, and, critically, being consistent and clear when a new approach is introduced, since an inconsistently applied strategy is one of the most common reasons a behaviour intervention fails to show benefit (EEF, Improving Behaviour in Schools: Guidance Report). The report's evidence for personalised, structured tools such as daily report cards is good; its caution about universal, one-size-fits-all approaches for pupils who need more support is equally clear."
+    ],
+    [
+      "p",
+      "Elsewhere in education, where mentoring is a mature profession, the standard the EEF implicitly calls for already exists. The Chartered College of Teaching has built a Mentoring Development Certificate and a Chartered Teacher (Mentor) status specifically for staff mentoring trainee and early-career teachers (Chartered College of Teaching, Mentoring Development Certificate; Chartered Teacher (Mentor) Status). The European Mentoring and Coaching Council (EMCC), described by its own accrediting body as the dominant standard across UK public-sector coaching and mentoring, operates a published competence framework and a five-year renewable quality award for training providers (EMCC Global, Accreditation and Competence Framework). Both show that the profession knows how to define, train for, and accredit mentoring rigorously. Neither framework, however, was built for, or has been widely adopted by, pupil-facing pastoral mentoring in schools. The infrastructure exists for mentoring teachers. It does not yet exist, in any equivalent form, for mentoring pupils."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "3. Why these twenty courses"
+    ],
+    [
+      "p",
+      "Phil's catalogue was not built as a generic list of “common behaviour issues”. Each course was chosen because it corresponds to a presentation that DfE or Ofsted guidance names directly, that EEF evidence supports a structured response to, or that shows up clearly in national data on suspensions, exclusions, absence or bullying, and each is written to reflect the approach that guidance recommends, not just its subject matter. The list below sets out, course by course, the evidence behind the choice."
+    ],
+    [
+      "li",
+      "1. Physical aggression — Persistent disruptive behaviour and physical assault are the two most common reasons for suspension in England (DfE, 2025). Grounded in: DfE Behaviour in Schools; Ofsted behaviour and attitudes."
+    ],
+    [
+      "li",
+      "2. Defiance and non-compliance — EEF evidence: consistent, relationship-based responses outperform blanket sanctions for defiant behaviour. Grounded in: EEF Improving Behaviour in Schools; DfE Behaviour in Schools."
+    ],
+    [
+      "li",
+      "3. Emotional regulation — DfE guidance asks staff to consider whether behaviour reflects an underlying difficulty regulating emotion, not just wilful misconduct. Grounded in: DfE Mental Health and Behaviour in Schools; Ofsted personal development."
+    ],
+    [
+      "li",
+      "4. Peer conflict and bullying — 21% of pupils in Years 7–13 reported being bullied in the past 12 months (DfE National Behaviour Survey, 2024/25). Grounded in: DfE Preventing and Tackling Bullying; Ofsted behaviour and attitudes."
+    ],
+    [
+      "li",
+      "5. Verbal disruption — Ofsted found low-level disruption can cost pupils up to an hour of learning time a day where it is not addressed early. Grounded in: Ofsted Below the Radar (2014); DfE Behaviour in Schools."
+    ],
+    [
+      "li",
+      "6. Anxiety and avoidance — Persistent absence stood at 17.63% in 2024/25, rising to 33.3% for pupils with an EHCP (DfE, 2025). Grounded in: DfE Working Together to Improve School Attendance; DfE Mental Health and Behaviour in Schools."
+    ],
+    [
+      "li",
+      "7. Low-level disengagement — The same Ofsted finding on cumulative lost learning time, from disengagement rather than open disruption. Grounded in: Ofsted Below the Radar (2014); EEF evidence on self-monitoring and goal-setting."
+    ],
+    [
+      "li",
+      "8. Disrespect to authority — Verbal abuse or threatening behaviour towards an adult is among the most common reasons recorded for suspension (DfE, 2025). Grounded in: EEF evidence on staff-pupil relationships; DfE Behaviour in Schools."
+    ],
+    [
+      "li",
+      "9. Social withdrawal — DfE guidance treats withdrawal as a possible sign of an underlying difficulty worth understanding, not a discipline issue. Grounded in: DfE Mental Health and Behaviour in Schools; Ofsted personal development."
+    ],
+    [
+      "li",
+      "10. Property damage and destructive behaviour — Shares the dysregulation pattern behind physical aggression, with its own restorative repair element. Grounded in: DfE Behaviour in Schools; Ofsted behaviour and attitudes."
+    ],
+    [
+      "li",
+      "11. Anger management — A standalone or follow-on course for frustration and relational anger, distinct from the physical-incident focus of Module 1. Grounded in: DfE Behaviour in Schools; Ofsted behaviour and attitudes."
+    ],
+    [
+      "li",
+      "12. Truancy and school avoidance — Addresses disengagement-driven absence specifically, distinct from the anxiety-driven avoidance covered in Module 6. Grounded in: DfE Working Together to Improve School Attendance; Ofsted behaviour and attitudes."
+    ],
+    [
+      "li",
+      "13. Vaping and nicotine use — A quarter of 11 to 15-year-olds have tried vaping and 9% vape currently, up from 6% in 2018 (NHS England, 2024). Grounded in: NHS Smoking, Drinking and Drug Use among Young People in England (2023); DfE guidance on vapes in schools."
+    ],
+    [
+      "li",
+      "14. Young carers: balancing care and school — Around 120,000 young carers aged 5 to 17 in England, against 39,000 identified in the school census, so most are not known to their school. Grounded in: Children and Families Act 2014, s.96; ONS Census 2021; DfE Mental Health and Behaviour."
+    ],
+    [
+      "li",
+      "15. Online safety, cyberbullying and digital wellbeing — A third of 8 to 17-year-olds using social media feel pressure to be popular online all or most of the time (Ofcom, 2026). Grounded in: Ofcom Children and Parents: Media Use and Attitudes; KCSIE (online safety); DfE Preventing and Tackling Bullying."
+    ],
+    [
+      "li",
+      "16. Exam and academic pressure — DfE advice treats anxiety around assessment as a recognised driver of behaviour and absence, not a motivation problem. Grounded in: DfE Mental Health and Behaviour in Schools; Ofsted personal development."
+    ],
+    [
+      "li",
+      "17. Sensory regulation for neurodivergent pupils — NICE asks schools and services to take the physical environment into account, considering individual sensitivities to noise, lighting and personal space. Grounded in: NICE CG170, recommendation 1.1.9; Equality Act 2010; DfE SEND Code of Practice."
+    ],
+    [
+      "li",
+      "18. Bereavement and loss — A common experience of childhood that schools are expected to respond to, and one where the wrong response does harm. Grounded in: DfE Mental Health and Behaviour in Schools; Childhood Bereavement Network."
+    ],
+    [
+      "li",
+      "19. Safeguarding: exploitation and county lines awareness — KCSIE names child criminal exploitation, including county lines, as a specific safeguarding issue every member of staff should be alert to. Grounded in: DfE Keeping Children Safe in Education; Home Office county lines guidance."
+    ],
+    [
+      "li",
+      "20. Moving up: primary-to-secondary and other school transitions — The move between phases is a recognised point of drop in attainment, attendance and wellbeing, and the one transition every pupil makes. Grounded in: EEF evidence on transition; DfE Working Together to Improve School Attendance."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Two national data points sit behind that list particularly directly. First, persistent absence, missing 10% or more of sessions, stood at 17.63% across autumn and spring 2024/25, more than 60% above the pre-pandemic rate of 10.53%, and reached 33.3% for pupils with an Education, Health and Care Plan (DfE, Pupil Absence in Schools in England, 2024/25), the single clearest justification for the two attendance-focused courses, Modules 6 and 12, treating anxiety-driven and disengagement-driven absence as genuinely different problems rather than one “truancy” category. Second, a fifth of pupils in Years 7 to 13 report being bullied in a given year (DfE, National Behaviour Survey, 2024/25), the direct evidence base for Module 4, built specifically around DfE's own anti-bullying advice rather than a generic conflict-resolution template."
+    ],
+    [
+      "p",
+      "This is also why the catalogue does not stop at “behaviour” in the narrow, disciplinary sense. Ofsted's personal development judgement, and the DfE advice on mental health and behaviour that sits behind it, are explicit that behaviour is often the visible symptom of something else, anxiety, low mood, disengagement, or a skills gap in regulating emotion or reading social situations. Five of the first twelve courses (Emotional regulation, Anxiety and avoidance, Low-level disengagement, Social withdrawal, and Truancy and school avoidance) exist specifically because the evidence treats these as distinct presentations needing their own structured response, not sub-categories of a single generic “bad behaviour” course."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h2",
+      "3.1 A structured core, not a ceiling"
+    ],
+    [
+      "p",
+      "The twenty courses above are not intended to be exhaustive, and Phil does not present them as such. A fixed, evidence-grounded catalogue is a foundation for consistent mentoring, not a claim that every pupil's need will map neatly onto one of twenty categories. Some pupils present with a need that sits outside all twenty, a specific SEND-related barrier, a family circumstance, a presentation the catalogue does not yet name, and mentors are expected to recognise that rather than force-fit a pupil into the nearest available module."
+    ],
+    [
+      "p",
+      "Where a pupil's need is not met by the current catalogue, mentors are encouraged to use their own professional judgement and bring in supplementary resources, adapted activities, or a different approach entirely, alongside or instead of the structured course content, recording what they actually delivered in the same session log, so it remains part of the pupil's evidenced record either way. This mirrors what the DfE's SEND Code of Practice asks of support for pupils with additional needs generally: personalised provision built around the individual, not one model applied uniformly to everyone (DfE, Special Educational Needs and Disability Code of Practice: 0 to 25 years, 2015), and what the EEF describes, in its guidance on SEND in mainstream schools, as a repertoire of strategies used flexibly in response to individual need rather than a fixed script (EEF, Special Educational Needs in Mainstream Schools: Guidance Report, 2020). The same applies across age ranges: the courses are written to be pitched by the mentor to the pupil in front of them, in a primary school or a secondary one, with the wording of an activity a matter for the person delivering it rather than fixed by the app."
+    ],
+    [
+      "p",
+      "The catalogue is also not static. As section 4.1 sets out, new courses are published as content rather than as an engineering project, and Phil expects, and plans, to keep extending the catalogue as schools identify gaps, as new evidence emerges, and as national guidance is revised, in the same way DfE's own behaviour and attendance advice has itself been updated repeatedly over the past decade."
+    ],
+    [
+      "p",
+      "None of this is an argument against having a core. A defined catalogue matters precisely because the alternative, no shared course structure at all, is the problem this paper opened with: two pupils with the same presentation currently receive two entirely different mentoring experiences depending only on which member of staff they happen to see, with no way for an establishment to know whether either pupil received something evidenced (Lawson et al., Pastoral Care in Education, 2021). A common core of twenty courses gives every mentor in an establishment a shared, evidenced starting point, so that flexibility sits on top of a consistent baseline of provision rather than replacing it, a combination consistent with how Ofsted expects good practice to work more broadly: a consistent entitlement for every pupil, adapted by staff exercising their own professional judgement for the pupil in front of them, not one or the other (Ofsted, Education Inspection Framework). In practice, that means every pupil at a Phil school is guaranteed the same evidenced starting point, and no pupil is limited to it."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "4. How Phil addresses the gap"
+    ],
+    [
+      "p",
+      "Phil is not a replacement for a school's safeguarding procedures, its behaviour policy, or the professional judgement of its staff. It is the structured layer that currently does not exist between those things and an individual mentoring session, delivered through an app that mentors use to run every session, pupils use to see their own progress, and admins use to pull reports, the courses, the consistent record, and the reporting that turns mentoring from an improvised good deed into a documented, evidenced part of a school's pastoral offer."
+    ],
+    [
+      "h2",
+      "4.1 A ready-made course library, not a blank page"
+    ],
+    [
+      "li",
+      "Twenty courses covering the behaviour and wellbeing presentations most commonly seen in UK schools, physical aggression, defiance and non-compliance, emotional regulation, peer conflict and bullying, verbal disruption, anxiety and avoidance, low-level disengagement, disrespect to authority, social withdrawal, property damage and destructive behaviour, anger management, truancy and school avoidance, vaping and nicotine use, young carers, online safety and digital wellbeing, exam and academic pressure, sensory regulation for neurodivergent pupils, bereavement and loss, exploitation and county lines awareness, and moving up between schools, set out course by course, with the evidence behind each one, in section 3. Each is structured as five weekly sessions with a defined objective, activity set and resources."
+    ],
+    [
+      "li",
+      "Every course is grounded in the evidence and guidance referenced in sections 2 and 3, DfE behaviour guidance, Ofsted's personal-development themes, and EEF's evidence on effective, personalised support, so a school can show its mentoring content is not improvised, but traceable to the same guidance its behaviour policy already draws on."
+    ],
+    [
+      "li",
+      "The catalogue is designed to grow: new courses can be published without a developer, a redeploy, or an app-store update, so a school's own emerging needs, a new module for a specific cohort, for example, can be added as content, not as an engineering project. It is a starting point, not a ceiling, see section 3.1 on why a structured core and room for mentor judgement are not in tension."
+    ],
+    [
+      "h2",
+      "4.2 Consistency, whoever is mentoring"
+    ],
+    [
+      "li",
+      "Every mentor, whether a full-time pastoral lead, a subject teacher taking on mentoring alongside their timetable, or an independent mentor working with one school, delivers the same structured course content, closing the gap where two pupils with the same presentation currently receive two entirely different experiences."
+    ],
+    [
+      "li",
+      "A mandatory step on every session record, flagged or not flagged, keeps every mentor, regardless of experience, engaging deliberately with safeguarding on every single session, consistent with the culture of vigilance KCSIE asks every member of staff to hold. Phil does not monitor, triage or act on this content; that responsibility, and the school's own safeguarding procedure, remain entirely the school's, exactly as KCSIE requires."
+    ],
+    [
+      "li",
+      "A pupil is never limited to one mentor's memory of their progress. A CompletionReflection captures, in the mentor's own words, how the pupil engaged, how effective the course was, and what's recommended next, visible to the establishment's admin and to any mentor who later picks up that pupil, so continuity of support survives a staff change, a mentor's absence, or a pupil moving between courses."
+    ],
+    [
+      "h2",
+      "4.3 Evidence a school can actually use"
+    ],
+    [
+      "li",
+      "An Establishment mentoring list gives any mentor, and any admin, a single view of who is mentoring whom: pupil, course, which session they are on, and whether a certificate has been issued, grouped under the mentor and filterable by academic year, term or mentor, replacing a mental list or a personal spreadsheet with something the whole establishment can see and rely on."
+    ],
+    [
+      "li",
+      "The same list exports to PDF or a spreadsheet, which is what a governor meeting, a parents' evening or an Ofsted conversation needs: what has been covered, pupil by pupil, across the whole establishment, including completed mentors' reflections, built without ever exposing session ratings, narrative notes or safeguarding content, so it is safe to hand over without a separate redaction step."
+    ],
+    [
+      "li",
+      "An Individual mentee report lets a mentor, an admin, or, where the school and mentor choose to grant it, a parent or carer see a single pupil's progress at any point in a course, not only once it is finished, so a pupil's engagement is visible and evidenced throughout, not just retrospectively."
+    ],
+    [
+      "h2",
+      "4.4 Built around how schools actually work"
+    ],
+    [
+      "li",
+      "Works for a single independent mentor with one pupil, for a department of pastoral staff in one school, or for a multi-academy trust standardising mentoring across every one of its schools, the same structured content and reporting scale with the establishment, not against it."
+    ],
+    [
+      "li",
+      "A three-week, no-card-required pilot lets a school trial the full offer with a small cohort before committing, and every pupil, mentor and session record created during the pilot carries over unchanged if the school converts."
+    ],
+    [
+      "li",
+      "Optional parent and carer engagement, controllable by the mentor or the school's admin, and, when switched off, invisible rather than merely restricted, lets home involvement be part of the model where it helps, and stay entirely out of the picture where it would not."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "5. The benefits, made explicit"
+    ],
+    [
+      "h2",
+      "5.1 For schools and establishments"
+    ],
+    [
+      "li",
+      "Evidence for Ofsted and governors, a documented, DfE- and evidence-referenced mentoring offer to point to under the new attendance and behaviour evaluation area and the personal-development themes inspectors already assess, without building a case file by hand."
+    ],
+    [
+      "li",
+      "A consistent standard across every mentor, no dependence on one experienced member of staff's personal approach, every mentor, however new to the role, works from the same structured, evidence-grounded course."
+    ],
+    [
+      "li",
+      "Reduced burden on already-stretched staff, ready-made session content, resources and take-home activities remove the need to design mentoring from scratch, directly addressing the workload pressure DfE's own workforce survey identifies as the leading source of staff stress."
+    ],
+    [
+      "li",
+      "Continuity of support that survives staff turnover, CompletionReflections and case load reporting mean a pupil's mentoring history is not lost when a mentor leaves, is absent, or a pupil is reassigned, a genuine answer to the “no clear national guidelines” gap identified in pastoral-support research."
+    ],
+    [
+      "li",
+      "A safeguarding-conscious record without becoming a safeguarding system, a mandatory flag on every session keeps vigilance active without Phil ever displacing the school's own KCSIE-mandated procedures, Designated Safeguarding Lead, or professional judgement."
+    ],
+    [
+      "li",
+      "Governance-ready reporting in minutes, not hours, roster, caseload and coverage exports in PDF, Excel or Google Sheets remove the need to manually compile mentoring evidence ahead of a governor meeting, a parents' evening, or an inspection."
+    ],
+    [
+      "li",
+      "Scales from one mentor to a whole trust, the same platform serves an independent mentor, a single school, or a multi-academy trust standardising mentoring provision across every school it runs."
+    ],
+    [
+      "li",
+      "A lower-risk way to start, a genuinely free, three-week pilot with no card required lets a school test the model with real pupils before making any financial commitment."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h2",
+      "5.2 For pupils"
+    ],
+    [
+      "li",
+      "Consistent, structured support regardless of who is mentoring them, the same evidence-grounded course content and pace, whichever member of staff or independent mentor they are working with."
+    ],
+    [
+      "li",
+      "Support that continues even when their mentor changes, a written reflection on their engagement and progress travels with them, so a new mentor picking up their case starts from what is already known, not from nothing."
+    ],
+    [
+      "li",
+      "Visible, tangible progress, a live progress bar and an automatically issued completion certificate give pupils a concrete sense of what they have achieved, session by session, not just a vague sense that “things got better”."
+    ],
+    [
+      "li",
+      "Individualised, not one-size-fits-all, support, twenty distinct courses addressing different presentations mean a pupil struggling with anxiety and avoidance is not given the same content as a pupil working through peer conflict, directly reflecting EEF's evidence that personalised approaches outperform universal ones for pupils who need more support."
+    ],
+    [
+      "li",
+      "Family involvement on the pupil's own terms, home engagement can be switched on where it helps a pupil's progress, and left off, invisibly, not just restricted, where home involvement is not appropriate or wanted."
+    ],
+    [
+      "li",
+      "Privacy by design, a pupil's mentoring content is never exposed to a wider audience than necessary, safeguarding notes and session narrative stay with the mentor and the establishment's admin, never surfaced to parents or reproduced in establishment-wide reporting."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "6. Conclusion"
+    ],
+    [
+      "p",
+      "England has spent two decades building an increasingly explicit expectation that schools support pupils' behaviour, attendance and personal development, most recently formalised in Ofsted's decision to make attendance and behaviour a standalone, graded evaluation area from November 2025. What has not kept pace is the infrastructure for the mentoring that so much of this support depends on: no shared national standard for what a mentoring session should contain, no training standard comparable to the one the profession has already built for mentoring teachers, and, as the pastoral-support research cited in this paper puts it plainly, no clear national guidelines or qualifications for the staff doing this work."
+    ],
+    [
+      "p",
+      "Phil is built to be that missing layer: a structured, evidence-grounded library of mentoring courses; a consistent, safeguarding-conscious way of recording every session regardless of who is mentoring; and reporting that turns a term of mentoring into evidence a school can actually use, for governors, for Ofsted, for parents where appropriate, and, most importantly, for the pupil's own continuity of support. It does not replace a school's judgement, its safeguarding procedures, or its staff. It gives them mentoring courses to work from, and a record worth keeping."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "Sources"
+    ],
+    [
+      "p",
+      "1.  Department for Education (2024). Behaviour in Schools: Advice for Headteachers and School Staff. February 2024."
+    ],
+    [
+      "p",
+      "2.  Department for Education (2024). Keeping Children Safe in Education. Statutory guidance, effective from September 2024."
+    ],
+    [
+      "p",
+      "3.  Department for Education (2024, updated). Behaviour Hubs programme, and Improving Behaviour in Schools collection, GOV.UK."
+    ],
+    [
+      "p",
+      "4.  Department for Education (2024). Evaluation of the Behaviour Hubs Programme: Interim Report. November 2024."
+    ],
+    [
+      "p",
+      "5.  Department for Education (2025). Suspensions and Permanent Exclusions in England: Autumn Term 2024/25. Explore Education Statistics, GOV.UK."
+    ],
+    [
+      "p",
+      "6.  Department for Education (2025). Working Lives of Teachers and Leaders: Wave 4. November 2025."
+    ],
+    [
+      "p",
+      "7.  Ofsted (2019, as amended). Education Inspection Framework, Behaviour and Attitudes; Personal Development."
+    ],
+    [
+      "p",
+      "8.  Ofsted (2025). Education Inspection Framework: Report Cards, Attendance and Behaviour evaluation area, effective from November 2025."
+    ],
+    [
+      "p",
+      "9.  Education Endowment Foundation (2019, current guidance). Improving Behaviour in Schools: Guidance Report."
+    ],
+    [
+      "p",
+      "10.  Lawson, H. & colleagues, Pastoral Care in Education (2021). Research on the role and training of pastoral support staff working with pupils with social, emotional and mental health needs."
+    ],
+    [
+      "p",
+      "11.  Chartered College of Teaching. Mentoring Development Certificate; Chartered Teacher (Mentor) Status."
+    ],
+    [
+      "p",
+      "12.  EMCC Global. Accreditation and Competence Framework for coaching and mentoring."
+    ],
+    [
+      "p",
+      "13.  Department for Education and Skills / HMI. Excellence in Cities and Education Action Zones: management and impact; background on the Learning Mentors programme, 1999–2000s."
+    ],
+    [
+      "p",
+      "14.  Ofsted (2014). Below the Radar: Low-Level Disruption in the Country's Classrooms."
+    ],
+    [
+      "p",
+      "15.  Department for Education (2024). Working Together to Improve School Attendance. Statutory guidance, effective from August 2024."
+    ],
+    [
+      "p",
+      "16.  Department for Education (2017, updated 2022). Preventing and Tackling Bullying: Advice for Headteachers, Staff and Governing Bodies."
+    ],
+    [
+      "p",
+      "17.  Department for Education (2018). Mental Health and Behaviour in Schools. Non-statutory advice, November 2018."
+    ],
+    [
+      "p",
+      "18.  Department for Education (2025). National Behaviour Survey: Findings from Academic Year 2024 to 2025."
+    ],
+    [
+      "p",
+      "19.  Department for Education (2025). Pupil Absence in Schools in England: Autumn and Spring Terms 2024/25. Explore Education Statistics, GOV.UK."
+    ],
+    [
+      "p",
+      "20.  Department for Education (2015). Special Educational Needs and Disability Code of Practice: 0 to 25 years. Statutory guidance."
+    ],
+    [
+      "p",
+      "21.  Education Endowment Foundation (2020). Special Educational Needs in Mainstream Schools: Guidance Report."
+    ],
+    [
+      "p",
+      "22.  NHS England / NHS Digital (2024). Smoking, Drinking and Drug Use among Young People in England, 2023."
+    ],
+    [
+      "p",
+      "23.  Office for National Statistics (2023). Unpaid care by age, sex and deprivation, England and Wales: Census 2021."
+    ],
+    [
+      "p",
+      "24.  Children and Families Act 2014, section 96 (young carers' needs assessments)."
+    ],
+    [
+      "p",
+      "25.  Ofcom (2026). Children and Parents: Media Use and Attitudes Report."
+    ],
+    [
+      "p",
+      "26.  National Institute for Health and Care Excellence (2013, as amended). CG170, Autism spectrum disorder in under 19s: support and management."
+    ],
+    [
+      "p",
+      "27.  Equality Act 2010 (reasonable adjustments for disabled pupils)."
+    ],
+    [
+      "p",
+      "28.  Home Office (2023, updated). County lines guidance and criminal exploitation of children."
+    ],
+    [
+      "p",
+      "29.  Childhood Bereavement Network. Guidance for schools supporting bereaved pupils."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Phil · structured support, real growth. This paper is provided to inform discussion with schools and establishments and does not constitute legal, safeguarding, or inspection advice."
+    ]
+  ],
+  "privacy_policy": [
+    [
+      "p",
+      "PHIL · BEHAVIOUR MENTORING"
+    ],
+    [
+      "p",
+      "Privacy policy"
+    ],
+    [
+      "p",
+      "Draft v1, last reviewed 8 August 2026"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "1. Who we are"
+    ],
+    [
+      "p",
+      "Phil (“Phil”, “we”, “us”) provides a behaviour-mentoring platform used by UK secondary schools and independent mentors to run structured, evidence-informed mentoring courses with pupils. This policy explains what personal data Phil processes, why, and how it is protected. It applies to establishment admins, mentors, and parents/carers who use Phil, and to the pupils whose records are created within it by mentors and admins on an establishment's behalf."
+    ],
+    [
+      "p",
+      "Contact: [Phil data protection contact name], [email address]. If Phil appoints a formal Data Protection Officer, their contact details will be added here."
+    ],
+    [
+      "h1",
+      "2. Controller and processor roles"
+    ],
+    [
+      "p",
+      "Data protection law draws a distinction between a data controller (who decides why and how personal data is processed) and a data processor (who processes it on the controller's instructions). Getting this right matters, because it determines who a parent, pupil or regulator should contact first."
+    ],
+    [
+      "li",
+      "For a school or establishment subscribed to Phil, the establishment is the data controller for its pupils' personal data. Phil acts as a data processor, processing that data only on the establishment's instructions, under a data processing agreement (DPA) signed as part of onboarding."
+    ],
+    [
+      "li",
+      "For an individual mentor on the independent plan, the mentor themselves is the data controller for the pupil data they enter, since there is no separate establishment instructing Phil on their behalf. Phil is still the processor of that data on the mentor's behalf."
+    ],
+    [
+      "li",
+      "For account data about mentors, admins and parents/carers themselves (name, email, login activity), Phil is the controller, since this data relates to the use of Phil's own service rather than to a pupil an establishment is responsible for."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "3. What data we collect"
+    ],
+    [
+      "h2",
+      "3.1 Account data"
+    ],
+    [
+      "p",
+      "Name, email address, role (admin, mentor, or parent/carer), establishment, and authentication and login activity, for every person who holds a Phil account."
+    ],
+    [
+      "h2",
+      "3.2 Pupil data"
+    ],
+    [
+      "p",
+      "Pupils do not hold their own Phil account or log in. Pupil data is entered by mentors or admins as part of delivering mentoring, and includes: forename, surname, date of birth, year group, form class (optional), enrolment and course history, session dates, engagement and mood ratings, mentor's session notes, the safeguarding_flag and safeguarding_note fields described in section 6, and certificates issued."
+    ],
+    [
+      "h2",
+      "3.3 Parent/carer data"
+    ],
+    [
+      "p",
+      "Name, email address, and relationship to the pupil (or pupils) they are linked to, recorded only once an admin or mentor has confirmed the parent/carer is entitled to see that pupil's information."
+    ],
+    [
+      "h2",
+      "3.4 Billing data"
+    ],
+    [
+      "p",
+      "Establishment billing contact details, payment method type, and invoice records including any purchase order reference supplied. Card payments are handled directly by Stripe, our payment processor, Phil does not store full card numbers."
+    ],
+    [
+      "h2",
+      "3.5 Technical and usage data"
+    ],
+    [
+      "p",
+      "Login timestamps, device and browser information, and an access log of who viewed or exported a safeguarding-flagged session record, and when, kept so an establishment can audit access to sensitive records if it ever needs to."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "4. Our lawful basis for processing"
+    ],
+    [
+      "p",
+      "Where Phil is a processor acting on an establishment's instructions, the establishment's own lawful basis applies, typically that processing pupil data is necessary for the school's public task of providing pastoral support and education (UK GDPR Article 6(1)(e)), or its legitimate interests. Because some session content (such as notes touching on a pupil's emotional or mental wellbeing) can be special category data, an establishment should hold an appropriate Article 9 condition too, such as the substantial public interest conditions used for safeguarding and pastoral welfare purposes under the Data Protection Act 2018, Schedule 1, this is the establishment's responsibility to confirm as controller, not Phil's."
+    ],
+    [
+      "p",
+      "Where Phil is itself the controller (account data, and pupil data entered by an individual mentor with no establishment behind them), our lawful basis is performance of the contract with the account holder, and our legitimate interest in operating, securing and improving the service."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "5. Safeguarding data, how it's handled"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Within Phil, a session record, flagged or not, is visible to the mentor who recorded it and to their establishment's admin, who can look up any pupil's records across the whole establishment at their own initiative. This is a fixed feature of the admin role, not something granted case by case, and it is passive, look-it-up access, Phil does not push, alert, or route a flagged record to the admin, or to anyone else. Whether the same person holds both the Phil admin account and the establishment's own Designated Safeguarding Lead role is a decision the establishment makes for itself. Phil staff can access a specific record only in response to a specific, logged support request from the account holder, for example to help a mentor recover a record they can't find, never as routine monitoring."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "6. How we use data"
+    ],
+    [
+      "li",
+      "To provide the service: creating and running enrolments and courses, recording sessions, generating certificates and PDFs, and showing progress to mentors, admins and linked parents/carers as described in the roles and permissions section of Phil's technical specification."
+    ],
+    [
+      "li",
+      "To manage subscriptions and billing, including seat usage and invoicing."
+    ],
+    [
+      "li",
+      "To respond to support requests from account holders."
+    ],
+    [
+      "li",
+      "To meet our own legal and regulatory obligations, including responding to lawful requests from an establishment or from a data subject."
+    ],
+    [
+      "li",
+      "To understand overall usage of the product, only in aggregate or anonymised form (for example, how many sessions are recorded per week across all establishments), never by reading individual pupil session content for this purpose."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "7. Who we share data with"
+    ],
+    [
+      "p",
+      "We do not sell personal data, and we do not share it with advertisers. We share data only with the following categories of recipient, each bound by a data processing agreement or equivalent terms:"
+    ],
+    [
+      "li",
+      "Hosting and infrastructure providers, to run the service."
+    ],
+    [
+      "li",
+      "Stripe, to process card payments and invoicing."
+    ],
+    [
+      "li",
+      "An email delivery provider, to send account, invite and billing notifications."
+    ],
+    [
+      "li",
+      "An establishment's own nominated admin and mentors, exactly as described in the roles and permissions model, this is data sharing within the establishment's own organisation, which Phil simply enables."
+    ],
+    [
+      "p",
+      "Phil is not affiliated with the Department for Education or any local authority, and does not share data with either as a matter of course."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "8. International transfers"
+    ],
+    [
+      "p",
+      "Phil's production data is hosted in the UK/EU. Where any sub-processor involves a transfer of personal data outside the UK or European Economic Area, that transfer is made only under a UK GDPR-recognised safeguard, such as the UK's International Data Transfer Agreement or the EU Standard Contractual Clauses with the UK Addendum."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "9. How long we keep data"
+    ],
+    [
+      "p",
+      "Pupil data is retained in line with the instructions of the establishment that controls it, typically matching the school's own data retention schedule for pastoral records. On request, or when a subscription ends, an establishment's data is exported and then deleted from Phil's systems within the timeframe set out in its data processing agreement. Account data for mentors, admins and parents/carers is retained while the account is active, and for a limited period afterwards to meet legal and accounting obligations."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "10. Security"
+    ],
+    [
+      "li",
+      "Data is encrypted in transit and at rest."
+    ],
+    [
+      "li",
+      "Access follows the roles and permissions model described in Phil's technical specification, mentors see only their own pupils, admins see roster and billing data but not session content, and so on."
+    ],
+    [
+      "li",
+      "Access to safeguarding-flagged records is logged, so an establishment can audit who viewed or exported one, and when."
+    ],
+    [
+      "li",
+      "Phil staff access to establishment data is limited to specific, logged support requests."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "11. Data subject rights"
+    ],
+    [
+      "p",
+      "Under UK GDPR, individuals have rights to access, correct, erase, restrict or object to the processing of their personal data, and to receive a copy of it in a portable format. For pupil data, a request should generally be made to the establishment first, since it is the data controller; Phil will assist the establishment in responding to it. For account data Phil controls directly (mentor, admin and parent/carer accounts), requests can be made to Phil using the contact details in section 1."
+    ],
+    [
+      "p",
+      "If you're unhappy with how your data has been handled, you also have the right to complain to the Information Commissioner's Office (ico.org.uk)."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "12. Children's data"
+    ],
+    [
+      "p",
+      "Phil processes personal data about pupils, who are children. Pupils do not create their own account or interact with Phil directly, all pupil data is entered by school staff on the establishment's behalf, as part of its existing pastoral duties. Responsibility for notifying parents/carers and, where required, obtaining consent for this processing sits with the establishment as data controller, in line with its own privacy notices and safeguarding policy."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "13. Cookies"
+    ],
+    [
+      "p",
+      "Phil uses only the minimal, essential cookies needed to keep an account holder securely signed in. Phil does not use third-party advertising or tracking cookies."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "14. Changes to this policy"
+    ],
+    [
+      "p",
+      "We may update this policy as Phil's features or sub-processors change. Material changes will be notified to establishment admins in advance."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Phil · structured support, real growth. This document is a working draft for planning purposes and should be reviewed by a qualified solicitor or data protection professional before publication."
+    ]
+  ],
+  "terms_of_service": [
+    [
+      "p",
+      "PHIL · BEHAVIOUR MENTORING"
+    ],
+    [
+      "p",
+      "Terms of service"
+    ],
+    [
+      "p",
+      "Draft v1, last reviewed 8 August 2026"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "1. Agreement to these terms"
+    ],
+    [
+      "p",
+      "These terms of service (“Terms”) govern access to and use of Phil, a behaviour-mentoring platform for secondary schools and independent mentors, provided by [PHIL LEGAL ENTITY NAME] (“Phil”, “we”, “us”). By creating an account, subscribing to a plan, or otherwise using Phil, the person or establishment doing so (“you”, the “Customer”) agrees to these Terms. If you're accepting on behalf of a school or other establishment, you confirm you're authorised to do so."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "2. The service"
+    ],
+    [
+      "p",
+      "Phil provides a library of structured, evidence-informed behaviour-mentoring courses, tools to record and track mentoring sessions, progress and certificates, and supporting features such as pupil records, parent/carer access, and admin reporting, as described on our website and in-product. We may add, change or retire individual features over time as the product develops; we'll aim to give reasonable notice of any change that materially reduces functionality you're actively using."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "3. Accounts and eligibility"
+    ],
+    [
+      "li",
+      "Establishment accounts: a school or other establishment subscribes under the establishment plan, nominates one named admin, and that admin invites mentors up to the seats included in the subscription. The establishment is responsible for the accuracy of information it provides and for the conduct of every account it creates or authorises under its subscription."
+    ],
+    [
+      "li",
+      "Individual mentor accounts: a mentor not attached to an establishment may sign up directly under the individual plan. They are responsible for their own account in the same way an establishment admin is responsible for establishment accounts."
+    ],
+    [
+      "li",
+      "You must keep account credentials confidential and tell us promptly if you suspect unauthorised access."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "4. Subscriptions, fees and payment"
+    ],
+    [
+      "li",
+      "Establishment plan: billed annually, includes 15 seats (1 admin plus 14 mentor seats). Additional seats beyond 15 are billed as a metered addition to the subscription, prorated from the date they're added. Current published pricing applies unless a separate written agreement says otherwise."
+    ],
+    [
+      "li",
+      "Individual plan: billed monthly or annually, by card only, for 1 seat. You may cancel at any time; cancellation takes effect at the end of the current billing period."
+    ],
+    [
+      "li",
+      "Payment methods: the establishment plan can be paid by card (charged automatically each renewal) or by invoice, with an optional purchase order reference, on standard payment terms communicated at the time of invoicing. The individual plan is card only."
+    ],
+    [
+      "li",
+      "Free pilot: where offered, a pilot period runs for a defined trial window, capped at a limited number of mentor seats and enrolled pupils, with no payment card required. Continuing past the pilot requires converting to a paid establishment plan; if you don't convert, pilot data is retained for a limited period and then deleted in line with our data retention practice."
+    ],
+    [
+      "li",
+      "Late or failed payment may result in restricted access to the account until the outstanding amount is resolved, though pupil data already recorded is not deleted solely for late payment."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "5. Cancellation and termination"
+    ],
+    [
+      "p",
+      "You may cancel a subscription at any time from your account or by contacting us; cancellation takes effect at the end of the current paid term unless otherwise agreed. We may suspend or terminate an account for material breach of these Terms, including a serious or repeated breach of the acceptable use section below, after giving reasonable notice where practical to do so. On termination, we will make reasonable arrangements for you to export your data before deletion, consistent with our privacy policy and any data processing agreement in place."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "6. Your data and content"
+    ],
+    [
+      "p",
+      "As between you and Phil, the establishment (or individual mentor, where there is no establishment) owns the pupil, mentor and session data it enters into Phil. Phil processes that data as a data processor acting on your instructions, as set out in our privacy policy and the data processing agreement entered into as part of onboarding. You're responsible for having the right to enter pupil information into Phil, and for using it in line with your own data protection and safeguarding obligations."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "7. Phil's intellectual property"
+    ],
+    [
+      "p",
+      "Phil and its licensors own all rights in the Phil platform itself, and in the course content, resource packs, and other materials we author and publish into the platform (the “Phil content”). Subscribing to Phil gives you a non-exclusive, non-transferable licence to use the Phil content to deliver mentoring within your own establishment (or your own individual practice) for as long as your subscription is active, it doesn't transfer ownership, and doesn't permit redistributing Phil content outside your own establishment or reselling access to it."
+    ],
+    [
+      "p",
+      "Where an establishment admin or content admin creates original course content using Phil's course-builder tools, that establishment retains ownership of the original material it authored, while Phil retains ownership of the underlying platform and any Phil-authored template structure used to build it."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "8. Safeguarding, what Phil does and does not do"
+    ],
+    [
+      "p",
+      "Your establishment's admin account has visibility of session records, including safeguarding notes, across your whole establishment, not only for pupils that admin mentors directly. This is a fixed feature of the admin role, on the basis that it's typically held by a management-level member of staff, and it works by letting the admin look a record up when they choose to; it is not a notification, alert, or referral of any kind. It's your establishment's responsibility to ensure the person holding the admin account is appropriate to have this access."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "9. Acceptable use"
+    ],
+    [
+      "p",
+      "You agree not to:"
+    ],
+    [
+      "li",
+      "Use Phil for any purpose other than legitimate behaviour mentoring of pupils you or your establishment are responsible for;"
+    ],
+    [
+      "li",
+      "Attempt to access another establishment's data, or another user's account, without authorisation;"
+    ],
+    [
+      "li",
+      "Reverse engineer, resell, sublicense, or use Phil content outside the licence granted in section 7;"
+    ],
+    [
+      "li",
+      "Upload unlawful, abusive, or materially inaccurate information about a real person, beyond ordinary human error;"
+    ],
+    [
+      "li",
+      "Interfere with the operation or security of the service."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "10. Availability and support"
+    ],
+    [
+      "p",
+      "We aim to keep Phil available and performant, but we don't currently offer a formal uptime service level agreement (SLA), this may change as the product matures, and any SLA offered to specific customers would be set out separately in writing. We provide support by [email/support channel] during UK business hours."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "11. Warranties and disclaimers"
+    ],
+    [
+      "p",
+      "Phil is provided “as is” and “as available”. Except as expressly stated in these Terms, we don't make any warranty that the service will be uninterrupted, error-free, or fit for a particular purpose beyond what's described in our own product documentation. Phil's course content is designed as a universal, early-intervention pastoral resource and is not a substitute for specialist clinical, educational psychology, or safeguarding assessment."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "12. Limitation of liability"
+    ],
+    [
+      "p",
+      "To the extent permitted by law, Phil's total liability arising out of or in connection with these Terms is limited to the fees paid by the Customer in the 12 months before the claim arose. Neither party excludes or limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot lawfully be excluded or limited. Phil is not liable for indirect or consequential losses, or for any safeguarding outcome, which remains the establishment's own responsibility as set out in section 8."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "13. Changes to these terms"
+    ],
+    [
+      "p",
+      "We may update these Terms from time to time, for example to reflect new features or changes in law. We'll give reasonable notice of material changes to establishment admins and individual mentors before they take effect. Continuing to use Phil after a change takes effect means you accept the updated Terms."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "14. Governing law"
+    ],
+    [
+      "p",
+      "These Terms are governed by the laws of England and Wales, and any dispute arising from them is subject to the exclusive jurisdiction of the courts of England and Wales."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "15. Contact"
+    ],
+    [
+      "p",
+      "Questions about these Terms can be sent to [contact email]."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Phil · structured support, real growth. This document is a working draft for planning purposes and should be reviewed by a qualified solicitor before publication."
+    ]
+  ],
+  "safeguarding_policy": [
+    [
+      "p",
+      "PHIL · BEHAVIOUR MENTORING"
+    ],
+    [
+      "p",
+      "Safeguarding policy template"
+    ],
+    [
+      "p",
+      "For establishments using Phil to deliver mentoring, draft v1, 8 August 2026"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "1. Purpose and status of this document"
+    ],
+    [
+      "p",
+      "This document explains how [ESTABLISHMENT NAME] expects staff to handle safeguarding when using Phil, the behaviour-mentoring platform, to deliver mentoring courses to pupils. It sits alongside, and does not replace, the school's main safeguarding and child protection policy. Where anything here appears to conflict with that policy, the main policy always takes precedence."
+    ],
+    [
+      "p",
+      "This template exists because Phil is a session-recording and course-delivery tool, not a safeguarding reporting system. Adopting it clarifies, for every mentor using Phil, exactly where the platform's role ends and the school's normal safeguarding procedure begins."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "2. Scope"
+    ],
+    [
+      "p",
+      "This policy applies to all staff at [ESTABLISHMENT NAME] who use Phil to deliver mentoring sessions to pupils, and to the Designated Safeguarding Lead(s) and admin who oversee that use."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "3. What Phil is, and isn't"
+    ],
+    [
+      "li",
+      "Phil is a tool for planning and recording one-to-one behaviour-mentoring sessions: it holds course content, session notes, ratings, and a pupil's progress through a course."
+    ],
+    [
+      "li",
+      "Phil is not a safeguarding reporting system. It does not send alerts, does not notify a DSL, and does not review, monitor or act on anything a mentor records, including the safeguarding_flag and safeguarding_note fields described in section 5."
+    ],
+    [
+      "li",
+      "Using Phil does not change any part of [ESTABLISHMENT NAME]'s existing child protection procedures. Every existing reporting route, [e.g. CPOMS / MyConcern / paper referral form / direct conversation with the DSL], remains exactly as it was."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "4. Roles and responsibilities"
+    ],
+    [
+      "h2",
+      "4.1 Mentors"
+    ],
+    [
+      "li",
+      "Are responsible for recognising and responding to a safeguarding concern raised during a mentoring session, in line with this school's main safeguarding policy, Phil plays no part in this."
+    ],
+    [
+      "li",
+      "Must report any concern to the DSL through the school's normal reporting route, the same day, regardless of whether they have also recorded anything in Phil."
+    ],
+    [
+      "li",
+      "May use the safeguarding_flag and safeguarding_note fields in Phil as their own factual record of what happened in a session, in addition to, never instead of, reporting the concern through the school's normal route."
+    ],
+    [
+      "h2",
+      "4.2 Designated Safeguarding Lead (DSL)"
+    ],
+    [
+      "li",
+      "Remains the school's central point of contact for every safeguarding concern, exactly as under normal procedure. Phil does not inform the DSL of anything automatically, so mentors must continue to report to them directly and immediately, using the school's usual method, regardless of what's recorded in Phil or who can see it."
+    ],
+    [
+      "li",
+      "If the DSL also holds [ESTABLISHMENT NAME]'s Phil admin account (see 4.3), they can look up any pupil's session records directly, including safeguarding notes. This is a convenience the school may choose to use, not a substitute for the mentor's direct report, a record sitting in Phil, unseen, is not the same as the DSL having been told."
+    ],
+    [
+      "h2",
+      "4.3 Establishment (Phil) admin"
+    ],
+    [
+      "li",
+      "Manages Phil user accounts and mentor seats. Unlike a mentor, who only sees their own pupils, the Phil admin account can view session records, including safeguarding notes, for every pupil at [ESTABLISHMENT NAME], by looking a record up directly. Nothing is sent or flagged to the admin automatically; this is access the admin has to actively use."
+    ],
+    [
+      "li",
+      "Holding the Phil admin account does not, by itself, make someone this school's Designated Safeguarding Lead under Keeping Children Safe in Education, that remains a separate, formal appointment. Because of the level of access involved, [ESTABLISHMENT NAME] should make sure whoever holds the Phil admin account is an appropriate person to have it, in many schools, that will be the DSL or a senior pastoral lead, but it's the school's own decision to make and review."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "5. What actually happens when a mentor flags a session in Phil"
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "This matters because it would be easy for a mentor, under pressure, to assume that flagging a session in the app is itself a form of reporting, or that the admin will simply notice. Neither is true unless the admin happens to go looking. Section 6 sets out the process a mentor should actually follow."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "6. Step-by-step: during and after a session"
+    ],
+    [
+      "p",
+      "1. Keep the pupil safe and calm. Do not promise absolute confidentiality, pupils should already have been told, before the course started, that anything raising a safety concern will be shared with [name/role, e.g. the DSL]."
+    ],
+    [
+      "p",
+      "2. Do not attempt to investigate or resolve the concern yourself, and do not use restorative or mediation techniques from the course material on a safeguarding matter."
+    ],
+    [
+      "p",
+      "3. Report the concern to [DSL NAME / ROLE] the same day, using [the school's normal method, e.g. CPOMS entry, in person, phone call], following the process set out in the main safeguarding policy."
+    ],
+    [
+      "p",
+      "4. Separately, and in addition, record the session in Phil as normal: tick the safeguarding-flag field and add a brief, factual note. This is your own mentoring record, not a substitute for step 3."
+    ],
+    [
+      "p",
+      "5. Follow any instructions from the DSL about next steps, further monitoring, or additional support for the pupil."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "7. Confidentiality"
+    ],
+    [
+      "p",
+      "Before a course begins, mentors should tell each pupil clearly what is confidential and what isn't, for example: “What you tell me stays between us, unless I'm worried about your safety or someone else's. If that happens, I have to tell [DSL name/role] myself.” Because Phil does not share flagged sessions with anyone automatically, this promise can only be kept if the mentor follows through on it personally, every time, through the school's normal reporting route."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "8. Record-keeping"
+    ],
+    [
+      "p",
+      "A Phil session record, including any safeguarding-flag and note, is a mentoring log, not this school's official safeguarding record. [ESTABLISHMENT NAME]'s official safeguarding record remains [CPOMS / MyConcern / the school's designated system], and any concern must be recorded there by the DSL (or the mentor, per your existing procedure) in addition to anything noted in Phil. Phil session records are retained in line with the school's own data retention schedule for pastoral records, see Phil's privacy policy for how Phil itself handles storage and deletion."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "9. Training"
+    ],
+    [
+      "p",
+      "Any member of staff delivering mentoring sessions through Phil must hold current safeguarding training in line with Keeping Children Safe in Education, and should be familiar with this document and the school's main safeguarding policy before running their first session."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "h1",
+      "10. Review"
+    ],
+    [
+      "p",
+      "This document should be reviewed at the same interval as [ESTABLISHMENT NAME]'s main safeguarding policy, or sooner if Phil's own safeguarding-related functionality changes."
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "b",
+      ""
+    ],
+    [
+      "p",
+      "Phil · structured support, real growth. This template must be adapted to your establishment's own policy and approved by your DSL and governing body before use. Phil accepts no responsibility for safeguarding outcomes; safeguarding action is, and remains, the establishment's own responsibility."
+    ]
+  ]
+}
