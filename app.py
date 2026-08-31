@@ -772,6 +772,17 @@ def current_user(request):
         conn.close()
 
 
+def home_for(user):
+    """Where this user's home page is.
+
+    The same map was written out by hand in four places. A page that needs to
+    send someone home should not have to know the role table.
+    """
+    return {"admin": "/admin", "mentor": "/mentor",
+            "parent_carer": "/parent", "phil_staff": "/staff"}.get(
+                (user or {}).get("role"), "/")
+
+
 def unread_notification_count(conn, user):
     if user["role"] == "phil_staff":
         row = conn.execute(
@@ -5520,7 +5531,14 @@ def notifications_page(request):
             ).fetchall()
     finally:
         conn.close()
-    return render("notifications.html", user=user, establishment=establishment, unread=unread, read=read)
+    # No-store, as on the session form: after marking one read the browser was
+    # serving the pre-POST copy from its back-forward cache, so pressing Back
+    # showed the notification unread again and a mentor could not tell whether
+    # it had saved.
+    response = render("notifications.html", user=user, establishment=establishment,
+                      unread=unread, read=read, home_url=home_for(user))
+    response.headers.append(("Cache-Control", "no-store, must-revalidate"))
+    return response
 
 
 @router.post("/notifications/<notification_id>/read")

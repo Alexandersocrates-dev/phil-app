@@ -2,7 +2,11 @@
 {% from "_icons.html" import icon_calendar, icon_users, icon_bell, icon_check_circle %}
 {% block title %}Notifications - Phil{% endblock %}
 {% block content %}
-<p class="back-link"><button type="button" class="js-back">&larr; Back</button></p>
+{# Home, not history. You arrive here from the bell in the header, which can be
+   pressed from anywhere, so "back" has no single answer — and after marking one
+   read, going back landed on the copy of this page rendered before the POST,
+   with the notification still showing as unread. #}
+<p class="back-link"><a class="btn-link-back" href="{{ home_url or '/' }}">&larr; Back</a></p>
 <div class="flex-between" style="margin-bottom:4px;">
   <h1 style="margin:0;">Notifications</h1>
   {% if unread %}
@@ -60,4 +64,8 @@
   </div>
 </details>
 {% endif %}
+<style>
+/* Matches the js-back button it replaces, so the row doesn't shift. */
+.back-link .btn-link-back{display:inline-block;text-decoration:none;}
+</style>
 {% endblock %}
