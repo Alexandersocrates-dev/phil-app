@@ -193,7 +193,7 @@
       },
       {
         "name": "Prevention and response plan template",
-        "body": "My personal plan, shared with my class teacher and pastoral lead.",
+        "body": "My personal plan, shared with my class teacher and whoever looks after pastoral support.",
         "form": {
           "fields": [
             "My triggers",
@@ -802,7 +802,7 @@
       },
       {
         "name": "Attendance file note",
-        "body": "For the attendance lead, alongside the graded plan.",
+        "body": "For whoever leads on attendance, alongside the graded plan.",
         "aliases": [
           "Copy for the attendance file"
         ],
@@ -2861,7 +2861,7 @@
         "cards": [
           {
             "cat": "In school",
-            "title": "Pastoral lead or counsellor",
+            "title": "Your person here",
             "art": "art-person-pin",
             "text": "Name the actual person before this session ends.",
             "note": "A name, not a role"
@@ -5163,7 +5163,7 @@
       },
       {
         "name": "My return-to-school plan",
-        "body": "Shared with the SENCO, pastoral lead and family.",
+        "body": "Shared with the SENCO, whoever leads on pastoral support, and family.",
         "form": {
           "fields": [
             "My next 2-3 ladder steps",
