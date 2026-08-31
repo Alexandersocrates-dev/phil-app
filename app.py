@@ -503,6 +503,15 @@ def attach_earlier_entries(conn, enrolment_id, week_id, items):
         wk = max(prior)
         item["earlier_week"] = wk
         item["earlier_values"] = _readable_entries(item, prior[wk])
+        # The raw field keys as well, so a table can show each earlier answer in
+        # the cell it was written in. A flat strip under the sheet asks a mentor
+        # to match five readings to five rows by eye; the grid already has a
+        # column for it.
+        item["earlier_fields"] = dict(prior[wk])
+        if item.get("table") and all(k.startswith("t") for k in prior[wk]):
+            # Every earlier answer has a cell to sit in, so the strip would
+            # repeat what the table already shows.
+            item["earlier_in_table"] = True
     return items
 
 

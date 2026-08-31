@@ -28,7 +28,7 @@
   {# What was written on this same sheet earlier in the course. Several sessions
      say "put both numbers side by side" or "compare with week one", which a
      mentor can't do if the earlier answer is only stored against that week. #}
-  {% if item.earlier_values %}
+  {% if item.earlier_values and not item.earlier_in_table %}
   <div class="res-earlier">
     <span class="res-earlier-label">Recorded in session {{ item.earlier_week }}</span>
     <span class="res-earlier-values">{{ item.earlier_values|join(' · ') }}</span>
@@ -47,12 +47,15 @@
       <td class="res-writable res-numbered"><span class="res-numbered-inner"><span class="res-rownum">{{ cell }}</span><input type="text"
         name="res__{{ item.slug }}__{{ fk }}"
         value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}"
+        placeholder="{{ (item.earlier_fields or {}).get(fk, '') }}"
         data-field="res__{{ item.slug }}__{{ fk }}" oninput="noteFieldChanged(this)"></span></td>
       {% elif cell %}<td>{{ cell }}</td>
       {% else %}{% set fk = 't' ~ row_i ~ '_' ~ loop.index0 %}
-      <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
+      {%- set was = (item.earlier_fields or {}).get(fk, '') %}
+      <td class="res-writable{% if was %} res-carried{% endif %}"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
         value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}"
-        aria-label="{{ item.table.headers[loop.index0] if item.table.headers|length > loop.index0 else 'Entry' }}, row {{ row_n }}"></td>
+        placeholder="{{ was }}"
+        aria-label="{{ item.table.headers[loop.index0] if item.table.headers|length > loop.index0 else 'Entry' }}, row {{ row_n }}{% if was %}, recorded in session {{ item.earlier_week }} as {{ was }}{% endif %}"></td>
       {% endif %}
     {%- endfor %}</tr>{% endfor %}
   </table>
@@ -688,6 +691,10 @@ for (var i = 0; i < group.length; i++) {
 .res-earlier-label{font-size:11.5px; font-weight:800; letter-spacing:.05em;
   text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
 .res-earlier-values{font-size:13px; color:var(--ink); min-width:0;}
+/* A cell holding an earlier session's answer. Shown as a placeholder so it sits
+   in its own column without being written into this week's entries; typing over
+   it replaces it as normal. */
+.res-carried input::placeholder{color:var(--ink); opacity:.55; font-style:italic;}
 
 .res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
 /* A card that has to exist on paper. Amber, because it is something to do
