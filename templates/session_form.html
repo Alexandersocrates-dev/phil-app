@@ -428,12 +428,16 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      {% if row.nothing_recorded %}
-      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
-      {% else %}
-      <span class="work-row-name">{{ row.name }}</span>
-      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
-      {% endif %}
+      <span class="work-row-body">
+        {%- if row.nothing_recorded %}
+        <span class="work-row-empty">Nothing recorded in this session</span>
+        {%- else %}
+        {%- if row.summary %}<span class="work-row-summary">{{ row.summary }}</span>{% endif %}
+        {%- for s in row.sheets %}
+        <span class="work-row-sheet"><span class="work-row-name">{{ s.name }}</span><span class="work-row-values">{{ s.answers|join(' · ') }}</span></span>
+        {%- endfor %}
+        {%- endif %}
+      </span>
     </div>
     {% endfor %}
   </div>
@@ -464,12 +468,16 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      {% if row.nothing_recorded %}
-      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
-      {% else %}
-      <span class="work-row-name">{{ row.name }}</span>
-      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
-      {% endif %}
+      <span class="work-row-body">
+        {%- if row.nothing_recorded %}
+        <span class="work-row-empty">Nothing recorded in this session</span>
+        {%- else %}
+        {%- if row.summary %}<span class="work-row-summary">{{ row.summary }}</span>{% endif %}
+        {%- for s in row.sheets %}
+        <span class="work-row-sheet"><span class="work-row-name">{{ s.name }}</span><span class="work-row-values">{{ s.answers|join(' · ') }}</span></span>
+        {%- endfor %}
+        {%- endif %}
+      </span>
     </div>
     {% endfor %}
   </div>
@@ -691,6 +699,11 @@ for (var i = 0; i < group.length; i++) {
 .res-earlier-label{font-size:11.5px; font-weight:800; letter-spacing:.05em;
   text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
 .res-earlier-values{font-size:13px; color:var(--ink); min-width:0;}
+/* A session's own summary sits above anything written on its sheets, so a row
+   is never empty for a session that was actually run. */
+.work-row-body{display:flex; flex-direction:column; gap:4px; min-width:0;}
+.work-row-summary{white-space:pre-line; color:var(--ink); font-size:13px;}
+.work-row-sheet{display:flex; gap:8px; flex-wrap:wrap; min-width:0;}
 /* A cell holding an earlier session's answer. Shown as a placeholder so it sits
    in its own column without being written into this week's entries; typing over
    it replaces it as normal. */

@@ -565,9 +565,15 @@ def work_so_far(conn, enrolment_id, module_number, before_week_number):
     this the mentor is recapping from memory, or the pupil is asked to remember
     a decision they made a month ago.
 
-    Returns [{"week": 3, "name": "Calm-down strategy cards", "answers": [...]}]
-    in session order. The key is "answers", not "values": dict.values is a
-    builtin, so a template reading row.values gets the method, not the data.
+    Returns [{"week": 3, "summary": "Check-in: ...", "sheets": [{"name": ...,
+    "answers": [...]}]}] in session order. The key is "answers", not "values":
+    dict.values is a builtin, so a template reading row.values gets the method,
+    not the data.
+
+    Sheets alone left the panel saying "nothing recorded" for every session of a
+    course where the work happened in conversation, which is most of them. The
+    mentor's own summary of each session is the record in that case, so it goes
+    in the row too.
     """
     rows = conn.execute(
         """SELECT re.resource_slug, re.field_key, re.value, w.week_number
@@ -604,23 +610,37 @@ def work_so_far(conn, enrolment_id, module_number, before_week_number):
         grouped.setdefault((r["week_number"], r["resource_slug"]), {})[
             r["field_key"]] = r["value"]
 
-    out = []
+    # What the mentor wrote up for each earlier session.
+    summaries = {r["week_number"]: (r["what_happened"] or "").strip()
+                 for r in conn.execute(
+        """SELECT w.week_number, r.what_happened
+           FROM session_records r
+           JOIN weeks w ON w.id = r.week_id
+           WHERE r.enrolment_id = ? AND w.week_number < ?
+           ORDER BY w.week_number""",
+        (enrolment_id, before_week_number)).fetchall()}
+
+    sheets = {}
     for (week_number, slug), values in sorted(grouped.items()):
         item = by_slug.get(slug)
         readable = _readable_entries(item or {}, values)
         if not readable:
             continue
+        sheets.setdefault(week_number, []).append(
+            {"name": (item or {}).get("name") or slug.replace("-", " "),
+             "answers": readable})
+
+    out = []
+    for week_number in sorted(set(done) | set(sheets) | set(summaries)):
+        rows = sheets.get(week_number) or []
+        summary = summaries.get(week_number) or ""
         out.append({"week": week_number,
-                    "name": (item or {}).get("name") or slug.replace("-", " "),
-                    "answers": readable})
-    # A completed session with nothing on its sheets says so, rather than
-    # vanishing from the list.
-    have = {r["week"] for r in out}
-    for week_number in done:
-        if week_number not in have:
-            out.append({"week": week_number, "name": "", "answers": [],
-                        "nothing_recorded": True})
-    return sorted(out, key=lambda r: (r["week"], r["name"]))
+                    "summary": summary,
+                    "sheets": rows,
+                    # A session that was run but produced neither still says so,
+                    # rather than vanishing from the list.
+                    "nothing_recorded": not summary and not rows})
+    return out
 
 
 _COMPARE_LINE = re.compile(
