@@ -777,10 +777,18 @@ def home_for(user):
 
     The same map was written out by hand in four places. A page that needs to
     send someone home should not have to know the role table.
+
+    Takes a dict or a sqlite3.Row. Row supports ["role"] but not .get(), and
+    the sign-in routes hand this a Row straight from authenticate().
     """
+    role = None
+    if user is not None:
+        try:
+            role = user["role"]
+        except (KeyError, IndexError):
+            role = None
     return {"admin": "/admin", "mentor": "/mentor",
-            "parent_carer": "/parent", "phil_staff": "/staff"}.get(
-                (user or {}).get("role"), "/")
+            "parent_carer": "/parent", "phil_staff": "/staff"}.get(role, "/")
 
 
 def unread_notification_count(conn, user):
