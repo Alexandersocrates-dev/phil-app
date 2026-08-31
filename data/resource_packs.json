@@ -216,13 +216,32 @@
     "items": [
       {
         "name": "Anger thermometer",
-        "body": "Most people use one word for all of this. Five levels, coolest at the bottom. Point at where you are.",
+        "body": "Most people use one word for all of this. Five levels, coolest at the bottom. Point at where you are. Write it down, and take it again in week five.",
         "aliases": [
           "Anger thermometer handout"
         ],
         "tone": "red",
         "selectable": true,
-        "figure": "thermometer"
+        "figure": "thermometer",
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "My number (1-10)",
+              "",
+              ""
+            ],
+            [
+              "What put me there",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Feeling word cards",
@@ -931,7 +950,7 @@
       },
       {
         "name": "Where am I now scale",
-        "body": "Pick the line that's closest to true today. There's no wrong answer here.",
+        "body": "Pick the line that's closest to true today. There's no wrong answer here. Write it down, and take it again in week five.",
         "tone": "blue",
         "cards": [
           {
@@ -970,7 +989,26 @@
             "note": "Ask for help, not just willpower"
           }
         ],
-        "selectable": true
+        "selectable": true,
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "My line (1-5)",
+              "",
+              ""
+            ],
+            [
+              "What's true about that today",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Trigger map template",
@@ -1928,7 +1966,26 @@
             "text": "I can't revise at all.",
             "note": "Needs an adult today"
           }
-        ]
+        ],
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "My number (1-5)",
+              "",
+              ""
+            ],
+            [
+              "What's driving it",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Thought-balance worksheet",
@@ -3436,7 +3493,7 @@
       },
       {
         "name": "Mood scale card",
-        "body": "How do you feel right now? Point at one.",
+        "body": "How do you feel right now? Point at one. Write it down, and take it again in week five.",
         "aliases": [
           "1-5 mood scale card"
         ],
@@ -3478,7 +3535,26 @@
             "note": "Get out of the situation"
           }
         ],
-        "selectable": true
+        "selectable": true,
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "My number (1-5)",
+              "",
+              ""
+            ],
+            [
+              "What put me there",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Trigger list",
@@ -4214,7 +4290,7 @@
       {
         "name": "How am I right now? chart",
         "slug": "how-am-i-right-now-chart",
-        "body": "Pick the one closest to today. There's no right one to be in.",
+        "body": "Pick the one closest to today. There's no right one to be in. Write it down, and take it again in week five.",
         "selectable": true,
         "tone": "teal",
         "cards": [
@@ -4247,7 +4323,26 @@
             "note": "Something small and doable. Fresh air, one easy task"
           }
         ],
-        "source": "Plain-language states used in UK pastoral practice. Not based on any branded self-regulation framework."
+        "source": "Plain-language states used in UK pastoral practice. Not based on any branded self-regulation framework.",
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "Where I am today",
+              "",
+              ""
+            ],
+            [
+              "What put me there",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Emotion word cards",
@@ -4858,7 +4953,29 @@
             "note": "Not a moment for a new step"
           }
         ],
-        "selectable": true
+        "selectable": true,
+        "table": {
+          "headers": [
+            "Reading",
+            "Week 1",
+            "Week 4",
+            "Week 5"
+          ],
+          "rows": [
+            [
+              "My number (1-10)",
+              "",
+              "",
+              ""
+            ],
+            [
+              "What the worry is about",
+              "",
+              "",
+              ""
+            ]
+          ]
+        }
       },
       {
         "name": "Avoidance ladder template",
