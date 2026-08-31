@@ -2316,7 +2316,7 @@ module.exports = [
         "objective": "Pupil can name and try at least two sensory regulation tools that work for the pupil.",
         "checkin": "1. Look at the timeline again and ask whether anything else belongs on it.\n2. Ask which point they'd most want to change.",
         "input": "1. Go through the toolkit options: ear defenders, fidget tools, a cap or sunglasses, a quiet pass, movement breaks.\n2. Ask: 'have you ever had something taken off you as a punishment?' These are aids, not treats to be earned or removed.\n3. Say they'll try whichever are to hand rather than choosing from a list.\n4. Explain that the ones to keep are the ones that suit the hardest point of their day.",
-        "activity": "1. Get out two or three tools from the options card and try each one here.\n2. Ask after each: 'did that help, do nothing, or make it worse?'\n3. Pupil writes the ones that helped into their toolkit list.\n4. Ask: 'could you use that in a lesson without it drawing attention?'",
+        "activity": "1. Get out two or three tools from the options card and try each one here.\n2. Ask after each: 'did that help, do nothing, or make it worse?'\n3. Pupil writes the ones that helped into their toolkit list.\n4. Ask: 'would you feel comfortable using that in a lesson?'",
         "reflect": "1. Ask: 'which of those was most useful?'\n2. Pupil agrees to use it once this week in a real moment, not just in here.",
         "lookfor": "Tools only work if pupils feel able to use them without standing out or facing comment from peers, discuss how to use them discreetly if that matters to the pupil.",
         "resources": [
