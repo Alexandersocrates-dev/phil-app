@@ -2509,10 +2509,12 @@ module.exports = [
         "objective": "Pupil has a personalised support plan and knows what further help is available if needed.",
         "checkin": "1. Look back over the five weeks gently.\n2. Ask what's felt most useful, rather than what's improved.\n3. Let them say 'none of it' if that's true.",
         "input": "1. Ask: 'has any of this been useful?' Take whatever answer comes, including none of it.\n2. Say clearly that grief support often needs far longer than five weeks, and that's normal.\n3. Say you'll go through what support exists, and name a real person at school, before the end of today.\n4. Make sure they leave knowing this ending isn't the end of the support.",
-        "activity": "1. Get out the one-page bereavement support plan.\n2. Ask: 'which of the things we've tried actually helped?'\n3. Ask: 'are there dates coming up that are likely to be hard?'\n4. Ask: 'who at school would you talk to?'\n5. Now write all of that into the support plan.\n6. Go through the support services card so they know what exists, without any expectation of using it.\n7. Ask who should have the copy for the pastoral file, and check they're comfortable with that before it goes anywhere.",
+        "activity": "1. Get out the one-page bereavement support plan.\n2. Ask: 'which of the things in your hard day toolkit actually helped?'\n3. Ask: 'are there dates coming up that are likely to be hard?' The anniversary planning card covers the ones people forget.\n4. Ask: 'who at school would you talk to?'\n5. Now write all of that into the support plan.\n6. Go through the support services card so they know what exists, without any expectation of using it.\n7. Ask who should have the copy for the pastoral file, and check they're comfortable with that before it goes anywhere.",
         "reflect": "1. Ask: 'what's felt most helpful about this course?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
         "resources": [
+          "Hard day toolkit template",
+          "Anniversary planning card",
           "One-page bereavement support plan",
           "Bereavement support services info card",
           "Copy for pastoral file"
