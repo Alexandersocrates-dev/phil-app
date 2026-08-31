@@ -2751,12 +2751,13 @@ module.exports = [
       {
         "title": "Making friends",
         "objective": "Pupil can rehearse at least one practical way to start a conversation or join a group in a new setting.",
-        "checkin": "1. Ask: 'how did preparing the practical thing go?'\n2. Ask: 'did it make the move feel any closer or easier?'",
-        "input": "1. Say that nobody arrives with friends already made, and everyone is watching everyone else.\n2. Ask: 'how many people do you reckon arrive already knowing everyone?' Nobody does, and everyone is watching everyone else.\n3. Add the low-pressure routes in: sitting near others at lunch, joining a club in the first fortnight.\n4. Get out the joining a club or group ideas card — a shared activity gives you a reason to talk, which is easier than talking for its own sake.\n5. Set the expectation honestly — the first weeks are about acquaintances, not best friends.",
+        "checkin": "1. Ask: 'did you get the thing on your first day checklist sorted?'\n2. Ask: 'does the move feel any easier now that's done?'",
+        "input": "1. Ask: 'how many people do you think arrive already knowing everyone?'\n2. Nobody does. Everyone there is watching everyone else, worrying about the same thing.\n3. Add the low-pressure routes in: sitting near others at lunch, joining a club in the first fortnight.\n4. Get out the joining a club or group ideas card — a shared activity gives you a reason to talk, which is easier than talking for its own sake.\n5. Set the expectation honestly — the first weeks are about acquaintances, not best friends.",
         "activity": "1. Get out the starting a conversation prompt cards.\n2. Pupil picks two openers from the prompt cards that they'd actually say.\n3. Role-play it: you're a new classmate, they start the conversation.\n4. Do it once where you reply well, once where you're short with them.\n5. Ask: 'what would you do if they didn't say much back?'",
         "reflect": "1. Ask: 'which of those felt least strange to say?'\n2. Pupil agrees to start one small conversation in the first couple of weeks. One is enough.",
         "lookfor": "Reassure the pupil that friendships often take weeks, not days, to form in a new setting, this is normal, not a sign that something's wrong.",
         "resources": [
+          "First day checklist template",
           "Starting a conversation prompt cards",
           "Joining a club or group ideas card"
         ],
