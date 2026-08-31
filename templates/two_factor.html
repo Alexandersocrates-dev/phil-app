@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_lock %}
+{% block title %}Two-factor authentication - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+
+{% if codes %}
+{# Shown once, on the response that created them. Only the hashes are stored,
+   so there is no page that can show them again. #}
+<div class="card">
+  <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+  <h1>Your recovery codes</h1>
+  <p>Save these somewhere that isn't your phone. Each one signs you in once, if you
+  ever lose the app.</p>
+  <p class="tf-warn">This is the only time they can be shown. They are stored scrambled,
+  so nobody &mdash; including us &mdash; can read them back to you later.</p>
+  <ol class="tf-codes">
+    {% for c in codes %}<li>{{ c }}</li>{% endfor %}
+  </ol>
+  <p class="muted">Printing this page is fine. Emailing it to yourself is not: your email
+  is what a recovery code is meant to protect you from losing.</p>
+  <p><a class="btn btn-primary" href="/account/two-factor">Done</a></p>
+</div>
+
+{% elif enabled %}
+<div class="card">
+  <h1>Two-factor is on</h1>
+  <p>Signing in needs your password and a code from your authenticator app.</p>
+  <p class="muted">{{ recovery_left }} recovery code{{ '' if recovery_left == 1 else 's' }} left.
+  {% if recovery_left <= 2 %}<strong>That is running low &mdash; generate a new set.</strong>{% endif %}</p>
+
+  <h2 class="tf-h2">New recovery codes</h2>
+  <p class="muted">A new set replaces the old one, so any code you have written down stops working.</p>
+  <form method="post" action="/account/two-factor/codes" class="form-left">
+    <div class="field">
+      <label for="rc-password">Your password</label>
+      <input type="password" id="rc-password" name="password" required autocomplete="current-password">
+    </div>
+    <button class="btn btn-secondary" type="submit">Generate a new set</button>
+  </form>
+
+  {% if user.role in ('admin', 'mentor', 'phil_staff') %}
+  <h2 class="tf-h2">Changed phone?</h2>
+  <p class="muted">Two-factor is required on staff accounts, so it can't be turned off.
+  To move it to a new phone, generate a new set of recovery codes above, then ask an
+  admin at your school to reset it &mdash; you'll be asked to set it up again next time
+  you sign in.</p>
+  {% else %}
+  <h2 class="tf-h2">Turn it off</h2>
+  <p class="muted">Your account goes back to a password on its own.</p>
+  <form method="post" action="/account/two-factor/disable" class="form-left"
+        onsubmit="return confirm('Turn off two-factor? Your account will be protected by a password alone.');">
+    <div class="field">
+      <label for="off-password">Your password</label>
+      <input type="password" id="off-password" name="password" required autocomplete="current-password">
+    </div>
+    <button class="btn btn-secondary" type="submit">Turn off two-factor</button>
+  </form>
+  {% endif %}
+</div>
+
+{% else %}
+<div class="card">
+  <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+  <h1>Set up two-factor</h1>
+  <p class="tf-required">Phil needs this on every staff account before you can carry on.</p>
+  <p>A code from your phone as well as your password. It means a stolen password isn't
+  enough on its own &mdash; which matters here, because Phil holds what pupils have
+  written and what mentors have recorded.</p>
+
+  <ol class="tf-steps">
+    <li>Install an authenticator app if you don't have one. Google Authenticator, Microsoft
+      Authenticator and 1Password all work.</li>
+    <li>Add an account by typing in this key:
+      <code class="tf-secret">{{ secret }}</code>
+      <span class="muted">Account name: your Phil email. Type: time-based.</span>
+    </li>
+    <li>Type the six-digit code it shows you, to prove it worked.</li>
+  </ol>
+
+  <form method="post" action="/account/two-factor" class="form-left">
+    <div class="field">
+      <label for="code">Code from the app</label>
+      <input type="text" id="code" name="code" required inputmode="numeric"
+             autocomplete="one-time-code" maxlength="6" class="tf-code" placeholder="000000">
+    </div>
+    <button class="btn btn-primary" type="submit">Turn on two-factor</button>
+  </form>
+  <p class="muted mt-4">Nothing changes until that code is accepted, so you can't lock
+  yourself out by starting this and stopping.</p>
+</div>
+{% endif %}
+
+<style>
+.tf-h2{font-size:15px;margin:28px 0 4px;}
+.tf-steps{margin:16px 0 20px;padding-left:20px;line-height:1.7;}
+.tf-steps li{margin-bottom:10px;}
+.tf-secret{display:block;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:17px;letter-spacing:.14em;word-break:break-all;background:var(--teal-light);
+  border-radius:8px;padding:10px 12px;margin:8px 0 4px;}
+.tf-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:20px;
+  letter-spacing:.18em;text-align:center;}
+.tf-codes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;
+  margin:16px 0;padding-left:20px;}
+.tf-codes li{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;
+  letter-spacing:.08em;}
+.tf-warn{color:#A32D2D;font-weight:600;}
+.tf-required{color:#A32D2D;font-weight:700;margin-bottom:12px;}
+@media (max-width:520px){ .tf-codes{grid-template-columns:minmax(0,1fr);} }
+</style>
+{% endblock %}

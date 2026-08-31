@@ -796,8 +796,27 @@ def unread_notification_count(conn, user):
     return row["c"] if row else 0
 
 
-def require(request, roles=None):
-    """Returns the user row (as a dict, with unread_notifications attached), or a redirect Response if not authorised."""
+# Two-factor is required for anyone who can see a pupil's record: mentors,
+# admins and Phil staff. Parents and carers are outside it deliberately — they
+# see only their own child, and requiring an authenticator app of every family
+# would put a wall in front of the people least able to get past it. If that
+# should change, add "parent_carer" here and nothing else needs touching.
+TWOFA_REQUIRED_ROLES = {"admin", "mentor", "phil_staff"}
+
+def twofa_outstanding(conn, user):
+    """True if this user must set two-factor up before going any further."""
+    return (user["role"] in TWOFA_REQUIRED_ROLES
+            and not authlib.twofa_enabled(conn, user["id"]))
+
+
+def require(request, roles=None, setting_up_twofa=False):
+    """Returns the user row (as a dict, with unread_notifications attached), or a redirect Response if not authorised.
+
+    setting_up_twofa exempts the two-factor pages themselves from the two-factor
+    requirement, which would otherwise redirect them to themselves for ever. It
+    is a flag on the handler rather than a list of URL paths, so a route that
+    moves cannot quietly fall out of the exemption or into it.
+    """
     user = current_user(request)
     if not user:
         return None, redirect("/login")
@@ -825,6 +844,14 @@ def require(request, roles=None):
                     "This establishment's access has been suspended. Contact Phil support to resolve this.",
                     status="403 Forbidden")
         user["unread_notifications"] = unread_notification_count(conn, user)
+        # Enforced here rather than at sign-in, because sessions last a
+        # fortnight: without this, everyone already signed in would carry on
+        # without a second factor until their cookie ran out.
+        if not setting_up_twofa and twofa_outstanding(conn, user):
+            return None, with_flash(
+                "/account/two-factor",
+                "Phil now needs two-factor authentication on every staff account. "
+                "It takes a minute to set up, and then you're back to normal.", "error")
     finally:
         conn.close()
     return user, None
@@ -953,10 +980,16 @@ def flash_from_query(request):
     return None
 
 
-def with_flash(location, message, kind="ok"):
+def with_flash_url(location, message, kind="ok"):
+    """The URL with_flash would redirect to, for a caller that needs to set a
+    cookie on the response as well."""
     from urllib.parse import quote
     sep = "&" if "?" in location else "?"
-    return redirect(f"{location}{sep}flash={quote(message)}&flash_kind={kind}")
+    return f"{location}{sep}flash={quote(message)}&flash_kind={kind}"
+
+
+def with_flash(location, message, kind="ok"):
+    return redirect(with_flash_url(location, message, kind))
 
 
 def seats_used(conn, establishment_id):
@@ -1088,7 +1121,7 @@ def signup_submit(request):
 
     dest = "/mentor" if role == "mentor" else "/admin"
     response = with_flash(dest, "Welcome to Phil. Your account is ready.", "ok")
-    response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * 14)
+    response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * authlib.SESSION_LIFETIME_DAYS)
     return response
 
 
@@ -1106,15 +1139,75 @@ def login_submit(request):
         user = authlib.authenticate(conn, email, password)
         if not user:
             return with_flash("/login", "Email or password not recognised.", "error")
+        # With two-factor on, the password alone buys nothing: no session is
+        # created until the code is given. The half-way state is a row, not a
+        # cookie, and it dies in ten minutes.
+        if authlib.twofa_enabled(conn, user["id"]):
+            pending = authlib.create_pending(conn, user["id"])
+            conn.commit()
+            response = redirect("/login/code")
+            response.set_cookie(TWOFA_PENDING_COOKIE, pending, max_age=60 * 10)
+            return response
         token = authlib.create_session(conn, user["id"])
         conn.commit()
     finally:
         conn.close()
 
-    dest = {"admin": "/admin", "mentor": "/mentor", "parent_carer": "/parent",
-            "phil_staff": "/staff"}.get(user["role"], "/courses")
+    response = redirect(home_for(user))
+    response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * authlib.SESSION_LIFETIME_DAYS)
+    return response
+
+
+TWOFA_PENDING_COOKIE = "phil_2fa"
+
+
+@router.get("/login/code")
+def login_code_form(request):
+    conn = db.get_conn()
+    try:
+        user = authlib.user_for_pending(conn, request.cookie(TWOFA_PENDING_COOKIE))
+    finally:
+        conn.close()
+    if not user:
+        return with_flash("/login", "That sign-in timed out. Start again.", "error")
+    return render("login_code.html", user=None, flash=flash_from_query(request))
+
+
+@router.post("/login/code")
+def login_code_submit(request):
+    token_pending = request.cookie(TWOFA_PENDING_COOKIE)
+    code = request.field("code", "").strip()
+    conn = db.get_conn()
+    try:
+        user = authlib.user_for_pending(conn, token_pending)
+        if not user:
+            return with_flash("/login", "That sign-in timed out. Start again.", "error")
+        record = authlib.twofa_record(conn, user["id"])
+        ok = authlib.verify_totp(record["secret"], code) if record else False
+        used_recovery = False
+        if not ok:
+            # A recovery code is spent whether or not it was the right one to
+            # use, so a stolen list cannot be tried repeatedly.
+            ok = used_recovery = authlib.consume_recovery_code(conn, user["id"], code)
+        if not ok:
+            conn.commit()
+            return with_flash("/login/code", "That code wasn't right. Try the next one.", "error")
+        authlib.consume_pending(conn, token_pending)
+        token = authlib.create_session(conn, user["id"])
+        left = authlib.unused_recovery_code_count(conn, user["id"])
+        db.log_action(conn, user["id"], "twofa_signin",
+                      detail="recovery code" if used_recovery else "authenticator")
+        conn.commit()
+    finally:
+        conn.close()
+    dest = home_for(user)
+    if used_recovery:
+        dest = with_flash_url(dest,
+            f"Signed in with a recovery code. {left} left \u2014 generate a new set "
+            "from your account if you are running low.", "ok")
     response = redirect(dest)
-    response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * 14)
+    response.set_cookie(authlib.SESSION_COOKIE, token, max_age=60 * 60 * 24 * authlib.SESSION_LIFETIME_DAYS)
+    response.delete_cookie(TWOFA_PENDING_COOKIE)
     return response
 
 
@@ -1131,6 +1224,101 @@ def logout(request):
     response = redirect("/")
     response.delete_cookie(authlib.SESSION_COOKIE)
     return response
+
+
+@router.get("/account/two-factor")
+def twofa_page(request):
+    user, err = require(request, setting_up_twofa=True)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enabled = authlib.twofa_enabled(conn, user["id"])
+        left = authlib.unused_recovery_code_count(conn, user["id"]) if enabled else 0
+        secret = uri = None
+        if not enabled:
+            # A fresh secret each time the setup page is opened, so an abandoned
+            # attempt can't be resumed by someone else at the same desk.
+            secret = authlib.begin_twofa_setup(conn, user["id"])
+            uri = authlib.otpauth_uri(secret, user["email"])
+            conn.commit()
+    finally:
+        conn.close()
+    return render("two_factor.html", user=user, enabled=enabled, secret=secret,
+                  otpauth_uri=uri, codes=None, recovery_left=left,
+                  flash=flash_from_query(request))
+
+
+@router.post("/account/two-factor")
+def twofa_enable(request):
+    user, err = require(request, setting_up_twofa=True)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        if authlib.twofa_enabled(conn, user["id"]):
+            return with_flash("/account/two-factor", "Two-factor is already on.", "error")
+        if not authlib.confirm_twofa(conn, user["id"], request.field("code", "")):
+            return with_flash("/account/two-factor",
+                              "That code wasn't right. Check the app and try the current code.", "error")
+        codes = authlib.issue_recovery_codes(conn, user["id"])
+        authlib.destroy_other_sessions(conn, user["id"], request.cookie(authlib.SESSION_COOKIE))
+        db.log_action(conn, user["id"], "twofa_enabled", "user", user["id"])
+        conn.commit()
+        left = len(codes)
+    finally:
+        conn.close()
+    # Shown once. They are not stored in the clear, so this page is the only
+    # time anyone can read them.
+    return render("two_factor.html", user=user, enabled=True, secret=None,
+                  otpauth_uri=None, codes=codes, recovery_left=left, flash=None)
+
+
+@router.post("/account/two-factor/codes")
+def twofa_new_codes(request):
+    user, err = require(request, setting_up_twofa=True)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        if not authlib.twofa_enabled(conn, user["id"]):
+            return with_flash("/account/two-factor", "Two-factor isn't on yet.", "error")
+        # Password, not a code: someone at an unlocked screen shouldn't be able
+        # to mint themselves a way back in later.
+        if not authlib.authenticate(conn, user["email"], request.field("password", "")):
+            return with_flash("/account/two-factor", "That password wasn't right.", "error")
+        codes = authlib.issue_recovery_codes(conn, user["id"])
+        db.log_action(conn, user["id"], "twofa_codes_reissued", "user", user["id"])
+        conn.commit()
+    finally:
+        conn.close()
+    return render("two_factor.html", user=user, enabled=True, secret=None,
+                  otpauth_uri=None, codes=codes, recovery_left=len(codes), flash=None)
+
+
+@router.post("/account/two-factor/disable")
+def twofa_disable(request):
+    user, err = require(request)
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        # Staff can't switch off something the app requires of them. Only an
+        # account outside TWOFA_REQUIRED_ROLES can, and only with its password.
+        if user["role"] in TWOFA_REQUIRED_ROLES:
+            return with_flash("/account/two-factor",
+                              "Two-factor is required on staff accounts and can't be turned off. "
+                              "If you've changed phone, generate new recovery codes first, then "
+                              "set it up again on the new one.", "error")
+        if not authlib.authenticate(conn, user["email"], request.field("password", "")):
+            return with_flash("/account/two-factor",
+                              "That password wasn't right, so nothing was changed.", "error")
+        authlib.disable_twofa(conn, user["id"])
+        db.log_action(conn, user["id"], "twofa_disabled", "user", user["id"])
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash("/account/two-factor", "Two-factor is off for your account.", "ok")
 
 
 @router.get("/account/password")
@@ -3181,6 +3369,12 @@ def admin_home(request):
             "SELECT * FROM users WHERE establishment_id=? AND role IN ('admin','mentor') AND status='active' ORDER BY role, name",
             (user["establishment_id"],),
         ).fetchall()
+        # Whether each has two-factor set up, so the staff list can show who is
+        # still to do it and offer the reset for anyone who has lost their phone.
+        authlib.init_twofa_tables(conn)
+        with_twofa = {r["user_id"] for r in conn.execute(
+            "SELECT user_id FROM user_twofa WHERE confirmed_at IS NOT NULL").fetchall()}
+        mentors = [dict(m, twofa=m["id"] in with_twofa) for m in mentors]
         pupils = conn.execute(
             "SELECT * FROM pupils WHERE establishment_id=? AND status='active' ORDER BY surname",
             (user["establishment_id"],),
@@ -3249,6 +3443,60 @@ def looks_like_email(value):
     local, _, domain = value.partition("@")
     return bool(local) and "." in domain and not domain.startswith(".") \
         and not domain.endswith(".") and " " not in value
+
+
+def _twofa_reset_back(user):
+    """Where to land after resetting someone's two-factor.
+
+    There is no /admin/mentors page: an admin's staff list is on their home
+    page, and Phil staff have their own area."""
+    return "/staff" if user["role"] == "phil_staff" else "/admin"
+
+
+@router.post("/admin/mentors/<mentor_id>/reset-two-factor")
+def admin_reset_twofa(request):
+    """Turns off a colleague's two-factor when they have lost the phone and the
+    recovery codes.
+
+    An admin can do this, because the alternative is every lost phone in every
+    school becoming a support ticket to one person. The cost is that an admin
+    could use it to take over a colleague's account, so it is not quiet: the
+    person is emailed, every other session of theirs is ended, and it is written
+    to the audit log with who did it.
+    """
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        if user["role"] == "phil_staff":
+            # A school's only admin has nobody above them locally, so somebody
+            # has to be able to let them back in.
+            target = conn.execute(
+                "SELECT * FROM users WHERE id = ? AND role IN ('admin','mentor')",
+                (request.params["mentor_id"],)).fetchone()
+        else:
+            target = conn.execute(
+                """SELECT * FROM users WHERE id = ? AND establishment_id = ?
+                   AND role IN ('admin','mentor')""",
+                (request.params["mentor_id"], user["establishment_id"]),
+            ).fetchone()
+        if not target:
+            return with_flash(_twofa_reset_back(user), "That member of staff isn't at your school.", "error")
+        if not authlib.twofa_enabled(conn, target["id"]):
+            return with_flash(_twofa_reset_back(user),
+                              f"{target['name']} doesn't have two-factor on.", "error")
+        authlib.disable_twofa(conn, target["id"])
+        authlib.destroy_other_sessions(conn, target["id"])
+        db.log_action(conn, user["id"], "twofa_reset_by_admin", "user", target["id"],
+                      detail=f"reset by {user['name']}")
+        conn.commit()
+    finally:
+        conn.close()
+    _send_twofa_reset_email(target["email"], target["name"], user["name"])
+    return with_flash(_twofa_reset_back(user),
+                      f"Two-factor is off for {target['name']}, and they have been emailed. "
+                      "They can set it up again from their account.", "ok")
 
 
 @router.post("/admin/mentors/new")
@@ -6808,7 +7056,33 @@ wsgi_app = make_wsgi_app(router, static_dir=STATIC_DIR)
 
 
 def _send_reset_email(to_email, link):
-    """Emails one reset link. Returns True only if a provider accepted it.
+    """Emails one reset link."""
+    return _send_email(
+        to_email, "Reset your Phil password",
+        "Someone asked to reset the password on your Phil account.\n\n"
+        f"Set a new one here, within the next hour:\n{link}\n\n"
+        "If this wasn't you, ignore this email. Your password has not changed.")
+
+
+def _send_twofa_reset_email(to_email, name, actor_name):
+    """Tells someone their second factor was switched off by an admin.
+
+    The whole point of letting an admin do it is that a lost phone shouldn't
+    become a support ticket. The whole point of this email is that it can't be
+    done quietly."""
+    return _send_email(
+        to_email, "Two-factor was turned off on your Phil account",
+        f"Hello {name},\n\n"
+        f"{actor_name} turned off two-factor authentication on your Phil account, "
+        "and signed you out everywhere.\n\n"
+        "If that was at your request, sign in and set it up again from your account "
+        "page.\n\n"
+        "If it was not, change your password now and speak to them, because someone "
+        "with admin access to your school's Phil account did this.")
+
+
+def _send_email(to_email, subject, body):
+    """Sends one email. Returns True only if a provider accepted it.
 
     Phil has no email delivery anywhere else: invites create accounts directly
     and alerts are in-app. Set RESEND_API_KEY or POSTMARK_SERVER_TOKEN, plus
@@ -6821,17 +7095,12 @@ def _send_reset_email(to_email, link):
     address cannot be told apart from a right one."""
     import urllib.request
 
-    subject = "Reset your Phil password"
-    body = ("Someone asked to reset the password on your Phil account.\n\n"
-            f"Set a new one here, within the next hour:\n{link}\n\n"
-            "If this wasn't you, ignore this email. Your password has not changed.")
-
     resend_key = os.environ.get("RESEND_API_KEY")
     postmark_token = os.environ.get("POSTMARK_SERVER_TOKEN")
     mail_from = os.environ.get("MAIL_FROM", "Phil <no-reply@phileducation.co.uk>")
 
     if not (resend_key or postmark_token):
-        print(f"[reset] No email provider configured. Link for {to_email}: {link}")
+        print(f"[mail] No email provider configured. To {to_email}: {subject}\n{body}")
         return False
 
     try:
@@ -6853,7 +7122,7 @@ def _send_reset_email(to_email, link):
         with urllib.request.urlopen(request_obj, timeout=10) as resp:
             return 200 <= resp.status < 300
     except Exception as exc:
-        print(f"[reset] Send to {to_email} failed: {exc}")
+        print(f"[mail] Send to {to_email} failed: {exc}")
         return False
 
 

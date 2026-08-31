@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_lock %}
+{% block title %}Enter your code - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card card-center">
+  <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+  <h1>Enter your code</h1>
+  <p class="muted">Open your authenticator app and type the six-digit code for Phil.</p>
+  <form method="post" action="/login/code" class="form-left">
+    <div class="field">
+      <label for="code">Code</label>
+      {# inputmode numeric brings up the number pad on a phone; one-time-code
+         lets a password manager fill it. autocomplete off would block both. #}
+      <input type="text" id="code" name="code" required autofocus
+             inputmode="numeric" autocomplete="one-time-code"
+             maxlength="11" class="code-input" placeholder="000000">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+  </form>
+  <p class="muted mt-4">Lost your phone? Type one of your recovery codes above instead.
+  Each one works once.</p>
+  <p class="muted mt-4">No codes either? Ask an admin at your school to turn two-factor
+  off for you, then set it up again.</p>
+  <p class="muted mt-4"><a href="/login">Back to sign in</a></p>
+</div>
+<style>
+/* Wide-spaced and monospaced: a six-digit code is read a character at a time,
+   and a recovery code has a hyphen in it that must be easy to see. */
+.code-input{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:20px;letter-spacing:.18em;text-align:center;}
+</style>
+{% endblock %}
