@@ -72,12 +72,19 @@
 
 <section class="card mh-list-card">
   <div class="mh-section-head">
-    <h2>My mentoring list</h2>
-    <p>Open a name to see their courses.</p>
+    <div class="mh-section-text">
+      <h2>My mentoring list</h2>
+      <p>Open a name to see their courses.</p>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil</a>
   </div>
 
 {% if not mentoring_list %}
-<p class="muted">Nobody on your list yet. Add a pupil from the Pupils page.</p>
+<div class="mh-empty">
+  <p>Nobody on your list yet.</p>
+  <p class="muted">Add a pupil, then enrol them on a course. They join your list, and only yours.</p>
+  <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add your first pupil</a>
+</div>
 {% else %}
 {# One row per pupil, not per enrolment. A pupil on three courses used to appear
    three times with the same name, which reads as three children. #}
@@ -211,8 +218,15 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .mh-main{min-width:0;display:flex;flex-direction:column;gap:16px;}
 .mh-aside{min-width:0;position:sticky;top:18px;display:flex;flex-direction:column;gap:16px;}
 
-.mh-section-head{margin-bottom:8px;}
+/* The heading and the action sit on one line, so adding a pupil is where the
+   list of pupils is rather than somewhere a mentor has to go looking. */
+.mh-section-head{margin-bottom:8px;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.mh-section-text{min-width:0;}
 .mh-section-head h2{margin:0;font-size:16px;letter-spacing:-.01em;}
+.mh-empty{padding:8px 0 4px;}
+.mh-empty p{margin:0 0 4px;font-size:14px;}
+.mh-empty p.muted{font-size:13px;margin-bottom:12px;}
 .mh-section-head p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.5;}
 .mh-list-card{margin:0;padding:16px 24px;}
 

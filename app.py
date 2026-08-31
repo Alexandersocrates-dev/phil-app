@@ -1861,6 +1861,25 @@ def new_pupil_submit(request):
 
     conn = db.get_conn()
     try:
+        # Matched on name and date of birth, case- and space-insensitively: two
+        # staff adding the same child a fortnight apart is the way a duplicate
+        # profile gets made, and the second one silently splits the history.
+        existing = conn.execute(
+            """SELECT id, forename, surname, status FROM pupils
+               WHERE establishment_id=?
+                 AND lower(trim(forename))=lower(trim(?))
+                 AND lower(trim(surname))=lower(trim(?))
+                 AND date_of_birth=?""",
+            (user["establishment_id"], forename, surname, dob)).fetchone()
+        if existing:
+            name = f"{existing['forename']} {existing['surname']}"
+            if existing["status"] != "active":
+                message = (f"{name} is already on Phil, but their profile is archived. "
+                           f"Restore it rather than adding them again.")
+            else:
+                message = f"{name} is already on Phil. Open their profile to enrol them on a course."
+            return with_flash(f"/mentor/pupils/{existing['id']}", message, "error")
+
         cur = conn.execute(
             """INSERT INTO pupils (establishment_id, forename, surname, date_of_birth,
                year_group, form_class, status, created_by, created_at)
@@ -2630,11 +2649,21 @@ def enrol_form(request):
         pupil = conn.execute("SELECT * FROM pupils WHERE id=? AND establishment_id=?",
                               (request.params["pupil_id"], user["establishment_id"])).fetchone()
         courses = conn.execute("SELECT * FROM courses WHERE status='published' ORDER BY module_number").fetchall()
+        # Only an admin chooses who mentors a pupil. A mentor adding someone is
+        # adding them to their own list, so there is nothing to choose.
+        mentors = []
+        if user["role"] in ("admin", "phil_staff"):
+            mentors = conn.execute(
+                """SELECT id, name FROM users
+                   WHERE establishment_id=? AND role IN ('admin','mentor') AND status='active'
+                   ORDER BY name""",
+                (user["establishment_id"],)).fetchall()
     finally:
         conn.close()
     if not pupil:
         return Response("Pupil not found", status="404 Not Found")
-    return render("enrol.html", user=user, pupil=pupil, courses=courses, flash=flash_from_query(request))
+    return render("enrol.html", user=user, pupil=pupil, courses=courses, mentors=mentors,
+                  flash=flash_from_query(request))
 
 
 @router.post("/mentor/enrol/<pupil_id>")
@@ -2668,11 +2697,26 @@ def enrol_submit(request):
                                    f"Pilot pupil limit reached ({sub['pupil_cap']}). Convert to a paid plan to enrol more pupils.",
                                    "error")
 
+        # A mentor always enrols onto their own list; the field is ignored for
+        # them rather than trusted, so a hand-made request can't reassign.
+        mentor_id = user["id"]
+        if user["role"] in ("admin", "phil_staff"):
+            chosen = (request.field("mentor_id", "") or "").strip()
+            if chosen:
+                valid = conn.execute(
+                    """SELECT id FROM users WHERE id=? AND establishment_id=?
+                       AND role IN ('admin','mentor') AND status='active'""",
+                    (chosen, user["establishment_id"])).fetchone()
+                if not valid:
+                    return with_flash(f"/mentor/enrol/{pupil_id}",
+                                       "Choose a mentor from the list.", "error")
+                mentor_id = valid["id"]
+
         cur = conn.execute(
             """INSERT INTO enrolments (pupil_id, course_id, mentor_id, start_date, status,
                current_week, parent_access_enabled, created_at)
                VALUES (?,?,?,?,?,?,?,?)""",
-            (pupil_id, course_id, user["id"], datetime.date.today().isoformat(), "active",
+            (pupil_id, course_id, mentor_id, datetime.date.today().isoformat(), "active",
              0, parent_access_enabled, db.now()),
         )
         # Taking a pupil on again clears any earlier removal from this mentor's
@@ -2680,7 +2724,7 @@ def enrol_submit(request):
         # then silently vanish again on a decision made months ago.
         conn.execute(
             "DELETE FROM mentoring_list_removals WHERE mentor_id=? AND pupil_id=?",
-            (user["id"], pupil_id))
+            (mentor_id, pupil_id))
         conn.commit()
     finally:
         conn.close()
