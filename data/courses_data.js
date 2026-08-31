@@ -94,6 +94,7 @@ module.exports = [
         "reflect": "1. Ask: 'what do you need from staff in the hour afterwards?'\n2. Check it is something a school could realistically do.",
         "lookfor": "Restorative conversations should stay non-blaming and focused on repair, not punishment, the mentor's tone matters as much as the questions.",
         "resources": [
+          "Getting out card",
           "Aggression cycle diagram",
           "Restorative conversation prompt card"
         ],
@@ -336,6 +337,7 @@ module.exports = [
         "reflect": "1. Ask: 'do you know the first thing your body does when you start to feel worried?'\n2. If they know it, pupil watches for that one this week. If they don't, they look out for whatever comes first and tell you next session.",
         "lookfor": "Some pupils, particularly those with additional needs, may have reduced awareness of body sensations, allow more time and use concrete examples.",
         "resources": [
+          "Emotion word cards",
           "How am I right now? chart",
           "Body map handout"
         ],
@@ -357,6 +359,7 @@ module.exports = [
         "reflect": "1. Ask: 'which of those three would you actually use if you were upset?'\n2. Pupil agrees to try it once this week at a calm moment, so it's practised before it's needed.",
         "lookfor": "Strategies need to feel natural to the individual pupil, don't force a technique that clearly isn't landing.",
         "resources": [
+          "Body map handout",
           "How am I right now? chart",
           "Grounding technique cards"
         ],
@@ -477,6 +480,7 @@ module.exports = [
         "reflect": "1. Ask: 'was there anything surprising about looking at it from their side?'\n2. If nothing was, ask: 'what do you still think they got wrong?' Both answers are useful.",
         "lookfor": "This is often the hardest skill in the module, don't expect full empathy immediately, partial attempts are progress.",
         "resources": [
+          "Restorative question prompt card",
           "Perspective-taking worksheet"
         ],
         "home": "Gently ask 'why do you think they did that?' about a recent friendship issue, practising perspective-taking without judgement.",
@@ -795,6 +799,7 @@ module.exports = [
         "reflect": "1. Ask: 'which moment in the day would this be most useful?'\n2. Pupil agrees to try it there once this week, even on a day that feels fine.",
         "lookfor": "Some pupils benefit from a discreet, non-stigmatising version, such as a fidget object, rather than an obvious technique.",
         "resources": [
+          "Step-planning worksheet",
           "Avoidance ladder template",
           "Worry thermometer",
           "Grounding technique card"
@@ -934,6 +939,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one piece of work this week you'd do differently because of that link?'\n2. Pupil writes the lesson and the piece of work on the last row of the worksheet.",
         "lookfor": "Keep it believable. A connection the pupil half-invents to please you will not survive contact with a Tuesday afternoon; a loose but real one will.",
         "resources": [
+          "Breaking a task into steps",
           "Goal-mapping worksheet"
         ],
         "home": "Ask how tonight's homework connects to something the pupil cares about, even a loose link helps.",
@@ -2342,6 +2348,7 @@ module.exports = [
         "reflect": "1. Ask: 'was that usable, or too obvious?' Change it now if it's the second.\n2. Pupil agrees to use it once this week if the moment comes up.",
         "lookfor": "Some pupils prefer a very subtle signal (a specific pencil case, a particular seat) over a visible card, let the pupil choose what feels comfortable rather than imposing a standard system.",
         "resources": [
+          "My personal toolkit list template",
           "Signal or exit card template",
           "Role-play scenario cards"
         ],
@@ -2626,6 +2633,7 @@ module.exports = [
         "reflect": "1. Ask: 'how did it feel saying that out loud?'\n2. Say clearly: if something ever feels wrong, that feeling is worth trusting.",
         "lookfor": "Focus on building confidence in the skill itself, in a low-stakes rehearsal format, avoid asking the pupil to apply this to a real, current situation unless the pupil raises one.",
         "resources": [
+          "My strengths and values worksheet",
           "Assertive refusal script cards",
           "Role-play scenario cards (general)"
         ],
@@ -2725,6 +2733,7 @@ module.exports = [
         "reflect": "1. Ask: 'what's one practical thing that would make the first day easier?'\n2. Agree who's sorting it, and when — before the move, not on the day.",
         "lookfor": "For particularly anxious pupils, a planned pre-visit to the new setting, even briefly, can make a significant difference, flag this as a recommendation to relevant staff or family if not already arranged.",
         "resources": [
+          "Worries and hopes chart",
           "New setting layout and route guide",
           "First day checklist template"
         ],
