@@ -2299,7 +2299,6 @@ module.exports = [
         "reflect": "1. Ask: 'which of those was hardest to say was difficult?'\n2. Say plainly there's no judgement in naming any of it.",
         "lookfor": "Pupils sometimes mask sensory distress well in the moment and only show the effects later (exhaustion, meltdown at home), take the timeline seriously even if the pupil seems fine in session.",
         "resources": [
-          "Sensory profile scale",
           "School day sensory timeline",
           "Difficult environments card"
         ],
