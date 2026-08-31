@@ -2464,7 +2464,7 @@ module.exports = [
       {
         "title": "Coping with hard days",
         "objective": "Pupil can name at least one coping strategy for particularly difficult days, including anniversaries.",
-        "checkin": "1. Ask: 'how did it go last week, expressing it your way?'\n2. Ask: 'has anything since been harder than you expected?'",
+        "checkin": "1. Ask: 'did you use your way of getting a feeling out again — saying it, writing it or drawing it?' No pressure if not; last week left it open.\n2. Ask: 'has anything since been harder than you expected?'",
         "input": "1. Explain that particular days bring grief back strongly, even long after things settle.\n2. Name the kinds of day that do it: birthdays, anniversaries, Christmas, results day.\n3. Say why a plan helps — the day arrives whether or not you've thought about it.\n4. Show the anniversary planning card, and say the toolkit gets built around a specific date if there's one coming up.",
         "activity": "1. Ask: 'who do you want to be near on a bad day?' Pupil writes them into the hard day toolkit.\n2. Ask: 'and what helps, even slightly?' Add those.\n3. Ask: 'what would you want school to do differently on a day like that?' Add it.\n4. Say clearly they're allowed to ask for a quieter day, and who to ask.",
         "reflect": "1. Ask: 'is there a date coming up you already know will be hard?'\n2. If there is, agree now what school should do around it.",
