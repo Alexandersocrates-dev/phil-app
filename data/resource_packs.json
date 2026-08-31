@@ -2184,7 +2184,8 @@
             "text": "I can't think past it.",
             "note": "This is what the toolkit is for"
           }
-        ]
+        ],
+        "source": "Sensory sensitivities to noise, lighting and personal space are named in NICE guideline CG170, Autism spectrum disorder in under 19s, recommendation 1.1.9. The three-point wording is Phil's, so a pupil can answer it without a clinician."
       },
       {
         "name": "Sense-by-sense examples card",
@@ -2258,7 +2259,8 @@
               ""
             ]
           ]
-        }
+        },
+        "source": "The National Autistic Society's guidance on masking describes distress often being held in until a person feels safe enough to show it, such as on getting home from school. Take the timeline at face value even if the pupil seems fine in the session."
       },
       {
         "name": "Difficult environments card",
@@ -2293,7 +2295,8 @@
             "text": "Naming the hardest moments makes them plannable.",
             "note": "You can't plan around a vague bad day"
           }
-        ]
+        ],
+        "source": "The environments named here follow NICE CG170 recommendation 1.1.9, which asks schools and services to take the physical environment into account and minimise its impact, considering individual sensitivities to noise, lighting and personal space."
       },
       {
         "name": "Sensory toolkit options card",
@@ -2342,7 +2345,8 @@
             "text": "Something steady to hold.",
             "note": "Try before deciding"
           }
-        ]
+        ],
+        "source": "Ear defenders and adjustments to noise, lighting and personal space are the adaptations named in NICE guideline CG170. Under the Equality Act 2010 these are reasonable adjustments for a disabled pupil, which is why they are not treats to be earned or withdrawn."
       },
       {
         "name": "My personal toolkit list template",
@@ -2469,7 +2473,8 @@
             "text": "Set before the plan is filed.",
             "note": ""
           }
-        ]
+        ],
+        "source": "Reasonable adjustments and SEN support are set out in the Equality Act 2010 and the SEND Code of Practice 0 to 25 years. This plan sits alongside them and replaces neither an EHC plan nor a formal assessment."
       }
     ],
     "missing": []
