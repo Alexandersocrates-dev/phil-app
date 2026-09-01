@@ -3432,6 +3432,17 @@ def admin_home(request):
                   stripe_configured=billing.is_configured(), flash=flash_from_query(request))
 
 
+@router.get("/admin/mentors")
+def admin_mentors_redirect(request):
+    """There is no separate mentors page — the staff list lives on the admin
+    home. Templates link here anyway ("Back to mentors"), and a link that 404s
+    is worse than one that lands somewhere sensible."""
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    return redirect("/staff" if user["role"] == "phil_staff" else "/admin")
+
+
 @router.get("/admin/mentors/new")
 def new_mentor_form(request):
     user, err = require(request, roles=["admin"])
@@ -3451,14 +3462,6 @@ def looks_like_email(value):
     local, _, domain = value.partition("@")
     return bool(local) and "." in domain and not domain.startswith(".") \
         and not domain.endswith(".") and " " not in value
-
-
-def _twofa_reset_back(user):
-    """Where to land after resetting someone's two-factor.
-
-    There is no /admin/mentors page: an admin's staff list is on their home
-    page, and Phil staff have their own area."""
-    return "/staff" if user["role"] == "phil_staff" else "/admin"
 
 
 @router.post("/admin/mentors/<mentor_id>/reset-two-factor")
@@ -3490,9 +3493,9 @@ def admin_reset_twofa(request):
                 (request.params["mentor_id"], user["establishment_id"]),
             ).fetchone()
         if not target:
-            return with_flash(_twofa_reset_back(user), "That member of staff isn't at your school.", "error")
+            return with_flash("/admin/mentors", "That member of staff isn't at your school.", "error")
         if not authlib.twofa_enabled(conn, target["id"]):
-            return with_flash(_twofa_reset_back(user),
+            return with_flash("/admin/mentors",
                               f"{target['name']} doesn't have two-factor on.", "error")
         authlib.disable_twofa(conn, target["id"])
         authlib.destroy_other_sessions(conn, target["id"])
@@ -3502,7 +3505,7 @@ def admin_reset_twofa(request):
     finally:
         conn.close()
     _send_twofa_reset_email(target["email"], target["name"], user["name"])
-    return with_flash(_twofa_reset_back(user),
+    return with_flash("/admin/mentors",
                       f"Two-factor is off for {target['name']}, and they have been emailed. "
                       "They can set it up again from their account.", "ok")
 
