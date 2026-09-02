@@ -19,6 +19,15 @@
   {% elif week and week.home_activity %}
   <h1 class="ha-title">{{ week.title }}</h1>
   <p class="ha-activity">{{ week.home_activity }}</p>
+  {# Some activities can't be done without the sheet — a script to read from, a
+     scale to point at — and a family has no other way to reach one. Only sheets
+     marked shareable appear; anything written for staff never does. #}
+  {% if sheets %}
+  <p class="ha-sheet">
+    <a class="btn btn-primary" href="/home-activity/{{ token }}/sheet.pdf" target="_blank" rel="noopener">
+      Print the sheet{{ '' if sheets|length == 1 else 's' }} for this activity</a>
+  </p>
+  {% endif %}
   <p class="ha-meta">Session {{ week.week_number }} of {{ total }} &middot; {{ course_title }}</p>
 
   {% else %}
@@ -40,6 +49,7 @@ way through. Any questions, speak to the school.</p>
 /* Big enough to read at arm's length on a phone, which is where this opens. */
 .ha-activity{font-size:17px;line-height:1.65;color:var(--ink);margin:0;text-wrap:pretty;
   white-space:pre-line;}
+.ha-sheet{margin:20px 0 0;}
 .ha-meta{font-size:13px;color:var(--muted);margin:18px 0 0;}
 .ha-foot{font-size:13px;line-height:1.6;color:var(--muted);margin:16px 4px 0;text-wrap:pretty;}
 @media (max-width:520px){
