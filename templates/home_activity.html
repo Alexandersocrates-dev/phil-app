@@ -7,20 +7,24 @@
 <div class="card ha-card">
   <p class="ha-eyebrow">For {{ pupil_forename }} to do at home</p>
 
-  {% if week and week.home_activity %}
-  <h1 class="ha-title">{{ week.title }}</h1>
-  <p class="ha-activity">{{ week.home_activity }}</p>
-  <p class="ha-meta">Session {{ week.week_number }} of {{ total }} &middot; {{ course_title }}</p>
-
-  {% elif finished %}
+  {# Finished comes first: once the course is closed there is nothing left to
+     do, and holding the last task on screen would say otherwise. Until then the
+     latest activity stays put, so a family that hasn't finished this week's
+     doesn't lose it the moment the next session happens. #}
+  {% if finished %}
   <h1 class="ha-title">All finished</h1>
   <p class="ha-activity">{{ pupil_forename }} has completed {{ course_title }}. There's nothing
   left to do at home.</p>
 
+  {% elif week and week.home_activity %}
+  <h1 class="ha-title">{{ week.title }}</h1>
+  <p class="ha-activity">{{ week.home_activity }}</p>
+  <p class="ha-meta">Session {{ week.week_number }} of {{ total }} &middot; {{ course_title }}</p>
+
   {% else %}
   <h1 class="ha-title">Nothing yet</h1>
-  <p class="ha-activity">There's no activity to do just yet. This page updates after each
-  session, so it's worth keeping the link.</p>
+  <p class="ha-activity">There&rsquo;s nothing to do just yet &mdash; the first activity appears
+  here after {{ pupil_forename }}&rsquo;s first session. It&rsquo;s worth keeping the link.</p>
   <p class="ha-meta">{{ course_title }}</p>
   {% endif %}
 </div>

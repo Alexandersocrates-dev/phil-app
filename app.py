@@ -3858,16 +3858,21 @@ def home_activity_page(request):
             # The same answer whether the link never existed, was regenerated,
             # or was switched off — so a wrong link tells you nothing.
             return Response("This link isn't active.", status="404 Not Found")
-        week = None
-        # The activity for the session just delivered, which is the one to do
-        # before the next. Only the two fields a family needs are selected:
-        # the week row also carries mentor guidance and the session plan, and a
-        # template cannot leak what was never fetched.
-        if 1 <= row["current_week"] <= PUPIL_SESSIONS:
-            week = conn.execute(
-                """SELECT week_number, title, home_activity FROM weeks
-                   WHERE course_id=? AND week_number=? AND staff_only=0""",
-                (row["course_id"], row["current_week"])).fetchone()
+        # The latest activity there is, not the current week's exactly. Asking
+        # for one specific week meant the page said "nothing yet" whenever that
+        # week happened to have no home activity, or once the course reached the
+        # staff write-up — throwing away an activity the family had not finished
+        # with. It now holds the last one set until a newer one exists.
+        #
+        # Only the fields a family needs are selected: the week row also carries
+        # mentor guidance and the session plan, and a template cannot leak what
+        # was never fetched.
+        week = conn.execute(
+            """SELECT week_number, title, home_activity FROM weeks
+               WHERE course_id=? AND staff_only=0 AND week_number <= ?
+                 AND home_activity IS NOT NULL AND trim(home_activity) != ''
+               ORDER BY week_number DESC LIMIT 1""",
+            (row["course_id"], min(row["current_week"], PUPIL_SESSIONS))).fetchone()
     finally:
         conn.close()
     response = render("home_activity.html", user=None, pupil_forename=row["forename"],
