@@ -13,58 +13,22 @@
   <p class="muted" style="margin:0 0 16px; font-size:13px;">Written to be read by someone who
   wasn&rsquo;t involved, so it can go straight into a governors&rsquo; meeting.</p>
 
-  {# The quick options cover most asks. The date fields matter because term
-     dates are set locally and vary between schools, so a head needs the dates
-     their own governors recognise. #}
-  <h3 class="if-label">Quick options</h3>
-  {# The dates are printed on the button. "This term" is a generous
-     approximation — real term dates vary by school and are set locally — so a
-     head clicking it should be able to see the window it actually covers
-     rather than assume it matches their calendar. #}
-  <div class="impact-presets">
-    {% for label, pfrom, pto in presets %}
-    <a class="preset" href="/admin/reports/impact/pdf?from={{ pfrom }}&amp;to={{ pto }}">
-      <span class="preset-label">{{ label }}</span>
-      <span class="preset-range">{{ pfrom|uk_date }} &ndash; {{ pto|uk_date }}</span>
-    </a>
-    {% endfor %}
-    <a class="preset" href="/admin/reports/impact/pdf?period=all">
-      <span class="preset-label">All time</span>
-      <span class="preset-range">Everything recorded</span>
-    </a>
-  </div>
-  {# Only an admin can fix either of these, so only an admin is told. #}
-  {% if not has_terms and user.role in ['admin', 'phil_staff'] %}
-  <p class="if-terms-note">&ldquo;This term&rdquo; is a rough guess &mdash; Phil doesn&rsquo;t know
-  your term dates. <a href="/admin/terms">Enter them</a> and each term gets its own button,
-  named the way your school names it.</p>
-  {% elif upcoming_terms and user.role in ['admin', 'phil_staff'] %}
-  {# Otherwise an admin who has just entered September's terms sees nothing and
-     assumes it didn't save. #}
-  <p class="if-terms-note">{{ upcoming_terms }} term{{ '' if upcoming_terms == 1 else 's' }}
-  entered but not yet started &mdash; {{ 'it appears' if upcoming_terms == 1 else 'they appear' }}
-  here once underway. <a href="/admin/terms">See your term dates</a>.</p>
-  {% endif %}
-
-  {# Built from years the school actually recorded sessions in, so it never
-     offers an empty year and never runs out. Hidden entirely for a school with
-     nothing recorded yet, and for one still in its first year, where the
-     buttons above already cover it. #}
-  {% set past = years | rejectattr('1', 'equalto', current_year_from) | list if years else [] %}
-  {% if past %}
-  <h3 class="if-label if-label-spaced">A previous year</h3>
+  {# Two controls, the same two on every downloadable report. The quick-option
+     buttons that used to sit above these duplicated both, and a button had to
+     be pressed before its date range could be seen. #}
   <form method="get" action="/admin/reports/impact/pdf" class="impact-range">
     <div class="field">
-      <label for="year">Academic year</label>
-      <select id="year" name="range">
-        {% for label, yfrom, yto in past %}
+      <label for="range">Academic year</label>
+      <select id="range" name="range">
+        <option value="{{ default_from }}|{{ default_to }}">This academic year</option>
+        {% for label, yfrom, yto in years %}{% if yfrom != current_year_from %}
         <option value="{{ yfrom }}|{{ yto }}">{{ label }}</option>
-        {% endfor %}
+        {% endif %}{% endfor %}
+        <option value="all">All time</option>
       </select>
     </div>
     <button class="btn btn-secondary" type="submit">Download</button>
   </form>
-  {% endif %}
 
   <h3 class="if-label if-label-spaced">Or choose your own dates</h3>
   <form method="get" action="/admin/reports/impact/pdf" class="impact-range">
@@ -79,6 +43,26 @@
     <button class="btn btn-primary" type="submit">Download report</button>
   </form>
 
+  {# Terms fill the date boxes rather than being a control of their own, so the
+     period is visible and editable before it is asked for. #}
+  {% if terms %}
+  <p class="if-terms">Or jump to a term:
+    {% for t in terms %}<button type="button" class="term-chip"
+      data-from="{{ t.date_from }}" data-to="{{ t.date_to }}">{{ t.name }}</button>{% endfor %}
+  </p>
+  <script>
+  document.querySelectorAll('.term-chip').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.getElementById('from').value = b.dataset.from;
+      document.getElementById('to').value = b.dataset.to;
+    });
+  });
+  </script>
+  {% elif user.role in ['admin', 'phil_staff'] %}
+  <p class="if-terms-note">Phil doesn&rsquo;t know your term dates.
+  <a href="/admin/terms">Enter them</a> and each one becomes a shortcut here.</p>
+  {% endif %}
+
   <p class="muted" style="margin:16px 0 0; font-size:12px;">Sessions are counted by the date they
   happened, so a course running across two terms appears in both. Overdue follow-up chats are always
   counted as they stand today, whatever period you choose.</p>
@@ -91,15 +75,13 @@
 
 /* Spacing here follows the 8-point scale used across the app: 8px between
    buttons in a row, 24px between one block and the next. */
-.impact-presets{display:flex;flex-wrap:wrap;gap:8px;}
-.preset{display:flex;flex-direction:column;gap:2px;text-align:left;
-  padding:12px 16px;border:1.4px solid var(--border);border-radius:9px;
-  background:#fff;text-decoration:none;box-sizing:border-box;
-  transition:border-color 150ms ease, background-color 150ms ease;}
-.preset:hover{border-color:var(--teal-dark);background:var(--teal-light);}
-.preset-label{font-family:var(--font-head);font-weight:700;font-size:14px;
-  color:var(--teal-darker);white-space:nowrap;}
-.preset-range{font-size:11.5px;color:var(--muted);white-space:nowrap;}
+.if-terms{font-size:13px;color:var(--muted);margin:14px 0 0;display:flex;
+  align-items:center;gap:8px;flex-wrap:wrap;}
+.term-chip{font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
+  color:var(--teal-darker);background:var(--teal-light);border:1px solid transparent;
+  border-radius:20px;padding:5px 12px;}
+.term-chip:hover{border-color:var(--teal-dark);}
+.term-chip:focus-visible{outline:2px solid var(--teal-dark);outline-offset:2px;}
 .if-terms-note{font-size:12px;line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:70ch;}
 .impact-range{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;}
 .impact-range .field{margin:0;min-width:170px;}

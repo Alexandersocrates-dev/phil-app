@@ -4141,10 +4141,12 @@ def cron_retention_check(request):
 def impact_report_form(request):
     """Lets a school choose the period before downloading.
 
-    The quick options cover most asks, but a school's terms are set locally and
-    vary, so the date fields are the point: a head writing an annual report or a
-    pupil premium statement needs the dates their governors recognise, not an
-    approximation of them."""
+    Two controls, the same two on every downloadable report: an academic year,
+    including all time, or your own dates. The quick-option buttons that used
+    to sit above these were removed — they duplicated what the year dropdown
+    and the date fields already do, and a button had to be pressed before you
+    could see the window it covered.
+    """
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
@@ -4154,45 +4156,27 @@ def impact_report_form(request):
 
     today = datetime.date.today()
     year_from, year_to = academic_year_bounds(today)
-    term_from, term_to = current_term_bounds(today)
 
     conn = db.get_conn()
     try:
         years = recorded_academic_years(conn, user["establishment_id"])
-        # Terms that have actually started, within this academic year. A term
-        # still in the future would be a button returning an empty report, and
-        # earlier years would pile up as a wall of buttons.
-        today_iso = today.isoformat()
+        # A school's own terms, offered as shortcuts that fill the date boxes
+        # rather than as a separate control. An admin knows "Autumn 2"; they do
+        # not necessarily know it ran 3 November to 19 December, and making
+        # them look it up to run a report is a step backwards.
         terms = conn.execute(
-            """SELECT * FROM terms WHERE establishment_id=?
-                 AND date_from <= ? AND date_to >= ? AND date_from <= ?
-               ORDER BY date_from""",
-            (user["establishment_id"], today_iso, year_from, year_to)).fetchall()
-        # Entered but not yet begun. Counted so the page can say so, rather than
-        # leaving an admin who has just entered next year's terms wondering why
-        # nothing appeared.
-        upcoming = conn.execute(
-            """SELECT count(*) FROM terms WHERE establishment_id=? AND date_from > ?""",
-            (user["establishment_id"], today_iso)).fetchone()[0]
-        # Whether they have entered any at all, which is what decides if the
-        # guess is still offered — a school with only future terms entered has
-        # still told us they don't want it.
-        any_terms = conn.execute(
+            """SELECT name, date_from, date_to FROM terms
+               WHERE establishment_id=? AND date_from <= ?
+               ORDER BY date_from DESC LIMIT 6""",
+            (user["establishment_id"], today.isoformat())).fetchall()
+        any_terms = bool(terms) or conn.execute(
             "SELECT 1 FROM terms WHERE establishment_id=? LIMIT 1",
             (user["establishment_id"],)).fetchone() is not None
     finally:
         conn.close()
 
-    # A school's own terms if they've entered them, and only those: a guessed
-    # "This term" sitting next to real ones would be indistinguishable from
-    # them, and it's the guess a head would quote to governors.
-    presets = [("This academic year", year_from, year_to)]
-    for t in terms:
-        presets.append((t["name"], t["date_from"], t["date_to"]))
-    if not any_terms:
-        presets.append(("This term (approximate)", term_from, term_to))
-    return render("impact_form.html", user=user, presets=presets, years=years,
-                  current_year_from=year_from, has_terms=any_terms, upcoming_terms=upcoming,
+    return render("impact_form.html", user=user, years=years, terms=terms,
+                  has_terms=any_terms, current_year_from=year_from,
                   default_from=year_from, default_to=year_to,
                   flash=flash_from_query(request))
 
@@ -4214,9 +4198,13 @@ def impact_report_download(request):
     date_from = request.query.get("from", [None])[0]
     date_to = request.query.get("to", [None])[0]
 
-    # The year dropdown sends one value so a select can carry both dates.
+    # The year dropdown sends one value so a select can carry both dates, and
+    # "all" for no bounds at all. Without the second branch, choosing All time
+    # fell through to the default period and quietly returned this year.
     chosen = request.query.get("range", [None])[0]
-    if chosen and "|" in chosen:
+    if chosen == "all":
+        period = "all"
+    elif chosen and "|" in chosen:
         date_from, date_to = chosen.split("|", 1)
 
     # Dates arrive from a form and a URL, so validate rather than trust. A bad
@@ -4517,26 +4505,46 @@ def mentee_report_pdf_download(request):
     return pdf_response(path, "course-report.pdf")
 
 
-def period_label(year, term_label=None):
+def period_label(year, range_label=None):
     """What a report says it covers. Printed in the header, so a PDF found in a
     drawer in three years still says which period it is about."""
     base = "All time" if year == "all" else f"Academic year {year}"
-    return f"{base} \u2014 {term_label}" if term_label else base
+    return f"{base} \u2014 {range_label}" if range_label else base
 
 
-def chosen_term(request, conn, establishment_id):
-    """(choice, from, to, label, terms) for a report's term picker.
+def chosen_range(request, conn, establishment_id):
+    """The period a report covers: an academic year, all time, or own dates.
 
-    Terms are the ones the school entered on /admin/terms, so a report is cut
-    by the dates that school actually works to rather than a guess. Keyed by id,
-    not name: every year has an "Autumn 1".
+    The same two controls on every downloadable report. Returns
+    (from, to, label, terms) — terms being the school's own, offered as
+    shortcuts that fill the date boxes rather than as a control of their own.
+    An admin knows "Autumn 2"; they do not necessarily know it ran 3 November
+    to 19 December.
     """
     terms = school_terms(conn, establishment_id)
-    choice = request.query.get("term", ["all"])[0]
-    for t in terms:
-        if choice == str(t["id"]):
-            return str(t["id"]), t["date_from"], t["date_to"], t["name"], terms
-    return "all", None, None, None, terms
+    d_from = (request.query.get("from", [""])[0] or "").strip() or None
+    d_to = (request.query.get("to", [""])[0] or "").strip() or None
+    for value in (d_from, d_to):
+        if value:
+            try:
+                datetime.date.fromisoformat(value)
+            except ValueError:
+                d_from = d_to = None
+                break
+    if d_from or d_to:
+        return d_from, d_to, "%s to %s" % (d_from or "the start", d_to or "today"), terms
+
+    chosen = request.query.get("range", [""])[0]
+    if chosen == "all":
+        return None, None, "All time", terms
+    if "|" in chosen:
+        a, b = chosen.split("|", 1)
+        try:
+            datetime.date.fromisoformat(a), datetime.date.fromisoformat(b)
+            return a, b, None, terms
+        except ValueError:
+            pass
+    return None, None, None, terms
 
 
 def _year_filter(year_from, year_to):
@@ -4746,7 +4754,7 @@ def admin_caseload(request):
         ).fetchall()
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
-        term, t_from, t_to, term_label, terms = chosen_term(request, conn, user["establishment_id"])
+        t_from, t_to, range_label, terms = chosen_range(request, conn, user["establishment_id"])
         # show_mentor is always on here: the page groups by mentor, and the
         # spreadsheet wants the column whether or not one mentor is selected.
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
@@ -4754,7 +4762,8 @@ def admin_caseload(request):
                                term_from=t_from, term_to=t_to)
     finally:
         conn.close()
-    suffix = f"?mentor_id={mentor_filter}&year={year}&term={term}"
+    suffix = ("?mentor_id=%s&year=%s%s" % (mentor_filter, year,
+              ("&from=%s&to=%s" % (t_from, t_to)) if t_from or t_to else ""))
     return render("report_caseload.html", user=user, rows=rows,
                   pupils=_caseload_grouped(rows), by_mentor=_caseload_by_mentor(rows),
                   show_mentor=True,
@@ -4762,7 +4771,8 @@ def admin_caseload(request):
                   pdf_url="/admin/reports/caseload/pdf" + suffix,
                   xlsx_url="/admin/reports/caseload/xlsx" + suffix, mentors=mentors,
                   years=years, selected_year=year, year_action="/admin/reports/caseload",
-                  terms=terms, selected_term=term, period=period_label(year, term_label),
+                  terms=terms, date_from=t_from, date_to=t_to,
+                  period=period_label(year, range_label),
                   selected_mentor=mentor_filter, flash=flash_from_query(request))
 
 
@@ -4779,7 +4789,7 @@ def admin_caseload_pdf(request):
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
-        term, t_from, t_to, term_label, _terms = chosen_term(request, conn, user["establishment_id"])
+        t_from, t_to, range_label, _terms = chosen_range(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
                                show_mentor=True, year_from=y_from, year_to=y_to,
                                term_from=t_from, term_to=t_to)
@@ -4787,7 +4797,7 @@ def admin_caseload_pdf(request):
         conn.close()
     path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, True,
                                        f"caseload_admin_{user['establishment_id']}",
-                                       period=period_label(year, term_label))
+                                       period=period_label(year, range_label))
     return pdf_response(path, "mentoring-list.pdf")
 
 
@@ -4826,7 +4836,7 @@ def admin_caseload_xlsx(request):
     try:
         mid = int(mentor_filter) if mentor_filter != "all" else None
         year, y_from, y_to, _ = chosen_year(request, conn, user["establishment_id"])
-        term, t_from, t_to, term_label, _terms = chosen_term(request, conn, user["establishment_id"])
+        t_from, t_to, range_label, _terms = chosen_range(request, conn, user["establishment_id"])
         rows = _caseload_rows(conn, mentor_id=mid, establishment_id=user["establishment_id"],
                                show_mentor=True, year_from=y_from, year_to=y_to,
                                term_from=t_from, term_to=t_to)
@@ -4834,7 +4844,7 @@ def admin_caseload_xlsx(request):
         conn.close()
     path = pdfgen.caseload_report_xlsx(rows, True,
                                        f"caseload_admin_{user['establishment_id']}",
-                                       period=period_label(year, term_label))
+                                       period=period_label(year, range_label))
     with open(path, "rb") as f:
         data = f.read()
     return Response(
