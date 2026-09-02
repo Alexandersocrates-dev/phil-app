@@ -3901,7 +3901,11 @@ def home_activity_page(request):
                                      week["week_number"]) if week else []
     finally:
         conn.close()
-    response = render("home_activity.html", user=None, pupil_forename=row["forename"],
+    # No sign-in links, no course library: this page is opened by a family, and
+    # the only thing on it should be the activity. Same switch the sign-in and
+    # sign-up pages already use.
+    response = render("home_activity.html", user=None, hide_nav_links=True,
+                      pupil_forename=row["forename"],
                       course_title=row["course_title"], week=week, sheets=sheets,
                       token=request.params["token"],
                       finished=row["status"] == "completed",
