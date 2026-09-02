@@ -758,6 +758,13 @@ def _load_legal_docs():
 
 
 
+# How long a pupil with nothing running stays on their mentor's home page.
+# Long enough to finish the write-up, issue the certificate and hold the
+# follow-up chat; short enough that the page stays a list of current work
+# rather than a record of everyone ever mentored. They remain findable in
+# the mentor's pupil list afterwards, and reappear here if enrolled again.
+INACTIVE_LIST_DAYS = 21
+
 PILOT_DAYS = 21
 
 
@@ -1964,7 +1971,10 @@ def mentor_home(request):
             (user["id"], user["establishment_id"], user["id"]),
         ).fetchall()
         enrolments = conn.execute(
-            """SELECT enrolments.*, pupils.forename, pupils.surname, courses.title as course_title
+            """SELECT enrolments.*, pupils.forename, pupils.surname, courses.title as course_title,
+                      COALESCE((SELECT MAX(date) FROM session_records
+                                WHERE session_records.enrolment_id = enrolments.id),
+                               enrolments.start_date) AS last_activity
                FROM enrolments
                JOIN pupils ON pupils.id = enrolments.pupil_id
                JOIN courses ON courses.id = enrolments.course_id
@@ -2000,15 +2010,25 @@ def mentor_home(request):
         entry["completed"] = sum(1 for c in entry["courses"] if c["status"] == "completed")
     # A pupil used to drop off the moment their last course finished, so someone
     # the mentor was still keeping an eye on disappeared without anyone deciding
-    # it. They now stay until the mentor removes them.
+    # it. They now move to a second list instead, and stay there for three weeks
+    # — long enough to write up, issue a certificate, hold the follow-up chat, or
+    # start another course, and short enough that the page doesn't become an
+    # archive of everyone ever mentored.
     #
-    # Removal only hides a pupil with nothing active: if they are enrolled on a
-    # new course later, they come back on their own rather than needing to be
-    # un-removed.
+    # Removal only hides a pupil with nothing active: enrolled on a new course
+    # later, they come back on their own rather than needing to be un-removed.
+    cutoff = (datetime.date.today() - datetime.timedelta(days=INACTIVE_LIST_DAYS)).isoformat()
     for entry in mentoring_list:
         entry["can_remove"] = entry["active"] == 0
-    mentoring_list = [entry for entry in mentoring_list
-                      if entry["active"] > 0 or entry["pupil_id"] not in removed_pupils]
+        # When the work actually stopped, taken from the last session recorded
+        # rather than a status flag, because nothing records a completion date.
+        entry["last_activity"] = max((c["last_activity"] for c in entry["courses"]
+                                      if c["last_activity"]), default=None)
+    inactive_list = [e for e in mentoring_list
+                     if e["active"] == 0
+                     and e["pupil_id"] not in removed_pupils
+                     and (e["last_activity"] or "") >= cutoff]
+    mentoring_list = [entry for entry in mentoring_list if entry["active"] > 0]
 
     # Reviews the mentor agreed at the end of a course. Only ones that have come
     # round: a review three weeks away isn't work yet, and listing it would
@@ -2045,7 +2065,8 @@ def mentor_home(request):
                                 overdue=bool(overdue_after and today > overdue_after)))
 
     return render("mentor_home.html", user=user, pupils=pupils, enrolments=enrolments,
-                  mentoring_list=mentoring_list,
+                  mentoring_list=mentoring_list, inactive_list=inactive_list,
+                  inactive_days=INACTIVE_LIST_DAYS,
                   due_this_week=due_this_week, reviews_due=reviews_due,
                   flash=flash_from_query(request))
 
@@ -2271,17 +2292,18 @@ def _pupils_list(request, roles, own_only):
     conn = db.get_conn()
     try:
         if own_only:
-            # A mentor's own list of active pupils means the ones they are
-            # currently mentoring, so a pupil whose courses with them have all
-            # finished drops off, matching the mentoring list on their home
-            # page. The archived view keeps the looser rule: an archived pupil
-            # rarely has an active enrolment, and a mentor looking back through
-            # archived pupils still needs to find the ones they worked with.
+            # Anyone this mentor has worked with, not only those mid-course.
+            # It used to require an active enrolment, on the stated grounds of
+            # matching the mentoring list — but that list keeps a pupil after
+            # their course finishes. So a finished pupil was on the home page
+            # and missing here, and a mentor who removed them from the home
+            # page could no longer reach them at all, which made enrolling them
+            # on a second course impossible without an admin.
             if status_filter == "active":
                 pupils = conn.execute(
                     """SELECT * FROM pupils WHERE establishment_id=? AND status=?
                          AND id IN (SELECT pupil_id FROM enrolments
-                                    WHERE mentor_id=? AND status='active')
+                                    WHERE mentor_id=? AND status IN ('active','completed'))
                        ORDER BY surname, forename""",
                     (user["establishment_id"], status_filter, user["id"]),
                 ).fetchall()

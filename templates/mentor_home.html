@@ -70,25 +70,10 @@
 </style>
 {% endif %}
 
-<section class="card mh-list-card">
-  <div class="mh-section-head">
-    <div class="mh-section-text">
-      <h2>My mentoring list</h2>
-      <p>Open a name to see their courses.</p>
-    </div>
-    <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil</a>
-  </div>
-
-{% if not mentoring_list %}
-<div class="mh-empty">
-  <p>Nobody on your list yet.</p>
-  <p class="muted">Add a pupil, then enrol them on a course. They join your list, and only yours.</p>
-  <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add your first pupil</a>
-</div>
-{% else %}
-{# One row per pupil, not per enrolment. A pupil on three courses used to appear
-   three times with the same name, which reads as three children. #}
-{% for p in mentoring_list %}
+{# One macro, two lists. Rendering the rows twice by hand is how the two drift
+   apart. #}
+{% macro pupil_rows(people) %}
+{% for p in people %}
 <details class="ml-pupil">
     {# The flex row lives in a span inside the summary, not on the summary
      itself: display:flex on a <summary> is refused by older engines and by
@@ -132,7 +117,13 @@
   {% endfor %}
   </table>
   </div>
-  <p class="ml-link-row"><a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a>
+  {# A pupil stays on the list after their course finishes, which is the point
+     at which a mentor most often wants to start another one. Enrolling was
+     only reachable through the pupil's record, so the obvious next step was
+     two clicks away from where the mentor already was. #}
+  <p class="ml-link-row">
+    <a class="btn btn-secondary btn-sm ml-enrol" href="/mentor/enrol/{{ p.pupil_id }}">Enrol on a course</a>
+    <a class="ml-link" href="/mentor/pupils/{{ p.pupil_id }}">Open {{ p.forename }}&rsquo;s record</a>
     {# Only once nothing is running. A pupil mid-course stays put, so live work
        can't be hidden by accident. #}
     {% if p.can_remove %}
@@ -144,8 +135,40 @@
   </p>
 </details>
 {% endfor %}
-{% endif %}
+{% endmacro %}
+
+<section class="card mh-list-card">
+  <div class="mh-section-head">
+    <div class="mh-section-text">
+      <h2>My mentoring list</h2>
+      <p>Pupils with a course running. Open a name to see their courses.</p>
+    </div>
+    <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil</a>
+  </div>
+  {% if not mentoring_list %}
+  <div class="mh-empty">
+    <p>Nothing running at the moment.</p>
+    <p class="muted">Add a pupil, then enrol them on a course. They join your list, and only yours.</p>
+    <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil</a>
+  </div>
+  {% else %}{{ pupil_rows(mentoring_list) }}{% endif %}
 </section>
+
+{# Finished, but not gone. This is where the write-up, the certificate and the
+   follow-up chat get picked up, and where a second course usually starts. #}
+{% if inactive_list %}
+<section class="card mh-list-card mh-inactive">
+  <div class="mh-section-head">
+    <div class="mh-section-text">
+      <h2>Recently finished</h2>
+      <p>No course running. They stay here for {{ inactive_days }} days, then move to
+      your <a href="/mentor/pupils">pupil list</a> &mdash; enrol them again and they come
+      straight back.</p>
+    </div>
+  </div>
+  {{ pupil_rows(inactive_list) }}
+</section>
+{% endif %}
   </main>
 
   <aside class="mh-aside">
@@ -229,6 +252,9 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .mh-empty p.muted{font-size:13px;margin-bottom:12px;}
 .mh-section-head p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.5;}
 .mh-list-card{margin:0;padding:16px 24px;}
+/* Quieter than the live list, so the eye lands on current work first. */
+.mh-inactive{background:var(--cream, #FAF7F2);}
+.mh-inactive .ml-name{color:var(--muted);}
 
 .mh-panel{margin:0;padding:16px;}
 .mh-figures{display:flex;align-items:stretch;margin:8px 0 12px;flex-wrap:wrap;}
@@ -288,7 +314,10 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
   color:var(--muted); text-decoration:underline; text-underline-offset:2px; cursor:pointer;}
 .ml-remove:hover{color:var(--red, #A32D2D);}
 .ml-remove:focus-visible{outline:2px solid var(--teal-dark); outline-offset:2px;}
-.ml-link-row{margin:8px 0 0;}
-.ml-link{font-size:12px; margin-left:32px;}
+/* The row is a flex line so the button, the record link and the remove link
+   sit on one baseline rather than the button pushing the others down. */
+.ml-link-row{margin:12px 0 4px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.ml-link{font-size:12px;}
+.ml-enrol{flex-shrink:0;}
 </style>
 {% endblock %}
