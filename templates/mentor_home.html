@@ -74,7 +74,10 @@
    apart. #}
 {% macro pupil_rows(people) %}
 {% for p in people %}
-<details class="ml-pupil">
+{# Open when this pupil's link was just made, or the redirect lands on a
+   collapsed row and the link is there but invisible. #}
+{% set has_new_link = share_enrolment_id and p.courses|selectattr('id', 'equalto', share_enrolment_id)|list %}
+<details class="ml-pupil" {% if has_new_link %}open{% endif %}>
     {# The flex row lives in a span inside the summary, not on the summary
      itself: display:flex on a <summary> is refused by older engines and by
      some print renderers, which stacks the row into separate lines. #}
