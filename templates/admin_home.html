@@ -20,57 +20,42 @@
   <main class="ah-main">
     <div class="ah-block">
 <div class="ah-sec"><h2>Day-to-day</h2><p>Pupils, mentors, the course library and reports.</p></div>
+{# One group rather than three. "More admin actions" held things an admin does
+   as often as the rest — reassigning a mentor, approving a parent — and putting
+   them behind their own heading implied they were rarer than they are. The
+   counts came off the tiles: a tile is a way in, and a number on it reads as
+   the point of the page. Both still show in the At a glance panel, which is
+   where a figure belongs. #}
 <div class="tile-grid ah-tiles">
-  <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><div class="num">{{ pupils|length }}</div><span class="tlabel">Active pupils</span></a>
+  <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><span class="tlabel">Active pupils</span></a>
   <a class="tile" href="/admin/mentors/new"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Add a mentor</span></a>
-  <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><div class="num">20</div><span class="tlabel">Course library</span></a>
+  <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><span class="tlabel">Course library</span></a>
   <a class="tile" href="/admin/reports"><div class="ati" style="background:var(--coral-light);">{{ icon_folder(color='var(--coral-dark)') }}</div><span class="tlabel">Reports</span></a>
+  <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
+  <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
+  <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
+  <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
 </div>
 
-<div class="ah-sec"><h2>Account &amp; establishment</h2><p>Billing, plan and course requests.</p></div>
+<div class="ah-sec"><h2>Account &amp; establishment</h2><p>Billing, plan, term dates and course requests.</p></div>
 <div class="tile-grid ah-tiles">
   <a class="tile" href="/admin/billing/checkout"><div class="ati" style="background:var(--teal-light);">{{ icon_file_text(color='var(--teal-darker)') }}</div><span class="tlabel">Billing and plan</span></a>
   <a class="tile" href="/admin/course-requests/new"><div class="ati" style="background:var(--amber-light);">{{ icon_message_circle(color='var(--amber-dark)') }}</div><span class="tlabel">Request a course</span></a>
   <a class="tile" href="/admin/terms"><div class="ati" style="background:var(--coral-light);">{{ icon_edit(color='var(--coral-dark)') }}</div><span class="tlabel">Term dates</span></a>
 </div>
-
-<div class="ah-sec"><h2>More admin actions</h2><p>Reassigning, permissions and role changes.</p></div>
-<div class="tile-grid ah-tiles">
-  <a class="tile" href="/admin/pupils?status=archived"><div class="ati" style="background:var(--teal-light);">{{ icon_users(color='var(--teal-darker)') }}</div><span class="tlabel">Archived pupils</span></a>
-  <a class="tile" href="/admin/parent-requests"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Parent permissions</span></a>
-  <a class="tile" href="/admin/reassign-admin"><div class="ati" style="background:var(--amber-light);">{{ icon_shield(color='var(--amber-dark)') }}</div><span class="tlabel">Reassign admin role</span></a>
-  <a class="tile" href="/admin/reassign-mentor"><div class="ati" style="background:var(--teal-light);">{{ icon_edit(color='var(--teal-darker)') }}</div><span class="tlabel">Reassign a mentor</span></a>
-</div>
     </div>
 
 <section class="card ah-card">
-  <div class="ah-card-head"><h2>Mentors and admins</h2><p>Everyone who can sign in at your establishment. Staff accounts need two-factor authentication before they can use Phil.</p></div>
+  <div class="ah-card-head"><h2>Mentors and admins</h2><p>Everyone who can sign in at your establishment.</p></div>
   <div class="ah-scroll">
   <table class="ah-table">
-    <tr><th>Name</th><th class="ah-tight">Role</th><th class="ah-tight">Email</th>
-        <th class="ah-tight">Two-factor</th><th class="ah-tight"></th></tr>
+    <tr><th>Name</th><th class="ah-tight">Role</th><th class="ah-tight">Email</th><th class="ah-tight"></th></tr>
     {% for m in mentors %}
     <tr>
       <td><span class="avatar-row"><span class="avatar avatar-sm">{{ m.name[:1] }}</span>{{ m.name }}</span></td>
       <td class="ah-tight">{{ m.role }}</td>
       <td class="ah-tight">{{ m.email }}</td>
-      {# Two-factor is required, so "not set up" means they cannot get past the
-         setup page — worth showing rather than leaving an admin to wonder why a
-         colleague says they are stuck. #}
-      <td class="ah-tight">
-        {%- if m.twofa %}<span class="badge badge-teal">On</span>
-        {%- else %}<span class="badge badge-amber">Not set up</span>{% endif %}</td>
-      <td class="ah-tight ah-actions">
-        {% if m.twofa %}
-        {# For a lost phone with the recovery codes gone. They are emailed that
-           it happened, signed out everywhere, and it goes in the audit log. #}
-        <form method="post" action="/admin/mentors/{{ m.id }}/reset-two-factor"
-              onsubmit="return confirm('Reset two-factor for {{ m.name }}? They will be signed out everywhere, emailed that you did it, and asked to set it up again next time they sign in.');">
-          <button class="btn btn-secondary btn-sm" type="submit">Reset two-factor</button>
-        </form>
-        {% endif %}
-        {% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}
-      </td>
+      <td class="ah-tight">{% if m.role == 'mentor' %}<a class="btn btn-red btn-sm" href="/admin/mentors/{{ m.id }}/remove">Remove</a>{% endif %}</td>
     </tr>
     {% endfor %}
   </table>
@@ -217,11 +202,18 @@
 
 /* Each group of tiles gets a real heading and room around it, rather than a
    label floated above a grid with negative margins. */
-.ah-sec{margin:0 0 12px;}
+/* A heading sits closer to its own tiles than to the group above it, so the
+   two groups read as two rather than as one long run. */
+.ah-sec{margin:0 0 14px;}
+.ah-sec + .tile-grid + .ah-sec{margin-top:32px;}
 .ah-sec h2{margin:0;font-size:14px;letter-spacing:-.01em;}
 .ah-sec p{margin:4px 0 0;font-size:12px;color:var(--muted);line-height:1.5;}
 .ah-tiles{margin:0;}
 .ah-block{margin:0;}
+/* Every tile is now icon-and-label, so they can be uniform and a little
+   shorter than they were when two of them carried a number. */
+.ah-tiles .tile{padding:18px 14px;}
+.ah-tiles .tlabel{font-size:13px;line-height:1.35;}
 
 .ah-card{margin:0;padding:16px 24px;}
 .ah-card-head{margin-bottom:8px;}
@@ -267,9 +259,6 @@
 .ah-table td:last-child, .ah-table th:last-child{padding-right:0;}
 .ah-tight{white-space:nowrap;}
 .ah-c-course{min-width:160px;}
-/* Two buttons on one row, side by side rather than stacked. */
-.ah-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end;}
-.ah-actions form{display:inline;margin:0;}
 
 .collapse-card{padding-top:0;}
 .collapse-summary{display:flex; align-items:center; justify-content:space-between; gap:12px;
