@@ -11,30 +11,6 @@
         {% for c in courses %}<option value="{{ c.id }}">{{ '%02d'|format(c.module_number) }} - {{ c.title }}</option>{% endfor %}
       </select>
     </div>
-    {# Admins only. A mentor enrolling is adding to their own list, so there is
-       nothing to choose, and the server ignores the field for them either way. #}
-    {% if mentors %}
-    <div class="field">
-      <label for="mentor_id">Mentor</label>
-      <select name="mentor_id" id="mentor_id" required>
-        {% for m in mentors %}
-        <option value="{{ m.id }}" {% if m.id == user.id %}selected{% endif %}>{{ m.name }}</option>
-        {% endfor %}
-      </select>
-      <div class="hint">Whose mentoring list this course joins. They see it on their home page.</div>
-    </div>
-    {% endif %}
-    <div class="field">
-      <label class="switch-row">
-        <span>Parent/carer access enabled</span>
-        <span class="switch">
-          <input type="checkbox" name="parent_access_enabled" checked aria-label="Give the parent or carer access">
-          <span class="track"></span>
-          <span class="thumb"></span>
-        </span>
-      </label>
-      <div class="hint">Grants progress tracking and this course's weekly home activities to a linked parent/carer. Off means the enrolment doesn't appear in the parent's app at all.</div>
-    </div>
     <button class="btn btn-primary" type="submit">Enrol</button>
   </form>
 </div>

@@ -115,7 +115,7 @@
   <p class="muted" style="margin:8px 0 16px;">Mentor: {{ e.mentor_name }} &middot; {%- if e.status == 'completed' %}All {{ sessions_total }} sessions completed
 {%- elif e.current_week == 0 %}Not started &middot; begin session 1
 {%- elif e.current_week >= sessions_total - 1 %}{{ e.current_week }} of {{ sessions_total }} completed &middot; write the summary and next steps
-{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date|uk_date }} &middot; parent/carer access {{ 'enabled' if e.parent_access_enabled else 'not enabled' }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned|uk_date }}{% endif %}</p>
+{%- else %}{{ e.current_week }} of {{ sessions_total }} completed &middot; start session {{ e.current_week + 1 }}{% endif -%} &middot; started {{ e.start_date|uk_date }}{% if item.next_planned %} &middot; next session planned for {{ item.next_planned|uk_date }}{% endif %}</p>
 
   {% if e.status == 'active' %}
     {# The staff write-up isn't "week 6", it's the course summary. Keyed off the
@@ -136,7 +136,7 @@
   {# The family link. One per course, sent by whatever the school already uses
      to talk to that family — no account for a parent to be locked out of, and
      no parent record held here. Only ever shows the current home activity. #}
-  {% if e.parent_access_enabled and e.status != 'withdrawn' %}
+  {% if e.status != 'withdrawn' %}
   <div class="share-strip">
     <span class="share-kicker">Home activity link</span>
     {% if share_token and share_enrolment_id == e.id %}

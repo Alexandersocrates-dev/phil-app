@@ -2958,7 +2958,6 @@ def enrol_submit(request):
         return blocked
     pupil_id = request.params["pupil_id"]
     course_id = request.field("course_id")
-    parent_access_enabled = 1 if request.field("parent_access_enabled") == "on" else 0
 
     conn = db.get_conn()
     try:
@@ -2999,7 +2998,7 @@ def enrol_submit(request):
                current_week, parent_access_enabled, created_at)
                VALUES (?,?,?,?,?,?,?,?)""",
             (pupil_id, course_id, mentor_id, datetime.date.today().isoformat(), "active",
-             0, parent_access_enabled, db.now()),
+             0, 1, db.now()),
         )
         # Taking a pupil on again clears any earlier removal from this mentor's
         # list. Without this they would reappear for the length of the course and
@@ -3820,6 +3819,20 @@ def unpublish_course(request):
 # nothing more can leak.
 
 
+def _latest_home_week(conn, course_id, current_week):
+    """The most recent session that has a home activity.
+
+    Not the current week exactly: a week with none set would otherwise throw
+    away an activity the family may not have finished.
+    """
+    return conn.execute(
+        """SELECT week_number, title, home_activity FROM weeks
+           WHERE course_id=? AND staff_only=0 AND week_number <= ?
+             AND home_activity IS NOT NULL AND trim(home_activity) != ''
+           ORDER BY week_number DESC LIMIT 1""",
+        (course_id, min(current_week, PUPIL_SESSIONS))).fetchone()
+
+
 def init_share_links(conn):
     """Created on demand, as the reset and two-factor tables are."""
     conn.execute(
@@ -3862,17 +3875,17 @@ def home_activity_page(request):
         init_share_links(conn)
         row = conn.execute(
             """SELECT enrolments.id, enrolments.current_week, enrolments.status,
-                      enrolments.parent_access_enabled,
-                      pupils.forename, courses.id AS course_id, courses.title AS course_title
+                      pupils.forename, courses.id AS course_id, courses.module_number,
+                      courses.title AS course_title
                FROM enrolment_share_links
                JOIN enrolments ON enrolments.id = enrolment_share_links.enrolment_id
                JOIN pupils ON pupils.id = enrolments.pupil_id
                JOIN courses ON courses.id = enrolments.course_id
                WHERE enrolment_share_links.token = ?""",
             (request.params["token"],)).fetchone()
-        if not row or not row["parent_access_enabled"]:
-            # The same answer whether the link never existed, was regenerated,
-            # or was switched off — so a wrong link tells you nothing.
+        if not row:
+            # The same answer whether the link never existed or was regenerated,
+            # so a wrong link tells you nothing either way.
             return Response("This link isn't active.", status="404 Not Found")
         # The latest activity there is, not the current week's exactly. Asking
         # for one specific week meant the page said "nothing yet" whenever that
@@ -3883,16 +3896,14 @@ def home_activity_page(request):
         # Only the fields a family needs are selected: the week row also carries
         # mentor guidance and the session plan, and a template cannot leak what
         # was never fetched.
-        week = conn.execute(
-            """SELECT week_number, title, home_activity FROM weeks
-               WHERE course_id=? AND staff_only=0 AND week_number <= ?
-                 AND home_activity IS NOT NULL AND trim(home_activity) != ''
-               ORDER BY week_number DESC LIMIT 1""",
-            (row["course_id"], min(row["current_week"], PUPIL_SESSIONS))).fetchone()
+        week = _latest_home_week(conn, row["course_id"], row["current_week"])
+        sheets = _shareable_for_week(conn, row["course_id"], "%02d" % row["module_number"],
+                                     week["week_number"]) if week else []
     finally:
         conn.close()
     response = render("home_activity.html", user=None, pupil_forename=row["forename"],
-                      course_title=row["course_title"], week=week,
+                      course_title=row["course_title"], week=week, sheets=sheets,
+                      token=request.params["token"],
                       finished=row["status"] == "completed",
                       total=PUPIL_SESSIONS, flash=None)
     # Not indexed, and not passed on in a referrer if the family follows a link
@@ -3900,6 +3911,64 @@ def home_activity_page(request):
     response.headers.append(("X-Robots-Tag", "noindex, nofollow"))
     response.headers.append(("Referrer-Policy", "no-referrer"))
     return response
+
+
+def _shareable_for_week(conn, course_id, course_num, week_number):
+    """The sheets a family may print for one session.
+
+    Opt-in, by a share flag on the pack item, so nothing reaches a family by
+    accident. Anything written for staff — a briefing note, a copy for the
+    pastoral file — has no flag and cannot appear here however the week is set
+    up.
+    """
+    row = conn.execute(
+        "SELECT resources FROM weeks WHERE course_id=? AND week_number=? AND staff_only=0",
+        (course_id, week_number)).fetchone()
+    if not row:
+        return []
+    wanted = {_norm_resource(n) for n in json.loads(row["resources"] or "[]")}
+    items = []
+    for it in (_load_resource_packs().get(course_num, {}) or {}).get("items", []):
+        if not it.get("share"):
+            continue
+        names = {_norm_resource(it.get("name"))}
+        names |= {_norm_resource(a) for a in it.get("aliases", [])}
+        if names & wanted:
+            items.append(it)
+    return items
+
+
+@router.get("/home-activity/<token>/sheet.pdf")
+def home_activity_sheet(request):
+    """The blank sheets for this week's activity, printable at home.
+
+    Some activities cannot be done without one — a script to use, a scale to
+    point at — and a family has no other way to reach them. Reuses the same
+    pack renderer the school prints from, so the sheet at home matches the
+    sheet in the session.
+    """
+    conn = db.get_conn()
+    try:
+        init_share_links(conn)
+        row = conn.execute(
+            """SELECT enrolments.current_week,
+                      courses.id AS course_id, courses.module_number, courses.title
+               FROM enrolment_share_links
+               JOIN enrolments ON enrolments.id = enrolment_share_links.enrolment_id
+               JOIN courses ON courses.id = enrolments.course_id
+               WHERE enrolment_share_links.token = ?""",
+            (request.params["token"],)).fetchone()
+        if not row:
+            return Response("This link isn't active.", status="404 Not Found")
+        week = _latest_home_week(conn, row["course_id"], row["current_week"])
+        items = _shareable_for_week(conn, row["course_id"], "%02d" % row["module_number"],
+                                    week["week_number"]) if week else []
+    finally:
+        conn.close()
+    if not items:
+        return Response("There's no sheet for this week.", status="404 Not Found")
+    path = pdfgen.resource_pack_pdf("%02d" % row["module_number"], row["title"], items)
+    return pdf_response(path, "activity-sheet.pdf")
 
 
 @router.post("/mentor/enrolment/<enrolment_id>/share-link")

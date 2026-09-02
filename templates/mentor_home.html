@@ -119,7 +119,7 @@
            where the mentor already is. It posts and lands on the pupil's page
            with the link in a copy box — the link needs somewhere it can be read
            properly, which a table cell isn't. #}
-        {% if e.parent_access_enabled and e.status != 'withdrawn' %}
+        {% if e.status != 'withdrawn' %}
         <form method="post" action="/mentor/enrolment/{{ e.id }}/share-link" class="form-inline">
           <input type="hidden" name="pupil_id" value="{{ p.pupil_id }}">
           <button class="btn btn-secondary btn-sm" type="submit">{% if share_token and share_enrolment_id == e.id %}New link{% else %}Family link{% endif %}</button>
