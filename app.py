@@ -1992,6 +1992,20 @@ def mentor_home(request):
         removed_pupils = {r["pupil_id"] for r in conn.execute(
             "SELECT pupil_id FROM mentoring_list_removals WHERE mentor_id=?",
             (user["id"],)).fetchall()}
+        # A link just generated, shown against its own course. Checked against
+        # this mentor's own enrolments, so a token from elsewhere shows nothing.
+        share_token = (request.query.get("share", [""])[0] or "").strip() or None
+        share_enrolment_id = None
+        if share_token:
+            init_share_links(conn)
+            found = conn.execute(
+                """SELECT enrolment_id FROM enrolment_share_links
+                   JOIN enrolments ON enrolments.id = enrolment_share_links.enrolment_id
+                   WHERE token=? AND enrolments.mentor_id=?""",
+                (share_token, user["id"])).fetchone()
+            share_enrolment_id = found["enrolment_id"] if found else None
+            if not found:
+                share_token = None
     finally:
         conn.close()
     # The list is about pupils, not enrolments. A pupil on three courses was
@@ -2068,6 +2082,8 @@ def mentor_home(request):
     return render("mentor_home.html", user=user, pupils=pupils, enrolments=enrolments,
                   mentoring_list=mentoring_list, inactive_list=inactive_list,
                   inactive_days=INACTIVE_LIST_DAYS,
+                  share_token=share_token, share_enrolment_id=share_enrolment_id,
+                  base_url=os.environ.get("APP_BASE_URL", "").rstrip("/"),
                   due_this_week=due_this_week, reviews_due=reviews_due,
                   flash=flash_from_query(request))
 
@@ -3911,8 +3927,13 @@ def make_share_link(request):
         conn.close()
     message = ("New link made. The old one has stopped working."
                if regenerate else "Link ready to send.")
-    return with_flash("/mentor/pupils/%s?share=%s" % (request.field("pupil_id", ""), token),
-                       message, "ok")
+    # Back where the button was pressed, with the link, rather than to a second
+    # page carrying a second button. The mentor home is the common case.
+    if request.field("back", "") == "pupil":
+        dest = "/mentor/pupils/%s?share=%s" % (request.field("pupil_id", ""), token)
+    else:
+        dest = "/mentor?share=%s" % token
+    return with_flash(dest, message, "ok")
 
 
 @router.get("/parent")

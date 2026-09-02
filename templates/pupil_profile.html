@@ -149,6 +149,7 @@
     {% endif %}
     <form method="post" action="/mentor/enrolment/{{ e.id }}/share-link" class="form-inline">
       <input type="hidden" name="pupil_id" value="{{ pupil.id }}">
+      <input type="hidden" name="back" value="pupil">
       {% if share_token and share_enrolment_id == e.id %}
       <input type="hidden" name="regenerate" value="1">
       <button class="btn btn-secondary btn-sm" type="submit"
