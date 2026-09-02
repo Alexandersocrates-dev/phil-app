@@ -112,6 +112,16 @@
       <td class="record-actions">
         {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">{% if e.current_week >= sessions_total - 1 %}Record summary{% else %}Record session{% endif %}</a>{% endif %}
         {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
+        {# Sending the home activity home is a weekly job, so the action belongs
+           where the mentor already is. It posts and lands on the pupil's page
+           with the link in a copy box — the link needs somewhere it can be read
+           properly, which a table cell isn't. #}
+        {% if e.parent_access_enabled and e.status != 'withdrawn' %}
+        <form method="post" action="/mentor/enrolment/{{ e.id }}/share-link" class="form-inline">
+          <input type="hidden" name="pupil_id" value="{{ p.pupil_id }}">
+          <button class="btn btn-secondary btn-sm" type="submit">Family link</button>
+        </form>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}
@@ -309,6 +319,9 @@ if (li2) { li2.classList.add('done'); li2.querySelector('.gs-tick').innerHTML = 
 .ml-c-course{min-width:170px;line-height:1.4;}
 .ml-c-progress{width:190px;}
 .ml-c-status{width:110px;white-space:nowrap;}
+/* Two or three buttons now, so the cell wraps rather than widening the table. */
+.ml-courses .record-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.ml-courses .record-actions form{margin:0;}
 .ml-remove-form{display:inline;}
 .ml-remove{background:none; border:none; padding:0; font-family:inherit; font-size:13px;
   color:var(--muted); text-decoration:underline; text-underline-offset:2px; cursor:pointer;}
