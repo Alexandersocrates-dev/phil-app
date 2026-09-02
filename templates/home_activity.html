@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}This week's activity - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+{# Written to be opened on a phone, by someone who has never heard of Phil and
+   is not going to read an explanation. The activity comes first. #}
+<div class="card ha-card">
+  <p class="ha-eyebrow">For {{ pupil_forename }} to do at home</p>
+
+  {% if week and week.home_activity %}
+  <h1 class="ha-title">{{ week.title }}</h1>
+  <p class="ha-activity">{{ week.home_activity }}</p>
+  <p class="ha-meta">Session {{ week.week_number }} of {{ total }} &middot; {{ course_title }}</p>
+
+  {% elif finished %}
+  <h1 class="ha-title">All finished</h1>
+  <p class="ha-activity">{{ pupil_forename }} has completed {{ course_title }}. There's nothing
+  left to do at home.</p>
+
+  {% else %}
+  <h1 class="ha-title">Nothing yet</h1>
+  <p class="ha-activity">There's no activity to do just yet. This page updates after each
+  session, so it's worth keeping the link.</p>
+  <p class="ha-meta">{{ course_title }}</p>
+  {% endif %}
+</div>
+
+<p class="ha-foot">This page updates each week. Keep the link &mdash; it's the same one all the
+way through. Any questions, speak to the school.</p>
+
+<style>
+.ha-card{margin:8px 0 0;padding:28px 24px;}
+.ha-eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--teal-darker);margin:0 0 10px;}
+.ha-title{font-size:22px;margin:0 0 14px;letter-spacing:-.02em;}
+/* Big enough to read at arm's length on a phone, which is where this opens. */
+.ha-activity{font-size:17px;line-height:1.65;color:var(--ink);margin:0;text-wrap:pretty;
+  white-space:pre-line;}
+.ha-meta{font-size:13px;color:var(--muted);margin:18px 0 0;}
+.ha-foot{font-size:13px;line-height:1.6;color:var(--muted);margin:16px 4px 0;text-wrap:pretty;}
+@media (max-width:520px){
+  .ha-card{padding:22px 18px;}
+  .ha-title{font-size:20px;}
+}
+</style>
+{% endblock %}

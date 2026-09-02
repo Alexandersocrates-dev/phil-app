@@ -18,7 +18,6 @@
       {% if pupil.status == 'active' %}
         <div class="pupil-actions-group">
           <a class="btn btn-secondary btn-sm" href="/mentor/enrol/{{ pupil.id }}">Enrol on another course +</a>
-          <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ pupil.id }}/link-parent">{{ 'Link a parent/carer +' if user.role == 'admin' else 'Request parent access +' }}</a>
           {# Every course this pupil has done, with each course summary — the
              question a new form tutor asks, which the per-course report can't
              answer. #}
@@ -133,6 +132,33 @@
   {% if item.certificate and e.status == 'completed' %}
     <a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Download certificate</a>
   {% endif %}
+
+  {# The family link. One per course, sent by whatever the school already uses
+     to talk to that family — no account for a parent to be locked out of, and
+     no parent record held here. Only ever shows the current home activity. #}
+  {% if e.parent_access_enabled and e.status != 'withdrawn' %}
+  <div class="share-strip">
+    <span class="share-kicker">Home activity link</span>
+    {% if share_token and share_enrolment_id == e.id %}
+    <p class="share-note">Send this to {{ pupil.forename }}&rsquo;s family. It stays the same all
+    course and shows whatever the current activity is.</p>
+    <input class="share-url" type="text" readonly onclick="this.select()"
+           value="{{ base_url }}/home-activity/{{ share_token }}">
+    {% else %}
+    <p class="share-note">A link showing this week&rsquo;s home activity, and nothing else.</p>
+    {% endif %}
+    <form method="post" action="/mentor/enrolment/{{ e.id }}/share-link" class="form-inline">
+      <input type="hidden" name="pupil_id" value="{{ pupil.id }}">
+      {% if share_token and share_enrolment_id == e.id %}
+      <input type="hidden" name="regenerate" value="1">
+      <button class="btn btn-secondary btn-sm" type="submit"
+              onclick="return confirm('Make a new link? The one the family already has will stop working.')">New link</button>
+      {% else %}
+      <button class="btn btn-secondary btn-sm" type="submit">Get the family link</button>
+      {% endif %}
+    </form>
+  </div>
+  {% endif %}
   {# No completion reflection button. It's retired: session 6's course summary
      asks the same questions of the same person at the same moment. Anything
      written before it was retired is still in the database and still prints in
@@ -199,6 +225,17 @@
 .review-overdue{background:#FBE3DE;border-color:#F0B9AC;border-left-color:#B4341C;color:#5E1B0E;}
 .review-done{background:#F3F2EC;border-color:var(--border);border-left-color:#B3B0A4;color:var(--muted);}
 .review-none{background:#fff;border-style:dashed;color:var(--muted);}
+.share-strip{margin:16px 0 0;padding:12px 16px;background:#FBFAF6;
+  border:1px solid var(--border);border-left:3px solid var(--teal-darker);
+  border-radius:0 10px 10px 0;}
+.share-kicker{display:block;font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:4px;}
+.share-note{font-size:12.5px;color:var(--muted);margin:0 0 8px;line-height:1.5;}
+/* Monospaced and full width: this gets copied, so it has to be selectable and
+   readable in one go rather than truncated. */
+.share-url{width:100%;box-sizing:border-box;font-family:ui-monospace,Menlo,monospace;
+  font-size:12.5px;padding:8px 10px;border:1.4px solid var(--border);border-radius:8px;
+  background:#fff;margin:0 0 8px;}
 .record-goal{display:block; font-size:12px; color:var(--muted); margin-top:4px; line-height:1.4;}
 /* A recorded follow-up sits under the course it followed, not in the session
    table: it isn't a session, and it happened after the course ended. */

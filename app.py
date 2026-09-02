@@ -14,6 +14,7 @@ import datetime
 import json
 import os
 import re
+import secrets
 
 import db
 import body_map
@@ -2181,7 +2182,31 @@ def pupil_profile(request):
         conn.close()
     # today is used to mark a review overdue; the default is the same three-week
     # gap the completion screen suggests, so both routes agree.
+    # Shown only just after it was made or regenerated, from the query string.
+    # The link is not put on the page every time: a page that always displays
+    # it invites it being read over a shoulder, and the mentor only needs it at
+    # the moment they are sending it.
+    share_token = (request.query.get("share", [""])[0] or "").strip() or None
+    share_enrolment_id = None
+    if share_token:
+        conn2 = db.get_conn()
+        try:
+            init_share_links(conn2)
+            row = conn2.execute(
+                """SELECT enrolment_share_links.enrolment_id FROM enrolment_share_links
+                   JOIN enrolments ON enrolments.id = enrolment_share_links.enrolment_id
+                   WHERE enrolment_share_links.token=? AND enrolments.pupil_id=?""",
+                (share_token, pupil["id"])).fetchone()
+        finally:
+            conn2.close()
+        # A token that isn't this pupil's is ignored rather than displayed.
+        share_enrolment_id = row["enrolment_id"] if row else None
+        if not row:
+            share_token = None
+
     return render("pupil_profile.html", user=user, pupil=pupil, enrolment_data=enrolment_data,
+                  share_token=share_token, share_enrolment_id=share_enrolment_id,
+                  base_url=os.environ.get("APP_BASE_URL", "").rstrip("/"),
                   helped_labels=HELPED_LABELS, behaviour_labels=BEHAVIOUR_LABELS,
                   next_step_labels=NEXT_STEP_LABELS,
                   today=datetime.date.today().isoformat(),
@@ -3761,6 +3786,129 @@ def unpublish_course(request):
 
 
 # ------------------------------------------------------------------- parent --
+
+# ------------------------------------------------------- home activity link --
+# A family only ever needs one thing from Phil: the activity to do at home this
+# week. That was a login, a password, a reset flow and a parent account holding
+# a child's record — a lot of machinery, and a lot of personal data, for one
+# paragraph a week.
+#
+# Instead: one unguessable link per course, which the mentor sends however they
+# already talk to that family. No account, no password to forget, nothing for a
+# parent to be locked out of, and no parent personal data in Phil at all. It is
+# revoked by regenerating it.
+#
+# The trade is that anyone holding the link can open it. That is acceptable for
+# a home activity and would not be for anything else, so the page shows the
+# child's first name, the course, and the activity. Nothing more is fetched, so
+# nothing more can leak.
+
+
+def init_share_links(conn):
+    """Created on demand, as the reset and two-factor tables are."""
+    conn.execute(
+        """CREATE TABLE IF NOT EXISTS enrolment_share_links (
+               enrolment_id INTEGER PRIMARY KEY,
+               token TEXT NOT NULL UNIQUE,
+               created_by INTEGER,
+               created_at TEXT NOT NULL
+           )"""
+    )
+
+
+def share_token_for(conn, enrolment_id, user_id, regenerate=False):
+    """The link for this course, making one if there isn't one.
+
+    Regenerating replaces the token, which is how access is withdrawn: the old
+    link stops resolving the moment the new one is made.
+    """
+    init_share_links(conn)
+    if not regenerate:
+        row = conn.execute("SELECT token FROM enrolment_share_links WHERE enrolment_id=?",
+                            (enrolment_id,)).fetchone()
+        if row:
+            return row["token"]
+    token = secrets.token_urlsafe(24)
+    conn.execute(
+        """INSERT INTO enrolment_share_links (enrolment_id, token, created_by, created_at)
+           VALUES (?,?,?,?)
+           ON CONFLICT(enrolment_id) DO UPDATE SET token=excluded.token,
+               created_by=excluded.created_by, created_at=excluded.created_at""",
+        (enrolment_id, token, user_id, db.now()))
+    return token
+
+
+@router.get("/home-activity/<token>")
+def home_activity_page(request):
+    """What a family sees. No sign-in: the link is the credential."""
+    conn = db.get_conn()
+    try:
+        init_share_links(conn)
+        row = conn.execute(
+            """SELECT enrolments.id, enrolments.current_week, enrolments.status,
+                      enrolments.parent_access_enabled,
+                      pupils.forename, courses.id AS course_id, courses.title AS course_title
+               FROM enrolment_share_links
+               JOIN enrolments ON enrolments.id = enrolment_share_links.enrolment_id
+               JOIN pupils ON pupils.id = enrolments.pupil_id
+               JOIN courses ON courses.id = enrolments.course_id
+               WHERE enrolment_share_links.token = ?""",
+            (request.params["token"],)).fetchone()
+        if not row or not row["parent_access_enabled"]:
+            # The same answer whether the link never existed, was regenerated,
+            # or was switched off — so a wrong link tells you nothing.
+            return Response("This link isn't active.", status="404 Not Found")
+        week = None
+        # The activity for the session just delivered, which is the one to do
+        # before the next. Only the two fields a family needs are selected:
+        # the week row also carries mentor guidance and the session plan, and a
+        # template cannot leak what was never fetched.
+        if 1 <= row["current_week"] <= PUPIL_SESSIONS:
+            week = conn.execute(
+                """SELECT week_number, title, home_activity FROM weeks
+                   WHERE course_id=? AND week_number=? AND staff_only=0""",
+                (row["course_id"], row["current_week"])).fetchone()
+    finally:
+        conn.close()
+    response = render("home_activity.html", user=None, pupil_forename=row["forename"],
+                      course_title=row["course_title"], week=week,
+                      finished=row["status"] == "completed",
+                      total=PUPIL_SESSIONS, flash=None)
+    # Not indexed, and not passed on in a referrer if the family follows a link
+    # away from the page.
+    response.headers.append(("X-Robots-Tag", "noindex, nofollow"))
+    response.headers.append(("Referrer-Policy", "no-referrer"))
+    return response
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/share-link")
+def make_share_link(request):
+    """Creates or regenerates the family link for one course."""
+    user, err = require(request, roles=["mentor", "admin", "phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        enrolment = conn.execute(
+            """SELECT enrolments.id FROM enrolments
+               JOIN pupils ON pupils.id = enrolments.pupil_id
+               WHERE enrolments.id=? AND pupils.establishment_id=?""",
+            (request.params["enrolment_id"], user["establishment_id"])).fetchone()
+        if not enrolment:
+            return with_flash("/mentor", "That course isn't at your school.", "error")
+        regenerate = request.field("regenerate", "") == "1"
+        token = share_token_for(conn, enrolment["id"], user["id"], regenerate)
+        db.log_action(conn, user["id"],
+                      "share_link_regenerated" if regenerate else "share_link_created",
+                      "enrolment", enrolment["id"])
+        conn.commit()
+    finally:
+        conn.close()
+    message = ("New link made. The old one has stopped working."
+               if regenerate else "Link ready to send.")
+    return with_flash("/mentor/pupils/%s?share=%s" % (request.field("pupil_id", ""), token),
+                       message, "ok")
+
 
 @router.get("/parent")
 def parent_home(request):
