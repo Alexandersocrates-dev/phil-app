@@ -51,7 +51,8 @@
             "What happened after",
             "The earliest point I could have stopped"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Body map handout",
@@ -154,7 +155,8 @@
             "Where it is kept",
             "Who knows it is there"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Restorative conversation prompt card",
@@ -206,7 +208,8 @@
         },
         "aliases": [
           "One-page prevention and response plan template"
-        ]
+        ],
+        "share": true
       }
     ],
     "missing": []
@@ -241,7 +244,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Feeling word cards",
@@ -491,7 +495,8 @@
         },
         "aliases": [
           "One-page anger-management plan template"
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Role-play scenario cards",
@@ -798,7 +803,8 @@
               "eg": "four weeks from today"
             }
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Attendance file note",
@@ -1008,7 +1014,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Trigger map template",
@@ -1235,7 +1242,8 @@
             "Who I can go to for support",
             "Review date"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Copy for pastoral file",
@@ -1302,7 +1310,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "What is a young carer? briefing card",
@@ -1596,7 +1605,8 @@
             "How to flag if things change at home",
             "Review date"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Copy for pastoral file",
@@ -1668,7 +1678,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Colour-code feelings key",
@@ -1889,7 +1900,8 @@
             "Who I'd go to if something happened",
             "Review date"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Copy for pastoral file",
@@ -2000,7 +2012,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Thought-balance worksheet",
@@ -2194,7 +2207,8 @@
             "Who I can talk to if pressure builds",
             "Review date"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Copy for pastoral file",
@@ -2303,7 +2317,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Sense-by-sense examples card",
@@ -2563,7 +2578,8 @@
             "Environment adjustments requested",
             "Review date"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Copy for SENCO or pastoral file",
@@ -2753,7 +2769,8 @@
             "Activities that help",
             "It's okay to ask for a quieter day"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Anniversary planning card",
@@ -2788,7 +2805,8 @@
             "text": "Arrives with no warning at all.",
             "note": "Normal, and not a setback"
           }
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Memory box list template",
@@ -2852,7 +2870,8 @@
             "Upcoming hard dates to be aware of",
             "Who I can talk to"
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Bereavement support services info card",
@@ -2880,7 +2899,8 @@
             "text": "Finds local services near you.",
             "note": "Useful if school support runs out"
           }
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Copy for pastoral file",
@@ -3169,7 +3189,8 @@
               "0800 1111"
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Reporting routes information card",
@@ -3197,7 +3218,8 @@
             "text": "999 in an emergency, 101 for non-urgent concerns.",
             "note": "You can report about a friend"
           }
-        ]
+        ],
+        "share": true
       }
     ],
     "missing": []
@@ -3466,7 +3488,8 @@
             "Whole body"
           ]
         },
-        "figure": "body-map"
+        "figure": "body-map",
+        "share": true
       },
       {
         "name": "Aggression cycle diagram",
@@ -3569,7 +3592,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Trigger list",
@@ -3612,7 +3636,8 @@
         },
         "aliases": [
           "Trigger list template"
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Tally tracking card",
@@ -3714,7 +3739,8 @@
           }
         ],
         "card_kind": "technique",
-        "tone": "teal"
+        "tone": "teal",
+        "share": true
       },
       {
         "name": "My signal card",
@@ -3848,7 +3874,8 @@
         },
         "aliases": [
           "One-page support plan template"
-        ]
+        ],
+        "share": true
       },
       {
         "name": "How staff can help me",
@@ -3900,7 +3927,8 @@
             "Who I tell",
             "What I do if that person isn't there"
           ]
-        }
+        },
+        "share": true
       }
     ],
     "missing": []
@@ -3969,7 +3997,8 @@
             "note": "Sort me"
           }
         ],
-        "tone": "amber"
+        "tone": "amber",
+        "share": true
       },
       {
         "name": "Notice-and-note tracking card",
@@ -4001,7 +4030,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Choices game scenario cards",
@@ -4266,7 +4296,8 @@
             "Signed: class teacher",
             "Review date"
           ]
-        }
+        },
+        "share": true
       }
     ],
     "missing": []
@@ -4357,7 +4388,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Emotion word cards",
@@ -4463,7 +4495,8 @@
             "Whole body"
           ]
         },
-        "figure": "body-map"
+        "figure": "body-map",
+        "share": true
       },
       {
         "name": "Grounding technique cards",
@@ -4499,7 +4532,8 @@
           }
         ],
         "tone": "teal",
-        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use."
+        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use.",
+        "share": true
       },
       {
         "name": "Wave diagram template",
@@ -4536,7 +4570,8 @@
             "Who can help me, and where to find them",
             "Review date"
           ]
-        }
+        },
+        "share": true
       }
     ],
     "missing": []
@@ -4759,7 +4794,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Tally card (week five)",
@@ -4797,7 +4833,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Stop-think-choose technique card",
@@ -4891,7 +4928,8 @@
             "note": "Agree it first"
           }
         ],
-        "tone": "teal"
+        "tone": "teal",
+        "share": true
       },
       {
         "name": "Self-monitoring chart",
@@ -4926,7 +4964,8 @@
         },
         "aliases": [
           "Finalised self-monitoring chart"
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Teacher briefing note",
@@ -5028,7 +5067,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Avoidance ladder template",
@@ -5095,7 +5135,8 @@
             "text": "First step: answer one question you already know the answer to.",
             "note": "Pick the easy one on purpose"
           }
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Step-planning worksheet",
@@ -5159,7 +5200,8 @@
           }
         ],
         "tone": "teal",
-        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use."
+        "source": "Sensory grounding, including the 5-4-3-2-1 method, in common clinical and pastoral use.",
+        "share": true
       },
       {
         "name": "My return-to-school plan",
@@ -5175,7 +5217,8 @@
         },
         "aliases": [
           "Support plan template"
-        ]
+        ],
+        "share": true
       }
     ],
     "missing": []
@@ -5213,7 +5256,8 @@
               ""
             ]
           ]
-        }
+        },
+        "share": true
       },
       {
         "name": "Disengagement trigger cards",
@@ -5375,7 +5419,8 @@
             "My goal",
             "Review date"
           ]
-        }
+        },
+        "share": true
       }
     ],
     "missing": []
@@ -5468,7 +5513,8 @@
             "text": "Acknowledges them first.",
             "note": "Hard to argue with"
           }
-        ]
+        ],
+        "share": true
       },
       {
         "name": "Restorative conversation prompt card",
