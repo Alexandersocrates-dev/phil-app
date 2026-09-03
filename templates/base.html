@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+{# Set by pages that have their own; the homepage overrides both in its head. #}
+{% if doc_description %}<meta name="description" content="{{ doc_description }}">{% endif %}
+{% if doc_slug and base_url %}<link rel="canonical" href="{{ base_url }}/legal/{{ doc_slug }}">
+<meta property="og:title" content="{{ doc_title }}">
+<meta property="og:description" content="{{ doc_description }}">
+<meta property="og:type" content="article">{% endif %}
 <title>{% block title %}Phil{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

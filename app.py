@@ -3914,8 +3914,8 @@ def sitemap(request):
     table could.
     """
     base = os.environ.get("APP_BASE_URL", "").rstrip("/")
-    paths = ["/home", "/courses", "/legal/privacy", "/legal/terms",
-             "/legal/safeguarding", "/legal/white-paper"]
+    paths = ["/home", "/courses", "/legal/white-paper", "/legal/privacy-policy",
+             "/legal/terms-of-service", "/legal/safeguarding-policy"]
     urls = "".join("<url><loc>%s%s</loc></url>" % (base, p) for p in paths)
     body = ('<?xml version="1.0" encoding="UTF-8"?>'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>' % urls)
@@ -7374,7 +7374,52 @@ _LEGAL_DOC_ROUTES = {
 }
 
 
+_LEGAL_DOC_META = {
+    "white-paper": (
+        "The missing standard: structuring pastoral mentoring in English schools",
+        "Why pastoral mentoring in English schools has grown without structured "
+        "courses or a training standard, what Ofsted, the DfE and the EEF say "
+        "about it, and the evidence behind each of Phil's twenty courses."),
+    "privacy-policy": (
+        "Privacy policy",
+        "How Phil handles personal data for schools, mentors, pupils and families."),
+    "terms-of-service": (
+        "Terms of service",
+        "The terms on which schools and independent mentors use Phil."),
+    "safeguarding-policy": (
+        "Safeguarding policy template",
+        "A template a school can adapt, covering how mentoring records and "
+        "safeguarding concerns are handled."),
+}
+
+
 @router.get("/legal/<doc_slug>")
+def legal_doc_page(request):
+    """The document as a web page.
+
+    These were download-only. A PDF is the right thing to hand a governor, but
+    it is a poor thing to be found by: the white paper is the most substantial
+    writing Phil has, and as a file it was invisible to anyone searching for
+    the problem it describes. The page is the document; the PDF is still one
+    click away for anyone who wants to print or circulate it.
+    """
+    slug = request.params["doc_slug"]
+    entry = _LEGAL_DOC_ROUTES.get(slug)
+    if not entry:
+        return Response("Document not found", status="404 Not Found")
+    key, _filename = entry
+    paras = _load_legal_docs().get(key)
+    if not paras:
+        return Response("Document not found", status="404 Not Found")
+    title, description = _LEGAL_DOC_META.get(slug, (slug.replace("-", " ").capitalize(), ""))
+    return render("legal_doc.html", user=None, hide_nav_links=False,
+                  blocks=paras, doc_title=title, doc_description=description,
+                  doc_slug=slug,
+                  base_url=os.environ.get("APP_BASE_URL", "").rstrip("/"),
+                  flash=None)
+
+
+@router.get("/legal/<doc_slug>/pdf")
 def legal_doc_pdf(request):
     slug = request.params["doc_slug"]
     entry = _LEGAL_DOC_ROUTES.get(slug)
