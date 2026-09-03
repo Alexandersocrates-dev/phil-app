@@ -72,7 +72,7 @@ from reportlab.lib.utils import simpleSplit
 NAVY = HexColor("#1B2A4A")
 TEAL = HexColor("#1D9E75")
 TEAL_DARK = HexColor("#0F6E56")
-# The book cover in the Phil mark. The masthead uses it so the band and the logo
+# The square in the Phil mark. The masthead uses it so the band and the logo
 # are the same green rather than two greens.
 TEAL_DARKER = HexColor("#085041")
 AMBER = HexColor("#EF9F27")
@@ -103,36 +103,31 @@ os.makedirs(PDF_DIR, exist_ok=True)
 
 
 def _phil_mark(c, x, y, size=13 * mm):
-    """Draws the Phil mark: a green book with a cream P, a page behind it and a
-    coral bookmark. Redrawn in reportlab primitives rather than embedded as an
-    image, so it stays crisp at any size and needs no asset file on the volume.
+    """Draws the Phil mark: four rounded pieces forming a P on a teal square.
 
-    Coordinates are proportional to size, taken from the SVG the app uses, so
-    the two can't drift apart."""
-    u = size / 120.0  # the source artwork is on a 120-unit grid
+    Redrawn in reportlab primitives rather than embedded as an image, so it
+    stays crisp at any size and needs no asset file on the volume. Coordinates
+    are proportional to size and taken straight from static/favicon.svg, so the
+    printed mark and the on-screen one cannot drift apart.
 
-    # Page behind the book
-    c.setFillColor(HexColor("#EAE2CC"))
-    c.roundRect(x + 30 * u, y + 14 * u, 66 * u, 90 * u, 4 * u, fill=1, stroke=0)
+    reportlab's origin is bottom-left and SVG's is top-left, so every y here is
+    (100 - svg_y - height). The previous mark drew its P with a font for exactly
+    this reason — hand-flipping bezier curves went wrong. These are rectangles,
+    so the arithmetic is safe.
+    """
+    u = size / 100.0  # the source artwork is on a 100-unit grid
 
-    # Bookmark
-    c.setFillColor(HexColor("#D85A30"))
-    c.rect(x + 62 * u, y + 104 * u, 7 * u, 14 * u, fill=1, stroke=0)
+    def piece(sx, sy, sw, sh, colour):
+        c.setFillColor(HexColor(colour))
+        c.roundRect(x + sx * u, y + (100 - sy - sh) * u,
+                    sw * u, sh * u, 6 * u, fill=1, stroke=0)
 
-    # Book cover
-    c.setFillColor(HexColor("#0F6E56"))
-    c.roundRect(x + 30 * u, y + 20 * u, 56 * u, 84 * u, 6 * u, fill=1, stroke=0)
-
-    # The P as a glyph rather than a transcribed path. Converting the SVG's
-    # bezier curves by hand meant flipping the y-axis, and getting that subtly
-    # wrong produced a shape that wasn't the letter at all. A font draws it
-    # correctly at any size.
-    c.setFillColor(HexColor("#F3EFE4"))
-    glyph = 62 * u
-    c.setFont("Helvetica-Bold", glyph)
-    # Optically centred on the cover: the cap sits slightly above the baseline
-    # centre, so nudge down rather than using the exact midpoint.
-    c.drawCentredString(x + 58 * u, y + 46 * u, "P")
+    c.setFillColor(TEAL_DARK)
+    c.roundRect(x, y, 100 * u, 100 * u, 24 * u, fill=1, stroke=0)
+    piece(26, 22, 13, 62, "#F3EFE4")   # stem
+    piece(43, 22, 32, 13, "#F3EFE4")   # top of the bowl
+    piece(62, 35, 13, 16, "#D85A30")   # the coral turn
+    piece(43, 51, 32, 13, "#F3EFE4")   # bottom of the bowl
 
 
 def _doc_header(c, w, h, margin, doc_title, meta=None, subtitle="Structured mentoring for schools"):
@@ -152,9 +147,9 @@ def _doc_header(c, w, h, margin, doc_title, meta=None, subtitle="Structured ment
     band_y = y - 6 * mm
     c.setFillColor(TEAL_DARKER)
     c.rect(0, band_y, w, band_h, fill=1, stroke=0)
-    # A cream hairline along the bottom edge, picking up the page colour in the
-    # mark, so the band reads as designed rather than as a block of colour.
-    c.setStrokeColor(HexColor("#EAE2CC"))
+    # A cream hairline along the bottom edge, picking up the cream in the mark,
+    # so the band reads as designed rather than as a block of colour.
+    c.setStrokeColor(HexColor("#F3EFE4"))
     c.setLineWidth(1.2)
     c.line(0, band_y, w, band_y)
 
@@ -168,7 +163,7 @@ def _doc_header(c, w, h, margin, doc_title, meta=None, subtitle="Structured ment
     c.setFillColor(HexColor("#A7D9C8"))
     c.drawString(text_x, band_y + 8 * mm, subtitle.upper())
 
-    c.setFillColor(HexColor("#EAE2CC"))
+    c.setFillColor(HexColor("#F3EFE4"))
     c.setFont("Helvetica-Bold", 9)
     c.drawRightString(w - margin, band_y + 10.5 * mm, doc_title.upper())
 
@@ -321,7 +316,7 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
 
     y = h - 42 * mm
 
-    # The Phil mark, then the issuing body — the same book used everywhere else.
+    # The Phil mark, then the issuing body — the same mark used everywhere else.
     _phil_mark(c, w / 2 - 7 * mm, y - 2 * mm, size=14 * mm)
     y -= 10 * mm
 
