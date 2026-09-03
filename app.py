@@ -3867,6 +3867,61 @@ def share_token_for(conn, enrolment_id, user_id, regenerate=False):
     return token
 
 
+@router.get("/robots.txt")
+def robots(request):
+    """Let the public pages be found; keep everything else out.
+
+    This used to disallow the whole site, which also blocked the marketing
+    pages — the only ones anyone is meant to find. The pages worth indexing are
+    the homepage, the course library and the legal documents. Everything behind
+    a sign-in is disallowed, and so is /home-activity/, because a family's link
+    is reachable without one and a link forwarded into a public group should
+    not become searchable.
+
+    It is not a security control. Scanners request /.env and /backup.zip and
+    get a 404 because no such route exists and the static handler serves only
+    what is inside its own directory — that is what protects them, not this
+    file. A crawler that ignores robots.txt is unaffected either way, which is
+    why the home activity page sends a noindex header as well.
+    """
+    lines = [
+        "User-agent: *",
+        "Disallow: /home-activity/",
+        "Disallow: /mentor/",
+        "Disallow: /admin/",
+        "Disallow: /staff/",
+        "Disallow: /parent/",
+        "Disallow: /account/",
+        "Disallow: /login",
+        "Disallow: /signup",
+        "Disallow: /report/",
+        "Disallow: /session/",
+        "Disallow: /certificate/",
+        "Allow: /",
+        "",
+        "Sitemap: %s/sitemap.xml" % os.environ.get("APP_BASE_URL", "").rstrip("/"),
+        "",
+    ]
+    return Response("\n".join(lines), content_type="text/plain; charset=utf-8")
+
+
+@router.get("/sitemap.xml")
+def sitemap(request):
+    """The handful of pages worth indexing, named explicitly.
+
+    Small enough to list by hand, and a hand-written list can't accidentally
+    expose a route that shouldn't be public — which a crawler of the routing
+    table could.
+    """
+    base = os.environ.get("APP_BASE_URL", "").rstrip("/")
+    paths = ["/home", "/courses", "/legal/privacy", "/legal/terms",
+             "/legal/safeguarding", "/legal/white-paper"]
+    urls = "".join("<url><loc>%s%s</loc></url>" % (base, p) for p in paths)
+    body = ('<?xml version="1.0" encoding="UTF-8"?>'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>' % urls)
+    return Response(body, content_type="application/xml; charset=utf-8")
+
+
 @router.get("/home-activity/<token>")
 def home_activity_page(request):
     """What a family sees. No sign-in: the link is the credential."""
