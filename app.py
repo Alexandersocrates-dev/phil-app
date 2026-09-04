@@ -7471,6 +7471,45 @@ def _send_twofa_reset_email(to_email, name, actor_name):
         "with admin access to your school's Phil account did this.")
 
 
+def _email_html(subject, body):
+    """A plain HTML version of the same text.
+
+    Text-only mail with one bare link is, structurally, what a phishing email
+    looks like, and filters score it accordingly. Sending both parts is what
+    ordinary transactional mail does, and its absence stood out.
+
+    Deliberately plain: no images, no tracking pixel, no button graphics. A
+    marketing-shaped email would score worse than the text one did, and this
+    has to reach someone locked out of their account.
+    """
+    import html as _html
+
+    def line(text):
+        text = _html.escape(text)
+        # Bare URLs become real links; a filter reads a naked https:// in a
+        # body as a stronger phishing signal than an anchor.
+        text = re.sub(r"(https?://\S+)",
+                      r'<a href="\1" style="color:#0F6E56;">\1</a>', text)
+        # Single newlines become line breaks, so a link on its own line stays on
+        # its own line rather than running into the sentence above it.
+        return text.replace("\n", "<br>")
+
+    paragraphs = "".join(
+        '<p style="margin:0 0 14px;">%s</p>' % line(p.strip())
+        for p in (body or "").split("\n\n") if p.strip())
+    return (
+        '<!doctype html><html><body style="margin:0;padding:24px;'
+        'background:#FBF8F2;font-family:-apple-system,Segoe UI,Helvetica,Arial,sans-serif;">'
+        '<div style="max-width:520px;margin:0 auto;background:#fff;border-radius:12px;'
+        'padding:28px 26px;color:#2B2A26;font-size:15px;line-height:1.6;">'
+        '<p style="margin:0 0 18px;font-weight:700;color:#0F6E56;letter-spacing:.06em;'
+        'font-size:13px;">PHIL</p>'
+        '%s'
+        '<p style="margin:22px 0 0;font-size:12.5px;color:#5F5E5A;">'
+        'Phil Education Ltd &middot; structured support, real growth</p>'
+        '</div></body></html>' % paragraphs)
+
+
 def _send_email(to_email, subject, body):
     """Sends one email. Returns True only if a provider accepted it.
 
@@ -7487,7 +7526,13 @@ def _send_email(to_email, subject, body):
 
     resend_key = os.environ.get("RESEND_API_KEY")
     postmark_token = os.environ.get("POSTMARK_SERVER_TOKEN")
-    mail_from = os.environ.get("MAIL_FROM", "Phil <no-reply@phileducation.co.uk>")
+    # A repliable address, not no-reply@. Authentication was never the problem —
+    # SPF, DKIM and DMARC all pass — but Outlook scored a reset mail at SCL 5 and
+    # binned it. A from-address nobody can reply to is one of the signals that
+    # feeds that score, and it is the wrong message anyway: a mentor who cannot
+    # get in should be able to answer the email that failed to let them.
+    mail_from = os.environ.get("MAIL_FROM", "Phil <hello@send.phileducation.co.uk>")
+    reply_to = os.environ.get("MAIL_REPLY_TO", "hello@phileducation.co.uk")
 
     if not (resend_key or postmark_token):
         print(f"[mail] No email provider configured. To {to_email}: {subject}\n{body}")
@@ -7496,13 +7541,17 @@ def _send_email(to_email, subject, body):
     try:
         if resend_key:
             url = "https://api.resend.com/emails"
-            payload = {"from": mail_from, "to": [to_email], "subject": subject, "text": body}
+            payload = {"from": mail_from, "to": [to_email], "subject": subject,
+                       "text": body, "html": _email_html(subject, body),
+                       "reply_to": reply_to}
             headers = {"Authorization": f"Bearer {resend_key}",
                        "Content-Type": "application/json",
                        "User-Agent": "Phil/1.0"}
         else:
             url = "https://api.postmarkapp.com/email"
-            payload = {"From": mail_from, "To": to_email, "Subject": subject, "TextBody": body}
+            payload = {"From": mail_from, "To": to_email, "Subject": subject,
+                       "TextBody": body, "HtmlBody": _email_html(subject, body),
+                       "ReplyTo": reply_to}
             headers = {"X-Postmark-Server-Token": postmark_token,
                        "Content-Type": "application/json",
                        "Accept": "application/json",
