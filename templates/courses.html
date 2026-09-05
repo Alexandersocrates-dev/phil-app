@@ -13,7 +13,7 @@
 
 <div id="courseList">
 {% for c in courses %}
-<a class="course-row" data-title="{{ c.title|lower }}" data-focus="{{ (c.focus_area or '')|lower }}" href="/courses/{{ c.id }}">
+<a class="course-row" data-title="{{ c.title|lower }}" data-focus="{{ (c.focus_area or '')|lower }}" href="{{ ('/courses/' ~ c.id) if user else ('/mentoring/' ~ c.slug) }}">
 <div class="ric" style="background:var(--coral-light);">{{ icon_book(color='var(--coral-dark)') }}</div>
 <div class="crt">
 <p class="crtitle">{{ '%02d'|format(c.module_number) }} &middot; {{ c.title }}</p>

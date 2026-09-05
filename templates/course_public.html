@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ course.title }} — mentoring course - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<article class="cp">
+  <p class="cp-back"><a href="/courses">&larr; All courses</a></p>
+
+  <p class="cp-eyebrow">Five-session mentoring course</p>
+  <h1 class="cp-title">{{ course.title }}</h1>
+
+  {% if course.signs %}
+  <h2 class="cp-h2">Who it's for</h2>
+  <p class="cp-lead">Consider this course for a pupil showing:</p>
+  <ul class="cp-list">
+    {% for s in course.signs %}<li>{{ s }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if course.aims %}
+  <h2 class="cp-h2">What it works towards</h2>
+  <ul class="cp-list">
+    {% for a in course.aims %}<li>{{ a }}</li>{% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if course.weeks %}
+  <h2 class="cp-h2">The five sessions</h2>
+  {# Titles and objectives only. The session content — what the mentor says and
+     does — is the product and is not fetched for this page, so it cannot leak
+     through a template change later. #}
+  <ol class="cp-weeks">
+    {% for w in course.weeks %}
+    <li>
+      <span class="cp-week-n">Session {{ loop.index }}</span>
+      <strong>{{ w.title }}</strong>
+      {% if w.objective %}<span class="cp-week-obj">{{ w.objective }}</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  <p class="cp-note">A sixth session follows, without the pupil: the mentor writes
+  the support plan and agrees next steps.</p>
+  {% endif %}
+
+  {% if course.approach %}
+  <h2 class="cp-h2">The approach, and where it comes from</h2>
+  <p class="cp-body">{{ course.approach }}</p>
+  {% endif %}
+
+  <div class="cp-cta">
+    <h2>Try it with a small group</h2>
+    <p>Three weeks free, no card, up to three staff and ten pupils. Everything
+    recorded during the trial carries over if you continue.</p>
+    <p><a class="btn btn-primary" href="/signup">Start the free pilot</a></p>
+    <p class="cp-cta-note">Or read the <a href="/legal/white-paper">white paper</a>,
+    which sets out the evidence behind each of the twenty courses.</p>
+  </div>
+
+  {% if others %}
+  <h2 class="cp-h2">The other courses</h2>
+  <ul class="cp-others">
+    {% for o in others %}<li><a href="/mentoring/{{ o.slug }}">{{ o.title }}</a></li>{% endfor %}
+  </ul>
+  {% endif %}
+</article>
+
+<style>
+.cp{max-width:70ch;margin:0 auto;}
+.cp-back{margin:0 0 20px;font-size:13px;}
+.cp-eyebrow{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--teal-darker);margin:0 0 8px;}
+.cp-title{font-size:28px;line-height:1.2;margin:0 0 24px;letter-spacing:-.02em;}
+.cp-h2{font-size:18px;margin:32px 0 10px;letter-spacing:-.01em;}
+.cp-lead{font-size:15px;color:var(--muted);margin:0 0 10px;}
+.cp-body{font-size:16px;line-height:1.7;color:var(--ink);margin:0 0 14px;text-wrap:pretty;}
+.cp-list{margin:0 0 8px 20px;padding:0;}
+.cp-list li{font-size:16px;line-height:1.65;color:var(--ink);margin:0 0 8px;}
+
+/* Numbered, so the sequence is the point — a school is looking for structure,
+   and a flat list would not show it. */
+.cp-weeks{list-style:none;margin:0;padding:0;counter-reset:none;}
+.cp-weeks li{border-left:3px solid var(--teal-light);padding:0 0 0 16px;margin:0 0 16px;}
+.cp-week-n{display:block;font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--teal-darker);margin-bottom:2px;}
+.cp-weeks strong{display:block;font-family:var(--font-head);font-size:16px;
+  color:var(--navy);margin-bottom:4px;}
+.cp-week-obj{display:block;font-size:14px;line-height:1.6;color:var(--muted);}
+.cp-note{font-size:13.5px;color:var(--muted);margin:0 0 8px;}
+
+.cp-cta{margin:36px 0 0;padding:24px;background:var(--teal-light);border-radius:12px;}
+.cp-cta h2{font-size:18px;margin:0 0 8px;}
+.cp-cta p{font-size:15px;line-height:1.6;color:var(--ink);margin:0 0 14px;}
+.cp-cta-note{font-size:13.5px;color:var(--muted);margin:0;}
+
+.cp-others{margin:0;padding:0;list-style:none;display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 20px;}
+.cp-others li{font-size:14px;line-height:1.5;}
+@media (max-width:560px){
+  .cp-title{font-size:24px;}
+  .cp-others{grid-template-columns:minmax(0,1fr);}
+}
+</style>
+{% endblock %}

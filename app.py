@@ -153,6 +153,8 @@ framework_jinja.filters["uk_date_long"] = uk_date_long
 framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
 RESOURCE_PACKS_PATH = os.path.join(os.path.dirname(__file__), "data", "resource_packs.json")
 _resource_packs_cache = None
+_courses_data_cache = None
+COURSES_DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "courses_data.js")
 
 
 SESSION_STEPS = ("checkin", "input", "activity", "reflect", "home")
@@ -736,6 +738,28 @@ def resource_items_for(module_number, resource_names):
             out.append(dict(item, slug=item.get("slug")
                             or resource_slug(item.get("name"))))
     return out
+
+
+def _load_courses_data():
+    """The course source file, for the parts of a course shown publicly.
+
+    The database holds the session text a mentor delivers; this file also holds
+    the signs, aims and approach note, which the sync script does not copy
+    across because nothing in the app needed them until now. Read from the file
+    and cached, as the resource packs are.
+    """
+    global _courses_data_cache
+    if _courses_data_cache is None:
+        try:
+            with open(COURSES_DATA_PATH, "r", encoding="utf-8") as fh:
+                text = fh.read()
+            match = re.search(r"=\s*(\[.*\])\s*;?\s*$", text, re.S)
+            _courses_data_cache = json.loads(match.group(1) if match else text)
+        except (OSError, ValueError, AttributeError):
+            # A public page missing its detail is worth far less than a crash,
+            # so a malformed file degrades to an empty list.
+            _courses_data_cache = []
+    return _courses_data_cache
 
 
 def _load_resource_packs():
@@ -1383,6 +1407,78 @@ def account_password_submit(request):
 
 # ------------------------------------------------------------------ courses --
 
+def course_slug(title):
+    """A stable, readable URL for a course.
+
+    Built from the title, so /courses/anxiety-and-avoidance rather than
+    /courses/6. A number tells a search engine nothing, and a school searching
+    for the problem is typing the words, not the module number.
+    """
+    return re.sub(r"[^a-z0-9]+", "-", (title or "").lower()).strip("-")
+
+
+def _course_public_detail(num):
+    """The parts of a course that may be shown publicly.
+
+    Signs, aims and the approach note describe who a course is for and what it
+    achieves. The session content — check-in, input, activity, the mentor
+    guidance — is the product and is never rendered here. Week titles and
+    objectives are included because a school needs to see there is a structure;
+    they are not enough to deliver it.
+    """
+    for course in _load_courses_data():
+        if course.get("num") == num:
+            weeks = [{"title": w.get("title"), "objective": w.get("objective")}
+                     for w in course.get("weeks", []) if not w.get("staff_only")]
+            return {
+                "num": num,
+                "title": course.get("title"),
+                "signs": course.get("signs") or [],
+                "aims": course.get("aims") or [],
+                "approach": course.get("approachNote"),
+                "weeks": weeks,
+            }
+    return None
+
+
+@router.get("/mentoring/<slug>")
+def course_public_page(request):
+    """A public page per course, at /mentoring/<slug>.
+
+    Twenty pages a school might actually search for — "anxiety and avoidance
+    mentoring", "support for a pupil refusing school" — against one library
+    page that ranks for none of them.
+
+    Deliberately not under /courses/: that path already carries
+    /courses/<course_id> for the signed-in detail view, and the router matches
+    in registration order, so a second /courses/<x> route would have shadowed
+    it for every mentor.
+    """
+    slug = request.params["slug"]
+    conn = db.get_conn()
+    try:
+        courses = conn.execute(
+            "SELECT * FROM courses WHERE status='published' ORDER BY module_number"
+        ).fetchall()
+    finally:
+        conn.close()
+    match = next((c for c in courses if course_slug(c["title"]) == slug), None)
+    if not match:
+        return Response("Course not found", status="404 Not Found")
+    detail = _course_public_detail(match["module_number"])
+    if not detail:
+        return Response("Course not found", status="404 Not Found")
+    others = [{"title": c["title"], "slug": course_slug(c["title"])}
+              for c in courses if c["id"] != match["id"]]
+    description = ("A five-session mentoring course for %s, grounded in DfE, Ofsted "
+                   "and EEF evidence. Structured sessions, printable resources and a "
+                   "record of what each pupil received." % detail["title"].lower())
+    return render("course_public.html", user=None, course=detail, others=others,
+                  slug=slug, doc_title=detail["title"], doc_description=description,
+                  base_url=os.environ.get("APP_BASE_URL", "").rstrip("/"),
+                  flash=None)
+
+
 @router.get("/courses")
 def course_library(request):
     user = current_user(request)
@@ -1393,7 +1489,11 @@ def course_library(request):
         ).fetchall()
     finally:
         conn.close()
-    return render("courses.html", user=user, courses=courses, flash=flash_from_query(request))
+    # A slug per course, so the library links to the public pages. Without an
+    # internal link a crawler has only the sitemap to go on, and pages with
+    # nothing pointing at them rank accordingly.
+    listed = [dict(c, slug=course_slug(c["title"])) for c in courses]
+    return render("courses.html", user=user, courses=listed, flash=flash_from_query(request))
 
 
 @router.get("/courses/module/<module_number>")
@@ -3916,6 +4016,15 @@ def sitemap(request):
     base = os.environ.get("APP_BASE_URL", "").rstrip("/")
     paths = ["/home", "/courses", "/legal/white-paper", "/legal/privacy-policy",
              "/legal/terms-of-service", "/legal/safeguarding-policy"]
+    # Generated from the same slug function the routes use, so a renamed course
+    # cannot leave a dead URL in the sitemap.
+    conn = db.get_conn()
+    try:
+        for row in conn.execute(
+                "SELECT title FROM courses WHERE status='published' ORDER BY module_number"):
+            paths.append("/mentoring/%s" % course_slug(row["title"]))
+    finally:
+        conn.close()
     urls = "".join("<url><loc>%s%s</loc></url>" % (base, p) for p in paths)
     body = ('<?xml version="1.0" encoding="UTF-8"?>'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s</urlset>' % urls)
