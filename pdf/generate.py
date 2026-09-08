@@ -279,6 +279,38 @@ def _award_rosette(c, cx, cy, r):
     c.drawPath(star, fill=1, stroke=0)
 
 
+def _draw_fitted_title(canvas_obj, centre_x, y, text, max_width,
+                       font="Times-Bold", start_size=19, min_size=14):
+    """Draws a centred title that always fits, and returns the new y.
+
+    Tries the ideal size first, steps down to a floor, and only then wraps.
+    Wrapping at full size would be prettier for one long title and worse for
+    the twelve that already fit on one line.
+    """
+    size = start_size
+    while size > min_size and canvas_obj.stringWidth(text, font, size) > max_width:
+        size -= 0.5
+    canvas_obj.setFont(font, size)
+    if canvas_obj.stringWidth(text, font, size) <= max_width:
+        canvas_obj.drawCentredString(centre_x, y, text)
+        return y
+
+    # Still too wide at the floor, so break on the last word that fits.
+    words, lines, current = text.split(), [], ""
+    for word in words:
+        trial = (current + " " + word).strip()
+        if canvas_obj.stringWidth(trial, font, size) <= max_width or not current:
+            current = trial
+        else:
+            lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    for index, line in enumerate(lines):
+        canvas_obj.drawCentredString(centre_x, y - index * (size * 1.25), line)
+    return y - (len(lines) - 1) * (size * 1.25)
+
+
 def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
                     establishment_name=None, mentor_name=None, module_number=None):
     """A certificate a pupil would be happy to take home and a school happy to file.
@@ -368,8 +400,13 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
 
     y -= 16 * mm
     c.setFillColor(TEAL_DARK)
-    c.setFont("Times-Bold", 19)
-    c.drawCentredString(w / 2, y, _clean_pdf_text(course_title))
+    # Titles run from "Anger management" to "Moving up: primary-to-secondary and
+    # other school transitions", which is 179mm at 19pt against 162mm of frame.
+    # Shrink to fit, then wrap onto a second line if shrinking alone is not
+    # enough — a certificate goes home and on a wall, so it cannot run off the
+    # edge or drop to unreadable type.
+    title_w = w - 2 * (margin + 3 * mm) - 12 * mm
+    y = _draw_fitted_title(c, w / 2, y, _clean_pdf_text(course_title), title_w)
 
     if module_number:
         y -= 8 * mm
@@ -431,11 +468,22 @@ def certificate_pdf(pupil_name, course_title, issued_date, enrolment_id,
     return path
 
 
-def _wrap(c, text, x, y, max_width, font="Helvetica", size=9, leading=12, color=INK):
+def _wrap(c, text, x, y, max_width, font="Helvetica", size=9, leading=12, color=INK,
+          page_break=None, floor=None):
+    """Draws wrapped text and returns the new y.
+
+    page_break and floor are optional: given both, the text carries onto a new
+    page instead of running past the bottom margin. Without them the behaviour
+    is unchanged, so callers that already guard their own blocks are untouched.
+    """
     c.setFont(font, size)
     c.setFillColor(color)
     lines = simpleSplit(text or "", font, size, max_width)
     for line in lines:
+        if page_break is not None and floor is not None and y < floor:
+            y = page_break()
+            c.setFont(font, size)
+            c.setFillColor(color)
         c.drawString(x, y, line)
         y -= leading
     return y
@@ -930,13 +978,19 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
 
         plan = (course.get("support_plan") or "").strip()
         if plan:
+            # Enough room for the heading and a line or two, or start a page.
+            if y < margin + 30 * mm:
+                y = _page_break()
             c.setFillColor(TEAL_DARK)
             c.setFont("Helvetica-Bold", 9)
             c.drawString(x, y, "Course summary and next steps")
             y -= 5 * mm
             c.setFillColor(INK)
-            y = _wrap(c, plan, x, y, max_width, size=9.5)
+            y = _wrap(c, plan, x, y, max_width, size=9.5,
+                      page_break=_page_break, floor=margin + 16 * mm)
         else:
+            if y < margin + 20 * mm:
+                y = _page_break()
             c.setFillColor(MUTED)
             c.setFont("Helvetica-Oblique", 9.5)
             c.drawString(x, y, "No course summary written for this course yet.")
@@ -947,6 +1001,8 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         # changed, and the second is the question being asked.
         fu = course.get("follow_up")
         if fu:
+            if y < margin + 34 * mm:
+                y = _page_break()
             y -= 1 * mm
             c.setFillColor(TEAL_DARK)
             c.setFont("Helvetica-Bold", 9)
