@@ -9,6 +9,14 @@
     <a class="btn btn-sm {{ 'btn-primary' if status_filter == 'active' else 'btn-secondary' }}" href="{{ pupils_base }}?status=active">Active</a>
     <a class="btn btn-sm {{ 'btn-primary' if status_filter == 'archived' else 'btn-secondary' }}" href="{{ pupils_base }}?status=archived">Archived</a>
   </div>
+  {# Filters in the browser rather than a round trip: a school has a few hundred
+     pupils at most, they are all on the page already, and a mentor looking for
+     one child wants it to narrow as they type. #}
+  <div class="pupils-search">
+    <label class="sr-only" for="pupilSearch">Search pupils</label>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" id="pupilSearch" placeholder="Search by name, year or course" oninput="filterPupils()" autocomplete="off">
+  </div>
   <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil +</a>
 </div>
 
@@ -16,32 +24,114 @@
   {% if not pupil_data %}
     <p class="muted">No {{ status_filter }} pupils yet.{% if status_filter == 'active' %} Add one to get started.{% endif %}</p>
   {% else %}
-  <table>
-    <tr><th>Pupil</th><th>Year</th><th>Courses</th><th></th></tr>
+  <div class="pupils-scroll">
+  <table class="pupils-table">
+    <tr><th>Pupil</th><th class="pt-year">Year</th><th>Courses</th><th class="pt-actions"><span class="sr-only">Actions</span></th></tr>
     {% for item in pupil_data %}
-    <tr>
-      <td><a href="/mentor/pupils/{{ item.pupil.id }}" style="display:flex; align-items:center; gap:10px; text-decoration:none;"><span class="avatar avatar-sm">{{ item.pupil.forename[:1] }}{{ item.pupil.surname[:1] }}</span>{{ item.pupil.forename }} {{ item.pupil.surname }}</a></td>
-      <td>{{ item.pupil.year_group }}</td>
-      <td>
+    {# Searchable text on the row, so the filter can match a course title as
+       well as a name without walking the DOM. #}
+    <tr class="pupil-row" data-search="{{ (item.pupil.forename ~ ' ' ~ item.pupil.surname ~ ' ' ~ (item.pupil.year_group or '') ~ ' ' ~ (item.enrolments | map(attribute='course_title') | join(' '))) | lower }}">
+      <td><a class="pt-name" href="/mentor/pupils/{{ item.pupil.id }}"><span class="avatar avatar-sm">{{ item.pupil.forename[:1] }}{{ item.pupil.surname[:1] }}</span>{{ item.pupil.forename }} {{ item.pupil.surname }}</a></td>
+      <td class="pt-year">{{ item.pupil.year_group }}</td>
+      <td class="pt-courses">
         {% if not item.enrolments %}<span class="muted">Not enrolled</span>{% endif %}
-        {% for e in item.enrolments %}
-          {{ e.course_title }} ({{ e.mentor_name }}{% if e.status != 'active' %}, {{ e.status }}{% endif %}){% if not loop.last %}, {% endif %}
-        {% endfor %}
+        {# Three, then a count. A pupil on twenty courses turned this cell into a
+           paragraph that swallowed the row and made the table unscannable. The
+           full list is on their record, which is one click away. #}
+        <ul class="pt-chips">
+          {% for e in item.enrolments[:3] %}
+          <li class="pt-chip{% if e.status != 'active' %} pt-chip-done{% endif %}">
+            {{ e.course_title }}
+            <span class="pt-chip-meta">{{ e.mentor_name }}{% if e.status != 'active' %} &middot; {{ e.status }}{% endif %}</span>
+          </li>
+          {% endfor %}
+          {% if item.enrolments|length > 3 %}
+          <li class="pt-more"><a href="/mentor/pupils/{{ item.pupil.id }}">+{{ item.enrolments|length - 3 }} more</a></li>
+          {% endif %}
+        </ul>
       </td>
-      <td>
-        <a class="btn btn-secondary btn-sm" href="/mentor/pupils/{{ item.pupil.id }}">View</a>
-        {% if status_filter == 'active' and user.role == 'admin' %}
-        <a class="btn btn-red btn-sm" href="/admin/pupils/{{ item.pupil.id }}/delete">Delete</a>
-        {% endif %}
+      <td class="pt-actions">
+        <div class="pt-buttons">
+          <a class="btn btn-primary btn-sm" href="/mentor/pupils/{{ item.pupil.id }}">View</a>
+          {% if status_filter == 'active' and user.role == 'admin' %}
+          {# Outlined, not filled. Deleting a child's record is permanent, and a
+             solid red button sitting level with View invites the wrong click. #}
+          <a class="btn btn-red-outline btn-sm" href="/admin/pupils/{{ item.pupil.id }}/delete">Delete</a>
+          {% endif %}
+        </div>
       </td>
     </tr>
     {% endfor %}
   </table>
+  </div>
+  <p class="pupils-nomatch" id="pupilsNoMatch" hidden>No pupils match that search.</p>
   {% endif %}
 </div>
+
+<script>
+function filterPupils() {
+  var q = document.getElementById('pupilSearch').value.trim().toLowerCase();
+  var rows = document.querySelectorAll('.pupil-row');
+  var visible = 0;
+  rows.forEach(function (row) {
+    var match = !q || row.getAttribute('data-search').indexOf(q) !== -1;
+    row.hidden = !match;
+    if (match) visible++;
+  });
+  var none = document.getElementById('pupilsNoMatch');
+  if (none) { none.hidden = !(visible === 0 && rows.length > 0); }
+}
+</script>
 
 <style>
 .pupils-bar{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;}
 .pupils-filters{display:flex; gap:8px; flex-wrap:wrap;}
+
+/* Grows into the space between the filters and the add button, so the bar has
+   one thing doing the stretching rather than three fighting over it. */
+.pupils-search{flex:1 1 220px; min-width:0; display:flex; align-items:center; gap:8px;
+  height:var(--ctl-h, 38px); padding:0 12px; background:#fff;
+  border:1.4px solid var(--border); border-radius:9px;}
+.pupils-search svg{width:15px; height:15px; flex-shrink:0; color:var(--muted);}
+.pupils-search input{flex:1; min-width:0; border:none; outline:none; background:none;
+  font-family:inherit; font-size:14px; color:var(--ink);}
+.pupils-search:focus-within{border-color:var(--teal-dark);}
+
+.pupils-scroll{overflow-x:auto;}
+.pupils-table{width:100%; border-collapse:collapse;}
+.pt-name{display:flex; align-items:center; gap:10px; text-decoration:none; white-space:nowrap;}
+.pt-year{white-space:nowrap;}
+.pt-courses{min-width:260px;}
+
+/* Chips, not a sentence. Each course wraps as a whole thing instead of
+   breaking mid-title across three lines. */
+.pt-chips{display:flex; flex-wrap:wrap; gap:6px; list-style:none; margin:0; padding:0;}
+.pt-chip{font-size:12px; line-height:1.35; color:var(--ink); background:#F3F2EC;
+  border-radius:6px; padding:4px 8px;}
+.pt-chip-done{color:var(--muted);}
+.pt-chip-meta{display:block; font-size:11px; color:var(--muted); margin-top:1px;}
+.pt-more{display:flex; align-items:center;}
+.pt-more a{font-size:12px; white-space:nowrap;}
+
+/* 12px between the two, which is the gap used between paired buttons elsewhere
+   in the app. They sit side by side until the column is too narrow. */
+.pt-actions{white-space:nowrap; text-align:right; vertical-align:middle;}
+.pt-buttons{display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap;}
+.pt-buttons .btn{white-space:nowrap;}
+
+/* Outlined destructive action: readable, unmistakably red, and not competing
+   with the primary for the eye. */
+.btn-red-outline{background:#fff; color:#A32D2D; border:1.4px solid #E0B4B4;}
+.btn-red-outline:hover{background:#FBE3DE; border-color:#A32D2D;}
+.btn-red-outline:focus-visible{outline:2px solid #A32D2D; outline-offset:2px;}
+
+.pupils-nomatch{font-size:14px; color:var(--muted); margin:16px 0 0;}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
+
+@media (max-width:700px){
+  .pupils-search{flex-basis:100%; order:3;}
+  .pt-buttons{justify-content:flex-start;}
+}
 </style>
 {% endblock %}
