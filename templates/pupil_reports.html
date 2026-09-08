@@ -33,7 +33,34 @@
           <input type="text" id="pupilFilter" placeholder="Start typing a name" oninput="filterPupilReports()">
         </div>
       </div>
-      <p class="rp-filter-note">A course belongs to the academic year its sessions ran in.</p>
+      {# Own dates alongside the year, as on the other two reports. A head asking
+         for "last half term" should not have to work out which academic year it
+         falls in. #}
+      <form method="get" action="{{ year_action }}" class="ctl-field rp-dates">
+        <span class="ctl-label">Or your own dates</span>
+        <span class="rp-date-row">
+          <input class="ctl" type="date" name="from" id="from" value="{{ date_from or '' }}" aria-label="From">
+          <input class="ctl" type="date" name="to" id="to" value="{{ date_to or '' }}" aria-label="To">
+          <button class="btn btn-secondary btn-sm" type="submit">Apply</button>
+        </span>
+      </form>
+      {% if terms %}
+      <p class="rp-terms">Jump to a term:
+        {% for t in terms %}<button type="button" class="term-chip"
+          data-from="{{ t.date_from }}" data-to="{{ t.date_to }}">{{ t.name }}</button>{% endfor %}
+      </p>
+      <script>
+      document.querySelectorAll('.term-chip').forEach(function (b) {
+        b.addEventListener('click', function () {
+          document.getElementById('from').value = b.dataset.from;
+          document.getElementById('to').value = b.dataset.to;
+        });
+      });
+      </script>
+      {% endif %}
+      <p class="rp-filter-note">A course belongs to the period its sessions ran in, so one
+      spanning two terms shows in both. A pupil with nothing recorded in the period you
+      choose doesn&rsquo;t appear.</p>
     </div>
 
     {% if not pupils %}
@@ -56,7 +83,7 @@
             </p>
           </div>
           <div class="rp-actions">
-            <a class="btn btn-primary btn-sm rp-download" href="/report/pupil/{{ p.id }}/pdf?year={{ selected_year }}" target="_blank" rel="noopener">Download report</a>
+            <a class="btn btn-primary btn-sm rp-download" href="/report/pupil/{{ p.id }}/pdf?year={{ selected_year }}{% if date_from %}&amp;from={{ date_from }}{% endif %}{% if date_to %}&amp;to={{ date_to }}{% endif %}" target="_blank" rel="noopener">Download report</a>
             <a class="rp-open" href="/mentor/pupils/{{ p.id }}">Open record</a>
           </div>
         </div>
@@ -89,6 +116,7 @@
     <div class="card rp-panel">
       <span class="rp-eyebrow">Before you download</span>
       <h2>What a pupil report holds</h2>
+      {% if period %}<p class="rp-period">{{ period }}</p>{% endif %}
       <ul class="rp-includes">
         <li>Every course at this school, whoever mentored it, with dates and progress</li>
         <li>Each session: what happened, the goal the pupil set, the safeguarding note</li>
@@ -122,26 +150,31 @@ function filterPupilReports() {
 .rp-eyebrow{display:block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
   text-transform:uppercase;color:var(--teal-darker);margin-bottom:8px;}
 .rp-head h1{margin:0 0 8px;letter-spacing:-.02em;}
-/* No ch cap: a fixed 64ch wrapped the sentence well short of the container and
-   read as an accident. Bounded by the layout instead, and balanced so the last
-   line is never a single orphaned word. */
 .rp-lede{font-size:14px;line-height:1.6;color:var(--ink);margin:0;max-width:70ch;
   text-wrap:pretty;}
 
 /* ----------------------------------------------------------------- layout -- */
 .rp-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start;}
-/* minmax(0,1fr) rather than 1fr: a grid column's default min-width is auto, so
-   long words in a child force the column wider and squeeze everything else. */
 .rp-main{min-width:0;}
 .rp-aside{min-width:0;position:sticky;top:18px;}
 
 /* ---------------------------------------------------------------- toolbar -- */
 .rp-toolbar{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:16px;}
-/* Heights come from --ctl-h in the stylesheet, so this row can't drift out of
-   step with controls anywhere else. */
 .rp-filter-grow{flex:1 1 240px;}
 .rp-toolbar select.ctl{min-width:150px;}
 .rp-filter-note{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
+.rp-dates{min-width:0;}
+.rp-date-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.rp-date-row .ctl{min-width:150px;}
+.rp-terms{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.term-chip{font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
+  color:var(--teal-darker);background:var(--teal-light);border:1px solid transparent;
+  border-radius:20px;padding:5px 12px;}
+.term-chip:hover{border-color:var(--teal-dark);}
+.term-chip:focus-visible{outline:2px solid var(--teal-dark);outline-offset:2px;}
+.rp-period{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--teal-darker);margin:-6px 0 12px;}
 
 /* ------------------------------------------------------------- pupil card -- */
 .rp-list{display:flex;flex-direction:column;gap:16px;}
@@ -155,7 +188,6 @@ function filterPupilReports() {
 .rp-download{white-space:nowrap;}
 .rp-open{font-size:12px;white-space:nowrap;}
 
-/* The three numbers, ruled off from the prose so they read as data. */
 .rp-stats{display:flex;gap:0;margin:16px 0 0;padding:0;border-top:1px solid var(--border);}
 .rp-stats > div{padding:12px 24px 2px 0;margin-right:24px;border-right:1px solid var(--border);}
 .rp-stats > div:last-child{border-right:none;margin-right:0;padding-right:0;}

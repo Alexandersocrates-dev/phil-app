@@ -4720,12 +4720,18 @@ def mentor_reports_chooser(request):
                   flash=flash_from_query(request))
 
 
-def _pupil_report_list(conn, mentor_id=None, establishment_id=None):
+def _pupil_report_list(conn, mentor_id=None, establishment_id=None,
+                       date_from=None, date_to=None):
     """Pupils, with enough about each to choose whose report you want.
 
     Its own page rather than a button on the mentoring list: that page answers
     "where is everyone up to", this one answers "give me everything on one
     child". Two questions, two pages.
+
+    The period filters on sessions actually delivered in it, the same test the
+    other reports use, so a course spanning two terms appears in both. A pupil
+    with nothing recorded in the period drops off the list entirely — the point
+    of choosing a term is to see who was worked with in it.
     """
     query = """
         SELECT pupils.id, pupils.forename, pupils.surname, pupils.year_group,
@@ -4747,19 +4753,34 @@ def _pupil_report_list(conn, mentor_id=None, establishment_id=None):
         # mentor sees, not which of that pupil's courses are counted: the report
         # itself has always covered the lot, so counting only your own here made
         # the page say "2 courses" and the PDF hand over five.
-        courses = conn.execute(
-            """SELECT e.status, c.title, u.name AS mentor_name,
+        course_sql = """SELECT e.status, c.title, u.name AS mentor_name,
                       (SELECT max(r.date) FROM session_records r WHERE r.enrolment_id = e.id) AS last_session
                FROM enrolments e
                JOIN courses c ON c.id = e.course_id
                LEFT JOIN users u ON u.id = e.mentor_id
-               WHERE e.pupil_id=?""",
-            (p["id"],)).fetchall()
+               WHERE e.pupil_id=?"""
+        course_args = [p["id"]]
+        # _year_filter names the table "enrolments"; this query aliases it "e",
+        # so the same condition is written out rather than reused wrongly.
+        if date_from and date_to:
+            course_sql += (""" AND EXISTS (SELECT 1 FROM session_records sr
+                                           WHERE sr.enrolment_id = e.id
+                                             AND sr.date BETWEEN ? AND ?)""")
+            course_args += [date_from, date_to]
+        courses = conn.execute(course_sql, course_args).fetchall()
         if not courses:
             continue
-        sessions = conn.execute(
-            """SELECT count(*) FROM session_records r JOIN enrolments e ON e.id = r.enrolment_id
-               WHERE e.pupil_id=?""", (p["id"],)).fetchone()[0]
+        session_sql = """SELECT count(*) FROM session_records r
+               JOIN enrolments e ON e.id = r.enrolment_id
+               WHERE e.pupil_id=?"""
+        session_args = [p["id"]]
+        if date_from:
+            session_sql += " AND r.date >= ?"
+            session_args.append(date_from)
+        if date_to:
+            session_sql += " AND r.date <= ?"
+            session_args.append(date_to)
+        sessions = conn.execute(session_sql, session_args).fetchone()[0]
         dates = [c["last_session"] for c in courses if c["last_session"]]
         out.append({
             "id": p["id"],
@@ -4791,11 +4812,15 @@ def mentor_pupil_reports(request):
     conn = db.get_conn()
     try:
         year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
-        pupils = _pupil_report_list(conn, mentor_id=user["id"])
+        d_from, d_to, range_label, terms = chosen_range(request, conn, user["establishment_id"])
+        pupils = _pupil_report_list(conn, mentor_id=user["id"],
+                                     date_from=d_from or y_from, date_to=d_to or y_to)
     finally:
         conn.close()
     return render("pupil_reports.html", user=user, pupils=pupils,
                   years=years, selected_year=year, year_action="/mentor/reports/pupils",
+                  terms=terms, date_from=d_from, date_to=d_to,
+                  period=period_label(year, range_label),
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
                         "done at this school, whoever mentored it, session by session, with "
@@ -4815,11 +4840,16 @@ def admin_pupil_reports(request):
     conn = db.get_conn()
     try:
         year, y_from, y_to, years = chosen_year(request, conn, user["establishment_id"])
-        pupils = _pupil_report_list(conn, establishment_id=user["establishment_id"])
+        d_from, d_to, range_label, terms = chosen_range(request, conn, user["establishment_id"])
+        # Own dates win over the year dropdown, as on the other reports.
+        pupils = _pupil_report_list(conn, establishment_id=user["establishment_id"],
+                                     date_from=d_from or y_from, date_to=d_to or y_to)
     finally:
         conn.close()
     return render("pupil_reports.html", user=user, pupils=pupils,
                   years=years, selected_year=year, year_action="/admin/reports/pupils",
+                  terms=terms, date_from=d_from, date_to=d_to,
+                  period=period_label(year, range_label),
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
                         "done at this school, whoever mentored it, session by session, with "
