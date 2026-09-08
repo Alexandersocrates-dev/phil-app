@@ -111,7 +111,9 @@ def main():
     if not os.path.exists(DB_PATH):
         sys.exit("No database at %s" % DB_PATH)
 
-    stamp = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H-%M-%SZ")
+    # timezone-aware: utcnow() is deprecated and goes away in a later Python,
+    # and this runs unattended, so a warning today is a crash later.
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
     name = "phil-db/phil-%s.db" % stamp
     with tempfile.TemporaryDirectory() as tmp:
         local = os.path.join(tmp, "snapshot.db")
