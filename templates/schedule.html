@@ -63,7 +63,7 @@
                record is the wrong size of tool for it, so the date is editable
                where the mentor is already looking. #}
             {% if i.planned and i.enrolment_id %}
-            <button type="button" class="td-plan td-edit-toggle"
+            <button type="button" class="btn btn-secondary btn-sm td-btn td-edit-toggle"
                     aria-expanded="false"
                     onclick="toggleDateEdit(this)">Change date</button>
             {% endif %}
@@ -72,7 +72,7 @@
         {% if i.planned and i.enrolment_id %}
         <form method="post" class="td-edit" hidden
               action="/mentor/schedule/{{ i.enrolment_id }}/week/{{ i.week_number }}">
-          <input type="hidden" name="back" value="/mentor/todo">
+          <input type="hidden" name="back" value="/mentor/schedule">
           <label class="td-edit-label" for="date-{{ i.enrolment_id }}-{{ i.week_number }}">New date for {{ i.title|lower }}</label>
           <span class="td-edit-row">
             <input class="td-edit-date" type="date" name="planned_date"
@@ -296,17 +296,18 @@
 /* The editor sits under its row rather than inside it: a date input and two
    buttons will not fit in the actions column without squeezing the row above
    into two lines. */
-.td-edit{padding:10px 0 12px 26px; border-bottom:1px solid var(--border);}
-.td-edit-label{display:block; font-size:12px; font-weight:600; color:var(--ink);
-  margin-bottom:6px;}
+.td-edit{margin:0 0 12px 26px; padding:14px 16px; background:#FBF8F2;
+  border:1px solid var(--border); border-left:3px solid var(--teal-dark);
+  border-radius:0 10px 10px 0;}
+.td-edit-label{display:block; font-size:11.5px; font-weight:800; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--teal-darker); margin-bottom:8px;}
 .td-edit-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
 .td-edit-date{font-family:inherit; font-size:14px; padding:7px 10px;
   border:1.4px solid var(--border); border-radius:8px; background:#fff; min-width:160px;}
 .td-edit-date:focus{outline:none; border-color:var(--teal-dark);}
 .td-edit-note{display:block; font-size:12px; line-height:1.5; color:var(--muted);
   margin-top:8px; max-width:60ch;}
-.td-edit-toggle{background:none; border:none; padding:0; cursor:pointer;
-  font-family:inherit;}
+.td-edit-toggle{cursor:pointer;}
 </style>
 <script>
 function toggleDateEdit(el) {

@@ -115,6 +115,51 @@ def uk_date_long(value):
     return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
 
 
+def person_name(value):
+    """Capitalises a name however it was typed, without flattening real ones.
+
+    Schools type names in a hurry: "sharon mcgovern", "JIMMY BULLARD". Plain
+    title case gets the common cases right and the rest wrong — Mcgovern,
+    O'brien, Anne-marie — and those are people's names, so the ones it breaks
+    are the ones that matter.
+
+    A name already containing an interior capital is left exactly as written:
+    if someone typed "McGovern" or "van der Berg", they know better than this
+    function does.
+    """
+    if not value:
+        return ""
+    text = str(value).strip()
+    if not text:
+        return ""
+    # Someone has already cased this deliberately.
+    if any(ch.isupper() for ch in text[1:]) and not text.isupper():
+        return text
+
+    def cap(word):
+        if not word:
+            return word
+        low = word.lower()
+        # Particles stay lower case inside a name: van der Berg, de Souza.
+        if low in ("van", "der", "den", "de", "du", "da", "di", "del", "della",
+                   "la", "le", "bin", "ibn", "of", "the"):
+            return low
+        for prefix in ("mac", "mc", "o'", "d'"):
+            if low.startswith(prefix) and len(low) > len(prefix):
+                rest = low[len(prefix):]
+                return prefix[:-1].capitalize() + prefix[-1] + rest.capitalize() \
+                    if prefix.endswith("'") else prefix.capitalize() + rest.capitalize()
+        return low[0].upper() + low[1:]
+
+    # Split on spaces and hyphens, keeping the hyphens: Anne-Marie, Smith-Jones.
+    out = []
+    for chunk in text.split(" "):
+        out.append("-".join(cap(p) for p in chunk.split("-")))
+    name = " ".join(w for w in out if w)
+    # A particle is only lower case inside a name, never at the start.
+    return name[0].upper() + name[1:] if name else name
+
+
 def year_group(value):
     """"9" as "Year 9", but "Reception" left alone.
 
@@ -148,6 +193,7 @@ def sentence(value):
 
 framework_jinja.filters["sentence"] = sentence
 framework_jinja.filters["year_group"] = year_group
+framework_jinja.filters["person_name"] = person_name
 framework_jinja.filters["uk_date"] = uk_date
 framework_jinja.filters["uk_date_long"] = uk_date_long
 framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
@@ -2209,8 +2255,10 @@ def new_pupil_submit(request):
     blocked = require_active_subscription(user)
     if blocked:
         return blocked
-    forename = request.field("forename", "").strip()
-    surname = request.field("surname", "").strip()
+    # Cased on the way in rather than on display: a certificate, a PDF and a
+    # report all render this name, and only one of them would remember a filter.
+    forename = person_name(request.field("forename", ""))
+    surname = person_name(request.field("surname", ""))
     dob = request.field("date_of_birth", "").strip()
     year_group = request.field("year_group", "").strip()
     form_class = request.field("form_class", "").strip() or None
@@ -3549,9 +3597,9 @@ def reschedule_one_session(request):
         try:
             week = int(request.params["week_number"])
         except (TypeError, ValueError):
-            return with_flash("/mentor/todo", "That session number isn't valid.", "error")
+            return with_flash("/mentor/schedule", "That session number is not valid.", "error")
         new_date = (request.field("planned_date", "") or "").strip()
-        back = request.field("back", "/mentor/todo")
+        back = request.field("back", "/mentor/schedule")
         if not new_date:
             conn.execute("DELETE FROM session_schedule WHERE enrolment_id=? AND week_number=?",
                          (enrolment_id, week))
