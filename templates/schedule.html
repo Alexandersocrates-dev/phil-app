@@ -58,8 +58,33 @@
           <div class="td-actions">
             <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming_sessions', 'coming_reviews'] else 'btn-primary' }} btn-sm td-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
             {% if i.kind == 'session' and not i.planned %}<a class="td-plan" href="{{ i.plan_url }}">Set session dates</a>{% endif %}
+            {# Moving one date is the common change — a session pushed to
+               Friday, a pupil off sick. Rewriting all five on the pupil's
+               record is the wrong size of tool for it, so the date is editable
+               where the mentor is already looking. #}
+            {% if i.planned and i.enrolment_id %}
+            <button type="button" class="td-plan td-edit-toggle"
+                    aria-expanded="false"
+                    onclick="toggleDateEdit(this)">Change date</button>
+            {% endif %}
           </div>
         </div>
+        {% if i.planned and i.enrolment_id %}
+        <form method="post" class="td-edit" hidden
+              action="/mentor/schedule/{{ i.enrolment_id }}/week/{{ i.week_number }}">
+          <input type="hidden" name="back" value="/mentor/todo">
+          <label class="td-edit-label" for="date-{{ i.enrolment_id }}-{{ i.week_number }}">New date for {{ i.title|lower }}</label>
+          <span class="td-edit-row">
+            <input class="td-edit-date" type="date" name="planned_date"
+                   id="date-{{ i.enrolment_id }}-{{ i.week_number }}" value="{{ i.planned }}">
+            <button class="btn btn-primary btn-sm" type="submit">Save</button>
+            <button type="button" class="td-plan" onclick="toggleDateEdit(this)">Cancel</button>
+          </span>
+          <span class="td-edit-note">Courses are designed to run about a week apart.
+          Phil will say so if this one lands well outside that, but won&rsquo;t stop you
+          &mdash; half terms and absences happen.</span>
+        </form>
+        {% endif %}
         {% endfor %}
         {% endfor %}
       </div>
@@ -267,5 +292,32 @@
   .td-btn{flex:1;}
   .td-blurb{margin-left:0;flex-basis:100%;text-align:left;}
 }
+
+/* The editor sits under its row rather than inside it: a date input and two
+   buttons will not fit in the actions column without squeezing the row above
+   into two lines. */
+.td-edit{padding:10px 0 12px 26px; border-bottom:1px solid var(--border);}
+.td-edit-label{display:block; font-size:12px; font-weight:600; color:var(--ink);
+  margin-bottom:6px;}
+.td-edit-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+.td-edit-date{font-family:inherit; font-size:14px; padding:7px 10px;
+  border:1.4px solid var(--border); border-radius:8px; background:#fff; min-width:160px;}
+.td-edit-date:focus{outline:none; border-color:var(--teal-dark);}
+.td-edit-note{display:block; font-size:12px; line-height:1.5; color:var(--muted);
+  margin-top:8px; max-width:60ch;}
+.td-edit-toggle{background:none; border:none; padding:0; cursor:pointer;
+  font-family:inherit;}
 </style>
+<script>
+function toggleDateEdit(el) {
+  var row = el.closest('.td-row') || el.closest('.td-edit').previousElementSibling;
+  var form = el.closest('.td-edit') || row.nextElementSibling;
+  if (!form || !form.classList.contains('td-edit')) { return; }
+  var opening = form.hidden;
+  form.hidden = !opening;
+  var toggle = row.querySelector('.td-edit-toggle');
+  if (toggle) { toggle.setAttribute('aria-expanded', opening ? 'true' : 'false'); }
+  if (opening) { form.querySelector('.td-edit-date').focus(); }
+}
+</script>
 {% endblock %}

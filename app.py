@@ -1918,6 +1918,8 @@ def schedule_for(conn, user, today=None):
             "ahead": ahead(row["planned_date"]),
             "last_label": "",
             "planned": row["planned_date"],
+            "enrolment_id": row["enrolment_id"],
+            "week_number": row["week_number"],
             "action_label": "Open record",
             "action_url": "/mentor/pupils/%s" % row["pupil_id"],
             "plan_url": "/mentor/schedule/%s" % row["enrolment_id"],
@@ -3482,6 +3484,100 @@ def schedule_form(request):
         conn.close()
     return render("schedule_form.html", user=user, enrolment=enrolment, planned=planned,
                   flash=flash_from_query(request))
+
+
+SESSION_GAP_DAYS = 7
+SESSION_GAP_TOLERANCE = 3
+
+
+def _spacing_warning(conn, enrolment_id, week_number, new_date):
+    """A note when a moved session sits oddly against the ones around it.
+
+    Courses are designed to run weekly: close enough together that the pupil
+    remembers the last one, far enough apart to try something in between. A
+    mentor still knows their own timetable better than Phil does, so this
+    warns and never refuses — half terms, absence and exam weeks are all good
+    reasons to break the pattern.
+    """
+    try:
+        moved = datetime.date.fromisoformat(new_date)
+    except (TypeError, ValueError):
+        return None
+    rows = conn.execute(
+        """SELECT week_number, planned_date FROM session_schedule
+           WHERE enrolment_id=? AND planned_date IS NOT NULL AND week_number != ?""",
+        (enrolment_id, week_number)).fetchall()
+    before = [r for r in rows if r["week_number"] < week_number]
+    after = [r for r in rows if r["week_number"] > week_number]
+    notes = []
+    if before:
+        prev = max(before, key=lambda r: r["week_number"])
+        gap = (moved - datetime.date.fromisoformat(prev["planned_date"])).days
+        if gap < 0:
+            notes.append("it now falls before session %d" % prev["week_number"])
+        elif abs(gap - SESSION_GAP_DAYS) > SESSION_GAP_TOLERANCE:
+            notes.append("%d days after session %d" % (gap, prev["week_number"]))
+    if after:
+        nxt = min(after, key=lambda r: r["week_number"])
+        gap = (datetime.date.fromisoformat(nxt["planned_date"]) - moved).days
+        if gap < 0:
+            notes.append("it now falls after session %d" % nxt["week_number"])
+        elif abs(gap - SESSION_GAP_DAYS) > SESSION_GAP_TOLERANCE:
+            notes.append("%d days before session %d" % (gap, nxt["week_number"]))
+    if not notes:
+        return None
+    return ("Saved, but check the spacing: " + ", and ".join(notes) +
+            ". Courses are designed to run about a week apart.")
+
+
+@router.post("/mentor/schedule/<enrolment_id>/week/<week_number>")
+def reschedule_one_session(request):
+    """Moves a single planned session, from wherever it is listed.
+
+    The existing form on the pupil's record rewrites all five dates at once,
+    which is right when planning a course and wrong when a mentor just needs to
+    push Thursday to Friday.
+    """
+    user, err = require(request, roles=["mentor", "admin", "phil_staff"])
+    if err:
+        return err
+    enrolment_id = request.params["enrolment_id"]
+    conn = db.get_conn()
+    try:
+        if not may_access_enrolment(conn, enrolment_id, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        try:
+            week = int(request.params["week_number"])
+        except (TypeError, ValueError):
+            return with_flash("/mentor/todo", "That session number isn't valid.", "error")
+        new_date = (request.field("planned_date", "") or "").strip()
+        back = request.field("back", "/mentor/todo")
+        if not new_date:
+            conn.execute("DELETE FROM session_schedule WHERE enrolment_id=? AND week_number=?",
+                         (enrolment_id, week))
+            conn.commit()
+            return with_flash(back, "Date cleared.", "ok")
+        try:
+            datetime.date.fromisoformat(new_date)
+        except ValueError:
+            return with_flash(back, "That date isn't valid.", "error")
+        warning = _spacing_warning(conn, enrolment_id, week, new_date)
+        # session_schedule has no unique constraint on (enrolment_id, week_number),
+        # so ON CONFLICT would never fire and every save would add a duplicate
+        # row. Delete then insert does what upsert cannot here.
+        conn.execute("DELETE FROM session_schedule WHERE enrolment_id=? AND week_number=?",
+                     (enrolment_id, week))
+        conn.execute(
+            "INSERT INTO session_schedule (enrolment_id, week_number, planned_date) VALUES (?,?,?)",
+            (enrolment_id, week, new_date))
+        db.log_action(conn, user["id"], "session_rescheduled", "enrolment", enrolment_id,
+                      detail="session %d to %s" % (week, new_date))
+        conn.commit()
+    finally:
+        conn.close()
+    if warning:
+        return with_flash(back, warning, "error")
+    return with_flash(back, "Date saved.", "ok")
 
 
 @router.post("/mentor/schedule/<enrolment_id>")
