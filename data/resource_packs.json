@@ -10,35 +10,35 @@
             "cat": "Example",
             "title": "What I was doing before",
             "art": "art-clock",
-            "text": "12:35 - walking back from lunch, normal day.",
+            "text": "12:35 – walking back from lunch, normal day.",
             "note": "Somewhere ordinary"
           },
           {
             "cat": "Example",
             "title": "The first thing that bothered me",
             "art": "art-bump",
-            "text": "12:50 - someone knocked my bag off the desk.",
+            "text": "12:50 – someone knocked my bag off the desk.",
             "note": "The first thing, not the worst"
           },
           {
             "cat": "Example",
             "title": "How it built up",
             "art": "art-too-hard",
-            "text": "12:55 - nobody said sorry. I sat there getting angrier.",
+            "text": "12:55 – nobody said sorry. I sat there getting angrier.",
             "note": "This bit is usually the longest"
           },
           {
             "cat": "Example",
             "title": "What I did",
             "art": "art-stop",
-            "text": "1:05 - kicked the chair over and slammed the door.",
+            "text": "1:05 – kicked the chair over and slammed the door.",
             "note": "Facts only"
           },
           {
             "cat": "Example",
             "title": "What happened after",
             "art": "art-door-exit",
-            "text": "1:10 - sent out, missed the rest of the lesson.",
+            "text": "1:10 – sent out, missed the rest of the lesson.",
             "note": "Including what it cost you"
           }
         ],
@@ -138,7 +138,7 @@
             "cat": "Push",
             "title": "Resistance band",
             "art": "art-texture",
-            "text": "A physical outlet that isn't destructive.",
+            "text": "A physical outlet that is not destructive.",
             "note": "Works for some, not all"
           },
           {
@@ -167,7 +167,7 @@
             "cat": "Question 1",
             "title": "What happened?",
             "art": "art-question",
-            "text": "Work backwards if it's easier.",
+            "text": "Work backwards if it is easier.",
             "note": ""
           },
           {
@@ -202,7 +202,7 @@
             "My early signs",
             "My safe outlet, and where to find it",
             "What happens if an incident still occurs",
-            "How I'll help repair it",
+            "How I will help repair it",
             "Review date"
           ]
         },
@@ -276,7 +276,7 @@
             "cat": "Level 2",
             "title": "Annoyed",
             "art": "art-level-2",
-            "text": "You'd say something if it happened again.",
+            "text": "You would say something if it happened again.",
             "note": "Middle"
           },
           {
@@ -401,21 +401,21 @@
             "cat": "Passive",
             "title": "Says nothing",
             "art": "art-passive",
-            "text": "“It's fine, I guess...”",
+            "text": "“It is fine, I guess...”",
             "note": "What happens next?"
           },
           {
             "cat": "Aggressive",
             "title": "Hits back",
             "art": "art-aggressive",
-            "text": "“This is stupid, I'm not doing it!”",
+            "text": "“This is stupid, I am not doing it!”",
             "note": "What happens next?"
           },
           {
             "cat": "Assertive",
             "title": "Names it calmly",
             "art": "art-assertive",
-            "text": "“I'm finding this frustrating, can I have a minute?”",
+            "text": "“I am finding this frustrating, can I have a minute?”",
             "note": "What happens next?"
           },
           {
@@ -447,12 +447,12 @@
       },
       {
         "name": "Assertive phrase bank",
-        "body": "Say these out loud until they sound like you. Reading them silently isn't practice.",
+        "body": "Say these out loud until they sound like you. Reading them silently is not practice.",
         "tone": "coral",
         "cards": [
           {
             "cat": "Name it",
-            "title": "“I'm finding this really frustrating.”",
+            "title": "“I am finding this really frustrating.”",
             "art": "art-talk",
             "text": "Says the feeling before it says itself.",
             "note": ""
@@ -466,14 +466,14 @@
           },
           {
             "cat": "Disagree",
-            "title": "“I don't agree, but I'm willing to talk about it.”",
+            "title": "“I do not agree, but I am willing to talk about it.”",
             "art": "art-nod",
             "text": "Holds your position without a fight.",
             "note": ""
           },
           {
             "cat": "Withdraw",
-            "title": "“I need some space, I'll come back to this.”",
+            "title": "“I need some space, I will come back to this.”",
             "art": "art-door-exit",
             "text": "Leaving on purpose, not storming off.",
             "note": "Say the second half"
@@ -527,7 +527,7 @@
             "cat": "Scenario",
             "title": "Wrongly blamed",
             "art": "art-blamed",
-            "text": "You're blamed for something you didn't do.",
+            "text": "You are blamed for something you did not do.",
             "note": "Name the feeling first"
           },
           {
@@ -541,7 +541,7 @@
             "cat": "Scenario",
             "title": "Talked over",
             "art": "art-talked-over",
-            "text": "Someone talks over you while you're speaking.",
+            "text": "Someone talks over you while you are speaking.",
             "note": "Name the feeling first"
           }
         ],
@@ -558,9 +558,9 @@
           "items": [
             "Say hello to me at the door, even on a bad day",
             "Notice when I get it right, not only when I get it wrong",
-            "Warn me before something changes, so it isn't a surprise",
+            "Warn me before something changes, so it is not a surprise",
             "Tell me off quietly, not in front of the class",
-            "Ask me what's going on before deciding what happened",
+            "Ask me what is going on before deciding what happened",
             "Let me use my signal instead of having to explain in the moment",
             "Let me take a short break in the place we agreed",
             "Give me a few seconds to answer before asking again",
@@ -628,7 +628,7 @@
             "cat": "Pull",
             "title": "Friends outside school",
             "art": "art-friends-out",
-            "text": "People to be with who aren't here.",
+            "text": "People to be with who are not here.",
             "note": "Pulls me away"
           },
           {
@@ -642,7 +642,7 @@
             "cat": "Push",
             "title": "Avoiding a specific person",
             "art": "art-avoid",
-            "text": "One person you'd rather not run into.",
+            "text": "One person you would rather not run into.",
             "note": "Pushes me away"
           },
           {
@@ -663,7 +663,7 @@
             "cat": "Pull",
             "title": "An unsettled routine at home",
             "art": "art-unsettled",
-            "text": "Mornings that don't work make school harder.",
+            "text": "Mornings that do not work make school harder.",
             "note": "Pulls me away"
           }
         ],
@@ -691,7 +691,7 @@
               ""
             ],
             [
-              "An achievement or target I'm working towards",
+              "An achievement or target I am working towards",
               ""
             ]
           ]
@@ -699,7 +699,7 @@
       },
       {
         "name": "Barrier type card sort",
-        "body": "Which is closest to your biggest barrier? There's no single right answer.",
+        "body": "Which is closest to your biggest barrier? There is no single right answer.",
         "cards": [
           {
             "cat": "Barrier",
@@ -754,7 +754,7 @@
             "cat": "Barrier",
             "title": "Something else",
             "art": "art-something-else",
-            "text": "Not on this list, and that's fine.",
+            "text": "Not on this list, and that is fine.",
             "note": "Pick the closest"
           }
         ],
@@ -762,13 +762,13 @@
       },
       {
         "name": "Barrier-specific action plan template",
-        "body": "Targeting the specific barrier identified - not a generic routine.",
+        "body": "Targeting the specific barrier identified — not a generic routine.",
         "form": {
           "fields": [
             "My specific barrier",
             "What would help",
             "Who needs to be involved",
-            "What I'll try first",
+            "What I will try first",
             "Review date"
           ]
         }
@@ -792,10 +792,10 @@
             },
             {
               "label": "What happens if I miss a step",
-              "eg": "we go back to the last target that worked, we don't start again"
+              "eg": "we go back to the last target that worked, we do not start again"
             },
             {
-              "label": "Who's supporting me",
+              "label": "Who is supporting me",
               "eg": "the person who meets me at reception on Thursday, and Mum in the mornings"
             },
             {
@@ -830,10 +830,10 @@
           },
           {
             "cat": "Act on this",
-            "title": "What's been agreed",
+            "title": "What is been agreed",
             "art": "art-document",
             "text": "The practical change and who is doing it.",
-            "note": "Needs someone's name on it"
+            "note": "Needs someone is name on it"
           }
         ]
       }
@@ -853,7 +853,7 @@
           ],
           "rows": [
             [
-              "\"Vaping is fine, as long as you're not smoking cigarettes.\"",
+              "\"Vaping is fine, as long as you are not smoking cigarettes.\"",
               ""
             ],
             [
@@ -883,7 +883,7 @@
           "note": "Mentor's copy. Cut this off before giving the sheet to the pupil, and reveal it only after they have committed to an answer.",
           "rows": [
             {
-              "statement": "Vaping is fine, as long as you're not smoking cigarettes.",
+              "statement": "Vaping is fine, as long as you are not smoking cigarettes.",
               "answer": "False",
               "why": "Nicotine is riskier for young people than for adults, because the developing brain is more sensitive to its addictive effects. It is against the law to sell vapes to under-18s.",
               "source": "NHS Better Health, Young people and vaping"
@@ -923,7 +923,7 @@
       },
       {
         "name": "Nicotine cycle diagram",
-        "body": "Why cutting down is hard, and why it isn't about willpower.",
+        "body": "Why cutting down is hard, and why it is not about willpower.",
         "tone": "blue",
         "steps": [
           {
@@ -949,28 +949,28 @@
           {
             "title": "Craving builds again",
             "art": "art-craving",
-            "text": "The dip is what drives the next one. That's chemistry, not weakness."
+            "text": "The dip is what drives the next one. That is chemistry, not weakness."
           }
         ],
         "source": "The nicotine dependence cycle described in NHS smoking-cessation guidance. Simplified for a school audience."
       },
       {
         "name": "Where am I now scale",
-        "body": "Pick the line that's closest to true today. There's no wrong answer here. Write it down, and take it again in week five.",
+        "body": "Pick the line that is closest to true today. There is no wrong answer here. Write it down, and take it again in week five.",
         "tone": "blue",
         "cards": [
           {
             "cat": "1",
             "title": "Never tried it",
             "art": "art-level-1",
-            "text": "I haven't vaped.",
+            "text": "I have not vaped.",
             "note": "Nothing to change"
           },
           {
             "cat": "2",
             "title": "Tried it once or twice",
             "art": "art-level-2",
-            "text": "I've had a go, but that's all.",
+            "text": "I have had a go, but that is all.",
             "note": "Worth knowing your triggers"
           },
           {
@@ -991,7 +991,7 @@
             "cat": "5",
             "title": "Hard to go without",
             "art": "art-level-5",
-            "text": "I notice when I haven't.",
+            "text": "I notice when I have not.",
             "note": "Ask for help, not just willpower"
           }
         ],
@@ -1009,7 +1009,7 @@
               ""
             ],
             [
-              "What's true about that today",
+              "What is true about that today",
               "",
               ""
             ]
@@ -1077,9 +1077,9 @@
           },
           {
             "cat": "Worth saying",
-            "title": "Naming isn't doing",
+            "title": "Naming is not doing",
             "art": "art-brain",
-            "text": "Naming a trigger doesn't mean acting on it.",
+            "text": "Naming a trigger does not mean acting on it.",
             "note": "It just makes it visible"
           }
         ]
@@ -1091,7 +1091,7 @@
         "cards": [
           {
             "cat": "Script",
-            "title": "“No thanks, I'm cutting back.”",
+            "title": "“No thanks, I am cutting back.”",
             "art": "art-talk",
             "text": "Gives a reason without an argument.",
             "note": "Works with people you know"
@@ -1105,16 +1105,16 @@
           },
           {
             "cat": "Script",
-            "title": "“I'm good, thanks.”",
+            "title": "“I am good, thanks.”",
             "art": "art-thumb",
             "text": "No reason offered, and none needed.",
-            "note": "You don't owe an explanation"
+            "note": "You do not owe an explanation"
           },
           {
             "cat": "Script",
             "title": "“Maybe later.”",
             "art": "art-hourglass",
-            "text": "Then simply don't come back to it.",
+            "text": "Then simply do not come back to it.",
             "note": "Buys time without a scene"
           }
         ]
@@ -1135,28 +1135,28 @@
             "cat": "Scenario",
             "title": "Offered at a party",
             "art": "art-join",
-            "text": "Someone you don't know well offers you one.",
+            "text": "Someone you do not know well offers you one.",
             "note": "Harder: you want to fit in"
           },
           {
             "cat": "Scenario",
             "title": "“Just try it”",
             "art": "art-talked-over",
-            "text": "Someone insists after you've said no.",
-            "note": "Repeat the same words, don't escalate"
+            "text": "Someone insists after you have said no.",
+            "note": "Repeat the same words, do not escalate"
           },
           {
             "cat": "Scenario",
             "title": "Nowhere to go",
             "art": "art-corridor",
-            "text": "Offered somewhere you can't easily leave.",
+            "text": "Offered somewhere you cannot easily leave.",
             "note": "Plan an exit before you need one"
           }
         ]
       },
       {
         "name": "Reduction strategy cards",
-        "body": "Pick one to try this week. One that happens beats three that don't.",
+        "body": "Pick one to try this week. One that happens beats three that do not.",
         "tone": "green",
         "cards": [
           {
@@ -1205,7 +1205,7 @@
       },
       {
         "name": "Habit-swap prompt card",
-        "body": "Fill these in together, in the pupil's own words. A swap they chose is one they'll use.",
+        "body": "Fill these in together, in the pupil's own words. A swap they chose is one they will use.",
         "tone": "teal",
         "table": {
           "headers": [
@@ -1247,7 +1247,7 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "What gets shared onward, and what doesn't.",
+        "body": "What gets shared onward, and what does not.",
         "tone": "blue",
         "cards": [
           {
@@ -1261,7 +1261,7 @@
             "cat": "Shared",
             "title": "The review date",
             "art": "art-calendar",
-            "text": "So the follow-up doesn't depend on one adult.",
+            "text": "So the follow-up does not depend on one adult.",
             "note": ""
           },
           {
@@ -1315,7 +1315,7 @@
       },
       {
         "name": "What is a young carer? briefing card",
-        "body": "Say this plainly and early. Many young carers don't use the term about themselves.",
+        "body": "Say this plainly and early. Many young carers do not use the term about themselves.",
         "tone": "teal",
         "cards": [
           {
@@ -1344,7 +1344,7 @@
             "title": "A recognised role",
             "art": "art-stand",
             "text": "Not a secret, and nothing to be ashamed of.",
-            "note": "Support exists that doesn't take over"
+            "note": "Support exists that does not take over"
           }
         ],
         "source": "The statutory definition in section 96 of the Children and Families Act 2014, which counts practical or emotional support for anyone in the same family, and gives a young carer the right to a needs assessment whatever the level of care. Worded for a school audience."
@@ -1356,7 +1356,7 @@
           "headers": [
             "Caring",
             "School",
-            "Time that's yours"
+            "Time that is yours"
           ],
           "rows": [
             [
@@ -1394,7 +1394,7 @@
       },
       {
         "name": "Weekly activity card set",
-        "body": "Sort each into caring, school, or time that's yours. Build the real week, not an ideal one.",
+        "body": "Sort each into caring, school, or time that is yours. Build the real week, not an ideal one.",
         "tone": "amber",
         "cards": [
           {
@@ -1516,7 +1516,7 @@
       },
       {
         "name": "My support network map",
-        "body": "Who's around me, and who could I go to?",
+        "body": "Who is around me, and who could I go to?",
         "table": {
           "headers": [
             "Person or service",
@@ -1568,7 +1568,7 @@
             "cat": "Any time",
             "title": "Childline",
             "art": "art-message",
-            "text": "0800 1111. Free, and it won't show on the bill.",
+            "text": "0800 1111. Free, and it will not show on the bill.",
             "note": "Day or night"
           },
           {
@@ -1589,7 +1589,7 @@
             "cat": "Say this",
             "title": "Nothing changes without you",
             "art": "art-stand",
-            "text": "Getting support doesn't take the caring role away.",
+            "text": "Getting support does not take the caring role away.",
             "note": "The fear that stops most referrals"
           }
         ],
@@ -1690,21 +1690,21 @@
             "cat": "1",
             "title": "Uncomfortable",
             "art": "art-unsettled",
-            "text": "I'd rather this part wasn't there.",
+            "text": "I would rather this part was not there.",
             "note": "Worth looking at"
           },
           {
             "cat": "2",
             "title": "Neutral",
             "art": "art-level",
-            "text": "It's just part of the day.",
+            "text": "It is just part of the day.",
             "note": ""
           },
           {
             "cat": "3",
             "title": "Good",
             "art": "art-thumb",
-            "text": "I'd miss this if it went.",
+            "text": "I would miss this if it went.",
             "note": "Not everything online is a problem"
           }
         ]
@@ -1739,7 +1739,7 @@
       },
       {
         "name": "What counts as cyberbullying briefing card",
-        "body": "It isn't only nasty comments. Sort these together into 'this counts' and 'this doesn't'.",
+        "body": "It is not only nasty comments. Sort these together into 'this counts' and 'this does not'.",
         "tone": "amber",
         "cards": [
           {
@@ -1774,8 +1774,8 @@
             "cat": "Why different",
             "title": "It follows you home",
             "art": "art-door-exit",
-            "text": "There's no end of the school day.",
-            "note": "That's what makes it heavier"
+            "text": "There is no end of the school day.",
+            "note": "That is what makes it heavier"
           }
         ]
       },
@@ -1830,7 +1830,7 @@
             "title": "“Something's been bothering me online.”",
             "art": "art-talk",
             "text": "Vague on purpose — you can stop there.",
-            "note": "Good when you're not ready for detail"
+            "note": "Good when you are not ready for detail"
           },
           {
             "cat": "Opener",
@@ -1841,7 +1841,7 @@
           },
           {
             "cat": "Opener",
-            "title": "“This happened and I'm not sure what to do.”",
+            "title": "“This happened and I am not sure what to do.”",
             "art": "art-fork",
             "text": "Asks for help without asking for action.",
             "note": "Keeps you in control"
@@ -1851,7 +1851,7 @@
             "title": "“I need to tell you something.”",
             "art": "art-stand",
             "text": "Direct. Buys you their full attention.",
-            "note": "Use when it's serious"
+            "note": "Use when it is serious"
           }
         ]
       },
@@ -1871,7 +1871,7 @@
             "cat": "Scenario",
             "title": "Left out of a chat",
             "art": "art-apart",
-            "text": "You find out there's a group you're not in.",
+            "text": "You find out there is a group you are not in.",
             "note": "Hard to explain — practise it"
           },
           {
@@ -1895,9 +1895,9 @@
         "body": "My plan, agreed with my mentor.",
         "form": {
           "fields": [
-            "Privacy steps I'll keep in place",
+            "Privacy steps I will keep in place",
             "My screen time or bedtime boundary",
-            "Who I'd go to if something happened",
+            "Who I would go to if something happened",
             "Review date"
           ]
         },
@@ -1905,7 +1905,7 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "What gets shared onward, and what doesn't.",
+        "body": "What gets shared onward, and what does not.",
         "tone": "blue",
         "cards": [
           {
@@ -1919,7 +1919,7 @@
             "cat": "Shared",
             "title": "The review date",
             "art": "art-calendar",
-            "text": "So the follow-up doesn't rest on one adult.",
+            "text": "So the follow-up does not rest on one adult.",
             "note": ""
           },
           {
@@ -1962,7 +1962,7 @@
             "cat": "1",
             "title": "Very calm",
             "art": "art-level-1",
-            "text": "Exams aren't on my mind.",
+            "text": "Exams are not on my mind.",
             "note": ""
           },
           {
@@ -1976,21 +1976,21 @@
             "cat": "3",
             "title": "Noticeably stressed",
             "art": "art-level-3",
-            "text": "I'm thinking about it a lot.",
+            "text": "I am thinking about it a lot.",
             "note": "Still workable"
           },
           {
             "cat": "4",
             "title": "Very stressed",
             "art": "art-level-4",
-            "text": "It's affecting sleep or eating.",
+            "text": "It is affecting sleep or eating.",
             "note": "Tell someone"
           },
           {
             "cat": "5",
             "title": "Overwhelmed",
             "art": "art-level-5",
-            "text": "I can't revise at all.",
+            "text": "I cannot revise at all.",
             "note": "Needs an adult today"
           }
         ],
@@ -2007,7 +2007,7 @@
               ""
             ],
             [
-              "What's driving it",
+              "What is driving it",
               "",
               ""
             ]
@@ -2043,16 +2043,16 @@
         "cards": [
           {
             "cat": "The thought",
-            "title": "“If I fail this, everything's ruined.”",
+            "title": "“If I fail this, everything is ruined.”",
             "art": "art-thoughts",
             "text": "Fairer: one result rarely decides everything. There are routes past a bad grade.",
             "note": "All-or-nothing"
           },
           {
             "cat": "The thought",
-            "title": "“It has to be perfect or it's pointless.”",
+            "title": "“It has to be perfect or it is pointless.”",
             "art": "art-too-hard",
-            "text": "Fairer: good enough is still good. Perfect isn't on the mark scheme.",
+            "text": "Fairer: good enough is still good. Perfect is not on the mark scheme.",
             "note": "Sets an impossible bar"
           },
           {
@@ -2109,7 +2109,7 @@
       },
       {
         "name": "Revision session length guide",
-        "body": "A routine you'll actually keep beats a better one you won't.",
+        "body": "A routine you will actually keep beats a better one you will not.",
         "tone": "green",
         "steps": [
           {
@@ -2125,7 +2125,7 @@
           {
             "title": "Repeat, then stop",
             "art": "art-level",
-            "text": "Two or three rounds is a good session. More isn't better."
+            "text": "Two or three rounds is a good session. More is not better."
           },
           {
             "title": "Rest is in the plan",
@@ -2157,7 +2157,7 @@
             "cat": "During",
             "title": "A short phrase",
             "art": "art-agreed-word",
-            "text": "One line you've chosen in advance.",
+            "text": "One line you have chosen in advance.",
             "note": "Write it on the front of your pencil case"
           },
           {
@@ -2165,13 +2165,13 @@
             "title": "Start anywhere",
             "art": "art-fork",
             "text": "Answer any question you can. Momentum returns.",
-            "note": "Don't sit staring at question one"
+            "note": "Do not sit staring at question one"
           }
         ]
       },
       {
         "name": "Breathing technique guide",
-        "body": "Practise this now, in the room. It has to be familiar before it's needed.",
+        "body": "Practise this now, in the room. It has to be familiar before it is needed.",
         "tone": "teal",
         "steps": [
           {
@@ -2192,7 +2192,7 @@
           {
             "title": "Four or five times",
             "art": "art-level",
-            "text": "Any more and you'll feel light-headed."
+            "text": "Any more and you will feel light-headed."
           }
         ],
         "source": "Paced breathing with a longer out-breath, in common clinical and pastoral use."
@@ -2212,7 +2212,7 @@
       },
       {
         "name": "Copy for pastoral file",
-        "body": "What gets shared onward, and what doesn't.",
+        "body": "What gets shared onward, and what does not.",
         "tone": "blue",
         "cards": [
           {
@@ -2267,7 +2267,7 @@
             "cat": "3",
             "title": "Too much",
             "art": "art-overload",
-            "text": "I can't think past it.",
+            "text": "I cannot think past it.",
             "note": "This is what the toolkit is for"
           }
         ],
@@ -2397,7 +2397,7 @@
       },
       {
         "name": "Difficult environments card",
-        "body": "These stack several demands at once. That's why it isn't the lesson that's hard.",
+        "body": "These stack several demands at once. That is why it is not the lesson that is hard.",
         "tone": "amber",
         "cards": [
           {
@@ -2426,14 +2426,14 @@
             "title": "Naming helps",
             "art": "art-locate",
             "text": "Naming the hardest moments makes them plannable.",
-            "note": "You can't plan around a vague bad day"
+            "note": "You cannot plan around a vague bad day"
           }
         ],
         "source": "The environments named here follow NICE CG170 recommendation 1.1.9, which asks schools and services to take the physical environment into account and minimise its impact, considering individual sensitivities to noise, lighting and personal space."
       },
       {
         "name": "Sensory toolkit options card",
-        "body": "These are aids, not treats. They shouldn't be earned or removed as a sanction.",
+        "body": "These are aids, not treats. They should not be earned or removed as a sanction.",
         "tone": "green",
         "cards": [
           {
@@ -2518,7 +2518,7 @@
           {
             "title": "Staff acknowledge",
             "art": "art-nod",
-            "text": "A nod, or whatever you've agreed. No questions in front of the class."
+            "text": "A nod, or whatever you have agreed. No questions in front of the class."
           },
           {
             "title": "Go",
@@ -2534,7 +2534,7 @@
       },
       {
         "name": "Role-play scenario cards",
-        "body": "Practise the signal in each of these, so the first real use isn't the first attempt.",
+        "body": "Practise the signal in each of these, so the first real use is not the first attempt.",
         "tone": "coral",
         "cards": [
           {
@@ -2583,7 +2583,7 @@
       },
       {
         "name": "Copy for SENCO or pastoral file",
-        "body": "What gets shared onward, and what it does and doesn't replace.",
+        "body": "What gets shared onward, and what it does and does not replace.",
         "tone": "blue",
         "cards": [
           {
@@ -2618,7 +2618,7 @@
     "items": [
       {
         "name": "Grief feeling word cards",
-        "body": "Pick any that have felt true recently. You don't have to explain why, and you can pick none.",
+        "body": "Pick any that have felt true recently. You do not have to explain why, and you can pick none.",
         "tone": "pink",
         "cards": [
           {
@@ -2647,7 +2647,7 @@
             "title": "Relieved",
             "art": "art-rise",
             "text": "Especially after a long illness.",
-            "note": "Doesn't mean you loved them less"
+            "note": "Does not mean you loved them less"
           },
           {
             "cat": "Feeling",
@@ -2661,14 +2661,14 @@
             "title": "Confused",
             "art": "art-confused",
             "text": "Not sure what you feel.",
-            "note": "That's an answer too"
+            "note": "That is an answer too"
           },
           {
             "cat": "Feeling",
             "title": "Okay sometimes",
             "art": "art-thumb",
             "text": "Laughing, enjoying things.",
-            "note": "Doesn't undo the grief"
+            "note": "Does not undo the grief"
           },
           {
             "cat": "Feeling",
@@ -2681,19 +2681,19 @@
       },
       {
         "name": "Grief isn't one feeling briefing card",
-        "body": "For the mentor to say out loud, early. Most young people think they're grieving wrongly.",
+        "body": "For the mentor to say out loud, early. Most young people think they are grieving wrongly.",
         "tone": "teal",
         "cards": [
           {
             "cat": "True",
-            "title": "It isn't only sadness",
+            "title": "It is not only sadness",
             "art": "art-thoughts",
             "text": "Anger, numbness, guilt and relief are all part of it.",
             "note": ""
           },
           {
             "cat": "True",
-            "title": "There's no order",
+            "title": "There is no order",
             "art": "art-tangle",
             "text": "No stages to work through, no timeline to be behind.",
             "note": "Stages are a myth"
@@ -2702,14 +2702,14 @@
             "cat": "True",
             "title": "Happiness is allowed",
             "art": "art-thumb",
-            "text": "Ordinary good moments don't mean you're not grieving.",
+            "text": "Ordinary good moments do not mean you are not grieving.",
             "note": "Guilt about this is very common"
           },
           {
             "cat": "True",
             "title": "Everyone's differs",
             "art": "art-apart",
-            "text": "Yours won't look like anyone else's.",
+            "text": "Yours will not look like anyone else's.",
             "note": "Including your family's"
           }
         ]
@@ -2751,10 +2751,10 @@
       },
       {
         "name": "Private note template",
-        "body": "A note you keep. Your mentor won't read it or file it — unless something in it worries them about your safety, and they'd tell you who they have to speak to.",
+        "body": "A note you keep. Your mentor will not read it or file it — unless something in it worries them about your safety, and they would tell you who they have to speak to.",
         "form": {
           "fields": [
-            "Something I'm feeling today",
+            "Something I am feeling today",
             "Something I miss",
             "Something I want to say"
           ]
@@ -2767,14 +2767,14 @@
           "fields": [
             "People I want to be near",
             "Activities that help",
-            "It's okay to ask for a quieter day"
+            "It is okay to ask for a quieter day"
           ]
         },
         "share": true
       },
       {
         "name": "Anniversary planning card",
-        "body": "Hard dates arrive whether or not you've thought about them. A small plan helps.",
+        "body": "Hard dates arrive whether or not you have thought about them. A small plan helps.",
         "tone": "amber",
         "cards": [
           {
@@ -2782,7 +2782,7 @@
             "title": "Birthdays",
             "art": "art-cake",
             "text": "Theirs, and sometimes yours.",
-            "note": "Decide in advance what you'll do"
+            "note": "Decide in advance what you will do"
           },
           {
             "cat": "Expected",
@@ -2810,7 +2810,7 @@
       },
       {
         "name": "Memory box list template",
-        "body": "Things I'd want to remember.",
+        "body": "Things I would want to remember.",
         "table": {
           "headers": [
             "Memory or item",
@@ -2834,12 +2834,12 @@
       },
       {
         "name": "Letter-writing prompt card",
-        "body": "Only if you'd like to. This isn't filed and isn't read — unless something in it worries your mentor about your safety, and they'd tell you who they have to speak to.",
+        "body": "Only if you would like to. This is not filed and is not read — unless something in it worries your mentor about your safety, and they would tell you who they have to speak to.",
         "tone": "teal",
         "table": {
           "headers": [
             "Prompt",
-            "What I'd write"
+            "What I would write"
           ],
           "rows": [
             [
@@ -2851,7 +2851,7 @@
               ""
             ],
             [
-              "Something I want you to know I'm doing…",
+              "Something I want you to know I am doing…",
               ""
             ],
             [
@@ -2875,7 +2875,7 @@
       },
       {
         "name": "Bereavement support services info card",
-        "body": "Five weeks is rarely enough for grief. These are here for after, and there's no wrong time to use them.",
+        "body": "Five weeks is rarely enough for grief. These are here for after, and there is no wrong time to use them.",
         "tone": "green",
         "cards": [
           {
@@ -2966,21 +2966,21 @@
       },
       {
         "name": "What makes a relationship feel safe? briefing card",
-        "body": "The test isn't whether someone is nice to you. It's these four.",
+        "body": "The test is not whether someone is nice to you. It is these four.",
         "tone": "green",
         "cards": [
           {
             "cat": "Safe",
             "title": "Equal say",
             "art": "art-level",
-            "text": "Mutual respect. Decisions aren't one-sided.",
+            "text": "Mutual respect. Decisions are not one-sided.",
             "note": ""
           },
           {
             "cat": "Safe",
             "title": "No secrets from people who care",
             "art": "art-talk",
-            "text": "Nothing you'd have to hide from family or friends.",
+            "text": "Nothing you would have to hide from family or friends.",
             "note": "Secrecy is the clearest warning sign"
           },
           {
@@ -3029,7 +3029,7 @@
             "cat": "Tactic",
             "title": "Secrets",
             "art": "art-hide",
-            "text": "“Don't tell your mum, she wouldn't get it.”",
+            "text": "“Do not tell your mum, she would not get it.”",
             "note": "The line that gives it away"
           }
         ]
@@ -3044,7 +3044,7 @@
             "title": "Attention feels flattering",
             "art": "art-rise",
             "text": "Before it feels controlling.",
-            "note": "That's the design, not a failing"
+            "note": "That is the design, not a failing"
           },
           {
             "cat": "Why",
@@ -3071,7 +3071,7 @@
       },
       {
         "name": "My strengths and values worksheet",
-        "body": "What matters to me, and what I'm proud of.",
+        "body": "What matters to me, and what I am proud of.",
         "table": {
           "headers": [
             "My strengths",
@@ -3100,14 +3100,14 @@
         "cards": [
           {
             "cat": "Script",
-            "title": "“No, I'm not doing that.”",
+            "title": "“No, I am not doing that.”",
             "art": "art-stand",
             "text": "Plain and final.",
-            "note": "Repeat it, don't expand it"
+            "note": "Repeat it, do not expand it"
           },
           {
             "cat": "Script",
-            "title": "“I'm not comfortable with this.”",
+            "title": "“I am not comfortable with this.”",
             "art": "art-unsettled",
             "text": "Names how you feel, not what they did.",
             "note": "Harder to argue with"
@@ -3123,7 +3123,7 @@
             "cat": "Remember",
             "title": "No reason required",
             "art": "art-hand-heart",
-            "text": "You don't have to justify a no.",
+            "text": "You do not have to justify a no.",
             "note": "Not to anyone, ever"
           }
         ]
@@ -3137,7 +3137,7 @@
             "cat": "Scenario",
             "title": "Asked to keep a secret",
             "art": "art-hide",
-            "text": "“Don't tell anyone about this.”",
+            "text": "“Do not tell anyone about this.”",
             "note": "Which script fits?"
           },
           {
@@ -3151,7 +3151,7 @@
             "cat": "Scenario",
             "title": "Pressured to go somewhere",
             "art": "art-transport",
-            "text": "Somewhere you don't know, with people you don't.",
+            "text": "Somewhere you do not know, with people you do not.",
             "note": "Plan the exit first"
           },
           {
@@ -3194,7 +3194,7 @@
       },
       {
         "name": "Reporting routes information card",
-        "body": "Fill in the name before this session ends. A role isn't a person.",
+        "body": "Fill in the name before this session ends. A role is not a person.",
         "tone": "blue",
         "cards": [
           {
@@ -3209,7 +3209,7 @@
             "title": "Childline — 0800 1111",
             "art": "art-helpline",
             "text": "Free, confidential, day or night.",
-            "note": "Doesn't show on a phone bill"
+            "note": "Does not show on a phone bill"
           },
           {
             "cat": "Urgent",
@@ -3274,8 +3274,8 @@
             "cat": "Useful",
             "title": "Name the specific worry",
             "art": "art-locate",
-            "text": "A named worry can be planned for. A vague one can't.",
-            "note": "That's this week's job"
+            "text": "A named worry can be planned for. A vague one cannot.",
+            "note": "That is this week's job"
           }
         ]
       },
@@ -3321,7 +3321,7 @@
       },
       {
         "name": "Starting a conversation prompt cards",
-        "body": "Pick two you'd actually say. Short openers need short answers, which is easier for both of you.",
+        "body": "Pick two you would actually say. Short openers need short answers, which is easier for both of you.",
         "tone": "green",
         "cards": [
           {
@@ -3342,7 +3342,7 @@
             "cat": "Opener",
             "title": "“Have you played this?”",
             "art": "art-join",
-            "text": "Games, shows, sport — anything you're into.",
+            "text": "Games, shows, sport — anything you are into.",
             "note": "Finds people like you"
           },
           {
@@ -3356,14 +3356,14 @@
       },
       {
         "name": "Joining a club or group ideas card",
-        "body": "A shared activity gives you a reason to talk. That's easier than talking for its own sake.",
+        "body": "A shared activity gives you a reason to talk. That is easier than talking for its own sake.",
         "tone": "green",
         "cards": [
           {
             "cat": "Why",
             "title": "A built-in reason",
             "art": "art-join",
-            "text": "You're there for the thing, not to make friends.",
+            "text": "You are there for the thing, not to make friends.",
             "note": "Takes the pressure off"
           },
           {
@@ -3371,7 +3371,7 @@
             "title": "Weeks, not days",
             "art": "art-hourglass",
             "text": "Friendships take longer than the first fortnight.",
-            "note": "That's normal, not failure"
+            "note": "That is normal, not failure"
           },
           {
             "cat": "Allowed",
@@ -3410,7 +3410,7 @@
           },
           {
             "cat": "Thought",
-            "title": "“I don't have to know everything yet.”",
+            "title": "“I do not have to know everything yet.”",
             "art": "art-agreed-word",
             "text": "Nobody does in week one.",
             "note": "Including the confident ones"
@@ -3424,9 +3424,9 @@
         "form": {
           "fields": [
             "My go-to person is…",
-            "Where I'd find them…",
+            "Where I would find them…",
             "My go-to place is…",
-            "If I can't find them, I will…"
+            "If I cannot find them, I will…"
           ]
         }
       },
@@ -3455,7 +3455,7 @@
           },
           {
             "cat": "Shared",
-            "title": "What they'd want known",
+            "title": "What they would want known",
             "art": "art-talk",
             "text": "One sentence, chosen by the pupil, for a new teacher.",
             "note": "The most useful line on the page"
@@ -3517,7 +3517,7 @@
           {
             "title": "Recovery",
             "art": "art-fall",
-            "text": "Coming down. It takes far longer than it took to go up, and it's easy to set off again."
+            "text": "Coming down. It takes far longer than it took to go up, and it is easy to set off again."
           },
           {
             "title": "After",
@@ -3707,7 +3707,7 @@
             "title": "Go to my safe space",
             "art": "art-door-exit",
             "text": "Go to the place you agreed with staff, and stay until it settles.",
-            "note": "Come back when you're ready"
+            "note": "Come back when you are ready"
           },
           {
             "cat": "Body",
@@ -3734,7 +3734,7 @@
             "cat": "People",
             "title": "Talk to my trusted adult",
             "art": "art-talk",
-            "text": "Find the adult you named and tell them how you're feeling.",
+            "text": "Find the adult you named and tell them how you are feeling.",
             "note": "Name them in advance"
           }
         ],
@@ -3764,7 +3764,7 @@
           {
             "title": "Come back",
             "art": "art-return-seat",
-            "text": "Return when you're ready, or after the agreed time."
+            "text": "Return when you are ready, or after the agreed time."
           }
         ],
         "tone": "teal",
@@ -3782,7 +3782,7 @@
             "cat": "Question 1",
             "title": "What happened?",
             "art": "art-question",
-            "text": "Their version. Don't correct it.",
+            "text": "Their version. Do not correct it.",
             "note": ""
           },
           {
@@ -3796,7 +3796,7 @@
             "cat": "Question 3",
             "title": "Who has been affected, and how?",
             "art": "art-apart",
-            "text": "Often the first time they've considered this.",
+            "text": "Often the first time they have considered this.",
             "note": ""
           },
           {
@@ -3823,7 +3823,7 @@
             "cat": "Scenario",
             "title": "Waiting your turn",
             "art": "art-hourglass",
-            "text": "You're told to wait your turn.",
+            "text": "You are told to wait your turn.",
             "note": "Name the feeling first"
           },
           {
@@ -3844,14 +3844,14 @@
             "cat": "Scenario",
             "title": "Redoing your work",
             "art": "art-redo",
-            "text": "You're asked to redo your work.",
+            "text": "You are asked to redo your work.",
             "note": "Name the feeling first"
           },
           {
             "cat": "Scenario",
             "title": "Sharing something",
             "art": "art-share",
-            "text": "You're asked to share something of yours.",
+            "text": "You are asked to share something of yours.",
             "note": "Name the feeling first"
           }
         ],
@@ -3888,9 +3888,9 @@
           "items": [
             "Say hello to me at the door, even on a bad day",
             "Notice when I get it right, not only when I get it wrong",
-            "Warn me before something changes, so it isn't a surprise",
+            "Warn me before something changes, so it is not a surprise",
             "Tell me off quietly, not in front of the class",
-            "Ask me what's going on before deciding what happened",
+            "Ask me what is going on before deciding what happened",
             "Let me use my signal instead of having to explain in the moment",
             "Let me take a short break in the place we agreed",
             "Give me a few seconds to answer before asking again",
@@ -3913,7 +3913,7 @@
         "checklist": {
           "items": [
             "Ask for the toilet and take the long way back",
-            "Use my signal so I don't have to explain",
+            "Use my signal so I do not have to explain",
             "Go to the agreed place without asking",
             "Put my head down and say nothing until it passes",
             "Move seats, away from the person",
@@ -3925,7 +3925,7 @@
           "fields": [
             "Where I go",
             "Who I tell",
-            "What I do if that person isn't there"
+            "What I do if that person is not there"
           ]
         },
         "share": true
@@ -3951,7 +3951,7 @@
             "cat": "School rule",
             "title": "Follow instructions first time",
             "art": "art-instruction",
-            "text": "Do what's asked without needing it repeated.",
+            "text": "Do what is asked without needing it repeated.",
             "note": "Sort me"
           },
           {
@@ -3984,7 +3984,7 @@
           },
           {
             "cat": "School rule",
-            "title": "Hand up, don't call out",
+            "title": "Hand up, do not call out",
             "art": "art-raise-card",
             "text": "Raise your hand and wait to be asked.",
             "note": "Sort me"
@@ -3993,7 +3993,7 @@
             "cat": "School rule",
             "title": "Respect others' space",
             "art": "art-space",
-            "text": "Don't touch other people or their belongings.",
+            "text": "Do not touch other people or their belongings.",
             "note": "Sort me"
           }
         ],
@@ -4041,42 +4041,42 @@
             "cat": "Scenario",
             "title": "Told to move seats",
             "art": "art-move-seat",
-            "text": "You're told to move to a different seat.",
+            "text": "You are told to move to a different seat.",
             "note": "Two outcomes"
           },
           {
             "cat": "Scenario",
             "title": "Asked for your phone",
             "art": "art-phone-off",
-            "text": "You're asked to hand in your phone.",
+            "text": "You are asked to hand in your phone.",
             "note": "Two outcomes"
           },
           {
             "cat": "Scenario",
             "title": "Told to stop talking",
             "art": "art-stop",
-            "text": "You're told to stop talking.",
+            "text": "You are told to stop talking.",
             "note": "Two outcomes"
           },
           {
             "cat": "Scenario",
             "title": "Asked to redo work",
             "art": "art-redo",
-            "text": "You're asked to redo work more neatly.",
+            "text": "You are asked to redo work more neatly.",
             "note": "Two outcomes"
           },
           {
             "cat": "Scenario",
             "title": "Told to wait",
             "art": "art-hourglass",
-            "text": "You're told to wait your turn.",
+            "text": "You are told to wait your turn.",
             "note": "Two outcomes"
           },
           {
             "cat": "Scenario",
             "title": "Asked to tidy up",
             "art": "art-bin",
-            "text": "You're asked to tidy up.",
+            "text": "You are asked to tidy up.",
             "note": "Two outcomes"
           }
         ],
@@ -4155,7 +4155,7 @@
             "cat": "Short term",
             "title": "You feel worse afterwards",
             "art": "art-fall",
-            "text": "Embarrassment or regret once it's over.",
+            "text": "Embarrassment or regret once it is over.",
             "note": "Common, rarely mentioned"
           },
           {
@@ -4176,14 +4176,14 @@
             "cat": "Longer term",
             "title": "You get a say next time",
             "art": "art-talk",
-            "text": "Adults negotiate more with pupils who don't refuse everything.",
+            "text": "Adults negotiate more with pupils who do not refuse everything.",
             "note": "Real, if slow"
           },
           {
             "cat": "Worth noticing",
             "title": "You can disagree and comply",
             "art": "art-fork",
-            "text": "Doing it now doesn't mean you agreed with it.",
+            "text": "Doing it now does not mean you agreed with it.",
             "note": "The most useful card here"
           }
         ]
@@ -4194,18 +4194,18 @@
         "aliases": [
           "First/then visual cue cards"
         ],
-        "body": "What to do in the three seconds after you're asked to do something.",
+        "body": "What to do in the three seconds after you are asked to do something.",
         "tone": "teal",
         "steps": [
           {
             "title": "Hear it",
             "art": "art-listen",
-            "text": "Stop what you're doing and look at them."
+            "text": "Stop what you are doing and look at them."
           },
           {
             "title": "Pause",
             "art": "art-countdown",
-            "text": "Count to three in your head. Nobody else can tell you're doing it."
+            "text": "Count to three in your head. Nobody else can tell you are doing it."
           },
           {
             "title": "Choose",
@@ -4221,7 +4221,7 @@
         "table": {
           "headers": [
             "An instruction I get a lot",
-            "What I'll do in the pause"
+            "What I will do in the pause"
           ],
           "rows": [
             [
@@ -4238,7 +4238,7 @@
             ]
           ]
         },
-        "note": "The pause is the whole skill. Everything else follows from it"
+        "note": "The pause is the whole skill. Everything else follows from it."
       },
       {
         "name": "Assertive disagreement script card",
@@ -4249,22 +4249,22 @@
             "cat": "Example",
             "title": "Being moved seats",
             "art": "art-move-seat",
-            "text": "“I don't want to move because I can't see the board from there. Can I move somewhere else instead?”",
+            "text": "“I do not want to move because I cannot see the board from there. Can I move somewhere else instead?”",
             "note": "Reason, then alternative"
           },
           {
             "cat": "Example",
             "title": "Being told to stop",
             "art": "art-stop",
-            "text": "“I don't want to stop now because I'm nearly finished. Can I have two more minutes?”",
+            "text": "“I do not want to stop now because I am nearly finished. Can I have two more minutes?”",
             "note": "Asks for something specific"
           },
           {
             "cat": "Example",
             "title": "Not understanding",
             "art": "art-confused",
-            "text": "“I don't understand this instruction. Can you explain it a different way?”",
-            "note": "Disagreeing isn't always refusing"
+            "text": "“I do not understand this instruction. Can you explain it a different way?”",
+            "note": "Disagreeing is not always refusing"
           }
         ],
         "table": {
@@ -4336,7 +4336,7 @@
       {
         "name": "How am I right now? chart",
         "slug": "how-am-i-right-now-chart",
-        "body": "Pick the one closest to today. There's no right one to be in. Write it down, and take it again in week five.",
+        "body": "Pick the one closest to today. There is no right one to be in. Write it down, and take it again in week five.",
         "selectable": true,
         "tone": "teal",
         "cards": [
@@ -4366,7 +4366,7 @@
             "title": "Shut down",
             "art": "art-tired",
             "text": "Flat, tired, switched off, nothing feels worth it.",
-            "note": "Something small and doable. Fresh air, one easy task"
+            "note": "Something small and doable. Fresh air, one easy task."
           }
         ],
         "source": "Plain-language states used in UK pastoral practice. Not based on any branded self-regulation framework.",
@@ -4399,7 +4399,7 @@
             "cat": "Emotion",
             "title": "Frustrated",
             "art": "art-tangle",
-            "text": "Things aren't working and it's building up.",
+            "text": "Things are not working and it is building up.",
             "note": "Which one is this?"
           },
           {
@@ -4427,7 +4427,7 @@
             "cat": "Emotion",
             "title": "Disappointed",
             "art": "art-fall",
-            "text": "You hoped for something and it didn't come.",
+            "text": "You hoped for something and it did not come.",
             "note": "Which one is this?"
           },
           {
@@ -4441,7 +4441,7 @@
             "cat": "Emotion",
             "title": "Content",
             "art": "art-level",
-            "text": "Nothing's wrong, and that's enough.",
+            "text": "Nothing is wrong, and that is enough.",
             "note": "Which one is this?"
           },
           {
@@ -4564,7 +4564,7 @@
         "body": "My emotional toolkit, to share with my class teacher.",
         "form": {
           "fields": [
-            "How I am when I'm calm, unsettled, overwhelmed and shut down",
+            "How I am when I am calm, unsettled, overwhelmed and shut down",
             "Where I first notice it in my body",
             "My top 3 grounding techniques",
             "Who can help me, and where to find them",
@@ -4588,7 +4588,7 @@
             "cat": "Question 1",
             "title": "What happened?",
             "art": "art-question",
-            "text": "Collect it, don't test it.",
+            "text": "Collect it, do not test it.",
             "note": ""
           },
           {
@@ -4693,7 +4693,7 @@
             "cat": "Example",
             "title": "Being left out",
             "art": "art-apart",
-            "text": "“I felt left out when I wasn't invited, and I need to know why.”",
+            "text": "“I felt left out when I was not invited, and I need to know why.”",
             "note": ""
           },
           {
@@ -4861,7 +4861,7 @@
       },
       {
         "name": "Quick-fire question card",
-        "body": "Your sheet to read from, not one to hand over - the game needs the questions to be a surprise. Practice at catching the gap between wanting to speak and speaking, not a test of what they know.",
+        "body": "Your sheet to read from, not one to hand over — the game needs the questions to be a surprise. Practice at catching the gap between wanting to speak and speaking, not a test of what they know.",
         "table": {
           "headers": [
             "Round one",
@@ -4990,7 +4990,7 @@
             "cat": "Helps",
             "title": "Notice the effort",
             "art": "art-thumb",
-            "text": "A quiet word when they manage it does more than a correction when they don't.",
+            "text": "A quiet word when they manage it does more than a correction when they do not.",
             "note": ""
           }
         ]
@@ -5072,10 +5072,10 @@
       },
       {
         "name": "Avoidance ladder template",
-        "body": "Six things you'd get out of if you could, the easiest at the top. Look at the examples, then fill in your own. A first step is always smaller than the thing itself.",
+        "body": "Six things you would get out of if you could, the easiest at the top. Look at the examples, then fill in your own. A first step is always smaller than the thing itself.",
         "table": {
           "headers": [
-            "What you'd avoid",
+            "What you would avoid",
             "A first step towards it",
             "How hard, 1-10"
           ],
@@ -5160,7 +5160,7 @@
               ""
             ],
             [
-              "What if it's too hard?",
+              "What if it is too hard?",
               ""
             ]
           ]
@@ -5211,7 +5211,7 @@
             "My next 2-3 ladder steps",
             "My support at each step",
             "My grounding technique",
-            "Who to contact if I'm struggling",
+            "Who to contact if I am struggling",
             "Review date"
           ]
         },
@@ -5267,14 +5267,14 @@
             "cat": "Trigger",
             "title": "Task feels too hard",
             "art": "art-too-hard",
-            "text": "You can't see a way into it.",
+            "text": "You cannot see a way into it.",
             "note": "Rank me"
           },
           {
             "cat": "Trigger",
             "title": "Task feels too easy",
             "art": "art-too-easy",
-            "text": "There's nothing in it to hold you.",
+            "text": "There is nothing in it to hold you.",
             "note": "Rank me"
           },
           {
@@ -5300,9 +5300,9 @@
           },
           {
             "cat": "Trigger",
-            "title": "Don't understand the instructions",
+            "title": "Do not understand the instructions",
             "art": "art-confused",
-            "text": "You missed the start and didn't ask.",
+            "text": "You missed the start and did not ask.",
             "note": "Rank me"
           },
           {
@@ -5367,23 +5367,23 @@
           },
           {
             "cat": "Example",
-            "title": "Writing you don't know how to start",
+            "title": "Writing you do not know how to start",
             "art": "art-document",
             "text": "1. Write the title. 2. Write one sentence, even a bad one. 3. Add two more. 4. Read it back and fix one thing.",
             "note": "A bad first sentence still counts"
           },
           {
             "cat": "Example",
-            "title": "Work you've fallen behind on",
+            "title": "Work you have fallen behind on",
             "art": "art-behind",
-            "text": "1. Find out exactly what's missing. 2. Pick the shortest one. 3. Do that one today. 4. Ask about the rest tomorrow.",
+            "text": "1. Find out exactly what is missing. 2. Pick the shortest one. 3. Do that one today. 4. Ask about the rest tomorrow.",
             "note": "Shortest first, not most important"
           }
         ]
       },
       {
         "name": "Goal-mapping worksheet",
-        "body": "Three things: what you want, the subject that gets you closer to it, and one thing you'll do differently this week.",
+        "body": "Three things: what you want, the subject that gets you closer to it, and one thing you will do differently this week.",
         "table": {
           "headers": [
             "Question",
@@ -5403,7 +5403,7 @@
               ""
             ],
             [
-              "One thing I'll do differently this week",
+              "One thing I will do differently this week",
               ""
             ]
           ]
@@ -5442,9 +5442,9 @@
           },
           {
             "cat": "Ask",
-            "title": "What's different about them?",
+            "title": "What is different about them?",
             "art": "art-listen",
-            "text": "What do they do that others don't?",
+            "text": "What do they do that others do not?",
             "note": "The most useful answer here"
           },
           {
@@ -5501,7 +5501,7 @@
           },
           {
             "cat": "Wording",
-            "title": "“I don't think that's fair — can you explain why?”",
+            "title": "“I do not think that is fair — can you explain why?”",
             "art": "art-talk",
             "text": "Asks rather than accuses.",
             "note": "Leaves them room to answer"
@@ -5532,15 +5532,15 @@
             "cat": "Question 2",
             "title": "What were you thinking at the time?",
             "art": "art-body-signals",
-            "text": "Explains it. Doesn't excuse it.",
-            "note": "Don't argue with the answer"
+            "text": "Explains it. Does not excuse it.",
+            "note": "Do not argue with the answer"
           },
           {
             "cat": "Question 3",
             "title": "What have you thought about since?",
             "art": "art-thoughts",
             "text": "The one that changes things.",
-            "note": "Wait. Don't fill the silence"
+            "note": "Wait. Do not fill the silence."
           },
           {
             "cat": "Question 4",
@@ -5554,12 +5554,12 @@
             "title": "What would put this right?",
             "art": "art-repair",
             "text": "One thing each.",
-            "note": "Something you'd actually do"
+            "note": "Something you would actually do"
           }
         ],
         "steps": [
           {
-            "title": "Before: check it's wanted",
+            "title": "Before: check it is wanted",
             "art": "art-fork",
             "text": "Both people have to be willing, and either can say no without it counting against them. A conversation someone was made to attend is not a restorative one."
           },
@@ -5571,7 +5571,7 @@
           {
             "title": "After: check it held",
             "art": "art-calendar",
-            "text": "Agree a day to check back, and do it. Whatever was agreed is either happening a week later or it isn't, and only asking finds out."
+            "text": "Agree a day to check back, and do it. Whatever was agreed is either happening a week later or it is not, and only asking finds out."
           }
         ],
         "source": "The five restorative questions as set out by the Restorative Justice Council. Sits within EEF, Improving Behaviour in Schools (2019), recommendation 5, on tailoring targeted approaches to individual pupils, and DfE, Behaviour in Schools (February 2024)."
@@ -5672,7 +5672,7 @@
             "cat": "Barrier",
             "title": "Feeling different",
             "art": "art-odd-one",
-            "text": "Like you don't fit the group you're in.",
+            "text": "Like you do not fit the group you are in.",
             "note": "Rank me"
           },
           {
@@ -5700,7 +5700,7 @@
             "cat": "Barrier",
             "title": "Worried about saying the wrong thing",
             "art": "art-worry-words",
-            "text": "You replay it before you've said it.",
+            "text": "You replay it before you have said it.",
             "note": "Rank me"
           },
           {
@@ -5714,7 +5714,7 @@
             "cat": "Barrier",
             "title": "Low confidence",
             "art": "art-low-conf",
-            "text": "You assume they'd rather you weren't there.",
+            "text": "You assume they would rather you were not there.",
             "note": "Rank me"
           },
           {
