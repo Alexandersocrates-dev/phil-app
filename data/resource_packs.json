@@ -401,21 +401,21 @@
             "cat": "Passive",
             "title": "Says nothing",
             "art": "art-passive",
-            "text": "“It is fine, I guess...”",
+            "text": "“It's fine, I guess...”",
             "note": "What happens next?"
           },
           {
             "cat": "Aggressive",
             "title": "Hits back",
             "art": "art-aggressive",
-            "text": "“This is stupid, I am not doing it!”",
+            "text": "“This is stupid, I'm not doing it!”",
             "note": "What happens next?"
           },
           {
             "cat": "Assertive",
             "title": "Names it calmly",
             "art": "art-assertive",
-            "text": "“I am finding this frustrating, can I have a minute?”",
+            "text": "“I'm finding this frustrating, can I have a minute?”",
             "note": "What happens next?"
           },
           {
@@ -452,7 +452,7 @@
         "cards": [
           {
             "cat": "Name it",
-            "title": "“I am finding this really frustrating.”",
+            "title": "“I'm finding this really frustrating.”",
             "art": "art-talk",
             "text": "Says the feeling before it says itself.",
             "note": ""
@@ -466,14 +466,14 @@
           },
           {
             "cat": "Disagree",
-            "title": "“I do not agree, but I am willing to talk about it.”",
+            "title": "“I don't agree, but I'm willing to talk about it.”",
             "art": "art-nod",
             "text": "Holds your position without a fight.",
             "note": ""
           },
           {
             "cat": "Withdraw",
-            "title": "“I need some space, I will come back to this.”",
+            "title": "“I need some space, I'll come back to this.”",
             "art": "art-door-exit",
             "text": "Leaving on purpose, not storming off.",
             "note": "Say the second half"
@@ -853,7 +853,7 @@
           ],
           "rows": [
             [
-              "\"Vaping is fine, as long as you are not smoking cigarettes.\"",
+              "\"Vaping is fine, as long as you aren't smoking cigarettes.\"",
               ""
             ],
             [
@@ -1091,7 +1091,7 @@
         "cards": [
           {
             "cat": "Script",
-            "title": "“No thanks, I am cutting back.”",
+            "title": "“No thanks, I'm cutting back.”",
             "art": "art-talk",
             "text": "Gives a reason without an argument.",
             "note": "Works with people you know"
@@ -1105,7 +1105,7 @@
           },
           {
             "cat": "Script",
-            "title": "“I am good, thanks.”",
+            "title": "“I'm good, thanks.”",
             "art": "art-thumb",
             "text": "No reason offered, and none needed.",
             "note": "You do not owe an explanation"
@@ -1739,7 +1739,7 @@
       },
       {
         "name": "What counts as cyberbullying briefing card",
-        "body": "It is not only nasty comments. Sort these together into 'this counts' and 'this does not'.",
+        "body": "It is not only nasty comments. Sort these together into 'this counts' and 'this doesn't'.",
         "tone": "amber",
         "cards": [
           {
@@ -1841,7 +1841,7 @@
           },
           {
             "cat": "Opener",
-            "title": "“This happened and I am not sure what to do.”",
+            "title": "“This happened and I'm not sure what to do.”",
             "art": "art-fork",
             "text": "Asks for help without asking for action.",
             "note": "Keeps you in control"
@@ -2050,7 +2050,7 @@
           },
           {
             "cat": "The thought",
-            "title": "“It has to be perfect or it is pointless.”",
+            "title": "“It has to be perfect or it's pointless.”",
             "art": "art-too-hard",
             "text": "Fairer: good enough is still good. Perfect is not on the mark scheme.",
             "note": "Sets an impossible bar"
@@ -3029,7 +3029,7 @@
             "cat": "Tactic",
             "title": "Secrets",
             "art": "art-hide",
-            "text": "“Do not tell your mum, she would not get it.”",
+            "text": "“Don't tell your mum, she wouldn't get it.”",
             "note": "The line that gives it away"
           }
         ]
@@ -3100,14 +3100,14 @@
         "cards": [
           {
             "cat": "Script",
-            "title": "“No, I am not doing that.”",
+            "title": "“No, I'm not doing that.”",
             "art": "art-stand",
             "text": "Plain and final.",
             "note": "Repeat it, do not expand it"
           },
           {
             "cat": "Script",
-            "title": "“I am not comfortable with this.”",
+            "title": "“I'm not comfortable with this.”",
             "art": "art-unsettled",
             "text": "Names how you feel, not what they did.",
             "note": "Harder to argue with"
@@ -3137,7 +3137,7 @@
             "cat": "Scenario",
             "title": "Asked to keep a secret",
             "art": "art-hide",
-            "text": "“Do not tell anyone about this.”",
+            "text": "“Don't tell anyone about this.”",
             "note": "Which script fits?"
           },
           {
@@ -3410,7 +3410,7 @@
           },
           {
             "cat": "Thought",
-            "title": "“I do not have to know everything yet.”",
+            "title": "“I don't have to know everything yet.”",
             "art": "art-agreed-word",
             "text": "Nobody does in week one.",
             "note": "Including the confident ones"
@@ -4249,21 +4249,21 @@
             "cat": "Example",
             "title": "Being moved seats",
             "art": "art-move-seat",
-            "text": "“I do not want to move because I cannot see the board from there. Can I move somewhere else instead?”",
+            "text": "“I don't want to move because I can't see the board from there. Can I move somewhere else instead?”",
             "note": "Reason, then alternative"
           },
           {
             "cat": "Example",
             "title": "Being told to stop",
             "art": "art-stop",
-            "text": "“I do not want to stop now because I am nearly finished. Can I have two more minutes?”",
+            "text": "“I don't want to stop now because I'm nearly finished. Can I have two more minutes?”",
             "note": "Asks for something specific"
           },
           {
             "cat": "Example",
             "title": "Not understanding",
             "art": "art-confused",
-            "text": "“I do not understand this instruction. Can you explain it a different way?”",
+            "text": "“I don't understand this instruction. Can you explain it a different way?”",
             "note": "Disagreeing is not always refusing"
           }
         ],
@@ -4693,7 +4693,7 @@
             "cat": "Example",
             "title": "Being left out",
             "art": "art-apart",
-            "text": "“I felt left out when I was not invited, and I need to know why.”",
+            "text": "“I felt left out when I wasn't invited, and I need to know why.”",
             "note": ""
           },
           {
@@ -5501,7 +5501,7 @@
           },
           {
             "cat": "Wording",
-            "title": "“I do not think that is fair — can you explain why?”",
+            "title": "“I don't think that's fair — can you explain why?”",
             "art": "art-talk",
             "text": "Asks rather than accuses.",
             "note": "Leaves them room to answer"

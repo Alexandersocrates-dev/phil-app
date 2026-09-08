@@ -25,8 +25,8 @@ module.exports = [
         "checkin": "1. Ask 'how has your week been, one to five?' and show the mood scale card.\n2. Whatever the number, ask what made it that rather than one higher or lower.\n3. Do not discuss any incidents yet — this is about building rapport first.\n4. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
         "input": "1. Show the aggression cycle diagram and read the five phases aloud: trigger, escalation, crisis, recovery, after.\n2. Ask: 'which of those five do you notice first?' Most say crisis — by then it has already happened.\n3. Explain that escalation is the only phase where anything they do still works, and it has physical signs: fists, breathing, pacing.\n4. Check they have got it: 'so which phase is the one worth spotting?' If they say crisis, go back over the diagram before moving on.",
         "activity": "1. Show the body map and read its question aloud. Pupil ticks where they feel it.\n2. Ask: 'what does it feel like in those places?' Note their words in the box below.\n3. Ask: 'can you tell me about a time it got physical recently?' Walk that one round the cycle together: trigger, escalation, crisis, recovery, after.\n4. Ask: 'where in that story was the escalation phase?' That is the check — if they can place it in their own incident, they have it.",
-        "reflect": "1. Ask: 'do you know the first thing your body does when you are heading for trouble?'\n2. If they know it, pupil watches for that one this week. If they do not, they look out for whatever comes first and tell you next session.",
-        "lookfor": "Watch for minimisation ('I was not even angry') or shutdown. If the pupil cannot discuss a specific incident yet, use a hypothetical scenario instead.",
+        "reflect": "1. Ask: 'do you know the first thing your body does when you're heading for trouble?'\n2. If they know it, pupil watches for that one this week. If they do not, they look out for whatever comes first and tell you next session.",
+        "lookfor": "Watch for minimisation ('I wasn't even angry') or shutdown. If the pupil cannot discuss a specific incident yet, use a hypothetical scenario instead.",
         "resources": [
           "Mood scale card",
           "Aggression cycle diagram",
@@ -113,7 +113,7 @@ module.exports = [
         "checkin": "1. Show the mood scale card again and ask for a number, as in week one.\n2. Ask: 'is that different from where you were in week one?'\n3. If the number has not moved, that is still worth discussing — progress is not always a rating.",
         "input": "1. Ask: 'what has made the biggest difference for you across our sessions?'\n2. Ask: 'if you got angry now, how would you react?'\n3. Get out the calm-down strategy cards and ask which two they would actually use.",
         "activity": "1. Get out everything from the earlier sessions: the trigger list, the body map, the getting out card and the staff help list.\n2. What are my triggers? Look back at the trigger list and pick the ones that still happen.\n3. What are my early warning signs? Use the body map to find the first thing they feel.\n4. How do I get out before it escalates? Use the getting out card — where they go, and who they tell.\n5. How can staff help me? Go through the list together and tick the ones that would actually make a difference.\n6. What happens after an incident, and how does it get put right? Agree it now, while nobody is upset.\n7. Now write all of that into the hot and cold plan, and set a review date.",
-        "reflect": "1. Ask: 'what is one thing you are more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is going.",
+        "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is going.",
         "lookfor": "Agree the follow-up chat (e.g. three weeks later) rather than ending support abruptly, sustained change needs follow-up, not a single course.",
         "resources": [
           "Mood scale card",
@@ -201,7 +201,7 @@ module.exports = [
           "Choices game scenario cards",
           "Possible outcome cards"
         ],
-        "home": "Notice one choice-and-consequence moment together this week ('if we leave now, we will not be late') and keep it factual, not a lecture.",
+        "home": "Notice one choice-and-consequence moment together this week ('if we leave now, we won't be late') and keep it factual, not a lecture.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -234,7 +234,7 @@ module.exports = [
         "title": "When I disagree",
         "objective": "Pupil can practise disagreeing assertively rather than defiantly.",
         "checkin": "1. Ask: 'how did the focus instruction go this week?'\n2. Ask: 'did you use the pause at all?'\n3. If they did not, ask what happened instead — that is the material for today.",
-        "input": "1. Take one thing they get told to do and do not want to — being moved seats, say.\n2. Say the flat refusal out loud, the way it usually comes out: 'no, and I am not explaining why'.\n3. Now say the other version: 'I do not want to move because I cannot see the board from there. Can I stay and turn my chair round?'\n4. Ask: 'which of those two is more likely to get you what you actually want?'\n5. Say plainly that this is not about giving in — it is about being harder to say no to.",
+        "input": "1. Take one thing they get told to do and do not want to — being moved seats, say.\n2. Say the flat refusal out loud, the way it usually comes out: 'no, and I'm not explaining why'.\n3. Now say the other version: 'I don't want to move because I can't see the board from there. Can I stay and turn my chair round?'\n4. Ask: 'which of those two is more likely to get you what you actually want?'\n5. Say plainly that this is not about giving in — it is about being harder to say no to.",
         "activity": "1. Get out the assertive disagreement script card.\n2. Pupil writes two situations they would want to push back on into the blank rows, with what they could say instead.\n3. Role-play the first one: you give the instruction, they answer using their own words.\n4. Do the second, then one they have not written, so it is not just reading.\n5. Ask: 'would you actually say that to a teacher?' If not, reword it together.",
         "reflect": "1. Ask: 'which felt easier, your usual answer or the new one?'\n2. Pupil agrees one lesson this week to try the new version, even once.",
         "lookfor": "This is a genuinely hard skill under real stress, praise any attempt, even an imperfect one.",
@@ -319,7 +319,7 @@ module.exports = [
           "How am I right now? chart",
           "Emotion word cards"
         ],
-        "home": "Try asking 'how are you right now?' instead of 'what is wrong?' this week, it can feel easier to answer.",
+        "home": "Try asking 'how are you right now?' instead of 'what's wrong?' this week, it can feel easier to answer.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -400,7 +400,7 @@ module.exports = [
         "checkin": "1. Get out the 'How am I right now?' chart and ask: 'which is closest to today — calm, unsettled, overwhelmed, or shut down?' Pupil picks one.\n2. Ask: 'is that different from where you were in week one?'\n3. Ask: 'what put you there today?' Then: 'would that same thing have put you somewhere worse in week one?'",
         "input": "1. Ask: 'if you could only keep one thing from this course, which would it be?' Their earlier sheets are in this step if they need reminding.\n2. That answer goes at the top of their toolkit page.",
         "activity": "1. Get out the body map and the grounding technique cards from the earlier sessions.\n2. Fill in the toolkit together from what they have already chosen: how they are when they are calm, unsettled, overwhelmed and shut down, where they feel it first, and the three techniques they rated highest.\n3. Ask: 'who at school could help, and where would you find them?' That is the one part they have not decided yet.\n4. Set a review date. Agree it with your line manager, then share the finished toolkit with the class teacher.",
-        "reflect": "1. Ask: 'what can you do now that you could not do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what can you do now that you couldn't do in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure the toolkit language is also understood by relevant class staff, so it is reinforced outside sessions.",
         "resources": [
           "How am I right now? chart",
@@ -455,7 +455,7 @@ module.exports = [
         "title": "What is going on between us",
         "objective": "Pupil can describe a conflict from their own perspective, real or made up, without starting from blame.",
         "checkin": "1. Start with something unrelated — what they are into, how the week went.\n2. Say plainly that today is not about deciding who was in the wrong.\n3. A pupil who thinks they are on trial will give you nothing useful.\n4. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
-        "input": "1. Ask: 'is there a fall-out with someone that is still on your mind?'\n2. If nothing comes, use a smaller one, or make one up. It works the same.\n3. Show the restorative question prompt card.",
+        "input": "1. Ask: 'is there a fall-out with someone that's still on your mind?'\n2. If nothing comes, use a smaller one, or make one up. It works the same.\n3. Show the restorative question prompt card.",
         "activity": "1. Say you will not be correcting their answers.\n2. Read the four questions aloud, then work through them one at a time on the situation from the input.\n3. Leave a silence after each — the first answer is rarely the full one.\n4. Note what they say in the box below, in their words, without taking sides.",
         "reflect": "1. Ask: 'if the other person could understand one thing about your side, what would it be?'\n2. Tell them to hold on to that — you will come back to it next week.",
         "lookfor": "Keep this session focused on the pupil's own experience — perspective-taking on the other party comes later, so do not rush it. A made-up fall-out does the job as well as a real one; the structure is what is being learnt, and a pupil with nothing recent is not a session without content.",
@@ -476,7 +476,7 @@ module.exports = [
         "objective": "Pupil can articulate at least one plausible perspective of the other person involved.",
         "checkin": "1. Ask what they have thought about since last week's questions.\n2. Ask whether they have spoken to the other person since.\n3. If they have, ask how it went. If not, do not push — that is this week's work.",
         "input": "1. Explain perspective-taking as a question, not an instruction to agree: if I were them, what might I have been thinking?\n2. Model it first with a neutral example — someone who did not reply to a message.\n3. Make clear that understanding why someone acted is not the same as saying it was fine.\n4. Say what is coming next: the same fall-out as last week, but answering as the other person.",
-        "activity": "1. Get out the perspective-taking worksheet.\n2. Take the same fall-out as last week, or a made-up one if that is still too raw.\n3. Ask: 'if you were them, what do you think you would have been thinking?' Pupil fills that into the perspective-taking worksheet.\n4. Ask: 'and how do you think they were feeling?' Add that too.\n5. Make clear this is not agreeing with them — it is working out what was going on for them.",
+        "activity": "1. Get out the perspective-taking worksheet.\n2. Take the same fall-out as last week, or a made-up one if that is still too raw.\n3. Ask: 'if you were them, what do you think you'd have been thinking?' Pupil fills that into the perspective-taking worksheet.\n4. Ask: 'and how do you think they were feeling?' Add that too.\n5. Make clear this is not agreeing with them — it is working out what was going on for them.",
         "reflect": "1. Ask: 'was there anything surprising about looking at it from their side?'\n2. If nothing was, ask: 'what do you still think they got wrong?' Both answers are useful.",
         "lookfor": "This is often the hardest skill in the module, do not expect full empathy immediately, partial attempts are progress.",
         "resources": [
@@ -497,8 +497,8 @@ module.exports = [
         "objective": "Pupil can identify which role or roles were played in a bullying dynamic and what each role needs.",
         "checkin": "1. Ask: 'what surprised you about seeing the situation from the other side?'\n2. If nothing did, ask what they still disagree with — that is just as useful.",
         "input": "1. Name the four roles out loud: target, instigator, bystander, defender.\n2. Explain that most people move between these rather than being one of them.\n3. Avoid labelling the pupil. The point is that roles change, which means they can be chosen.",
-        "activity": "1. Ask: 'thinking about something that is happened this term, which of these four roles were you?'\n2. Pupil marks that role on the handout.\n3. Ask: 'what would someone in that role need — to feel safe, to get help, or a way to stop?' Pupil writes that in the next column.\n4. Ask: 'have you ever been one of the other roles too?' Most people have. Fill in a row for each one they name.",
-        "reflect": "1. Ask: 'if that same thing happened again next week, what is one thing that would help you?'\n2. Pupil names that one thing, and who they would need to tell for it to happen.",
+        "activity": "1. Ask: 'thinking about something that's happened this term, which of these four roles were you?'\n2. Pupil marks that role on the handout.\n3. Ask: 'what would someone in that role need — to feel safe, to get help, or a way to stop?' Pupil writes that in the next column.\n4. Ask: 'have you ever been one of the other roles too?' Most people have. Fill in a row for each one they name.",
+        "reflect": "1. Ask: 'if that same thing happened again next week, what's one thing that would help you?'\n2. Pupil names that one thing, and who they would need to tell for it to happen.",
         "lookfor": "Be alert to safeguarding disclosures in this session and follow your school's reporting procedure if anything raises concern.",
         "resources": [
           "Roles-in-bullying handout"
@@ -516,7 +516,7 @@ module.exports = [
         "title": "Sorting it out",
         "objective": "Pupil can build an 'I statement' about a real fall-out and rehearse it until they would say it.",
         "checkin": "1. Ask: 'what did you decide about your own part in it last week?'\n2. Ask: 'if that fall-out happened again tomorrow, what would help?'\n3. Write that answer down — it feeds into the plan in week five.",
-        "input": "1. Take the fall-out they have been working on for the last two weeks.\n2. Say the blaming version out loud, the way it usually comes out: 'you always leave me out, you are such a liar'.\n3. Show the I statement card and say the same thing from it: 'I felt left out when I was not invited, and I need to know if I am included next time.'\n4. Ask: 'which of those two is the other person more likely to listen to?'\n5. Say why it works: it is harder to argue with how someone felt than with an accusation.",
+        "input": "1. Take the fall-out they have been working on for the last two weeks.\n2. Say the blaming version out loud, the way it usually comes out: 'you always leave me out, you're such a liar'.\n3. Show the I statement card and say the same thing from it: 'I felt left out when I wasn't invited, and I need to know if I'm included next time.'\n4. Ask: 'which of those two is the other person more likely to listen to?'\n5. Say why it works: it is harder to argue with how someone felt than with an accusation.",
         "activity": "1. Pupil builds their own I statement about the fall-out: how they felt, what caused it, and what they want instead.\n2. Say it back to them the blaming way, then their way, so they hear the difference.\n3. Practise it twice more until it sounds like something they would actually say.\n4. Do not set a joint conversation up from inside this session, and do not approach the other pupil about it.\n5. If your pupil wants one, ask what they would want out of it, then take it through your school's own route for this — read the joint conversation briefing note first.",
         "reflect": "1. Ask: 'if this got sorted out properly, what would that look like?'\n2. Check it is something that could actually happen, not the other person being punished.",
         "lookfor": "Rehearsal is the whole session — it is not a lesser version of it. Any joint conversation goes through the school's own route for this rather than being settled in a mentoring session, and never happens where there has been repeated targeting or an imbalance between the two pupils.",
@@ -524,7 +524,7 @@ module.exports = [
           "I statement card",
           "Joint conversation briefing note"
         ],
-        "home": "Practise one of these sentences together for something small at home — 'I felt annoyed when the telly went off, and I would like a warning next time' — so it feels familiar.",
+        "home": "Practise one of these sentences together for something small at home — 'I felt annoyed when the telly went off, and I'd like a warning next time' — so it feels familiar.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -538,8 +538,8 @@ module.exports = [
         "objective": "Pupil has an agreed, practical next step for peer relationships.",
         "checkin": "1. Ask: 'the fall-out you told me about in week one — where is that now?'\n2. Ask: 'would the other person say the same thing?'\n3. Keep both answers — they go into the plan later in this session.",
         "input": "1. Ask: 'if it happened again tomorrow, which would you use — the restorative questions, seeing it from their side, or an I statement?' Their earlier sheets are in this step if they need reminding.\n2. That is the one that goes at the top of their plan.",
-        "activity": "1. Ask: 'what is one thing you would like to be different socially next term?'\n2. Ask: 'what would staff need to do to help that happen?'\n3. Ask: 'what is the first step, and when would you take it?'\n4. Now write all of that into the social goals plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher, or whoever leads on pastoral support.",
-        "reflect": "1. Ask: 'what is one thing from these five weeks you are proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "activity": "1. Ask: 'what's one thing you'd like to be different socially next term?'\n2. Ask: 'what would staff need to do to help that happen?'\n3. Ask: 'what's the first step, and when would you take it?'\n4. Now write all of that into the social goals plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher, or whoever leads on pastoral support.",
+        "reflect": "1. Ask: 'what's one thing from these five weeks you're proud of?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Share relevant, appropriate context with the pastoral team so peer dynamics are monitored beyond the course.",
         "resources": [
           "I statement card",
@@ -613,7 +613,7 @@ module.exports = [
         "objective": "Pupil can explain a simple stop-think-choose technique in the pupil's own words.",
         "checkin": "1. Look at the tally together and add up the marks.\n2. Ask: 'which lesson had the most marks, and is that what you expected?'\n3. If the tally was not filled in, do it now from memory rather than skipping it.",
         "input": "1. Show the stop-think-choose card and read the three steps.\n2. Explain the gap: the urge to speak and the speaking are not the same moment.\n3. Ask: 'is wanting to say something the same as saying it?' Then practise once — you say something they would want to answer, they pause instead.\n4. Name what the pause feels like, so it is recognisable in a lesson.",
-        "activity": "1. Say what it is for: 'this is not about the answers. It is practice at catching the moment before you speak — the gap we just talked about.'\n2. Give the rules: you ask, they put a hand up and wait to be asked.\n3. Say plainly that calling out is not losing. It is the moment you both want to catch, so it is worth something when it happens.\n4. Read round one off the quick-fire question card, straight down, barely pausing. Do not wait for a right answer — the speed is what brings the urge up.\n5. Each time they call out, stop and ask: 'what did you notice just before you spoke?' Then pick up where you left off.\n6. If they get all the way through, ask which one was hardest to hold in.\n7. Run round two, then tell them one thing you saw them do differently, however small.",
+        "activity": "1. Say what it is for: 'this isn't about the answers. It's practice at catching the moment before you speak — the gap we just talked about.'\n2. Give the rules: you ask, they put a hand up and wait to be asked.\n3. Say plainly that calling out is not losing. It is the moment you both want to catch, so it is worth something when it happens.\n4. Read round one off the quick-fire question card, straight down, barely pausing. Do not wait for a right answer — the speed is what brings the urge up.\n5. Each time they call out, stop and ask: 'what did you notice just before you spoke?' Then pick up where you left off.\n6. If they get all the way through, ask which one was hardest to hold in.\n7. Run round two, then tell them one thing you saw them do differently, however small.",
         "reflect": "1. Ask: 'what does it feel like just before you call out?'\n2. If they do not know yet, they watch for it this week and tell you next session.",
         "lookfor": "Impulse control is a skill that needs repetition, do not expect mastery this session, just recognition of the pause point.",
         "resources": [
@@ -635,7 +635,7 @@ module.exports = [
         "objective": "Pupil has an agreed alternative signal for getting the teacher's attention.",
         "checkin": "1. Ask: 'last week we practised pause, notice, choose — did you get a chance to use it?'\n2. Ask: 'what happened in the moment you managed it?'\n3. If they did not use it, ask: 'which lesson would have been the best place to try?'",
         "input": "1. Show the signal card options: hand up, name card, thumbs signal, agreed word.\n2. Explain that the point is getting attention without interrupting.\n3. Ask them to pick one — it has to be theirs, or they will not use it.\n4. Agree that you will tell the class teacher which one it is before the next lesson.",
-        "activity": "1. Pupil picks which signal they would actually use from the card options.\n2. Role-play a lesson: you teach, they use the signal to get your attention.\n3. Deliberately miss it once, and ask: 'what would you do if the teacher did not see it?'\n4. Agree the final version with their class teacher, so the teacher knows to look for it.",
+        "activity": "1. Pupil picks which signal they would actually use from the card options.\n2. Role-play a lesson: you teach, they use the signal to get your attention.\n3. Deliberately miss it once, and ask: 'what would you do if the teacher didn't see it?'\n4. Agree the final version with their class teacher, so the teacher knows to look for it.",
         "reflect": "1. Ask: 'would you be comfortable using that in a full class?'\n2. Check they would use it with a teacher they find hardest, not just an easy one.",
         "lookfor": "The system only works if the class teacher consistently responds to it, check this is set up before the pupil relies on it.",
         "resources": [
@@ -754,7 +754,7 @@ module.exports = [
         "objective": "Pupil and mentor have identified specific situations that are avoided, ranked by difficulty.",
         "checkin": "1. Worry thermometer check-in: where are they on it right now?\n2. Ask: 'what was the number at its highest this week, and when was that?'\n3. Do not challenge the number. You are building a picture, not negotiating.",
         "input": "1. Explain what avoiding something buys you: relief right now, and more fear next time.\n2. Ask: 'have you ever put off a phone call?' Then ask what happened to it while they waited.\n3. Say plainly that the goal is not to stop feeling worried — it is to do the thing while the worry is still there, starting small.",
-        "activity": "1. Get out the avoidance ladder template.\n2. Ask: 'what are the bits of school you would get out of if you could?'\n3. Be specific together: not 'lessons', but 'walking into maths late'.\n4. Pupil writes each one onto the ladder, easiest at the top.\n5. Read the examples together, then pupil writes a first step for each one.\n6. Pupil rates how hard each one would be, 1 to 10.",
+        "activity": "1. Get out the avoidance ladder template.\n2. Ask: 'what are the bits of school you'd get out of if you could?'\n3. Be specific together: not 'lessons', but 'walking into maths late'.\n4. Pupil writes each one onto the ladder, easiest at the top.\n5. Read the examples together, then pupil writes a first step for each one.\n6. Pupil rates how hard each one would be, 1 to 10.",
         "reflect": "1. Ask: 'which one on that ladder is the smallest?'\n2. Pupil marks it — that is the one they will try first, not the one that matters most.",
         "lookfor": "Build the ladder with the people around the pupil where you can — family, and whoever supports them in school. A ladder that home and school both know about is the one that gets climbed.",
         "resources": [
@@ -775,7 +775,7 @@ module.exports = [
         "objective": "Pupil has agreed and attempted the first, smallest step on the avoidance ladder.",
         "checkin": "1. Get out the avoidance ladder template and read their steps back to them.\n2. Ask: 'did you try any step on the ladder, even partly?'\n3. A partial attempt counts. Say so before they tell you it does not.\n4. Ask what has changed about the order, if anything, since last week.",
         "input": "1. Define success out loud: attempting the step, whatever it felt like.\n2. Make clear they do not have to feel calm first — waiting to feel ready is the trap.\n3. Ask: 'what would the smallest possible version of the next step be?'\n4. If they cannot imagine doing it, it is too big. Halve it.",
-        "activity": "1. Ask: 'when this week could you do that first step?' Pupil writes the day and time on the worksheet.\n2. Ask: 'who needs to know, so they are expecting you?' Add that name.\n3. Walk the route or rehearse it now if that would help.\n4. Agree what counts as done: trying it, however it felt.",
+        "activity": "1. Ask: 'when this week could you do that first step?' Pupil writes the day and time on the worksheet.\n2. Ask: 'who needs to know, so they're expecting you?' Add that name.\n3. Walk the route or rehearse it now if that would help.\n4. Agree what counts as done: trying it, however it felt.",
         "reflect": "1. Ask: 'what would make that step feel more doable?'\n2. Check the thing they name is something a person at school can actually provide.",
         "lookfor": "If even the smallest step feels impossible, break it down further, the ladder can always be made gentler.",
         "resources": [
@@ -819,8 +819,8 @@ module.exports = [
         "objective": "Pupil has a written, realistic plan for the next steps on the avoidance ladder, shared with pastoral staff and family.",
         "checkin": "1. Take a worry thermometer reading and put it beside the week one number.\n2. Ask what they would have said in week one about the step they have now managed.\n3. If the number has not moved, ask what has — often it is the avoidance, not the worry.",
         "input": "1. Ask: 'which part of what we have done would you want a teacher to know about?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes into the plan in their own words later in this session.",
-        "activity": "1. Ask: 'which two or three steps come next on your ladder?'\n2. Ask: 'how long do you want for each one?' Realistic dates, not hopeful ones.\n3. Ask: 'what should staff do if a step does not happen?'\n4. Get out the grounding technique card and ask: 'which one are you keeping, and who do you contact if you are struggling?'\n5. Now write all of that into the return-to-school plan, and set a review date.\n6. Agree it with your line manager, then share the finished plan with the SENCO, whoever leads on pastoral support, and family.",
-        "reflect": "1. Ask: 'what is helped most out of everything we have tried?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "activity": "1. Ask: 'which two or three steps come next on your ladder?'\n2. Ask: 'how long do you want for each one?' Realistic dates, not hopeful ones.\n3. Ask: 'what should staff do if a step doesn't happen?'\n4. Get out the grounding technique card and ask: 'which one are you keeping, and who do you contact if you're struggling?'\n5. Now write all of that into the return-to-school plan, and set a review date.\n6. Agree it with your line manager, then share the finished plan with the SENCO, whoever leads on pastoral support, and family.",
+        "reflect": "1. Ask: 'what's helped most out of everything we have tried?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This type of plan needs regular review, weekly or fortnightly, rather than a single course, build in a clear next check-in date.",
         "resources": [
           "Worry thermometer",
@@ -935,9 +935,9 @@ module.exports = [
         "title": "Setting goals that matter",
         "objective": "Pupil can name something they want in the future, and one subject that helps them get to it.",
         "checkin": "1. Ask: 'did you break any tasks into steps last week? Which lesson?'\n2. Ask: 'what was different about that lesson, if anything?'\n3. If they did not, ask what would have made it possible. Take the answer and move on.",
-        "input": "1. Explain that effort lasts longer when it is tied to something they want, rather than to being told.\n2. Say the link does not have to be impressive. A loose one they believe beats a neat one they do not.\n3. Say there is no wrong answer coming, including 'I do not know'.",
+        "input": "1. Explain that effort lasts longer when it is tied to something they want, rather than to being told.\n2. Say the link does not have to be impressive. A loose one they believe beats a neat one they do not.\n3. Say there is no wrong answer coming, including 'I don't know'.",
         "activity": "1. Ask: 'what do you want to be doing in two years?' Pupil writes it on the goal-mapping worksheet.\n2. If they do not know, ask what they would want to avoid, or what they would do with a free day. Write that instead.\n3. Ask: 'which subject has anything at all to do with that?' Pupil writes the subject down.\n4. If nothing connects, take the subject they dislike least and find one small link — a teacher, or just turning up.\n5. Ask how it connects, and write that on the worksheet in their words.",
-        "reflect": "1. Ask: 'what is one piece of work this week you would do differently because of that link?'\n2. Pupil writes the lesson and the piece of work on the last row of the worksheet.",
+        "reflect": "1. Ask: 'what's one piece of work this week you'd do differently because of that link?'\n2. Pupil writes the lesson and the piece of work on the last row of the worksheet.",
         "lookfor": "Keep it believable. A connection the pupil half-invents to please you will not survive contact with a Tuesday afternoon; a loose but real one will.",
         "resources": [
           "Breaking a task into steps",
@@ -956,8 +956,8 @@ module.exports = [
         "title": "My engagement plan",
         "objective": "Pupil has a simple, personalised engagement plan shared with the class teacher.",
         "checkin": "1. Put this week's focus timeline beside week one's.\n2. Ask: 'which lesson changed most?'\n3. Ask: 'what did you do differently in that lesson?' That is the thing worth keeping.",
-        "input": "1. Ask: 'what is been the most helpful thing you have learnt from this course?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of the plan later in this session.",
-        "activity": "1. Ask: 'what are the two things most likely to make you lose focus?' Their week two sheets are in this step if they need reminding.\n2. Ask: 'and what is your go-to strategy when it happens?'\n3. Ask: 'what was the goal you named last week?'\n4. Now write all of that into the engagement plan, with the goal at the top, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher.",
+        "input": "1. Ask: 'what's been the most helpful thing you have learnt from this course?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of the plan later in this session.",
+        "activity": "1. Ask: 'what are the two things most likely to make you lose focus?' Their week two sheets are in this step if they need reminding.\n2. Ask: 'and what's your go-to strategy when it happens?'\n3. Ask: 'what was the goal you named last week?'\n4. Now write all of that into the engagement plan, with the goal at the top, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher.",
         "reflect": "1. Ask: 'what will you keep doing in that lesson next term?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree light-touch monitoring, such as teacher spot-checks at agreed points, rather than close supervision, which can undermine trust.",
         "resources": [
@@ -1012,8 +1012,8 @@ module.exports = [
         "objective": "Pupil can describe, in general terms, a personal experience of adults and authority.",
         "checkin": "1. This module only works if they trust you, so spend real time here.\n2. Ask about something outside school and follow it properly, do not just wait for your turn.\n3. Say what this course is and is not: not a punishment, not a report to anyone.\n4. Do not mention any specific incident today.\n5. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
         "input": "1. Ask: 'what does respect mean to you?' Write down their words, not yours.\n2. Ask: 'is respect something you give, or something you earn?' Either answer is fine.\n3. Ask: 'which adults do you listen to, and what do they do differently?'\n4. That last answer is the most useful thing in the session. Keep it.",
-        "activity": "1. Get out the trusted-adult discussion prompts.\n2. Ask: 'is there an adult anywhere — school or not — who you actually get on with?'\n3. Ask: 'what do they do that is different?' Use the discussion prompts if it stalls.\n4. Note their words in the box below — that list is what they need from staff.\n5. If they cannot name anyone, ask what an adult would have to do to earn it.",
-        "reflect": "1. Ask: 'what is one thing an adult could do that would make you more likely to listen?'\n2. Check it is something a teacher could actually do.",
+        "activity": "1. Get out the trusted-adult discussion prompts.\n2. Ask: 'is there an adult anywhere — school or not — who you actually get on with?'\n3. Ask: 'what do they do that's different?' Use the discussion prompts if it stalls.\n4. Note their words in the box below — that list is what they need from staff.\n5. If they cannot name anyone, ask what an adult would have to do to earn it.",
+        "reflect": "1. Ask: 'what's one thing an adult could do that would make you more likely to listen?'\n2. Check it is something a teacher could actually do.",
         "lookfor": "Past negative experiences with authority figures, including outside school, often explain current patterns, listen for this without probing inappropriately, and escalate any safeguarding concerns per school policy.",
         "resources": [
           "Trusted-adult discussion prompts"
@@ -1051,9 +1051,9 @@ module.exports = [
         "title": "Communicating respectfully",
         "objective": "Pupil can practise a respectful way of disagreeing with an adult.",
         "checkin": "1. Ask: 'did seeing the adult's side change anything this week?'\n2. Ask: 'did it change what you did, or only what you thought?'\n3. Both are progress. Say so.",
-        "input": "1. Take an instruction from a teacher they would want to argue with.\n2. Say the version that gets them in trouble: 'this is stupid, I am not doing it'.\n3. Show the respectful disagreement script card and say one from it instead: “I do not think that is fair — can you explain why?”\n4. Cover the three parts that made the difference: tone, timing, and wording.\n5. On timing, be specific — not in front of the class, and not in the first ten seconds.",
+        "input": "1. Take an instruction from a teacher they would want to argue with.\n2. Say the version that gets them in trouble: 'this is stupid, I'm not doing it'.\n3. Show the respectful disagreement script card and say one from it instead: “I do not think that is fair — can you explain why?”\n4. Cover the three parts that made the difference: tone, timing, and wording.\n5. On timing, be specific — not in front of the class, and not in the first ten seconds.",
         "activity": "1. Pupil picks a real instruction from a teacher they would want to argue with.\n2. Role-play it: you are the teacher, they use the script card — tone, timing, wording.\n3. Do it twice more, including one where you respond badly, so they have practised that too.\n4. Ask: 'when would be the wrong moment to say that?' The answer is in front of the class.",
-        "reflect": "1. Ask: 'how did that feel compared to what you would normally say?'\n2. Pupil picks one teacher to try it with this week.",
+        "reflect": "1. Ask: 'how did that feel compared to what you'd normally say?'\n2. Pupil picks one teacher to try it with this week.",
         "lookfor": "Tone and body language often matter as much as words, practise both, not just the script.",
         "resources": [
           "Respectful disagreement script card"
@@ -1147,7 +1147,7 @@ module.exports = [
         "objective": "Pupil feels comfortable enough to talk one-to-one and share at least one honest reflection on how school feels socially.",
         "checkin": "1. Keep this very low pressure. No questions about friendships at all today.\n2. Ask: 'what are you into outside school?' Games, music, anything they choose.\n3. Silence is fine. Do not fill every gap — a withdrawn pupil is used to adults doing that.\n4. Doing an activity side by side is often easier than sitting face to face.\n5. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
         "input": "1. Explain what the course is in plain words: some time each week, with you, about school feeling easier.\n2. Avoid clinical language — no 'social skills', no 'intervention'.\n3. Say what it is not: not a punishment, not something their class will know about.\n4. Ask whether there is anything they would rather you did not ask about. Then honour it.",
-        "activity": "1. Get out the low-pressure activity ideas.\n2. Ask: 'what do you like doing when you are not in lessons?'\n3. Pupil picks something from the low-pressure activity ideas, or their own.\n4. Do it together and talk about that, not about school.\n5. Do not push towards the topic — this session is for them getting used to you.",
+        "activity": "1. Get out the low-pressure activity ideas.\n2. Ask: 'what do you like doing when you aren't in lessons?'\n3. Pupil picks something from the low-pressure activity ideas, or their own.\n4. Do it together and talk about that, not about school.\n5. Do not push towards the topic — this session is for them getting used to you.",
         "reflect": "1. Only if they seem ready, ask: 'is there anything about school that feels hard at the moment?'\n2. If they would rather not say, leave it — there are four more sessions.",
         "lookfor": "Do not rush this session, for withdrawn pupils, trust-building may need to extend beyond one session before real progress is possible.",
         "resources": [
@@ -1225,10 +1225,10 @@ module.exports = [
       {
         "title": "My connection plan",
         "objective": "Pupil has one or two realistic, agreed social goals with identified support.",
-        "checkin": "1. Ask: 'how have the five weeks felt overall?'\n2. Ask: 'what was easier than you expected, and what was not?'\n3. Compare with how week one felt, if they will say.",
+        "checkin": "1. Ask: 'how have the five weeks felt overall?'\n2. Ask: 'what was easier than you expected, and what wasn't?'\n3. Compare with how week one felt, if they will say.",
         "input": "1. Ask: 'which of these would you keep doing without me there?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of the plan later in this session.",
-        "activity": "1. Ask: 'what is one social thing you would like to be different next term?'\n2. Ask: 'what support needs to be in place for that?'\n3. Ask: 'who could you check in with, and what is your first step?'\n4. Now write all of that into the connection plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher, or whoever leads on pastoral support.",
-        "reflect": "1. Ask: 'what is felt most different since week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "activity": "1. Ask: 'what's one social thing you'd like to be different next term?'\n2. Ask: 'what support needs to be in place for that?'\n3. Ask: 'who could you check in with, and what's your first step?'\n4. Now write all of that into the connection plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher, or whoever leads on pastoral support.",
+        "reflect": "1. Ask: 'what's felt most different since week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "This module often benefits from a longer review window than others, such as half a term, since social change happens gradually, avoid declaring early success or failure.",
         "resources": [
           "Connection plan template"
@@ -1324,7 +1324,7 @@ module.exports = [
         "checkin": "1. Ask: 'did you notice the feeling before the urge at any point this week?'\n2. Ask: 'what did you do with it?'\n3. If nothing came up, ask about the closest they got — near-misses count.",
         "input": "1. Explain that the urge is physical, so it needs something physical to do with it, not just calm words.\n2. Show the safe outlet ideas: squeezing something, tearing scrap paper, pushing against a wall.\n3. Say plainly that they will try these out in a moment, and that it is fine to decide one of them does nothing for them.",
         "activity": "1. Try two or three of the safe outlet ideas here and now, properly.\n2. Ask after each: 'did that help at all, or not really?'\n3. Ask: 'which of those could you do at school without drawing attention?'\n4. Agree where it would be kept and who needs to know, and write all three on the card.",
-        "reflect": "1. Ask: 'which one would you actually reach for when it is happening?'\n2. Check they could get to it in the room where incidents usually happen.",
+        "reflect": "1. Ask: 'which one would you actually reach for when it's happening?'\n2. Check they could get to it in the room where incidents usually happen.",
         "lookfor": "An outlet the pupil cannot reach in the moment is not an outlet. Agree with the class teacher where it is kept and how the pupil asks for it, before the session ends.",
         "resources": [
           "Safe outlet ideas"
@@ -1362,9 +1362,9 @@ module.exports = [
       {
         "title": "My prevention and response plan",
         "objective": "Pupil has a personalised prevention and response plan shared with relevant staff.",
-        "checkin": "1. Get out the week one incident timeline and compare it with how things are now.\n2. Ask: 'what is changed in how you notice it building?'\n3. Ask: 'has anyone else noticed a difference?'",
+        "checkin": "1. Get out the week one incident timeline and compare it with how things are now.\n2. Ask: 'what's changed in how you notice it building?'\n3. Ask: 'has anyone else noticed a difference?'",
         "input": "1. Ask: 'looking at your own timeline, where could you interrupt it now?' Their earlier sheets are in this step if they need reminding.\n2. That interruption point, and the outlet that works, go into the plan.",
-        "activity": "1. Ask: 'what are your triggers, and what is the first sign?'\n2. Ask: 'what is your safe outlet, and where is it kept?'\n3. Ask: 'and if it happens anyway, what should putting it right look like?'\n4. Now write all of that into the prevention and response plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher and whoever leads on pastoral support.",
+        "activity": "1. Ask: 'what are your triggers, and what's the first sign?'\n2. Ask: 'what's your safe outlet, and where is it kept?'\n3. Ask: 'and if it happens anyway, what should putting it right look like?'\n4. Now write all of that into the prevention and response plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the class teacher and whoever leads on pastoral support.",
         "reflect": "1. Ask: 'which part of that plan are you most confident about?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat and make sure all relevant staff know where the agreed safe outlet is kept and how the pupil can access it.",
         "resources": [
@@ -1427,7 +1427,7 @@ module.exports = [
           "Anger thermometer",
           "Feeling word cards"
         ],
-        "home": "Notice out loud when you are mildly annoyed this week ('I am a bit frustrated, not furious') so they see the wider vocabulary modelled at home too.",
+        "home": "Notice out loud when you are mildly annoyed this week ('I'm a bit frustrated, not furious') so they see the wider vocabulary modelled at home too.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -1485,7 +1485,7 @@ module.exports = [
         "objective": "Pupil can practise expressing frustration assertively rather than aggressively or by shutting down.",
         "checkin": "1. Ask: 'last week you were going to try STOP once for real — did you get the chance?'\n2. If they did, ask: 'which letter did you actually get to?'\n3. If they did not, ask: 'what happened too fast?' Usually the trigger was not spotted.",
         "input": "1. Take one thing they get told to do and do not want to — being moved seats, say. Read the passive, aggressive and assertive cards for it, in that order.\n2. Ask: 'which of those three gets you what you actually want?'\n3. Say they will build their own version in a moment.\n4. Warn them it sounds different out loud than it reads. That is why it gets said, not just read.",
-        "activity": "1. Get out the assertive phrase bank.\n2. Say an aggressive line out loud: 'this is stupid, I am not doing it'.\n3. Pupil finds an assertive version of the same thing, using the phrase bank.\n4. Role-play it: you give the instruction, they use their version.\n5. Do it twice more until it sounds like something they would say in a real lesson.",
+        "activity": "1. Get out the assertive phrase bank.\n2. Say an aggressive line out loud: 'this is stupid, I'm not doing it'.\n3. Pupil finds an assertive version of the same thing, using the phrase bank.\n4. Role-play it: you give the instruction, they use their version.\n5. Do it twice more until it sounds like something they would say in a real lesson.",
         "reflect": "1. Ask: 'which of those phrases felt most like you?'\n2. Pupil agrees to use it once at school this week.",
         "lookfor": "Some pupils confuse assertiveness with rudeness, reinforce that tone and body language matter as much as the words chosen.",
         "resources": [
@@ -1493,7 +1493,7 @@ module.exports = [
           "Passive / aggressive / assertive cards",
           "Assertive phrase bank"
         ],
-        "home": "If a small frustration comes up at home this week, model an assertive phrase yourself ('I am getting annoyed, can we pause?') so they hear it used naturally.",
+        "home": "If a small frustration comes up at home this week, model an assertive phrase yourself ('I'm getting annoyed, can we pause?') so they hear it used naturally.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -1505,10 +1505,10 @@ module.exports = [
       {
         "title": "My anger-management plan",
         "objective": "Pupil has a personalised, written anger-management plan and understands what happens next.",
-        "checkin": "1. Take a reading on the anger thermometer and put it beside the week one number.\n2. Ask: 'what would you have done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
+        "checkin": "1. Take a reading on the anger thermometer and put it beside the week one number.\n2. Ask: 'what would you've done in week one about that?'\n3. The difference between those two answers is the progress, whatever the numbers say.",
         "input": "1. Ask: 'which of the things we have practised would you use tomorrow without being reminded?' Their earlier sheets are in this step if they need reminding.\n2. That goes at the top of the plan and on the copy for the class teacher.",
-        "activity": "1. Get out the staff help list and the anger-management plan.\n2. Ask: 'what are your triggers, and what is your first warning sign?'\n3. Ask: 'which two strategies would you actually use, and which phrase from the bank?'\n4. Ask: 'who would you go to if it started building?'\n5. Go through the staff help list together and tick the ones that would actually make a difference.\n6. Now write all of that into the anger-management plan and set a review date. Agree it with your line manager, then share it with the class teacher, or whoever leads on pastoral support.",
-        "reflect": "1. Ask: 'what is one thing you are more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is working.",
+        "activity": "1. Get out the staff help list and the anger-management plan.\n2. Ask: 'what are your triggers, and what's your first warning sign?'\n3. Ask: 'which two strategies would you actually use, and which phrase from the bank?'\n4. Ask: 'who would you go to if it started building?'\n5. Go through the staff help list together and tick the ones that would actually make a difference.\n6. Now write all of that into the anger-management plan and set a review date. Agree it with your line manager, then share it with the class teacher, or whoever leads on pastoral support.",
+        "reflect": "1. Ask: 'what's one thing you're more confident about now than in week one?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is working.",
         "lookfor": "Agree the follow-up chat (two to three weeks later) rather than ending support abruptly.",
         "resources": [
           "Anger thermometer",
@@ -1562,9 +1562,9 @@ module.exports = [
         "title": "What is really going on",
         "objective": "Pupil can describe, in the pupil's own words, the main reasons behind the pattern of absence, without judgement.",
         "checkin": "1. Rapport chat first, about anything other than attendance.\n2. Then say clearly: this course is about working out what is making school hard, not about being in trouble.\n3. Say who will and will not see what is discussed. Attendance work usually involves other adults, so be honest about that.\n4. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
-        "input": "1. Say that attendance patterns almost always have real reasons behind them.\n2. Ask: 'do you think I am going to say it is laziness?' Say plainly you are not assuming that, and not assuming it is simple either.\n3. Say you will map it out together, starting from a recent day they did not come in.\n4. Explain that you will ask what the morning was like, hour by hour, rather than why they did not come.",
+        "input": "1. Say that attendance patterns almost always have real reasons behind them.\n2. Ask: 'do you think I'm going to say it's laziness?' Say plainly you are not assuming that, and not assuming it is simple either.\n3. Say you will map it out together, starting from a recent day they did not come in.\n4. Explain that you will ask what the morning was like, hour by hour, rather than why they did not come.",
         "activity": "1. Ask: 'when did coming in start getting harder?' Pupil marks that point on the attendance story.\n2. Ask: 'what was going on around then?' Fill in the timeline together, in their words.\n3. Do not correct their version, even if the register says otherwise.\n4. Ask: 'has it been the same reason all the way through, or has it changed?'",
-        "reflect": "1. Ask: 'what is the single biggest reason it has been hard to come in?'\n2. Pupil picks one thing to notice this week that makes attending harder.",
+        "reflect": "1. Ask: 'what's the single biggest reason it's been hard to come in?'\n2. Pupil picks one thing to notice this week that makes attending harder.",
         "lookfor": "Watch for signs the underlying driver is actually anxiety rather than disengagement, if so, consider Module 6 instead or alongside. Also stay alert to safeguarding indicators such as neglect, caring responsibilities or an unsafe home routine, and follow school procedure.",
         "resources": [
           "Attendance story template"
@@ -1602,9 +1602,9 @@ module.exports = [
       {
         "title": "What school could give me",
         "objective": "Pupil identifies at least one source of connection or purpose at school worth showing up for.",
-        "checkin": "1. Ask: 'what is happened since we mapped the push and pull factors?'\n2. Ask: 'did the biggest one come up this week?'\n3. Note any day they did come in, and what made that possible.",
+        "checkin": "1. Ask: 'what's happened since we mapped the push and pull factors?'\n2. Ask: 'did the biggest one come up this week?'\n3. Note any day they did come in, and what made that possible.",
         "input": "1. Explain that attendance holds better when it is tied to something they want, not a rule.\n2. Say you will look for whatever is worth coming in for — a friend, a subject, a club, a target.\n3. Ask: 'was there ever anything worth coming in for?' If nothing comes to mind now, look at what used to be.\n4. Say honestly that an empty sheet is a useful answer too, not a failure.",
-        "activity": "1. Ask: 'who or what is worth coming in for?' Pupil writes them onto the reasons-to-be-here sheet.\n2. Cover people, lessons, clubs, anything they have been good at.\n3. Pupil puts them in order, strongest pull first.\n4. If the sheet is nearly empty, say so honestly — that is the finding, and it is useful.",
+        "activity": "1. Ask: 'who or what's worth coming in for?' Pupil writes them onto the reasons-to-be-here sheet.\n2. Cover people, lessons, clubs, anything they have been good at.\n3. Pupil puts them in order, strongest pull first.\n4. If the sheet is nearly empty, say so honestly — that is the finding, and it is useful.",
         "reflect": "1. Ask: 'which one of those pulls hardest?'\n2. Pupil agrees one thing to do with it this week — meeting a friend at the gate, going to one club.",
         "lookfor": "If a pupil cannot identify any reason at all, this may signal deeper disengagement needing wider pastoral involvement, not just mentoring.",
         "resources": [
@@ -1625,8 +1625,8 @@ module.exports = [
         "objective": "Pupil and mentor agree a practical plan that targets the single biggest barrier identified so far, whatever form it actually takes.",
         "checkin": "1. Ask: 'how did it go with the person or the thing you said was worth coming in for?'\n2. Ask: 'did it make any morning easier?'\n3. If it did not, that is information, not failure.",
         "input": "1. Name the barrier they described in weeks one and two, so you are both working on the same thing.\n2. Ask: 'have I got that right?' Follow what they actually described — do not assume it is mornings, or sleep, or anxiety.\n3. Say you will pin down exactly which kind of barrier it is in a moment.\n4. Explain that you will solve one barrier properly rather than four of them vaguely.",
-        "activity": "1. Go back to the barrier they named, and use the card sort to pin down which kind it is.\n2. Ask: 'what would actually fix that?' Pupil writes it into the action plan. Keep it specific to their barrier — transport, one lesson, a person, a caring role — not a general routine.\n3. Ask: 'who needs to do something for this to work?' Add the name.\n4. Ask: 'and what is the first thing you will try yourself?' Pupil writes that in too. It should be something they can do without waiting for anyone.\n5. Agree when you will look at the plan again, and write the date on it.",
-        "reflect": "1. Ask: 'what is most likely to stop that plan working?'\n2. Ask: 'and what do we do if that happens?' Agree the backup now, not later.",
+        "activity": "1. Go back to the barrier they named, and use the card sort to pin down which kind it is.\n2. Ask: 'what would actually fix that?' Pupil writes it into the action plan. Keep it specific to their barrier — transport, one lesson, a person, a caring role — not a general routine.\n3. Ask: 'who needs to do something for this to work?' Add the name.\n4. Ask: 'and what's the first thing you'll try yourself?' Pupil writes that in too. It should be something they can do without waiting for anyone.\n5. Agree when you will look at the plan again, and write the date on it.",
+        "reflect": "1. Ask: 'what's most likely to stop that plan working?'\n2. Ask: 'and what do we do if that happens?' Agree the backup now, not later.",
         "lookfor": "Do not default to assuming the barrier is 'mornings', for many pupils it is a specific lesson, a social situation, transport, or a responsibility at home. Let what the pupil told you in Weeks 1 and 2 drive this session, not a template.",
         "resources": [
           "Barrier type card sort",
@@ -1647,7 +1647,7 @@ module.exports = [
         "checkin": "1. Look at attendance across the five weeks together.\n2. Ask: 'which week was best, and what was different about it?'\n3. If nothing has shifted yet, ask: 'what would have to change first?'",
         "input": "1. Ask: 'which part of what we have done made the most difference?' Their earlier sheets are in this step if they need reminding.\n2. Explain that the plan you will write starts from what they are already managing, not from full attendance.",
         "activity": "1. Get out the attendance file note and the graded attendance plan template.\n2. Ask: 'what could you manage next week — not next term?'\n3. Ask: 'and the step after that, once the first one is steady?' Building up, not jumping to full attendance.\n4. Ask: 'what should happen if you miss a step?' So a bad week is not the end of the plan.\n5. Ask: 'who is supporting you with this?'\n6. Now write all of that into the graded attendance plan and set a review date. Agree it with your line manager, then share it with whoever leads on attendance.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what still feels hardest?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is holding up.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hardest?' Note the answer — it goes into the course summary.\n3. Tell them this is the last session together, and you will have a follow-up chat in a few weeks to see how the plan is holding up.",
         "lookfor": "Agree the follow-up chat with the attendance team, and loop in the Education Welfare Officer if statutory thresholds are a concern.",
         "resources": [
           "Graded attendance plan template",
@@ -1711,7 +1711,7 @@ module.exports = [
           "Nicotine cycle diagram",
           "Where am I now scale"
         ],
-        "home": "If this comes up naturally, ask an open, curious question like 'what do you know about what is actually in a vape?' rather than starting with rules. This keeps the door open for honest conversation.",
+        "home": "If this comes up naturally, ask an open, curious question like 'what do you know about what's actually in a vape?' rather than starting with rules. This keeps the door open for honest conversation.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -1791,7 +1791,7 @@ module.exports = [
         "checkin": "1. Take a 'where am I now' reading and put it beside the week one reading.\n2. Ask what is changed in how they think about it, not just what they have done.\n3. Both count.",
         "input": "1. Ask: 'who would you go to if you wanted help with this in six months?' Their earlier sheets are in this step if they need reminding.\n2. Put that name on the plan. A plan without a person behind it rarely survives.",
         "activity": "1. Ask: 'what are your main triggers?'\n2. Ask: 'which refusal line and which strategy felt most like you?'\n3. Ask: 'who at school would you actually go to?'\n4. Now write all of that into the vaping support plan, and set a review date.\n5. Agree who gets a copy — check the pupil is comfortable, and agree it with your line manager before it is shared.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than ending support abruptly, nicotine dependence, even mild, often needs more than five weeks to fully shift.",
         "resources": [
           "Where am I now scale",
@@ -1846,10 +1846,10 @@ module.exports = [
       {
         "title": "Getting to know my role",
         "objective": "Pupil can describe the pupil's caring responsibilities in the pupil's own words and feel heard without judgement.",
-        "checkin": "1. Open warmly and generally: 'tell me a bit about your week at home, if you would like to.'\n2. Accept whatever they give you, including very little. Home may be private for good reasons.\n3. Say what happens to what they tell you, and who else would need to know.\n4. Do not call them a young carer yet — they may not use that word for themselves.\n5. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
+        "checkin": "1. Open warmly and generally: 'tell me a bit about your week at home, if you'd like to.'\n2. Accept whatever they give you, including very little. Home may be private for good reasons.\n3. Say what happens to what they tell you, and who else would need to know.\n4. Do not call them a young carer yet — they may not use that word for themselves.\n5. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
         "input": "1. Explain what a young carer is in plain terms: someone helping look after a family member.\n2. Cover illness, disability, mental health and addiction, without dwelling on any one.\n3. Ask: 'had you heard the phrase young carer before?' It is a recognised role, not a secret and not something to be ashamed of.\n4. Say you will map out an ordinary day together — theirs, not a typical one.",
         "activity": "1. Get out the day timeline template.\n2. Ask: 'can you talk me through a normal day, from waking up?'\n3. Pupil fills in the day timeline as they go — school, caring, anything that is theirs.\n4. Let them keep it vague if they want to. The detail matters less than being heard.\n5. Ask: 'is that a normal day, or a good one?'",
-        "reflect": "1. Ask: 'is there anything about what you do at home you are proud of?'\n2. Nothing to do this week — say that plainly. Today was about being heard.",
+        "reflect": "1. Ask: 'is there anything about what you do at home you're proud of?'\n2. Nothing to do this week — say that plainly. Today was about being heard.",
         "lookfor": "Some pupils do not identify as a 'young carer' even when they clearly are, avoid pushing the label if it does not fit how the pupil sees the pupil's own situation yet.",
         "resources": [
           "My day timeline template",
@@ -1892,7 +1892,7 @@ module.exports = [
         "checkin": "1. Ask: 'what happened in the tight moment you noticed last week?'\n2. Ask: 'what did you do, and did it help?'\n3. Whatever they did is their existing coping strategy — start there rather than replacing it.",
         "input": "1. Explain that short moments count: five minutes is not nothing.\n2. Ask: 'when did you last get five minutes that were yours?' Long blocks of free time may never appear.\n3. Say you will look for a couple of things that fit their actual day, not a general list.\n4. Explain that when in the day it happens matters as much as what it is.",
         "activity": "1. Get out the what-helps list and the five-minute reset ideas card.\n2. Ask: 'what actually helps, even a bit?' Pupil writes each one onto the what-helps list.\n3. Prompt with the five-minute reset ideas if the list stalls — short things count.\n4. Ask: 'which of those could you do on a bad day, not just a good one?'\n5. Pupil marks that one.",
-        "reflect": "1. Ask: 'what is the smallest thing on there that genuinely helps?'\n2. Pupil agrees to do it once this week, even for five minutes.",
+        "reflect": "1. Ask: 'what's the smallest thing on there that genuinely helps?'\n2. Pupil agrees to do it once this week, even for five minutes.",
         "lookfor": "Some young carers find it genuinely hard to imagine time 'just for them', if the list is short, that is useful information, not a failure to fix in one session.",
         "resources": [
           "What helps me list template",
@@ -1911,8 +1911,8 @@ module.exports = [
         "title": "Getting support",
         "objective": "Pupil can name at least one person or service, beyond the mentor, the pupil could go to for support.",
         "checkin": "1. Ask: 'how did the thing you marked on the what-helps list go?'\n2. If it did not happen, ask: 'which day did it come closest?'\n3. Do not treat a missed week as failure — their week is not fully theirs.",
-        "input": "1. Explain that young carers services exist specifically for this, not because anything has gone wrong.\n2. Name the school contact, by name — whoever looks after young carers here.\n3. Ask: 'who already knows what is going on at home?' Be honest about what involving anyone else would and would not mean.\n4. Say you will work out together who already knows, including people outside school, not only staff.",
-        "activity": "1. Ask: 'who knows what is going on at home?' Pupil writes those people onto the support network map.\n2. Cover family, friends, staff, anyone outside school.\n3. Ask: 'is there anyone who could help who does not know?'\n4. Explain what a young carers service does: breaks away from home, activities and days out, meeting other young carers, and advice for the whole family. It does not take the caring role away, and there is no pressure to sign up to anything.",
+        "input": "1. Explain that young carers services exist specifically for this, not because anything has gone wrong.\n2. Name the school contact, by name — whoever looks after young carers here.\n3. Ask: 'who already knows what's going on at home?' Be honest about what involving anyone else would and would not mean.\n4. Say you will work out together who already knows, including people outside school, not only staff.",
+        "activity": "1. Ask: 'who knows what's going on at home?' Pupil writes those people onto the support network map.\n2. Cover family, friends, staff, anyone outside school.\n3. Ask: 'is there anyone who could help who doesn't know?'\n4. Explain what a young carers service does: breaks away from home, activities and days out, meeting other young carers, and advice for the whole family. It does not take the caring role away, and there is no pressure to sign up to anything.",
         "reflect": "1. Ask: 'who would you go to if things got harder?'\n2. Nothing to do with that yet — knowing the name is enough for now.",
         "lookfor": "Some pupils worry that accessing support means their family will be seen as failing, or that they will be taken away from caring duties they value, reassure that support is about helping the whole family, not removing the pupil's role.",
         "resources": [
@@ -1935,7 +1935,7 @@ module.exports = [
         "checkin": "1. Look at the week one timeline beside how this week looked.\n2. Ask: 'what feels different, if anything?'\n3. Ask: 'what would you want school to understand about your week?'",
         "input": "1. Ask: 'what would make the biggest difference at school?' Their earlier sheets are in this step if they need reminding.\n2. That goes on the plan, and on the copy for the pastoral file if they agree to it.",
         "activity": "1. Ask: 'who at school would you go to first?' That person is their named contact.\n2. Ask: 'which of the things from week three actually helped?'\n3. Ask: 'if things got harder at home, how would you let school know?' Something simple — a word, a note.\n4. Now write all of that into the young carer plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with that named person.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Caring responsibilities can change quickly (a family member's health worsening, for example), agree a light-touch follow-up chat rather than closing support entirely.",
         "resources": [
           "My day timeline template",
@@ -2034,7 +2034,7 @@ module.exports = [
         "objective": "Pupil can demonstrate how to block, report, and save evidence on at least one platform the pupil uses.",
         "checkin": "1. Ask: 'how has the week gone since we talked through the scenarios?'\n2. Ask: 'did anything you saw online look different afterwards?'",
         "input": "1. Show the step card and read the order: screenshot first, then block, then report.\n2. Ask: 'why screenshot before blocking?' Blocking can hide the original message.\n3. Say they will check their own settings before the end, with their phone if that is allowed.\n4. They do it, not you. A setting they change themselves is one they understand.",
-        "activity": "1. Ask: 'which app would you actually need this on?'\n2. Walk the block, report and save steps on that one, using a practice account or the printed screenshots.\n3. Pupil does it themselves, not just watches.\n4. Ask: 'where would the screenshot end up, so it is not lost?'",
+        "activity": "1. Ask: 'which app would you actually need this on?'\n2. Walk the block, report and save steps on that one, using a practice account or the printed screenshots.\n3. Pupil does it themselves, not just watches.\n4. Ask: 'where would the screenshot end up, so it isn't lost?'",
         "reflect": "1. Ask: 'which of those did you already know, and which was new?'\n2. Pupil picks one privacy setting from the checklist to check this week.",
         "lookfor": "Some pupils feel reporting will make things worse (retaliation, being seen as 'snitching'), validate this concern honestly rather than dismissing it, and discuss how reporting privately differs from confronting someone publicly.",
         "resources": [
@@ -2057,7 +2057,7 @@ module.exports = [
         "checkin": "1. Ask: 'which privacy setting did you check?'\n2. Ask: 'did anything surprise you about what was public?'",
         "input": "1. Explain that telling an adult early gives more options, not fewer.\n2. Ask: 'what stops people telling an adult?' Name the phone fear directly — it is usually that.\n3. Say what would and would not happen at your school if they reported something.\n4. Say you will practise the first sentence in a moment. That is the hard part, not the rest.",
         "activity": "1. Get out the opening line cards and the role-play scenario cards together.\n2. Pupil picks an opening line they would actually say, or writes their own.\n3. Role-play it twice: once with you responding well, once with you distracted.\n4. Ask: 'who would you actually say that to?'",
-        "reflect": "1. Ask: 'which of those lines felt most like something you would say?'\n2. Nothing to do with it this week — knowing the line is the point.",
+        "reflect": "1. Ask: 'which of those lines felt most like something you'd say?'\n2. Nothing to do with it this week — knowing the line is the point.",
         "lookfor": "The goal is a rehearsed, low-stakes opening line the pupil can reach for under pressure, not a perfect script, since real disclosures rarely follow a script exactly.",
         "resources": [
           "Privacy settings checklist",
@@ -2078,8 +2078,8 @@ module.exports = [
         "objective": "Pupil has a personalised plan covering online safety steps, screen time balance, and who to tell if something happens.",
         "checkin": "1. Put this week's digital day map beside week one's.\n2. Ask what is changed — in the hours, or in how the parts feel.\n3. Either is progress.",
         "input": "1. Ask: 'which part of this would you pass on to a younger pupil?' Their earlier sheets are in this step if they need reminding.\n2. Keep that answer — it goes at the top of their plan later in this session.",
-        "activity": "1. Ask: 'which privacy settings are you keeping in place?'\n2. Ask: 'what is one boundary you would actually keep — a time, a room, an app?'\n3. Ask: 'and who would you go to if something happened?'\n4. Now write all of that into the digital wellbeing plan, and set a review date.\n5. Agree who gets a copy, and check they are comfortable with that first.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
+        "activity": "1. Ask: 'which privacy settings are you keeping in place?'\n2. Ask: 'what's one boundary you'd actually keep — a time, a room, an app?'\n3. Ask: 'and who would you go to if something happened?'\n4. Now write all of that into the digital wellbeing plan, and set a review date.\n5. Agree who gets a copy, and check they are comfortable with that first.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Screen time boundaries work best when the pupil sets them, not when they are imposed, a self-chosen boundary is far more likely to stick.",
         "resources": [
           "My digital day map",
@@ -2157,7 +2157,7 @@ module.exports = [
         "objective": "Pupil can identify one catastrophic thought pattern and practise a more balanced alternative.",
         "checkin": "1. Ask: 'did you notice any of the physical signs of stress we talked about last week?'\n2. Ask: 'when was it strongest?'\n3. If they noticed nothing, ask: 'when did revision last feel bad?'",
         "input": "1. Read a catastrophic thought aloud: 'if I fail this, everything is ruined.'\n2. Ask whether that is ever crossed their mind. Most will say yes if you go first.\n3. Explain the two questions you will use on it: what is the evidence, and what is a fairer version?\n4. Aim for balanced, not positive. 'It will be fine' is as unhelpful as the original.",
-        "activity": "1. Get out the catastrophic thinking examples card and the thought-balance worksheet together.\n2. Ask: 'what is the thought that comes up most when you think about the exams?' Pupil writes it into the worksheet, using the examples card if nothing comes.\n3. Work through it together: what is the evidence for it, what is the evidence against.\n4. Pupil writes a fairer version in their own words — not a cheerful one, a realistic one.",
+        "activity": "1. Get out the catastrophic thinking examples card and the thought-balance worksheet together.\n2. Ask: 'what's the thought that comes up most when you think about the exams?' Pupil writes it into the worksheet, using the examples card if nothing comes.\n3. Work through it together: what is the evidence for it, what is the evidence against.\n4. Pupil writes a fairer version in their own words — not a cheerful one, a realistic one.",
         "reflect": "1. Ask: 'did the fairer version feel any more true?'\n2. Pupil agrees to catch that thought once this week when it turns up.",
         "lookfor": "The goal is not to eliminate worry entirely, some concern about exams is normal and even motivating. Watch for the difference between healthy concern and thoughts that spiral into hopelessness.",
         "resources": [
@@ -2165,7 +2165,7 @@ module.exports = [
           "Thought-balance worksheet",
           "Catastrophic thinking examples card"
         ],
-        "home": "If they mention an exam worry this week, try gently asking 'what is the evidence for that?' rather than reassuring immediately. This helps build the same skill practised in session.",
+        "home": "If they mention an exam worry this week, try gently asking 'what's the evidence for that?' rather than reassuring immediately. This helps build the same skill practised in session.",
         "timing": {
           "checkin": 5,
           "input": 10,
@@ -2179,7 +2179,7 @@ module.exports = [
         "objective": "Pupil can design a realistic weekly revision routine that includes rest.",
         "checkin": "1. Ask: 'did you catch one of those unhelpful thoughts this week and turn it into a fairer one?'\n2. Ask: 'what did the balanced version sound like?'\n3. If they did not, do one now with a real thought from this week.",
         "input": "1. Say that a sustainable routine beats a perfect one, every time.\n2. Ask: 'how long can you actually revise before it stops going in?' Short, regular blocks with real breaks.\n3. Say plainly that rest is part of the plan, not a reward for finishing it.\n4. Say that the routine gets built around what already exists — clubs, jobs, caring, travel.",
-        "activity": "1. Get out the weekly routine template and the revision session length guide.\n2. Start from their real week — clubs, jobs, travel, caring — not an empty timetable.\n3. Pupil blocks in revision sessions on the weekly routine template, using the session length guide.\n4. Block in rest and time with friends too, and mark them as fixed.\n5. Ask: 'is there a single day here you would actually manage all of?'",
+        "activity": "1. Get out the weekly routine template and the revision session length guide.\n2. Start from their real week — clubs, jobs, travel, caring — not an empty timetable.\n3. Pupil blocks in revision sessions on the weekly routine template, using the session length guide.\n4. Block in rest and time with friends too, and mark them as fixed.\n5. Ask: 'is there a single day here you'd actually manage all of?'",
         "reflect": "1. Ask: 'which part of that would you actually stick to?'\n2. Agree to try it for one week and change what does not fit, rather than starting again.",
         "lookfor": "Pupils under high academic pressure sometimes build routines with no rest at all, gently push back on this rather than accepting it as dedication.",
         "resources": [
@@ -2202,7 +2202,7 @@ module.exports = [
         "checkin": "1. Ask: 'which parts of the routine actually happened?'\n2. Change what did not fit rather than asking them to try harder.\n3. A routine that survives contact with a real week is worth more than a better one on paper.",
         "input": "1. Ask: 'which is worse — waiting outside before it starts, or going blank in the middle?'\n2. Say you will try the breathing properly in a moment, rather than just reading it.\n3. Agree one short phrase for when the mind goes blank — something like 'start with the one I can do' — in their words.\n4. Say what to do if panic builds mid-paper: stop, breathe, start with any question they can answer.",
         "activity": "1. Get out the breathing technique guide and the exam-day coping strategy cards.\n2. Do one breathing technique together now, properly, not just described.\n3. Pupil picks the coping strategy card they would use on the day.\n4. Role-play walking into the exam room and using it — stand up and do it.\n5. Ask: 'what would make it hard to remember in the moment?'",
-        "reflect": "1. Ask: 'which of those would you manage when you are actually nervous?'\n2. Pupil agrees to run through it once more before their next real assessment.",
+        "reflect": "1. Ask: 'which of those would you manage when you're actually nervous?'\n2. Pupil agrees to run through it once more before their next real assessment.",
         "lookfor": "Strategies only work if rehearsed when calm, encourage practising away from an actual exam, not for the first time during one.",
         "resources": [
           "Weekly routine template",
@@ -2224,7 +2224,7 @@ module.exports = [
         "checkin": "1. Take a stress thermometer reading and set it beside week one's.\n2. Ask what is changed about how they revise, not just how they feel.\n3. If the number is higher because exams are closer, say that is expected.",
         "input": "1. Ask: 'which of these would you want in place the morning of your first exam?' Their earlier sheets are in this step if they need reminding.\n2. That goes at the top of the plan, and on the copy for the pastoral file.",
         "activity": "1. Ask: 'which bit of the routine actually worked?'\n2. Ask: 'which coping strategy would you use before an assessment?'\n3. Ask: 'who would you tell if it started building again?'\n4. Ask: 'what would you change first if this routine stopped working?' So they know the plan is theirs to adjust.\n5. Now write all of that into the exam wellbeing plan, and set a review date.\n6. Agree it with your line manager, then share the finished plan with that person.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat ahead of the next assessment period rather than ending support after one round of exams, pressure often returns and the plan needs revisiting.",
         "resources": [
           "Exam stress thermometer",
@@ -2280,7 +2280,7 @@ module.exports = [
         "title": "Getting to know my senses",
         "objective": "Pupil can identify at least two senses that feel more intense or sensitive for the pupil than others.",
         "checkin": "1. Ask: 'how has school felt this week?' Any particularly loud, bright or busy moments.\n2. Let them answer in their own way. Some pupils will describe places, others feelings.\n3. Do not push for eye contact or a fast answer. Processing time is not reluctance.\n4. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to.",
-        "input": "1. Explain that everyone's senses work differently, and that is not a fault.\n2. Ask: 'is there a noise or a smell that other people do not seem to notice?' That is information, not a fault.\n3. Say you will go one sense at a time — it is easier than an open question.\n4. Say it gets filled in again in week five, so there is something to compare against.",
+        "input": "1. Explain that everyone's senses work differently, and that is not a fault.\n2. Ask: 'is there a noise or a smell that other people don't seem to notice?' That is information, not a fault.\n3. Say you will go one sense at a time — it is easier than an open question.\n4. Say it gets filled in again in week five, so there is something to compare against.",
         "activity": "1. Get out the sensory profile scale and the sense-by-sense examples card together.\n2. Take one sense at a time — sound, light, touch, smell, being crowded — and ask: 'is that fine, is it bearable, or is it too much?' Pupil marks the scale, using the examples if a sense is hard to picture.\n3. Go back over anything marked 'too much' and ask what exactly it is.\n4. Ask: 'which one of those is worst at school?'",
         "reflect": "1. Ask: 'which of those surprised you when you actually thought about it?'\n2. Pupil agrees to notice one sensory moment this week — just notice it.",
         "lookfor": "Some pupils have never had language for their sensory experience before, allow extra time and offer examples if the pupil struggles to identify specifics.",
@@ -2368,7 +2368,7 @@ module.exports = [
         "checkin": "1. Fill in the sensory profile again and set it beside week one's.\n2. Ask: 'which part of the day has changed most?'\n3. Ask: 'what still needs solving?' There is usually one thing left.",
         "input": "1. Ask: 'what would you want a new teacher to know about you, in one sentence?' Their earlier sheets are in this step if they need reminding.\n2. That sentence goes at the top of the plan and on the copy for the SENCO.",
         "activity": "1. Ask: 'what are the sensory things that get you most?'\n2. Ask: 'which tools worked, and what signal did you settle on?'\n3. Ask: 'what would need to change about where you sit, or when you move?'\n4. Now write all of that into the sensory support plan, and set a review date.\n5. Agree it with your line manager, then share the finished plan with the SENCO and the staff who teach them.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels hard?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat rather than treating this as a fixed plan, sensory needs can shift with age, environment changes, or overall stress levels.",
         "resources": [
           "Sensory profile scale",
@@ -2424,7 +2424,7 @@ module.exports = [
         "title": "Understanding grief",
         "objective": "Pupil can describe at least two different ways grief can feel, beyond sadness alone.",
         "checkin": "1. Go slowly. Say that however they are feeling today is fine to bring here.\n2. Do not ask how they are coping — it implies there is a way they should be.\n3. Let silence sit. You do not need to fill it, and filling it can end the session early.\n4. Say what happens to what they tell you: you keep notes, and the plan at the end goes to staff they agree to. If something worries you about their safety you have to pass it on, and you would tell them who to. They can stop at any point.",
-        "input": "1. Say plainly that grief has no fixed order and no timeline.\n2. Ask: 'is there any way you are supposed to feel?' There is not — anger, numbness, guilt, relief and ordinary happiness all turn up.\n3. Say that none of these mean they are grieving wrongly. Relief and laughter especially.\n4. Say they will be able to look through some words in a moment, and pick any without explaining why.",
+        "input": "1. Say plainly that grief has no fixed order and no timeline.\n2. Ask: 'is there any way you're supposed to feel?' There is not — anger, numbness, guilt, relief and ordinary happiness all turn up.\n3. Say that none of these mean they are grieving wrongly. Relief and laughter especially.\n4. Say they will be able to look through some words in a moment, and pick any without explaining why.",
         "activity": "1. Lay out the grief feeling word cards and say they can look without picking anything.\n2. Ask: 'have any of these felt true recently?' Pupil picks whichever they want.\n3. Ask about one, only if they seem willing: 'when did that one turn up?'\n4. Do not ask about the rest. Picking them up is enough for today.",
         "reflect": "1. Ask: 'was there anything on those cards that surprised you?'\n2. Say plainly there is no right way to feel, and nothing to do this week.",
         "lookfor": "Some pupils will want to talk in detail; others will want minimal words. Follow the pupil's lead entirely in this first session rather than pushing for depth.",
@@ -2511,7 +2511,7 @@ module.exports = [
         "checkin": "1. Look back over the five weeks gently.\n2. Ask what is felt most useful, rather than what is improved.\n3. Let them say 'none of it' if that is true.",
         "input": "1. Ask: 'has any of this been useful?' Take whatever answer comes, including none of it.\n2. Say clearly that grief support often needs far longer than five weeks, and that is normal.\n3. Say you will go through what support exists, and name a real person at school, before the end of today.\n4. Make sure they leave knowing this ending is not the end of the support.",
         "activity": "1. Get out the one-page bereavement support plan.\n2. Ask: 'which of the things in your hard day toolkit actually helped?'\n3. Ask: 'are there dates coming up that are likely to be hard?' The anniversary planning card covers the ones people forget.\n4. Ask: 'who at school would you talk to?'\n5. Now write all of that into the support plan.\n6. Go through the support services card so they know what exists, without any expectation of using it.\n7. Ask who should have the copy for the pastoral file, and check they are comfortable with that before it goes anywhere.",
-        "reflect": "1. Ask: 'what is felt most helpful about this course?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
+        "reflect": "1. Ask: 'what's felt most helpful about this course?'\n2. Ask: 'what would help most going forward?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat, and make clear that returning to talk again, even after the course ends, is always welcome, not a sign of failure to 'move on'.",
         "resources": [
           "Hard day toolkit template",
@@ -2591,7 +2591,7 @@ module.exports = [
         "objective": "Pupil can name at least two common tactics used in grooming or exploitation, in the pupil's own words.",
         "checkin": "1. Ask: 'what did you think about what we talked about last week?' In general terms.\n2. Keep it general. You are not fishing for a disclosure.",
         "input": "1. Go through the tactics card set in plain language, one at a time.\n2. Cover being picked out for special attention, presents that make you feel you owe them, being cut off from other people, and secrets.\n3. Say why they are hard to spot: at the start it just feels like someone likes you.\n4. Say that anyone can be drawn in, including confident people. That matters — shame stops disclosure.",
-        "activity": "1. Read out a tactic card and ask: 'why do you think that one works on people?'\n2. Keep it general — about people, not about them.\n3. Ask: 'what would make that hard to spot while it is happening?'\n4. Cover the presents, the secrets and being cut off from other friends. Those three come up most.",
+        "activity": "1. Read out a tactic card and ask: 'why do you think that one works on people?'\n2. Keep it general — about people, not about them.\n3. Ask: 'what would make that hard to spot while it's happening?'\n4. Cover the presents, the secrets and being cut off from other friends. Those three come up most.",
         "reflect": "1. Ask: 'why do you think those are hard to spot at the time?'\n2. No pressure to link any of it to anyone real — say that out loud.",
         "lookfor": "If the pupil discloses anything during this session that raises concern, stop the planned content, reassure the pupil calmly, and follow your school's safeguarding procedure immediately.",
         "resources": [
@@ -2632,7 +2632,7 @@ module.exports = [
         "objective": "Pupil can rehearse at least one assertive refusal response and describe one safe decision-making step.",
         "checkin": "1. Ask: 'what was the strength you noticed last week?'\n2. Ask: 'where did it show up?'",
         "input": "1. Say that you never have to explain a no. You will look at ways of saying it in a moment.\n2. Ask: 'if someone buys you things, do you owe them a yes?' You do not. Presents are not a swap.\n3. Say how you spot a safe person: they hear the no and leave it there. No sulking, no pushing, no getting you back for it.\n4. Say you will practise with made-up situations, never anything real from their life.",
-        "activity": "1. Get out the refusal script cards and the general scenario cards together.\n2. Pupil picks a refusal line they would actually say, and you deal a scenario — never one from their life.\n3. Role-play it, with you doing the pressuring, then push back once so they say it twice.\n4. Ask: 'what would you do if that person would not take no?'",
+        "activity": "1. Get out the refusal script cards and the general scenario cards together.\n2. Pupil picks a refusal line they would actually say, and you deal a scenario — never one from their life.\n3. Role-play it, with you doing the pressuring, then push back once so they say it twice.\n4. Ask: 'what would you do if that person wouldn't take no?'",
         "reflect": "1. Ask: 'how did it feel saying that out loud?'\n2. Say clearly: if something ever feels wrong, that feeling is worth trusting.",
         "lookfor": "Focus on building confidence in the skill itself, in a low-stakes rehearsal format, avoid asking the pupil to apply this to a real, current situation unless the pupil raises one.",
         "resources": [
@@ -2653,8 +2653,8 @@ module.exports = [
         "title": "My safety plan",
         "objective": "Pupil knows at least two trusted adults and one reporting route, at school and beyond, if the pupil ever needs help.",
         "checkin": "1. Review the five weeks in general terms.\n2. Ask what is felt most useful.",
-        "input": "1. Ask: 'what is the main thing you would take away from these five weeks?'\n2. Show the reporting routes information card and go through it properly: whoever leads on safeguarding in your school, by name, Childline on 0800 1111, and the police.\n3. Say they can report something about a friend, not just themselves. That is often how someone gets help.\n4. Say the card gets filled in today and leaves with them, not kept in a file here.",
-        "activity": "1. Ask: 'who are two adults you would go to?'\n2. Ask: 'do you know who leads on safeguarding here, by name?' If not, tell them now.\n3. Now write both onto the safety card, with Childline's number from the reporting routes card.\n4. Ask: 'where will you keep this so it is there but private?'",
+        "input": "1. Ask: 'what's the main thing you'd take away from these five weeks?'\n2. Show the reporting routes information card and go through it properly: whoever leads on safeguarding in your school, by name, Childline on 0800 1111, and the police.\n3. Say they can report something about a friend, not just themselves. That is often how someone gets help.\n4. Say the card gets filled in today and leaves with them, not kept in a file here.",
+        "activity": "1. Ask: 'who are two adults you'd go to?'\n2. Ask: 'do you know who leads on safeguarding here, by name?' If not, tell them now.\n3. Now write both onto the safety card, with Childline's number from the reporting routes card.\n4. Ask: 'where will you keep this so it's there but private?'",
         "reflect": "1. Ask: 'which of those adults would you actually go to first?'\n2. The card is theirs — nothing needs to happen with it.",
         "lookfor": "This session should end on a note of empowerment and clear, practical routes to help, not fear. If any concerns have emerged across the five weeks, ensure your school's safeguarding lead has been informed through the proper channel, separately from this course record.",
         "resources": [
@@ -2713,7 +2713,7 @@ module.exports = [
         "input": "1. Name the specific move this course is about: primary to secondary, a mid-year move, or a new key stage.\n2. Ask: 'what do you already know about the new school, and where did you hear it?'\n3. Correct anything that is plainly rumour, gently — sibling stories can be years out of date.\n4. Use the briefing card to say that feeling mixed about it — worried and looking forward at once — is normal.\n5. Say that both columns get filled in, not just the worries.",
         "activity": "1. Ask: 'what are you worried about with the move?' Pupil writes each one into the worries column.\n2. Ask: 'and what are you actually looking forward to?' Fill the hopes column too.\n3. Push for specifics — not 'everything', but getting lost, or lunch.\n4. Ask: 'which column filled up faster?'",
         "reflect": "1. Ask: 'which of those worries is the biggest?'\n2. Tell them that is the one you will work on properly next week.",
-        "lookfor": "Vague, general anxiety ('I just do not want to go') is common and can be hard to work with directly, gently help the pupil break it into specific, addressable worries over the five weeks.",
+        "lookfor": "Vague, general anxiety ('I just don't want to go') is common and can be hard to work with directly, gently help the pupil break it into specific, addressable worries over the five weeks.",
         "resources": [
           "Worries and hopes chart",
           "It's normal to feel mixed briefing card"
@@ -2730,10 +2730,10 @@ module.exports = [
       {
         "title": "Finding my way",
         "objective": "Pupil can describe the practical layout, routine or route for the pupil's new setting.",
-        "checkin": "1. Ask: 'what is happened with the biggest worry you named last week?'\n2. Ask: 'has it grown or shrunk since you said it out loud?'",
-        "input": "1. Explain that most transition anxiety is about not knowing, not about danger.\n2. Ask: 'is it the new school you are worried about, or not knowing what it is like?' Usually the second, and that can be fixed.\n3. Say you will walk through the journey and what happens on arrival, step by step.\n4. Say you will pick one practical thing to sort out before the move — the bag, the route, or the timetable.",
+        "checkin": "1. Ask: 'what's happened with the biggest worry you named last week?'\n2. Ask: 'has it grown or shrunk since you said it out loud?'",
+        "input": "1. Explain that most transition anxiety is about not knowing, not about danger.\n2. Ask: 'is it the new school you're worried about, or not knowing what it's like?' Usually the second, and that can be fixed.\n3. Say you will walk through the journey and what happens on arrival, step by step.\n4. Say you will pick one practical thing to sort out before the move — the bag, the route, or the timetable.",
         "activity": "1. Get out the new setting layout and route guide and the first day checklist template.\n2. Get out the layout guide and ask: 'how are you actually getting there?'\n3. Walk through the day on the map: arriving, finding a room, lunch, home.\n4. Ask: 'where would you go if you got lost?'\n5. Pupil fills in the first day checklist — what is in the bag, what time they leave.",
-        "reflect": "1. Ask: 'what is one practical thing that would make the first day easier?'\n2. Agree who is sorting it, and when — before the move, not on the day.",
+        "reflect": "1. Ask: 'what's one practical thing that would make the first day easier?'\n2. Agree who is sorting it, and when — before the move, not on the day.",
         "lookfor": "For particularly anxious pupils, a planned pre-visit to the new setting, even briefly, can make a significant difference, flag this as a recommendation to relevant staff or family if not already arranged.",
         "resources": [
           "Worries and hopes chart",
@@ -2752,9 +2752,9 @@ module.exports = [
       {
         "title": "Making friends",
         "objective": "Pupil can rehearse at least one practical way to start a conversation or join a group in a new setting.",
-        "checkin": "1. Ask: 'did you get the thing on your first day checklist sorted?'\n2. Ask: 'does the move feel any easier now that is done?'",
+        "checkin": "1. Ask: 'did you get the thing on your first day checklist sorted?'\n2. Ask: 'does the move feel any easier now that's done?'",
         "input": "1. Ask: 'how many people do you think arrive already knowing everyone?'\n2. Nobody does. Everyone there is watching everyone else, worrying about the same thing.\n3. Add the low-pressure routes in: sitting near others at lunch, joining a club in the first fortnight.\n4. Get out the joining a club or group ideas card — a shared activity gives you a reason to talk, which is easier than talking for its own sake.\n5. Set the expectation honestly — the first weeks are about acquaintances, not best friends.",
-        "activity": "1. Get out the starting a conversation prompt cards.\n2. Pupil picks two openers from the prompt cards that they would actually say.\n3. Role-play it: you are a new classmate, they start the conversation.\n4. Do it once where you reply well, once where you are short with them.\n5. Ask: 'what would you do if they did not say much back?'",
+        "activity": "1. Get out the starting a conversation prompt cards.\n2. Pupil picks two openers from the prompt cards that they would actually say.\n3. Role-play it: you are a new classmate, they start the conversation.\n4. Do it once where you reply well, once where you are short with them.\n5. Ask: 'what would you do if they didn't say much back?'",
         "reflect": "1. Ask: 'which of those felt least strange to say?'\n2. Pupil agrees to start one small conversation in the first couple of weeks. One is enough.",
         "lookfor": "Reassure the pupil that friendships often take weeks, not days, to form in a new setting, this is normal, not a sign that something's wrong.",
         "resources": [
@@ -2774,7 +2774,7 @@ module.exports = [
       {
         "title": "Coping with the unknown",
         "objective": "Pupil can name and try at least one coping strategy for moments of uncertainty during the move.",
-        "checkin": "1. Ask: 'how did it feel practising how you would start a conversation with someone new?'\n2. Ask: 'which opener felt least strange?'",
+        "checkin": "1. Ask: 'how did it feel practising how you'd start a conversation with someone new?'\n2. Ask: 'which opener felt least strange?'",
         "input": "1. Ask: 'will all of this go away before you start?' Some will not — the aim is coping, not removing it.\n2. Mention that a small object or reminder they can carry works for some people.\n3. Explain that they will name a go-to person and place at the new school before the end.",
         "activity": "1. Do one calming technique from the cards together now, properly.\n2. Ask: 'could you do that somewhere with people around?'\n3. Ask: 'who or where would you go to at the new school if it got much?' Pupil writes it on the go-to card.\n4. If they do not know yet, agree who could find out before they start.",
         "reflect": "1. Ask: 'which of those would you actually use?'\n2. Agree it is the one for the first day, when it is most likely to be needed.",
@@ -2798,8 +2798,8 @@ module.exports = [
         "objective": "Pupil has a personalised transition plan and knows who to go to in the new setting if things feel hard.",
         "checkin": "1. Get out the week one worries and hopes chart.\n2. Ask: 'which worries have shrunk, and are any of them new?'\n3. New worries at this point are normal — they mean it is become real.",
         "input": "1. Ask: 'what would you want the new school to know about you on day one?' Their earlier sheets are in this step if they need reminding.\n2. That goes on the plan, and on the copy for the receiving school.",
-        "activity": "1. Ask: 'what is the biggest worry now, and what is the plan if it happens?'\n2. Ask: 'which coping strategy are you taking with you?'\n3. Ask: 'who is the adult at the new school you would go to?'\n4. Now write all of that into the transition plan.\n5. Agree it with your line manager, then share the finished plan with the receiving school.",
-        "reflect": "1. Ask: 'what is one thing you feel more confident about now?'\n2. Ask: 'what still feels uncertain?' Note the answer — it goes into the course summary.",
+        "activity": "1. Ask: 'what's the biggest worry now, and what's the plan if it happens?'\n2. Ask: 'which coping strategy are you taking with you?'\n3. Ask: 'who is the adult at the new school you'd go to?'\n4. Now write all of that into the transition plan.\n5. Agree it with your line manager, then share the finished plan with the receiving school.",
+        "reflect": "1. Ask: 'what's one thing you feel more confident about now?'\n2. Ask: 'what still feels uncertain?' Note the answer — it goes into the course summary.",
         "lookfor": "Agree the follow-up chat a few weeks into the new setting, since transition difficulties often only fully surface once the move has actually happened, not before.",
         "resources": [
           "Worries and hopes chart",
