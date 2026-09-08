@@ -55,8 +55,7 @@
         {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
       </form>
       <p class="ml-filter-note">A course belongs to the period its sessions ran in, so
-      one that spans a half-term shows in both.{% if terms is defined and not terms %} Term dates are
-      set on <a href="/admin/terms">term dates</a>.{% endif %}
+      one that spans a half-term shows in both.
       Only periods with recorded sessions are listed.</p>
     </div>
 

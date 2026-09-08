@@ -43,10 +43,7 @@
     <button class="btn btn-primary" type="submit">Download report</button>
   </form>
 
-  {% if not terms and user.role in ['admin', 'phil_staff'] %}
-  <p class="if-terms-note">Phil doesn&rsquo;t know your term dates.
-  <a href="/admin/terms">Enter them</a> and reports can be cut by term.</p>
-  {% endif %}
+
 
   <p class="muted" style="margin:16px 0 0; font-size:12px;">Sessions are counted by the date they
   happened, so a course running across two terms appears in both. Overdue follow-up chats are always
@@ -60,7 +57,6 @@
 
 /* Spacing here follows the 8-point scale used across the app: 8px between
    buttons in a row, 24px between one block and the next. */
-.if-terms-note{font-size:12px;line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:70ch;}
 .impact-range{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;}
 .impact-range .field{margin:0;min-width:170px;}
 .impact-range .field label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.04em;

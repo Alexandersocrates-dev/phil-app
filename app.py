@@ -4689,18 +4689,9 @@ def impact_report_form(request):
     conn = db.get_conn()
     try:
         years = recorded_academic_years(conn, user["establishment_id"])
-        # A school's own terms, offered as shortcuts that fill the date boxes
-        # rather than as a separate control. An admin knows "Autumn 2"; they do
-        # not necessarily know it ran 3 November to 19 December, and making
-        # them look it up to run a report is a step backwards.
-        terms = conn.execute(
-            """SELECT name, date_from, date_to FROM terms
-               WHERE establishment_id=? AND date_from <= ?
-               ORDER BY date_from DESC LIMIT 6""",
-            (user["establishment_id"], today.isoformat())).fetchall()
-        any_terms = bool(terms) or conn.execute(
-            "SELECT 1 FROM terms WHERE establishment_id=? LIMIT 1",
-            (user["establishment_id"],)).fetchone() is not None
+        # Terms are no longer read here: the shortcuts they fed were removed
+        # once the date pickers landed.
+        terms, any_terms = [], False
     finally:
         conn.close()
 
@@ -5075,12 +5066,12 @@ def chosen_range(request, conn, establishment_id):
     """The period a report covers: an academic year, all time, or own dates.
 
     The same two controls on every downloadable report. Returns
-    (from, to, label, terms) — terms being the school's own, offered as
-    shortcuts that fill the date boxes rather than as a control of their own.
-    An admin knows "Autumn 2"; they do not necessarily know it ran 3 November
-    to 19 December.
+    (from, to, label, terms), with terms kept as an empty list: the term
+    shortcuts were removed once the date pickers landed, and querying the
+    table on every report page load bought nothing. The signature is unchanged
+    so the three report routes did not all need editing for it.
     """
-    terms = school_terms(conn, establishment_id)
+    terms = []
     d_from = (request.query.get("from", [""])[0] or "").strip() or None
     d_to = (request.query.get("to", [""])[0] or "").strip() or None
     for value in (d_from, d_to):
