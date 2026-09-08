@@ -15,6 +15,7 @@ import json
 import os
 import re
 import secrets
+import sys
 
 import db
 import body_map
@@ -4749,6 +4750,52 @@ def cron_retention_check(request):
         conn.close()
     summary = ", ".join(f"{k}: {v}" for k, v in results.items())
     return Response(f"daily checks ok \u2014 {summary}\n", content_type="text/plain")
+
+
+@router.post("/internal/cron/backup")
+def cron_offsite_backup(request):
+    """Uploads a database snapshot offsite, called by the cron service.
+
+    Same shape as the retention check above, and for the same reason: Railway
+    volumes cannot be shared between services, so the cron service has no way
+    to read the database. It calls this, and the app — which holds the volume
+    and the B2 credentials — does the work.
+
+    Railway's own backups sit on the volume they protect, so wiping the volume
+    takes them with it. This is the copy that survives that.
+    """
+    import hmac
+    secret = os.environ.get("CRON_SECRET", "")
+    supplied = request.header("X-Cron-Secret") or request.field("secret", "")
+    if not secret:
+        return Response("Cron secret not configured on this deployment.",
+                        status="503 Service Unavailable")
+    if not hmac.compare_digest(secret, supplied):
+        return Response("Not authorised.", status="403 Forbidden")
+
+    import subprocess
+    script = os.path.join(os.path.dirname(__file__), "backup_offsite.py")
+    if not os.path.exists(script):
+        return Response("backup_offsite.py not deployed.\n",
+                        status="503 Service Unavailable", content_type="text/plain")
+    try:
+        # Run as a subprocess rather than importing it: the script is written to
+        # be run from a shell too, and a failure there must not be able to take
+        # a web worker down with it.
+        done = subprocess.run([sys.executable, script], capture_output=True,
+                              text=True, timeout=300)
+    except subprocess.TimeoutExpired:
+        return Response("backup timed out after 5 minutes\n",
+                        status="500 Internal Server Error", content_type="text/plain")
+    output = (done.stdout or "") + (done.stderr or "")
+    if done.returncode != 0:
+        # Loud and non-200, so a failure shows in the cron service's run history
+        # rather than passing quietly as a success.
+        print("[backup] FAILED: %s" % output.strip())
+        return Response("backup failed\n%s" % output, status="500 Internal Server Error",
+                        content_type="text/plain")
+    print("[backup] %s" % output.strip())
+    return Response(output or "backup ok\n", content_type="text/plain")
 
 
 @router.get("/admin/reports/impact")
