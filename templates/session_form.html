@@ -28,7 +28,7 @@
   {# What was written on this same sheet earlier in the course. Several sessions
      say "put both numbers side by side" or "compare with week one", which a
      mentor can't do if the earlier answer is only stored against that week. #}
-  {% if item.earlier_values and not item.earlier_in_table %}
+  {% if item.earlier_values %}
   <div class="res-earlier">
     <span class="res-earlier-label">Recorded in session {{ item.earlier_week }}</span>
     <span class="res-earlier-values">{{ item.earlier_values|join(' · ') }}</span>
@@ -47,15 +47,12 @@
       <td class="res-writable res-numbered"><span class="res-numbered-inner"><span class="res-rownum">{{ cell }}</span><input type="text"
         name="res__{{ item.slug }}__{{ fk }}"
         value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}"
-        placeholder="{{ (item.earlier_fields or {}).get(fk, '') }}"
         data-field="res__{{ item.slug }}__{{ fk }}" oninput="noteFieldChanged(this)"></span></td>
       {% elif cell %}<td>{{ cell }}</td>
       {% else %}{% set fk = 't' ~ row_i ~ '_' ~ loop.index0 %}
-      {%- set was = (item.earlier_fields or {}).get(fk, '') %}
-      <td class="res-writable{% if was %} res-carried{% endif %}"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
+      <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
         value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}"
-        placeholder="{{ was }}"
-        aria-label="{{ item.table.headers[loop.index0] if item.table.headers|length > loop.index0 else 'Entry' }}, row {{ row_n }}{% if was %}, recorded in session {{ item.earlier_week }} as {{ was }}{% endif %}"></td>
+        aria-label="{{ item.table.headers[loop.index0] if item.table.headers|length > loop.index0 else 'Entry' }}, row {{ row_n }}"></td>
       {% endif %}
     {%- endfor %}</tr>{% endfor %}
   </table>
@@ -81,16 +78,10 @@
   {% endif %}
   {% if item.form %}
   <table class="res-table">
-    {# A field is a label, or a label with an example of the size of answer
-       wanted. Both shapes are accepted, so the forms that are still plain
-       strings need no edit. #}
     {% for f in item.form.fields %}{% set fk = 'f' ~ loop.index0 %}
-    {%- set label = f.label if f is mapping else f %}
-    {%- set eg = f.eg if f is mapping else '' %}
-    <tr><th style="width:45%;">{{ label }}
-      {%- if eg %}<span class="res-eg">for example: {{ eg }}</span>{% endif %}</th>
+    <tr><th style="width:45%;">{{ f }}</th>
       <td class="res-writable"><input type="text" name="res__{{ item.slug }}__{{ fk }}"
-        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}" aria-label="{{ label }}"></td>
+        value="{{ (entries.get(item.slug, {})).get(fk, '') if entries else '' }}" aria-label="{{ f }}"></td>
     </tr>{% endfor %}
   </table>
   {% endif %}
@@ -173,23 +164,6 @@
   </div>
   <p class="res-cards-hint">{{ item.cards|length }} cards &middot; scroll for more, or print the pack to cut them out</p>
   {% endif %}
-  {# The answer key stays shut until the mentor opens it. A true/false sort only
-     works if the pupil commits to an answer first, so this is a reveal, not a
-     panel. #}
-  {% if item.answers %}
-  <details class="res-answers">
-    <summary>{{ item.answers.title or 'Show the answers' }}</summary>
-    {% if item.answers.note %}<p class="res-answers-note">{{ item.answers.note }}</p>{% endif %}
-    <ol>
-      {%- for a in item.answers.rows %}
-      <li><span class="res-verdict">{{ a.answer }}</span> {{ a.statement }}
-        {%- if a.why %}<span class="res-why">{{ a.why }}</span>{% endif %}
-        {%- if a.source %}<span class="res-answer-source">Source: {{ a.source }}</span>{% endif %}
-      </li>
-      {%- endfor %}
-    </ol>
-  </details>
-  {% endif %}
   {% if item.source %}<p class="res-source">{{ item.source }}</p>{% endif %}
 </details>
 {% endmacro %}
@@ -265,23 +239,24 @@
 </details>
 {% endif %}
 
-<div style="background:#fff;border:1.5px solid var(--teal);border-radius:14px;box-shadow:0 4px 14px rgba(29,158,117,0.14);padding:16px 18px;margin-bottom:8px;">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-<div style="width:24px;height:24px;border-radius:50%;background:{% if week.staff_only %}var(--coral-light);color:var(--coral-dark){% else %}var(--amber-light);color:var(--amber-dark){% endif %};display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11.5px;flex-shrink:0;margin-right:12px;">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</div>
-<div class="step-body"><p style="font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:0;">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</p>{# The goal panel below already says what the session is for, so a generic
-        "This session's focus" label above it was one line of nothing. #}
-        {% if week.staff_only %}<p style="font-size:12px;color:var(--muted);margin:2px 0 0;">No pupil in this one &mdash; written for other staff, and not shown to the pupil or their family</p>{% endif %}</div>
+<div class="sess-card">
+<div class="sess-head">
+  <span class="sess-num{% if week.staff_only %} sess-num-staff{% endif %}" aria-hidden="true">{% if week.staff_only %}&#9998;{% else %}{{ next_week_number }}{% endif %}</span>
+  <div class="sess-head-text">
+    <h2 class="sess-title">{% if week.staff_only %}{{ week.title }}{% else %}Session {{ next_week_number }} &middot; {{ week.title }}{% endif %}</h2>
+    {% if week.staff_only %}<p class="sess-head-sub">No pupil in this one &mdash; written for other staff, and not shown to the pupil or their family</p>{% endif %}
+  </div>
 </div>
 
-{# The objective was already written as a goal — "Pupil can describe what anger
-   feels like in the body" — but sat as unlabelled body text and got skimmed.
-   Labelled and given its own panel, it's the thing a mentor checks against
-   when deciding whether the session landed. #}
+{# The goal sits under the title as supporting text, not on a filled slab.
+   A dark block with type larger than the heading above it pulled the eye
+   first and made every session page open on the same shape of colour, which
+   is what made these screens feel busy. #}
 {% if week.objective %}
 <div class="sess-goal">
   <div class="sess-goal-head">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/></svg>
-    <span>{% if week.staff_only %}What this write-up has to do{% else %}By the end of this session{% endif %}</span>
+    <span>{% if week.staff_only %}What this write-up has to do{% else %}Session goal{% endif %}</span>
   </div>
   <p>{{ week.objective|replace('Pupil ', 'The pupil ', 1)|sentence }}</p>
 </div>
@@ -289,10 +264,10 @@
 
 <div class="sess-context">
 {% if prev_record and prev_record.mentor_notes and not week.staff_only %}
-{# Was coral throughout, which reads as a warning. This is a helpful reminder
-   the mentor left themselves, so it should look like information — but a flat
-   tint with a hairline border was too quiet to notice at all. A solid left bar
-   and an icon give it weight without making it look like an alert. #}
+{# Neutral, not teal. Teal in this header means "what this session is for", and
+   giving the same colour to last week's summary made two different kinds of
+   thing look identical: one is what to do next, the other is what already
+   happened. Grey says history without saying unimportant. #}
 <div class="note-panel note-panel--last">
   <div class="note-panel-head">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
@@ -428,16 +403,12 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      <span class="work-row-body">
-        {%- if row.nothing_recorded %}
-        <span class="work-row-empty">Nothing recorded in this session</span>
-        {%- else %}
-        {%- if row.summary %}<span class="work-row-summary">{{ row.summary }}</span>{% endif %}
-        {%- for s in row.sheets %}
-        <span class="work-row-sheet"><span class="work-row-name">{{ s.name }}</span><span class="work-row-values">{{ s.answers|join(' · ') }}</span></span>
-        {%- endfor %}
-        {%- endif %}
-      </span>
+      {% if row.nothing_recorded %}
+      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
+      {% else %}
+      <span class="work-row-name">{{ row.name }}</span>
+      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -451,7 +422,7 @@
 <div class="step-block">
 <div class="step-num">2</div>
 <div class="step-body">
-<h5 class="step-head">{% if week.staff_only %}What they find hard{% else %}Input{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
+<h5 class="step-head">{% if week.staff_only %}Triggers and early signs{% else %}Input{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.input }} min{% endif %}</span></h5>
 {% for ln in week.resource_lines['input'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['input'].leftover %}{{ resource_card(item) }}{% endfor %}
@@ -468,16 +439,12 @@
     {% for row in week.work_so_far %}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      <span class="work-row-body">
-        {%- if row.nothing_recorded %}
-        <span class="work-row-empty">Nothing recorded in this session</span>
-        {%- else %}
-        {%- if row.summary %}<span class="work-row-summary">{{ row.summary }}</span>{% endif %}
-        {%- for s in row.sheets %}
-        <span class="work-row-sheet"><span class="work-row-name">{{ s.name }}</span><span class="work-row-values">{{ s.answers|join(' · ') }}</span></span>
-        {%- endfor %}
-        {%- endif %}
-      </span>
+      {% if row.nothing_recorded %}
+      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
+      {% else %}
+      <span class="work-row-name">{{ row.name }}</span>
+      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -503,7 +470,7 @@
 <div class="step-block">
 <div class="step-num">4</div>
 <div class="step-body">
-<h5 class="step-head">{% if week.staff_only %}If it happens again{% else %}Reflect{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
+<h5 class="step-head">{% if week.staff_only %}If it escalates{% else %}Reflect{% endif %} <span class="step-time">{% if week.timing %}&middot; {{ week.timing.reflect }} min{% endif %}</span></h5>
 {% for ln in week.resource_lines['reflect'].lines %}<p class="step-line{% if not ln.text.strip()[0].isdigit() %} step-line--plain{% endif %}">{{ ln.text }}</p>
 {% for item in ln.resources %}{{ resource_card(item) }}{% endfor %}{% endfor %}
 {% for item in week.resource_lines['reflect'].leftover %}{{ resource_card(item) }}{% endfor %}
@@ -531,7 +498,7 @@
 <div class="step-block">
 <div class="step-num">6</div>
 <div class="step-body">
-<h5 class="step-head">{% if week.staff_only %}What happens next{% else %}Summary for this session{% endif %}</h5>
+<h5 class="step-head">{% if week.staff_only %}Plan moving forward{% else %}Summary for this session{% endif %}</h5>
 <textarea class="note-field" name="next_session_note" data-field="next_session_note" oninput="{{ '' if editing_record else 'noteFieldChanged(this)' }}" rows="2" placeholder="{% if week.staff_only %}What happens next, who is doing it, and when you&rsquo;ll review&hellip;{% else %}What happened, what changed, and what to pick up next time&hellip;{% endif %}">{{ draft.next_session_note if draft and draft.next_session_note else '' }}</textarea>
 <div class="field-save-hint"></div>
 <p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course, and what you take to the follow-up chat.{% else %}Private to you, and shown again at the start of Session {{ next_week_number + 1 }}. These notes are what you write the course summary and next steps from in the final session, so write for yourself in five weeks&rsquo; time.{% endif %}</p>
@@ -548,21 +515,17 @@
    pupil's mood as 1 out of 5 — the worst possible score, by accident. A blank
    first option means an unanswered rating stays unanswered. #}
 {% if not week.staff_only %}
-{# Both are required. A skipped rating doesn't lower the impact figure, it takes
-   the pupil out of it, so the report rests on whoever remembered. The blank
-   option stays as the placeholder so nothing is pre-picked, but it can't be
-   submitted. #}
 <div class="field">
-<label for="mood_rating">How the pupil seemed in today&rsquo;s session <span class="req">required</span></label>
-<select id="mood_rating" name="mood_rating" required>
-<option value="" disabled {% if not (draft and draft.mood_rating) %}selected{% endif %}>Choose one</option>
+<label for="mood_rating">How the pupil seemed in today&rsquo;s session</label>
+<select id="mood_rating" name="mood_rating">
+<option value="">Not rated</option>
 {% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.mood_rating|string == i|string %}selected{% endif %}>{{ MOOD_LABELS[i] }}</option>{% endfor %}
 </select>
 </div>
 <div class="field">
-<label for="engagement_rating">How well the pupil took part today <span class="req">required</span></label>
-<select id="engagement_rating" name="engagement_rating" required>
-<option value="" disabled {% if not (draft and draft.engagement_rating) %}selected{% endif %}>Choose one</option>
+<label for="engagement_rating">How well the pupil took part today</label>
+<select id="engagement_rating" name="engagement_rating">
+<option value="">Not rated</option>
 {% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.engagement_rating|string == i|string %}selected{% endif %}>{{ ENGAGEMENT_LABELS[i] }}</option>{% endfor %}
 </select>
 </div>
@@ -703,18 +666,6 @@ for (var i = 0; i < group.length; i++) {
 .res-earlier-label{font-size:11.5px; font-weight:800; letter-spacing:.05em;
   text-transform:uppercase; color:var(--muted); margin-right:8px; white-space:nowrap;}
 .res-earlier-values{font-size:13px; color:var(--ink); min-width:0;}
-/* Said on the label rather than as an asterisk, so it reads without a legend. */
-.req{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
-  color:#A32D2D;margin-left:6px;}
-/* A session's own summary sits above anything written on its sheets, so a row
-   is never empty for a session that was actually run. */
-.work-row-body{display:flex; flex-direction:column; gap:4px; min-width:0;}
-.work-row-summary{white-space:pre-line; color:var(--ink); font-size:13px;}
-.work-row-sheet{display:flex; gap:8px; flex-wrap:wrap; min-width:0;}
-/* A cell holding an earlier session's answer. Shown as a placeholder so it sits
-   in its own column without being written into this week's entries; typing over
-   it replaces it as normal. */
-.res-carried input::placeholder{color:var(--ink); opacity:.55; font-style:italic;}
 
 .res-inline-p{font-size:14px;line-height:1.5;color:var(--ink);margin:0 0 5px;}
 /* A card that has to exist on paper. Amber, because it is something to do
@@ -745,12 +696,30 @@ for (var i = 0; i < group.length; i++) {
    solid. A pale tint left it the quietest element on the screen, and a lighter
    teal fill would have competed with the last-session panel, which is a
    different kind of information. */
-.sess-goal{background:var(--teal-darker);border-radius:12px;padding:15px 18px;margin:0 0 16px;}
-.sess-goal-head{display:flex;align-items:center;margin-bottom:6px;color:#9FE1CB;}
+.sess-card{background:#fff; border:1px solid var(--border); border-left:3px solid var(--teal-dark);
+  border-radius:12px; padding:18px 20px; margin-bottom:8px;}
+
+/* --- session header ------------------------------------------------------ */
+.sess-head{display:flex; align-items:flex-start; gap:12px; margin:0 0 14px;}
+.sess-num{width:28px; height:28px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--teal-light); color:var(--teal-darker);
+  font-family:var(--font-head); font-weight:700; font-size:13px; margin-top:1px;}
+.sess-num-staff{background:var(--coral-light); color:var(--coral-dark);}
+.sess-head-text{min-width:0;}
+/* The largest thing on the screen, because it is what tells a mentor where
+   they are. Everything below it is support. */
+.sess-title{font-family:var(--font-head); font-weight:700; font-size:20px;
+  line-height:1.25; letter-spacing:-.02em; color:var(--navy); margin:0;}
+.sess-head-sub{font-size:12.5px; line-height:1.5; color:var(--muted); margin:4px 0 0;}
+
+.sess-goal{border-left:3px solid var(--teal-dark); background:#F4FAF7;
+  border-radius:0 10px 10px 0; padding:11px 16px; margin:0 0 14px;}
+.sess-goal-head{display:flex;align-items:center;margin-bottom:3px;color:var(--teal-darker);}
 .sess-goal-head svg{width:16px;height:16px;flex-shrink:0;margin-right:8px;}
 .sess-goal-head span{font-size:11.5px;font-weight:800;letter-spacing:.07em;
   text-transform:uppercase;}
-.sess-goal p{font-size:16px;font-weight:600;color:#fff;line-height:1.5;margin:0;}
+.sess-goal p{font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.55;margin:0;}
 .res-figure-wrap{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
 .res-figure{width:132px;height:auto;flex-shrink:0;}
 .res-figure circle, .res-figure rect{fill:#F3F2EC;stroke:var(--border);stroke-width:1.5;}
@@ -763,30 +732,6 @@ for (var i = 0; i < group.length; i++) {
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
-/* The worked example under a form field's label. Lighter and smaller, so it
-   reads as a prompt rather than as part of the pupil's own answer. */
-.res-eg{display:block;font-weight:400;font-style:italic;font-size:12px;
-  color:var(--muted);margin-top:2px;}
-/* The anger thermometer. Sized off one number: the box is 100 x 200, so the
-   figure's height is twice its width. The levels sit beside it rather than
-   inside the drawing, so they wrap like the rest of a resource. */
-.therm{--fig-w:132px;--fig-h:calc(var(--fig-w) * 2);display:flex;
-  align-items:flex-start;gap:24px;flex-wrap:wrap;margin:8px 0 4px;}
-.therm-fig-wrap{flex:0 0 var(--fig-w);}
-.therm-fig{display:block;width:100%;height:auto;}
-/* thermometer.label_track(): the tube starts 5% down the figure and is 71% of
-   its height, because the bulb takes the rest. A percentage has no definite
-   height to resolve against inside a flex row, hence calc off --fig-h. */
-.therm-levels{flex:1;min-width:180px;margin:calc(var(--fig-h) * .05) 0 0;
-  height:calc(var(--fig-h) * .71);display:grid;grid-template-rows:repeat(5,1fr);
-  align-items:center;padding-left:0;list-style:none;font-size:13px;}
-.therm-level{display:flex;flex-direction:column;gap:1px;}
-.therm-name{font-weight:700;color:var(--ink);}
-.therm-level.is-hot .therm-name{color:#A32D2D;}
-.therm-detail{color:var(--muted);}
-/* Two columns are kept on a narrow screen: stacking would break the alignment
-   between a level and its band, which is the point of the picture. */
-@media (max-width:520px){ .therm{--fig-w:104px;gap:14px;} }
 .res-check{margin:6px 0 0;padding-left:0;font-size:13px;list-style:none;}
 /* The bullet was a third mark on a row that already has a tick box and a
    number. */
@@ -866,13 +811,13 @@ for (var i = 0; i < group.length; i++) {
 .note-panel-foot{font-size:11.5px; margin:4px 0 0; opacity:.75;}
 
 /* What happened last week: information, so teal. */
-.note-panel--last{background:#EAF6F1; border-left-color:var(--teal-darker);}
-.note-panel--last .note-panel-head{color:var(--teal-darker);}
-.note-panel--last .note-panel-body, .note-panel--last .note-panel-foot{color:#04342C;}
+.note-panel--last{background:#F4F3EE; border-left-color:#9A9486;}
+.note-panel--last .note-panel-head{color:#5F5E5A;}
+.note-panel--last .note-panel-body, .note-panel--last .note-panel-foot{color:var(--ink);}
 
 /* What tends to go wrong here: attention, so amber. Not coral or red — those
    mean safeguarding on this page and must not be diluted. */
-.note-panel--watch{background:var(--amber-light); border-left-color:var(--amber-dark);}
+.note-panel--watch{background:#FDF6EA; border-left-color:var(--amber-dark);}
 .note-panel--watch .note-panel-head{color:var(--amber-dark);}
 .note-panel--watch .note-panel-body{color:#412402;}
 
@@ -932,29 +877,14 @@ for (var i = 0; i < group.length; i++) {
    title or a missing note shift everything below it. */
 .res-card{scroll-snap-align:start;flex:0 0 152px;display:grid;
   grid-template-rows:16px 52px 60px 1fr auto;border-radius:12px;padding:12px;border:1.5px dashed;}
-/* The label sits in a fixed 16px row, so the titles, art and notes line up
-   across the strip. A label too long for that row used to wrap and draw itself
-   over the title underneath. Held to one line: a long label now shrinks its
-   tracking and then truncates, which is visible in review rather than silently
-   overlapping the card's own title. */
-.res-card-cat{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;
-  align-self:start;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;
-  overflow:hidden;overflow-wrap:break-word;}
+.res-card-cat{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0;align-self:start;}
+.res-card-title{font-size:14px;font-weight:600;margin:0;line-height:1.3;align-self:start;overflow:hidden;}
 .res-card-art{display:flex;align-items:center;justify-content:center;}
 .res-card .res-art{height:56px;margin:0;}
 .res-card-text{font-size:13px;line-height:1.4;margin:6px 0 0;}
 .res-card-note{font-size:12px;margin:8px 0 0;padding-top:7px;border-top:1px solid;min-height:14px;}
 .res-card-note--empty{border-top-color:transparent;}
 .res-source{margin:8px 0 0; font-size:12px; line-height:1.45; color:var(--muted); font-style:italic;}
-.res-answers{margin:10px 0 0;border:1px solid var(--border);border-radius:8px;padding:8px 12px;}
-.res-answers>summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--teal-dark,#0F6E56);}
-.res-answers-note{margin:6px 0 0;font-size:12px;font-style:italic;color:#A32D2D;}
-.res-answers ol{margin:8px 0 2px;padding-left:20px;font-size:13px;}
-.res-answers li{margin-bottom:8px;}
-.res-verdict{font-weight:700;margin-right:4px;}
-.res-why{display:block;color:var(--muted);margin-top:2px;}
-.res-answer-source{display:block;font-size:11.5px;font-style:italic;color:var(--muted);margin-top:2px;}
 .res-cards-hint{font-size:12px;color:var(--muted);margin:0;}
 .res-foot{font-size:12px;color:var(--muted);margin:8px 0 0;}
 .tone-teal{background:var(--teal-light);border-color:var(--teal-darker);color:var(--teal-darker);}
