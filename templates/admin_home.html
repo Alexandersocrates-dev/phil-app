@@ -109,6 +109,25 @@
       </div>
       {% if sub %}
       <p class="ah-seats">{{ sub.plan_type|capitalize }} plan &middot; {{ used }} of {{ limit }} seats used{% if sub.plan_type == 'pilot' %} &middot; pilot ends {{ sub.pilot_ends_at|uk_date }}{% endif %}</p>
+      {# The URN is what separates two schools with the same name, so a missing
+         or wrong one is worth showing rather than hiding in a settings page. #}
+      {% if establishment and establishment.type == 'school' %}
+      <div class="ah-urn">
+        {% if establishment.dfe_urn %}
+        <p class="ah-urn-set">DfE URN {{ establishment.dfe_urn }}
+          <button type="button" class="ah-urn-edit" onclick="document.getElementById('urnForm').hidden = !document.getElementById('urnForm').hidden">Change</button></p>
+        {% else %}
+        <p class="ah-urn-none">No DfE URN recorded. It tells your school apart from others with the same name.</p>
+        {% endif %}
+        <form method="post" action="/admin/establishment/urn" class="ah-urn-form"
+              id="urnForm" {% if establishment.dfe_urn %}hidden{% endif %}>
+          <label class="sr-only" for="dfe_urn">DfE URN</label>
+          <input type="text" id="dfe_urn" name="dfe_urn" inputmode="numeric"
+                 placeholder="Six digits, e.g. 137285" value="{{ establishment.dfe_urn or '' }}">
+          <button class="btn btn-secondary btn-sm" type="submit">Save</button>
+        </form>
+      </div>
+      {% endif %}
       {% endif %}
     </div>
 
@@ -267,5 +286,19 @@
 .collapse-card[open] .collapse-summary h2::before{transform:rotate(90deg);}
 .collapse-hint{font-size:12px; color:var(--muted); white-space:nowrap;}
 .collapse-card[open] .collapse-hint{visibility:hidden;}
+
+.ah-urn{margin:10px 0 0; padding-top:10px; border-top:1px solid var(--border);}
+.ah-urn-set{font-size:12.5px; color:var(--muted); margin:0; display:flex;
+  align-items:center; gap:8px; flex-wrap:wrap;}
+.ah-urn-none{font-size:12.5px; line-height:1.5; color:var(--coral-dark); margin:0 0 8px;}
+.ah-urn-edit{font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
+  background:none; border:none; padding:0; color:var(--teal-darker);
+  text-decoration:underline;}
+.ah-urn-form{display:flex; gap:8px; align-items:center; margin-top:8px; flex-wrap:wrap;}
+.ah-urn-form input{font-family:inherit; font-size:13.5px; padding:7px 10px;
+  border:1.4px solid var(--border); border-radius:8px; width:170px;}
+.ah-urn-form input:focus{outline:none; border-color:var(--teal-dark);}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
 </style>
 {% endblock %}

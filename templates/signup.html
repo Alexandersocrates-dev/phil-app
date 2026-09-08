@@ -55,6 +55,15 @@
 <label for="establishment_name">School/Establishment name</label>
 <input type="text" id="establishment_name" name="establishment_name" placeholder="e.g. Elmswood Academy">
 </div>
+<div class="field" id="urnField">
+<label for="dfe_urn">DfE URN</label>
+<input type="text" id="dfe_urn" name="dfe_urn" inputmode="numeric" placeholder="e.g. 137285"
+       autocomplete="off">
+<div class="hint">Six digits. Two schools can share a name, so this is what tells
+yours apart. You can find it on your
+<a href="https://get-information-schools.service.gov.uk" target="_blank" rel="noopener">Get Information About Schools</a>
+page.</div>
+</div>
 <div class="field">
 <label for="name">Full name</label>
 <input type="text" id="name" name="name" required>
@@ -117,14 +126,22 @@ function philPrepStep3(){
 document.getElementById('signup_type_input').value = philPlan;
 var estabField = document.getElementById('estabNameField');
 var estabInput = document.getElementById('establishment_name');
+var urnField = document.getElementById('urnField');
+var urnInput = document.getElementById('dfe_urn');
 var sub = document.getElementById('s3sub');
 if (philPlan === 'individual') {
 estabField.style.display = 'none';
 estabInput.required = false;
+// An independent mentor has no URN, and asking for one would stop a paying
+// customer at the last step.
+urnField.style.display = 'none';
+urnInput.required = false;
 sub.textContent = "Work independently, outside a School/Establishment subscription, you'll add your own mentees once you're in.";
 } else {
 estabField.style.display = 'block';
 estabInput.required = true;
+urnField.style.display = 'block';
+urnInput.required = true;
 sub.textContent = philPlan === 'pilot'
 ? "You'll be the first admin, on a free 3-week pilot, invite mentors once you're in."
 : "You'll be the first admin, you can invite mentors once you're in.";

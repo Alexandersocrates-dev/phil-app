@@ -115,6 +115,24 @@ def uk_date_long(value):
     return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
 
 
+URN_HELP = ("A URN is the six-digit Unique Reference Number on your school's "
+            "GOV.UK Get Information About Schools page.")
+
+
+def clean_urn(value):
+    """Normalises a DfE URN, or returns None if it isn't one.
+
+    URNs are six digits. Schools often paste them with spaces, or type the
+    local authority and establishment number instead ("302/4321"), so the
+    digits are pulled out before checking the length rather than rejecting
+    anything that is not already clean.
+    """
+    if not value:
+        return None
+    digits = re.sub(r"\D", "", str(value))
+    return digits if len(digits) == 6 else None
+
+
 def person_name(value):
     """Capitalises a name however it was typed, without flattening real ones.
 
@@ -1145,6 +1163,7 @@ def signup_form(request):
 def signup_submit(request):
     signup_type = request.field("signup_type", "pilot")
     establishment_name = request.field("establishment_name", "").strip()
+    dfe_urn_raw = request.field("dfe_urn", "").strip()
     name = request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
     password = request.field("password", "")
@@ -1177,9 +1196,27 @@ def signup_submit(request):
         else:
             if not establishment_name:
                 return with_flash("/signup", "Establishment name is required.", "error")
+            # Two schools can share a name — there are several St Mary's in one
+            # borough — so the URN is what tells them apart, in Phil and in any
+            # conversation about which school a record belongs to.
+            urn = clean_urn(dfe_urn_raw)
+            if not urn:
+                return with_flash("/signup",
+                    "Please enter your school's six-digit DfE URN. " + URN_HELP, "error")
+            clash = conn.execute(
+                "SELECT name FROM establishments WHERE dfe_urn=? AND status='active'",
+                (urn,)).fetchone()
+            if clash:
+                # Almost always a colleague who signed up first, so point them
+                # at the person rather than at a form they cannot get past.
+                return with_flash("/signup",
+                    "%s is already registered with that URN. Ask whoever set it up to add "
+                    "you as a mentor, or email hello@phileducation.co.uk." % clash["name"],
+                    "error")
             cur = conn.execute(
-                "INSERT INTO establishments (type, name, status, created_at) VALUES (?,?,?,?)",
-                ("school", establishment_name, "active", now),
+                """INSERT INTO establishments (type, name, dfe_urn, status, created_at)
+                   VALUES (?,?,?,?,?)""",
+                ("school", establishment_name, urn, "active", now),
             )
             establishment_id = cur.lastrowid
             if signup_type == "pilot":
@@ -5535,6 +5572,7 @@ def staff_new_establishment_submit(request):
     if err:
         return err
     name = request.field("establishment_name", "").strip()
+    urn = clean_urn(request.field("dfe_urn", ""))
     plan_type = request.field("plan_type", "pilot")
     admin_name = request.field("admin_name", "").strip()
     admin_email = request.field("admin_email", "").strip().lower()
@@ -5549,8 +5587,8 @@ def staff_new_establishment_submit(request):
         if conn.execute("SELECT id FROM users WHERE email=?", (admin_email,)).fetchone():
             return with_flash("/staff/establishments/new", "That admin email is already registered.", "error")
         now = db.now()
-        cur = conn.execute("INSERT INTO establishments (type, name, status, created_at) VALUES (?,?,?,?)",
-                            ("school", name, "active", now))
+        cur = conn.execute("INSERT INTO establishments (type, name, dfe_urn, status, created_at) VALUES (?,?,?,?,?)",
+                            ("school", name, urn, "active", now))
         establishment_id = cur.lastrowid
         if plan_type == "pilot":
             pilot_ends = (datetime.datetime.utcnow() + datetime.timedelta(days=PILOT_DAYS)).isoformat()
@@ -5917,6 +5955,39 @@ def delete_establishment_data(conn, eid):
     run("DELETE FROM subscriptions WHERE establishment_id = ?")
     run("DELETE FROM establishments WHERE id = ?")
     return total
+
+
+@router.post("/admin/establishment/urn")
+def update_establishment_urn(request):
+    """Lets an admin correct their own school's URN.
+
+    Without this a typed digit is a support request, and the URN is the thing
+    telling two same-named schools apart — so a wrong one is worse than none.
+    """
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    urn = clean_urn(request.field("dfe_urn", ""))
+    if not urn:
+        return with_flash("/admin", "That is not a six-digit URN. " + URN_HELP, "error")
+    conn = db.get_conn()
+    try:
+        clash = conn.execute(
+            """SELECT name FROM establishments
+               WHERE dfe_urn=? AND id!=? AND status='active'""",
+            (urn, user["establishment_id"])).fetchone()
+        if clash:
+            return with_flash("/admin",
+                "%s is already registered with that URN. Email hello@phileducation.co.uk "
+                "if that is not right." % clash["name"], "error")
+        conn.execute("UPDATE establishments SET dfe_urn=? WHERE id=?",
+                     (urn, user["establishment_id"]))
+        db.log_action(conn, user["id"], "urn_updated", "establishment",
+                      user["establishment_id"], detail=urn)
+        conn.commit()
+    finally:
+        conn.close()
+    return with_flash("/admin", "DfE URN saved.", "ok")
 
 
 @router.post("/staff/establishments/<establishment_id>/suspend")
