@@ -43,24 +43,9 @@
     <button class="btn btn-primary" type="submit">Download report</button>
   </form>
 
-  {# Terms fill the date boxes rather than being a control of their own, so the
-     period is visible and editable before it is asked for. #}
-  {% if terms %}
-  <p class="if-terms">Or jump to a term:
-    {% for t in terms %}<button type="button" class="term-chip"
-      data-from="{{ t.date_from }}" data-to="{{ t.date_to }}">{{ t.name }}</button>{% endfor %}
-  </p>
-  <script>
-  document.querySelectorAll('.term-chip').forEach(function (b) {
-    b.addEventListener('click', function () {
-      document.getElementById('from').value = b.dataset.from;
-      document.getElementById('to').value = b.dataset.to;
-    });
-  });
-  </script>
-  {% elif user.role in ['admin', 'phil_staff'] %}
+  {% if not terms and user.role in ['admin', 'phil_staff'] %}
   <p class="if-terms-note">Phil doesn&rsquo;t know your term dates.
-  <a href="/admin/terms">Enter them</a> and each one becomes a shortcut here.</p>
+  <a href="/admin/terms">Enter them</a> and reports can be cut by term.</p>
   {% endif %}
 
   <p class="muted" style="margin:16px 0 0; font-size:12px;">Sessions are counted by the date they
@@ -75,13 +60,6 @@
 
 /* Spacing here follows the 8-point scale used across the app: 8px between
    buttons in a row, 24px between one block and the next. */
-.if-terms{font-size:13px;color:var(--muted);margin:14px 0 0;display:flex;
-  align-items:center;gap:8px;flex-wrap:wrap;}
-.term-chip{font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
-  color:var(--teal-darker);background:var(--teal-light);border:1px solid transparent;
-  border-radius:20px;padding:5px 12px;}
-.term-chip:hover{border-color:var(--teal-dark);}
-.term-chip:focus-visible{outline:2px solid var(--teal-dark);outline-offset:2px;}
 .if-terms-note{font-size:12px;line-height:1.6;color:var(--muted);margin:16px 0 0;max-width:70ch;}
 .impact-range{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;}
 .impact-range .field{margin:0;min-width:170px;}

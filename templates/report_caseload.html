@@ -28,17 +28,7 @@
       </form>
       {% endif %}
 
-      {# The same two controls as the impact report: a year, or your own dates.
-         Terms fill the date boxes rather than being a control of their own. #}
-      <form method="get" action="{{ year_action }}" class="ctl-field ctl-dates">
-        <span class="ctl-label">Or your own dates</span>
-        <span class="ctl-date-row">
-          <input class="ctl" type="date" name="from" id="from" value="{{ date_from or '' }}" aria-label="From">
-          <input class="ctl" type="date" name="to" id="to" value="{{ date_to or '' }}" aria-label="To">
-          <button class="btn btn-secondary btn-sm" type="submit">Apply</button>
-        </span>
-        {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
-      </form>
+
 
       {% if mentors is defined %}
       <form method="get" action="/admin/reports/caseload" class="ctl-field">
@@ -52,20 +42,18 @@
         <input type="hidden" name="year" value="{{ selected_year }}">
       </form>
       {% endif %}
-      {% if terms %}
-      <p class="ml-terms">Jump to a term:
-        {% for t in terms %}<button type="button" class="term-chip"
-          data-from="{{ t.date_from }}" data-to="{{ t.date_to }}">{{ t.name }}</button>{% endfor %}
-      </p>
-      <script>
-      document.querySelectorAll('.term-chip').forEach(function (b) {
-        b.addEventListener('click', function () {
-          document.getElementById('from').value = b.dataset.from;
-          document.getElementById('to').value = b.dataset.to;
-        });
-      });
-      </script>
-      {% endif %}
+
+      {# The same two controls as the impact report: a year, or your own dates.
+         Terms fill the date boxes rather than being a control of their own. #}
+      <form method="get" action="{{ year_action }}" class="ctl-field ctl-dates">
+        <span class="ctl-label">Or your own dates</span>
+        <span class="ctl-date-row">
+          <input class="ctl" type="date" name="from" id="from" value="{{ date_from or '' }}" aria-label="From">
+          <input class="ctl" type="date" name="to" id="to" value="{{ date_to or '' }}" aria-label="To">
+          <button class="btn btn-secondary btn-sm" type="submit">Apply</button>
+        </span>
+        {% if selected_mentor is defined %}<input type="hidden" name="mentor_id" value="{{ selected_mentor }}">{% endif %}
+      </form>
       <p class="ml-filter-note">A course belongs to the period its sessions ran in, so
       one that spans a half-term shows in both.{% if terms is defined and not terms %} Term dates are
       set on <a href="/admin/terms">term dates</a>.{% endif %}
@@ -77,10 +65,7 @@
       <h2>Nothing to show</h2>
       <p>{% if selected_year == 'all' %}No courses have been enrolled yet.{% else %}No courses ran in {{ selected_year }}.{% endif %}</p>
     </div>
-    {% else %}
-
     {% macro pupil_card(p, open_it, with_mentor) %}
-      <details class="card ml-pupil" {% if open_it %}open{% endif %}>
       <details class="card ml-pupil" {% if open_it %}open{% endif %}>
                 {# The flex row lives in a span inside the summary, not on the summary
            itself: display:flex on a <summary> is refused by older engines and by
@@ -185,20 +170,18 @@
 .ml-main{min-width:0;}
 .ml-aside{min-width:0;position:sticky;top:18px;}
 
-.ml-toolbar{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:16px;}
+/* A grid, not a wrapping flex row. Three controls of different widths in a
+   flex row left the mentor select alone on a second line with a gap beside it
+   the width of the card, which read as a mistake. The grid gives each control
+   a column and lets the dates take the space they need. */
+.ml-toolbar{display:grid;grid-template-columns:auto auto 1fr;gap:16px 20px;
+  align-items:end;padding:16px;}
 /* Heights come from --ctl-h in the stylesheet. */
 .ml-toolbar select.ctl{min-width:170px;}
-.ml-filter-note{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
+.ml-filter-note{grid-column:1 / -1;margin:0;font-size:12px;color:var(--muted);line-height:1.5;}
 .ctl-dates{min-width:0;}
 .ctl-date-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .ctl-date-row .ctl{min-width:150px;}
-.ml-terms{flex-basis:100%;margin:0;font-size:12px;color:var(--muted);
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.term-chip{font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer;
-  color:var(--teal-darker);background:var(--teal-light);border:1px solid transparent;
-  border-radius:20px;padding:5px 12px;}
-.term-chip:hover{border-color:var(--teal-dark);}
-.term-chip:focus-visible{outline:2px solid var(--teal-dark);outline-offset:2px;}
 
 .ml-list{display:flex;flex-direction:column;gap:12px;}
 /* The mentor heads their own group, so their name is said once rather than
@@ -254,6 +237,11 @@
 .ml-empty h2{margin:0 0 8px;font-size:16px;}
 .ml-empty p{margin:0;color:var(--muted);font-size:14px;}
 
+@media (max-width:820px){
+  /* One control per row below the point where three stop fitting, rather than
+     an awkward two-and-one. */
+  .ml-toolbar{grid-template-columns:minmax(0,1fr);}
+}
 @media (max-width:900px){
   .ml-layout{grid-template-columns:minmax(0,1fr);}
   .ml-aside{position:static;order:-1;}
