@@ -55,17 +55,25 @@
           </div>
           {# Fixed-width column with the button always first, so buttons line up
              down the page whether or not a row has the dates link. #}
+          {# One button and one lighter action per row, whatever the row is.
+             Two identical outlined buttons stacked gave the eye nothing to
+             lead on, and "Set session dates" as a bare underlined link was
+             doing the same job as "Change date" in a different shape. #}
           <div class="td-actions">
             <a class="btn {{ 'btn-secondary' if b.key in ['seen', 'coming_sessions', 'coming_reviews'] else 'btn-primary' }} btn-sm td-btn" href="{{ i.action_url }}">{{ i.action_label }}</a>
-            {% if i.kind == 'session' and not i.planned %}<a class="td-plan" href="{{ i.plan_url }}">Set session dates</a>{% endif %}
+            {% if i.kind == 'session' and not i.planned %}
+            <a class="td-mini" href="{{ i.plan_url }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+              Set dates</a>
+            {% endif %}
             {# Moving one date is the common change — a session pushed to
                Friday, a pupil off sick. Rewriting all five on the pupil's
-               record is the wrong size of tool for it, so the date is editable
-               where the mentor is already looking. #}
+               record is the wrong size of tool for it. #}
             {% if i.planned and i.enrolment_id %}
-            <button type="button" class="btn btn-secondary btn-sm td-btn td-edit-toggle"
-                    aria-expanded="false"
-                    onclick="toggleDateEdit(this)">Change date</button>
+            <button type="button" class="td-mini td-edit-toggle" aria-expanded="false"
+                    onclick="toggleDateEdit(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              Change date</button>
             {% endif %}
           </div>
         </div>
@@ -236,8 +244,18 @@
 .chip-grey{background:#EDEBE2;color:#6B675B;}
 .chip-ahead{background:#EDF0F7;color:#3D4E72;}
 
-.td-actions{width:148px;flex-shrink:0;display:flex;flex-direction:column;gap:4px;}
+.td-actions{width:150px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
 .td-btn{width:100%;text-align:center;white-space:nowrap;}
+/* Lighter than a button, heavier than a link: it has an icon, a hit area and a
+   hover state, so it reads as an action without competing with the primary. */
+.td-mini{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;box-sizing:border-box;padding:5px 8px;border-radius:8px;
+  font-family:inherit;font-size:12.5px;font-weight:600;line-height:1.2;
+  color:var(--teal-darker);background:none;border:1px solid transparent;
+  cursor:pointer;text-decoration:none;white-space:nowrap;}
+.td-mini svg{width:14px;height:14px;flex-shrink:0;}
+.td-mini:hover{background:var(--teal-light);border-color:#BFE0D2;}
+.td-mini:focus-visible{outline:2px solid var(--teal-dark);outline-offset:2px;}
 .td-plan{font-size:12px;text-align:center;white-space:nowrap;}
 
 /* ------------------------------------------------------------------ panel -- */
@@ -307,7 +325,7 @@
 .td-edit-date:focus{outline:none; border-color:var(--teal-dark);}
 .td-edit-note{display:block; font-size:12px; line-height:1.5; color:var(--muted);
   margin-top:8px; max-width:60ch;}
-.td-edit-toggle{cursor:pointer;}
+
 </style>
 <script>
 function toggleDateEdit(el) {
