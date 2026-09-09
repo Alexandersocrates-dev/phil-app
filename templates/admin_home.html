@@ -123,7 +123,7 @@
               id="urnForm" {% if establishment.dfe_urn %}hidden{% endif %}>
           <label class="sr-only" for="dfe_urn">DfE number or URN</label>
           <input type="text" id="dfe_urn" name="dfe_urn" inputmode="numeric"
-                 placeholder="302/5407 or 137285" value="{{ establishment.dfe_urn or '' }}">
+                 placeholder="DfE number or URN" value="{{ establishment.dfe_urn or '' }}">
           <button class="btn btn-secondary btn-sm" type="submit">Save</button>
         </form>
       </div>
