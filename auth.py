@@ -159,6 +159,8 @@ def destroy_other_sessions(conn, user_id, keep_token=None):
 
 
 RESET_TOKEN_LIFETIME_MINUTES = 60
+# A week, for an invitation rather than a reset.
+INVITE_TOKEN_LIFETIME_MINUTES = 60 * 24 * 7
 
 
 def generate_temporary_password():
@@ -183,18 +185,25 @@ def init_reset_table(conn):
     )
 
 
-def create_reset_token(conn, user_id):
+def create_reset_token(conn, user_id, lifetime_minutes=None):
     """Issues a single-use, time-limited token and kills any earlier unused one
     for the same user, so requesting a second link makes the first dead rather
-    than leaving several live at once."""
+    than leaving several live at once.
+
+    lifetime_minutes overrides the default hour. An invitation to a new admin
+    needs days rather than an hour: a school business manager may not open
+    their email until Monday, and a dead link on arrival means they cannot get
+    in at all and have to ask us.
+    """
     init_reset_table(conn)
     conn.execute(
         "UPDATE password_resets SET used_at = ? WHERE user_id = ? AND used_at IS NULL",
         (db.now(), user_id),
     )
     token = secrets.token_urlsafe(32)
-    expires = (datetime.datetime.utcnow()
-               + datetime.timedelta(minutes=RESET_TOKEN_LIFETIME_MINUTES)).isoformat()
+    minutes = lifetime_minutes or RESET_TOKEN_LIFETIME_MINUTES
+    expires = (datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+               + datetime.timedelta(minutes=minutes)).isoformat()
     conn.execute(
         "INSERT INTO password_resets (token, user_id, created_at, expires_at) VALUES (?,?,?,?)",
         (token, user_id, db.now(), expires),
