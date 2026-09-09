@@ -113,13 +113,24 @@ def render(template_name, **context):
     return Response(template.render(**context))
 
 
-def pdf_response(path, filename):
+def pdf_response(path, filename, download=False):
+    """Serves a PDF, either shown in the browser or saved to disk.
+
+    inline is right for something being glanced at — a session record, a
+    resource a mentor is about to print. attachment is right for anything a
+    school keeps or forwards: a report or a certificate should land in
+    Downloads with a sensible name, not sit in a tab until it is closed.
+
+    A button labelled "Download" must send attachment, or it does not do what
+    it says.
+    """
     with open(path, "rb") as f:
         data = f.read()
+    disposition = "attachment" if download else "inline"
     return Response(
         data,
         content_type="application/pdf",
-        headers=[("Content-Disposition", f'inline; filename="{filename}"')],
+        headers=[("Content-Disposition", f'{disposition}; filename="{filename}"')],
     )
 
 
@@ -163,9 +174,17 @@ def make_wsgi_app(router, static_dir=None, static_prefix="/static/"):
             rel = path[len(static_prefix):]
             file_path = os.path.normpath(os.path.join(static_dir, rel))
             if file_path.startswith(static_dir) and os.path.isfile(file_path):
-                ctype = "text/css" if file_path.endswith(".css") else "application/octet-stream"
-                if file_path.endswith(".js"):
-                    ctype = "application/javascript"
+                # An SVG served as octet-stream is refused by browsers as a
+                # favicon and downloaded rather than shown, so the type matters
+                # here rather than being cosmetic.
+                ctype = {
+                    ".css": "text/css",
+                    ".js": "application/javascript",
+                    ".svg": "image/svg+xml",
+                    ".png": "image/png",
+                    ".ico": "image/x-icon",
+                    ".webmanifest": "application/manifest+json",
+                }.get(os.path.splitext(file_path)[1].lower(), "application/octet-stream")
                 with open(file_path, "rb") as f:
                     data = f.read()
                 start_response("200 OK", [("Content-Type", ctype)])

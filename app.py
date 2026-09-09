@@ -4366,6 +4366,18 @@ def _resources_the_activity_needs(activity, shareable):
     return []
 
 
+def _download_name(*parts):
+    """A filename a school can tell apart in a Downloads folder.
+
+    Every pupil report was called pupil-report.pdf, so downloading three left
+    someone with pupil-report(1) and pupil-report(2) and no way to know which
+    child was which without opening them.
+    """
+    slug = "-".join(re.sub(r"[^A-Za-z0-9]+", "-", str(p)).strip("-").lower()
+                    for p in parts if p)
+    return re.sub(r"-{2,}", "-", slug)[:80] + ".pdf"
+
+
 def _shareable_for_week(conn, course_id, course_num, week_number, activity=None):
     """The sheets a family may print for one session.
 
@@ -4999,7 +5011,8 @@ def impact_report_download(request):
         conn.close()
     path = pdfgen.impact_report_pdf(user["establishment_id"],
                                     estab["name"] if estab else "Establishment", figures)
-    return pdf_response(path, "impact-report.pdf")
+    return pdf_response(path, _download_name("phil-impact-report",
+                                             datetime.date.today().isoformat()), download=True)
 
 
 @router.get("/admin/reports")
@@ -5293,7 +5306,7 @@ def mentee_report_pdf_download(request):
         enrolment["mentor_name"], enrolment["start_date"], enrolment["current_week"], enrolment["status"],
         weeks_list, reflection_dict, support_plan=plan,
     )
-    return pdf_response(path, "course-report.pdf")
+    return pdf_response(path, "course-report.pdf", download=True)
 
 
 def period_label(year, range_label=None):
@@ -5528,7 +5541,8 @@ def mentor_caseload_pdf(request):
         conn.close()
     path = pdfgen.caseload_report_pdf("Mentoring list", rows, False, f"caseload_{user['id']}",
                                       period=period_label(year))
-    return pdf_response(path, "mentoring-list.pdf")
+    return pdf_response(path, _download_name("phil-mentoring-list",
+                                             datetime.date.today().isoformat()), download=True)
 
 
 @router.get("/admin/reports/caseload")
@@ -5589,7 +5603,8 @@ def admin_caseload_pdf(request):
     path = pdfgen.caseload_report_pdf("Establishment mentoring list", rows, True,
                                        f"caseload_admin_{user['establishment_id']}",
                                        period=period_label(year, range_label))
-    return pdf_response(path, "mentoring-list.pdf")
+    return pdf_response(path, _download_name("phil-mentoring-list",
+                                             datetime.date.today().isoformat()), download=True)
 
 
 @router.get("/mentor/reports/caseload/xlsx")
@@ -7021,7 +7036,9 @@ def certificate_download(request):
         conn.commit()
     finally:
         conn.close()
-    return pdf_response(path, "certificate.pdf")
+    return pdf_response(path, _download_name(
+        "phil-certificate", row["forename"], row["surname"], row["course_title"]),
+        download=True)
 
 
 @router.get("/mentor/session/record/<record_id>/edit")
@@ -7775,7 +7792,9 @@ def pupil_report_download(request):
     path = pdfgen.pupil_report_pdf(
         pupil["id"], f"{pupil['forename']} {pupil['surname']}",
         pupil["establishment_name"], courses, period=period_label(year))
-    return pdf_response(path, "pupil-report.pdf")
+    return pdf_response(path, _download_name(
+        "phil-pupil-report", pupil["forename"], pupil["surname"],
+        datetime.date.today().isoformat()), download=True)
 
 
 @router.get("/mentor/enrolment/<enrolment_id>/summaries/pdf")
@@ -7820,7 +7839,8 @@ def session_summaries_download(request):
     path = pdfgen.session_summaries_pdf(
         enrolment["id"], f"{enrolment['forename']} {enrolment['surname']}",
         enrolment["course_title"], enrolment["mentor_name"] or "Mentor", rows)
-    return pdf_response(path, "session-summaries.pdf")
+    return pdf_response(path, _download_name("phil-session-summaries",
+                                             datetime.date.today().isoformat()), download=True)
 
 
 @router.get("/session/<record_id>/pdf")
@@ -7949,7 +7969,7 @@ def legal_doc_pdf(request):
     if not paras:
         return Response("Document not found", status="404 Not Found")
     path = pdfgen.legal_doc_pdf(key, paras)
-    return pdf_response(path, filename)
+    return pdf_response(path, filename, download=True)
 
 
 # --------------------------------------------------------------------- wsgi --
