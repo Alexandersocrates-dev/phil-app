@@ -116,22 +116,39 @@ def uk_date_long(value):
     return "%d %s %d" % (d.day, d.strftime("%B"), d.year)
 
 
-URN_HELP = ("A URN is the six-digit Unique Reference Number on your school's "
-            "GOV.UK Get Information About Schools page.")
+URN_HELP = ("Either the six-digit URN or the seven-digit DfE number "
+            "(local authority code and establishment number, e.g. 302/5407). "
+            "Both are on your school's GOV.UK Get Information About Schools page.")
 
 
 def clean_urn(value):
-    """Normalises a DfE URN, or returns None if it isn't one.
+    """Normalises a school's DfE identifier, or returns None if it is not one.
 
-    URNs are six digits. Schools often paste them with spaces, or type the
-    local authority and establishment number instead ("302/4321"), so the
-    digits are pulled out before checking the length rather than rejecting
-    anything that is not already clean.
+    Schools are identified two ways and know them to different degrees:
+
+      URN      six digits, unique nationally
+      LAESTAB  seven digits, a three-digit local authority code and a
+               four-digit establishment number, usually written 302/5407
+
+    Both are accepted, because a school office is as likely to have one as the
+    other and refusing the one they have in front of them helps nobody. They
+    cannot be confused with each other: the lengths differ, so a stored value
+    is unambiguous.
+
+    Punctuation and spaces are stripped first, so "302/5407", "302 5407" and
+    "URN 137285" all work.
     """
     if not value:
         return None
     digits = re.sub(r"\D", "", str(value))
-    return digits if len(digits) == 6 else None
+    return digits if len(digits) in (6, 7) else None
+
+
+def urn_label(value):
+    """Says which kind of identifier a stored value is, for display."""
+    if not value:
+        return ""
+    return "URN" if len(str(value)) == 6 else "DfE number"
 
 
 def person_name(value):
@@ -213,6 +230,7 @@ def sentence(value):
 framework_jinja.filters["sentence"] = sentence
 framework_jinja.filters["year_group"] = year_group
 framework_jinja.filters["person_name"] = person_name
+framework_jinja.filters["urn_kind"] = urn_label
 framework_jinja.filters["uk_date"] = uk_date
 framework_jinja.filters["uk_date_long"] = uk_date_long
 framework_jinja.globals["pupil_sessions"] = PUPIL_SESSIONS
@@ -1204,7 +1222,7 @@ def signup_submit(request):
             urn = clean_urn(dfe_urn_raw)
             if not urn:
                 return with_flash("/signup",
-                    "Please enter your school's six-digit DfE URN. " + URN_HELP, "error")
+                    "Please enter your school's DfE identifier. " + URN_HELP, "error")
             clash = conn.execute(
                 "SELECT name FROM establishments WHERE dfe_urn=? AND status='active'",
                 (urn,)).fetchone()
@@ -1378,8 +1396,12 @@ def twofa_page(request):
             conn.commit()
     finally:
         conn.close()
+    # Drawn on the server: the URL carries the shared secret, so it must not go
+    # to a QR web service. None if reportlab is unavailable, and the template
+    # falls back to the typed key.
     return render("two_factor.html", user=user, enabled=enabled, secret=secret,
-                  otpauth_uri=uri, codes=None, recovery_left=left,
+                  otpauth_uri=uri, qr_svg=totp_qr_svg(uri) if uri else None,
+                  codes=None, recovery_left=left,
                   flash=flash_from_query(request))
 
 
@@ -6046,7 +6068,7 @@ def update_establishment_urn(request):
         return err
     urn = clean_urn(request.field("dfe_urn", ""))
     if not urn:
-        return with_flash("/admin", "That is not a six-digit URN. " + URN_HELP, "error")
+        return with_flash("/admin", "That is not a valid DfE identifier. " + URN_HELP, "error")
     conn = db.get_conn()
     try:
         clash = conn.execute(
@@ -7938,6 +7960,49 @@ def _email_html(subject, body):
         '<p style="margin:22px 0 0;font-size:12.5px;color:#5F5E5A;">'
         'Phil Education Ltd &middot; structured support, real growth</p>'
         '</div></body></html>' % paragraphs)
+
+
+def totp_qr_svg(otpauth_url, module_px=6):
+    """An inline SVG QR code for an otpauth:// URL.
+
+    Drawn on the server with reportlab, which is already a dependency, rather
+    than sent to a QR web service: that URL contains the shared secret, and
+    handing it to a third party would defeat the point of the second factor.
+
+    Returned as inline SVG rather than an image file so there is nothing to
+    store, nothing to serve, and no URL anyone could stumble across.
+    """
+    try:
+        from reportlab.graphics.barcode import qr
+    except ImportError:
+        return None
+    try:
+        code = qr.QrCodeWidget(otpauth_url)
+        # The module grid is not built until the widget is measured, so this
+        # call is required rather than incidental.
+        code.getBounds()
+        modules = code.qr.modules
+    except Exception:  # noqa: BLE001 - a missing QR must not break setup
+        return None
+    if not modules:
+        return None
+    n = len(modules)
+    quiet = 2  # the spec asks for 4; 2 is enough on a light card and keeps it small
+    size = (n + quiet * 2) * module_px
+    # One path for every dark module beats 1,369 rects: smaller markup, and it
+    # scales without seams between neighbouring squares.
+    parts = []
+    for row_i, row in enumerate(modules):
+        for col_i, dark in enumerate(row):
+            if dark:
+                parts.append("M%d %dh%dv%dh-%dz" % (
+                    (col_i + quiet) * module_px, (row_i + quiet) * module_px,
+                    module_px, module_px, module_px))
+    return ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
+            'viewBox="0 0 %d %d" role="img" aria-label="Two-factor setup QR code">'
+            '<rect width="%d" height="%d" fill="#fff"/>'
+            '<path d="%s" fill="#12263A"/></svg>'
+            % (size, size, size, size, size, size, "".join(parts)))
 
 
 def _sign_in_url():

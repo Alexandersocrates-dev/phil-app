@@ -114,16 +114,16 @@
       {% if establishment and establishment.type == 'school' %}
       <div class="ah-urn">
         {% if establishment.dfe_urn %}
-        <p class="ah-urn-set">DfE URN {{ establishment.dfe_urn }}
+        <p class="ah-urn-set">{{ establishment.dfe_urn|urn_kind }} {{ establishment.dfe_urn }}
           <button type="button" class="ah-urn-edit" onclick="document.getElementById('urnForm').hidden = !document.getElementById('urnForm').hidden">Change</button></p>
         {% else %}
-        <p class="ah-urn-none">No DfE URN recorded. It tells your school apart from others with the same name.</p>
+        <p class="ah-urn-none">No DfE number recorded. It tells your school apart from others with the same name.</p>
         {% endif %}
         <form method="post" action="/admin/establishment/urn" class="ah-urn-form"
               id="urnForm" {% if establishment.dfe_urn %}hidden{% endif %}>
-          <label class="sr-only" for="dfe_urn">DfE URN</label>
+          <label class="sr-only" for="dfe_urn">DfE number or URN</label>
           <input type="text" id="dfe_urn" name="dfe_urn" inputmode="numeric"
-                 placeholder="Six digits, e.g. 137285" value="{{ establishment.dfe_urn or '' }}">
+                 placeholder="302/5407 or 137285" value="{{ establishment.dfe_urn or '' }}">
           <button class="btn btn-secondary btn-sm" type="submit">Save</button>
         </form>
       </div>
