@@ -1165,6 +1165,7 @@ def signup_submit(request):
     signup_type = request.field("signup_type", "pilot")
     establishment_name = request.field("establishment_name", "").strip()
     dfe_urn_raw = request.field("dfe_urn", "").strip()
+    pilot_ends = None
     name = request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
     password = request.field("password", "")
@@ -1242,6 +1243,15 @@ def signup_submit(request):
         conn.commit()
     finally:
         conn.close()
+
+    # Sent after the transaction has committed, so a mail failure cannot roll
+    # back an account that has already been created. A missing welcome email is
+    # a nuisance; a half-created account is not.
+    try:
+        send_welcome_email(name, email, establishment_name if signup_type != "individual" else None,
+                           signup_type, pilot_ends)
+    except Exception as exc:  # noqa: BLE001 - never block a signup on email
+        print("[mail] welcome email failed for %s: %s" % (email, exc))
 
     dest = "/mentor" if role == "mentor" else "/admin"
     response = with_flash(dest, "Welcome to Phil. Your account is ready.", "ok")
@@ -3904,11 +3914,22 @@ def new_mentor_submit(request):
             return with_flash("/admin", "Seat limit reached. We've logged a request for an extra seat, "
                                           "someone from Phil will be in touch.", "error")
 
-        authlib.create_user(conn, user["establishment_id"], "mentor", name, email, password)
+        mentor_id = authlib.create_user(conn, user["establishment_id"], "mentor",
+                                        name, email, password)
+        # Same reasoning as an admin invitation: the person who typed this
+        # password should not be one of two people who know it.
+        estab = conn.execute("SELECT name FROM establishments WHERE id=?",
+                             (user["establishment_id"],)).fetchone()
+        invite_sent = invite_new_user(conn, mentor_id, name, email,
+                                      estab["name"] if estab else None, role="mentor")
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Mentor added", f"{name} can now sign in and start mentoring.", "/admin", back_label="Continue")
+    detail = (f"{name} has been sent a link to set their own password and can sign in "
+              "once they have." if invite_sent else
+              f"{name} was added, but the invitation email could not be sent to {email}. "
+              "Ask them to use 'Forgotten your password' on the sign-in page.")
+    return render_done(user, "Mentor added", detail, "/admin", back_label="Continue")
 
 
 @router.get("/admin/session/<record_id>")
@@ -5648,13 +5669,22 @@ def staff_new_establishment_submit(request):
                 """INSERT INTO subscriptions (establishment_id, plan_type, included_seats, pupil_cap,
                    status, payment_method, created_at) VALUES (?,?,?,?,?,?,?)""",
                 (establishment_id, "school", 15, None, "active", request.field("payment_method", "invoice"), now))
-        authlib.create_user(conn, establishment_id, "admin", admin_name, admin_email, admin_password)
+        new_admin_id = authlib.create_user(conn, establishment_id, "admin", admin_name,
+                                           admin_email, admin_password)
+        # An invitation rather than the password we just typed: an emailed
+        # password is permanent, forwardable, and known to whoever typed it.
+        invite_sent = invite_new_user(conn, new_admin_id, admin_name, admin_email,
+                                      name, role="admin")
         db.log_action(conn, user["id"], "establishment_created", "establishment", establishment_id,
                        f"Created {name} on behalf of the school ({plan_type})")
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Establishment added", f"{name} has been created and can sign in now.", "/staff/establishments", back_label="Back to establishments")
+    detail = (f"{name} has been created and {admin_email} has been sent a link to set "
+              "their password." if invite_sent else
+              f"{name} has been created, but the invitation email could not be sent to "
+              f"{admin_email}. Ask them to use 'Forgotten your password' on the sign-in page.")
+    return render_done(user, "Establishment added", detail, "/staff/establishments", back_label="Back to establishments")
 
 
 @router.get("/staff/establishments/<establishment_id>")
@@ -6445,12 +6475,20 @@ def staff_team_new_submit(request):
     try:
         if conn.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
             return with_flash("/staff/team/new", "That email is already registered.", "error")
-        authlib.create_user(conn, None, "phil_staff", name, email, password)
+        staff_id = authlib.create_user(conn, None, "phil_staff", name, email, password)
+        # The screen already called this an invite; now it is one. A Phil staff
+        # account can reach every establishment, so it is the last account whose
+        # password should travel by email.
+        invite_sent = invite_new_user(conn, staff_id, name, email, None, role="phil_staff")
         db.log_action(conn, user["id"], "phil_staff_invited", "user", None, email)
         conn.commit()
     finally:
         conn.close()
-    return render_done(user, "Invite sent", f"{name} added to the Phil team and can sign in now.", "/staff/team", back_label="Back to team")
+    detail = (f"{name} has been sent a link to set their own password."
+              if invite_sent else
+              f"{name} was added, but the invitation could not be sent to {email}. "
+              "Ask them to use 'Forgotten your password' on the sign-in page.")
+    return render_done(user, "Invite sent", detail, "/staff/team", back_label="Back to team")
 
 
 @router.get("/staff/audit-log")
@@ -7900,6 +7938,98 @@ def _email_html(subject, body):
         '<p style="margin:22px 0 0;font-size:12.5px;color:#5F5E5A;">'
         'Phil Education Ltd &middot; structured support, real growth</p>'
         '</div></body></html>' % paragraphs)
+
+
+def _sign_in_url():
+    base = os.environ.get("APP_BASE_URL", "").rstrip("/")
+    return "%s/login" % base if base else "the Phil website"
+
+
+def send_welcome_email(name, email, establishment_name, plan_type, pilot_ends=None):
+    """Confirms a new account to the address that registered it.
+
+    Two jobs. It proves the address works — nothing else in signup does, so a
+    typo would only surface when a password reset went nowhere and the account
+    was already unreachable. And it leaves the school something in writing:
+    which plan, when a pilot ends, who the admin is. A business manager
+    otherwise has no record of any of it.
+    """
+    where = establishment_name or "your account"
+    lines = ["Hello %s," % (name.split()[0] if name else "there"), "",
+             "Your Phil account is ready.", ""]
+    if establishment_name:
+        lines.append("Establishment: %s" % establishment_name)
+    lines.append("Signed in as: %s" % email)
+    if plan_type == "pilot":
+        lines.append("Plan: free three-week pilot"
+                     + (", ending %s" % uk_date(pilot_ends) if pilot_ends else ""))
+        lines += ["", "Nothing recorded during the pilot is lost if you carry on "
+                      "afterwards, and no card is needed."]
+    elif plan_type == "individual":
+        lines.append("Plan: individual mentor")
+    else:
+        lines.append("Plan: school")
+    lines += ["", "Sign in here: %s" % _sign_in_url(), "",
+              "If you are an admin or a mentor, Phil will ask you to set up "
+              "two-factor authentication the first time you sign in. It takes "
+              "a minute and uses any authenticator app.", "",
+              "If you did not sign up for this, reply to this email and we will "
+              "remove the account.", "", "Phil Education Ltd"]
+    return _send_email(email, "Your Phil account is ready — %s" % where,
+                       "\n".join(lines))
+
+
+def send_invite_email(name, email, establishment_name, set_password_url, role="admin"):
+    """Invites someone whose account was created for them by another person.
+
+    Used for mentors added by a school admin, admins created by Phil staff, and
+    Phil staff accounts. All three share the same problem: somebody typed a
+    password for somebody else.
+
+    Deliberately does not carry the password. A password sent by email is
+    permanent, forwardable and often stored unencrypted, and whoever typed it
+    knows it too. A one-time link lets them set their own, which nobody else
+    ever sees.
+    """
+    first = name.split()[0] if name else "there"
+    ROLE_LINE = {
+        "admin": "A Phil account has been set up for %s, with you as the administrator.",
+        "mentor": "You have been added as a mentor on Phil at %s.",
+        "phil_staff": "A Phil staff account has been set up for you.",
+    }
+    opening = ROLE_LINE.get(role, ROLE_LINE["admin"])
+    if "%s" in opening:
+        opening = opening % (establishment_name or "your establishment")
+    body = "\n".join([
+        "Hello %s," % first, "", opening, "",
+        "Set your password here:", set_password_url, "",
+        "The link works once and lasts a week. If it expires, use "
+        "'Forgotten your password' on the sign-in page and a new one will be sent.",
+        "", "Your sign-in address is %s." % email, "",
+        "Phil will ask you to set up two-factor authentication the first time "
+        "you sign in. It takes a minute and uses any authenticator app.", "",
+        "Any questions, just reply to this email.", "", "Phil Education Ltd",
+    ])
+    return _send_email(email, "Set up your Phil account — %s"
+                       % (establishment_name or "Phil"), body)
+
+
+def invite_new_user(conn, user_id, name, email, establishment_name, role="admin"):
+    """Issues a one-week token and emails the link. Returns True if it sent.
+
+    Never raises: an account that exists is worth more than an email that did
+    not, and every caller reports the failure so nobody is told it worked when
+    it did not.
+    """
+    try:
+        token = authlib.create_reset_token(
+            conn, user_id, lifetime_minutes=authlib.INVITE_TOKEN_LIFETIME_MINUTES)
+        base = os.environ.get("APP_BASE_URL", "").rstrip("/")
+        return bool(send_invite_email(name, email, establishment_name,
+                                      "%s/reset-password/%s" % (base, token), role))
+    except Exception as exc:  # noqa: BLE001
+        print("[mail] invite failed for %s: %s" % (email, exc))
+        return False
 
 
 def _send_email(to_email, subject, body):
