@@ -4287,7 +4287,8 @@ def home_activity_page(request):
         # was never fetched.
         week = _latest_home_week(conn, row["course_id"], row["current_week"])
         sheets = _shareable_for_week(conn, row["course_id"], "%02d" % row["module_number"],
-                                     week["week_number"]) if week else []
+                                     week["week_number"],
+                                     activity=week["home_activity"]) if week else []
     finally:
         conn.close()
     # No sign-in links, no course library: this page is opened by a family, and
@@ -4306,13 +4307,75 @@ def home_activity_page(request):
     return response
 
 
-def _shareable_for_week(conn, course_id, course_num, week_number):
+_RESOURCE_GENERIC = {"card", "cards", "sheet", "template", "list", "plan", "set", "note",
+                     "notes", "options", "ideas", "my", "the", "and", "for", "how", "it",
+                     "in", "of", "a", "one", "page", "at", "school", "me", "week", "own",
+                     "your", "their", "information", "info", "now", "am", "i"}
+# The everyday word a family uses for a thing: "read through the plan", "the chart".
+_RESOURCE_HEADS = ("plan", "chart", "card", "cards", "toolkit", "scale", "timeline",
+                   "ladder", "thermometer", "script", "map", "worksheet", "handout",
+                   "tally", "profile", "agreement", "ideas")
+
+
+def _distinctive_words(name):
+    """The words that identify a resource, minus the ones every resource has."""
+    return {w for w in re.findall(r"[a-z]+", (name or "").lower())
+            if w not in _RESOURCE_GENERIC and len(w) > 3}
+
+
+def _resources_the_activity_needs(activity, shareable):
+    """Only the sheets this week's home activity actually refers to.
+
+    A week can carry four or five shareable resources, and by week five the
+    list has accumulated everything from the weeks before it. Sending all of
+    them buries the one the family was asked to use, so the activity text
+    decides.
+
+    Three ways of referring to something, in order of confidence:
+
+      1. By name        "look at the avoidance ladder"
+      2. By its kind    "read through the plan", where only one is a plan
+      3. By one word    "read the agreement", where only one matches
+
+    Nothing matched means nothing is sent. Most activities are things to do
+    rather than sheets to use, and offering a printout for "notice one moment
+    this week" is noise.
+    """
+    words = set(re.findall(r"[a-z]+", (activity or "").lower()))
+    exact = [i for i in shareable
+             if _distinctive_words(i["name"]) and _distinctive_words(i["name"]) <= words]
+    if exact:
+        return exact
+    for head in _RESOURCE_HEADS:
+        if head in words:
+            same_kind = [i for i in shareable
+                         if head in re.findall(r"[a-z]+", i["name"].lower())]
+            # Only when there is no ambiguity: "the card" must not guess
+            # between three different cards.
+            if len(same_kind) == 1:
+                return same_kind
+    # 3. Scored: the item sharing the most words with the activity, when one is
+    #    clearly ahead. "the support services information" shares two words
+    #    with the services card and one with the support plan, so it is not
+    #    ambiguous even though both match something.
+    scored = sorted(((len(_distinctive_words(i["name"]) & words), i) for i in shareable),
+                    key=lambda pair: -pair[0])
+    if scored and scored[0][0] > 0:
+        if len(scored) == 1 or scored[0][0] > scored[1][0]:
+            return [scored[0][1]]
+    return []
+
+
+def _shareable_for_week(conn, course_id, course_num, week_number, activity=None):
     """The sheets a family may print for one session.
 
     Opt-in, by a share flag on the pack item, so nothing reaches a family by
     accident. Anything written for staff — a briefing note, a copy for the
     pastoral file — has no flag and cannot appear here however the week is set
     up.
+
+    Narrowed further by what the activity refers to: the flag says a resource
+    may be shared, the activity says whether this week needs it.
     """
     row = conn.execute(
         "SELECT resources FROM weeks WHERE course_id=? AND week_number=? AND staff_only=0",
@@ -4328,7 +4391,9 @@ def _shareable_for_week(conn, course_id, course_num, week_number):
         names |= {_norm_resource(a) for a in it.get("aliases", [])}
         if names & wanted:
             items.append(it)
-    return items
+    if activity is None:
+        return items
+    return _resources_the_activity_needs(activity, items)
 
 
 @router.get("/home-activity/<token>/sheet.pdf")
@@ -4355,7 +4420,8 @@ def home_activity_sheet(request):
             return Response("This link isn't active.", status="404 Not Found")
         week = _latest_home_week(conn, row["course_id"], row["current_week"])
         items = _shareable_for_week(conn, row["course_id"], "%02d" % row["module_number"],
-                                    week["week_number"]) if week else []
+                                    week["week_number"],
+                                    activity=week["home_activity"]) if week else []
     finally:
         conn.close()
     if not items:
