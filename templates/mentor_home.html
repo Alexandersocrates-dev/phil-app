@@ -114,7 +114,10 @@
       </td>
       <td class="record-actions">
         {% if e.status == 'active' %}<a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">{% if e.current_week >= sessions_total - 1 %}Record summary{% else %}Record session{% endif %}</a>{% endif %}
-        {% if e.status == 'completed' %}<a class="btn btn-secondary btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
+        {# Amber, as on the pupil's record. A certificate is the one reward in the
+   app and shouldn't look like a secondary action on one page and a prize on
+   another. #}
+        {% if e.status == 'completed' %}<a class="btn btn-amber btn-sm" href="/certificate/{{ e.id }}/pdf" target="_blank" rel="noopener">Certificate</a>{% endif %}
         {# Sending the home activity home is a weekly job, so the action belongs
            where the mentor already is. It posts and lands on the pupil's page
            with the link in a copy box — the link needs somewhere it can be read
@@ -172,8 +175,10 @@
   {% if not mentoring_list %}
   <div class="mh-empty">
     <p>Nothing running at the moment.</p>
-    <p class="muted">Add a pupil, then enrol them on a course. They join your list, and only yours.</p>
-    <a class="btn btn-primary btn-sm" href="/mentor/pupils/new">Add a pupil</a>
+    {# The button in the section heading is always there, so repeating it here
+       gave an empty list two identical calls to action a few centimetres
+       apart. The empty state explains; the heading acts. #}
+    <p class="muted">Use <strong>Add a pupil</strong> above, then enrol them on a course. They join your list, and only yours.</p>
   </div>
   {% else %}{{ pupil_rows(mentoring_list) }}{% endif %}
 </section>

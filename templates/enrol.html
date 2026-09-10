@@ -1,5 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Enrol {{ pupil.forename }} - Phil{% endblock %}
+{% block title %}Enrol {{ pupil.forename }} - Phil<style>
+.en-hint{font-size:12px; color:var(--muted); line-height:1.45; margin:6px 0 0;}
+</style>
+{% endblock %}
 {% block wrapclass %}narrow{% endblock %}
 {% block content %}
 <div class="card">
@@ -11,6 +14,21 @@
         {% for c in courses %}<option value="{{ c.id }}">{{ '%02d'|format(c.module_number) }} - {{ c.title }}</option>{% endfor %}
       </select>
     </div>
+    {# Only an admin sees this. A mentor enrolling someone is enrolling them to
+       themselves, and a dropdown with one name in it is a question with one
+       answer. The route validates the choice again, so a mentor cannot post
+       a mentor_id and assign work to a colleague. #}
+    {% if mentors %}
+    <div class="field">
+      <label for="mentor_id">Mentor</label>
+      <select name="mentor_id" id="mentor_id">
+        {% for m in mentors %}
+        <option value="{{ m.id }}" {% if m.id == user.id %}selected{% endif %}>{{ m.name }}{% if m.id == user.id %} (you){% endif %}</option>
+        {% endfor %}
+      </select>
+      <p class="en-hint">The pupil appears on this mentor's list, and they do the sessions.</p>
+    </div>
+    {% endif %}
     <button class="btn btn-primary" type="submit">Enrol</button>
   </form>
 </div>

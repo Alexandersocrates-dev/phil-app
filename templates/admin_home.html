@@ -28,6 +28,9 @@
    where a figure belongs. #}
 <div class="tile-grid ah-tiles">
   <a class="tile" href="/admin/pupils"><div class="ati" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div><span class="tlabel">Active pupils</span></a>
+  {# An admin adds pupils for the whole school, not just their own list, and
+     chooses which mentor picks them up on the next screen. #}
+  <a class="tile" href="/mentor/pupils/new"><div class="ati" style="background:var(--teal-light);">{{ icon_user_plus(color='var(--teal-darker)') }}</div><span class="tlabel">Add a pupil</span></a>
   <a class="tile" href="/admin/mentors/new"><div class="ati" style="background:var(--coral-light);">{{ icon_user_plus(color='var(--coral-dark)') }}</div><span class="tlabel">Add a mentor</span></a>
   <a class="tile" href="/courses"><div class="ati" style="background:var(--teal-light);">{{ icon_book(color='var(--teal-darker)') }}</div><span class="tlabel">Course library</span></a>
   <a class="tile" href="/admin/reports"><div class="ati" style="background:var(--coral-light);">{{ icon_folder(color='var(--coral-dark)') }}</div><span class="tlabel">Reports</span></a>
