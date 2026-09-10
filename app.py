@@ -3899,11 +3899,12 @@ def new_mentor_submit(request):
     surname = request.field("surname", "").strip()
     name = " ".join(part for part in (forename, surname) if part) or request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
-    password = request.field("password", "")
+    # No typed password: the mentor sets their own from the invitation.
+    password = unknowable_password()
 
-    if not name or not email or len(password) < 8:
+    if not name or not email:
         return with_flash("/admin/mentors/new",
-                          "Fill in every field. The password needs at least 8 characters.", "error")
+                          "A name and an email address are both needed.", "error")
 
     if not looks_like_email(email):
         return with_flash("/admin/mentors/new",
@@ -4364,6 +4365,31 @@ def _resources_the_activity_needs(activity, shareable):
         if len(scored) == 1 or scored[0][0] > scored[1][0]:
             return [scored[0][1]]
     return []
+
+
+def unknowable_password():
+    """A password for an account somebody else will claim by email.
+
+    Not shown, not stored anywhere readable, and never sent. The user sets
+    their own through the invitation link; until they do, the account cannot be
+    signed into by anyone, including whoever created it.
+    """
+    return secrets.token_urlsafe(32)
+
+
+def xlsx_response(path, filename):
+    """Serves a spreadsheet as a download.
+
+    Always an attachment: a browser cannot display an xlsx, so inline would
+    simply produce a file with an unhelpful name.
+    """
+    with open(path, "rb") as fh:
+        data = fh.read()
+    return Response(
+        data,
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers=[("Content-Disposition", 'attachment; filename="%s"' % filename)],
+    )
 
 
 def _download_name(*parts):
@@ -5009,8 +5035,12 @@ def impact_report_download(request):
         figures = impact_figures(conn, user["establishment_id"], date_from, date_to)
     finally:
         conn.close()
-    path = pdfgen.impact_report_pdf(user["establishment_id"],
-                                    estab["name"] if estab else "Establishment", figures)
+    name = estab["name"] if estab else "Establishment"
+    if request.query.get("format", [""])[0] == "xlsx":
+        path = pdfgen.impact_report_xlsx(user["establishment_id"], name, figures)
+        return xlsx_response(path, _download_name(
+            "phil-impact-report", datetime.date.today().isoformat())[:-4] + ".xlsx")
+    path = pdfgen.impact_report_pdf(user["establishment_id"], name, figures)
     return pdf_response(path, _download_name("phil-impact-report",
                                              datetime.date.today().isoformat()), download=True)
 
@@ -5747,11 +5777,12 @@ def staff_new_establishment_submit(request):
     plan_type = request.field("plan_type", "pilot")
     admin_name = request.field("admin_name", "").strip()
     admin_email = request.field("admin_email", "").strip().lower()
-    admin_password = request.field("admin_password", "")
+    admin_password = unknowable_password()
 
-    if not (name and admin_name and admin_email and len(admin_password) >= 8):
+    if not (name and admin_name and admin_email):
         return with_flash("/staff/establishments/new",
-                           "Fill in every field. Password needs at least 8 characters.", "error")
+                           "An establishment name, and a name and email for the first "
+                           "admin, are all needed.", "error")
 
     conn = db.get_conn()
     try:
@@ -6571,9 +6602,9 @@ def staff_team_new_submit(request):
         return err
     name = request.field("name", "").strip()
     email = request.field("email", "").strip().lower()
-    password = request.field("password", "")
-    if not name or not email or len(password) < 8:
-        return with_flash("/staff/team/new", "Fill in every field. Password needs at least 8 characters.", "error")
+    password = unknowable_password()
+    if not name or not email:
+        return with_flash("/staff/team/new", "A name and an email address are both needed.", "error")
     conn = db.get_conn()
     try:
         if conn.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone():
@@ -7789,6 +7820,13 @@ def pupil_report_download(request):
                                 follow_up=fu_dict))
     finally:
         conn.close()
+    stem = _download_name("phil-pupil-report", pupil["forename"], pupil["surname"],
+                          datetime.date.today().isoformat())[:-4]
+    if request.query.get("format", [""])[0] == "xlsx":
+        path = pdfgen.pupil_report_xlsx(
+            pupil["id"], f"{pupil['forename']} {pupil['surname']}",
+            pupil["establishment_name"], courses, period=period_label(year))
+        return xlsx_response(path, stem + ".xlsx")
     path = pdfgen.pupil_report_pdf(
         pupil["id"], f"{pupil['forename']} {pupil['surname']}",
         pupil["establishment_name"], courses, period=period_label(year))

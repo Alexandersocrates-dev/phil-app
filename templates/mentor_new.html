@@ -8,7 +8,7 @@
 <div class="card card-center">
   <div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
   <h1>Add a mentor</h1>
-  <p class="muted">They'll sign in with the email address you enter here, using the temporary password. Ask them to change it once they're in.</p>
+  <p class="muted">They'll be emailed a link to set their own password. Nobody else ever sees it, including you.</p>
 </div>
 
 <form method="post" action="/admin/mentors/new">
@@ -25,16 +25,11 @@
     </div>
     <div class="field">
       <label for="email">Email address</label>
-      <p class="mn-hint">This is what they sign in with, so it must be one they can receive at &mdash; usually their school address.</p>
+      <p class="mn-hint">The invitation goes here, so it must be an address they can receive at &mdash; usually their school one. Without it they cannot set a password.</p>
       <input type="email" id="email" name="email" autocomplete="email"
              placeholder="name@school.sch.uk" required>
     </div>
-    <div class="field">
-      <label for="password">Temporary password</label>
-      <p class="mn-hint">At least 8 characters. Give it to them directly, and ask them to change it after signing in.</p>
-      <input type="password" id="password" name="password" autocomplete="new-password"
-             minlength="8" required>
-    </div>
+
   </div>
   <button class="btn btn-primary btn-block" type="submit">Add mentor</button>
 </form>
