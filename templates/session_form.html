@@ -732,6 +732,22 @@ for (var i = 0; i < group.length; i++) {
   font-weight:700;flex-shrink:0;}
 .res-figure-wrap .res-check{flex:1;min-width:180px;}
 @media (max-width:520px){ .res-figure{width:104px;} }
+.therm{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+.therm-fig-wrap{flex-shrink:0;}
+.therm-fig-wrap svg{height:260px;width:auto;max-width:120px;display:block;}
+.therm-levels{flex:1;min-width:200px;margin:0;padding:0;list-style:none;}
+.therm-level{display:flex;flex-direction:column;gap:2px;padding:7px 0;
+  border-bottom:1px solid var(--border);}
+.therm-level:last-child{border-bottom:none;}
+.therm-name{font-weight:700;}
+.therm-detail{font-size:13.5px;opacity:.85;}
+.therm-level.is-hot .therm-name{color:var(--teal-darker);}
+@media (max-width:520px){
+  .therm{gap:16px;}
+  .therm-fig-wrap svg{height:200px;max-width:96px;}
+  .therm-levels{min-width:0;}
+}
+
 .res-check{margin:6px 0 0;padding-left:0;font-size:13px;list-style:none;}
 /* The bullet was a third mark on a row that already has a tick box and a
    number. */
