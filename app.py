@@ -3529,7 +3529,11 @@ def session_submit(request):
             (new_current_week, new_status, enrolment_id))
 
         if safeguarding_flag:
-            notify_safeguarding(conn, enrolment.get("establishment_id") or user["establishment_id"],
+            # enrolment is a sqlite3.Row, which has no .get(), and the query
+            # selects enrolments.* — establishment_id lives on pupils, so this
+            # could never have read from the row. The mentor's own establishment
+            # is the right value: they can only record sessions for their school.
+            notify_safeguarding(conn, user["establishment_id"],
                                 pupil_name, mentor_name,
                                 f"session {next_week_number} of {enrolment['course_title']}",
                                 safeguarding_note)
