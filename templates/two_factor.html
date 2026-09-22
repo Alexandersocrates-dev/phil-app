@@ -71,10 +71,27 @@
   <ol class="tf-steps">
     <li>Install an authenticator app if you don't have one. Google Authenticator, Microsoft
       Authenticator and 1Password all work.</li>
+    {% if qr_svg %}
+    {# The QR code carries the same key as the typed version. It is drawn on
+       Phil's own server (totp_qr_svg in app.py) and never sent anywhere else. #}
+    <li>In the app, add an account and scan this code.
+      <div class="tf-qr">{{ qr_svg|safe }}</div>
+      {# On a phone you can't scan your own screen. Authenticator apps register
+         otpauth:// links, so tapping this adds the account directly. #}
+      <p class="tf-same-phone">Setting this up on this phone?
+        <a href="{{ otpauth_uri }}">Open it in your authenticator app</a>.</p>
+      <details class="tf-manual">
+        <summary>Can't scan it? Type a key instead</summary>
+        <code class="tf-secret">{{ secret }}</code>
+        <span class="muted">Account name: your Phil email. Type: time-based.</span>
+      </details>
+    </li>
+    {% else %}
     <li>Add an account by typing in this key:
       <code class="tf-secret">{{ secret }}</code>
       <span class="muted">Account name: your Phil email. Type: time-based.</span>
     </li>
+    {% endif %}
     <li>Type the six-digit code it shows you, to prove it worked.</li>
   </ol>
 
@@ -106,6 +123,14 @@
   letter-spacing:.08em;}
 .tf-warn{color:#A32D2D;font-weight:600;}
 .tf-required{color:#A32D2D;font-weight:700;margin-bottom:12px;}
+.tf-qr{display:inline-block;background:#fff;border:1px solid var(--border);
+  border-radius:10px;padding:10px;margin:10px 0 6px;line-height:0;}
+.tf-qr svg{width:210px;height:auto;max-width:100%;display:block;}
+.tf-same-phone{display:none;margin:4px 0 8px;}
+.tf-manual{margin:6px 0 4px;}
+.tf-manual summary{cursor:pointer;color:var(--teal-darker);font-weight:600;font-size:14px;}
+.tf-manual[open] summary{margin-bottom:6px;}
+@media (max-width:760px){ .tf-same-phone{display:block;} }
 @media (max-width:520px){ .tf-codes{grid-template-columns:minmax(0,1fr);} }
 </style>
 {% endblock %}
