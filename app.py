@@ -1265,11 +1265,20 @@ def signup_submit(request):
     # Sent after the transaction has committed, so a mail failure cannot roll
     # back an account that has already been created. A missing welcome email is
     # a nuisance; a half-created account is not.
+    welcome_sent = False
     try:
-        send_welcome_email(name, email, establishment_name if signup_type != "individual" else None,
+        welcome_sent = send_welcome_email(name, email, establishment_name if signup_type != "individual" else None,
                            signup_type, pilot_ends)
     except Exception as exc:  # noqa: BLE001 - never block a signup on email
         print("[mail] welcome email failed for %s: %s" % (email, exc))
+    # Phil hears about every new account, and whether the welcome email went.
+    # Separate from the welcome email so one failing can't stop the other.
+    try:
+        send_signup_notice(name, email,
+                           establishment_name if signup_type != "individual" else None,
+                           signup_type, pilot_ends, welcome_sent)
+    except Exception as exc:  # noqa: BLE001 - never block a signup on email
+        print("[mail] sign-up notice failed for %s: %s" % (email, exc))
 
     dest = "/mentor" if role == "mentor" else "/admin"
     response = with_flash(dest, "Welcome to Phil. Your account is ready.", "ok")
@@ -8259,6 +8268,43 @@ def invite_new_user(conn, user_id, name, email, establishment_name, role="admin"
     except Exception as exc:  # noqa: BLE001
         print("[mail] invite failed for %s: %s" % (email, exc))
         return False
+
+
+def send_signup_notice(name, email, establishment_name, plan_type,
+                       pilot_ends=None, welcome_sent=False):
+    """Tells Phil that someone has just signed up.
+
+    Without it the only way to learn about a new school was to go looking. Goes
+    to hello@ unless SIGNUP_NOTIFY_EMAIL says otherwise, so the address can move
+    without a code change. Holds only what the sign-up form asked for: nothing
+    about pupils exists yet at this point.
+    """
+    to_email = os.environ.get("SIGNUP_NOTIFY_EMAIL", "hello@phileducation.co.uk")
+    try:
+        from zoneinfo import ZoneInfo
+        when = datetime.datetime.now(ZoneInfo("Europe/London")).strftime("%d %B %Y, %H:%M")
+    except Exception:  # noqa: BLE001 - no tz data: fall back to UTC, say so
+        when = datetime.datetime.utcnow().strftime("%d %B %Y, %H:%M") + " UTC"
+    if plan_type == "pilot":
+        plan = "Free three-week pilot" + (", ending %s" % uk_date(pilot_ends) if pilot_ends else "")
+    elif plan_type == "individual":
+        plan = "Individual mentor"
+    else:
+        plan = "School"
+    who = establishment_name or name or email
+    lines = ["A new account has just been created on Phil.", ""]
+    if establishment_name:
+        lines.append("Establishment: %s" % establishment_name)
+    lines += ["Plan: %s" % plan,
+              "Signed up by: %s (%s)" % (name or "no name given", email),
+              "When: %s" % when, ""]
+    if welcome_sent:
+        lines.append("Their welcome email was accepted for delivery.")
+    else:
+        lines.append("Their welcome email was NOT accepted for delivery. Check "
+                     "Resend, and consider contacting them directly.")
+    return _send_email(to_email, "New Phil sign-up: %s (%s)" % (who, plan.split(",")[0]),
+                       "\n".join(lines))
 
 
 def _send_email(to_email, subject, body):
