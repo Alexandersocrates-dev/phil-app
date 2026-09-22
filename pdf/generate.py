@@ -489,8 +489,46 @@ def _wrap(c, text, x, y, max_width, font="Helvetica", size=9, leading=12, color=
     return y
 
 
+# The staff session saves its five boxes into one field as "Label: text"
+# paragraphs (see the staff_session branch in app.py). The course write-up
+# prints them back out under their own headings. Stored label, printed heading.
+STAFF_WRITE_UP = [
+    ("Starting point and reason for referral", "Starting point and reason for referral"),
+    ("What was worked on", "What was worked on"),
+    ("What worked", "What worked"),
+    ("If it happens again", "If it happens again"),
+    ("Summary and next steps", "Summary for this course"),
+]
+
+
+def _staff_write_up(record):
+    """(heading, text) pairs for the course write-up, in order."""
+    import re
+    text = record["what_happened"] or ""
+    pattern = re.compile(r"^(%s): " % "|".join(re.escape(s) for s, _ in STAFF_WRITE_UP),
+                         re.M)
+    found = list(pattern.finditer(text))
+    parts = {}
+    for i, m in enumerate(found):
+        end = found[i + 1].start() if i + 1 < len(found) else len(text)
+        parts[m.group(1)] = text[m.end():end].strip()
+    # The edit page saves the last two boxes to their own columns, so those
+    # hold the current wording if the record was corrected after saving.
+    if (record["reflection_goal"] or "").strip():
+        parts["If it happens again"] = record["reflection_goal"].strip()
+    if (record["mentor_notes"] or "").strip():
+        parts["Summary and next steps"] = record["mentor_notes"].strip()
+    pairs = []
+    if not found and text.strip():
+        # No labels in it (written before they existed, or edited out of
+        # shape): print it whole rather than lose it.
+        pairs.append(("What happened", text.strip()))
+    pairs += [(shown, parts.get(stored, "")) for stored, shown in STAFF_WRITE_UP]
+    return pairs
+
+
 def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, mentor_name,
-                       resource_work=None):
+                       resource_work=None, staff_only=False):
     """
     record: sqlite3.Row from session_records
     """
@@ -510,23 +548,30 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         ("Mentor", mentor_name),
     ])
 
-    def section(label, text):
+    def section(label, text, size=9, leading=12, gap=5 * mm):
         nonlocal y
         y = _doc_section(c, x, y, label, max_width)
         c.setFillColor(INK)
-        y = _wrap(c, text or "-", x, y, max_width)
-        y -= 5 * mm
+        y = _wrap(c, text or "-", x, y, max_width, size=size, leading=leading)
+        y -= gap
 
-    c.setFillColor(INK)
-    c.setFont("Helvetica", 10)
-    mood = _rating_word(record["mood_rating"], MOOD_LABELS)
-    engagement = _rating_word(record["engagement_rating"], ENGAGEMENT_LABELS)
-    c.drawString(x, y, f"Mood: {mood}    Took part: {engagement}")
-    y -= 8 * mm
+    if staff_only:
+        # The course write-up. Its five parts print under their own headings
+        # with more room between them, instead of as one block of text, and
+        # without the ratings line: there is no pupil in the room.
+        for label, text in _staff_write_up(record):
+            section(label, text, size=10, leading=14, gap=9 * mm)
+    else:
+        c.setFillColor(INK)
+        c.setFont("Helvetica", 10)
+        mood = _rating_word(record["mood_rating"], MOOD_LABELS)
+        engagement = _rating_word(record["engagement_rating"], ENGAGEMENT_LABELS)
+        c.drawString(x, y, f"Mood: {mood}    Took part: {engagement}")
+        y -= 8 * mm
 
-    section("What happened", record["what_happened"])
-    section("Reflect", record["reflection_goal"])
-    section("Summary for this session", record["mentor_notes"])
+        section("What happened", record["what_happened"])
+        section("Reflect", record["reflection_goal"])
+        section("Summary for this session", record["mentor_notes"])
     # What the pupil actually wrote, under the resource's own name. Resources
     # used but not written on are listed separately, so the record distinguishes
     # "we used this" from "here is what came of it".

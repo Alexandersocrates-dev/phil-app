@@ -3520,7 +3520,7 @@ def session_submit(request):
         resource_work = resource_work_for(conn, enrolment_id, week["id"])
         pdf_path = pdfgen.session_record_pdf(record, enrolment, pupil_name, enrolment["course_title"],
                                               week["title"], mentor_name,
-                                              resource_work=resource_work)
+                                              resource_work=resource_work, staff_only=staff_session)
         conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?", (pdf_path, record_id))
 
         new_current_week = next_week_number
@@ -5401,6 +5401,27 @@ def _year_filter(year_from, year_to):
             [year_from, year_to])
 
 
+def _caseload_period_filter(date_from, date_to):
+    """_year_filter, plus courses that haven't had a session yet.
+
+    _year_filter puts a course in the year its sessions ran. That is right for
+    the impact figures, but wrong for a list of who a mentor is working with:
+    a pupil enrolled and not yet seen has no sessions, so they matched no year
+    or term and vanished from the list. Until their first session they count
+    from the day they were enrolled.
+    """
+    if not (date_from and date_to):
+        return "", []
+    return (""" AND (EXISTS (SELECT 1 FROM session_records sr
+                             WHERE sr.enrolment_id = enrolments.id
+                               AND sr.date BETWEEN ? AND ?)
+                 OR (NOT EXISTS (SELECT 1 FROM session_records sr
+                                 WHERE sr.enrolment_id = enrolments.id)
+                     AND enrolments.status = 'active'
+                     AND enrolments.start_date <= ?))""",
+            [date_from, date_to, date_to])
+
+
 def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=False,
                    year_from=None, year_to=None, term_from=None, term_to=None):
     query = """
@@ -5422,10 +5443,10 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
     if establishment_id:
         query += " AND pupils.establishment_id=?"
         params.append(establishment_id)
-    year_sql, year_args = _year_filter(year_from, year_to)
+    year_sql, year_args = _caseload_period_filter(year_from, year_to)
     query += year_sql
     params += year_args
-    term_sql, term_args = _year_filter(term_from, term_to)
+    term_sql, term_args = _caseload_period_filter(term_from, term_to)
     query += term_sql
     params += term_args
     query += " ORDER BY enrolments.status, pupils.surname"
@@ -5437,6 +5458,7 @@ def _caseload_rows(conn, mentor_id=None, establishment_id=None, show_mentor=Fals
         scheduled_end = (start + datetime.timedelta(days=35)).isoformat()
         cert = conn.execute("SELECT id FROM certificates WHERE enrolment_id=?", (r["id"],)).fetchone()
         progress = ("Completed" if r["status"] == "completed"
+                    else "Not started" if not r["current_week"]
                     else f"Week {r['current_week']} of {SESSIONS_PER_COURSE}")
         # The reflection column asked for something retired, so it read "Needed"
         # for ever on every finished course. Replaced with the follow-up, which
@@ -7934,10 +7956,11 @@ def session_pdf_download(request):
         enrolment = conn.execute("SELECT * FROM enrolments WHERE id=?",
                                   (ctx["enrolment_id"],)).fetchone()
         resource_work = resource_work_for(conn, ctx["enrolment_id"], record["week_id"])
+        staff_week = conn.execute("SELECT staff_only FROM weeks WHERE id=?", (record["week_id"],)).fetchone()
         path = pdfgen.session_record_pdf(
             record, enrolment, f"{ctx['forename']} {ctx['surname']}",
             ctx["course_title"], ctx["week_title"], ctx["mentor_name"] or "Mentor",
-            resource_work=resource_work)
+            resource_work=resource_work, staff_only=bool(staff_week and staff_week["staff_only"]))
         conn.execute("UPDATE session_records SET pdf_path=? WHERE id=?",
                      (path, request.params["record_id"]))
         conn.commit()
