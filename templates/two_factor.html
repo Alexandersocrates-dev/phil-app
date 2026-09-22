@@ -23,11 +23,24 @@
 </div>
 
 {% elif enabled %}
+{# Most people arrive here straight after setting up, so the page leads with
+   "you're finished" and a way home. The settings below are for later. #}
+{% set running_low = recovery_left <= 2 %}
 <div class="card">
-  <h1>Two-factor is on</h1>
-  <p>Signing in needs your password and a code from your authenticator app.</p>
-  <p class="muted">{{ recovery_left }} recovery code{{ '' if recovery_left == 1 else 's' }} left.
-  {% if recovery_left <= 2 %}<strong>That is running low &mdash; generate a new set.</strong>{% endif %}</p>
+  <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+  <h1>You're all set</h1>
+  <p class="tf-done">Two-factor is on for your account. There's nothing else you need to do here.</p>
+  <p>From now on, signing in asks for your password and then a code from your
+  authenticator app.</p>
+  {% if running_low %}
+  <p class="tf-warn">You have {{ recovery_left }} recovery code{{ '' if recovery_left == 1 else 's' }}
+  left. Generate a new set below so you can still get in if you lose your phone.</p>
+  {% endif %}
+  <p class="tf-home"><a class="btn btn-primary" href="/">Go to your home page</a></p>
+
+  <details class="tf-manage"{% if running_low %} open{% endif %}>
+  <summary>Managing two-factor</summary>
+  <p class="muted">{{ recovery_left }} recovery code{{ '' if recovery_left == 1 else 's' }} left.</p>
 
   <h2 class="tf-h2">New recovery codes</h2>
   <p class="muted">A new set replaces the old one, so any code you have written down stops working.</p>
@@ -57,6 +70,7 @@
     <button class="btn btn-secondary" type="submit">Turn off two-factor</button>
   </form>
   {% endif %}
+  </details>
 </div>
 
 {% else %}
@@ -131,6 +145,12 @@
 .tf-manual summary{cursor:pointer;color:var(--teal-darker);font-weight:600;font-size:14px;}
 .tf-manual[open] summary{margin-bottom:6px;}
 @media (max-width:760px){ .tf-same-phone{display:block;} }
+.tf-done{font-size:17px;font-weight:600;color:var(--teal-darker);}
+.tf-home{margin:22px 0 6px;}
+.tf-manage{margin-top:26px;border-top:1px solid var(--border);padding-top:16px;}
+.tf-manage summary{cursor:pointer;color:var(--muted);font-weight:600;font-size:14px;}
+.tf-manage[open] summary{margin-bottom:10px;}
+.tf-manage .tf-h2:first-of-type{margin-top:14px;}
 @media (max-width:520px){ .tf-codes{grid-template-columns:minmax(0,1fr);} }
 </style>
 {% endblock %}
