@@ -501,17 +501,26 @@ STAFF_WRITE_UP = [
 ]
 
 
+# Before 22 Sep 2026 the edit page resaved the final session under the
+# ordinary labels. Same boxes, so the same parts: read them as such.
+EDITED_LABELS = {
+    "Check-in": "Starting point and reason for referral",
+    "Input": "What was worked on",
+    "Activity": "What worked",
+}
+
+
 def _staff_write_up(record):
     """(heading, text) pairs for the course write-up, in order."""
     import re
     text = record["what_happened"] or ""
-    pattern = re.compile(r"^(%s): " % "|".join(re.escape(s) for s, _ in STAFF_WRITE_UP),
-                         re.M)
+    labels = [s for s, _ in STAFF_WRITE_UP] + list(EDITED_LABELS)
+    pattern = re.compile(r"^(%s): " % "|".join(re.escape(s) for s in labels), re.M)
     found = list(pattern.finditer(text))
     parts = {}
     for i, m in enumerate(found):
         end = found[i + 1].start() if i + 1 < len(found) else len(text)
-        parts[m.group(1)] = text[m.end():end].strip()
+        parts[EDITED_LABELS.get(m.group(1), m.group(1))] = text[m.end():end].strip()
     # The edit page saves the last two boxes to their own columns, so those
     # hold the current wording if the record was corrected after saving.
     if (record["reflection_goal"] or "").strip():

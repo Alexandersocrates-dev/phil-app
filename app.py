@@ -7218,9 +7218,22 @@ def session_record_edit_submit(request):
         # The edit form is the full session page, so it posts the same five note
         # fields as recording does. Rebuild what_happened the same way, or the
         # two paths would store the record in different shapes.
+        # The final session stores its boxes under the support-plan labels,
+        # as recording does (the staff_session branch). Using the ordinary
+        # labels here meant editing a course summary quietly relabelled it.
+        staff_week = conn.execute("SELECT staff_only FROM weeks WHERE id=?",
+                                  (record["week_id"],)).fetchone()
+        if staff_week and staff_week["staff_only"]:
+            note_fields = (("Starting point and reason for referral", "checkin_note"),
+                           ("What was worked on", "input_note"),
+                           ("What worked", "activity_note"),
+                           ("If it happens again", "reflect_note"),
+                           ("Summary and next steps", "next_session_note"))
+        else:
+            note_fields = (("Check-in", "checkin_note"), ("Input", "input_note"),
+                           ("Activity", "activity_note"))
         parts = []
-        for label, field in (("Check-in", "checkin_note"), ("Input", "input_note"),
-                             ("Activity", "activity_note")):
+        for label, field in note_fields:
             value = request.field(field, "").strip()
             if value:
                 parts.append(f"{label}: {value}")
