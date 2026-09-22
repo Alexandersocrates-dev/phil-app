@@ -45,7 +45,7 @@ module.exports = [
         "title": "Spotting my triggers",
         "objective": "Pupil can identify two to three personal triggers and rate their intensity.",
         "checkin": "1. Ask: 'last week you were going to watch out for the first thing your body does when you start getting angry — did you notice it?'\n2. If they did, ask: 'what was happening at the time?' If they did not, ask: 'do you remember a time last week where you almost got angry?'\n3. Either answer is useful — noticing nothing usually means it built too fast to catch.",
-        "input": "1. Explain that triggers are personal: what irritates one person does not bother another.\n2. Ask: 'does the same thing wind up everyone in your class, or just you?'\n3. Explain that some triggers are instant — a word, a shove — and some are slow: being tired, hungry, told off all morning.\n4. Say why the slow ones matter: they do not cause the incident, they shorten the fuse before it.",
+        "input": "1. Explain that triggers are personal: what irritates one person does not bother another.\n2. Ask: 'does the same thing wind up everyone in your class, or just you?'\n3. Explain that some triggers are instant — a word, a shove — and some are slow: being tired, hungry, told off all morning.\n4. Say why the slow ones matter: they do not cause the incident, but they build up before it, so a small thing feels much bigger.",
         "activity": "1. Ask: 'what kinds of things at school make you angry?' Write each one they name into the trigger list.\n2. Pupil rates each one out of ten on the trigger list.\n3. Sort them into the table together, strongest first.\n4. Ask: 'which of these triggers happens most often at school?'",
         "reflect": "1. Ask: 'which trigger comes up most at school?'\n2. Pupil picks one trigger to track this week, and marks a tally on the card each time it happens.",
         "lookfor": "Some pupils find it easier to identify triggers through drawing or examples from TV or games rather than direct discussion, adapt the format if needed.",
@@ -1481,7 +1481,7 @@ module.exports = [
         }
       },
       {
-        "title": "Speaking up without blowing up",
+        "title": "Speaking up assertively",
         "objective": "Pupil can practise expressing frustration assertively rather than aggressively or by shutting down.",
         "checkin": "1. Ask: 'last week you were going to try STOP once for real — did you get the chance?'\n2. If they did, ask: 'which letter did you actually get to?'\n3. If they did not, ask: 'what happened too fast?' Usually the trigger was not spotted.",
         "input": "1. Take one thing they get told to do and do not want to — being moved seats, say. Read the passive, aggressive and assertive cards for it, in that order.\n2. Ask: 'which of those three gets you what you actually want?'\n3. Say they will build their own version in a moment.\n4. Warn them it sounds different out loud than it reads. That is why it gets said, not just read.",

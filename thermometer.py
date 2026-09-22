@@ -21,7 +21,7 @@ LEVELS = [
     ("Annoyed", "3-4", "Slightly irritated", "You can act on this one"),
     ("Frustrated", "5-6", "Building now", "The gap is still open"),
     ("Angry", "7-8", "Hard to think past it", "STOP goes here"),
-    ("Furious", "9-10", "About to lose control", "Leave, then talk later"),
+    ("Furious", "9-10", "Too angry to think clearly", "Leave, then talk later"),
 ]
 
 VIEW_W, VIEW_H = 100, 200
