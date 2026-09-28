@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_user_plus %}
+{% block title %}Add a staff member - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><a href="/staff/establishments/{{ estab.id }}">&larr; Back to {{ estab.name }}</a></p>
+
+<div class="card card-center">
+  <div class="icon-badge icon-badge--coral">{{ icon_user_plus(color='var(--coral-dark)') }}</div>
+  <h1>Add a staff member</h1>
+  <p class="muted">To {{ estab.name }}. They'll be emailed a link to set their own password,
+  exactly as if their own admin had added them. Nobody else ever sees it, including you.</p>
+  {% if limit %}
+  <p class="muted sn-seats">{{ used }} of {{ limit }} seat{{ '' if limit == 1 else 's' }} used.
+  {% if used >= limit %}<strong>Adding another puts them over their limit.</strong>{% endif %}</p>
+  {% endif %}
+</div>
+
+<form method="post" action="/staff/establishments/{{ estab.id }}/staff/new">
+  <div class="card">
+    <div class="field">
+      <label for="forename">Forename</label>
+      <input type="text" id="forename" name="forename" autocomplete="given-name" required>
+    </div>
+    <div class="field">
+      <label for="surname">Surname</label>
+      <input type="text" id="surname" name="surname" autocomplete="family-name" required>
+    </div>
+    <div class="field">
+      <label for="email">Email address</label>
+      <p class="sn-hint">The invitation goes here, so it must be an address they can receive at
+      &mdash; usually their school one. Without it they cannot set a password.</p>
+      <input type="email" id="email" name="email" autocomplete="email"
+             placeholder="name@school.sch.uk" required>
+    </div>
+    <div class="field">
+      <label for="role">Role</label>
+      <p class="sn-hint">A mentor runs courses with pupils. An admin can also add staff and pupils,
+      and see the whole school's reporting.</p>
+      <select id="role" name="role">
+        <option value="mentor" selected>Mentor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit">Add staff member</button>
+</form>
+
+<style>
+.sn-hint{font-size:12px;color:var(--muted);line-height:1.45;margin:2px 0 6px;}
+.sn-seats{margin-top:8px;}
+</style>
+{% endblock %}

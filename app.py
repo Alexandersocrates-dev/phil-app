@@ -6137,6 +6137,99 @@ def check_retention_due(conn):
     return raised
 
 
+@router.get("/staff/establishments/<establishment_id>/staff/new")
+def staff_new_user_form(request):
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        estab = conn.execute("SELECT * FROM establishments WHERE id=?",
+                             (request.params["establishment_id"],)).fetchone()
+        if not estab:
+            return Response("Not found", status="404 Not Found")
+        sub = conn.execute(
+            "SELECT * FROM subscriptions WHERE establishment_id=? ORDER BY id DESC LIMIT 1",
+            (estab["id"],)).fetchone()
+        used = seats_used(conn, estab["id"])
+    finally:
+        conn.close()
+    return render("staff_user_new.html", user=user, estab=estab, used=used,
+                  limit=seat_limit(sub) if sub else 0,
+                  flash=flash_from_query(request))
+
+
+@router.post("/staff/establishments/<establishment_id>/staff/new")
+def staff_new_user_submit(request):
+    """Adds a mentor or admin to a school, the way the school's own admin would.
+
+    Deliberately the same creation and invitation as /admin/mentors/new: the
+    person sets their own password from the emailed link, so nobody at Phil
+    ever knows it. Two differences. The role is chosen rather than fixed by the
+    route, because staff use this for both. And the seat limit warns instead of
+    blocking: the admin flow stops and raises a seat request to Phil, which is
+    circular when it is Phil doing the adding.
+    """
+    user, err = require(request, roles=["phil_staff"])
+    if err:
+        return err
+    eid = request.params["establishment_id"]
+    back = "/staff/establishments/%s/staff/new" % eid
+    # Two name fields, as on the admin's own form and the pupil form.
+    forename = request.field("forename", "").strip()
+    surname = request.field("surname", "").strip()
+    name = " ".join(part for part in (forename, surname) if part) or request.field("name", "").strip()
+    email = request.field("email", "").strip().lower()
+    role = request.field("role", "mentor").strip()
+    if role not in ("mentor", "admin"):
+        role = "mentor"
+    # No typed password: they set their own from the invitation.
+    password = unknowable_password()
+
+    if not name or not email:
+        return with_flash(back, "A name and an email address are both needed.", "error")
+    if not looks_like_email(email):
+        return with_flash(back, f"\u201c{email}\u201d isn't an email address. They sign in with "
+                                "their email, so it has to be one they can receive at.", "error")
+
+    conn = db.get_conn()
+    try:
+        estab = conn.execute("SELECT * FROM establishments WHERE id=?", (eid,)).fetchone()
+        if not estab:
+            return Response("Not found", status="404 Not Found")
+        existing = conn.execute("SELECT id FROM users WHERE email=?", (email,)).fetchone()
+        if existing:
+            return with_flash(back, "That email is already registered.", "error")
+
+        sub = conn.execute(
+            "SELECT * FROM subscriptions WHERE establishment_id=? ORDER BY id DESC LIMIT 1",
+            (estab["id"],)).fetchone()
+        used = seats_used(conn, estab["id"])
+        limit = seat_limit(sub) if sub else 0
+
+        new_user_id = authlib.create_user(conn, estab["id"], role, name, email, password)
+        invite_sent = invite_new_user(conn, new_user_id, name, email, estab["name"], role=role)
+        db.log_action(conn, user["id"], "user_added_by_staff", "user", new_user_id,
+                      f"{name} added to {estab['name']} as {role} by Phil staff")
+        conn.commit()
+        estab_name = estab["name"]
+    finally:
+        conn.close()
+
+    article = "an" if role == "admin" else "a"
+    detail = (f"{name} has been added to {estab_name} as {article} {role}, and sent a link "
+              "to set their own password."
+              if invite_sent else
+              f"{name} was added to {estab_name}, but the invitation email could not be sent "
+              f"to {email}. Ask them to use \u2018Forgotten your password\u2019 on the sign-in page.")
+    if limit and used + 1 > limit:
+        detail += (f" This takes {estab_name} to {used + 1} of {limit} seats, which is over "
+                   "their limit \u2014 worth a conversation about extra seats.")
+    return render_done(user, "Staff member added", detail,
+                       "/staff/establishments/%s" % eid,
+                       back_label="Back to the establishment")
+
+
 @router.post("/staff/establishments/<establishment_id>/delete")
 def staff_delete_establishment(request):
     """Deletes every record belonging to one establishment.
