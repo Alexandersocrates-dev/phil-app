@@ -6197,6 +6197,17 @@ def delete_establishment_data(conn, eid):
     run("DELETE FROM seat_alerts WHERE establishment_id = ?")
     run("""DELETE FROM sessions WHERE user_id IN
            (SELECT id FROM users WHERE establishment_id = ?)""")
+    # audit_log.actor_user_id points at users, so the log blocks the delete.
+    # The column is nullable and the entries are the school's own history, so
+    # they are detached rather than destroyed: who is cleared, what and when
+    # stay. Outside run(), because nothing here is removed.
+    conn.execute(
+        """UPDATE audit_log
+              SET actor_user_id = NULL,
+                  detail = COALESCE(detail || ' | ', '')
+                           || 'actor removed with establishment ' || ?
+            WHERE actor_user_id IN (SELECT id FROM users WHERE establishment_id = ?)""",
+        (eid, eid))
     run("DELETE FROM users WHERE establishment_id = ?")
     run("DELETE FROM subscriptions WHERE establishment_id = ?")
     run("DELETE FROM establishments WHERE id = ?")

@@ -97,6 +97,14 @@ def delete(conn, eid):
     conn.execute("DELETE FROM seat_alerts WHERE establishment_id = ?", (eid,))
     conn.execute("""DELETE FROM sessions WHERE user_id IN
                     (SELECT id FROM users WHERE establishment_id = ?)""", (eid,))
+    # audit_log.actor_user_id points at users: detach, do not destroy.
+    conn.execute(
+        """UPDATE audit_log
+              SET actor_user_id = NULL,
+                  detail = COALESCE(detail || ' | ', '')
+                           || 'actor removed with establishment ' || ?
+            WHERE actor_user_id IN (SELECT id FROM users WHERE establishment_id = ?)""",
+        (eid, eid))
     conn.execute("DELETE FROM users WHERE establishment_id = ?", (eid,))
     conn.execute("DELETE FROM subscriptions WHERE establishment_id = ?", (eid,))
     conn.execute("DELETE FROM establishments WHERE id = ?", (eid,))
