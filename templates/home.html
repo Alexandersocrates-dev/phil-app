@@ -237,6 +237,12 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-footer-grid{grid-template-columns:1.4fr repeat(3,1fr);gap:32px;margin-bottom:40px;}
   p.scr-body{font-size:14px;}
 }
+
+/* One card wide since the individual plan was withdrawn: the grid was built
+   for two and left a single card stranded in the left-hand column. */
+.mkt-price-grid{grid-template-columns:minmax(0,1fr);justify-content:center;
+  justify-items:center;max-width:560px;margin-left:auto;margin-right:auto;}
+.mkt-price-grid .mkt-price-card{width:100%;}
 </style>
 </head>
 <body>
@@ -445,7 +451,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">Pricing</span>
             <h2>Priced against <em>real comparables</em>, not generic software</h2>
-            <p>Benchmarked against UK solo-practitioner tools and school safeguarding and SEND software.</p>
+            <p>Benchmarked against the school safeguarding and SEND software you already buy.</p>
           </div>
           <div class="mkt-pricing-promo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg><span>Free three-week pilot for every new establishment: up to three seats, ten pupils, no card required</span></div>
           <div class="mkt-price-grid">
