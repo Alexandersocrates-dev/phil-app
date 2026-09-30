@@ -12,10 +12,6 @@
 <div class="ric" style="background:var(--teal-light);">{{ icon_building(color='var(--teal-darker)') }}</div>
 <div><p class="rt">School/Establishment</p><p class="rd">Set up Phil for your School/Establishment, invite mentors, admins and parents.</p></div>
 </button>
-<button type="button" class="role-card" data-role="individual" onclick="philSelectRole('individual')">
-<div class="ric" style="background:var(--amber-light);">{{ icon_user(color='var(--amber-dark)') }}</div>
-<div><p class="rt">Individual mentor</p><p class="rd">Work independently, outside a School/Establishment subscription.</p></div>
-</button>
 </div>
 <p class="muted" style="font-size:12px; margin-top:6px;">Have a parent/carer invite code? Ask your mentor or school admin for sign-in details, parents don't self-register.</p>
 <button class="btn btn-primary" id="s1continue" type="button" disabled onclick="philGoToStep2()" style="width:100%; margin-top:12px;">Continue</button>
@@ -98,11 +94,7 @@ document.getElementById('s1continue').disabled = false;
 function philGoToStep2(){
 if (!philRole) return;
 document.getElementById('s1').style.display = 'none';
-if (philRole === 'school') {
 document.getElementById('s2').style.display = 'block';
-} else {
-philChoosePlan('individual');
-}
 }
 function philGoToStep1(){
 document.getElementById('s2').style.display = 'none';
@@ -117,11 +109,7 @@ document.getElementById('s3').style.display = 'block';
 }
 function philGoBack(){
 document.getElementById('s3').style.display = 'none';
-if (philRole === 'school') {
 document.getElementById('s2').style.display = 'block';
-} else {
-document.getElementById('s1').style.display = 'block';
-}
 }
 function philPrepStep3(){
 document.getElementById('signup_type_input').value = philPlan;
@@ -130,15 +118,6 @@ var estabInput = document.getElementById('establishment_name');
 var urnField = document.getElementById('urnField');
 var urnInput = document.getElementById('dfe_urn');
 var sub = document.getElementById('s3sub');
-if (philPlan === 'individual') {
-estabField.style.display = 'none';
-estabInput.required = false;
-// An independent mentor has no URN, and asking for one would stop a paying
-// customer at the last step.
-urnField.style.display = 'none';
-urnInput.required = false;
-sub.textContent = "Work independently, outside a School/Establishment subscription, you'll add your own mentees once you're in.";
-} else {
 estabField.style.display = 'block';
 estabInput.required = true;
 urnField.style.display = 'block';
@@ -147,7 +126,8 @@ sub.textContent = philPlan === 'pilot'
 ? "You'll be the first admin, on a free 3-week pilot, invite mentors once you're in."
 : "You'll be the first admin, you can invite mentors once you're in.";
 }
-}
+// Schools are the only route now, so the choice is made for them.
+philSelectRole('school');
 (function(){
 var link = document.getElementById('s2emailLink');
 if (link) {

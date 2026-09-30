@@ -1181,6 +1181,13 @@ def signup_form(request):
 @router.post("/signup")
 def signup_submit(request):
     signup_type = request.field("signup_type", "pilot")
+    # The individual plan was withdrawn. The form no longer offers it, but a
+    # form can be posted directly, so the handler refuses it too rather than
+    # creating an account nothing else in the app now supports.
+    if signup_type == "individual":
+        return with_flash("/signup", "Phil is sold to schools and settings. Start a "
+                          "free pilot for your school, or email hello@phileducation.co.uk.",
+                          "error")
     establishment_name = request.field("establishment_name", "").strip()
     dfe_urn_raw = request.field("dfe_urn", "").strip()
     pilot_ends = None
@@ -1199,62 +1206,47 @@ def signup_submit(request):
 
         now = db.now()
 
-        if signup_type == "individual":
-            estab_name = name or "Independent mentor"
-            cur = conn.execute(
-                "INSERT INTO establishments (type, name, status, created_at) VALUES (?,?,?,?)",
-                ("individual", estab_name, "active", now),
+        if not establishment_name:
+            return with_flash("/signup", "Establishment name is required.", "error")
+        # Two schools can share a name — there are several St Mary's in one
+        # borough — so the URN is what tells them apart, in Phil and in any
+        # conversation about which school a record belongs to.
+        urn = clean_urn(dfe_urn_raw)
+        if not urn:
+            return with_flash("/signup",
+                "Please enter your school's DfE identifier. " + URN_HELP, "error")
+        clash = conn.execute(
+            "SELECT name FROM establishments WHERE dfe_urn=? AND status='active'",
+            (urn,)).fetchone()
+        if clash:
+            # Almost always a colleague who signed up first, so point them
+            # at the person rather than at a form they cannot get past.
+            return with_flash("/signup",
+                "%s is already registered with that URN. Ask whoever set it up to add "
+                "you as a mentor, or email hello@phileducation.co.uk." % clash["name"],
+                "error")
+        cur = conn.execute(
+            """INSERT INTO establishments (type, name, dfe_urn, status, created_at)
+               VALUES (?,?,?,?,?)""",
+            ("school", establishment_name, urn, "active", now),
+        )
+        establishment_id = cur.lastrowid
+        if signup_type == "pilot":
+            pilot_ends = (datetime.datetime.utcnow() + datetime.timedelta(days=PILOT_DAYS)).isoformat()
+            conn.execute(
+                """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
+                   pupil_cap, status, payment_method, pilot_ends_at, created_at)
+                   VALUES (?,?,?,?,?,?,?,?)""",
+                (establishment_id, "pilot", 3, 10, "active", "none", pilot_ends, now),
             )
-            establishment_id = cur.lastrowid
+        else:
             conn.execute(
                 """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
                    pupil_cap, status, payment_method, created_at)
                    VALUES (?,?,?,?,?,?,?)""",
-                (establishment_id, "individual", 1, None, "expired", "card", now),
+                (establishment_id, "school", 15, None, "active", "invoice", now),
             )
-            role = "mentor"
-        else:
-            if not establishment_name:
-                return with_flash("/signup", "Establishment name is required.", "error")
-            # Two schools can share a name — there are several St Mary's in one
-            # borough — so the URN is what tells them apart, in Phil and in any
-            # conversation about which school a record belongs to.
-            urn = clean_urn(dfe_urn_raw)
-            if not urn:
-                return with_flash("/signup",
-                    "Please enter your school's DfE identifier. " + URN_HELP, "error")
-            clash = conn.execute(
-                "SELECT name FROM establishments WHERE dfe_urn=? AND status='active'",
-                (urn,)).fetchone()
-            if clash:
-                # Almost always a colleague who signed up first, so point them
-                # at the person rather than at a form they cannot get past.
-                return with_flash("/signup",
-                    "%s is already registered with that URN. Ask whoever set it up to add "
-                    "you as a mentor, or email hello@phileducation.co.uk." % clash["name"],
-                    "error")
-            cur = conn.execute(
-                """INSERT INTO establishments (type, name, dfe_urn, status, created_at)
-                   VALUES (?,?,?,?,?)""",
-                ("school", establishment_name, urn, "active", now),
-            )
-            establishment_id = cur.lastrowid
-            if signup_type == "pilot":
-                pilot_ends = (datetime.datetime.utcnow() + datetime.timedelta(days=PILOT_DAYS)).isoformat()
-                conn.execute(
-                    """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
-                       pupil_cap, status, payment_method, pilot_ends_at, created_at)
-                       VALUES (?,?,?,?,?,?,?,?)""",
-                    (establishment_id, "pilot", 3, 10, "active", "none", pilot_ends, now),
-                )
-            else:
-                conn.execute(
-                    """INSERT INTO subscriptions (establishment_id, plan_type, included_seats,
-                       pupil_cap, status, payment_method, created_at)
-                       VALUES (?,?,?,?,?,?,?)""",
-                    (establishment_id, "school", 15, None, "active", "invoice", now),
-                )
-            role = "admin"
+        role = "admin"
 
         user_id = authlib.create_user(conn, establishment_id, role, name, email, password)
         token = authlib.create_session(conn, user_id)
