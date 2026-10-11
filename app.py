@@ -5777,8 +5777,49 @@ def staff_establishments(request):
         # staff open the console. A cron job would be better; this at least means
         # nobody has to remember to look.
         check_retention_due(conn)
-        rows = conn.execute("SELECT * FROM establishments WHERE type='school' ORDER BY name").fetchall()
+        # The latest subscription per school, for the plan and its dates. Same
+        # choice the billing page makes: renewal_date first, pilot_ends_at for
+        # a pilot.
+        rows = conn.execute(
+            """SELECT e.*, s.plan_type, s.renewal_date, s.pilot_ends_at
+               FROM establishments e
+               LEFT JOIN subscriptions s ON s.id = (
+                   SELECT id FROM subscriptions WHERE establishment_id = e.id
+                   ORDER BY id DESC LIMIT 1)
+               WHERE e.type='school' ORDER BY e.name""").fetchall()
         due = {e["id"]: e for e in establishments_due_deletion(conn)}
+        today = datetime.date.today()
+        listed = []
+        for r in rows:
+            row = dict(r)
+            derived = False
+            if row.get("plan_type") == "pilot" and row.get("pilot_ends_at"):
+                renewal = row["pilot_ends_at"][:10]
+            elif row.get("renewal_date"):
+                renewal = row["renewal_date"][:10]
+            else:
+                # A school created through signup has no renewal date recorded,
+                # so the anniversary is the best available answer. Marked as an
+                # estimate in the table rather than shown as though it were set.
+                try:
+                    start = datetime.date.fromisoformat((row.get("created_at") or "")[:10])
+                except ValueError:
+                    start = None
+                if start is None:
+                    renewal = None
+                else:
+                    try:
+                        renewal = start.replace(year=start.year + 1).isoformat()
+                    except ValueError:
+                        # 29 February has no anniversary in a common year.
+                        renewal = (start + datetime.timedelta(days=365)).isoformat()
+                    derived = True
+            row["renewal"] = renewal
+            row["renewal_derived"] = derived
+            row["renewal_days"] = ((datetime.date.fromisoformat(renewal) - today).days
+                                   if renewal else None)
+            listed.append(row)
+        rows = listed
     finally:
         conn.close()
     return render("staff_establishments.html", user=user, establishments=rows,

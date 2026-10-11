@@ -20,11 +20,25 @@
 {% endif %}
 <div class="card">
   <table>
-    <tr><th>Name</th><th>Status</th><th>Retention</th><th></th></tr>
+    <tr><th>Name</th><th>Signed up</th><th>Renews</th><th>Status</th><th>Retention</th><th></th></tr>
     {% for e in establishments %}
     {% set due = due_deletion.get(e.id) if due_deletion else None %}
     <tr{% if due %} class="row-due"{% endif %}>
       <td>{{ e.name }}</td>
+      <td class="est-date">{% if e.created_at %}{{ e.created_at|uk_date }}{% else %}<span class="muted">&mdash;</span>{% endif %}</td>
+      <td class="est-date">
+        {%- if e.renewal %}{{ e.renewal|uk_date }}
+        <span class="est-note">
+          {%- if e.plan_type == 'pilot' %}pilot
+          {%- elif e.renewal_derived %}estimated{% endif -%}
+          {%- if e.renewal_days is not none %}
+            {%- if e.renewal_days < 0 %} &middot; passed
+            {%- elif e.renewal_days == 0 %} &middot; today
+            {%- elif e.renewal_days <= 30 %} &middot; {{ e.renewal_days }} day{{ '' if e.renewal_days == 1 else 's' }}{% endif -%}
+          {% endif -%}
+        </span>
+        {%- else %}<span class="muted">&mdash;</span>{% endif -%}
+      </td>
       <td>{% if e.status == 'active' %}<span class="badge badge-teal">Active</span>{% else %}<span class="badge badge-red">Suspended</span>{% endif %}</td>
       <td>
         {%- if due %}<span class="badge badge-red">Delete &mdash; {{ due.overdue_by }} day{{ '' if due.overdue_by == 1 else 's' }} overdue</span>
@@ -46,5 +60,7 @@
   font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:4px 9px;
   border-radius:6px; margin-top:2px;}
 .row-due{background:#FDF4F4;}
+.est-date{white-space:nowrap;font-size:13.5px;}
+.est-note{display:block;font-size:11.5px;color:var(--muted);line-height:1.3;}
 </style>
 {% endblock %}
