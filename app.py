@@ -7299,8 +7299,8 @@ def session_record_edit(request):
     # a format this app controls, so it can be split back into the three fields
     # the mentor originally typed into.
     draft = _split_what_happened(record["what_happened"])
-    draft["reflect_note"] = record["reflection_goal"] or ""
-    draft["next_session_note"] = record["mentor_notes"] or ""
+    draft["reflect_note"] = record["reflection_goal"] or draft.get("reflect_note", "")
+    draft["next_session_note"] = record["mentor_notes"] or draft.get("next_session_note", "")
 
     conn3 = db.get_conn()
     try:
@@ -7319,16 +7319,35 @@ def session_record_edit(request):
 
 
 def _split_what_happened(text):
-    """Turns the stored summary back into the three note fields it came from."""
-    out = {"checkin_note": "", "input_note": "", "activity_note": ""}
-    labels = [("Check-in:", "checkin_note"), ("Input:", "input_note"), ("Activity:", "activity_note")]
+    """Turns the stored summary back into the note fields it came from.
+
+    Two label sets, because the staff session stores the same five boxes under
+    the support-plan headings. Knowing only the ordinary three meant a course
+    summary matched nothing and fell through to the catch-all below, which put
+    the whole write-up in the first box.
+    """
+    out = {"checkin_note": "", "input_note": "", "activity_note": "",
+           "reflect_note": "", "next_session_note": ""}
+    labels = [("Check-in:", "checkin_note"), ("Input:", "input_note"),
+              ("Activity:", "activity_note"),
+              ("Starting point and reason for referral:", "checkin_note"),
+              ("What was worked on:", "input_note"),
+              ("What worked:", "activity_note"),
+              ("If it happens again:", "reflect_note"),
+              ("Summary and next steps:", "next_session_note")]
     if not text:
         return out
     positions = []
-    for label, key in labels:
+    taken = []
+    for label, key in sorted(labels, key=lambda pair: -len(pair[0])):
         idx = text.find(label)
+        # A shorter label can sit inside one already matched ("What worked:" in
+        # "What was worked on:" is not a match, but the reverse order would be).
+        while idx >= 0 and any(start <= idx < end for start, end in taken):
+            idx = text.find(label, idx + 1)
         if idx >= 0:
             positions.append((idx, len(label), key))
+            taken.append((idx, idx + len(label)))
     positions.sort()
     for i, (idx, label_len, key) in enumerate(positions):
         end = positions[i + 1][0] if i + 1 < len(positions) else len(text)

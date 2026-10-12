@@ -193,6 +193,11 @@
 
 <style>
 .pupil-actions{display:flex; flex-wrap:wrap; align-items:center; gap:24px;}
+/* The goal line makes a record row two or three lines tall. Cells that centred
+   themselves then sat out of line with the week they belong to. */
+table td{vertical-align:top;}
+.record-actions{white-space:nowrap; text-align:right;}
+.record-actions a{display:inline-block; margin-left:16px; border-bottom:none;}
 .pupil-actions-group{display:flex; flex-wrap:wrap; align-items:center; gap:8px;}
 /* A clear gap, and a divider on wide screens, so the delete is never adjacent
    to something harmless. */
