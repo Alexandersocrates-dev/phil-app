@@ -401,14 +401,25 @@
   </span></summary>
   <div class="work-so-far-body">
     {% for row in week.work_so_far %}
+    {# A session row carries a list of sheets and the mentor's own summary, so
+       both are read from inside the row rather than off the row itself. #}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      {% if row.nothing_recorded %}
-      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
-      {% else %}
-      <span class="work-row-name">{{ row.name }}</span>
-      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
-      {% endif %}
+      <span class="work-row-detail">
+        {%- if row.nothing_recorded %}
+        <span class="work-row-empty">Nothing recorded in this session</span>
+        {%- else %}
+          {%- for sheet in row.sheets %}
+          <span class="work-row-sheet">
+            <span class="work-row-name">{{ sheet.name }}</span>
+            <span class="work-row-values">{{ sheet.answers|join(' · ') }}</span>
+          </span>
+          {%- endfor %}
+          {%- if row.summary %}
+          <span class="work-row-summary">{{ row.summary }}</span>
+          {%- endif %}
+        {%- endif %}
+      </span>
     </div>
     {% endfor %}
   </div>
@@ -437,14 +448,25 @@
   </span></summary>
   <div class="work-so-far-body">
     {% for row in week.work_so_far %}
+    {# A session row carries a list of sheets and the mentor's own summary, so
+       both are read from inside the row rather than off the row itself. #}
     <div class="work-row">
       <span class="work-row-week">Session {{ row.week }}</span>
-      {% if row.nothing_recorded %}
-      <span class="work-row-empty">Nothing recorded on the sheets in this session</span>
-      {% else %}
-      <span class="work-row-name">{{ row.name }}</span>
-      <span class="work-row-values">{{ row.answers|join(' · ') }}</span>
-      {% endif %}
+      <span class="work-row-detail">
+        {%- if row.nothing_recorded %}
+        <span class="work-row-empty">Nothing recorded in this session</span>
+        {%- else %}
+          {%- for sheet in row.sheets %}
+          <span class="work-row-sheet">
+            <span class="work-row-name">{{ sheet.name }}</span>
+            <span class="work-row-values">{{ sheet.answers|join(' · ') }}</span>
+          </span>
+          {%- endfor %}
+          {%- if row.summary %}
+          <span class="work-row-summary">{{ row.summary }}</span>
+          {%- endif %}
+        {%- endif %}
+      </span>
     </div>
     {% endfor %}
   </div>
@@ -643,6 +665,12 @@ for (var i = 0; i < group.length; i++) {
 .res-inline[open] .res-toggle::after{content:"Hide";}
 .res-inline[open] > summary{margin-bottom:8px;}
 @media print{ .res-toggle{display:none;} }
+.work-row-detail{display:block; min-width:0;}
+.work-row-sheet{display:block; margin-bottom:4px;}
+.work-row-sheet:last-child{margin-bottom:0;}
+.work-row-summary{display:block; margin-top:4px; font-size:12.5px; color:var(--muted);
+  line-height:1.45; white-space:pre-line;}
+
 /* The earlier answer sits above the blank sheet, so a comparison can be made
    without leaving the page. */
 /* Folded by default: it's a reference for the recap, not the session. */
