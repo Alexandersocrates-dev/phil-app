@@ -167,7 +167,7 @@
      sent to any more. #}
 
   {% if item.records %}
-  <table style="margin-top:16px;">
+  <table class="pupil-records" style="margin-top:16px;">
     <tr><th>Week</th><th>Date</th><th>Safeguarding</th><th></th></tr>
     {% for r in item.records %}
     <tr>
@@ -193,11 +193,6 @@
 
 <style>
 .pupil-actions{display:flex; flex-wrap:wrap; align-items:center; gap:24px;}
-/* The goal line makes a record row two or three lines tall. Cells that centred
-   themselves then sat out of line with the week they belong to. */
-table td{vertical-align:top;}
-.record-actions{white-space:nowrap; text-align:right;}
-.record-actions a{display:inline-block; margin-left:16px; border-bottom:none;}
 .pupil-actions-group{display:flex; flex-wrap:wrap; align-items:center; gap:8px;}
 /* A clear gap, and a divider on wide screens, so the delete is never adjacent
    to something harmless. */
@@ -205,7 +200,13 @@ table td{vertical-align:top;}
 @media (max-width:700px){
   .pupil-actions-danger{padding-left:0; border-left:none; width:100%; margin-top:4px;}
 }
-.record-actions{display:flex; gap:8px; align-items:center; white-space:nowrap;}
+/* A table cell, not a flex container: as flex it stopped behaving like a
+   cell, broke out of the row and drew its own borders. The goal line makes
+   rows two or three lines tall, so everything aligns to the top instead of
+   floating against the tallest cell. */
+.record-actions{white-space:nowrap; text-align:right; vertical-align:top;}
+.record-actions a{display:inline-block; margin-left:14px;}
+.record-actions a:first-child{margin-left:0;}
 .enrol-card{padding-top:0;}
 .enrol-summary{cursor:pointer; list-style:none; padding:var(--sp-4) 0 0;}
 .enrol-summary::-webkit-details-marker{display:none;}
@@ -243,6 +244,7 @@ table td{vertical-align:top;}
   font-size:12.5px;padding:8px 10px;border:1.4px solid var(--border);border-radius:8px;
   background:#fff;margin:0 0 8px;}
 .record-goal{display:block; font-size:12px; color:var(--muted); margin-top:4px; line-height:1.4;}
+.pupil-records td{vertical-align:top;}
 /* A recorded follow-up sits under the course it followed, not in the session
    table: it isn't a session, and it happened after the course ended. */
 .fu-record{border:1px solid var(--border);border-left:3px solid var(--teal-darker);
