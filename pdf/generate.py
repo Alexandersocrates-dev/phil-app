@@ -557,11 +557,37 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         ("Mentor", mentor_name),
     ])
 
+    page_no = 1
+    # Above the footer rule at 14mm, with room for a line of text.
+    floor = margin + 10 * mm
+
+    def new_page():
+        """Close this page and open the next.
+
+        Without it a long write-up ran past the bottom margin, drew through the
+        footer, and the rest was simply lost off the page.
+        """
+        nonlocal page_no, y
+        _doc_footer(c, w, margin, page_no)
+        c.showPage()
+        page_no += 1
+        y = _doc_header(c, w, h, margin, "Session record", meta=[
+            ("Pupil", pupil_name),
+            ("Session", week_title),
+            ("Continued", ""),
+        ])
+        return y
+
     def section(label, text, size=9, leading=12, gap=5 * mm):
         nonlocal y
+        # A heading alone at the foot of a page reads as a mistake, so it moves
+        # with at least the first couple of lines of its text.
+        if y - (14 * mm + leading * 2) < floor:
+            y = new_page()
         y = _doc_section(c, x, y, label, max_width)
         c.setFillColor(INK)
-        y = _wrap(c, text or "-", x, y, max_width, size=size, leading=leading)
+        y = _wrap(c, text or "-", x, y, max_width, size=size, leading=leading,
+                  page_break=new_page, floor=floor)
         y -= gap
 
     if staff_only:
@@ -615,9 +641,9 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
              + 5 * mm)                    # bottom padding
     box_h = max(box_h, 22 * mm)
 
-    if y - box_h < margin:
-        c.showPage()
-        y = h - margin
+    # The box moves whole rather than overlapping what is already there.
+    if y - box_h < floor:
+        y = new_page()
 
     c.setFillColor(HexColor("#FCEBEB") if flagged else HexColor("#E1F5EE"))
     c.rect(x, y - box_h, max_width, box_h, fill=1, stroke=0)
@@ -643,7 +669,7 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
         c.drawString(x + 4 * mm, text_y, line)
         text_y -= 3.2 * mm
 
-    _doc_footer(c, w, margin, 1)
+    _doc_footer(c, w, margin, page_no)
     c.showPage()
     c.save()
     return path
