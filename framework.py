@@ -167,28 +167,110 @@ class Router:
         return Response("Not found", status="404 Not Found")
 
 
+# File types the static handler labels explicitly. Anything else goes out as
+# application/octet-stream, which browsers treat as "download this" — and some
+# refuse outright in the place it is used: a captions track that is not
+# text/vtt is ignored by Chrome, and an SVG favicon that is not image/svg+xml
+# is not shown. So the type matters here rather than being cosmetic.
+STATIC_TYPES = {
+    ".css": "text/css",
+    ".js": "application/javascript",
+    ".json": "application/json",
+    ".webmanifest": "application/manifest+json",
+    ".svg": "image/svg+xml",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+    ".gif": "image/gif",
+    ".ico": "image/x-icon",
+    ".mp4": "video/mp4",
+    ".webm": "video/webm",
+    ".mp3": "audio/mpeg",
+    ".vtt": "text/vtt; charset=utf-8",
+    ".txt": "text/plain; charset=utf-8",
+    ".pdf": "application/pdf",
+    ".woff2": "font/woff2",
+    ".woff": "font/woff",
+}
+
+_RANGE_RE = re.compile(r"^bytes=(\d*)-(\d*)$")
+
+
+def _parse_range(header, size):
+    """Turns a single-range Range header into (start, end) inclusive, or
+    returns None to send the whole file, or "unsatisfiable".
+
+    iPhones and Safari will not play a <video> unless the server answers
+    "bytes=0-1" with 206 Partial Content: they probe with a tiny range before
+    fetching anything, and a 200 with the whole file reads to them as a server
+    that cannot stream. Only one range per request is supported; a multi-range
+    request is answered with the whole file, which the spec allows."""
+    if not header:
+        return None
+    m = _RANGE_RE.match(header.strip())
+    if not m:
+        return None
+    start_s, end_s = m.groups()
+    if start_s == "" and end_s == "":
+        return None
+    if start_s == "":
+        # "bytes=-500" means the last 500 bytes.
+        length = int(end_s)
+        if length == 0:
+            return "unsatisfiable"
+        start, end = max(size - length, 0), size - 1
+    else:
+        start = int(start_s)
+        end = int(end_s) if end_s else size - 1
+        end = min(end, size - 1)
+    if start >= size or start > end:
+        return "unsatisfiable"
+    return start, end
+
+
+def _serve_static(environ, start_response, file_path):
+    ctype = STATIC_TYPES.get(os.path.splitext(file_path)[1].lower(), "application/octet-stream")
+    size = os.path.getsize(file_path)
+    head_only = environ.get("REQUEST_METHOD", "GET").upper() == "HEAD"
+    headers = [("Content-Type", ctype), ("Accept-Ranges", "bytes")]
+
+    rng = _parse_range(environ.get("HTTP_RANGE"), size)
+    if rng == "unsatisfiable":
+        start_response("416 Range Not Satisfiable",
+                       headers + [("Content-Range", f"bytes */{size}"), ("Content-Length", "0")])
+        return [b""]
+
+    if rng is None:
+        start, end, status = 0, size - 1, "200 OK"
+    else:
+        start, end = rng
+        status = "206 Partial Content"
+        headers.append(("Content-Range", f"bytes {start}-{end}/{size}"))
+    length = max(end - start + 1, 0)
+    headers.append(("Content-Length", str(length)))
+    start_response(status, headers)
+    if head_only or length == 0:
+        return [b""]
+    with open(file_path, "rb") as f:
+        f.seek(start)
+        return [f.read(length)]
+
+
 def make_wsgi_app(router, static_dir=None, static_prefix="/static/"):
+    static_root = os.path.normpath(static_dir) if static_dir else None
+
     def app(environ, start_response):
         path = environ.get("PATH_INFO", "/")
-        if static_dir and path.startswith(static_prefix):
+        if static_root and path.startswith(static_prefix):
             rel = path[len(static_prefix):]
-            file_path = os.path.normpath(os.path.join(static_dir, rel))
-            if file_path.startswith(static_dir) and os.path.isfile(file_path):
-                # An SVG served as octet-stream is refused by browsers as a
-                # favicon and downloaded rather than shown, so the type matters
-                # here rather than being cosmetic.
-                ctype = {
-                    ".css": "text/css",
-                    ".js": "application/javascript",
-                    ".svg": "image/svg+xml",
-                    ".png": "image/png",
-                    ".ico": "image/x-icon",
-                    ".webmanifest": "application/manifest+json",
-                }.get(os.path.splitext(file_path)[1].lower(), "application/octet-stream")
-                with open(file_path, "rb") as f:
-                    data = f.read()
-                start_response("200 OK", [("Content-Type", ctype)])
-                return [data]
+            file_path = os.path.normpath(os.path.join(static_root, rel))
+            # Compare against the folder plus a separator: a bare startswith
+            # would also accept a sibling folder such as "static2".
+            inside = file_path.startswith(static_root + os.sep)
+            method = environ.get("REQUEST_METHOD", "GET").upper()
+            if inside and os.path.isfile(file_path) and method in ("GET", "HEAD"):
+                return _serve_static(environ, start_response, file_path)
             start_response("404 Not Found", [("Content-Type", "text/plain")])
             return [b"Not found"]
 

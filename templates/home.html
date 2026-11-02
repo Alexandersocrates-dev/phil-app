@@ -241,18 +241,26 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-enquire-note{font-size:12.5px;color:var(--muted);margin:0;}
 .mkt-enquire-note a{color:var(--teal-darker);font-weight:600;}
 @media (min-width:700px){.mkt-enquire-card{padding:40px 44px;}}
-/* Promo video: vertical film in a phone frame */
-.mkt-film{background:var(--cream);}
-.mkt-film-inner{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;}
-.mkt-film-copy h2{font-family:var(--font-head);font-weight:800;font-size:30px;color:var(--navy);margin:0 0 12px;letter-spacing:-0.01em;}
-.mkt-film-copy p{font-size:15px;color:var(--muted);line-height:1.6;margin:0 0 22px;max-width:46ch;}
-.mkt-film-copy ol{margin:0 0 26px;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;}
-.mkt-film-copy li{display:flex;gap:12px;align-items:baseline;font-size:14.5px;color:var(--ink);}
-.mkt-film-copy li b{font-family:var(--font-head);font-weight:800;color:var(--teal-dark);min-width:18px;}
-.mkt-film-frame{justify-self:center;width:min(320px,82vw);aspect-ratio:9/16;background:var(--navy);border-radius:40px;padding:10px;box-shadow:0 24px 60px rgba(27,42,74,.22);}
+/* Hero film: the page's focal point */
+.mkt-hero-film{flex-direction:column;align-items:center;gap:18px;}
+.mkt-film-frame{position:relative;width:min(300px,78vw);aspect-ratio:9/16;background:var(--navy);border-radius:40px;padding:10px;box-shadow:0 30px 70px rgba(27,42,74,.28),0 0 0 1px rgba(27,42,74,.08);}
+.mkt-film-frame::before{content:"";position:absolute;inset:-28px;z-index:-1;border-radius:60px;background:radial-gradient(closest-side,rgba(29,158,117,.22),transparent);}
 .mkt-film-frame video{display:block;width:100%;height:100%;border-radius:31px;background:#FBF8F2;object-fit:cover;}
-.mkt-film-frame video:focus-visible{outline:3px solid var(--teal);outline-offset:3px;}
-@media (min-width:900px){.mkt-film-inner{grid-template-columns:1.1fr 1fr;gap:64px;}.mkt-film-frame{width:340px;}}
+.mkt-film-play{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:12px 22px 12px 12px;border:none;border-radius:999px;background:var(--navy);color:#fff;font-family:var(--font-head);font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 10px 30px rgba(27,42,74,.35);white-space:nowrap;transition:transform 180ms var(--ease-spring),background 150ms ease;}
+.mkt-film-play:hover{transform:translateX(-50%) translateY(-2px);background:#24365e;}
+.mkt-film-play:focus-visible,.mkt-film-chapters button:focus-visible{outline:3px solid var(--teal);outline-offset:3px;}
+.mkt-film-play-icon{width:44px;height:44px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mkt-film-play-icon svg{width:22px;height:22px;margin-left:3px;}
+.mkt-film-play-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;}
+.mkt-film-play-text small{font-family:var(--font-body);font-weight:500;font-size:12px;color:#BFC7D6;margin-top:2px;}
+.mkt-hero-film.is-playing .mkt-film-play{opacity:0;pointer-events:none;}
+.mkt-film-chapters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:360px;}
+.mkt-film-chapters button{font-family:var(--font-body);font-weight:600;font-size:12.5px;color:var(--teal-darker);background:#fff;border:1px solid var(--border);border-radius:999px;padding:7px 13px;min-height:36px;cursor:pointer;}
+.mkt-film-chapters button:hover{background:var(--teal-light);}
+.mkt-film-chapters button[aria-current="true"]{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff;}
+@media (min-width:900px){.mkt-film-frame{width:340px;}}
+@media (max-width:899px){.mkt-hero-grid{display:flex;flex-direction:column;}.mkt-hero-copy{display:contents;}.mkt-hero-copy > .mkt-eyebrow{order:1;align-self:flex-start;margin-bottom:-22px;}.mkt-hero-copy > h1{order:2;margin-bottom:0;align-self:flex-start;max-width:none;}.mkt-hero-copy [data-play-film]{display:none;}.mkt-hero-film{order:3;}.mkt-hero-copy > p:not(.mkt-hero-note){order:4;margin-bottom:-12px;}.mkt-hero-copy > .mkt-hero-ctas{order:5;margin-bottom:-24px;}.mkt-hero-copy > .mkt-hero-note{order:6;}}
+@media (prefers-reduced-motion:reduce){.mkt-film-play{transition:none;}}
 </style>
 </head>
 <body>
@@ -283,61 +291,32 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <p>Phil gives every mentor a library of ready-made, evidence-grounded five-week courses covering the difficulties pupils actually face. Every session is recorded as it happens, and the reports download in a click.</p>
             <div class="mkt-hero-ctas">
               <a class="btn-mkt-primary" href="/signup">Start your free three-week pilot</a>
-              <a class="btn-mkt-secondary" href="#mkt-how">See how it works</a>
+              <a class="btn-mkt-secondary" href="#mkt-hero-film" data-play-film>&#9654;&nbsp; Watch the 48-second film</a>
             </div>
             <p class="mkt-hero-note"><strong>No card required</strong> for the establishment pilot &middot; three weeks &middot; up to three seats and ten pupils</p>
           </div>
-          <div class="mkt-hero-visual">
-            <div class="mkt-device-glow"></div>
-            <div class="mkt-device-mock">
-              <div class="statusbar"><span>9:41</span><span>&#9679;&#9679;&#9679;</span></div>
-              <div class="screen">
-          <div class="topbar">
-            <div style="display:flex;align-items:center;gap:9px;">
-              <div style="width:32px;height:32px;border-radius:50%;background:var(--amber-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:11px;color:var(--amber-dark);">JO</div>
-              <div><div style="font-family:var(--font-head);font-weight:700;font-size:13px;color:var(--navy);">Hi, J. Okafor</div><div style="font-size:10px;color:var(--muted);">Elmswood Academy</div></div>
+          <div class="mkt-hero-visual mkt-hero-film" id="mkt-hero-film">
+            <div class="mkt-film-frame">
+              <video id="phil-film" playsinline preload="metadata" width="720" height="1280"
+                     poster="/static/video/phil-promo-poster.jpg"
+                     aria-label="Phil explained in 48 seconds">
+                <source src="/static/video/phil-promo.mp4" type="video/mp4">
+                <track kind="captions" src="/static/video/phil-promo-captions.vtt" srclang="en" label="English" default>
+                <a href="/static/video/phil-promo.mp4">Watch the Phil film</a>
+              </video>
+              <button type="button" class="mkt-film-play" id="phil-film-play" aria-label="Play the 48-second film about Phil, with sound">
+                <span class="mkt-film-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
+                <span class="mkt-film-play-text">Watch the film<small>48 seconds &middot; sound on</small></span>
+              </button>
             </div>
-            <div class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-          </div>
-
-          <div style="display:flex;gap:8px;margin-bottom:16px;">
-            <div style="flex:1;background:var(--teal-light);border-radius:12px;padding:10px 12px;">
-              <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--teal-darker);">3</div>
-              <div style="font-size:10px;color:var(--teal-darker);font-weight:600;">Active pupils</div>
-            </div>
-            <div style="flex:1;background:var(--amber-light);border-radius:12px;padding:10px 12px;">
-              <div style="font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--amber-dark);">1</div>
-              <div style="font-size:10px;color:var(--amber-dark);font-weight:600;">Due this week</div>
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:10px;border:1.4px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:16px;">
-            <div style="width:30px;height:30px;border-radius:9px;background:var(--coral-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="var(--coral-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
-            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:11.5px;color:var(--navy);">Course library</div><div style="font-size:9.5px;color:var(--muted);">Browse all 20 courses to decide what to enrol a pupil on</div></div>
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" style="width:13px;height:13px;flex-shrink:0;"><path d="M9 18l6-6-6-6"/></svg>
-          </div>
-
-          <p class="scr-body" style="margin-bottom:2px;"><strong style="color:var(--navy);">Mentoring list</strong></p>
-          <p style="font-size:9px;color:var(--muted);margin:0 0 8px;">Tap a pupil to open their profile, then their course to open it directly.</p>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
-            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">MB</div>
-            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Marcus B.</div><div style="font-size:9.5px;color:var(--muted);">Course 1: Physical aggression</div></div>
-            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">4/5</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);">
-            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">SK</div>
-            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Sam K.</div><div style="font-size:9.5px;color:var(--muted);">Course 4: Peer conflict and bullying</div></div>
-            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">1/5</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;">
-            <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--amber-light),var(--coral-light));display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:10.5px;color:var(--coral-dark);flex-shrink:0;">AA</div>
-            <div style="flex:1;min-width:0;"><div style="font-family:var(--font-head);font-weight:700;font-size:12px;color:var(--navy);">Aiyana A.</div><div style="font-size:9.5px;color:var(--muted);">Course 12</div></div>
-            <span style="font-size:10.5px;font-weight:700;color:var(--teal-darker);flex-shrink:0;">2/5</span>
-          </div>
-          <div class="spacer"></div>
-        </div>
-              <div class="mkt-device-fade"></div>
-            </div>
+            <nav class="mkt-film-chapters" aria-label="Jump to a part of the film">
+              <button type="button" data-t="0">The problem</button>
+              <button type="button" data-t="12.9">Courses</button>
+              <button type="button" data-t="17.5">Sessions</button>
+              <button type="button" data-t="22.7">Safeguarding</button>
+              <button type="button" data-t="27.9">Certificates</button>
+              <button type="button" data-t="31.1">Reports</button>
+            </nav>
           </div>
         </div>
       </section>
@@ -363,31 +342,6 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <li class="mkt-proof-besa"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyNDAuOSAxNDAuMyIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQwLjkgMTQwLjM7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojRTBFMUREO30KCS5zdDF7ZmlsbDpub25lO3N0cm9rZTojMUEyQTQ5O3N0cm9rZS13aWR0aDowLjkwODE7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEwO30KCS5zdDJ7ZmlsbDojMUEyQTQ5O30KCS5zdDN7ZmlsbDojRjA4MDEyO30KCS5zdDR7ZmlsbDojRkZGRkZGO30KPC9zdHlsZT4KPGc+Cgk8Zz4KCQk8cmVjdCB5PSIwIiBjbGFzcz0ic3QwIiB3aWR0aD0iMjQwLjkiIGhlaWdodD0iODkuNSIvPgoJCTxnPgoJCQk8Zz4KCQkJCTxsaW5lIGNsYXNzPSJzdDEiIHgxPSIxNjEuNCIgeTE9IjY3LjEiIHgyPSIxNjEuNCIgeTI9IjIzLjMiLz4KCQkJCTxnPgoJCQkJCTxnPgoJCQkJCQk8Zz4KCQkJCQkJCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02NS45LDY3LjFjLTQuMywwLTcuOC0xLjQtMTAuNS00LjJjLTIuNy0yLjgtNC4xLTYuNS00LjEtMTEuMnMxLjQtOC40LDQuMS0xMS4yCgkJCQkJCQkJYzIuNy0yLjgsNi4zLTQuMiwxMC42LTQuMmM0LjMsMCw3LjksMS4zLDEwLjYsNGMyLjcsMi43LDQuMSw2LjIsNC4xLDEwLjVjMCwwLjcsMCwxLjQtMC4xLDJjLTAuMSwwLjUtMC41LDAuOS0xLDAuOWwtMjEuOCwwCgkJCQkJCQkJYy0wLjEsMC0wLjEsMC4xLTAuMSwwLjFjMC4yLDIuNCwxLDQuNCwyLjUsNS44YzEuNSwxLjUsMy40LDIuMiw1LjgsMi4yYzMuMiwwLDUuNS0xLjIsNi45LTMuN2MwLjEtMC4zLDAuNC0wLjQsMC43LTAuNAoJCQkJCQkJCWw1LjQsMGMwLjQsMCwwLjcsMC40LDAuNSwwLjhjLTAuOSwyLjQtMi41LDQuNC00LjYsNkM3Mi40LDY2LjIsNjkuNCw2Ny4xLDY1LjksNjcuMXogTTcxLjgsNDMuN2MtMS42LTEuNS0zLjUtMi4yLTUuOC0yLjIKCQkJCQkJCQljLTIuMywwLTQuMiwwLjctNS43LDIuMmMtMS41LDEuNC0yLjQsMy4zLTIuNiw1LjdjMCwwLjEsMC4xLDAuMSwwLjEsMC4xbDE2LjMsMGMwLjEsMCwwLjEtMC4xLDAuMS0wLjEKCQkJCQkJCQlDNzQuMiw0Ny4xLDczLjQsNDUuMSw3MS44LDQzLjd6Ii8+CgkJCQkJCQk8cGF0aCBjbGFzcz0ic3QyIiBkPSJNODUuNCw0NS40YzAtMi41LDEuMS00LjcsMy4yLTYuNGMyLjEtMS43LDQuOS0yLjYsOC40LTIuNnM2LjIsMC45LDguMiwyLjZjMS44LDEuNSwyLjksMy42LDMuMiw2LjIKCQkJCQkJCQljMC4xLDAuNC0wLjMsMC44LTAuNywwLjhsLTQuOCwwYy0wLjQsMC0wLjctMC4zLTAuNy0wLjZjLTAuMi0xLjItMC43LTIuMS0xLjUtMi44Yy0wLjktMC44LTIuMi0xLjItMy45LTEuMgoJCQkJCQkJCWMtMS43LDAtMywwLjQtMy45LDEuMWMtMC45LDAuNy0xLjQsMS43LTEuNCwyLjljMCwxLjIsMC42LDIuMiwxLjgsMi44YzEuMiwwLjcsMi42LDEuMiw0LjMsMS41YzEuNywwLjMsMy40LDAuNyw1LjEsMS4yCgkJCQkJCQkJYzEuNywwLjUsMy4yLDEuMyw0LjMsMi42YzEuMiwxLjIsMS44LDIuOSwxLjgsNWMwLDIuNi0xLjEsNC43LTMuMyw2LjNjLTIuMiwxLjYtNSwyLjQtOC40LDIuNGMtMy40LDAtNi4yLTAuOC04LjMtMi41CgkJCQkJCQkJYy0xLjktMS41LTMuMS0zLjYtMy40LTYuMmMtMC4xLTAuNSwwLjMtMC45LDAuNy0wLjlsNC45LDBjMC40LDAsMC43LDAuMywwLjcsMC42YzAuMiwxLjIsMC43LDIuMSwxLjUsMi44CgkJCQkJCQkJYzEsMC44LDIuMywxLjIsNCwxLjJjMS43LDAsMy0wLjQsNC0xLjFjMS0wLjcsMS41LTEuNywxLjUtMi45YzAtMS4yLTAuNi0yLjItMS44LTIuOWMtMS4yLTAuNy0yLjYtMS4yLTQuMy0xLjUKCQkJCQkJCQljLTEuNy0wLjMtMy40LTAuNy01LjEtMS4yYy0xLjctMC40LTMuMi0xLjMtNC4zLTIuNUM4Niw0OC45LDg1LjQsNDcuMyw4NS40LDQ1LjR6Ii8+CgkJCQkJCTwvZz4KCQkJCQkJPHBhdGggY2xhc3M9InN0MiIgZD0iTTEyOC42LDY3LjFjMy40LDAuMSw2LjUtMSw5LjEtMi44YzAuMi0wLjIsMC41LTAuMiwwLjctMC4xYzEsMC41LDMuOCwyLDUuMiwyLjdjMC4zLDAuMiwwLjctMC4xLDAuNy0wLjQKCQkJCQkJCWwtMC4xLTEzLjljMCwwLDAtMC4xLDAtMC4xYzAtMC4zLDAtMC41LDAtMC44YzAtOC41LTYuOS0xNS4zLTE1LjMtMTUuM2MtOC43LDAtMTUuNyw3LjItMTUuMywxNS45CgkJCQkJCQlDMTEzLjgsNjAuNCwxMjAuNSw2Ni45LDEyOC42LDY3LjF6IE0xMjguMSw0Mi41YzUuNy0wLjUsMTAuNSw0LjMsMTAsMTBjLTAuNCw0LjUtNCw4LjEtOC41LDguNWMtNS43LDAuNS0xMC40LTQuMy0xMC0xMAoJCQkJCQkJQzExOS45LDQ2LjUsMTIzLjYsNDIuOSwxMjguMSw0Mi41eiIvPgoJCQkJCQk8cGF0aCBjbGFzcz0ic3QyIiBkPSJNMzIuMywzNi40Yy0zLjQtMC4xLTYuNSwxLTkuMSwyLjhjLTAuMiwwLjItMC41LDAuMi0wLjcsMC4xYy0xLTAuNS0zLjgtMi01LjItMi43CgkJCQkJCQljLTAuMy0wLjItMC43LDAuMS0wLjcsMC40bDAuMSwxMy45YzAsMCwwLDAuMSwwLDAuMWMwLDAuMywwLDAuNSwwLDAuOGMwLDguNSw2LjksMTUuMywxNS4zLDE1LjNjOC43LDAsMTUuNy03LjIsMTUuMy0xNS45CgkJCQkJCQlDNDcsNDMuMSw0MC40LDM2LjUsMzIuMywzNi40eiBNMzIuOCw2MWMtNS43LDAuNS0xMC41LTQuMy0xMC0xMGMwLjQtNC41LDQtOC4xLDguNS04LjVjNS43LTAuNSwxMC40LDQuMywxMCwxMAoJCQkJCQkJQzQwLjksNTcsMzcuMiw2MC42LDMyLjgsNjF6Ii8+CgkJCQkJPC9nPgoJCQkJPC9nPgoJCQkJPHBhdGggY2xhc3M9InN0MyIgZD0iTTE2LjYsMjMuNFYzM2MwLDAuMywwLjIsMC42LDAuNSwwLjdsNS43LDNWMjMuM2MwLTAuNS0wLjQtMC45LTAuOS0wLjloLTQuM0MxNywyMi40LDE2LjYsMjIuOSwxNi42LDIzLjR6IgoJCQkJCS8+CgkJCTwvZz4KCQk8L2c+CgkJPGc+CgkJCTxwYXRoIGNsYXNzPSJzdDMiIGQ9Ik0yMDcuNSw0My41YzAuNy00LjMsMC44LTcuNSwwLjMtOS43Yy0xLjQtNi43LTguMS0xNS42LTguNC0xNmwtMC45LTEuMWwtMC45LDEuMWMtMC4zLDAuNC03LDkuMy04LjQsMTYKCQkJCWMtMC41LDIuMi0wLjMsNS41LDAuMyw5LjdjLTcuNCw1LjQtNC41LDE1LjItNC41LDE1LjNsMC41LDEuN2w2LjMtNi4zYzAuNCwxLjYsMC44LDIuOCwwLjksMy4ybDAuMiwwLjhIMjA0bDAuMi0wLjgKCQkJCWMwLjEtMC41LDAuNS0xLjYsMC45LTMuMmw2LjMsNi4zbDAuNS0xLjdDMjEyLDU4LjcsMjE0LjksNDguOSwyMDcuNSw0My41eiBNMTkxLjUsNTEuOGwtNC41LDQuNWMtMC4zLTIuNS0wLjMtNy4xLDMuMi0xMC40CgkJCQlDMTkwLjYsNDcuNywxOTEsNDkuNywxOTEuNSw1MS44eiBNMTk0LjMsMjcuM2MxLjYtMi45LDMuNC01LjcsNC40LTcuMWMxLDEuNCwyLjgsNC4xLDQuNCw3LjFIMTk0LjN6IE0xOTQuOSw1NgoJCQkJYy0xLTMuMy00LjUtMTYuMi0zLjQtMjEuOWMwLjMtMS4zLDAuOC0yLjksMS43LTQuN2gxMC45YzAuOCwxLjgsMS40LDMuNCwxLjcsNC43YzEuMiw1LjctMi40LDE4LjYtMy40LDIxLjlIMTk0Ljl6IE0yMDcuMSw0NS45CgkJCQljMy42LDMuMywzLjYsNy45LDMuMiwxMC40bC00LjUtNC41QzIwNi4zLDQ5LjcsMjA2LjcsNDcuNywyMDcuMSw0NS45eiIvPgoJCQk8cGF0aCBjbGFzcz0ic3QzIiBkPSJNMTk4LjcsMzEuNmMtMi41LDAtNC41LDItNC41LDQuNWMwLDIuNSwyLDQuNSw0LjUsNC41YzIuNSwwLDQuNS0yLDQuNS00LjUKCQkJCUMyMDMuMSwzMy42LDIwMS4xLDMxLjYsMTk4LjcsMzEuNnogTTIwMSwzNi4xYzAsMS4zLTEuMSwyLjMtMi4zLDIuM3MtMi4zLTEuMS0yLjMtMi4zYzAtMS4zLDEuMS0yLjMsMi4zLTIuM1MyMDEsMzQuOCwyMDEsMzYuMXoKCQkJCSIvPgoJCQk8cmVjdCB4PSIxOTcuNiIgeT0iNjAuNSIgY2xhc3M9InN0MyIgd2lkdGg9IjIuMSIgaGVpZ2h0PSIxMi40Ii8+CgkJCTxyZWN0IHg9IjIwMS4yIiB5PSI2MC41IiBjbGFzcz0ic3QzIiB3aWR0aD0iMi4xIiBoZWlnaHQ9IjYiLz4KCQkJPHJlY3QgeD0iMTk0IiB5PSI2MC41IiBjbGFzcz0ic3QzIiB3aWR0aD0iMi4xIiBoZWlnaHQ9IjYiLz4KCQk8L2c+Cgk8L2c+Cgk8Zz4KCQk8cmVjdCB5PSI4OS41IiBjbGFzcz0ic3QyIiB3aWR0aD0iMjQwLjkiIGhlaWdodD0iNTAuOCIvPgoJCTxnPgoJCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMTgsMTAzLjRoMy44djIwLjJoNy44djIuOUgxOFYxMDMuNHoiLz4KCQkJPHBhdGggY2xhc3M9InN0NCIgZD0iTTQ5LjQsMTI2LjVsLTEuNy00LjdIMzhsLTEuNyw0LjdoLTRsOC4zLTIzLjJoNC40bDguMywyMy4ySDQ5LjR6IE0zOSwxMTguOGg3LjZsLTMuOC0xMC45TDM5LDExOC44eiIvPgoJCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNNTcuOSwxMTguMXYtMTQuN2gzLjh2MTQuN2MwLDEuOCwwLjUsMy4xLDEuNCw0YzAuOSwwLjksMi4yLDEuMywzLjksMS4zYzEuNywwLDIuOS0wLjQsMy45LTEuMwoJCQkJYzAuOS0wLjksMS40LTIuMiwxLjQtNHYtMTQuN0g3NnYxNC43YzAsMi44LTAuOSw0LjktMi42LDYuNGMtMS43LDEuNS0zLjksMi4yLTYuNSwyLjJzLTQuNy0wLjctNi40LTIuMgoJCQkJQzU4LjgsMTIzLDU3LjksMTIwLjksNTcuOSwxMTguMXoiLz4KCQkJPHBhdGggY2xhc3M9InN0NCIgZD0iTTk3LjEsMTAzLjNoMy44djIzLjJoLTMuOGwtMTEuNC0xNy4zdjE3LjNoLTMuOHYtMjMuMmgzLjhsMTEuNCwxNy4yVjEwMy4zeiIvPgoJCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMTA5LjEsMTIzLjRjLTIuMy0yLjItMy40LTUtMy40LTguNWMwLTMuNCwxLjEtNi4zLDMuNC04LjVjMi4zLTIuMiw1LjEtMy4zLDguNC0zLjNjMi41LDAsNC43LDAuNiw2LjYsMS44CgkJCQljMS45LDEuMiwzLjMsMi45LDQuMiw1LjFoLTQuNmMtMS4yLTIuMy0zLjMtMy41LTYuMi0zLjVjLTIuMywwLTQuMiwwLjgtNS43LDIuM2MtMS41LDEuNS0yLjIsMy42LTIuMiw2LjFjMCwyLjUsMC43LDQuNSwyLjIsNi4xCgkJCQljMS41LDEuNSwzLjQsMi4zLDUuNywyLjNjMi45LDAsNC45LTEuMiw2LjItMy41aDQuNmMtMC45LDIuMi0yLjMsMy45LTQuMiw1LjFzLTQuMSwxLjgtNi42LDEuOAoJCQkJQzExNC4yLDEyNi43LDExMS40LDEyNS42LDEwOS4xLDEyMy40eiIvPgoJCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMTQ4LjMsMTAzLjRoMy44djIzLjFoLTMuOHYtMTAuMmgtMTAuOXYxMC4yaC0zLjh2LTIzLjFoMy44djEwaDEwLjlWMTAzLjR6Ii8+CgkJCTxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0xNzIuMiwxMDUuM2MxLjQsMS4zLDIuMSwyLjksMi4xLDQuOWMwLDEuOS0wLjcsMy42LTIsNC45Yy0xLjMsMS4zLTMuNCwyLTYuMiwyaC00LjJ2OS40aC0zLjh2LTIzLjFoOAoJCQkJQzE2OC43LDEwMy40LDE3MC44LDEwNCwxNzIuMiwxMDUuM3ogTTE2MS45LDExNC4yaDQuMmMxLjQsMCwyLjUtMC4zLDMuMi0xYzAuNy0wLjcsMS4xLTEuNiwxLjEtMi45cy0wLjQtMi4yLTEuMS0yLjkKCQkJCWMtMC43LTAuNy0xLjgtMS0zLjItMWgtNC4yVjExNC4yeiIvPgoJCQk8cGF0aCBjbGFzcz0ic3Q0IiBkPSJNMTk0LjUsMTI2LjVsLTEuNy00LjdoLTkuN2wtMS43LDQuN2gtNGw4LjMtMjMuMmg0LjRsOC4zLDIzLjJIMTk0LjV6IE0xODQuMiwxMTguOGg3LjZsLTMuOC0xMC45CgkJCQlMMTg0LjIsMTE4Ljh6Ii8+CgkJCTxwYXRoIGNsYXNzPSJzdDQiIGQ9Ik0yMTAuNywxMDMuNGMzLjcsMCw2LjcsMSw4LjksMy4xYzIuMiwyLjEsMy4zLDQuOSwzLjMsOC41YzAsMy42LTEuMSw2LjQtMy4zLDguNGMtMi4yLDIuMS01LjIsMy4xLTguOSwzLjEKCQkJCWgtNy42di0yMy4xSDIxMC43eiBNMjA2LjksMTIzLjZoMy44YzIuNywwLDQuOC0wLjgsNi4yLTIuM2MxLjUtMS41LDIuMi0zLjYsMi4yLTYuM2MwLTIuNy0wLjctNC44LTIuMi02LjMKCQkJCWMtMS41LTEuNS0zLjUtMi4zLTYuMi0yLjNoLTMuOFYxMjMuNnoiLz4KCQk8L2c+Cgk8L2c+CjwvZz4KPC9zdmc+Cg==" alt="BESA LaunchPad" width="86" height="50"><div><strong>BESA LaunchPad member</strong><span>British Educational Suppliers Association</span></div></li>
             {# ICO: add "Registered with the ICO" and the registration number once confirmed. #}
           </ul>
-        </div>
-      </section>
-      <section class="mkt-section mkt-film" id="mkt-film" aria-labelledby="mkt-film-title">
-        <div class="mkt-container mkt-film-inner">
-          <div class="mkt-film-copy">
-            <span class="mkt-eyebrow">Watch</span>
-            <h2 id="mkt-film-title">See Phil in under a minute</h2>
-            <p>How one structured course gives every pupil the same support, whichever mentor picks them up.</p>
-            <ol>
-              <li><b>1</b>Pick from 20 ready-made five-week courses</li>
-              <li><b>2</b>Deliver each session from a plan, resources included</li>
-              <li><b>3</b>Record it, with a safeguarding step every time</li>
-              <li><b>4</b>A certificate for the pupil, a report for governors</li>
-            </ol>
-            <a class="btn-mkt-primary" href="/signup">Start your free three-week pilot</a>
-          </div>
-          <div class="mkt-film-frame">
-            <video controls playsinline preload="none" width="720" height="1280"
-                   poster="/static/video/phil-promo-poster.jpg"
-                   aria-label="Phil explained in 48 seconds, with voiceover and captions">
-              <source src="/static/video/phil-promo.mp4" type="video/mp4">
-              <track kind="captions" src="/static/video/phil-promo-captions.vtt" srclang="en" label="English" default>
-              <a href="/static/video/phil-promo.mp4">Watch the Phil video</a>
-            </video>
-          </div>
         </div>
       </section>
       <section class="mkt-section mkt-stats">
@@ -588,5 +542,31 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
         </div>
       </footer>
     
+<script>
+(function(){
+  var v = document.getElementById('phil-film'); if(!v) return;
+  var wrap = document.getElementById('mkt-hero-film');
+  var btn = document.getElementById('phil-film-play');
+  var chapters = Array.prototype.slice.call(document.querySelectorAll('.mkt-film-chapters button'));
+  function start(t){
+    v.controls = true;
+    if(typeof t === 'number'){ try{ v.currentTime = t; }catch(e){} }
+    var p = v.play(); if(p && p.catch){ p.catch(function(){}); }
+    wrap.classList.add('is-playing');
+  }
+  btn.addEventListener('click', function(){ start(); v.focus(); });
+  document.querySelectorAll('[data-play-film]').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); wrap.scrollIntoView({behavior:'smooth', block:'center'}); start(); });
+  });
+  chapters.forEach(function(c){ c.addEventListener('click', function(){ start(parseFloat(c.dataset.t)); }); });
+  v.addEventListener('timeupdate', function(){
+    var cur = null;
+    chapters.forEach(function(c){ if(v.currentTime >= parseFloat(c.dataset.t) - 0.05){ cur = c; } });
+    chapters.forEach(function(c){ c.setAttribute('aria-current', String(c === cur && !v.paused)); });
+  });
+  v.addEventListener('play', function(){ wrap.classList.add('is-playing'); });
+  v.addEventListener('ended', function(){ wrap.classList.remove('is-playing'); v.controls = false; try{ v.currentTime = 0; }catch(e){} chapters.forEach(function(c){ c.setAttribute('aria-current','false'); }); });
+})();
+</script>
 </body>
 </html>
