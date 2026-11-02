@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Phil: structured mentoring courses for schools</title>
+<title>Phil Education | Structured mentoring courses for schools</title>
 <meta name="description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK schools. Structured sessions, a safeguarding step every time, and governance-ready reporting.">
-<meta property="og:title" content="Phil: structured mentoring courses for schools">
+<meta property="og:title" content="Phil Education | Structured mentoring courses for schools">
 <meta property="og:description" content="A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK schools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://phileducation.co.uk/home">
-<meta property="og:site_name" content="Phil">
+<meta property="og:site_name" content="Phil Education">
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://phileducation.co.uk/home">
 {# A school searching for this is looking for a product, not an article, so the
@@ -21,9 +21,24 @@
  "operatingSystem":"Web browser",
  "description":"A library of five-week, evidence-grounded behaviour and wellbeing mentoring courses for UK schools, with structured session records and governance-ready reporting.",
  "url":"https://phileducation.co.uk/home",
- "publisher":{"@type":"Organization","name":"Phil Education Ltd","url":"https://phileducation.co.uk"}}
+ "publisher":{"@id":"https://phileducation.co.uk/#organization"}}
 </script>
-<meta name="theme-color" content="#1B2A4A">
+{# Google names a site in results from WebSite structured data, and "Phil" on
+   its own is a first name it cannot tell apart from anyone else's. These two
+   blocks tie the brand people search for, "Phil Education", to this domain. #}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"WebSite","@id":"https://phileducation.co.uk/#website",
+  "name":"Phil Education","alternateName":["Phil","phileducation.co.uk"],
+  "url":"https://phileducation.co.uk/","publisher":{"@id":"https://phileducation.co.uk/#organization"}},
+ {"@type":"Organization","@id":"https://phileducation.co.uk/#organization",
+  "name":"Phil Education","legalName":"Phil Education LTD","alternateName":"Phil",
+  "url":"https://phileducation.co.uk/","email":"hello@phileducation.co.uk",
+  "description":"Structured mentoring courses for UK schools.",
+  "areaServed":"GB"}
+]}
+</script>
+<meta name="theme-color" content="#0F6E56">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -572,7 +587,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             </div>
           </div>
           <div class="mkt-footer-bottom">
-            <span>&copy; 2026 Phil: structured support, real growth.</span>
+            <span>&copy; 2026 Phil Education LTD. Phil: structured support, real growth.</span>
           </div>
         </div>
       </footer>
