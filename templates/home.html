@@ -68,7 +68,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-nav-actions .btn-mkt-primary{padding:10px 16px;font-size:12.5px;min-height:44px;}
 .mkt-hero{background:linear-gradient(180deg,#F3F0E6 0%,#FBF8F2 100%);border-bottom:1px solid var(--border);}
 .mkt-hero-grid{max-width:1120px;margin:0 auto;padding:48px 20px 40px;display:grid;grid-template-columns:1fr;gap:40px;align-items:center;}
-.mkt-hero-copy h1{font-family:var(--font-head);font-weight:800;font-size:30px;line-height:1.15;color:var(--navy);margin:0 0 18px;letter-spacing:-0.015em;max-width:15ch;}
+.mkt-hero-copy h1{font-family:var(--font-head);font-weight:800;font-size:30px;line-height:1.15;color:var(--navy);margin:0 0 18px;letter-spacing:-0.015em;max-width:21ch;text-wrap:balance;}
 .mkt-hero-copy h1 em{font-style:normal;color:var(--teal-dark);}
 .mkt-section-head h2 em{font-style:normal;color:var(--teal-dark);}
 .mkt-hero-copy p{font-size:16.5px;line-height:1.65;color:var(--muted);margin:0 0 28px;max-width:520px;}
@@ -259,8 +259,27 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-film-chapters button:hover{background:var(--teal-light);}
 .mkt-film-chapters button[aria-current="true"]{background:var(--teal-dark);border-color:var(--teal-dark);color:#fff;}
 @media (min-width:900px){.mkt-film-frame{width:340px;}}
-@media (max-width:899px){.mkt-hero-grid{display:flex;flex-direction:column;}.mkt-hero-copy{display:contents;}.mkt-hero-copy > .mkt-eyebrow{order:1;align-self:flex-start;margin-bottom:-22px;}.mkt-hero-copy > h1{order:2;margin-bottom:0;align-self:flex-start;max-width:none;}.mkt-hero-copy [data-play-film]{display:none;}.mkt-hero-film{order:3;}.mkt-hero-copy > p:not(.mkt-hero-note){order:4;margin-bottom:-12px;}.mkt-hero-copy > .mkt-hero-ctas{order:5;margin-bottom:-24px;}.mkt-hero-copy > .mkt-hero-note{order:6;}}
+@media (max-width:899px){.mkt-hero-grid{display:flex;flex-direction:column;}.mkt-hero-copy{display:contents;}.mkt-hero-copy > .mkt-eyebrow{order:1;align-self:flex-start;margin-bottom:-22px;}.mkt-hero-copy > h1{order:2;margin-bottom:0;align-self:flex-start;max-width:none;}.mkt-hero-film{order:3;}.mkt-hero-copy > p:not(.mkt-hero-note){order:4;margin-bottom:-12px;}.mkt-hero-copy > .mkt-hero-ctas{order:5;margin-bottom:-24px;}.mkt-hero-copy > .mkt-hero-note{order:6;}}
 @media (prefers-reduced-motion:reduce){.mkt-film-play{transition:none;}}
+/* Feature cards: swipe on phones, a plain grid from tablet up so none are hidden */
+@media (min-width:700px){.mkt-feature-grid{display:grid;overflow:visible;}.mkt-feature-card{flex:none;}}
+.mkt-preview-flag{display:inline-flex;align-items:center;gap:8px;margin-top:16px !important;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--teal);color:var(--teal-darker) !important;font-weight:700;font-size:13.5px !important;}
+.mkt-preview-flag svg{width:18px;height:18px;flex-shrink:0;}
+/* End of film: the moment of most interest gets something to do */
+.mkt-film-end{position:absolute;inset:10px;border-radius:31px;background:rgba(27,42,74,.94);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center;opacity:0;visibility:hidden;transition:opacity 220ms ease,visibility 0s linear 220ms;}
+.mkt-hero-film.is-ended .mkt-film-end{opacity:1;visibility:visible;transition:opacity 220ms ease;}
+.mkt-film-end h3{font-family:var(--font-head);font-weight:800;font-size:22px;line-height:1.2;margin:0 0 6px;color:#fff;}
+.mkt-film-end .btn-mkt-primary,.mkt-film-end .btn-mkt-secondary{width:100%;max-width:230px;}
+.mkt-film-end .btn-mkt-secondary{background:#fff;color:var(--navy);}
+.mkt-film-replay{background:none;border:none;color:#CDEBDF;font:inherit;font-weight:600;font-size:13px;text-decoration:underline;cursor:pointer;margin-top:4px;min-height:36px;}
+.mkt-film-replay:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.mkt-hero-film.is-ended .mkt-film-play{opacity:0;pointer-events:none;}
+/* Phones: a slim action bar once the hero has scrolled away */
+.mkt-sticky{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;gap:10px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(251,248,242,.97);border-top:1px solid var(--border);box-shadow:0 -6px 20px rgba(27,42,74,.08);transform:translateY(110%);transition:transform 220ms ease;}
+.mkt-sticky.is-on{transform:none;}
+.mkt-sticky a{flex:1;}
+@media (min-width:900px){.mkt-sticky{display:none;}}
+@media (prefers-reduced-motion:reduce){.mkt-sticky,.mkt-film-end{transition:none;}}
 </style>
 </head>
 <body>
@@ -270,7 +289,6 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-logo"><svg viewBox="0 0 100 100" role="img" aria-label="Phil"><rect width="100" height="100" rx="24" fill="#0F6E56"/><rect x="26" y="22" width="13" height="62" rx="6" fill="#F3EFE4"/><rect x="43" y="22" width="32" height="13" rx="6" fill="#F3EFE4"/><rect x="62" y="35" width="13" height="16" rx="6" fill="#D85A30"/><rect x="43" y="51" width="32" height="13" rx="6" fill="#F3EFE4"/></svg><span>Phil</span></div>
           <nav class="mkt-nav-links">
             <a href="#mkt-features">Features</a>
-            <a href="#mkt-platforms">App &amp; web</a>
             <a href="#mkt-how">How it works</a>
             <a href="#mkt-courses">Courses</a>
             <a href="#mkt-enquire">Pricing</a>
@@ -278,7 +296,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           </nav>
           <div class="mkt-nav-actions">
             <a class="mkt-nav-signin" href="/login">Sign in</a>
-            <a class="btn-mkt-primary" href="/signup">Get started</a>
+            <a class="btn-mkt-primary" href="/signup">Start free pilot</a>
           </div>
         </div>
       </header>
@@ -290,10 +308,10 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <h1>The structured mentoring courses English schools have been <em>missing</em>.</h1>
             <p>Phil gives every mentor a library of ready-made, evidence-grounded five-week courses covering the difficulties pupils actually face. Every session is recorded as it happens, and the reports download in a click.</p>
             <div class="mkt-hero-ctas">
-              <a class="btn-mkt-primary" href="/signup">Start your free three-week pilot</a>
-              <a class="btn-mkt-secondary" href="#mkt-hero-film" data-play-film>&#9654;&nbsp; Watch the 48-second film</a>
+              <a class="btn-mkt-primary" href="/signup">Start free pilot</a>
+              <a class="btn-mkt-secondary" href="/courses/module/04">Try a sample session</a>
             </div>
-            <p class="mkt-hero-note"><strong>No card required</strong> for the establishment pilot &middot; three weeks &middot; up to three seats and ten pupils</p>
+            <p class="mkt-hero-note"><strong>Free for three weeks, no card needed.</strong> Up to three mentors and ten pupils. Or open a sample session first, no sign-up.</p>
           </div>
           <div class="mkt-hero-visual mkt-hero-film" id="mkt-hero-film">
             <div class="mkt-film-frame">
@@ -304,6 +322,12 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
                 <track kind="captions" src="/static/video/phil-promo-captions.vtt" srclang="en" label="English" default>
                 <a href="/static/video/phil-promo.mp4">Watch the Phil film</a>
               </video>
+              <div class="mkt-film-end" id="phil-film-end" aria-hidden="true">
+                <h3>Ready to try it with your mentors?</h3>
+                <a class="btn-mkt-primary" href="/signup">Start free pilot</a>
+                <a class="btn-mkt-secondary" href="/courses/module/04">Try a sample session</a>
+                <button type="button" class="mkt-film-replay" id="phil-film-replay">Watch again</button>
+              </div>
               <button type="button" class="mkt-film-play" id="phil-film-play" aria-label="Play the 48-second film about Phil, with sound">
                 <span class="mkt-film-play-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span>
                 <span class="mkt-film-play-text">Watch the film<small>48 seconds &middot; sound on</small></span>
@@ -379,7 +403,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">What Phil gives you</span>
             <h2>Everything a structured mentoring offer needs</h2>
-            <p>Not a generic behaviour app. A library of courses, a safeguarding-conscious record, and reporting built for how English schools actually work.</p>
+            <p>Not a generic behaviour app. A library of courses, a safeguarding-conscious record, and reporting built for how English schools actually work. It works in any browser, on a phone, tablet or desktop.</p>
           </div>
           <div class="mkt-feature-grid">
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h3>20 evidence-grounded courses</h3><p>Five structured weekly sessions per course, each mapped to published DfE, Ofsted and EEF guidance, not a generic behaviour template.</p></div>
@@ -388,32 +412,6 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg></div><h3>Governance-ready reporting</h3><p>Mentoring list, whole-establishment and individual pupil reports, ready to take into a governors&rsquo; meeting, a parents&rsquo; evening or an Ofsted conversation.</p></div>
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5 6 22l6-3 6 3-2.5-8.5"/></svg></div><h3>Progress a pupil can see</h3><p>A live progress bar and a certificate at the end, so a pupil finishes the course with something to show for it.</p></div>
             <div class="mkt-feature-card"><div class="mkt-feature-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div><h3>Scales from one school to a trust</h3><p>The same structured content and reporting work for a single school or a whole multi-academy trust.</p></div>
-          </div>
-        </div>
-      </section>
-      <section class="mkt-section mkt-platforms" id="mkt-platforms">
-        <div class="mkt-container">
-          <div class="mkt-section-head center">
-            <span class="mkt-eyebrow">Available today, with more on the way</span>
-            <h2>On the web now, in your pocket soon</h2>
-            <p>Every session record works the same way on a phone, tablet or desktop browser, because a mentor writes up wherever they happen to be. Native iOS and Android apps are coming soon.</p>
-          </div>
-          <div class="mkt-platform-grid">
-            <div class="mkt-platform-card">
-              <div class="mkt-platform-icon" style="background:var(--teal-light);color:var(--teal-darker);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 9h20"/></svg></div>
-              <h3>Available now: the web app</h3>
-              <p>Log a session the moment it ends, browse the course library and download reports — all from any browser. Nothing to install, and no separate login.</p>
-            </div>
-            <div class="mkt-platform-card">
-              <div class="mkt-platform-icon" style="background:var(--amber-light);color:var(--amber-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-              <h3>iOS and Android: coming soon</h3>
-              <p>Native apps are in development, so a mentor can log a session straight from the room they are sitting in. Start your pilot now and we&rsquo;ll let you know the moment they launch.</p>
-            </div>
-            <div class="mkt-platform-card">
-              <div class="mkt-platform-icon" style="background:var(--coral-light);color:var(--coral-dark);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M3 16v5h5"/><path d="M16 3h5v5"/></svg></div>
-              <h3>Always in sync</h3>
-              <p>When the apps launch, everything logged on the web carries straight over: same pupil, same course, same safeguarding step. Nothing to reconcile, nothing recorded twice.</p>
-            </div>
           </div>
         </div>
       </section>
@@ -436,7 +434,8 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">The course library</span>
             <h2>Twenty courses, <em>ready to assign</em></h2>
-            <p>Every course is a five-week structured plan grounded in DfE, Ofsted and clinical guidance. The titles are below. Sign up to see the full session plans, activities and resources for each one.</p>
+            <p>Every course is a five-week structured plan grounded in DfE, Ofsted and clinical guidance.</p>
+            <p class="mkt-preview-flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Open any course to preview week 1 free, no sign-up needed</p>
           </div>
           <div class="mkt-course-group">
             <p class="mkt-course-group-label">Behaviour in the classroom</p>
@@ -454,7 +453,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <p class="mkt-course-group-label">Attendance, engagement and risk</p>
             <div class="mkt-course-grid"><a class="mkt-course-pill" href="/courses/module/07"><span class="mkt-course-num">07</span><span class="mkt-course-title">Low-level disengagement</span></a><a class="mkt-course-pill" href="/courses/module/12"><span class="mkt-course-num">12</span><span class="mkt-course-title">Truancy and school avoidance</span></a><a class="mkt-course-pill" href="/courses/module/13"><span class="mkt-course-num">13</span><span class="mkt-course-title">Vaping and nicotine use</span></a><a class="mkt-course-pill" href="/courses/module/19"><span class="mkt-course-num">19</span><span class="mkt-course-title">Safeguarding: exploitation and county lines awareness</span></a><a class="mkt-course-pill" href="/courses/module/20"><span class="mkt-course-num">20</span><span class="mkt-course-title">Moving up: primary-to-secondary and other school transitions</span></a></div>
           </div>
-          <p class="mkt-courses-note">Full session plans, activities and mentor guidance are included once your school signs up. <a href="#mkt-enquire">Ask about pricing &rarr;</a></p>
+          <p class="mkt-courses-note">A free pilot opens weeks 1 to 3 of every course in full. A subscription opens all five, with every resource. <a href="/signup">Start free pilot &rarr;</a></p>
         </div>
       </section>
       <section class="mkt-section mkt-enquire" id="mkt-enquire">
@@ -472,7 +471,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             </ul>
             <div class="mkt-hero-ctas">
               <a class="btn-mkt-primary" href="mailto:hello@phileducation.co.uk?subject=Pricing%20enquiry&amp;body=School%20or%20trust%20name%3A%0D%0ANumber%20of%20schools%3A%0D%0ARoughly%20how%20many%20mentors%3A%0D%0AWhen%20you%27d%20like%20to%20start%3A%0D%0ADo%20you%20need%20an%20invoice%20against%20a%20purchase%20order%3F%3A%0D%0A">Email us about pricing</a>
-              <a class="btn-mkt-secondary" href="/signup">Start your free three-week pilot</a>
+              <a class="btn-mkt-secondary" href="/signup">Start free pilot</a>
             </div>
             <p class="mkt-enquire-note">Or write to <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a> directly.</p>
           </div>
@@ -497,7 +496,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <h2>Ready to bring structured courses to your mentoring?</h2>
           <p>Free three-week pilot for establishments &middot; no card required &middot; existing records carry over if you convert.</p>
           <div class="mkt-hero-ctas">
-            <a class="btn-mkt-primary" href="/signup">Start your free three-week pilot</a>
+            <a class="btn-mkt-primary" href="/signup">Start free pilot</a>
           </div>
         </div>
       </section>
@@ -530,7 +529,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
             <div class="mkt-footer-col">
               <h4>Get in touch</h4>
               <ul>
-                <li><a href="/signup">Get started</a></li>
+                <li><a href="/signup">Start free pilot</a></li>
                 <li><a href="/login">Sign in</a></li>
                 <li><a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a></li>
               </ul>
@@ -565,7 +564,42 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
     chapters.forEach(function(c){ c.setAttribute('aria-current', String(c === cur && !v.paused)); });
   });
   v.addEventListener('play', function(){ wrap.classList.add('is-playing'); });
-  v.addEventListener('ended', function(){ wrap.classList.remove('is-playing'); v.controls = false; try{ v.currentTime = 0; }catch(e){} chapters.forEach(function(c){ c.setAttribute('aria-current','false'); }); });
+  var endCard = document.getElementById('phil-film-end');
+  function showEnd(on){
+    wrap.classList.toggle('is-ended', on);
+    endCard.setAttribute('aria-hidden', String(!on));
+    endCard.querySelectorAll('a,button').forEach(function(el){ el.tabIndex = on ? 0 : -1; });
+  }
+  showEnd(false);
+  v.addEventListener('ended', function(){
+    wrap.classList.remove('is-playing'); v.controls = false;
+    chapters.forEach(function(c){ c.setAttribute('aria-current','false'); });
+    showEnd(true);
+    var first = endCard.querySelector('a'); if(first){ first.focus({preventScroll:true}); }
+  });
+  v.addEventListener('play', function(){ showEnd(false); });
+  document.getElementById('phil-film-replay').addEventListener('click', function(){ showEnd(false); start(0); });
+})();
+</script>
+<div class="mkt-sticky" id="mkt-sticky" aria-hidden="true">
+  <a class="btn-mkt-primary" href="/signup" tabindex="-1">Start free pilot</a>
+  <a class="btn-mkt-secondary" href="/courses/module/04" tabindex="-1">Sample session</a>
+</div>
+<script>
+(function(){
+  var bar = document.getElementById('mkt-sticky'); if(!bar || !('IntersectionObserver' in window)) return;
+  var hero = document.querySelector('.mkt-hero'), band = document.querySelector('.mkt-cta-band'), footer = document.querySelector('footer');
+  var heroGone = false, endVisible = false;
+  function update(){
+    var on = heroGone && !endVisible;
+    bar.classList.toggle('is-on', on);
+    bar.setAttribute('aria-hidden', String(!on));
+    bar.querySelectorAll('a').forEach(function(a){ a.tabIndex = on ? 0 : -1; });
+  }
+  new IntersectionObserver(function(es){ heroGone = !es[0].isIntersecting; update(); }).observe(hero);
+  var seen = {};
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ seen[e.target === band ? 'b' : 'f'] = e.isIntersecting; }); endVisible = !!(seen.b || seen.f); update(); });
+  if(band) io.observe(band); if(footer) io.observe(footer);
 })();
 </script>
 </body>
