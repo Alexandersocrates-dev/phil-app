@@ -1157,7 +1157,8 @@ def home(request):
         dest = {"admin": "/admin", "mentor": "/mentor", "parent_carer": "/parent",
                 "phil_staff": "/staff"}.get(user["role"], "/courses")
         return redirect(dest)
-    return render("home.html", user=None, flash=flash_from_query(request))
+    return render("home.html", user=None, flash=flash_from_query(request),
+                  enquiry_roles=ENQUIRY_ROLES, enquiry_sizes=ENQUIRY_SIZES)
 
 
 @router.get("/home")
@@ -1168,7 +1169,104 @@ def marketing_home(request):
     someone typing the address but wrong for the logo in the app shell: that
     should take you to the public site, not bounce you back where you came
     from. This route is what the logo points at."""
-    return render("home.html", user=None, flash=flash_from_query(request))
+    return render("home.html", user=None, flash=flash_from_query(request),
+                  enquiry_roles=ENQUIRY_ROLES, enquiry_sizes=ENQUIRY_SIZES)
+
+
+# ---------------------------------------------------------------- enquiries --
+
+ENQUIRY_ROLES = ["Headteacher or senior leader", "Pastoral or behaviour lead",
+                 "Mentor or teacher", "School business manager", "Trust leader", "Other"]
+ENQUIRY_SIZES = ["1 to 3 mentors", "4 to 15 mentors", "More than 15 mentors", "Not sure yet"]
+_ENQUIRY_LOG = {}  # client address -> recent submission times, held in memory only
+_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+ENQUIRY_THANKS = "Thanks, we've got your enquiry and will reply within two working days."
+
+
+def _client_address(request):
+    """The visitor's address as Railway's proxy reports it. Used only to slow
+    down repeated submissions; never stored on disk or emailed."""
+    forwarded = request.environ.get("HTTP_X_FORWARDED_FOR", "")
+    first = forwarded.split(",")[0].strip() if forwarded else ""
+    return first or request.environ.get("REMOTE_ADDR", "")
+
+
+def _enquiry_allowed(address, now=None):
+    """At most five enquiries an hour from one address, and sixty an hour in
+    total. A real school sends one; anything faster is a script, and an open
+    form that emails Phil is exactly what a script would hammer."""
+    import time
+    now = now or time.time()
+    hour_ago = now - 3600
+    for key in list(_ENQUIRY_LOG):
+        _ENQUIRY_LOG[key] = [t for t in _ENQUIRY_LOG[key] if t > hour_ago]
+        if not _ENQUIRY_LOG[key]:
+            del _ENQUIRY_LOG[key]
+    if len(_ENQUIRY_LOG.get(address, [])) >= 5:
+        return False
+    if sum(len(v) for v in _ENQUIRY_LOG.values()) >= 60:
+        return False
+    _ENQUIRY_LOG.setdefault(address, []).append(now)
+    return True
+
+
+def _one_line(value, limit):
+    """Form text for a subject or a labelled line: no line breaks, trimmed."""
+    return " ".join((value or "").split())[:limit]
+
+
+def _enquiry_back(message, kind="ok"):
+    return redirect(with_flash_url("/home", message, kind) + "#mkt-enquire")
+
+
+@router.post("/enquire")
+def enquiry_submit(request):
+    """The pricing enquiry form on the homepage.
+
+    Replaces a mailto: link, which on a shared school computer often opens
+    nothing at all, so the most commercial click on the page could end in a
+    dead end. The enquiry is emailed to Phil with the sender as the reply-to,
+    so answering it is a plain Reply. Nothing is stored. No email goes to the
+    address typed into the form: an open form that sends mail to any address
+    it is given would be a spam relay.
+    """
+    # A field people never see. A person leaves it empty; a form-filling bot
+    # does not. Answer as if it worked, so the bot learns nothing.
+    if (request.field("website", "") or "").strip():
+        return _enquiry_back(ENQUIRY_THANKS)
+
+    name = _one_line(request.field("name", ""), 120)
+    email = _one_line(request.field("email", ""), 200).lower()
+    school = _one_line(request.field("school", ""), 200)
+    role = request.field("role", "")
+    size = request.field("size", "")
+    message = (request.field("message", "") or "").strip()[:2000]
+
+    if not (name and school and _EMAIL_RE.match(email)):
+        return _enquiry_back("Please add your name, a work email address and your school or trust.", "error")
+    role = role if role in ENQUIRY_ROLES else "Not given"
+    size = size if size in ENQUIRY_SIZES else "Not given"
+
+    if not _enquiry_allowed(_client_address(request)):
+        return _enquiry_back("We've had several enquiries from here in the last hour. "
+                             "Please email hello@phileducation.co.uk instead.", "error")
+
+    to_email = os.environ.get("ENQUIRY_NOTIFY_EMAIL",
+                              os.environ.get("SIGNUP_NOTIFY_EMAIL", "hello@phileducation.co.uk"))
+    lines = ["A pricing enquiry has come in from the homepage.", "",
+             "Name: %s" % name,
+             "Email: %s" % email,
+             "School or trust: %s" % school,
+             "Role: %s" % role,
+             "Mentors: %s" % size, ""]
+    if message:
+        lines += ["Message:", message, ""]
+    lines.append("Reply to this email to answer them directly.")
+    if not _send_email(to_email, "Pricing enquiry: %s" % school, "\n".join(lines), reply_to=email):
+        print("[enquiry] not delivered: %s <%s>, %s" % (name, email, school))
+        return _enquiry_back("Sorry, that didn't send. Please email hello@phileducation.co.uk "
+                             "and we'll reply within two working days.", "error")
+    return _enquiry_back(ENQUIRY_THANKS)
 
 
 # --------------------------------------------------------------- auth/signup --
@@ -1674,7 +1772,12 @@ def course_detail(request):
         related = related_courses(conn, course) if course else []
     finally:
         conn.close()
-    if not course:
+    # A signed-out visitor reaches this page by guessing an id as easily as by
+    # following a link, so an unpublished course must not answer them: its
+    # week 1 would be public before anyone decided it was ready. Signed-in
+    # users keep access, so a mentor mid-course is not cut off if a course is
+    # withdrawn for editing.
+    if not course or (not user and course["status"] != "published"):
         return Response("Course not found", status="404 Not Found")
     weeks = [dict(w, resources=json.loads(w["resources"] or "[]")) for w in weeks]
 
@@ -8463,7 +8566,7 @@ def send_signup_notice(name, email, establishment_name, plan_type,
                        "\n".join(lines))
 
 
-def _send_email(to_email, subject, body):
+def _send_email(to_email, subject, body, reply_to=None):
     """Sends one email. Returns True only if a provider accepted it.
 
     Phil has no email delivery anywhere else: invites create accounts directly
@@ -8485,7 +8588,7 @@ def _send_email(to_email, subject, body):
     # feeds that score, and it is the wrong message anyway: a mentor who cannot
     # get in should be able to answer the email that failed to let them.
     mail_from = os.environ.get("MAIL_FROM", "Phil <hello@send.phileducation.co.uk>")
-    reply_to = os.environ.get("MAIL_REPLY_TO", "hello@phileducation.co.uk")
+    reply_to = reply_to or os.environ.get("MAIL_REPLY_TO", "hello@phileducation.co.uk")
 
     if not (resend_key or postmark_token):
         print(f"[mail] No email provider configured. To {to_email}: {subject}\n{body}")

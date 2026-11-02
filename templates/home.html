@@ -280,6 +280,21 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
 .mkt-sticky a{flex:1;}
 @media (min-width:900px){.mkt-sticky{display:none;}}
 @media (prefers-reduced-motion:reduce){.mkt-sticky,.mkt-film-end{transition:none;}}
+/* Pricing enquiry form */
+.mkt-form{display:flex;flex-direction:column;gap:14px;}
+.mkt-form-row{display:grid;grid-template-columns:1fr;gap:14px;}
+.mkt-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--navy);}
+.mkt-form input,.mkt-form select,.mkt-form textarea{font:inherit;font-weight:500;font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--border);border-radius:10px;padding:11px 12px;min-height:46px;width:100%;box-sizing:border-box;}
+.mkt-form textarea{min-height:88px;resize:vertical;}
+.mkt-form input:focus-visible,.mkt-form select:focus-visible,.mkt-form textarea:focus-visible{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal);}
+.mkt-optional{font-weight:500;color:var(--muted);}
+.mkt-form .mkt-hero-ctas{margin:6px 0 0;}
+.mkt-form button.btn-mkt-primary{font-size:14px;padding:14px 22px;}
+.mkt-hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;}
+.mkt-form-msg{margin:0 0 18px;padding:12px 14px;border-radius:10px;font-size:14px;font-weight:600;}
+.mkt-form-msg.is-ok{background:var(--teal-light);color:var(--teal-darker);}
+.mkt-form-msg.is-error{background:var(--coral-light);color:#993C1D;}
+@media (min-width:700px){.mkt-form-row{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -461,7 +476,7 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
           <div class="mkt-section-head center">
             <span class="mkt-eyebrow">Pricing</span>
             <h2>Tell us about your school and we&rsquo;ll send you a quote</h2>
-            <p>Pricing depends on how many mentors you need, how long you sign up for, and whether you&rsquo;re a single school or a trust. Email us and we&rsquo;ll reply within two working days.</p>
+            <p>Pricing depends on how many mentors you need, how long you sign up for, and whether you&rsquo;re a single school or a trust. Send us a few details and we&rsquo;ll reply within two working days.</p>
           </div>
           <div class="mkt-enquire-card">
             <ul>
@@ -469,11 +484,25 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
               <li>Discounts for multi-academy trusts</li>
               <li>Pay by card, or by invoice against a purchase order</li>
             </ul>
-            <div class="mkt-hero-ctas">
-              <a class="btn-mkt-primary" href="mailto:hello@phileducation.co.uk?subject=Pricing%20enquiry&amp;body=School%20or%20trust%20name%3A%0D%0ANumber%20of%20schools%3A%0D%0ARoughly%20how%20many%20mentors%3A%0D%0AWhen%20you%27d%20like%20to%20start%3A%0D%0ADo%20you%20need%20an%20invoice%20against%20a%20purchase%20order%3F%3A%0D%0A">Email us about pricing</a>
-              <a class="btn-mkt-secondary" href="/signup">Start free pilot</a>
-            </div>
-            <p class="mkt-enquire-note">Or write to <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a> directly.</p>
+            {% if flash %}<p class="mkt-form-msg {{ 'is-error' if flash.kind == 'error' else 'is-ok' }}" role="status" tabindex="-1" id="mkt-enquire-msg">{{ flash.message }}</p>{% endif %}
+            <form class="mkt-form" method="post" action="/enquire">
+              <div class="mkt-form-row">
+                <label>Your name<input name="name" type="text" autocomplete="name" required maxlength="120"></label>
+                <label>Work email<input name="email" type="email" autocomplete="email" required maxlength="200"></label>
+              </div>
+              <label>School or trust<input name="school" type="text" autocomplete="organization" required maxlength="200"></label>
+              <div class="mkt-form-row">
+                <label>Your role<select name="role"><option value="">Choose one</option>{% for r in enquiry_roles or [] %}<option>{{ r }}</option>{% endfor %}</select></label>
+                <label>How many mentors?<select name="size"><option value="">Choose one</option>{% for z in enquiry_sizes or [] %}<option>{{ z }}</option>{% endfor %}</select></label>
+              </div>
+              <label><span>Anything else? <span class="mkt-optional">(optional)</span></span><textarea name="message" rows="3" maxlength="2000" placeholder="For example, when you'd like to start, or whether you need an invoice against a purchase order"></textarea></label>
+              <div class="mkt-hp" aria-hidden="true"><label>Leave this empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+              <div class="mkt-hero-ctas">
+                <button class="btn-mkt-primary" type="submit">Send enquiry</button>
+                <a class="btn-mkt-secondary" href="/signup">Start free pilot</a>
+              </div>
+              <p class="mkt-enquire-note">We'll only use these details to reply to you. See our <a href="/legal/privacy-policy">privacy policy</a>. Prefer email? Write to <a href="mailto:hello@phileducation.co.uk">hello@phileducation.co.uk</a>.</p>
+            </form>
           </div>
         </div>
       </section>
@@ -602,5 +631,6 @@ p.scr-body{font-size:12.5px;color:var(--muted);margin:0 0 16px;line-height:1.55;
   if(band) io.observe(band); if(footer) io.observe(footer);
 })();
 </script>
+<script>(function(){var m=document.getElementById('mkt-enquire-msg');if(m){m.focus({preventScroll:true});}})();</script>
 </body>
 </html>
