@@ -4348,7 +4348,11 @@ def sitemap(request):
     table could.
     """
     base = os.environ.get("APP_BASE_URL", "").rstrip("/")
-    paths = ["/home", "/courses", "/legal/white-paper", "/legal/privacy-policy",
+    # "/" rather than "/home": both serve the homepage to a signed-out visitor,
+    # and Google had already chosen "/" as the canonical, ignoring the page's
+    # own tag for /home. Listing and declaring the address Google prefers ends
+    # the disagreement instead of leaving the homepage marked as a duplicate.
+    paths = ["/", "/courses", "/legal/white-paper", "/legal/privacy-policy",
              "/legal/terms-of-service", "/legal/safeguarding-policy"]
     # Generated from the same slug function the routes use, so a renamed course
     # cannot leave a dead URL in the sitemap.
