@@ -88,6 +88,17 @@ def engagement_label(value):
         return ""
 
 
+# Why a course stopped before its last session. Kept as keys so the impact
+# report can count them without depending on the wording shown to a mentor.
+END_EARLY_REASONS = {
+    "refused": "The pupil persistently refused to engage",
+    "left": "The pupil left the school",
+    "moved": "Moved to a different form of support",
+    "other": "Another reason",
+}
+
+
+framework_jinja.globals["END_EARLY_REASONS"] = END_EARLY_REASONS
 framework_jinja.globals["MOOD_LABELS"] = MOOD_LABELS
 framework_jinja.globals["ENGAGEMENT_LABELS"] = ENGAGEMENT_LABELS
 framework_jinja.filters["mood_label"] = mood_label
@@ -3593,17 +3604,40 @@ def session_submit(request):
         # takes the pupil out of it — so a report to governors quietly rests on
         # whoever remembered. Required on the pupil sessions; the staff write-up
         # has no pupil in the room to rate.
+        # A pupil who was in the room and would not take part. Recorded as its
+        # own fact rather than left to be read off a low rating: a rating is a
+        # judgement on a scale, a refusal is an event, and ending a course early
+        # has to rest on a countable pattern of them rather than on the mentor's
+        # recollection. Meaningless on the staff write-up, where no pupil is
+        # present, so it is forced off there.
+        refused = 0 if staff_session else (
+            1 if request.field("refused_to_engage") == "yes" else 0)
+        refusal_note = request.field("refusal_note", "").strip() if refused else ""
+        if refused and not refusal_note:
+            return with_flash(
+                f"/mentor/session/{enrolment_id}",
+                "Say briefly what was offered and how the refusal showed. It is what "
+                "a decision to end the course early would rest on.", "error")
+
+        # ENGAGEMENT_LABELS[1] is already "Wouldn't take part", so without this a
+        # record could say the pupil refused and led the session themselves. The
+        # flag sets the rating, which keeps the written record and the impact
+        # figures from contradicting each other.
+        engagement = ("1" if refused
+                      else (request.field("engagement_rating", "") or "").strip())
+
         if not staff_session:
             mood = (request.field("mood_rating", "") or "").strip()
-            engagement = (request.field("engagement_rating", "") or "").strip()
-            missing = [label for value, label in
-                       ((mood, "how the pupil seemed"), (engagement, "how well they took part"))
+            needed = [(mood, "how the pupil seemed")]
+            if not refused:
+                needed.append((engagement, "how well they took part"))
+            missing = [label for value, label in needed
                        if value not in {"1", "2", "3", "4", "5"}]
             if missing:
                 return with_flash(
                     f"/mentor/session/{enrolment_id}",
                     "Before saving, rate " + " and ".join(missing) +
-                    ". Both go into the impact report.", "error")
+                    ". They go into the impact report.", "error")
 
         if staff_session:
             # Three things a reader wants, in order: why this pupil, what was
@@ -3627,13 +3661,15 @@ def session_submit(request):
         cur = conn.execute(
             """INSERT INTO session_records (enrolment_id, week_id, date, mood_rating,
             engagement_rating, safeguarding_flag, safeguarding_note, what_happened,
-            reflection_goal, mentor_notes, resources_used, recorded_by, created_at)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+            reflection_goal, mentor_notes, resources_used, refused_to_engage,
+            refusal_note, recorded_by, created_at)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (enrolment_id, week["id"], datetime.date.today().isoformat(),
-             request.field("mood_rating") or None, request.field("engagement_rating") or None,
+             request.field("mood_rating") or None, engagement or None,
              safeguarding_flag, safeguarding_note, what_happened,
              reflect_note, next_session_note,
-             request.field("resources_used", ""), user["id"], db.now()),
+             request.field("resources_used", ""), refused, refusal_note or None,
+             user["id"], db.now()),
         )
         record_id = cur.lastrowid
 
@@ -7344,6 +7380,10 @@ def certificate_download(request):
                                 (request.params["enrolment_id"],)).fetchone()
         finally:
             conn2.close()
+        if row and row["status"] == "withdrawn":
+            return with_flash(f"/mentor/pupils/{row['pupil_id']}",
+                              "This course was ended early, so no certificate was issued.",
+                              "error")
         if row and row["status"] == "completed":
             return with_flash(f"/mentor/enrolment/{request.params['enrolment_id']}/wrap-up",
                               "The certificate is issued once the course is closed.", "error")
@@ -7546,19 +7586,29 @@ def session_record_edit_submit(request):
                 parts.append(f"{label}: {value}")
         save_resource_entries(conn, record["enrolment_id"], record["week_id"],
                               request, user["id"])
+        # The same rule as recording: the refusal flag decides the engagement
+        # rating, so an edit cannot leave the two disagreeing either.
+        staff_only_week = bool(staff_week and staff_week["staff_only"])
+        refused = 0 if staff_only_week else (
+            1 if request.field("refused_to_engage") == "yes" else 0)
+        refusal_note = request.field("refusal_note", "").strip() if refused else ""
+        engagement = "1" if refused else (request.field("engagement_rating") or None)
+
         conn.execute(
             """UPDATE session_records
                SET what_happened=?, reflection_goal=?, mentor_notes=?,
                    mood_rating=?, engagement_rating=?,
-                   safeguarding_flag=?, safeguarding_note=?, pdf_path=NULL
+                   safeguarding_flag=?, safeguarding_note=?,
+                   refused_to_engage=?, refusal_note=?, pdf_path=NULL
                WHERE id=?""",
             ("\n\n".join(parts),
              request.field("reflect_note", "").strip(),
              request.field("next_session_note", "").strip(),
              request.field("mood_rating") or None,
-             request.field("engagement_rating") or None,
+             engagement,
              1 if request.field("safeguarding_flag") == "yes" else 0,
              safeguarding_note,
+             refused, refusal_note or None,
              request.params["record_id"]))
         # An edit can raise a concern that wasn't there when the session was
         # first written up. Only notify when it's newly raised — re-saving a
@@ -7681,6 +7731,14 @@ def course_wrap_up(request):
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
 
+        # This route is what issues a certificate, so it is where a course that
+        # ended early has to be stopped. Without the guard the wrap-up URL on its
+        # own is enough to mint a certificate for a pupil who never finished.
+        if enrolment["status"] == "withdrawn":
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              "This course was ended early, so there is no certificate "
+                              "to issue.", "error")
+
         conn.execute("UPDATE enrolments SET review_date=?, review_note=?, review_done=0 WHERE id=?",
                      (review_date, review_note or None, enrolment_id))
 
@@ -7709,6 +7767,94 @@ def course_wrap_up(request):
                       f"Course closed and {pupil_name}'s certificate issued.", "ok")
 
 
+@router.get("/mentor/enrolment/<enrolment_id>/end-early")
+def end_course_early_form(request):
+    """The screen for closing a course that is not going to be finished."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    conn = db.get_conn()
+    try:
+        if not may_access_enrolment(conn, request.params["enrolment_id"], user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        enrolment = conn.execute(
+            """SELECT e.*, p.forename, p.surname, p.id AS pupil_id,
+                      c.title AS course_title
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               JOIN courses c ON c.id = e.course_id WHERE e.id=?""",
+            (request.params["enrolment_id"],)).fetchone()
+        if not enrolment:
+            return Response("Not found", status="404 Not Found")
+        # Shown on the form because a decision this final should be made against
+        # the record rather than against the mentor's memory of it.
+        refused_count = conn.execute(
+            """SELECT COUNT(*) AS c FROM session_records
+               WHERE enrolment_id=? AND refused_to_engage=1""",
+            (enrolment["id"],)).fetchone()["c"]
+    finally:
+        conn.close()
+    if enrolment["status"] != "active":
+        return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                          "That course is not running, so it cannot be ended.", "error")
+    return render("end_course_early.html", user=user,
+                  pupil_name=f"{enrolment['forename']} {enrolment['surname']}",
+                  course_title=enrolment["course_title"],
+                  enrolment_id=enrolment["id"], pupil_id=enrolment["pupil_id"],
+                  sessions_recorded=enrolment["current_week"],
+                  refused_count=refused_count, flash=flash_from_query(request))
+
+
+@router.post("/mentor/enrolment/<enrolment_id>/end-early")
+def end_course_early(request):
+    """Closes a course that will not be finished. No certificate is issued.
+
+    A course a pupil would not take part in is not a completed course. Recording
+    it as one would put it in the completion count and in the impact report's
+    change figure, so a course that never really ran would improve the numbers.
+    It closes as withdrawn instead, with the reason kept: the sessions that did
+    happen stay on the pupil's record, and the decision is answerable later."""
+    user, err = require(request, roles=["mentor", "admin"])
+    if err:
+        return err
+    enrolment_id = request.params["enrolment_id"]
+    reason = request.field("end_reason", "").strip()
+    note = request.field("end_note", "").strip()
+    if reason not in END_EARLY_REASONS:
+        return with_flash(f"/mentor/enrolment/{enrolment_id}/end-early",
+                          "Choose a reason for ending the course.", "error")
+    if not note:
+        return with_flash(f"/mentor/enrolment/{enrolment_id}/end-early",
+                          "Add a short note saying what happened. A course that ended "
+                          "early is the one a SENCO asks about.", "error")
+    conn = db.get_conn()
+    try:
+        if not may_access_enrolment(conn, enrolment_id, user):
+            return Response("Not authorised for this area.", status="403 Forbidden")
+        enrolment = conn.execute(
+            """SELECT e.status, e.pupil_id, p.forename, p.surname
+               FROM enrolments e JOIN pupils p ON p.id = e.pupil_id
+               WHERE e.id=?""", (enrolment_id,)).fetchone()
+        if not enrolment:
+            return Response("Not found", status="404 Not Found")
+        if enrolment["status"] != "active":
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              "That course is not running, so it cannot be ended.", "error")
+        conn.execute(
+            """UPDATE enrolments SET status='withdrawn', end_reason=?, end_note=?,
+               ended_at=? WHERE id=?""",
+            (reason, note, datetime.date.today().isoformat(), enrolment_id))
+        db.log_action(conn, user["id"], "course_ended_early", "enrolment",
+                      enrolment_id, reason)
+        conn.commit()
+        pupil_id = enrolment["pupil_id"]
+        pupil_name = f"{enrolment['forename']} {enrolment['surname']}"
+    finally:
+        conn.close()
+    return with_flash(f"/mentor/pupils/{pupil_id}",
+                      f"{pupil_name}'s course was ended early. No certificate is issued.",
+                      "ok")
+
+
 @router.get("/mentor/enrolment/<enrolment_id>/wrap-up")
 def course_wrap_up_form(request):
     """The wrap-up screen, reachable again if it wasn't finished first time."""
@@ -7725,6 +7871,10 @@ def course_wrap_up_form(request):
             (request.params["enrolment_id"],)).fetchone()
         if not enrolment or enrolment["establishment_id"] != user["establishment_id"]:
             return Response("Not authorised for this area.", status="403 Forbidden")
+        if enrolment["status"] == "withdrawn":
+            return with_flash(f"/mentor/pupils/{enrolment['pupil_id']}",
+                              "This course was ended early. There is no course to close "
+                              "and no certificate to issue.", "error")
         reflection = conn.execute("SELECT * FROM completion_reflections WHERE enrolment_id=?",
                                   (request.params["enrolment_id"],)).fetchone()
     finally:

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}End course early - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<h1>End this course early</h1>
+<p class="muted">{{ pupil_name }} &middot; {{ course_title }}</p>
+
+<div class="card">
+  <p>{{ sessions_recorded }} of {{ sessions_total }} sessions
+  {% if sessions_recorded == 1 %}has{% else %}have{% endif %} been recorded.
+  {% if refused_count %}
+  <strong>{{ refused_count }}</strong> of them
+  {% if refused_count == 1 %}was{% else %}were{% endif %} recorded as the pupil
+  refusing to engage.
+  {% else %}
+  No session has been recorded as a refusal to engage.
+  {% endif %}
+  </p>
+
+  {# Said plainly and before the form, not in a confirmation the mentor clicks
+     past: the certificate is the one reward in the app, and a mentor should not
+     find out afterwards that ending the course withheld it. #}
+  <p><strong>No certificate will be issued.</strong> The course will show as ended
+  early on {{ pupil_name }}&rsquo;s record. Every session already recorded stays
+  there, and the pupil can be enrolled on another course at any time.</p>
+</div>
+
+<form method="post" action="/mentor/enrolment/{{ enrolment_id }}/end-early">
+  <div class="card">
+    <div class="field">
+      <label for="end_reason">Why is it ending? <span class="req">Required</span></label>
+      <select id="end_reason" name="end_reason" required>
+        <option value="">Choose a reason</option>
+        {% for key, label in END_EARLY_REASONS.items() %}
+        <option value="{{ key }}">{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label for="end_note">What happened? <span class="req">Required</span></label>
+      <textarea id="end_note" name="end_note" rows="4" required
+        placeholder="e.g. Refused to take part in sessions two, three and four. Offered a different room and a different time of day. Discussed with the SENCO on 14 November; agreed to pause and revisit next term."></textarea>
+      <p class="muted" style="font-size:12px;">A sentence or two. This is what a SENCO,
+      a parent or the next school will be shown when they ask why the course stopped.</p>
+    </div>
+    <button class="btn btn-primary" type="submit">End the course</button>
+    <a class="btn btn-secondary" href="/mentor/pupils/{{ pupil_id }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

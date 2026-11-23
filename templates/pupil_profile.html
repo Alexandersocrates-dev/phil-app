@@ -59,10 +59,19 @@
   <div class="flex-between">
     <h2>{{ e.course_title }}</h2>
     {% if e.status == 'completed' %}<span class="badge badge-amber">Completed</span>
-    {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Withdrawn</span>
+    {% elif e.status == 'withdrawn' %}<span class="badge badge-muted">Ended early</span>
     {% else %}<span class="badge badge-teal">Active</span>{% endif %}
   </div>
   </summary>
+  {# Why it stopped, next to the badge that says it did. A course ended early is
+     the one a SENCO asks about, so the answer lives on the record. #}
+  {% if e.status == 'withdrawn' and e.end_note %}
+  <p class="muted" style="font-size:13px; margin:0 0 12px;">
+    Ended early{% if e.ended_at %} on {{ e.ended_at|uk_date }}{% endif %}
+    &mdash; {{ END_EARLY_REASONS.get(e.end_reason, 'reason not recorded')|lower }}.
+    {{ e.end_note }}
+  </p>
+  {% endif %}
   {# A follow-up booked at completion has to be visible here, or it's a date
      nobody ever sees again. Overdue is called out; a done one stays as a record
      that the conversation happened. #}
@@ -122,6 +131,7 @@
        session count rather than a hardcoded 6. #}
     <a class="btn btn-primary btn-sm" href="/mentor/session/{{ e.id }}">{% if e.current_week >= sessions_total - 1 %}Record the course summary and next steps{% else %}Record week {{ e.current_week + 1 }} session{% endif %}</a>
     <a class="btn btn-secondary btn-sm" href="/mentor/schedule/{{ e.id }}">Plan session dates</a>
+    <a class="btn btn-secondary btn-sm" href="/mentor/enrolment/{{ e.id }}/end-early">End course early</a>
     {% if user.role == 'admin' %}
     <a class="btn btn-secondary btn-sm" href="/admin/enrolments/{{ e.id }}/reassign">Reassign mentor</a>
     {% endif %}
