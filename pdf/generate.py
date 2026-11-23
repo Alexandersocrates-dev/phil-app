@@ -1030,9 +1030,11 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         c.drawString(x, y, "    ".join(bits))
         y -= 6 * mm
 
-        # Session by session. Without this the report answered "which courses"
-        # but not "what happened in them", which is the question a new form
-        # tutor or a SENCO is actually asking.
+        # The sessions as a list, not a transcript. Printing each session's
+        # check-in, input, activity and sheets ran to three pages for one
+        # course and buried the summary, which is the part a form tutor or a
+        # SENCO actually reads. What happened in a given week is still in that
+        # session's own record.
         def _page_break():
             nonlocal page_no
             _doc_footer(c, w, margin, page_no)
@@ -1045,43 +1047,25 @@ def pupil_report_pdf(pupil_id, pupil_name, establishment_name, courses, period="
         for s in (course.get("sessions") or []):
             if s.get("staff_only"):
                 continue                      # the write-up prints as the summary below
-            if y < margin + 34 * mm:
+            if y < margin + 24 * mm:
                 y = _page_break()
+            label = f"Session {s['week_number']}: {s['title']}"
             c.setFillColor(INK)
-            c.setFont("Helvetica-Bold", 9.5)
-            c.drawString(x, y, f"Session {s['week_number']}: {s['title']}   {uk(s.get('date', ''))}")
-            y -= 4.6 * mm
-            if (s.get("what_happened") or "").strip():
-                y = _wrap(c, s["what_happened"].strip(), x + 4 * mm, y, max_width - 4 * mm,
-                          size=9, leading=12, color=INK)
-            if (s.get("reflection_goal") or "").strip():
-                y -= 0.5 * mm
-                y = _wrap(c, "Goal set: " + s["reflection_goal"].strip(), x + 4 * mm, y,
-                          max_width - 4 * mm, size=9, leading=12, color=MUTED)
-            for title, lines in (s.get("resource_work") or []):
-                if y < margin + 22 * mm:
-                    y = _page_break()
-                c.setFillColor(MUTED)
-                c.setFont("Helvetica-Bold", 8)
-                c.drawString(x + 4 * mm, y, title.upper())
-                y -= 4 * mm
-                for line in lines:
-                    y = _wrap(c, line, x + 8 * mm, y, max_width - 8 * mm, size=8.5,
-                              leading=11, color=INK)
-            # A flag is the thing a reader must not miss, so it is stated even
-            # when the note itself is empty.
+            c.setFont("Helvetica", 9.5)
+            c.drawString(x + 4 * mm, y, label)
+            c.setFillColor(MUTED)
+            c.setFont("Helvetica", 9)
+            c.drawRightString(w - margin, y, uk(s.get("date", "")))
+            # Which session carried a concern is the one thing from the detail
+            # that must survive the trim. The note itself stays in the session
+            # record rather than being copied into a report that circulates.
             if s.get("safeguarding_flag"):
-                if y < margin + 20 * mm:
-                    y = _page_break()
-                note = (s.get("safeguarding_note") or "").strip()
                 c.setFillColor(RED)
-                c.setFont("Helvetica-Bold", 8.5)
-                c.drawString(x + 4 * mm, y, "SAFEGUARDING CONCERN RECORDED")
-                y -= 4.2 * mm
-                if note:
-                    y = _wrap(c, note, x + 8 * mm, y, max_width - 8 * mm, size=9,
-                              leading=12, color=INK)
-            y -= 4 * mm
+                c.setFont("Helvetica-Bold", 8)
+                c.drawString(x + 4 * mm + c.stringWidth(label, "Helvetica", 9.5) + 3 * mm,
+                             y, "SAFEGUARDING NOTE")
+            y -= 5.4 * mm
+        y -= 3 * mm
 
         plan = (course.get("support_plan") or "").strip()
         if plan:
