@@ -29,6 +29,27 @@
       <p class="en-hint">The pupil appears on this mentor's list, and they do the sessions.</p>
     </div>
     {% endif %}
+    {# Why this course is being started. Both optional: a mentor enrolling a
+       pupil between lessons should not be held up, and an unanswered question
+       is recorded as unanswered rather than as a no. #}
+    <div class="field">
+      <label for="after_suspension">Following a fixed-term suspension?</label>
+      <select name="after_suspension" id="after_suspension">
+        <option value="" selected>Not recorded</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <p class="en-hint">Whether this course was started in response to a suspension.</p>
+    </div>
+    <div class="field">
+      <label for="alternative_provision">Part of alternative provision support?</label>
+      <select name="alternative_provision" id="alternative_provision">
+        <option value="" selected>Not recorded</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <p class="en-hint">Whether this course forms part of a pupil's alternative provision.</p>
+    </div>
     <button class="btn btn-primary" type="submit">Enrol</button>
   </form>
 </div>

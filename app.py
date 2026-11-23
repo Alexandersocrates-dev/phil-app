@@ -3242,6 +3242,16 @@ def admin_reassign_admin_submit(request):
                         "/mentor", back_label="Go to Mentor home")
 
 
+def enrolment_context_value(raw):
+    """'yes', 'no', or None for anything else.
+
+    Anything unrecognised becomes None rather than a default, so a posted form
+    with a missing or odd value records nothing instead of a wrong answer.
+    """
+    value = (raw or "").strip().lower()
+    return value if value in ("yes", "no") else None
+
+
 @router.get("/mentor/enrol/<pupil_id>")
 def enrol_form(request):
     user, err = require(request, roles=["mentor", "admin"])
@@ -3317,12 +3327,21 @@ def enrol_submit(request):
                                        "Choose a mentor from the list.", "error")
                 mentor_id = valid["id"]
 
+        # Why this course was started. Three states, not two: a mentor who
+        # skipped the question leaves NULL, so a report can say how many were
+        # not recorded rather than counting silence as a no. Stored on the
+        # enrolment because a pupil's circumstances change between courses.
+        after_suspension = enrolment_context_value(request.field("after_suspension", ""))
+        alternative_provision = enrolment_context_value(
+            request.field("alternative_provision", ""))
+
         cur = conn.execute(
             """INSERT INTO enrolments (pupil_id, course_id, mentor_id, start_date, status,
-               current_week, parent_access_enabled, created_at)
-               VALUES (?,?,?,?,?,?,?,?)""",
+               current_week, parent_access_enabled, after_suspension,
+               alternative_provision, created_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?)""",
             (pupil_id, course_id, mentor_id, datetime.date.today().isoformat(), "active",
-             0, 1, db.now()),
+             0, 1, after_suspension, alternative_provision, db.now()),
         )
         # Taking a pupil on again clears any earlier removal from this mentor's
         # list. Without this they would reappear for the length of the course and
