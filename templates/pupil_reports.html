@@ -106,11 +106,13 @@
       {% if period %}<p class="rp-period">{{ period }}</p>{% endif %}
       <ul class="rp-includes">
         <li>Every course at this school, whoever mentored it, with dates and progress</li>
-        <li>Each session: what happened, the goal the pupil set, the safeguarding note</li>
-        <li>The course summary and next steps written for staff</li>
+        <li>Each session listed by title and date, with any carrying a safeguarding note marked</li>
+        <li>The course summary and next steps written for staff, in full</li>
         <li>The follow-up chat, where one has been recorded</li>
       </ul>
       <p class="rp-scope">{{ scope }}</p>
+      <p class="rp-note">What was said in a given session stays in that session&rsquo;s own
+      record, which is where to look for it.</p>
       <p class="rp-warn">Written about one child. Handle it as you would any pastoral record.</p>
     </div>
   </aside>
@@ -193,6 +195,7 @@ function filterPupilReports() {
 .rp-includes{margin:0 0 12px;padding-left:16px;font-size:13px;line-height:1.6;color:var(--ink);}
 .rp-includes li{margin-bottom:4px;}
 .rp-scope{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 8px;}
+.rp-note{font-size:12px;color:var(--muted);line-height:1.55;margin:0 0 8px;}
 .rp-warn{font-size:12px;line-height:1.55;margin:0;color:var(--coral-dark);font-weight:600;}
 
 .rp-empty{text-align:center;padding:32px 24px;}

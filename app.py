@@ -5399,8 +5399,8 @@ def admin_reports_chooser(request):
                                                           "which session they are on, and whether a certificate is out. "
                                                           "Filter by academic year, term or mentor. PDF or spreadsheet.",
          "href": "/admin/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
-        {"title": "Pupil report", "desc": "Everything on one pupil: every course, session by session, "
-                                          "with their goals and the course summaries.",
+        {"title": "Pupil report", "desc": "Everything on one pupil: every course, the sessions and dates, "
+                                          "and the course summaries.",
          "href": "/admin/reports/pupils", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards, intro=None, note=None,
@@ -5419,8 +5419,8 @@ def mentor_reports_chooser(request):
         {"title": "Your mentoring list", "desc": "Every pupil you mentor and where each course is up to. "
                                                 "Progress only, no session notes.",
          "href": "/mentor/reports/caseload", "icon": _ICON_USERS, "bg": "var(--teal-light)"},
-        {"title": "Pupil report", "desc": "Everything on one pupil: every course, session by session, "
-                                          "with their goals and the course summaries.",
+        {"title": "Pupil report", "desc": "Everything on one pupil: every course, the sessions and dates, "
+                                          "and the course summaries.",
          "href": "/mentor/reports/pupils", "icon": _ICON_DOC, "bg": "var(--coral-light)"},
     ]
     return render("reports_chooser.html", user=user, cards=cards,
@@ -5532,8 +5532,8 @@ def mentor_pupil_reports(request):
                   period=period_label(year, range_label),
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
-                        "done at this school, whoever mentored it, session by session, with "
-                        "the goals they set and the course summaries written for staff.",
+                        "done at this school, whoever mentored it, the sessions they sat "
+                        "with the dates, and the course summary written for staff.",
                   scope="Pupils you mentor, including courses run by other mentors.",
                   flash=flash_from_query(request))
 
@@ -5561,8 +5561,8 @@ def admin_pupil_reports(request):
                   period=period_label(year, range_label),
                   title="Pupil reports",
                   intro="Everything on one pupil in a single file: every course they have "
-                        "done at this school, whoever mentored it, session by session, with "
-                        "the goals they set and the course summaries written for staff.",
+                        "done at this school, whoever mentored it, the sessions they sat "
+                        "with the dates, and the course summary written for staff.",
                   scope="Every pupil at your establishment, whoever mentors them.",
                   flash=flash_from_query(request))
 
