@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_shield %}
+{% block title %}Reset two-factor for {{ target.name }} - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<p class="back-link"><a href="{{ return_to }}">&larr; Back</a></p>
+<div class="card card-center">
+  <div class="icon-badge icon-badge--teal">{{ icon_shield(color='var(--teal-darker)') }}</div>
+  <h1>Reset two-factor for {{ target.name }}</h1>
+
+{% if not has_twofa %}
+  <p class="muted">{{ target.name }} does not have two-factor set up, so there is nothing
+  to reset. They will be asked to set it up next time they sign in.</p>
+  <p><a class="btn btn-secondary" href="{{ return_to }}">Back</a></p>
+{% else %}
+  <div class="safeguard-box safeguard-flagged form-left">
+    <p><strong>Speak to {{ target.name }} first.</strong> In person, or on a number you
+    already have for them &mdash; not by replying to an email or a message asking for
+    this. Someone holding their password would ask for exactly this.</p>
+    <p>{% if codes_left %}They still have {{ codes_left }} unused recovery code{{ '' if codes_left == 1 else 's' }}.
+    A recovery code typed into the sign-in box gets them in without this reset, and
+    without ending their sessions &mdash; worth checking they have looked.
+    {% else %}They have no recovery codes left, so this is the only way back in.{% endif %}</p>
+  </div>
+
+  <div class="form-left">
+    <p>Turning it off will sign {{ target.name }} out everywhere, email them to say you
+    did it, and record it in the audit log with your name on it. They will set
+    two-factor up again on their new phone the next time they sign in.</p>
+  </div>
+
+  <form method="post" action="/admin/mentors/{{ target.id }}/reset-two-factor" class="form-left">
+    <input type="hidden" name="return_to" value="{{ return_to }}">
+    <div class="field">
+      <label for="password">Your own password <span class="req">Required</span></label>
+      <input type="password" id="password" name="password" required
+             autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" type="submit"
+      onclick="return confirm('Turn off two-factor for {{ target.name }}?')">
+      Turn off two-factor for {{ target.name }}</button>
+    <a class="btn btn-secondary" href="{{ return_to }}">Cancel</a>
+  </form>
+{% endif %}
+</div>
+{% endblock %}

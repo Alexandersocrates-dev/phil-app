@@ -1422,6 +1422,34 @@ def login_submit(request):
 
 TWOFA_PENDING_COOKIE = "phil_2fa"
 
+# How long before the same person can ask again for their two-factor to be
+# reset. Long enough that a leaked password can't be used to pester an admin
+# into resetting an account, short enough to retry after a genuine mistake.
+TWOFA_HELP_INTERVAL_HOURS = 1
+
+
+def _twofa_help_asked_recently(conn, user_id):
+    row = conn.execute(
+        """SELECT created_at FROM audit_log
+           WHERE actor_user_id=? AND action='twofa_help_requested'
+           ORDER BY id DESC LIMIT 1""", (user_id,)).fetchone()
+    if not row:
+        return False
+    cutoff = (datetime.datetime.utcnow()
+              - datetime.timedelta(hours=TWOFA_HELP_INTERVAL_HOURS)).isoformat()
+    return row["created_at"] > cutoff
+
+
+def _twofa_unlockers(conn, user):
+    """The admins at this person's school who can turn their two-factor off.
+
+    Themselves excluded: an admin locked out of their own account cannot reset
+    it, which is the case that has to fall through to Phil."""
+    return conn.execute(
+        """SELECT name, email FROM users
+           WHERE establishment_id=? AND role='admin' AND status='active' AND id != ?
+           ORDER BY name""", (user["establishment_id"], user["id"])).fetchall()
+
 
 @router.get("/login/code")
 def login_code_form(request):
@@ -1433,6 +1461,85 @@ def login_code_form(request):
     if not user:
         return with_flash("/login", "That sign-in timed out. Start again.", "error")
     return render("login_code.html", user=None, flash=flash_from_query(request))
+
+
+@router.get("/login/no-code")
+def login_no_code(request):
+    """What to do when the authenticator app has gone.
+
+    Only reachable with a sign-in already part-way through, so the password has
+    been accepted: naming the admins who can help is telling someone who their
+    own colleagues are, not handing a stranger a staff list."""
+    conn = db.get_conn()
+    try:
+        user = authlib.user_for_pending(conn, request.cookie(TWOFA_PENDING_COOKIE))
+        if not user:
+            return with_flash("/login", "That sign-in timed out. Start again.", "error")
+        codes_left = authlib.unused_recovery_code_count(conn, user["id"])
+        admins = _twofa_unlockers(conn, user)
+        asked = _twofa_help_asked_recently(conn, user["id"])
+    finally:
+        conn.close()
+    return render("login_no_code.html", user=None, hide_nav_links=True,
+                  name=user["name"], codes_left=codes_left, admins=admins,
+                  already_asked=asked, flash=flash_from_query(request))
+
+
+@router.post("/login/no-code")
+def login_no_code_request(request):
+    """Tells the people who can unlock this account that it needs unlocking.
+
+    It unlocks nothing itself. A request arriving by email is not evidence of
+    who sent it, so the mail says plainly that the admin must speak to the
+    person first — without that line this becomes the easy half of taking over
+    an account whose password has already leaked."""
+    conn = db.get_conn()
+    recipients = []
+    try:
+        user = authlib.user_for_pending(conn, request.cookie(TWOFA_PENDING_COOKIE))
+        if not user:
+            return with_flash("/login", "That sign-in timed out. Start again.", "error")
+        if _twofa_help_asked_recently(conn, user["id"]):
+            return with_flash("/login/no-code",
+                              "A request has already gone out in the last hour. Give them "
+                              "a moment, or speak to them directly.", "error")
+        recipients = [(a["name"], a["email"]) for a in _twofa_unlockers(conn, user)]
+        if recipients:
+            conn.execute(
+                """INSERT INTO notifications (type, recipient, establishment_id, payload,
+                   status, sent_at) VALUES (?,?,?,?,?,?)""",
+                ("twofa_locked_out", "admin", user["establishment_id"],
+                 f"{user['name']} could not produce a two-factor code when signing in, and "
+                 "has asked for it to be reset. Speak to them first, then reset it from "
+                 "your staff list.", "unread", db.now()))
+        else:
+            # Nobody at the school can do it — a sole admin locked out of their
+            # own account. This is the case that would otherwise be a phone call
+            # to one person, so it goes to Phil.
+            conn.execute(
+                """INSERT INTO notifications (type, recipient, establishment_id, payload,
+                   status, sent_at) VALUES (?,?,?,?,?,?)""",
+                ("twofa_locked_out", "phil_staff", user["establishment_id"],
+                 f"{user['name']} ({user['email']}) is locked out of two-factor and is the "
+                 "only admin at their school, so nobody there can reset it.",
+                 "unread", db.now()))
+        db.log_action(conn, user["id"], "twofa_help_requested", "user", user["id"],
+                      detail=f"{len(recipients)} admin(s) at the school notified")
+        conn.commit()
+        name, email = user["name"], user["email"]
+    finally:
+        conn.close()
+    for who, address in recipients:
+        _send_twofa_help_email(address, who, name)
+    if not recipients:
+        _send_twofa_help_email(
+            os.environ.get("SIGNUP_NOTIFY_EMAIL", "hello@phileducation.co.uk"),
+            "Phil", f"{name} ({email}), the only admin at their school")
+    return with_flash("/login/no-code",
+                      "Sent. They will need to speak to you before they reset it, so "
+                      "expect them to get in touch." if recipients else
+                      "Sent to Phil. Nobody at your school can reset it, so this one "
+                      "comes to us.", "ok")
 
 
 @router.post("/login/code")
@@ -4003,6 +4110,40 @@ def looks_like_email(value):
         and not domain.endswith(".") and " " not in value
 
 
+@router.get("/admin/mentors/<mentor_id>/reset-two-factor")
+def admin_reset_twofa_form(request):
+    """The confirmation screen for turning off a colleague's two-factor.
+
+    A GET page rather than a button in a table row, because the password field
+    belongs somewhere the consequences can be spelled out next to it."""
+    user, err = require(request, roles=["admin", "phil_staff"])
+    if err:
+        return err
+    back = request.field("return_to", "").strip()
+    if not back.startswith("/") or back.startswith("//"):
+        back = "/admin/mentors"
+    conn = db.get_conn()
+    try:
+        if user["role"] == "phil_staff":
+            target = conn.execute(
+                "SELECT * FROM users WHERE id=? AND role IN ('admin','mentor')",
+                (request.params["mentor_id"],)).fetchone()
+        else:
+            target = conn.execute(
+                """SELECT * FROM users WHERE id=? AND establishment_id=?
+                   AND role IN ('admin','mentor')""",
+                (request.params["mentor_id"], user["establishment_id"])).fetchone()
+        if not target:
+            return with_flash(back, "That member of staff isn't at your school.", "error")
+        has_twofa = authlib.twofa_enabled(conn, target["id"])
+        codes_left = authlib.unused_recovery_code_count(conn, target["id"])
+    finally:
+        conn.close()
+    return render("twofa_reset_confirm.html", user=user, target=target,
+                  has_twofa=has_twofa, codes_left=codes_left, return_to=back,
+                  flash=flash_from_query(request))
+
+
 @router.post("/admin/mentors/<mentor_id>/reset-two-factor")
 def admin_reset_twofa(request):
     """Turns off a colleague's two-factor when they have lost the phone and the
@@ -4017,8 +4158,22 @@ def admin_reset_twofa(request):
     user, err = require(request, roles=["admin", "phil_staff"])
     if err:
         return err
+    # Back to wherever this was started from: an admin's own staff list, or the
+    # Phil staff page for that school. Checked rather than trusted — a redirect
+    # target read straight from a form field is a way to bounce someone onto
+    # another host.
+    back = request.field("return_to", "").strip()
+    if not back.startswith("/") or back.startswith("//"):
+        back = "/admin/mentors"
     conn = db.get_conn()
     try:
+        # The actor's own password, because this is the one action that turns off
+        # somebody else's second factor. An unattended laptop in a staff room is
+        # the realistic way it gets misused, and a password is the thing an
+        # unattended session does not carry.
+        if not authlib.authenticate(conn, user["email"], request.field("password", "")):
+            return with_flash(back, "That password wasn't right, so nothing was changed.",
+                              "error")
         if user["role"] == "phil_staff":
             # A school's only admin has nobody above them locally, so somebody
             # has to be able to let them back in.
@@ -4032,9 +4187,9 @@ def admin_reset_twofa(request):
                 (request.params["mentor_id"], user["establishment_id"]),
             ).fetchone()
         if not target:
-            return with_flash("/admin/mentors", "That member of staff isn't at your school.", "error")
+            return with_flash(back, "That member of staff isn't at your school.", "error")
         if not authlib.twofa_enabled(conn, target["id"]):
-            return with_flash("/admin/mentors",
+            return with_flash(back,
                               f"{target['name']} doesn't have two-factor on.", "error")
         authlib.disable_twofa(conn, target["id"])
         authlib.destroy_other_sessions(conn, target["id"])
@@ -4044,9 +4199,9 @@ def admin_reset_twofa(request):
     finally:
         conn.close()
     _send_twofa_reset_email(target["email"], target["name"], user["name"])
-    return with_flash("/admin/mentors",
+    return with_flash(back,
                       f"Two-factor is off for {target['name']}, and they have been emailed. "
-                      "They can set it up again from their account.", "ok")
+                      "They will be asked to set it up again next time they sign in.", "ok")
 
 
 @router.post("/admin/mentors/new")
@@ -6080,6 +6235,16 @@ def staff_establishment_detail(request):
         admin = conn.execute("SELECT * FROM users WHERE establishment_id=? AND role='admin' LIMIT 1",
                               (request.params["establishment_id"],)).fetchone()
         used = seats_used(conn, request.params["establishment_id"])
+        # Everyone at the school who can sign in, with whether two-factor is on.
+        # Phil staff need this to let a sole admin back in after a lost phone:
+        # there is nobody above them at their own school to do it.
+        authlib.init_twofa_tables(conn)
+        with_twofa = {r["user_id"] for r in conn.execute(
+            "SELECT user_id FROM user_twofa WHERE confirmed_at IS NOT NULL").fetchall()}
+        staff_rows = [dict(r, twofa=r["id"] in with_twofa) for r in conn.execute(
+            """SELECT id, name, email, role FROM users
+               WHERE establishment_id=? AND role IN ('admin','mentor') AND status='active'
+               ORDER BY role, name""", (request.params["establishment_id"],)).fetchall()]
         pupil_count = conn.execute("SELECT count(*) FROM pupils WHERE establishment_id=? AND status='active'",
                                     (request.params["establishment_id"],)).fetchone()[0]
     finally:
@@ -6092,6 +6257,7 @@ def staff_establishment_detail(request):
     finally:
         conn2.close()
     return render("staff_establishment_detail.html", user=user, estab=estab, sub=sub, admin=admin, used=used,
+                  staff=staff_rows,
                   limit=seat_limit(sub) if sub else 0, pupil_count=pupil_count,
                   due_deletion=due.get(estab["id"]), retention_days=RETENTION_DAYS,
                   flash=flash_from_query(request))
@@ -8542,6 +8708,25 @@ def _send_twofa_reset_email(to_email, name, actor_name):
         "page.\n\n"
         "If it was not, change your password now and speak to them, because someone "
         "with admin access to your school's Phil account did this.")
+
+
+def _send_twofa_help_email(to_email, name, locked_out_name):
+    """Asks an admin to let a colleague back in, without asserting who asked.
+
+    The warning is the substance of this mail, not politeness around it. An
+    email saying "reset my two-factor" is exactly what someone holding a stolen
+    password would send, and the only check left at that point is a human one."""
+    return _send_email(
+        to_email, "A colleague cannot sign in to Phil",
+        f"Hello {name},\n\n"
+        f"{locked_out_name} signed in with the right password but could not produce a "
+        "two-factor code, and asked for it to be reset.\n\n"
+        "Speak to them first, in person or on a number you already have for them. "
+        "This email is not evidence that they sent it: anyone who had their password "
+        "could have asked for this.\n\n"
+        "Once you are satisfied it is them, open your staff list in Phil and choose "
+        "Reset two-factor next to their name. They will be signed out everywhere and "
+        "asked to set it up again on their new phone the next time they sign in.")
 
 
 def _email_html(subject, body):

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon_lock %}
+{% block title %}Can&rsquo;t use your authenticator - Phil{% endblock %}
+{% block wrapclass %}narrow{% endblock %}
+{% block content %}
+<div class="card card-center">
+  <div class="icon-badge icon-badge--teal">{{ icon_lock(color='var(--teal-darker)') }}</div>
+  <h1>Can&rsquo;t use your authenticator?</h1>
+  <p class="muted">{% if codes_left %}Two ways back in{% else %}Here&rsquo;s how to get back in{% endif %},
+  {{ name.split(' ')[0] }}.</p>
+
+  <div class="form-left">
+    <h2 class="tf-h2">1. A recovery code</h2>
+    {% if codes_left %}
+    <p>You have <strong>{{ codes_left }}</strong> unused recovery code{{ '' if codes_left == 1 else 's' }}
+    &mdash; the list you were given when you set two-factor up. Each one works once,
+    and it goes in the same box as a six-digit code.</p>
+    <p class="muted">Look in your password manager, your downloads, or wherever you saved
+    them. This is the quickest way in and nothing gets reset.</p>
+    <p><a class="btn btn-primary" href="/login/code">Type a recovery code</a></p>
+    {% else %}
+    <p>You have no recovery codes left, so this one is out.</p>
+    {% endif %}
+
+    <h2 class="tf-h2">2. Ask for it to be reset</h2>
+    {% if admins %}
+    <p>{% if admins|length == 1 %}{{ admins[0].name }} is an admin at your school and can
+    turn two-factor off for you{% else %}These admins at your school can turn two-factor
+    off for you{% endif %}:</p>
+    <ul>{% for a in admins %}<li>{{ a.name }} &mdash; {{ a.email }}</li>{% endfor %}</ul>
+    <p class="muted">They will need to speak to you first to check it is really you, so
+    the fastest route is usually to go and find them. The button below just lets them
+    know.</p>
+    {% else %}
+    <p>You are the only admin at your school, so nobody there can reset it for you.
+    This one comes to Phil.</p>
+    {% endif %}
+
+    {% if already_asked %}
+    <p class="muted">A request went out in the last hour. Give them a moment, or speak
+    to them directly.</p>
+    {% else %}
+    <form method="post" action="/login/no-code">
+      <button class="btn btn-secondary" type="submit">
+        {% if admins %}Let them know I&rsquo;m locked out{% else %}Ask Phil to reset it{% endif %}</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <p class="muted mt-4"><a href="/login">Back to sign in</a></p>
+</div>
+{% endblock %}

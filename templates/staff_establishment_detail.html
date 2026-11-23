@@ -19,6 +19,22 @@
         <p class="muted">Add a mentor or admin to this establishment. They are emailed a
         link to set their own password, as if their own admin had added them.</p>
         <p><a class="btn btn-secondary" href="/staff/establishments/{{ estab.id }}/staff/new">Add a staff member</a></p>
+        {# A school's only admin has nobody above them locally, so if they lose
+           their phone and their recovery codes this is the only way back in. #}
+        {% if staff %}
+        <table class="ah-table" style="margin-top:12px;">
+          <tr><th>Name</th><th>Role</th><th>Two-factor</th><th></th></tr>
+          {% for s in staff %}
+          <tr>
+            <td>{{ s.name }}</td>
+            <td>{{ s.role }}</td>
+            <td>{% if s.twofa %}On{% else %}<span class="muted">Not set up</span>{% endif %}</td>
+            <td>{% if s.twofa %}<a class="btn btn-secondary btn-sm"
+              href="/admin/mentors/{{ s.id }}/reset-two-factor?return_to=/staff/establishments/{{ estab.id }}">Reset 2FA</a>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
       </div>
 
       <form method="post" action="/staff/establishments/{{ estab.id }}/suspend" class="form-inline" onsubmit="return confirm('Suspend {{ estab.name }}? Their staff will lose access until reactivated.')">
