@@ -4863,6 +4863,10 @@ def current_term_bounds(today=None):
             datetime.date(y, 8, 31).isoformat())
 
 
+# What a session is scheduled for, used to turn a session count into hours.
+SESSION_MINUTES = 30
+
+
 def impact_figures(conn, establishment_id, date_from=None, date_to=None):
     """The numbers a school weighs at renewal, over a chosen period.
 
@@ -4913,6 +4917,11 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
            JOIN enrolments e ON e.id = r.enrolment_id
            JOIN pupils p ON p.id = e.pupil_id WHERE p.establishment_id = ?"""
         + period_sql, tuple([establishment_id] + period_args)).fetchone()[0]
+    # Sessions as time, because that is how a school weighs what it bought. A
+    # session is scheduled at half an hour; this is a floor, not a claim about
+    # any particular session.
+    figures["support_hours"] = round((figures["sessions"] or 0) * SESSION_MINUTES / 60)
+
     figures["safeguarding"] = conn.execute(
         """SELECT COUNT(*) FROM session_records r
            JOIN enrolments e ON e.id = r.enrolment_id
@@ -4920,7 +4929,11 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
            WHERE p.establishment_id = ? AND r.safeguarding_flag = 1"""
         + period_sql, tuple([establishment_id] + period_args)).fetchone()[0]
 
-    # First and last rating per enrolment, counted only where both exist.
+    # First rating to last, on COMPLETED courses only. A course rated at session
+    # one and again at session two carries no signal about whether anything
+    # changed, and mixing those in with finished courses buries the ones that
+    # do. The spread is kept as well as the mean: a governor reading "+0.3"
+    # cannot tell whether that is everyone edging up or two pupils moving a lot.
     changes = {"mood": [], "engagement": []}
     rows = conn.execute(
         """SELECT r.enrolment_id, w.week_number, r.mood_rating, r.engagement_rating
@@ -4928,7 +4941,8 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
            JOIN weeks w ON w.id = r.week_id
            JOIN enrolments e ON e.id = r.enrolment_id
            JOIN pupils p ON p.id = e.pupil_id
-           WHERE p.establishment_id = ? AND w.staff_only = 0""" + period_sql + """
+           WHERE p.establishment_id = ? AND w.staff_only = 0
+             AND e.status = 'completed'""" + period_sql + """
            ORDER BY r.enrolment_id, w.week_number""",
         tuple([establishment_id] + period_args)).fetchall()
     per = {}
@@ -4944,6 +4958,8 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
         figures[f"{key}_n"] = len(vals)
         figures[f"{key}_change"] = (sum(vals) / len(vals)) if vals else None
         figures[f"{key}_improved"] = sum(1 for v in vals if v > 0)
+        figures[f"{key}_unchanged"] = sum(1 for v in vals if v == 0)
+        figures[f"{key}_declined"] = sum(1 for v in vals if v < 0)
 
     figures["courses"] = conn.execute(
         """SELECT c.title, COUNT(*) AS n,

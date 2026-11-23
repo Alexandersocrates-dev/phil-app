@@ -843,7 +843,10 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     y = _doc_section(c, x, y, "Reach", max_width)
     stat("pupils supported", f.get("pupils") or 0,
          f"{f.get('enrolments') or 0} course enrolments in total")
-    stat("sessions delivered", f.get("sessions") or 0)
+    hours = f.get("support_hours") or 0
+    stat("sessions delivered", f.get("sessions") or 0,
+         f"about {hours} hour{'' if hours == 1 else 's'} of one-to-one support"
+         if hours else "")
     completed = f.get("completed") or 0
     enrolments = f.get("enrolments") or 0
     rate = f"{round(completed / enrolments * 100)}%" if enrolments else "\u2014"
@@ -852,25 +855,49 @@ def impact_report_pdf(establishment_id, establishment_name, f):
     y -= 2 * mm
 
     y = _doc_section(c, x, y, "Change", max_width)
-    for key, label in (("engagement", "engagement"), ("mood", "mood")):
-        n = f.get(f"{key}_n") or 0
-        change = f.get(f"{key}_change")
-        if n == 0:
-            c.setFillColor(MUTED)
-            c.setFont("Helvetica-Oblique", 9.5)
-            c.drawString(x, y, f"Not enough {label} ratings yet to show change.")
-            y -= 7 * mm
-            continue
-        arrow = "+" if change and change > 0 else ""
-        stat(f"average change in {label}", f"{arrow}{change:.1f}",
-             f"across {n} course{'' if n == 1 else 's'} rated at the start and again later; "
-             f"{f.get(f'{key}_improved') or 0} improved")
+    # Engagement leads because it is the thing the course works on. Mood is how
+    # a pupil presented on the day, which moves with the lesson they just left,
+    # so it is reported underneath as context rather than as an outcome. It is
+    # still counted and still printed: a figure that only ever appears when it
+    # flatters is worth nothing to the governor reading it.
+    n = f.get("engagement_n") or 0
+    change = f.get("engagement_change")
+    if n == 0:
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica-Oblique", 9.5)
+        c.drawString(x, y, "No completed courses rated more than once yet.")
+        y -= 7 * mm
+    else:
+        stat("average change in engagement", f"{change:+.2f}",
+             f"across {n} completed course{'' if n == 1 else 's'} \u00b7 "
+             f"{f.get('engagement_improved') or 0} improved, "
+             f"{f.get('engagement_unchanged') or 0} unchanged, "
+             f"{f.get('engagement_declined') or 0} declined")
+
+    mood_n = f.get("mood_n") or 0
+    if mood_n:
+        c.setFillColor(INK)
+        c.setFont("Helvetica", 9.5)
+        c.drawString(x, y, "Mood, how the pupil presented on the day:")
+        y -= 4.8 * mm
+        c.setFillColor(MUTED)
+        c.setFont("Helvetica", 9)
+        c.drawString(x, y, f"{f.get('mood_improved') or 0} improved, "
+                           f"{f.get('mood_unchanged') or 0} unchanged, "
+                           f"{f.get('mood_declined') or 0} declined "
+                           f"across the same {mood_n} course"
+                           f"{'' if mood_n == 1 else 's'}")
+        y -= 7 * mm
+
     c.setFillColor(MUTED)
     c.setFont("Helvetica-Oblique", 8.5)
     y = _wrap(c, "Ratings are the mentor's judgement at the time, on a 1\u20135 scale. "
-                 "Only courses rated more than once are counted. Figures cover "
-                 "sessions delivered in the period above, so a course spanning "
-                 "two terms appears in both.", x, y, max_width, size=8.5)
+                 "Change is the first rated session compared with the last, counted "
+                 "only on courses that have finished: a course still running has not "
+                 "had time to show one. Mood moves with the day and is shown as "
+                 "context, not as a measure of the course. These figures describe "
+                 "what mentors observed; they do not establish that the course caused "
+                 "the change.", x, y, max_width, size=8.5)
     y -= 6 * mm
 
     y = _doc_section(c, x, y, "Follow-through", max_width)
