@@ -358,8 +358,8 @@
   <label class="refusal-tick"><input type="checkbox" name="refused_to_engage" value="yes"
     onchange="philRefusal()"{% if editing_record and editing_record.refused_to_engage %} checked{% endif %}>
     The pupil refused to engage</label>
-  <p>They were here but would not take part. The session plan below greys out, and
-  all you need is the note, how they seemed, and the safeguarding box.</p>
+  <p>They were here but would not take part. The session plan folds away, and all
+  you need is the note below, how they seemed, and the safeguarding box.</p>
   <div class="field" id="refusalNote" style="display:none;">
     <label for="refusal_note">What was offered, and how the refusal showed</label>
     <textarea name="refusal_note" id="refusal_note" rows="3" placeholder="e.g. Offered the body map and the card sort; sat with his head down and would not speak. Left after ten minutes.">{% if editing_record %}{{ editing_record.refusal_note or '' }}{% endif %}</textarea>
@@ -368,7 +368,11 @@
 </div>
 {% endif %}
 
-<div id="sessionSteps">
+<details id="sessionSteps" open>
+<summary class="steps-off">
+  <span>Session plan not delivered &mdash; the pupil refused to engage</span>
+  <span class="steps-off-hint">Show the plan</span>
+</summary>
 <div class="step-block">
 <div class="step-num">1</div>
 <div class="step-body">
@@ -545,7 +549,7 @@
 <p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course, and what you take to the follow-up chat.{% else %}Private to you, and shown again at the start of Session {{ next_week_number + 1 }}. These notes are what you write the course summary and next steps from in the final session, so write for yourself in five weeks&rsquo; time.{% endif %}</p>
 </div>
 </div>
-</div>{# /#sessionSteps #}
+</details>{# /#sessionSteps #}
 
 <input type="hidden" name="resources_used" value="{{ week.resources|join(', ') }}">
 <input type="hidden" name="for_week" value="{{ next_week_number }}">
@@ -553,22 +557,29 @@
 {# Hidden on the staff session: there is no pupil to rate, and a stray value
    would distort the only structured data the reports have.
 
-   Both once had "1" preselected, so a mentor who never touched them recorded the
-   pupil's mood as 1 out of 5 — the worst possible score, by accident. A blank
-   first option means an unanswered rating stays unanswered. #}
+   Both once had "1" preselected, so a mentor who never touched them recorded
+   the worst possible score by accident. A blank first option means an
+   unanswered rating stays unanswered. #}
 {% if not week.staff_only %}
-<div class="field">
-<label for="mood_rating">How the pupil seemed in today&rsquo;s session</label>
-<select id="mood_rating" name="mood_rating">
+{# Session one has nothing to look back on, so the question isn't asked.
+   Prefilled from the record being edited, not from draft: draft only ever
+   carries the five note fields, so both menus used to come up "Not rated" on
+   an edit and saving a corrected typo wiped the ratings the impact report
+   runs on. #}
+{% if next_week_number > 1 %}
+<div class="field" id="recallField">
+<label for="recall_rating">What they remembered from last session</label>
+<select id="recall_rating" name="recall_rating">
 <option value="">Not rated</option>
-{% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.mood_rating|string == i|string %}selected{% endif %}>{{ MOOD_LABELS[i] }}</option>{% endfor %}
+{% for i in range(1,6) %}<option value="{{ i }}" {% if editing_record and editing_record.recall_rating == i %}selected{% endif %}>{{ RECALL_LABELS[i] }}</option>{% endfor %}
 </select>
 </div>
+{% endif %}
 <div class="field" id="engagementField">
 <label for="engagement_rating">How well the pupil took part today</label>
 <select id="engagement_rating" name="engagement_rating">
 <option value="">Not rated</option>
-{% for i in range(1,6) %}<option value="{{ i }}" {% if draft and draft.engagement_rating|string == i|string %}selected{% endif %}>{{ ENGAGEMENT_LABELS[i] }}</option>{% endfor %}
+{% for i in range(1,6) %}<option value="{{ i }}" {% if editing_record and editing_record.engagement_rating == i %}selected{% endif %}>{{ ENGAGEMENT_LABELS[i] }}</option>{% endfor %}
 </select>
 </div>
 {% endif %}
@@ -593,14 +604,26 @@ function philRefusal(){
   var on = !!(box && box.checked);
   var note = document.getElementById('refusalNote');
   var eng = document.getElementById('engagementField');
+  var rec = document.getElementById('recallField');
   var steps = document.getElementById('sessionSteps');
   if (note) note.style.display = on ? '' : 'none';
   // Engagement is hidden rather than greyed: the server records "Wouldn't take
   // part" when this is ticked, so a dimmed menu showing something else would be
   // telling the mentor something untrue.
   if (eng) eng.style.display = on ? 'none' : '';
+  // A pupil who would not take part has not shown what they remember either
+  // way, so the server stores nothing for it and the menu goes with it.
+  if (rec) rec.style.display = on ? 'none' : '';
   if (!steps) return;
   steps.classList.toggle('is-refused', on);
+  // Collapsed, not just dimmed: six greyed boxes are still six boxes to scroll
+  // past on a session that needs three fields. Fields inside a closed details
+  // stay in the DOM and still submit, so nothing is lost by folding it away,
+  // and the plan is one click back for a mentor who wants to see what was
+  // offered.
+  steps.open = !on;
+  var bar = document.querySelector('.refusal-bar');
+  if (bar) bar.classList.toggle('is-on', on);
   // Read-only, not disabled, for anything typed: a disabled field submits
   // nothing, so a mentor who wrote a line before ticking the box would lose it
   // without being told. Read-only keeps it on the page and in the record.
@@ -928,12 +951,24 @@ for (var i = 0; i < group.length; i++) {
   font-size:15px; color:var(--ink); cursor:pointer;}
 .refusal-tick input{width:auto; display:inline-block; margin:0;}
 .refusal-bar > p{font-size:13px; color:var(--muted); line-height:1.5; margin:6px 0 0;}
-/* Dimmed rather than hidden, so a mentor can still read what the session would
-   have been, and see at a glance that none of it is theirs to fill in. */
-/* Only once it is revealed, so it separates from the line above it. */
+/* Revealed only once the box is ticked, so it separates from the line above. */
 .refusal-bar #refusalNote{margin:12px 0 0;}
-.is-refused{opacity:.45;}
-.is-refused .step-block{background:#fafaf8;}
+
+/* Red here, and nowhere else on this page, for a session that did not happen.
+   The safeguarding box keeps its own red untouched: that one means a concern
+   was raised, and a reader has to be able to tell the two apart at a glance. */
+#sessionSteps > summary{display:none;}
+#sessionSteps.is-refused > summary{display:flex; align-items:center;
+  justify-content:space-between; gap:12px; cursor:pointer; list-style:none;
+  border:1px solid var(--red); border-left:4px solid var(--red);
+  background:var(--red-light); color:var(--red); border-radius:10px;
+  padding:12px 14px; margin:0 0 4px; font-weight:700; font-size:14px;}
+#sessionSteps.is-refused > summary::-webkit-details-marker{display:none;}
+.steps-off-hint{font-weight:600; font-size:12.5px; text-decoration:underline;
+  white-space:nowrap;}
+/* Opened from that bar, the plan reads clearly but is plainly not in play. */
+.is-refused .step-block{opacity:.45; background:#fafaf8;}
+.refusal-bar.is-on{border-left:4px solid var(--red);}
 .step-line:last-child{margin-bottom:6px;}
 /* Five steps separated by a hairline read as one long column: a mentor working
    through a session, looking at a pupil rather than the screen, had no way of

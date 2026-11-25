@@ -20,10 +20,32 @@ FOLLOWUP_MIN_FOR_SHARE = 5
 
 # The same wording the mentor picked from, so a report never shows a bare
 # number whose meaning the reader has to guess.
+# Kept for records written before recall replaced it: those still hold a mood
+# rating, and a report should show what was actually recorded at the time.
 MOOD_LABELS = {1: "very low", 2: "low", 3: "mixed", 4: "settled", 5: "bright"}
+RECALL_LABELS = {1: "nothing came back", 2: "needed reminding",
+                 3: "recalled it when asked", 4: "recalled it unprompted",
+                 5: "used it without being asked"}
 ENGAGEMENT_LABELS = {1: "wouldn't take part", 2: "took part reluctantly",
                      3: "took part when prompted", 4: "took part willingly",
                      5: "led it themselves"}
+
+
+def _opt(row, key):
+    """A column a given query may not have selected, or an older row may lack."""
+    try:
+        return row[key]
+    except (IndexError, KeyError):
+        return None
+
+
+def _recall_or_mood(row):
+    """The first half of the ratings line, whichever measure that record holds."""
+    if _opt(row, "recall_rating"):
+        return "Remembered: " + _rating_word(row["recall_rating"], RECALL_LABELS)
+    if _opt(row, "mood_rating"):
+        return "Mood: " + _rating_word(row["mood_rating"], MOOD_LABELS)
+    return "Not rated"
 
 
 def _rating_word(value, labels):
@@ -599,9 +621,11 @@ def session_record_pdf(record, enrolment, pupil_name, course_title, week_title, 
     else:
         c.setFillColor(INK)
         c.setFont("Helvetica", 10)
-        mood = _rating_word(record["mood_rating"], MOOD_LABELS)
         engagement = _rating_word(record["engagement_rating"], ENGAGEMENT_LABELS)
-        c.drawString(x, y, f"Mood: {mood}    Took part: {engagement}")
+        line = f"{_recall_or_mood(record)}    Took part: {engagement}"
+        if _opt(record, "refused_to_engage"):
+            line += "    Refused to engage"
+        c.drawString(x, y, line)
         y -= 8 * mm
 
         section("What happened", record["what_happened"])
@@ -730,9 +754,9 @@ def session_summaries_pdf(enrolment_id, pupil_name, course_title, mentor_name, r
         y = _doc_section(c, x, y, f"Session {row['week_number']} \u00b7 {row['week_title']}", max_width)
         c.setFillColor(MUTED)
         c.setFont("Helvetica", 8.5)
-        mood = _rating_word(row["mood_rating"], MOOD_LABELS)
         engagement = _rating_word(row["engagement_rating"], ENGAGEMENT_LABELS)
-        c.drawString(x, y, f"{uk(row['date'])}    Mood: {mood}    Took part: {engagement}"
+        c.drawString(x, y, f"{uk(row['date'])}    {_recall_or_mood(row)}    "
+                           f"Took part: {engagement}"
                            + ("    Safeguarding flagged" if row["safeguarding_flag"] else ""))
         y -= 6 * mm
 
@@ -874,28 +898,26 @@ def impact_report_pdf(establishment_id, establishment_name, f):
              f"{f.get('engagement_unchanged') or 0} unchanged, "
              f"{f.get('engagement_declined') or 0} declined")
 
-    mood_n = f.get("mood_n") or 0
-    if mood_n:
-        c.setFillColor(INK)
-        c.setFont("Helvetica", 9.5)
-        c.drawString(x, y, "Mood, how the pupil presented on the day:")
-        y -= 4.8 * mm
-        c.setFillColor(MUTED)
-        c.setFont("Helvetica", 9)
-        c.drawString(x, y, f"{f.get('mood_improved') or 0} improved, "
-                           f"{f.get('mood_unchanged') or 0} unchanged, "
-                           f"{f.get('mood_declined') or 0} declined "
-                           f"across the same {mood_n} course"
-                           f"{'' if mood_n == 1 else 's'}")
-        y -= 7 * mm
+    # A second outcome rather than context. What a pupil brings back from the
+    # last session is about the course; mood, which this replaced, moved with
+    # whatever lesson they had just left. So it gets a figure of its own.
+    recall_n = f.get("recall_n") or 0
+    recall_change = f.get("recall_change")
+    if recall_n:
+        stat("average change in what they remembered", f"{recall_change:+.2f}",
+             f"across {recall_n} completed course{'' if recall_n == 1 else 's'} \u00b7 "
+             f"{f.get('recall_improved') or 0} improved, "
+             f"{f.get('recall_unchanged') or 0} unchanged, "
+             f"{f.get('recall_declined') or 0} declined")
 
     c.setFillColor(MUTED)
     c.setFont("Helvetica-Oblique", 8.5)
     y = _wrap(c, "Ratings are the mentor's judgement at the time, on a 1\u20135 scale. "
                  "Change is the first rated session compared with the last, counted "
                  "only on courses that have finished: a course still running has not "
-                 "had time to show one. Mood moves with the day and is shown as "
-                 "context, not as a measure of the course. These figures describe "
+                 "had time to show one. What a pupil remembered is first asked in "
+                 "session two, as session one has nothing to look back on. These "
+                 "figures describe "
                  "what mentors observed; they do not establish that the course caused "
                  "the change.", x, y, max_width, size=8.5)
     y -= 6 * mm

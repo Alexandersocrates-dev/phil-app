@@ -65,6 +65,19 @@ MOOD_LABELS = {
     4: "Settled",
     5: "Bright",
 }
+# What came back from the session before. Observable in the room, which mood
+# also was — but mood moved with whatever lesson the pupil had just left, so it
+# described the day rather than the course. This describes the course.
+#
+# MOOD_LABELS stays below it: sessions recorded before this change hold a mood
+# rating, and they are still shown as they were written.
+RECALL_LABELS = {
+    1: "Nothing came back",
+    2: "Needed reminding",
+    3: "Recalled it when asked",
+    4: "Recalled it unprompted",
+    5: "Used it without being asked",
+}
 ENGAGEMENT_LABELS = {
     1: "Wouldn't take part",
     2: "Took part reluctantly",
@@ -77,6 +90,13 @@ ENGAGEMENT_LABELS = {
 def mood_label(value):
     try:
         return MOOD_LABELS.get(int(value), "")
+    except (TypeError, ValueError):
+        return ""
+
+
+def recall_label(value):
+    try:
+        return RECALL_LABELS.get(int(value), "")
     except (TypeError, ValueError):
         return ""
 
@@ -101,6 +121,8 @@ END_EARLY_REASONS = {
 framework_jinja.globals["END_EARLY_REASONS"] = END_EARLY_REASONS
 framework_jinja.globals["MOOD_LABELS"] = MOOD_LABELS
 framework_jinja.globals["ENGAGEMENT_LABELS"] = ENGAGEMENT_LABELS
+framework_jinja.globals["RECALL_LABELS"] = RECALL_LABELS
+framework_jinja.filters["recall_label"] = recall_label
 framework_jinja.filters["mood_label"] = mood_label
 framework_jinja.filters["engagement_label"] = engagement_label
 framework_jinja.globals["sessions_total"] = SESSIONS_PER_COURSE
@@ -3733,11 +3755,19 @@ def session_submit(request):
         engagement = ("1" if refused
                       else (request.field("engagement_rating", "") or "").strip())
 
+        # Session one has nothing to look back on, and a pupil who would not take
+        # part has not shown what they remember either way. In both cases the
+        # rating is left unset rather than guessed at, and the impact report
+        # already skips an enrolment that was not rated twice.
+        recall = ("" if (refused or next_week_number <= 1)
+                  else (request.field("recall_rating", "") or "").strip())
+
         if not staff_session:
-            mood = (request.field("mood_rating", "") or "").strip()
-            needed = [(mood, "how the pupil seemed")]
+            needed = []
             if not refused:
                 needed.append((engagement, "how well they took part"))
+                if next_week_number > 1:
+                    needed.append((recall, "what they remembered from last session"))
             missing = [label for value, label in needed
                        if value not in {"1", "2", "3", "4", "5"}]
             if missing:
@@ -3766,13 +3796,13 @@ def session_submit(request):
         what_happened = "\n\n".join(f"{label}: {text}" for label, text in sections if text)
 
         cur = conn.execute(
-            """INSERT INTO session_records (enrolment_id, week_id, date, mood_rating,
+            """INSERT INTO session_records (enrolment_id, week_id, date, recall_rating,
             engagement_rating, safeguarding_flag, safeguarding_note, what_happened,
             reflection_goal, mentor_notes, resources_used, refused_to_engage,
             refusal_note, recorded_by, created_at)
             VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             (enrolment_id, week["id"], datetime.date.today().isoformat(),
-             request.field("mood_rating") or None, engagement or None,
+             recall or None, engagement or None,
              safeguarding_flag, safeguarding_note, what_happened,
              reflect_note, next_session_note,
              request.field("resources_used", ""), refused, refusal_note or None,
@@ -5125,9 +5155,9 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
     # changed, and mixing those in with finished courses buries the ones that
     # do. The spread is kept as well as the mean: a governor reading "+0.3"
     # cannot tell whether that is everyone edging up or two pupils moving a lot.
-    changes = {"mood": [], "engagement": []}
+    changes = {"recall": [], "engagement": []}
     rows = conn.execute(
-        """SELECT r.enrolment_id, w.week_number, r.mood_rating, r.engagement_rating
+        """SELECT r.enrolment_id, w.week_number, r.recall_rating, r.engagement_rating
            FROM session_records r
            JOIN weeks w ON w.id = r.week_id
            JOIN enrolments e ON e.id = r.enrolment_id
@@ -5140,11 +5170,12 @@ def impact_figures(conn, establishment_id, date_from=None, date_to=None):
     for r in rows:
         per.setdefault(r["enrolment_id"], []).append(r)
     for records in per.values():
-        for key, field in (("mood", "mood_rating"), ("engagement", "engagement_rating")):
+        for key, field in (("recall", "recall_rating"),
+                           ("engagement", "engagement_rating")):
             rated = [x[field] for x in records if x[field]]
             if len(rated) >= 2:
                 changes[key].append(rated[-1] - rated[0])
-    for key in ("mood", "engagement"):
+    for key in ("recall", "engagement"):
         vals = changes[key]
         figures[f"{key}_n"] = len(vals)
         figures[f"{key}_change"] = (sum(vals) / len(vals)) if vals else None
@@ -7734,7 +7765,7 @@ def session_record_edit_submit(request):
         # The final session stores its boxes under the support-plan labels,
         # as recording does (the staff_session branch). Using the ordinary
         # labels here meant editing a course summary quietly relabelled it.
-        staff_week = conn.execute("SELECT staff_only FROM weeks WHERE id=?",
+        staff_week = conn.execute("SELECT staff_only, week_number FROM weeks WHERE id=?",
                                   (record["week_id"],)).fetchone()
         if staff_week and staff_week["staff_only"]:
             note_fields = (("Starting point and reason for referral", "checkin_note"),
@@ -7759,18 +7790,23 @@ def session_record_edit_submit(request):
             1 if request.field("refused_to_engage") == "yes" else 0)
         refusal_note = request.field("refusal_note", "").strip() if refused else ""
         engagement = "1" if refused else (request.field("engagement_rating") or None)
+        # Same rule as recording: nothing to recall in session one, and nothing
+        # shown by a pupil who would not take part.
+        week_no = staff_week["week_number"] if staff_week else 1
+        recall = (None if (refused or week_no <= 1)
+                  else (request.field("recall_rating") or None))
 
         conn.execute(
             """UPDATE session_records
                SET what_happened=?, reflection_goal=?, mentor_notes=?,
-                   mood_rating=?, engagement_rating=?,
+                   recall_rating=?, engagement_rating=?,
                    safeguarding_flag=?, safeguarding_note=?,
                    refused_to_engage=?, refusal_note=?, pdf_path=NULL
                WHERE id=?""",
             ("\n\n".join(parts),
              request.field("reflect_note", "").strip(),
              request.field("next_session_note", "").strip(),
-             request.field("mood_rating") or None,
+             recall,
              engagement,
              1 if request.field("safeguarding_flag") == "yes" else 0,
              safeguarding_note,
@@ -8519,6 +8555,7 @@ def session_summaries_download(request):
             return Response("Not authorised for this area.", status="403 Forbidden")
         rows = conn.execute(
             """SELECT r.date, r.mentor_notes, r.reflection_goal, r.mood_rating,
+                      r.recall_rating,
                       r.engagement_rating, r.safeguarding_flag, r.safeguarding_note,
                       r.what_happened, r.week_id,
                       w.week_number, w.title AS week_title
