@@ -350,6 +350,25 @@
 </div>
 {% endif %}
 
+{# Above the session plan, because ticking it switches that plan off. At the
+   bottom, next to the ratings, a mentor had already worked down six boxes
+   before reaching the control that says they did not need to. #}
+{% if not week.staff_only %}
+<div class="refusal-bar">
+  <label class="refusal-tick"><input type="checkbox" name="refused_to_engage" value="yes"
+    onchange="philRefusal()"{% if editing_record and editing_record.refused_to_engage %} checked{% endif %}>
+    The pupil refused to engage</label>
+  <p>They were here but would not take part. The session plan below greys out, and
+  all you need is the note, how they seemed, and the safeguarding box.</p>
+  <div class="field" id="refusalNote" style="display:none;">
+    <label for="refusal_note">What was offered, and how the refusal showed</label>
+    <textarea name="refusal_note" id="refusal_note" rows="3" placeholder="e.g. Offered the body map and the card sort; sat with his head down and would not speak. Left after ten minutes.">{% if editing_record %}{{ editing_record.refusal_note or '' }}{% endif %}</textarea>
+    <p class="muted" style="font-size:12px;margin-top:4px;">Needed if the refusal persists and the course is ended early.</p>
+  </div>
+</div>
+{% endif %}
+
+<div id="sessionSteps">
 <div class="step-block">
 <div class="step-num">1</div>
 <div class="step-body">
@@ -526,6 +545,7 @@
 <p style="font-size:11.5px;color:var(--muted);margin:4px 0 0;line-height:1.4;">{% if week.staff_only %}Private to you. This is the last thing written for this course, and what you take to the follow-up chat.{% else %}Private to you, and shown again at the start of Session {{ next_week_number + 1 }}. These notes are what you write the course summary and next steps from in the final session, so write for yourself in five weeks&rsquo; time.{% endif %}</p>
 </div>
 </div>
+</div>{# /#sessionSteps #}
 
 <input type="hidden" name="resources_used" value="{{ week.resources|join(', ') }}">
 <input type="hidden" name="for_week" value="{{ next_week_number }}">
@@ -553,32 +573,6 @@
 </div>
 {% endif %}
 
-{# A pupil who was there and would not take part. It sits next to the ratings
-   because it decides one of them: ticking it records "Wouldn't take part" and
-   hides the engagement menu, so one record cannot say both things. #}
-{% if not week.staff_only %}
-<div class="field">
-<label><input type="radio" name="refused_to_engage" value="no" onchange="philRefusal()" style="width:auto; display:inline-block;"{% if not (editing_record and editing_record.refused_to_engage) %} checked{% endif %}> The pupil took part</label><br>
-<label><input type="radio" name="refused_to_engage" value="yes" onchange="philRefusal()" style="width:auto; display:inline-block;"{% if editing_record and editing_record.refused_to_engage %} checked{% endif %}> The pupil refused to engage</label>
-</div>
-<div class="field" id="refusalNote" style="display:none;">
-<label for="refusal_note">What was offered, and how the refusal showed</label>
-<textarea name="refusal_note" id="refusal_note" rows="3" placeholder="e.g. Offered the body map and the card sort; sat with his head down and would not speak. Left after ten minutes.">{% if editing_record %}{{ editing_record.refusal_note or '' }}{% endif %}</textarea>
-<p class="muted" style="font-size:12px;">Needed if the refusal persists and the course is ended early.</p>
-</div>
-<script>
-function philRefusal(){
-  var yes = document.querySelector('input[name="refused_to_engage"][value="yes"]');
-  var on = !!(yes && yes.checked);
-  var note = document.getElementById('refusalNote');
-  var eng = document.getElementById('engagementField');
-  if (note) note.style.display = on ? '' : 'none';
-  if (eng) eng.style.display = on ? 'none' : '';
-}
-document.addEventListener('DOMContentLoaded', philRefusal);
-</script>
-{% endif %}
-
 <div class="safeguard-box safeguard-clear" id="sgBox">
 <h3>Safeguarding, every session</h3>
 <div class="field">
@@ -591,6 +585,37 @@ document.addEventListener('DOMContentLoaded', philRefusal);
 </div>
 <p class="muted" style="font-size:12px;">This record is not a safeguarding report and Phil takes no action on it. You remain responsible for following your establishment's own safeguarding procedure.</p>
 </div>
+
+{% if not week.staff_only %}
+<script>
+function philRefusal(){
+  var box = document.querySelector('input[name="refused_to_engage"]');
+  var on = !!(box && box.checked);
+  var note = document.getElementById('refusalNote');
+  var eng = document.getElementById('engagementField');
+  var steps = document.getElementById('sessionSteps');
+  if (note) note.style.display = on ? '' : 'none';
+  // Engagement is hidden rather than greyed: the server records "Wouldn't take
+  // part" when this is ticked, so a dimmed menu showing something else would be
+  // telling the mentor something untrue.
+  if (eng) eng.style.display = on ? 'none' : '';
+  if (!steps) return;
+  steps.classList.toggle('is-refused', on);
+  // Read-only, not disabled, for anything typed: a disabled field submits
+  // nothing, so a mentor who wrote a line before ticking the box would lose it
+  // without being told. Read-only keeps it on the page and in the record.
+  steps.querySelectorAll('textarea, input[type="text"]').forEach(function(el){
+    el.readOnly = on;
+  });
+  // Tick-boxes and menus have no read-only, so these are switched off. What was
+  // ticked on a worksheet the pupil refused to do is not a record worth having.
+  steps.querySelectorAll('input[type="checkbox"], input[type="radio"], select').forEach(function(el){
+    el.disabled = on;
+  });
+}
+document.addEventListener('DOMContentLoaded', philRefusal);
+</script>
+{% endif %}
 
 <button class="btn btn-primary btn-block" type="submit">{{ "Save changes" if editing_record else "Mark session complete" }}</button>
 
@@ -894,6 +919,21 @@ for (var i = 0; i < group.length; i++) {
 .step-line{font-size:14px; color:var(--ink); line-height:1.55; margin:0 0 5px;
   padding-left:20px; text-indent:-20px;}
 .step-line--plain{padding-left:0; text-indent:0;}
+
+/* Deliberately not coral or red: those mean safeguarding on this page and must
+   not be diluted. A refusal is a fact about the session, not an alarm. */
+.refusal-bar{border:1px solid var(--border); border-radius:10px; padding:14px 16px;
+  margin:0 0 18px; background:#fff;}
+.refusal-tick{display:flex; gap:10px; align-items:center; font-weight:700;
+  font-size:15px; color:var(--ink); cursor:pointer;}
+.refusal-tick input{width:auto; display:inline-block; margin:0;}
+.refusal-bar > p{font-size:13px; color:var(--muted); line-height:1.5; margin:6px 0 0;}
+/* Dimmed rather than hidden, so a mentor can still read what the session would
+   have been, and see at a glance that none of it is theirs to fill in. */
+/* Only once it is revealed, so it separates from the line above it. */
+.refusal-bar #refusalNote{margin:12px 0 0;}
+.is-refused{opacity:.45;}
+.is-refused .step-block{background:#fafaf8;}
 .step-line:last-child{margin-bottom:6px;}
 /* Five steps separated by a hairline read as one long column: a mentor working
    through a session, looking at a pupil rather than the screen, had no way of
